@@ -1,8 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{DA05A625-74C3-4866-A237-250494EEB0DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{025D82A1-4D1A-49E3-9CFD-BD1EBDE57755}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skutech.WebUi", "Web\Skutech.WebUi\Skutech.WebUi.csproj", "{824A2507-D139-48F7-A04E-CFD1B16F85A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{824A2507-D139-48F7-A04E-CFD1B16F85A8} = {DA05A625-74C3-4866-A237-250494EEB0DE}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{824A2507-D139-48F7-A04E-CFD1B16F85A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{824A2507-D139-48F7-A04E-CFD1B16F85A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{824A2507-D139-48F7-A04E-CFD1B16F85A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{824A2507-D139-48F7-A04E-CFD1B16F85A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
