@@ -21,4 +21,11 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Api\Skutec.DtoLayer\Skutec.DtoLayer.csproj" />
+      <ProjectReference Include="..\Api\Skutech.BusinessLayer\Skutech.BusinessLayer.csproj" />
+      <ProjectReference Include="..\Api\Skutech.DataAccessLayer\Skutech.DataAccessLayer.csproj" />
+      <ProjectReference Include="..\Skutech.EntityLayer\Skutech.EntityLayer.csproj" />
+    </ItemGroup>
+
 </Project>

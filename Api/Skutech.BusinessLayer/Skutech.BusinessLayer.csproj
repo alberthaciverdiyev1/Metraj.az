@@ -19,4 +19,9 @@
       </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Skutech.EntityLayer\Skutech.EntityLayer.csproj" />
+      <ProjectReference Include="..\Skutech.DataAccessLayer\Skutech.DataAccessLayer.csproj" />
+    </ItemGroup>
+
 </Project>
