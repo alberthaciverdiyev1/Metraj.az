@@ -30,7 +30,7 @@ public class GenericRepository<T> : IGenericDal<T> where T : class
         _context.SaveChanges();
     }
 
-    public T? GetElementByID(int id)
+    public T? GetElementById(int id)
     {
         return _context.Set<T>().Find(id);
     }

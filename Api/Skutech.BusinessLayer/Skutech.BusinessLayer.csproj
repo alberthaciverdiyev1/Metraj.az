@@ -25,4 +25,8 @@
       <ProjectReference Include="..\Skutech.DataAccessLayer\Skutech.DataAccessLayer.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Concrete\" />
+    </ItemGroup>
+
 </Project>
