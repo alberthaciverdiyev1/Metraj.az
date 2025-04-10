@@ -1,3 +1,9 @@
+using Skutech.BusinessLayer.Abstract;
+using Skutech.BusinessLayer.Concrete;
+using Skutech.DataAccessLayer.Abstract;
+using Skutech.DataAccessLayer.Concrete;
+using Skutech.DataAccessLayer.EntityFramework;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddDbContext<Context>();
+builder.Services.AddScoped<IBrand, EfBrandDal>();
+builder.Services.AddScoped<IBrandService, BrandManager>();
 
 var app = builder.Build();
 
@@ -16,6 +25,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-    
+app.MapControllers(); 
 
 app.Run();
