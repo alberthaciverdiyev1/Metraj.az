@@ -4,5 +4,7 @@
     "Price": true,
     "Vehicle": true,
     "VehicleModel": true,
-    "Base": true
+    "Base": true,
+    "City": true,
+    "Dealer": true
 }
