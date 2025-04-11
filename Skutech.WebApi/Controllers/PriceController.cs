@@ -1,39 +1,53 @@
 using Microsoft.AspNetCore.Mvc;
+using Skutech.BusinessLayer.Abstract;
+using Skutech.EntityLayer;
 
 namespace Skutech.WebApi.Controllers;
 
-    [Route("api/[controller]")]
-    [ApiController]
+[Route("api/[controller]")]
+[ApiController]
 public class PriceController : ControllerBase
 {
- 
-        [HttpGet]
-        public IActionResult List()
-        {
-            return Ok();
-        }
+    private readonly IPriceService _priceService;
 
-        [HttpGet("{id}")]
-        public IActionResult Details(int id)
-        {
-            return Ok();
-        }
+    public PriceController(IPriceService priceService)
+    {
+        _priceService = priceService;
+    }
 
-        [HttpPost]
-        public IActionResult Add()
-        {
-            return Ok();
-        }
+    [HttpGet]
+    public IActionResult List()
+    {
+        var result = _priceService.TGetList();
+        return Ok(result);
+    }
 
-        [HttpPut]
-        public IActionResult Update()
-        {
-            return Ok();
-        }
+    [HttpGet("{id}")]
+    public IActionResult Details(int id)
+    {
+        var result = _priceService.TGetElementById(id);
+        return Ok(result);
+    }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            return Ok();
-        }
+    [HttpPost]
+    public IActionResult Add(Price price)
+    {
+        _priceService.TInsert(price);
+        return Ok();
+    }
+
+    [HttpPut]
+    public IActionResult Update(Price price)
+    {
+        _priceService.TUpdate(price);
+        return Ok();
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        var value = _priceService.TGetElementById(id);
+        if (value != null) _priceService.TDelete(value);
+        return Ok();
+    }
 }

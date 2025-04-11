@@ -12,8 +12,30 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<Context>();
+
+//Entities
+
 builder.Services.AddScoped<IBrand, EfBrandDal>();
 builder.Services.AddScoped<IBrandService, BrandManager>();
+
+builder.Services.AddScoped<IColor, EfColorDal>();
+builder.Services.AddScoped<IColorService, ColorManager>();
+
+builder.Services.AddScoped<IPrice, EfPriceDal>();
+builder.Services.AddScoped<IPriceService, PriceManager>();
+
+builder.Services.AddScoped<IVehicle, EfVehicleDal>();
+builder.Services.AddScoped<IVehicleService, VehicleManager>();
+
+builder.Services.AddScoped<IVehicleModel, EfVehicleModelDal>();
+builder.Services.AddScoped<IVehicleModelService, VehicleModelManager>();
+
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("SkutechApiCors",
+        corsPolicyBuilder => { corsPolicyBuilder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); });
+});
+// End Entities
 
 var app = builder.Build();
 
@@ -25,6 +47,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.MapControllers(); 
+app.MapControllers();
+app.UseCors("SkutechApiCors");
+app.UseRouting();
 
 app.Run();

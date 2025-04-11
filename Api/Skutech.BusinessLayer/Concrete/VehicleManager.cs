@@ -4,7 +4,7 @@ using Skutech.EntityLayer;
 
 namespace Skutech.BusinessLayer.Concrete;
 
-public class VehicleManager:IGenericService<Vehicle>
+public class VehicleManager:IVehicleService
 {
     private readonly IVehicle _vehicle;
 

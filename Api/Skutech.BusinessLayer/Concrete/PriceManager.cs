@@ -4,7 +4,7 @@ using Skutech.EntityLayer;
 
 namespace Skutech.BusinessLayer.Concrete;
 
-public class PriceManager : IGenericService<Price>
+public class PriceManager : IPriceService
 {
     private readonly IPrice _price;
 

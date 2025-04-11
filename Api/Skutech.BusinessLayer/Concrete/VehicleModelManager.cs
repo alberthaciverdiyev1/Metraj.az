@@ -4,7 +4,7 @@ using IVehicleModel = Skutech.DataAccessLayer.Abstract.IVehicleModel;
 
 namespace Skutech.BusinessLayer.Concrete;
 
-public class VehicleModelManager : IGenericService<VehicleModel>
+public class VehicleModelManager : IVehicleModelService
 {
     private readonly IVehicleModel _vehicleModel;
 

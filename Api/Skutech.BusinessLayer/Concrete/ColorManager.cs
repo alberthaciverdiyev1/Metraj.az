@@ -4,7 +4,7 @@ using Skutech.EntityLayer;
 
 namespace Skutech.BusinessLayer.Concrete;
 
-public class ColorManager : IGenericService<Color>
+public class ColorManager : IColorService
 {
     private readonly IColor _color;
 
