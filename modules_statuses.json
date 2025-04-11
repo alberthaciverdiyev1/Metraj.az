@@ -1,3 +1,8 @@
 {
-    "Brand": true
+    "Brand": true,
+    "Color": true,
+    "Price": true,
+    "Vehicle": true,
+    "VehicleModel": true,
+    "Base": true
 }

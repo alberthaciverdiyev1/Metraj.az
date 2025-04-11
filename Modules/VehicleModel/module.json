@@ -1,0 +1,11 @@
+{
+    "name": "VehicleModel",
+    "alias": "vehiclemodel",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        
+    ],
+    "files": []
+}
