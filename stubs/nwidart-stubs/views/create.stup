@@ -1,0 +1,99 @@
+@extends('app.dashboard.layout.layout')
+@section('title',__('Create') . ' ' .config('$LOWER_NAME$.name'))
+@push('css')
+    <link rel="stylesheet" href="{{asset('assets/dashboard/assets/js/plugins/image-uploader/uploader.css')}}">
+@endpush
+@section('content')
+    <nav class="breadcrumb push bg-body-extra-light rounded-pill px-4 py-2">
+        <a class="breadcrumb-item" href="{{route('admin:home')}}">@lang('Dashboard')</a>
+        <a class="breadcrumb-item" href="{{route('admin:services.index')}}">@lang('$LOWER_NAME$s')</a>
+        <span class="breadcrumb-item active">@lang('Create $LOWER_NAME$')</span>
+    </nav>
+    <div class="block block-rounded block-mode-loading-repeat">
+        <div class="block-header block-header-default">
+            <h3 class="block-title">@lang('$LOWER_NAME$ information')</h3>
+            <div class="block-options">
+                <a href="{{route('admin:$LOWER_NAME$s.index')}}" class="btn btn-sm btn-primary">@lang('Back')</a>
+            </div>
+        </div>
+        <div class="block-content">
+            <form class="needs-validation" action="{{route('admin:$LOWER_NAME$s.store')}}" method="POST" novalidate enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+
+                    <x-admin.form.input
+                        :label="__('Title Az')"
+                        name="title_az"
+                        custom-div-class="col-12 col-lg-4"
+                        :value="old('title_az')"
+                        required/>
+
+                    <x-admin.form.input
+                        :label="__('Title Ru')"
+                        name="title_ru"
+                        custom-div-class="col-12 col-lg-4"
+                        :value="old('title_ru')"/>
+
+                    <x-admin.form.input
+                        :label="__('Title En')"
+                        name="title_en"
+                        custom-div-class="col-12 col-lg-4"
+                        :value="old('title_en')"/>
+
+                    <x-admin.pages.seo-maker/>
+
+                    <x-admin.form.input
+                        :label="__('Image')"
+                        name="image"
+                        type="file"
+                        :value="old('image')"
+                        required/>
+
+                    <div class="col-12 mb-3">
+                        <label class="col-form-label">@lang('Gallery')</label>
+                        <div id="gallery" class="form-control"></div>
+                    </div>
+
+                    <x-admin.form.text-area
+                        :label="__('Description Az')"
+                        custom-input-class="description_az"
+                        name="description_az"
+                        :value="old('description_az')"/>
+
+                    <x-admin.form.text-area
+                        :label="__('Description Ru')"
+                        custom-input-class="description_ru"
+                        name="description_ru"
+                        :value="old('description_ru')"/>
+
+                    <x-admin.form.text-area
+                        :label="__('Description En')"
+                        custom-input-class="description_en"
+                        name="description_en"
+                        :value="old('description_en')"/>
+
+                    <x-admin.form.submit-button/>
+
+                </div>
+            </form>
+        </div>
+    </div>
+@endsection
+@push('js')
+    <script src="{{asset('/assets/dashboard/assets/js/plugins/image-uploader/uploader.js')}}"></script>
+    <script src="{{asset('/assets/dashboard/assets/js/plugins/ckeditor5-classic/build/ckeditor.js')}}"></script>
+    <script>
+        $("#gallery").imageUploader({
+            label:"{{__('Drag & Drop files here or click to browse')}}",
+            imagesInputName: 'gallery',
+            maxFiles: 10,
+            maxSize: '2 * 1024 * 1024',
+            allowedExt: 'jpg|jpeg|gif|png|webp|svg',
+        });
+    </script>
+    <script>
+        ClassicEditor.create(document.getElementById('description_az'))
+        ClassicEditor.create(document.getElementById('description_ru'))
+        ClassicEditor.create(document.getElementById('description_en'))
+    </script>
+@endpush
