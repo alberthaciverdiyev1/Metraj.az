@@ -10,19 +10,6 @@ use Nwidart\Modules\Facades\Module;
 class VehicleController extends Controller
 {
 
-    public function __construct()
-    {
-        if (Module::find('Roles')->isEnabled()) {
-            $this->middleware('permission:view vehicles')->only('index');
-            $this->middleware('permission:create vehicle')->only('create');
-            $this->middleware('permission:store vehicle')->only('store');
-            $this->middleware('permission:edit vehicle')->only('edit');
-            $this->middleware('permission:update vehicle')->only('update');
-            $this->middleware('permission:destroy vehicle')->only('destroy');
-        }
-    }
-
-
     /**
     * Display a listing of the resource.
     */

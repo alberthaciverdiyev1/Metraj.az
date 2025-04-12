@@ -10,19 +10,6 @@ use Nwidart\Modules\Facades\Module;
 class BaseController extends Controller
 {
 
-    public function __construct()
-    {
-        if (Module::find('Roles')->isEnabled()) {
-            $this->middleware('permission:view bases')->only('index');
-            $this->middleware('permission:create base')->only('create');
-            $this->middleware('permission:store base')->only('store');
-            $this->middleware('permission:edit base')->only('edit');
-            $this->middleware('permission:update base')->only('update');
-            $this->middleware('permission:destroy base')->only('destroy');
-        }
-    }
-
-
     /**
     * Display a listing of the resource.
     */

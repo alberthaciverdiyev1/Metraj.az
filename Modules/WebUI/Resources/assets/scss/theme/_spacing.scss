@@ -1,0 +1,98 @@
+@use '../utils/' as *;
+
+.sp1{
+     padding: 100px 0 100px;
+     @media #{$xs} {
+          padding: 50px 0 50px;
+     }
+     @media #{$md} {
+          padding: 50px 0 50px;
+     }
+}
+.sp2{
+     padding: 100px 0 70px;
+     @media #{$xs} {
+          padding: 50px 0 20px;
+     }
+     @media #{$md} {
+          padding: 50px 0 20px;
+     }
+}
+.sp3{
+     padding: 100px 0 50px;
+}
+.sp4{
+     padding: 80px 0 80px;
+     @media #{$xs} {
+          padding: 40px 0 40px;
+     }
+     @media #{$md} {
+          padding: 40px 0 40px;
+     }
+}
+.sp5{
+     padding:60px 0 60px;
+     @media #{$xs} {
+          padding: 30px 0 30px;
+     }
+     @media #{$md} {
+          padding: 30px 0 30px;
+     }
+}
+.sp6{
+     padding:120px 0 120px;
+     @media #{$xs} {
+          padding: 60px 0 60px;
+     }
+     @media #{$md} {
+          padding: 60px 0 60px;
+     }
+}
+.sp7{
+     padding: 120px 0 90px;
+     @media #{$xs} {
+          padding: 60px 0 30px;
+     }
+     @media #{$md} {
+          padding: 60px 0 30px;
+     }
+}
+.sp8{
+     padding: 100px 0 0;
+     @media #{$xs} {
+          padding: 50px 0 0;
+     }
+     @media #{$md} {
+          padding: 50px 0 0;
+     }
+}
+.sp9{
+     padding: 120px 0 0;
+     @media #{$xs} {
+          padding: 60px 0 0;
+     }
+     @media #{$md} {
+          padding: 60px 0 0;
+     }
+}
+.sp10{
+     padding: 0 0 100px;
+     @media #{$xs} {
+          padding: 0 0 50px;
+     }
+     @media #{$md} {
+          padding: 0 0 50px;
+     }
+}
+
+
+.space-margin60 {
+     margin-bottom: 60px;
+     @media #{$xs} {
+          margin-bottom: 30px;
+     }
+     @media #{$md} {
+          margin-bottom: 30px;
+     }
+}
+

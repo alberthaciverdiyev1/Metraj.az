@@ -10,19 +10,6 @@ use Nwidart\Modules\Facades\Module;
 class PriceController extends Controller
 {
 
-    public function __construct()
-    {
-        if (Module::find('Roles')->isEnabled()) {
-            $this->middleware('permission:view prices')->only('index');
-            $this->middleware('permission:create price')->only('create');
-            $this->middleware('permission:store price')->only('store');
-            $this->middleware('permission:edit price')->only('edit');
-            $this->middleware('permission:update price')->only('update');
-            $this->middleware('permission:destroy price')->only('destroy');
-        }
-    }
-
-
     /**
     * Display a listing of the resource.
     */

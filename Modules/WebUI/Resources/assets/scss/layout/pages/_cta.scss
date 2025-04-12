@@ -1,0 +1,208 @@
+@use '../../utils/' as * ;
+
+/*============= CTA CSS AREA ===============*/
+.cta1-section-area{
+    position: relative;
+    z-index: 2;
+    margin-bottom: -140px;
+    .cta-bg-area{
+        position: relative;
+        z-index: 1;
+        padding: 50px;
+        border-radius: 16px;
+        @media #{$xs} {
+            padding: 25px;
+        }
+        .cta-header{
+            h2 {
+                color: var(--ztc-text-text-1);
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s44);
+                font-style: normal;
+                font-weight: var(--ztc-weight-semibold);
+                line-height: 52px;
+                @media #{$xs} {
+                    font-size: var(--ztc-font-size-font-s32);
+                    line-height: 40px;
+                }    
+            }
+            p {
+                color: rgba(255, 255, 255, 0.80);
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s18);
+                font-style: normal;
+                font-weight: var(--ztc-weight-regular);
+                line-height: 28px;
+                font-size: var(--ztc-font-size-font-s16);
+            }
+        }
+        .btn-area1 {
+            @media #{$xs} {
+                margin-top: 20px;
+                text-align: start !important;
+            }
+            @media #{$md} {
+                margin-top: 20px;
+                text-align: start !important;
+            }
+        }
+    }
+}
+
+// Homepage 03 //
+.cta4-section-area {
+    position: relative;
+    z-index: 1;
+    padding: 70px 0 70px;
+    @media #{$md} {
+        height: 750px;
+    }
+    .img1 {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        @media #{$xs} {
+            position: relative;
+            @media #{$xs} {
+                left: 0;
+                width: 100%;
+                right: inherit;
+                top: 70px;
+            }
+        }
+        img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+    .cta-header {
+        h2 {
+            color: var(--ztc-text-text-1);
+        }
+        p {
+            color: var(--ztc-text-text-1);
+            opacity: 80%;
+        }
+        form {
+            position: relative;
+            z-index: 1;
+            input {
+                color: var(--ztc-text-text-2);
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s20);
+                font-style: normal;
+                font-weight: var(--ztc-weight-regular);
+                line-height: 20px; 
+                background: var(--ztc-text-text-1);
+                border-radius: 8px;
+                width: 100%;
+                padding: 27px 24px;
+                &::placeholder {
+                    color: var(--ztc-text-text-3);
+                    font-family: var(--ztc-family-font1);
+                    font-size: var(--ztc-font-size-font-s20);
+                    font-style: normal;
+                    font-weight: var(--ztc-weight-regular);
+                    line-height: 20px; 
+                    background: var(--ztc-text-text-1);       
+                }       
+            }
+            button {
+                border: none;
+                outline: none;
+                position: absolute;
+                right: 12px;
+                top: 13px;
+            }
+        }
+    }
+}
+
+// Homepage 04 //
+.cta5-section-area{
+    position: relative;
+    z-index: 2;
+    margin-bottom: -140px;
+    padding: 70px 0 70px;
+    margin-left: 50px;
+    margin-right: 50px;
+    border-radius: 40px;
+    @media #{$xs} {
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: 0;
+    }
+    @media #{$md} {
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: 0;
+    }
+    .cta-bg-area{
+        .cta-header{
+            h2 {
+                color: var(--ztc-text-text-1);
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s44);
+                font-style: normal;
+                font-weight: var(--ztc-weight-semibold);
+                line-height: 52px;
+                @media #{$xs} {
+                    font-size: var(--ztc-font-size-font-s32);
+                    line-height: 40px;
+                }    
+            }
+            p {
+                color: rgba(255, 255, 255, 0.80);
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s18);
+                font-style: normal;
+                font-weight: var(--ztc-weight-regular);
+                line-height: 28px;
+                font-size: var(--ztc-font-size-font-s16);
+            }
+        }
+        form {
+            position: relative;
+            z-index: 1;
+            @media #{$xs} {
+                margin-top: 30px;
+            }
+            @media #{$md} {
+                margin-top: 30px;
+            }
+            input {
+                background: var(--ztc-text-text-1);
+                border-radius: 8px;
+                outline: none;
+                border: none;
+                width: 100%;
+                padding: 27px 24px;
+                color: var(--ztc-text-text-3);
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s20);
+                font-style: normal;
+                font-weight: var(--ztc-weight-regular);
+                line-height: 20px;
+                position: relative;
+
+                &::placeholder {
+                    color: var(--ztc-text-text-2);
+                    font-family: var(--ztc-family-font1);
+                    font-size: var(--ztc-font-size-font-s20);
+                    font-style: normal;
+                    font-weight: var(--ztc-weight-regular);
+                    line-height: 20px;
+                }
+            }
+            button {
+                position: absolute;
+                right: 0;
+                top: 12px;
+                right: 12px;
+            }
+        }
+    }
+}
+
+/*============= CTA CSS AREA ENDS===============*/

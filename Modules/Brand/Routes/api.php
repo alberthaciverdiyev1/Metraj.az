@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Modules\WebUI\Http\Controllers\WebUIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/brand', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:api')->group(function () {
+    Route::resource('brand', \Modules\Brand\Http\Controllers\BrandController::class);
 });

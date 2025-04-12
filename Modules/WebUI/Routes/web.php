@@ -14,9 +14,4 @@
 use Illuminate\Support\Facades\Route;
 use Modules\WebUI\Http\Controllers\WebUIController;
 
-Route::prefix('dashboard')
-    ->name('admin:webuis.')
-    ->middleware(['auth', 'role_or_permission:developer|admin|show dashboard'])
-    ->group(function () {
-        Route::resource('/webuis', WebUIController::class);
-    });
+Route::get('/', [WebUIController::class, 'index'])->name('web.home');

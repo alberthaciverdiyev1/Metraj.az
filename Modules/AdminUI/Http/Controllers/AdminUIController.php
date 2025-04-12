@@ -10,19 +10,6 @@ use Nwidart\Modules\Facades\Module;
 class AdminUIController extends Controller
 {
 
-    public function __construct()
-    {
-        if (Module::find('Roles')->isEnabled()) {
-            $this->middleware('permission:view adminuis')->only('index');
-            $this->middleware('permission:create adminui')->only('create');
-            $this->middleware('permission:store adminui')->only('store');
-            $this->middleware('permission:edit adminui')->only('edit');
-            $this->middleware('permission:update adminui')->only('update');
-            $this->middleware('permission:destroy adminui')->only('destroy');
-        }
-    }
-
-
     /**
     * Display a listing of the resource.
     */

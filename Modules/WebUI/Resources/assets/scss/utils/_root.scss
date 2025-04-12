@@ -1,0 +1,44 @@
+@use './colors'  as *;
+@use './fonts-s'  as *;
+@use './typography'  as *;
+
+:root{
+     //Colors Declearations
+     @each $color, $shades in $colors {
+          @each $shade, $value in $shades {
+          --ztc-#{$color}-#{$shade}: #{$value};
+          }
+     }
+
+ @each $font-size, $shades in $fonts-size {
+     @each $shade, $value in $shades {
+          --ztc-#{$font-size}-#{$shade}: #{$value};
+     }
+ }
+ @each $weight, $shades in $fonts-size {
+     @each $shade, $value in $shades {
+          --ztc-#{$weight}-#{$shade}: #{$value};
+     }
+ }
+ 
+ @each $specing, $shades in $height {
+     @each $shade, $value in $shades {
+          --ztc-#{$specing}-#{$shade}: #{$value};
+     }
+ }
+
+ @each $weight, $shades in $fontsweight {
+     @each $shade, $value in $shades {
+          --ztc-#{$weight}-#{$shade}: #{$value};
+     }
+ }
+ 
+ //Fonts Family
+ @each $family, $shades in $fontsfamily {
+     @each $shade, $value in $shades {
+          --ztc-#{$family}-#{$shade}: #{$value};
+     }
+ }
+
+}
+

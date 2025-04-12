@@ -10,25 +10,12 @@ use Nwidart\Modules\Facades\Module;
 class WebUIController extends Controller
 {
 
-    public function __construct()
-    {
-        if (Module::find('Roles')->isEnabled()) {
-            $this->middleware('permission:view webuis')->only('index');
-            $this->middleware('permission:create webui')->only('create');
-            $this->middleware('permission:store webui')->only('store');
-            $this->middleware('permission:edit webui')->only('edit');
-            $this->middleware('permission:update webui')->only('update');
-            $this->middleware('permission:destroy webui')->only('destroy');
-        }
-    }
-
-
     /**
     * Display a listing of the resource.
     */
     public function index()
     {
-        return view('webui::index');
+        return view('webui::main');
     }
 
     /**

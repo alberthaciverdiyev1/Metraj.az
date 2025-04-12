@@ -1,0 +1,450 @@
+@use '../../utils/' as * ;
+
+/*============= PROPERTY_LOCATION CSS AREA STARTS ===============*/
+.property-location-section-area {
+    position: relative;
+    z-index: 1;
+    .property-single-slider {
+        position: relative;
+        z-index: 1;
+        .owl-nav {
+            @media #{$xs} {
+                margin-top: 30px;
+                text-align: center;
+            }
+            @media #{$md} {
+                margin-top: 30px;
+                text-align: center;
+            }
+            button {
+                height: 60px;
+                width: 60px;
+                text-align: center;
+                line-height: 60px;
+                display: inline-block;
+                transition: all .4s;
+                background: var(--ztc-bg-bg-3);
+                color: var(--ztc-text-text-2);
+                border-radius: 50%;
+                font-size: var(--ztc-font-size-font-s20);
+                &:hover {
+                    background: var(--ztc-bg-bg-4);
+                    transition: all .4s;
+                    color: var(--ztc-text-text-1);
+                }
+                &.owl-prev {
+                    position: absolute;
+                    left: -80px;
+                    top: 50%;
+                    margin-top: -30px;
+                    @media #{$xs} {
+                        position: relative;
+                        z-index: 1;
+                        top: 0;
+                        left: 0;
+                        margin-top: 0;
+                        margin-right: 16px;
+                    }
+                    @media #{$md} {
+                        position: relative;
+                        z-index: 1;
+                        top: 0;
+                        left: 0;
+                        margin-top: 0;
+                        margin-right: 16px;
+                    }
+
+                }
+                &.owl-next {
+                    position: absolute;
+                    right: -80px;
+                    top: 50%;
+                    margin-top: -30px;
+                    @media #{$xs} {
+                        position: relative;
+                        z-index: 1;
+                        top: 0;
+                        right: 0;
+                        margin-top: 0;
+                    }
+                    @media #{$md} {
+                        position: relative;
+                        z-index: 1;
+                        top: 0;
+                        right: 0;
+                        margin-top: 0;
+                    }
+                }
+            }
+        }
+        .propety-single-boxarea {
+            position: relative;
+            z-index: 1;
+            .img1 {
+                img {
+                    height: 100%;
+                    width: 100%;
+                    object-fit: cover;
+                    border-radius: 8px;
+                }
+            }
+            h3 {
+                color: var(--ztc-text-text-2);
+                text-align: center;
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s16);
+                font-style: normal;
+                font-weight: var(--ztc-weight-semibold);    
+                height: 38px;
+                width: 38px;
+                line-height: 38px;
+                display: inline-block;
+                border-radius: 50%;  
+                position: absolute;
+                top: 20px;
+                right: 20px;   
+                z-index: 1; 
+                background: var(--ztc-text-text-1);
+            }
+            a {
+                color: var(--ztc-text-text-2);
+                text-align: center;
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s18);
+                font-style: normal;
+                font-weight: var(--ztc-weight-semibold);
+                line-height: 18px;
+                display: inline-block;
+                transition: all .4s;
+                background: var(--ztc-bg-bg-1); 
+                padding: 14px;
+                position: absolute;
+                bottom: 16px;
+                left: 16px;
+                right: 16px;
+                border-radius: 4px;
+                z-index: 2;     
+            }
+        }
+    }
+}
+
+// Homepage 02 //
+.property2-location-section-area {
+    position: relative;
+    z-index: 1;
+    .propety-single-boxarea {
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        margin-bottom: 30px;
+        &:hover {
+            .img1 {
+                position: relative;
+                z-index: 1;
+                overflow: hidden;
+                border-radius: 8px;
+                &::after {
+                    visibility: visible;
+                    opacity: 0.7;
+                    transition: all .4s;
+                    transform: scale(1);
+                }
+                img {
+                    transform: scale(1.05) rotate(0deg);
+                    transition: all .4s;
+                    border-radius: 8px;
+                }
+            }
+            h3 {
+                right: 20px;
+                transition: all .6s;
+            }
+            a {
+                bottom: 16px;
+                transition: all .6s;
+            }
+        }
+        .img1 {
+            position: relative;
+            z-index: 1;
+            border-radius: 8px;
+            transition: all .4s;
+            overflow: hidden;
+            &::after {
+                position: absolute;
+                content: "";
+                height: 100%;
+                width: 100%;
+                left: 0;
+                top: 0;
+                border-radius: 8px;
+                background: var(--ztc-bg-bg-4);
+                transition: all .4s;
+                opacity: 0;
+                transform: scale(0.7);
+                visibility: hidden;
+            }
+            img {
+                height: 310px;
+                width: 100%;
+                object-fit: cover;
+                border-radius: 8px;
+                transition: all .4s;
+            }
+        }
+        h3 {
+            color: var(--ztc-text-text-2);
+            text-align: center;
+            font-family: var(--ztc-family-font1);
+            font-size: var(--ztc-font-size-font-s16);
+            font-style: normal;
+            font-weight: var(--ztc-weight-semibold);    
+            height: 38px;
+            width: 38px;
+            line-height: 38px;
+            display: inline-block;
+            border-radius: 50%;  
+            position: absolute;
+            top: 20px;
+            right: -100px;   
+            z-index: 1; 
+            background: var(--ztc-text-text-1);
+            transition: all .6s;
+        }
+        a {
+            color: var(--ztc-text-text-2);
+            text-align: center;
+            font-family: var(--ztc-family-font1);
+            font-size: var(--ztc-font-size-font-s18);
+            font-style: normal;
+            font-weight: var(--ztc-weight-semibold);
+            line-height: 18px;
+            display: inline-block;
+            transition: all .6s;
+            background: var(--ztc-bg-bg-1); 
+            padding: 14px;
+            position: absolute;
+            bottom: -100px;
+            left: 16px;
+            border-radius: 4px;
+            z-index: 2;     
+        }
+    }
+}
+
+.property3-location-section-area {
+    position: relative;
+    z-index: 1;
+    .location-accordion {
+        .accordion {
+            .accordion-item {
+                border-radius: 8px;
+                background: var(--ztc-bg-bg-4);
+                border: none;
+                .accordion-button:not(.collapsed) {
+                    background: none;
+                    transition: all .4s;
+                    color: var(--ztc-text-text-1);
+                    transition: all .4s;
+                    padding: 27px 20px 17px 20px;
+                    &::before {
+                        background: var(--ztc-bg-bg-1);
+                        transition: all .4s;
+                    }
+                    &::after {
+                        filter: brightness(0);
+                        transition: all .4s;
+                    }
+                }
+                button {
+                    box-shadow: none;
+                    border: none;
+                    border-radius: 6px;
+                    color: var(--ztc-text-text-2);
+                    font-family: var(--ztc-family-font2);
+                    font-size: var(--ztc-font-size-font-s18);
+                    font-style: normal;
+                    font-weight: var(--ztc-weight-medium);
+                    line-height: 18px;
+                    transition: all .4s;
+                    padding: 27px 20px;
+                    &::after {
+                        filter: brightness(0) invert(1);
+                    }
+                    &::before {
+                        height: 40px;
+                        width: 40px;
+                        background: var(--ztc-bg-bg-4);
+                        border-radius: 50%;
+                        transition: all .4s;
+                        line-height: 40px;
+                        color: var(--ztc-text-text-1);
+                        position: absolute;
+                        content: "";
+                        right: 10px;
+                    }
+                }
+                .accordion-body {
+                    padding: 0;
+                    p {
+                        color: var(--ztc-text-text-1);
+                        font-family: var(--ztc-family-font2);
+                        font-size: var(--ztc-font-size-font-s16);
+                        font-style: normal;
+                        font-weight: var(--ztc-weight-regular);
+                        line-height: 26px;
+                        padding: 0 20px 12px 20px;
+                    }
+                }
+            }
+        }
+    }
+    .location-maps-area {
+        position: relative;
+        z-index: 1;
+        left: 100px;
+        @media #{$xs} {
+            left: 0;
+            margin-top: 30px;
+        }
+        @media #{$md} {
+            left: 0;
+            margin-top: 30px;
+        }
+        iframe {
+            width: 100%;
+            height: 630px;
+            border-radius: 8px;
+            @media #{$xs} {
+                height: 200px;
+            }
+            @media #{$md} {
+                height: 300px;
+            }
+        }
+    }
+}
+
+// Homepage 03 //
+.property-loaction3-section {
+    position: relative;
+    z-index: 1;
+    .loaction-slider-property {
+        position: relative;
+        z-index: 1;
+        .owl-nav {
+            @media #{$xs} {
+                text-align: center;
+                margin-top: 30px;
+            }
+            button {
+                height: 56px;
+                width: 56px;
+                text-align: center;
+                line-height: 56px;
+                border-radius: 50%;
+                transition: all .4s;
+                background: var(--ztc-bg-bg-1);
+                color: var(--ztc-text-text-2);
+                font-size: var(--ztc-font-size-font-s20);
+                box-shadow: 0px 4px 40px 0px rgba(0, 0, 0, 0.09);
+                &:hover {
+                    background: var(--ztc-text-text-7);
+                    color: var(--ztc-text-text-1);
+                    transition: all .4s;
+                }
+                &.owl-prev {
+                    position: absolute;
+                    left: -20px;
+                    top: 50%;
+                    margin-top: -50px;
+                    @media #{$xs} {
+                        position: relative;
+                        left: 0;
+                        top: 0;
+                        margin: 0 16px 0 0;
+                    }
+                }
+                &.owl-next {
+                    position: absolute;
+                    right: -20px;
+                    top: 50%;
+                    margin-top: -50px;
+                    @media #{$xs} {
+                        position: relative;
+                        right: 0;
+                        top: 0;
+                    }
+                }
+            }
+        }
+        .propety-loaction {
+            position: relative;
+            z-index: 1;
+            &:hover {
+                .img1 {
+                    img {
+                        transform: scale(1.1) rotate(-4deg);
+                        transition: all .4s;
+                    }
+                }
+            }
+            .img1 {
+                overflow: hidden;
+                transition: all .4s;
+                border-radius: 50%;
+                position: relative;
+                img {
+                    height: 100%;
+                    width: 100%;
+                    object-fit: cover;
+                    border-radius: 50%;
+                    transition: all .4s;
+                }
+            }
+            .content-area {
+                a {
+                    color: var(--ztc-text-text-2);
+                    text-align: center;
+                    font-family: var(--ztc-family-font1);
+                    font-size: var(--ztc-font-size-font-s18);
+                    font-style: normal;
+                    font-weight: var(--ztc-weight-medium);
+                    line-height: 18px;
+                    display: inline-block;
+                    border-radius: 6px;
+                    background: var(--ztc-bg-bg-1);
+                    box-shadow: 0px 4px 40px 0px rgba(0, 0, 0, 0.09);
+                    border-radius: 4px;
+                    padding: 15px 30px;  
+                    position: absolute;
+                    bottom: 0;   
+                    width: 100%;
+                    @media #{$xs} {
+                        font-size: var(--ztc-font-size-font-s14);
+                    } 
+                }
+                h3 {
+                    color: var(--ztc-text-text-1);
+                    text-align: center;
+                    font-family: var(--ztc-family-font1);
+                    font-size: var(--ztc-font-size-font-s16);
+                    font-style: normal;
+                    font-weight: var(--ztc-weight-semibold);    
+                    display: inline-block;  
+                    height: 38px;
+                    width: 38px;
+                    border-radius: 50%;
+                    background: var(--ztc-bg-bg-6);
+                    line-height: 38px;   
+                    position: absolute;
+                    right: 35px; 
+                    top: 0;
+                }
+
+            }
+        }
+    }
+}
+/*============= PROPERTY_LOCATION CSS AREA ENDS ===============*/

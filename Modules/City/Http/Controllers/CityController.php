@@ -10,19 +10,6 @@ use Nwidart\Modules\Facades\Module;
 class CityController extends Controller
 {
 
-    public function __construct()
-    {
-        if (Module::find('Roles')->isEnabled()) {
-            $this->middleware('permission:view citys')->only('index');
-            $this->middleware('permission:create city')->only('create');
-            $this->middleware('permission:store city')->only('store');
-            $this->middleware('permission:edit city')->only('edit');
-            $this->middleware('permission:update city')->only('update');
-            $this->middleware('permission:destroy city')->only('destroy');
-        }
-    }
-
-
     /**
     * Display a listing of the resource.
     */

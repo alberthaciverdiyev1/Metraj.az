@@ -1,0 +1,180 @@
+@use '../../utils/' as * ;
+
+/*============= PROJECT CSS AREA STARTS ===============*/
+.project1-section-area {
+    position: relative;
+    z-index: 1;
+    .project-featured-box {
+        position: relative;
+        z-index: 1;
+        background: #F2F3F3;
+        border-radius: 16px;
+        padding: 44px 30px;
+        text-align: center;
+        margin-bottom: 30px;
+        &:hover {
+            .img1 {
+                img {
+                    transform: rotateY(-180deg);
+                    transition: all .4s;
+                }
+            }
+        }   
+        .img1 {
+            img {
+                height: 140px;
+                width: 100%;
+                object-fit: contain;
+                transition: all .4s;
+            }
+        }
+        .head {
+            color: var(--ztc-text-text-2);
+            font-family: var(--ztc-family-font1);
+            font-size: var(--ztc-font-size-font-s24);
+            font-style: normal;
+            font-weight: var(--ztc-weight-semibold);
+            line-height: 24px; 
+            display: inline-block;
+            transition: all .4s;    
+        }
+        p {
+            color: var(--ztc-text-text-3);
+            text-align: center;
+            font-family: var(--ztc-family-font1);
+            font-size: var(--ztc-font-size-font-s18);
+            font-style: normal;
+            font-weight: var(--ztc-weight-regular);
+            line-height: 26px; 
+            opacity: 70%;  
+        }
+        .btn-area {
+            a  {
+                color: var(--ztc-text-text-3);
+                text-align: center;
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s24);
+                font-style: normal;
+                font-weight: var(--ztc-weight-medium);
+                line-height: 24px;      
+                display: inline-block;
+                transition: all .4s;
+                padding: 16px 30px;
+                border-radius: 8px;
+                background: var(--ztc-bg-bg-1);
+                &:hover {
+                    background: var(--ztc-bg-bg-4);
+                    color: var(--ztc-text-text-1);
+                    transition: all .4s;
+                }
+            }
+        }
+        .btn-area1 {
+            a {
+                background: transparent;
+                border: 1px solid var(--ztc-text-text-2);
+                &:hover {
+                    background: var(--ztc-bg-bg-4);
+                    color: var(--ztc-text-text-1);
+                    transition: all .4s;
+                }
+            }
+        }
+    }
+}
+
+// Homepage 04 //
+.project4-section-area {
+    position: relative;
+    z-index: 1;
+    .gallery-boxarea {
+        position: relative;
+        z-index: 1;
+        margin-bottom: 30px;
+        &:hover {
+            .img1 {
+                &::after {
+                    visibility: visible;
+                    opacity: 1;
+                    transition: all .4s;
+                    transform: scale(1);
+                }
+                img {
+                    transform: scale(1.1) rotate(-4deg);
+                    transition: all .4s;
+                }
+            }
+            .btn-area1 {
+                transform: scale(1);
+                transition: all .6s;
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+        .img1 {
+            position: relative;
+            z-index: 1;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all .4s;
+            &::after {
+                position: absolute;
+                content: "";
+                height: 100%;
+                width: 100%;
+                left: 0;
+                top: 0;
+                transition: all .4s;
+                border-radius: 16px;
+                background: rgba(7, 5, 20, 0.20);
+                backdrop-filter: blur(2px); 
+                visibility: hidden;
+                opacity: 0;    
+            }
+            img {
+                width: 100%;
+                height: 270px;
+                object-fit: cover;
+                border: 16px;
+                transition: all .4s;
+            }
+        }
+        .btn-area1 {
+            position: absolute;
+            top: 50%;
+            margin-top: -50px;
+            z-index: 1;
+            left: 50%;
+            margin-left: -50px;
+            visibility: hidden;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all .4s;
+            a {
+                background: var(--ztc-bg-bg-1);
+                display: inline-block;
+                padding: 23px;
+                border-radius: 16px;
+                span {
+                    height: 54px;
+                    width: 54px;
+                    text-align: center;
+                    line-height: 51px;
+                    display: inline-block;
+                    transition: all .4s;
+                    background: var(--ztc-bg-bg-7);
+                    color: var(--ztc-text-text-1);
+                    border-radius: 50%;
+                    transform: rotate(-45deg);
+                    svg {
+                        height: 24px;
+                        width: 24px;
+                        text-align: center;
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+    }
+}
+/*============= PROJECT CSS AREA STARTS ===============*/

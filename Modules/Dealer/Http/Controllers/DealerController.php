@@ -9,20 +9,6 @@ use Nwidart\Modules\Facades\Module;
 
 class DealerController extends Controller
 {
-
-    public function __construct()
-    {
-        if (Module::find('Roles')->isEnabled()) {
-            $this->middleware('permission:view dealers')->only('index');
-            $this->middleware('permission:create dealer')->only('create');
-            $this->middleware('permission:store dealer')->only('store');
-            $this->middleware('permission:edit dealer')->only('edit');
-            $this->middleware('permission:update dealer')->only('update');
-            $this->middleware('permission:destroy dealer')->only('destroy');
-        }
-    }
-
-
     /**
     * Display a listing of the resource.
     */

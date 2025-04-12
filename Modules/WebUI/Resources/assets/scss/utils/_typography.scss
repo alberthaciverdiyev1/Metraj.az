@@ -1,0 +1,455 @@
+// font url
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+// font family
+$font-family: (
+    'ff': (
+        'body':  "'Inter', sans-serif",
+        'heading':"'Inter', sans-serif",
+        'p': "'Inter', sans-serif",
+        'fontawesome': '"Font Awesome 6 Pro"',
+    )
+);
+
+
+// font size
+$font-size: (
+    'fz': (
+        'body': 16px,
+        'p': 16px,
+        'heading': 20px,
+    )
+);
+
+a, a:hover{
+    text-decoration: none;
+}
+ul{
+    padding: 0;
+    margin: 0;
+    li{
+        list-style: none;
+    }
+}
+h2,p{
+    margin-bottom: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+    margin-bottom: 0;
+}
+input,textarea{
+    background: none;
+    border: none;
+    outline: none;
+  }
+  
+  img{
+       max-width: 100%;
+       max-height: 100%;
+  }
+  
+$height:(
+     'specing': (
+          'height6': 6px,
+          'height8': 8px,
+          'height10': 10px,
+          'height12': 12px,
+          'height14': 114px,
+          'height16': 16px,
+          'height18': 18px,
+          'height20': 20px,
+          'height22': 22px,
+          'height24': 24px,
+          'height26': 26px,
+          'height28': 28px,
+          'height30': 30px,
+          'height32': 32px,
+          'height34': 34px,
+          'height36': 36px,
+          'height38': 38px,
+          'height40': 40px,
+          'height42': 42px,
+          'height44': 44px,
+          'height46': 46px,
+          'height48': 48px,
+          'height50': 50px,
+          'height52': 52px,
+          'height54': 54px,
+          'height56': 56px,
+          'height58': 58px,
+          'height60': 60px,
+          'height70': 70px,
+          'height80': 80px,
+          'height90': 90px,
+          'height100': 100px,
+          'height110': 110px,
+          'height120': 120px,
+          'height130': 130px,
+          
+     )
+);
+
+.space6{
+    height:6px;
+}
+.space8{
+    height:8px;
+}
+.space10{
+    height:10px;
+}
+.space12{
+    height:12px;
+}
+.space14{
+    height:14px;
+}
+.space16{
+    height:16px;
+}
+.space18{
+    height:18px;
+}
+.space20{
+    height:20px;
+}
+.space22{
+    height:22px;
+}
+.space24{
+    height:24px;
+}
+.space26{
+    height:26px;
+}
+.space28{
+    height:28px;
+}
+.space30{
+    height:30px;
+}
+.space32{
+  height:32px;
+}
+.space34{
+    height:34px;
+}
+.space36{
+    height:36px;
+}
+.space38{
+    height:38px;
+}
+.space40{
+    height:40px;
+}
+.space42{
+    height:42px;
+}
+.space44{
+    height:44px;
+}
+.space46{
+    height:46px;
+}
+.space48{
+    height:48px;
+}
+.space50{
+    height:50px;
+}
+.space52{
+    height:52px;
+}
+.space54{
+    height:54px;
+}
+.space56{
+    height:56px;
+}
+.space58{
+    height:58px;
+}
+.space60{
+    height:60px;
+}
+.space62{
+    height:62px;
+}
+.space64{
+    height:64px;
+}
+.space66{
+    height:66px;
+}
+.space68{
+    height:68px;
+}
+.space70{
+    height:70px;
+}
+.space72{
+    height:72px;
+}
+.space74{
+    height:74px;
+}
+.space76{
+    height:76px;
+}
+.space78{
+    height:78px;
+}
+.space80{
+    height:80px;
+}
+.space82{
+    height:82px;
+}
+.space84{
+    height:84px;
+}
+.space86{
+    height:86px;
+}
+.space{
+    height:88px;
+}
+.space90{
+    height:90px;
+}
+.space92{
+    height:92px;
+}
+.space94{
+    height:94px;
+}
+.space96{
+    height:96px;
+}
+.space98{
+    height:98px;
+}
+.space100{
+    height:100px;
+}
+
+$trans: all .4s ease-in-out;
+
+@keyframes animation-5 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.1);
+    }
+  }
+  .aniamtion-key-5 {
+    position: relative;
+    animation-name: animation-5;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    transition: $trans;
+  }
+
+  @keyframes animation-7 {
+    0% {
+      
+      transform:rotate(0) ;
+    }
+
+    100% {
+    
+      transform: rotate(-1000deg);
+    }
+}
+
+.keyframe5 {
+    position: relative;
+    animation-name: animation-7;
+    animation-duration: 90s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: cubic-bezier(0.59, 0.59, 1, 1)
+}
+
+@keyframes animation-1 {
+    0% {
+      
+      transform:translateY(0) ;
+    }
+
+    100% {
+    
+      transform: translateY(30px);
+    }
+  }
+
+.aniamtion-key-1 {
+    position: relative;
+    animation-name: animation-1;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes animation-2 {
+    0% {
+      
+      transform:translateX(0) ;
+    }
+
+    100% {
+    
+      transform: translateX(50px);
+    }
+  }
+
+  .aniamtion-key-2 {
+    position: relative;
+    animation-name: animation-2;
+    animation-duration: 2.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+@keyframes animation-3 {
+    0% {
+      
+      transform:translateY(0) ;
+    }
+
+    100% {
+    
+      transform: translateY(60px);
+    }
+  }
+
+  .aniamtion-key-3 {
+    position: relative;
+    animation-name: animation-3;
+    animation-duration: 1.3s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes animation-4 {
+    0% {
+      
+      transform:translateY(0) ;
+    }
+
+    100% {
+    
+      transform: translateY(40px);
+    }
+  }
+
+  .aniamtion-key-4 {
+    position: relative;
+    animation-name: animation-4;
+    animation-duration: 1.6s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+@keyframes animation-6 {
+    0% {
+      
+      transform:translateY(0) ;
+    }
+
+    100% {
+    
+      transform: translateY(50px);
+    }
+  }
+
+  .aniamtion-key-6 {
+    position: relative;
+    animation-name: animation-6;
+    animation-duration: 1.9s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+@keyframes animation-8 {
+    0% {
+      
+      padding-left: 0px;
+    }
+
+    100% {
+    
+      padding-left: 50px;
+    }
+  }
+
+  .aniamtion-key-7 {
+    position: relative;
+    animation-name: animation-8;
+    animation-duration: 1.3s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@-webkit-keyframes fade-in-down {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -50px, 0);
+        transform: translate3d(0, -50px, 0);
+    }
+  
+    100% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+  }
+  
+  @keyframes fade-in-down {
+    0% {
+        -webkit-transform: translate3d(0, -50px, 0);
+        transform: translate3d(0, -50px, 0);
+    }
+  
+    100% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+  }
+
+  @keyframes pulse-border {
+    0% {
+        transform: translateX(-50%) translateY(-50%) translateZ(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-50%) translateY(-50%) translateZ(0) scale(1.5);
+        opacity: 0;
+    }
+  
+  }
+  .pulse-border {
+    position: relative;
+    animation-name: pulse-border ;
+    animation-duration: 1500ms;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+//   margquee animation //
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translatex(-100%); }
+}
+@keyframes marquee-2 {
+    0% { transform: translateX(-100%); }
+    100% { transform: translatex(0); }
+}
+
+
+

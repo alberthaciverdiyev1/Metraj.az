@@ -1,0 +1,485 @@
+@use '../../utils/' as * ;
+
+/*============= WORK CSS AREA ===============*/
+.work3-section-area  {
+    position: relative;
+    z-index: 1;
+
+    .work-single-boxarea {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        margin-bottom: 30px;
+        position: relative;
+        z-index: 1;
+        &.box2 {
+            &::after {
+                display: none;
+            }
+        }
+        &::after {
+            position: absolute;
+            content: "";
+            height: 1px;
+            width: 100%;
+            left: 160px;
+            transition: all .4s;
+            background: var(--ztc-text-text-2);
+            bottom: 14%;
+            opacity: 10%;
+            @media #{$xs} {
+                display: none;
+            }
+            @media #{$md} {
+                display: none;
+            }
+        }
+        &:hover {
+            .img1 {
+                img {
+                    transform: scale(1.1) rotate(-4deg);
+                    transition: all .4s;
+                }
+            }
+            .content {
+                h3 {
+                    background: var(--ztc-text-text-7);
+                    color: var(--ztc-text-text-1);
+                    transition: all .4s;
+                }
+            }
+        }
+        .img1 {
+            overflow: hidden;
+            transition: all .4s;
+            border-radius: 16px;
+            position: relative;
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                border-radius: 16px;
+                transition: all .4s;
+            }
+        }
+        .content {
+            h3 {
+                color: var(--ztc-text-text-1);
+                font-family: var(--ztc-family-font2);
+                font-size: var(--ztc-font-size-font-s20);
+                font-style: normal;
+                font-weight: var(--ztc-weight-semibold);
+                height: 40px;
+                width: 40px;
+                text-align: center;
+                line-height: 40px; 
+                display: inline-block;  
+                background: var(--ztc-text-text-2);
+                border-radius: 50%; 
+                transition: all .4s;
+            }
+            a {
+                color: var(--ztc-text-text-2);
+                text-align: center;
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s20);
+                font-style: normal;
+                font-weight: var(--ztc-weight-medium);
+                line-height: 20px;
+                display: block;
+                transition: all .4s;       
+            }
+        }
+    }
+}
+
+// Inner Pages //
+.faq-section-area {
+    position: relative;
+    z-index: 1;
+    .faq-area {
+       .accordion {
+        .accordion-item {
+            margin-bottom: 16px;
+            border: none;
+            padding: 0;
+            outline: none;
+            background: rgba(3, 14, 15, 0.05);
+            border-radius: 8px;
+            button {
+                color: var(--ztc-text-text-2);
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s20);
+                font-style: normal;
+                font-weight: var(--ztc-weight-medium);
+                line-height: 20px;
+                display: inline-block;
+                box-shadow: none;
+                border: none;
+                padding: 26px 24px;
+                border-radius: 7px;
+                background: rgba(3, 14, 15, 0.05);
+                &:not(.collapsed) {
+                    background: none;
+                    &::before {
+                        display: none;
+                        transition: all .4s;
+                    }
+                }
+                &::after {
+                    flex-shrink: 0;
+                    width: 16px;
+                    height: 2px;
+                    margin-left: auto;
+                    content: "";
+                    background-color: var(--white-100, #FFF);
+                    filter: brightness(0);
+                    position: absolute;
+                    right: 24px;
+                    top: 34px;
+                }
+                &::before {
+                    flex-shrink: 0;
+                    width: 2px;
+                    height: 16px;
+                    margin-left: auto;
+                    content: "";
+                    background-color: var(--white-100, #FFF);
+                    filter: brightness(0);
+                    position: absolute;
+                    right: 31px;
+                    z-index: 3;
+                    position: absolute;
+                    display: block;
+                    transition: all .4s;
+                    
+                }
+            }
+            .accordion-body {
+                padding: 0;
+                p {
+                    color: var(--ztc-text-text-3);
+                    font-family: var(--ztc-family-font1);
+                    font-size: var(--ztc-font-size-font-s18);
+                    font-style: normal;
+                    font-weight: var(--ztc-weight-regular);
+                    line-height: 26px; 
+                    padding: 0 110px 24px 24px;   
+                    @media #{$xs} {
+                        padding: 0 24px 24px 24px;
+                    }  
+                }
+            }
+        }
+       } 
+    }
+}
+
+.faq-inner-area {
+    position: relative;
+    z-index: 1;
+    .faq-area {
+        .accordion {
+         .accordion-item {
+             margin-bottom: 16px;
+             border: none;
+             padding: 0;
+             outline: none;
+             background: rgba(3, 14, 15, 0.05);
+             border-radius: 8px;
+             button {
+                 color: var(--ztc-text-text-2);
+                 font-family: var(--ztc-family-font1);
+                 font-size: var(--ztc-font-size-font-s20);
+                 font-style: normal;
+                 font-weight: var(--ztc-weight-medium);
+                 line-height: 20px;
+                 display: inline-block;
+                 box-shadow: none;
+                 border: none;
+                 padding: 26px 24px;
+                 border-radius: 7px;
+                 background: rgba(3, 14, 15, 0.05);
+                 &:not(.collapsed) {
+                     background: none;
+                     &::before {
+                         display: none;
+                         transition: all .4s;
+                     }
+                 }
+                 &::after {
+                     flex-shrink: 0;
+                     width: 16px;
+                     height: 2px;
+                     margin-left: auto;
+                     content: "";
+                     background-color: var(--white-100, #FFF);
+                     filter: brightness(0);
+                     position: absolute;
+                     right: 24px;
+                     top: 34px;
+                 }
+                 &::before {
+                     flex-shrink: 0;
+                     width: 2px;
+                     height: 16px;
+                     margin-left: auto;
+                     content: "";
+                     background-color: var(--white-100, #FFF);
+                     filter: brightness(0);
+                     position: absolute;
+                     right: 31px;
+                     z-index: 3;
+                     position: absolute;
+                     display: block;
+                     transition: all .4s;
+                     
+                 }
+             }
+             .accordion-body {
+                 padding: 0;
+                 p {
+                     color: var(--ztc-text-text-3);
+                     font-family: var(--ztc-family-font1);
+                     font-size: var(--ztc-font-size-font-s18);
+                     font-style: normal;
+                     font-weight: var(--ztc-weight-regular);
+                     line-height: 26px; 
+                     padding: 0 110px 24px 24px;   
+                     @media #{$xs} {
+                         padding: 0 24px 24px 24px;
+                     }  
+                 }
+             }
+         }
+        } 
+     }
+}
+
+// PRIVAVCY_POLICY //
+.privacy-policy-area {
+    position: relative;
+    z-index: 1;
+    .policy-details {
+        padding: 0 40px 0 0;
+        @media #{$xs} {
+            padding: 0;
+            margin-bottom: 30px;
+        }
+        @media #{$md} {
+            padding: 0;
+            margin-bottom: 30px;
+        }
+        h3 {
+            color: var(--ztc-text-text-3);
+            font-family: var(--ztc-family-font1);
+            font-size: var(--ztc-font-size-font-s32);
+            font-style: normal;
+            font-weight: var(--ztc-weight-semibold);
+            line-height: 32px;       
+        }
+        h4 {
+            color: var(--ztc-text-text-3);
+            font-family: var(--ztc-family-font1);
+            font-size: var(--ztc-font-size-font-s20);
+            font-style: normal;
+            font-weight: var(--ztc-weight-semibold);
+            line-height: 20px;       
+        }
+
+        ul {
+            li {
+                color: var(--ztc-text-text-3);
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s16);
+                font-style: normal;
+                font-weight: var(--ztc-weight-regular);
+                line-height: 16px;
+                margin-top: 16px;
+                svg {
+                    height: 18px;
+                    width: 18px;
+                    object-fit: cover;
+                    margin: 0 4px 0 0;
+                }       
+            }
+        }
+    }
+
+    .all-category {
+        position: sticky;
+        top: 160px;
+        .categories-area {
+            position: relative;
+            z-index: 1;
+            background: #F2F3F3;
+            padding: 24px;
+            border-radius: 8px;
+            h3 {
+                color: var(--ztc-text-text-2);
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s24);
+                font-style: normal;
+                font-weight: var(--ztc-weight-semibold);
+                line-height: 24px;  
+            }
+            ul {
+                li {
+                    a {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        color: var(--ztc-text-text-2);
+                        font-family: var(--ztc-family-font1);
+                        font-size: var(--ztc-font-size-font-s16);
+                        font-style: normal;
+                        font-weight: var(--ztc-weight-semibold);
+                        line-height: 16px; 
+                        padding: 20px 16px;
+                        background: var(--ztc-bg-bg-1);
+                        border-radius: 4px;
+                        margin-top: 16px;
+                        transition: all .4s;
+                        &:hover {
+                            background: var(--ztc-bg-bg-3);
+                            transition: all .4s;
+    
+                        }
+                        svg {
+                            height: 18px;
+                            width: 18px;
+                            object-fit: cover;
+                        } 
+                    }
+                }
+            }
+        }
+        .details-siderbar2 {
+            position: relative;
+            z-index: 1;
+            background: #F2F3F3;
+            padding: 24px;
+            border-radius: 8px;
+            h4 {
+                color: var(--ztc-text-text-2);
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s24);
+                font-style: normal;
+                font-weight: var(--ztc-weight-semibold);
+                line-height: 24px;  
+            }
+            .personal-info {
+                display: flex;
+                align-items: center;
+                .img1 {
+                    img {
+                        height: 100px;
+                        width: 100px;
+                        object-fit: cover;
+                        border-radius: 50%;
+                    }
+                }
+                .content {
+                    padding-left: 20px;
+                    a {
+                        &:nth-child(1) {
+                            color: var(--ztc-text-text-2);
+                            font-family: var(--ztc-family-font1);
+                            font-size: var(--ztc-font-size-font-s20);
+                            font-style: normal;
+                            font-weight: var(--ztc-weight-semibold);
+                            line-height: 20px; 
+                            display: block;
+                        }
+                        &:nth-child(2) {
+                            color: var(--ztc-text-text-2);
+                            font-family: var(--ztc-family-font1);
+                            font-size: var(--ztc-font-size-font-s16);
+                            font-style: normal;
+                            font-weight: var(--ztc-weight-semibold);
+                            line-height: 16px; 
+                            display: block;
+                            margin-top: 10px;
+                            svg {
+                                height: 16px;
+                                width: 16px;
+                                object-fit: cover;
+                                margin: 0 4px 0 0;
+                            }
+                        }
+                        &:nth-child(3) {
+                            color: var(--ztc-text-text-2);
+                            font-family: var(--ztc-family-font1);
+                            font-size: var(--ztc-font-size-font-s16);
+                            font-style: normal;
+                            font-weight: var(--ztc-weight-semibold);
+                            line-height: 16px; 
+                            display: block;
+                            margin-top: 10px;
+                            svg {
+                                height: 16px;
+                                width: 16px;
+                                object-fit: cover;
+                                margin: 0 4px 0 0;
+                            }
+                        }
+                    }
+                }
+            }
+            .input-area {
+                margin-top: 18px;
+                input {
+                    width: 100%;
+                    color: var(--ztc-text-text-2);
+                    font-family: var(--ztc-family-font1);
+                    font-size: var(--ztc-font-size-font-s16);
+                    font-style: normal;
+                    font-weight: var(--ztc-weight-medium);
+                    line-height: 16px;
+                    padding: 20px;
+                    border-radius: 8px;
+                    background: var(--ztc-bg-bg-1);
+                    &::placeholder {
+                        color: var(--ztc-text-text-2);
+                        font-family: var(--ztc-family-font1);
+                        font-size: var(--ztc-font-size-font-s16);
+                        font-style: normal;
+                        font-weight: var(--ztc-weight-medium);
+                        line-height: 16px;
+                        opacity: 0.7;
+                    }              
+                }
+    
+                textarea {
+                    width: 100%;
+                    color: var(--ztc-text-text-2);
+                    font-family: var(--ztc-family-font1);
+                    font-size: var(--ztc-font-size-font-s16);
+                    font-style: normal;
+                    font-weight: var(--ztc-weight-medium);
+                    line-height: 16px;
+                    padding: 20px;
+                    border-radius: 8px;
+                    background: var(--ztc-bg-bg-1);
+                    height: 130px;
+                    &::placeholder {
+                        color: var(--ztc-text-text-2);
+                        font-family: var(--ztc-family-font1);
+                        font-size: var(--ztc-font-size-font-s16);
+                        font-style: normal;
+                        font-weight: var(--ztc-weight-medium);
+                        line-height: 16px;
+                        opacity: 70%;
+                    }              
+                }
+                button {
+                    border: none;
+                    outline: none;
+                    width: 100%;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
+/*============= WORK CSS AREA ===============*/

@@ -1,0 +1,301 @@
+@use '../../utils/' as * ;
+
+/*============= TEAM CSS AREA ===============*/
+.team1-section-area {
+    position: relative;
+    z-index: 1;
+    .team-widget-boxarea  {
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        border-radius: 8px;
+        text-align: center;
+        margin-bottom: 30px;
+        &:hover {
+            ul {
+                right: 20px;
+                transition: all .6s;
+            }
+            .share {
+                a {
+                    background: var(--ztc-bg-bg-3);
+                    transition: all .4s;
+                    svg {
+                        color: var(--ztc-text-text-2);
+                        filter: brightness(0);
+                    }
+                }
+            }
+        }
+        .img1 {
+            position: relative;
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                border-radius: 8px;
+            }
+        }
+        .share {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            svg {
+                transition: all .4s;
+            }
+            a {
+                height: 48px;
+                width: 48px;
+                text-align: center;
+                line-height: 48px;
+                border-radius: 50%;
+                transition: all .4s;
+                display: inline-block;
+                transition: all .4s;
+                background: var(--ztc-bg-bg-2);
+            }
+        }
+        .content-area {
+            a {
+                color: var(--ztc-text-text-2);
+                text-align: center;
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s24);
+                font-style: normal;
+                font-weight: var(--ztc-weight-semibold);
+                line-height: 24px; 
+                display: inline-block;
+                transition: all .4s;   
+                &:hover {
+                    color: var(--ztc-text-text-4);
+                    transition: all .4s;
+                }   
+            }
+            p {
+                color: var(--ztc-text-text-3);
+                text-align: center;
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s18);
+                font-style: normal;
+                font-weight: var(--ztc-weight-regular);
+                line-height: 18px;      
+            }
+        }
+
+        ul {
+            position: absolute;
+            bottom: 80px;
+            right: -100px;
+            transition: all .6s;
+            z-index: 2;
+            li {
+                a {
+                    height: 48px;
+                    width: 48px;
+                    text-align: center;
+                    line-height: 48px;
+                    display: inline-block;
+                    background: var(--ztc-bg-bg-1);
+                    transition: all .4s;
+                    color:  var(--ztc-text-text-2);
+                    font-size: var(--ztc-font-size-font-s20);
+                    border-radius: 50%;
+                    margin-bottom: 10px;
+                    &:hover {
+                        background: var(--ztc-bg-bg-3);
+                        transition: all .4s;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Homepage 03 //
+.team3-section-area {
+    position: relative;
+    z-index: 1;
+    .team-single-boxarea {
+        position: relative;
+        z-index: 1;
+        margin-bottom: 30px;
+        transition: all .4s;
+        &:hover {
+            transform: translateY(-5px);
+            transition: all .4s;
+            .img1 {
+                transform: rotateY(-180deg);
+                transition: all .4s;
+            }
+        }
+        .img1 {
+            margin: 0 auto;
+            height: 120px;
+            width: 120px;
+            border-radius: 50%;
+            position: relative;
+            top: 0;
+            margin-bottom: -60px;
+            transition: all .4s;
+            img {
+                height: 120px;
+                width: 120px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+        }
+        .content-area {
+            background: #F4F4F8;
+            border-radius: 8px;
+            padding: 84px 32px 32px 32px;
+            text-align: center;
+            a {
+                color: var(--ztc-text-text-2);
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s24);
+                font-style: normal;
+                font-weight: var(--ztc-weight-semibold);
+                line-height: 24px; 
+                display: inline-block;
+                transition: all .4s;
+                &:hover {
+                    color: var(--ztc-text-text-7);
+                    transition: all .4s;
+                }     
+            }
+            p {
+                color: var(--ztc-text-text-3);
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s16);
+                font-style: normal;
+                font-weight: var(--ztc-weight-regular);
+                line-height: 16px; /* 100% */       
+            }
+            ul {
+                li {
+                    display: inline-block;
+                    a {
+                        height: 40px;
+                        width: 40px;
+                        text-align: center;
+                        line-height: 40px;
+                        display: inline-block;
+                        transition: all .4s;
+                        background: var(--ztc-bg-bg-1);
+                        font-size: var(--ztc-font-size-font-s18);
+                        border-radius: 50%;
+                        margin: 0 12px 0 0;
+                        &:hover {
+                            background: var(--ztc-bg-bg-6);
+                            color: var(--ztc-text-text-1);
+                            transition: all .4s;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Homepage 04 //
+.team4-section-area {
+    position: relative;
+    z-index: 1;
+    .team3-boxarea {
+        position: relative;
+        z-index: 1;
+        border-radius: 4px;
+        margin-bottom: 30px;
+        &:hover {
+            .img1 {
+                &::before {
+                    width: 100%;
+                    transition: all .4s;
+                }
+                img {
+                    transform: scale(1.05) rotate(0deg);
+                    transition: all .4s;
+                }
+            }
+        }
+        .img1 {
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            transition: all .4s;
+            border-radius: 4px 4px 0 0;
+            &::before {
+                position: absolute;
+                content: "";
+                height: 5px;
+                width: 0;
+                left: 0;
+                bottom: 0;
+                background: var(--ztc-bg-bg-7);
+                transition: all .4s;
+                z-index: 2;
+            }
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                border-radius: 4px 4px 0 0;
+                transition: all .4s;
+            }
+        }
+        .content-area {
+            padding: 16px;
+            transition: all .4s;
+            border-left: 1px solid #F0F1F0;
+            border-bottom: 1px solid #F0F1F0;
+            border-right: 1px solid #F0F1F0;
+            a {
+                color: var(--ztc-text-text-2);
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s24);
+                font-style: normal;
+                font-weight: var(--ztc-weight-semibold);
+                line-height: 24px;
+                display: inline-block;
+                transition: all .4s;
+                &:hover {
+                    color: var(--ztc-text-text-8);
+                    transition: all .4s;
+                }
+            }
+            p {
+                color: var(--ztc-text-text-3);
+                font-family: var(--ztc-family-font1);
+                font-size: var(--ztc-font-size-font-s16);
+                font-style: normal;
+                font-weight: var(--ztc-weight-regular);
+                line-height: 16px; /* 100% */ 
+                opacity: 70%;      
+            }
+            ul {
+                li {
+                    display: inline-block;
+                    a {
+                        height: 28px;
+                        width: 28px;
+                        display: inline-block;
+                        transition: all .4s;
+                        text-align: center;
+                        line-height: 28px;
+                        border-radius: 50%;
+                        border: 1px solid rgba(8, 17, 13, 0.20);
+                        font-size: var(--ztc-font-size-font-s14);
+                        margin: 0 8px 0 0;
+                        &:hover {
+                            background: var(--ztc-bg-bg-7);
+                            transition: all .4s;
+                            border: 1px solid var(--ztc-bg-bg-7);
+                            color: var(--ztc-text-text-1);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+/*============= TEAM CSS AREA STARTS ===============*/

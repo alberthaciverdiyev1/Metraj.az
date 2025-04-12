@@ -10,18 +10,6 @@ use Nwidart\Modules\Facades\Module;
 class BrandController extends Controller
 {
 
-    public function __construct()
-    {
-        if (Module::find('Roles')->isEnabled()) {
-            $this->middleware('permission:view brands')->only('index');
-            $this->middleware('permission:create brand')->only('create');
-            $this->middleware('permission:store brand')->only('store');
-            $this->middleware('permission:edit brand')->only('edit');
-            $this->middleware('permission:update brand')->only('update');
-            $this->middleware('permission:destroy brand')->only('destroy');
-        }
-    }
-
 
     /**
     * Display a listing of the resource.
