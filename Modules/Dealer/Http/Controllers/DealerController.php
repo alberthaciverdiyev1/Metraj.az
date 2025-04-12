@@ -1,51 +1,102 @@
 <?php
 
-namespace App\Controllers;
+namespace Modules\Dealer\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Dealer;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Nwidart\Modules\Facades\Module;
 
 class DealerController extends Controller
 {
+
+    public function __construct()
+    {
+        if (Module::find('Roles')->isEnabled()) {
+            $this->middleware('permission:view dealers')->only('index');
+            $this->middleware('permission:create dealer')->only('create');
+            $this->middleware('permission:store dealer')->only('store');
+            $this->middleware('permission:edit dealer')->only('edit');
+            $this->middleware('permission:update dealer')->only('update');
+            $this->middleware('permission:destroy dealer')->only('destroy');
+        }
+    }
+
+
+    /**
+    * Display a listing of the resource.
+    */
     public function index()
     {
-        return Dealer::all();
+        return view('dealer::index');
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('dealer::create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'user_id' => ['required', 'numeric'],
-            'address' => ['required'],
-            'google_map_location' => ['required'],
-        ]);
+        try {
 
-        return Dealer::create($data);
+            //TODO:STORE FUNCTIONS
+
+            return response()->json(__('Data successfully created!'));
+        } catch (Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
-    public function show(Dealer $dealer)
+    /**
+     * Show the specified resource.
+     */
+    public function show()
     {
-        return $dealer;
+        return view('dealer::show');
     }
 
-    public function update(Request $request, Dealer $dealer)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit()
     {
-        $data = $request->validate([
-            'user_id' => ['required', 'numeric'],
-            'address' => ['required'],
-            'google_map_location' => ['required'],
-        ]);
-
-        $dealer->update($data);
-
-        return $dealer;
+        return view('dealer::edit');
     }
 
-    public function destroy(Dealer $dealer)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request)
     {
-        $dealer->delete();
+        try {
 
-        return response()->json();
+            //TODO:UPDATE FUNCTIONS
+
+            return response()->json(__('Data successfully updated!'));
+        } catch (Exception $e) {
+            return response()->json($e->getMessage());
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy()
+    {
+        try {
+
+            //TODO:DESTROY FUNCTIONS
+
+            return response()->json(__('Data successfully deleted!'));
+        } catch (Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 }

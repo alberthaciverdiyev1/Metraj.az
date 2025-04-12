@@ -6,5 +6,8 @@
     "VehicleModel": true,
     "Base": true,
     "City": true,
-    "Dealer": true
+    "Dealer": true,
+    "WebUI": true,
+    "AdminUI": true,
+    "Test": true
 }

@@ -1,0 +1,11 @@
+{
+    "name": "WebUI",
+    "alias": "webui",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\WebUI\\Providers\\WebUIServiceProvider"
+    ],
+    "files": []
+}

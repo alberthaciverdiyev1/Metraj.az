@@ -1,49 +1,102 @@
 <?php
 
-namespace App\Controllers;
+namespace Modules\City\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\City;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Nwidart\Modules\Facades\Module;
 
 class CityController extends Controller
 {
+
+    public function __construct()
+    {
+        if (Module::find('Roles')->isEnabled()) {
+            $this->middleware('permission:view citys')->only('index');
+            $this->middleware('permission:create city')->only('create');
+            $this->middleware('permission:store city')->only('store');
+            $this->middleware('permission:edit city')->only('edit');
+            $this->middleware('permission:update city')->only('update');
+            $this->middleware('permission:destroy city')->only('destroy');
+        }
+    }
+
+
+    /**
+    * Display a listing of the resource.
+    */
     public function index()
     {
-        return City::all();
+        return view('city::index');
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('city::create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'name' => ['required'],
-            'is_active' => ['boolean'],
-        ]);
+        try {
 
-        return City::create($data);
+            //TODO:STORE FUNCTIONS
+
+            return response()->json(__('Data successfully created!'));
+        } catch (Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
-    public function show(City $city)
+    /**
+     * Show the specified resource.
+     */
+    public function show()
     {
-        return $city;
+        return view('city::show');
     }
 
-    public function update(Request $request, City $city)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit()
     {
-        $data = $request->validate([
-            'name' => ['required'],
-            'is_active' => ['boolean'],
-        ]);
-
-        $city->update($data);
-
-        return $city;
+        return view('city::edit');
     }
 
-    public function destroy(City $city)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request)
     {
-        $city->delete();
+        try {
 
-        return response()->json();
+            //TODO:UPDATE FUNCTIONS
+
+            return response()->json(__('Data successfully updated!'));
+        } catch (Exception $e) {
+            return response()->json($e->getMessage());
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy()
+    {
+        try {
+
+            //TODO:DESTROY FUNCTIONS
+
+            return response()->json(__('Data successfully deleted!'));
+        } catch (Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 }

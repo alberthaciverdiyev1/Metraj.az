@@ -2,6 +2,5 @@
 
 return [
     'name' => '$STUDLY_NAME$',
-    'icon' => '$LOWER_NAME$',
-    'route' => route('admin:$LOWER_NAME$s.index')
+    'icon' => '$STUDLY_NAME$',
 ];

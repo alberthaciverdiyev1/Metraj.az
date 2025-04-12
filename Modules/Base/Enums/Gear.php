@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enums;
+namespace Modules\Base\Enums;
 
 enum Gear: string
 {

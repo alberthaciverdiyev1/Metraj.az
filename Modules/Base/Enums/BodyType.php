@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enums;
+namespace Modules\Base\Enums;
 
 enum BodyType: int
 {
@@ -86,6 +86,6 @@ enum BodyType: int
 
     public function value(): int
     {
-        return $this->value; 
+        return $this->value;
     }
 }

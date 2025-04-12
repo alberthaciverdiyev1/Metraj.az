@@ -1,5 +1,6 @@
 <?php
 
+namespace Modules\Price\Http\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 

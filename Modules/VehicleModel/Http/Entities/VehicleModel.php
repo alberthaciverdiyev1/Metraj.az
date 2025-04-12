@@ -1,8 +1,11 @@
 <?php
 
 
+namespace Modules\VehicleModel\Http\Entities;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Modules\Brand\Http\Entities\Brand;
 
 class VehicleModel extends Model
 {

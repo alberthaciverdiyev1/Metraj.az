@@ -11,8 +11,12 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
 use Modules\$STUDLY_NAME$\Http\Controllers\$STUDLY_NAME$Controller;
 
-Route::prefix('dashboard')->name('admin:')->middleware(['auth', 'role_or_permission:developer|admin|show dashboard'])->group(function() {
-    Route::resource('/$LOWER_NAME$s', $STUDLY_NAME$Controller::class);
-});
+Route::prefix('dashboard')
+    ->name('admin:$LOWER_NAME$s.')
+    ->middleware(['auth', 'role_or_permission:developer|admin|show dashboard'])
+    ->group(function () {
+        Route::resource('/$LOWER_NAME$s', $STUDLY_NAME$Controller::class);
+    });

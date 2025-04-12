@@ -27,17 +27,18 @@ return [
         'enabled' => false,
         'path' => base_path('stubs/nwidart-stubs'),
         'files' => [
-            'routes/web' => 'routes/web.php',
-            'routes/api' => 'routes/api.php',
-            'views/index' => 'resources/views/index.blade.php',
-            'views/includes/cart' => 'resources/views/includes/cart.blade.php',
-            'views/master' => 'resources/views/layouts/master.blade.php',
-            'scaffold/config' => 'config/config.php',
+            'routes/web' => 'Routes/web.php',
+            'routes/api' => 'Routes/api.php',
+            'views/index' => 'Resources/views/index.blade.php',
+            'views/includes/cart' => 'Resources/views/includes/cart.blade.php',
+            'scaffold/config' => 'Config/config.php',
             'composer' => 'composer.json',
-            'assets/js/app' => 'resources/assets/js/app.js',
-            'assets/sass/app' => 'resources/assets/sass/app.scss',
+            'assets/js/app' => 'Resources/assets/js/app.js',
+            'assets/sass/app' => 'Resources/assets/sass/app.scss',
             'vite' => 'vite.config.js',
             'package' => 'package.json',
+            'migration' => 'Database/Migrations/' . date('Y_m_d_His') . '_create_$CLASS$_table.php',
+            'model' => 'Http/Entities/Model.php',
         ],
         'replacements' => [
             /**
@@ -172,9 +173,9 @@ return [
             'lang' => ['path' => 'Lang', 'generate' => false],
 
             // resource/
-            'assets' => ['path' => 'Resources/Assets', 'generate' => true],
+            'assets' => ['path' => 'Resources/assets', 'generate' => true],
             'component-view' => ['path' => 'Resources/Views/Components', 'generate' => false],
-            'views' => ['path' => 'Resources/Views', 'generate' => true],
+            'views' => ['path' => 'Resources/views', 'generate' => true],
 
             // routes/
             'routes' => ['path' => 'Routes', 'generate' => true],

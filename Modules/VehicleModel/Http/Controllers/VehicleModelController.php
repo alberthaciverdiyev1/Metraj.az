@@ -1,0 +1,102 @@
+<?php
+
+namespace Modules\VehicleModel\Http\Controllers;
+
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Nwidart\Modules\Facades\Module;
+
+class VehicleModelController extends Controller
+{
+
+    public function __construct()
+    {
+        if (Module::find('Roles')->isEnabled()) {
+            $this->middleware('permission:view vehiclemodels')->only('index');
+            $this->middleware('permission:create vehiclemodel')->only('create');
+            $this->middleware('permission:store vehiclemodel')->only('store');
+            $this->middleware('permission:edit vehiclemodel')->only('edit');
+            $this->middleware('permission:update vehiclemodel')->only('update');
+            $this->middleware('permission:destroy vehiclemodel')->only('destroy');
+        }
+    }
+
+
+    /**
+    * Display a listing of the resource.
+    */
+    public function index()
+    {
+        return view('vehiclemodel::index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('vehiclemodel::create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        try {
+
+            //TODO:STORE FUNCTIONS
+
+            return response()->json(__('Data successfully created!'));
+        } catch (Exception $e) {
+            return response()->json($e->getMessage());
+        }
+    }
+
+    /**
+     * Show the specified resource.
+     */
+    public function show()
+    {
+        return view('vehiclemodel::show');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit()
+    {
+        return view('vehiclemodel::edit');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request)
+    {
+        try {
+
+            //TODO:UPDATE FUNCTIONS
+
+            return response()->json(__('Data successfully updated!'));
+        } catch (Exception $e) {
+            return response()->json($e->getMessage());
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy()
+    {
+        try {
+
+            //TODO:DESTROY FUNCTIONS
+
+            return response()->json(__('Data successfully deleted!'));
+        } catch (Exception $e) {
+            return response()->json($e->getMessage());
+        }
+    }
+}

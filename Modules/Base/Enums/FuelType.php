@@ -1,15 +1,16 @@
 <?php
 
-enum FuelType:string
+namespace Modules\Base\Enums;
+enum FuelType: string
 {
     case GASOLINE = '0x001';
     case DIESEL = '0x002';
-    case GAS  = '0x003';
+    case GAS = '0x003';
     case ELECTRIC = '0x004';
     case HYBRID = '0x005';
     case PLUG_IN_HYBRID = '0x006';
     case HYDROGEN = '0x007';
-    case NONE  = '0x008';
+    case NONE = '0x008';
 
     /**
      * @return string
