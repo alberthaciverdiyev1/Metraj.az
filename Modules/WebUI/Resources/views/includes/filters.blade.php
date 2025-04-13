@@ -19,15 +19,15 @@
                 </div>
                 <div class="property-tab-section search-filter-form">
                     <div class="tab-header">
-                        <button class="tab-btn active" data-tab="for-sale">@lang('All')</button>
-                        <button class="tab-btn" data-tab="for-rent">@lang("New")</button>
-                        <button class="tab-btn" data-tab="for-rent">@lang("Used")</button>
+                        <button class="tab-btn active">@lang('All')</button>
+                        <button class="tab-btn">@lang("New")</button>
+                        <button class="tab-btn">@lang("Used")</button>
                     </div>
 
-                    <div class="tab-content1" id="for-sale">
+                    <div class="tab-content1">
                         <div class="filters">
 
-                            <livewire:webui::brand-select />
+                            <livewire:webui::brand-select/>
 
                             <div class="filter-group">
                                 <label>Labels</label>
@@ -37,19 +37,20 @@
                                     <option>Hot Offer</option>
                                 </select>
                             </div>
+
                             <div class="filter-group">
-                                <livewire:webui::city-select />
+                                <livewire:webui::city-select/>
                             </div>
 
 
                             <div class="filter-group">
                                 <label for="customize-sale">Customize</label>
                                 <button id="customize-sale" class="customize-sale show-form">
-                                    Advance <span class="icon"><svg xmlns="http://www.w3.org/2000/svg"
+                                    Advance <span class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
                                                                     viewBox="0 0 24 24" fill="currentColor">
-                        <path
-                            d="M6.17071 18C6.58254 16.8348 7.69378 16 9 16C10.3062 16 11.4175 16.8348 11.8293 18H22V20H11.8293C11.4175 21.1652 10.3062 22 9 22C7.69378 22 6.58254 21.1652 6.17071 20H2V18H6.17071ZM12.1707 11C12.5825 9.83481 13.6938 9 15 9C16.3062 9 17.4175 9.83481 17.8293 11H22V13H17.8293C17.4175 14.1652 16.3062 15 15 15C13.6938 15 12.5825 14.1652 12.1707 13H2V11H12.1707ZM6.17071 4C6.58254 2.83481 7.69378 2 9 2C10.3062 2 11.4175 2.83481 11.8293 4H22V6H11.8293C11.4175 7.16519 10.3062 8 9 8C7.69378 8 6.58254 7.16519 6.17071 6H2V4H6.17071Z"></path>
-                      </svg></span>
+                                     <path d="M6.17071 18C6.58254 16.8348 7.69378 16 9 16C10.3062 16 11.4175 16.8348 11.8293 18H22V20H11.8293C11.4175 21.1652 10.3062 22 9 22C7.69378 22 6.58254 21.1652 6.17071 20H2V18H6.17071ZM12.1707 11C12.5825 9.83481 13.6938 9 15 9C16.3062 9 17.4175 9.83481 17.8293 11H22V13H17.8293C17.4175 14.1652 16.3062 15 15 15C13.6938 15 12.5825 14.1652 12.1707 13H2V11H12.1707ZM6.17071 4C6.58254 2.83481 7.69378 2 9 2C10.3062 2 11.4175 2.83481 11.8293 4H22V6H11.8293C11.4175 7.16519 10.3062 8 9 8C7.69378 8 6.58254 7.16519 6.17071 6H2V4H6.17071Z"></path>
+                                  </svg></span>
                                 </button>
                             </div>
                             <div class="search-button">
@@ -74,145 +75,30 @@
                                 </div>
                             </div>
 
-                            <livewire:webui::currency-select />
+                            <livewire:webui::currency-select/>
 
-                            <livewire:webui::body-type-select />
+                            <livewire:webui::body-type-select/>
 
-                            <livewire:webui::fuel-type-select />
+                            <livewire:webui::fuel-type-select/>
 
-                            <livewire:webui::gear-select />
+                            <livewire:webui::gear-select/>
 
-                            <livewire:webui::gearbox-select />
+                            <livewire:webui::gearbox-select/>
 
-                            <div class="search-button">
-                                <button id="search-sale">@lang('Credit')</button>
+
+                            <div class="home-filters-btn">
+                                <button id="is_credit">@lang('Credit')</button>
+                                <button id="is_barter">@lang('Barter')</button>
                             </div>
 
-                            <div class="search-button">
-                                <button id="search-sale">@lang('Barter')</button>
-                            </div>
 
                         </div>
                         <div class="group-checkbox">
                             <div class=" title text-4 fw-6">Others Features</div>
                             <div class="space16"></div>
-                            <div class="group-amenities ">
-                                <fieldset class="checkbox-item style-1  ">
-                                    <label>
-                                        <input type="checkbox">
-                                        <span class="btn-checkbox"></span>
-                                        <span class="text-4">Air Conditioning</span>
-                                    </label>
-                                </fieldset>
-                                <fieldset class="checkbox-item style-1   mt-12">
-                                    <label>
-                                        <input type="checkbox">
-                                        <span class="btn-checkbox"></span>
-                                        <span class="text-4"> Laundry</span>
-                                    </label>
-                                </fieldset>
-                                <fieldset class="checkbox-item style-1   mt-12">
-                                    <label>
-                                        <input type="checkbox">
-                                        <span class="btn-checkbox"></span>
-                                        <span class="text-4">Refrigerator </span>
-                                    </label>
-                                </fieldset>
-                                <fieldset class="checkbox-item style-1   mt-12">
-                                    <label>
-                                        <input type="checkbox">
-                                        <span class="btn-checkbox"></span>
-                                        <span class="text-4">Washer </span>
-                                    </label>
-                                </fieldset>
 
-                                <fieldset class="checkbox-item style-1  ">
-                                    <label>
-                                        <input type="checkbox">
-                                        <span class="btn-checkbox"></span>
-                                        <span class="text-4"> Barbeque</span>
-                                    </label>
-                                </fieldset>
-                                <fieldset class="checkbox-item style-1   mt-12">
-                                    <label>
-                                        <input type="checkbox">
-                                        <span class="btn-checkbox"></span>
-                                        <span class="text-4"> Lawn</span>
-                                    </label>
-                                </fieldset>
-                                <fieldset class="checkbox-item style-1   mt-12">
-                                    <label>
-                                        <input type="checkbox">
-                                        <span class="btn-checkbox"></span>
-                                        <span class="text-4">Sauna </span>
-                                    </label>
-                                </fieldset>
-                                <fieldset class="checkbox-item style-1   mt-12">
-                                    <label>
-                                        <input type="checkbox">
-                                        <span class="btn-checkbox"></span>
-                                        <span class="text-4">Wifi </span>
-                                    </label>
-                                </fieldset>
+                            <livewire:webui::feature-list/>
 
-                                <fieldset class="checkbox-item style-1  ">
-                                    <label>
-                                        <input type="checkbox">
-                                        <span class="btn-checkbox"></span>
-                                        <span class="text-4">Dryer </span>
-                                    </label>
-                                </fieldset>
-                                <fieldset class="checkbox-item style-1   mt-12">
-                                    <label>
-                                        <input type="checkbox">
-                                        <span class="btn-checkbox"></span>
-                                        <span class="text-4">Microwave</span>
-                                    </label>
-                                </fieldset>
-                                <fieldset class="checkbox-item style-1   mt-12">
-                                    <label>
-                                        <input type="checkbox">
-                                        <span class="btn-checkbox"></span>
-                                        <span class="text-4"> Swimming Pool</span>
-                                    </label>
-                                </fieldset>
-                                <fieldset class="checkbox-item style-1   mt-12">
-                                    <label>
-                                        <input type="checkbox">
-                                        <span class="btn-checkbox"></span>
-                                        <span class="text-4">Window Coverings</span>
-                                    </label>
-                                </fieldset>
-
-                                <fieldset class="checkbox-item style-1  ">
-                                    <label>
-                                        <input type="checkbox">
-                                        <span class="btn-checkbox"></span>
-                                        <span class="text-4"> Gym</span>
-                                    </label>
-                                </fieldset>
-                                <fieldset class="checkbox-item style-1   mt-12">
-                                    <label>
-                                        <input type="checkbox">
-                                        <span class="btn-checkbox"></span>
-                                        <span class="text-4">Outdoor Shower </span>
-                                    </label>
-                                </fieldset>
-                                <fieldset class="checkbox-item style-1   mt-12">
-                                    <label>
-                                        <input type="checkbox">
-                                        <span class="btn-checkbox"></span>
-                                        <span class="text-4"> TV Cable</span>
-                                    </label>
-                                </fieldset>
-                                <fieldset class="checkbox-item style-1   mt-12">
-                                    <label>
-                                        <input type="checkbox">
-                                        <span class="btn-checkbox"></span>
-                                        <span class="text-4">Fireplace </span>
-                                    </label>
-                                </fieldset>
-                            </div>
                         </div>
                     </div>
                 </div>

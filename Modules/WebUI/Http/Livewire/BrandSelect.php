@@ -13,7 +13,7 @@ class BrandSelect extends Component
     public function mount()
     {
         $this->brands = cache()->rememberForever('brands', function () {
-            return API::call('api/brand');
+            return API::call('api/brands');
         });
     }
 

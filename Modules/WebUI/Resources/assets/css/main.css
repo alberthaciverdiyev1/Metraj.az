@@ -540,11 +540,6 @@ img {
 
 /*
 ============================
-Name:  HouseBox - Real Esate Template
-Version: 1.0.0
-Description: HouseBox - Real Esate Template
-Author: alithemes
-Author URI: https://themeforest.net/user/alithemes/portfolio
 Location:
 ============================
 */
@@ -749,6 +744,53 @@ Location:
   left: 0;
   width: 100%;
 }
+
+.home-filters-btn {
+  position: relative;
+  top: 14px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.home-filters-btn button {
+  font-family: var(--ztc-family-font1);
+  font-size: var(--ztc-font-size-font-s14);
+  color: var(--ztc-text-text-2);
+  transition: all 0.4s;
+  font-weight: var(--ztc-weight-medium);
+  background-color: var(--ztc-bg-bg-3);
+  display: inline-block;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  width: 150px;
+  height: 52px;
+  flex: 1 1 48%;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.home-filters-btn button svg {
+  height: 20px;
+  width: 20px;
+  object-fit: cover;
+  margin: 0 0 0 4px;
+}
+
+.home-filters-btn button:hover {
+  background: var(--ztc-bg-bg-4);
+  color: var(--ztc-text-text-1);
+  transition: all 0.4s;
+}
+
 
 .theme-btn2 {
   display: inline-block;

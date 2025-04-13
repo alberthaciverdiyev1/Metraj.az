@@ -10,5 +10,6 @@
     "WebUI": true,
     "AdminUI": true,
     "Test": true,
-    "Resource": true
+    "Resource": true,
+    "Feature": true
 }

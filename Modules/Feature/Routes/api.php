@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use Modules\WebUI\Http\Controllers\WebUIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +12,9 @@ use Modules\WebUI\Http\Controllers\WebUIController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('brands', [\Modules\Brand\Http\Controllers\BrandController::class, 'index']);
-
+Route::get('features', [\Modules\Feature\Http\Controllers\FeatureController::class, 'index']);
 
 //Route::middleware('auth:api')->group(function () {
-////    Route::resource('brand', \Modules\Brand\Http\Controllers\BrandController::class)->except('index');
+//    Route::resource('/{feature}', \Modules\{Feature}\Http\Controllers\{Feature}Controller::class);
 //});
+
