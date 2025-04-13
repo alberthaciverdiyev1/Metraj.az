@@ -13,7 +13,7 @@ use Modules\WebUI\Http\Controllers\WebUIController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('brand', [\Modules\Brand\Http\Controllers\BrandController::class, 'index'])->name('brand.index');
+Route::get('brand', [\Modules\Brand\Http\Controllers\BrandController::class, 'index']);
 
 
 //Route::middleware('auth:api')->group(function () {

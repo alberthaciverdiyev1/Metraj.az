@@ -13,6 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('currencies',[\Modules\Base\Http\Controllers\EnumController::class, 'currencies']);
+Route::get('fuel',[\Modules\Base\Http\Controllers\EnumController::class, 'fuelTypes']);
+Route::get('body',[\Modules\Base\Http\Controllers\EnumController::class, 'bodyTypes']);
+Route::get('gears',[\Modules\Base\Http\Controllers\EnumController::class, 'gears']);
+Route::get('gearbox',[\Modules\Base\Http\Controllers\EnumController::class, 'gearBox']);
+
 Route::middleware('auth:api')->get('/base', function (Request $request) {
     return $request->user();
 });

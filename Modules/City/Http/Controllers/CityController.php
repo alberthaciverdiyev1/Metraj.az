@@ -5,7 +5,8 @@ namespace Modules\City\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Nwidart\Modules\Facades\Module;
+use Modules\City\Http\Entities\City;
+use Modules\City\Http\Transformers\CityResource;
 
 class CityController extends Controller
 {
@@ -15,15 +16,10 @@ class CityController extends Controller
     */
     public function index()
     {
-        return view('city::index');
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('city::create');
+        $cities = City::all();
+
+        return CityResource::collection($cities);
     }
 
     /**
@@ -49,13 +45,6 @@ class CityController extends Controller
         return view('city::show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit()
-    {
-        return view('city::edit');
-    }
 
     /**
      * Update the specified resource in storage.

@@ -49,7 +49,7 @@
     });
     //========== SIDEBAR/SEARCH AREA ============= //
 
-    //========== PAGE PROGRESS STARTS ============= // 
+    //========== PAGE PROGRESS STARTS ============= //
     var progressPath = document.querySelector(".progress-wrap path");
     var pathLength = progressPath.getTotalLength();
     progressPath.style.transition = progressPath.style.WebkitTransition =
@@ -81,7 +81,7 @@
       jQuery("html, body").animate({ scrollTop: 0 }, duration);
       return false;
     });
-    //========== PAGE PROGRESS STARTS ============= // 
+    //========== PAGE PROGRESS STARTS ============= //
 
     //========== VIDEO POPUP STARTS ============= //
     if ($(".popup-youtube").length > 0) {

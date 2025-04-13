@@ -3,8 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Modules\Brand\Http\Entities\Brand;
+use Modules\City\Http\Entities\City;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +16,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        Brand::factory()->count(100)->create();
+        City::factory()->count(100)->create();
+
     }
 }
