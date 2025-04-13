@@ -9,5 +9,6 @@
     "Dealer": true,
     "WebUI": true,
     "AdminUI": true,
-    "Test": true
+    "Test": true,
+    "Resource": true
 }

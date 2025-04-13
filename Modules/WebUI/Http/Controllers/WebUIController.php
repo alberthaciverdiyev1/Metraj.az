@@ -15,7 +15,7 @@ class WebUIController extends Controller
     */
     public function index()
     {
-        return view('webui::main');
+        return view('webui::home.index');
     }
 
     /**

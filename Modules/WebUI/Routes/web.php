@@ -12,6 +12,7 @@
 */
 
 use Illuminate\Support\Facades\Route;
+use Modules\WebUI\Http\Controllers\HomeController;
 use Modules\WebUI\Http\Controllers\WebUIController;
 
-Route::get('/', [WebUIController::class, 'index'])->name('web.home');
+Route::get('/', [HomeController::class, 'index'])->name('web.home');

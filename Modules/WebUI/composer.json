@@ -16,6 +16,9 @@
         }
     },
     "autoload": {
+        "files": [
+            "Helpers/API.php"
+        ],
         "psr-4": {
             "Modules\\WebUI\\": "app/",
             "Modules\\WebUI\\Database\\Factories\\": "database/factories/",

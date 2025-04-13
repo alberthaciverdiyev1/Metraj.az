@@ -5,26 +5,20 @@ namespace Modules\Brand\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Brand\Http\Entities\Brand;
+use Modules\Brand\Http\Transformers\BrandResource;
 use Nwidart\Modules\Facades\Module;
 
 class BrandController extends Controller
 {
-
 
     /**
     * Display a listing of the resource.
     */
     public function index()
     {
-        return view('brand::index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('brand::create');
+        $brands = Brand::all();
+        return BrandResource::collection($brands);
     }
 
     /**
@@ -48,14 +42,6 @@ class BrandController extends Controller
     public function show()
     {
         return view('brand::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit()
-    {
-        return view('brand::edit');
     }
 
     /**
