@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{asset('libs/css/swiper-slider.css')}}">
 
     @vite('Modules/WebUI/Resources/assets/css/main.css')
-
+    @livewireStyles
 
     <!--=====  JS SCRIPT LINK =======-->
     {{--    <script src="{{asset('libs/js/jquery-3-7-1.min.js')}}"></script>--}}

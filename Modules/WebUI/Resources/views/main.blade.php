@@ -19,9 +19,6 @@
 </div>
 <!--===== PROGRESS ENDS=======-->
 
-<!--===== SEARCHBAR STARTS=======-->
-@include('webui::partials.searchbar')
-<!--===== SEARCHBAR STARTS=======-->
 
 <!--=====HEADER START=======-->
 @include('webui::partials.header')
@@ -31,7 +28,7 @@
 @include('webui::partials.mobile_header')
 <!--===== MOBILE HEADER STARTS =======-->
 
-@yield('webui::body')
+@yield('webui::content')
 
 <!--===== FOOTER AREA STARTS =======-->
 @include('webui::partials.footer')
@@ -54,6 +51,7 @@
 <script src="{{asset('libs/js/waypoints.js')}}"></script>
 <script src="{{asset('libs/js/slick-slider.js')}}"></script>
 <script src="{{asset('libs/js/circle-progress.js')}}"></script>
+@livewireScripts
 
 
 

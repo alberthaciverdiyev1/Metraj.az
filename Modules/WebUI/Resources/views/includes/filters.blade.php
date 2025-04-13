@@ -26,17 +26,9 @@
 
                     <div class="tab-content1" id="for-sale">
                         <div class="filters">
-                            <div class="filter-group">
-                                <label>@lang('Brands')</label>
-                                <select>
-                                    <option>@lang('All brands')</option>
-                                    @forelse($brands as $key => $item)
-                                        <option {{$item->id}} >{{$item->name}}</option>
-                                    @empty
-                                        <option>@lang('No Data')</option>
-                                    @endforelse
-                                </select>
-                            </div>
+
+                            <livewire:webui::brand-select />
+
                             <div class="filter-group">
                                 <label>Labels</label>
                                 <select>
@@ -46,15 +38,7 @@
                                 </select>
                             </div>
                             <div class="filter-group">
-                                <label>Types</label>
-                                <select>
-                                    <option>@lang('All cities')</option>
-                                    @forelse($cities as $key => $item)
-                                        <option {{$item->id}} >{{$item->name}}</option>
-                                    @empty
-                                        <option>@lang('No Data')</option>
-                                    @endforelse
-                                </select>
+                                <livewire:webui::city-select />
                             </div>
 
 
@@ -82,93 +66,23 @@
 
                     <div class="wd-search-form ">
                         <div class=" group-select">
-
-                            <div class="box-select">
-                                <h5>@lang('Min price')</h5>
-                                <div class="input-area border">
-                                    <input type="text" placeholder="@lang('Min price')">
-                                </div>
-                            </div>
-                            <div class="box-select">
-                                <h5>@lang('Max price')</h5>
-                                <div class="input-area border">
-                                    <input type="text" placeholder="@lang('Max price')">
+                            <div class="mb-3">
+                                <h5 class="mb-3">@lang('Price')</h5>
+                                <div class="input-group h-75">
+                                    <input type="text" class="form-control" placeholder="Min">
+                                    <input type="text" class="form-control" placeholder="Max">
                                 </div>
                             </div>
 
-                            <div class="box-select ">
-                                <h5>@lang('Currency')</h5>
-                                <div class="nice-select" tabindex="0">
-                                    <span class="current">@lang('Currency')</span>
-                                    <ul class="list">
-                                        @forelse($currencies as $key => $item)
-                                            <li data-value="{{$item->key}}" class="option">{{$item->label}}</li>
-                                        @empty
-                                            <li class="option"> @lang('No Data')</li>
-                                        @endforelse
+                            <livewire:webui::currency-select />
 
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="box-select">
-                                <h5>@lang('Body type')</h5>
-                                <div class="nice-select" tabindex="0">
-                                    <span class="current">@lang('Select body type')</span>
-                                    <ul class="list">
-                                        @forelse($body_types as $key => $item)
-                                            <li data-value="{{$item->key}}" class="option">{{$item->label}}</li>
-                                        @empty
-                                            <li class="option"> @lang('No Data')</li>
-                                        @endforelse
+                            <livewire:webui::body-type-select />
 
-                                    </ul>
-                                </div>
-                            </div>
+                            <livewire:webui::fuel-type-select />
 
-                            <div class="box-select">
-                                <h5>@lang('Fuel type')</h5>
-                                <div class="nice-select" tabindex="0">
-                                    <span class="current">@lang('Select fuel type')</span>
-                                    <ul class="list">
-                                        @forelse($fuel_types as $key => $item)
-                                            <li data-value="{{$item->key}}" class="option">{{$item->label}}</li>
-                                        @empty
-                                            <li class="option"> @lang('No Data')</li>
-                                        @endforelse
+                            <livewire:webui::gear-select />
 
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="box-select">
-                                <h5>@lang('Gear')</h5>
-                                <div class="nice-select" tabindex="0">
-                                    <span class="current">@lang('Select gear')</span>
-                                    <ul class="list">
-                                        @forelse($gears as $key => $item)
-                                            <li data-value="{{$item->key}}" class="option">{{$item->label}}</li>
-                                        @empty
-                                            <li class="option"> @lang('No Data')</li>
-                                        @endforelse
-
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="box-select">
-                                <h5>@lang('Gearbox')</h5>
-                                <div class="nice-select" tabindex="0">
-                                    <span class="current">@lang('Select gearbox')</span>
-                                    <ul class="list">
-                                        @forelse($gearbox as $key => $item)
-                                            <li data-value="{{$item->key}}" class="option">{{$item->label}}</li>
-                                        @empty
-                                            <li class="option"> @lang('No Data')</li>
-                                        @endforelse
-
-                                    </ul>
-                                </div>
-                            </div>
+                            <livewire:webui::gearbox-select />
 
                             <div class="search-button">
                                 <button id="search-sale">@lang('Credit')</button>

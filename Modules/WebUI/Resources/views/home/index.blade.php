@@ -1,6 +1,6 @@
 @extends('webui::main')
 
-@section('webui::body')
+@section('webui::content')
     <!--===== HERO AREA STARTS =======-->
     <div class="hero-area-slider">
         <div class="hero1-section-area">
@@ -250,7 +250,7 @@
                                     <div class="row">
                                         @php($i = 0)
 
-                                        @while($i<110)
+                                        @while($i<50)
                                             @include('webui::includes.card')
                                             @php($i++)
 

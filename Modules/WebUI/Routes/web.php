@@ -13,6 +13,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\WebUI\Http\Controllers\HomeController;
+use Modules\WebUI\Http\Controllers\VehicleController;
 use Modules\WebUI\Http\Controllers\WebUIController;
 
 Route::get('/', [HomeController::class, 'index'])->name('web.home');
+Route::get('/add-vehicle', [VehicleController::class, 'index'])->name('web.vehicle.add');
