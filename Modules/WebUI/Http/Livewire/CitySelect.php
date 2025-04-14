@@ -7,13 +7,15 @@ use Modules\WebUI\Helpers\API;
 
 class CitySelect extends Component
 {
-    public $cities;
+    public $cities,$type;
+    public string $class;
 
-    public function mount()
+    public function mount($type = null)
     {
         $this->cities = cache()->rememberForever('cities', function () {
             return API::call('api/cities');
         });
+        $this->type = $type;
     }
 
     public function render()

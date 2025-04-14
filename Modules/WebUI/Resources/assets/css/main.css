@@ -16147,10 +16147,11 @@ Location:
   z-index: 1;
   margin-top: -6px;
 }
+
 .others-section-area .property-tab-section .filter-group {
   display: flex;
   flex-direction: column;
-  flex: 1 1 200px;
+  flex: 1 1 220px;
   width: 220px;
   position: relative;
 }
@@ -16161,14 +16162,14 @@ Location:
   }
 }
 .others-section-area .property-tab-section .filter-group::after {
-  position: absolute;
-  content: "";
-  height: 100%;
-  right: 25px;
-  background: var(--ztc-bg-bg-2);
-  opacity: 10%;
-  top: 0;
-  width: 1px;
+  /*position: absolute;*/
+  /*content: "";*/
+  /*height: 100%;*/
+  /*right: 25px;*/
+  /*background: var(--ztc-bg-bg-2);*/
+  /*opacity: 10%;*/
+  /*top: 0;*/
+  /*width: 1px;*/
 }
 @media (max-width: 767px) {
   .others-section-area .property-tab-section .filter-group::after {

@@ -10,13 +10,14 @@ use Modules\WebUI\Helpers\API;
 class BodyTypeSelect extends Component
 {
 
-    public $body_types;
+    public $body_types,$type;
 
-    public function mount()
+    public function mount($type = null)
     {
         $this->body_types = Cache::rememberForever('body_types', function () {
             return API::call('api/body', 'GET', true);
         });
+        $this->type = $type;
     }
 
     public function render()

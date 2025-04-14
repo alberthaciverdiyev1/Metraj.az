@@ -28,6 +28,7 @@
                         <div class="filters">
 
                             <livewire:webui::brand-select/>
+                            <livewire:webui::brand-select/>
 
                             <div class="filter-group">
                                 <label>Labels</label>
@@ -38,9 +39,8 @@
                                 </select>
                             </div>
 
-                            <div class="filter-group">
-                                <livewire:webui::city-select/>
-                            </div>
+
+                            <livewire:webui::city-select/>
 
 
                             <div class="filter-group">

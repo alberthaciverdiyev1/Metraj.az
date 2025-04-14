@@ -8,13 +8,14 @@ use Modules\WebUI\Helpers\API;
 
 class GearSelect extends Component
 {
-    public $gears;
+    public $gears,$type;
 
-    public function mount()
+    public function mount($type = null)
     {
         $this->gears = Cache::rememberForever('gears', function () {
             return API::call('api/gears', 'GET', true);
         });
+        $this->type = $type;
     }
 
 

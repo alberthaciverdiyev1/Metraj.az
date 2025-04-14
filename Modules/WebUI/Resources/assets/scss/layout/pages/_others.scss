@@ -488,27 +488,27 @@
       flex: 1 1 200px;
       width: 220px;
       position: relative;
-      @media #{$md} {
-        width: 100%;
-        flex: 4 4 100%;
-      }
-      &::after {
-        position: absolute;
-        content: "";
-        height: 100%;
-        right: 25px;
-        background: var(--ztc-bg-bg-2);
-        opacity: 10%;
-        top: 0;
-        width: 1px;
-        @media #{$xs} {
-          display: none;
-        }
-        @media #{$md} {
-          display: none;
-        }
-
-      }
+      //@media #{$md} {
+      //  width: 100%;
+      //  flex: 4 4 100%;
+      //}
+      //&::after {
+      //  position: absolute;
+      //  content: "";
+      //  height: 100%;
+      //  right: 25px;
+      //  background: var(--ztc-bg-bg-2);
+      //  opacity: 10%;
+      //  top: 0;
+      //  width: 1px;
+      //  @media #{$xs} {
+      //    display: none;
+      //  }
+      //  @media #{$md} {
+      //    display: none;
+      //  }
+      //
+      //}
       button.customize-sale {
           width: 200px;
           padding: 18px 14px;

@@ -8,13 +8,14 @@ use Modules\WebUI\Helpers\API;
 
 class GearboxSelect extends Component
 {
-    public $gearbox;
+    public $gearbox,$type;
 
-    public function mount()
+    public function mount($type = null)
     {
         $this->gearbox = Cache::rememberForever('gearbox', function () {
             return API::call('api/gearbox', 'GET', true);
         });
+        $this->type = $type;
     }
 
     public function render()

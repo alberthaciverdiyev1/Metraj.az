@@ -8,13 +8,14 @@ use Modules\WebUI\Helpers\API;
 
 class FuelTypeSelect extends Component
 {
-    public $fuel_types;
+    public $fuel_types,$type;
 
-    public function mount()
+    public function mount($type = null)
     {
         $this->fuel_types = Cache::rememberForever('fuel_types', function () {
             return API::call('api/fuel', 'GET', true);
         });
+        $this->type = $type;
     }
 
 

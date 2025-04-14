@@ -8,13 +8,15 @@ use Modules\WebUI\Helpers\API;
 
 class CurrencySelect extends Component
 {
-    public $currencies;
+    public $currencies,$type;
 
-    public function mount()
+    public function mount($type = null)
     {
         $this->currencies = Cache::rememberForever('currencies', function () {
             return  API::call('api/currencies','GET',true);
         });
+        $this->type = $type;
+
     }
 
     public function render()

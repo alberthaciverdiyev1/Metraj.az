@@ -9,12 +9,13 @@ use Modules\WebUI\Helpers\API;
 
 class FeatureList extends Component
 {
-    public $features;
+    public $features,$type;
 
-    public function mount(){
+    public function mount($type = null){
         $this->features = Cache::rememberForever('features', function () {
             return API::call('api/features');
         });
+        $this->type = $type;
     }
 
     public function render()
