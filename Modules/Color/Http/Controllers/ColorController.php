@@ -5,6 +5,7 @@ namespace Modules\Color\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Color\Http\Entities\Color;
 use Nwidart\Modules\Facades\Module;
 
 class ColorController extends Controller
@@ -13,18 +14,11 @@ class ColorController extends Controller
     /**
     * Display a listing of the resource.
     */
-    public function index()
+    public function all()
     {
-        return view('color::index');
+        return response()->json(Color::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('color::create');
-    }
 
     /**
      * Store a newly created resource in storage.

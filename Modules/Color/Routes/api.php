@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('colors', [\Modules\Color\Http\Controllers\ColorController::class, 'all']);
 
 Route::middleware('auth:api')->get('/color', function (Request $request) {
     return $request->user();
