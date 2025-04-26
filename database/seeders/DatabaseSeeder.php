@@ -17,10 +17,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        Brand::factory()->count(100)->create();
         City::factory()->count(100)->create();
         Feature::factory()->count(10)->create();
-        Color::factory()->count(20)->create();
 
 
     }

@@ -1,0 +1,11 @@
+{
+    "name": "Realtor",
+    "alias": "realtor",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Realtor\\Providers\\RealtorServiceProvider"
+    ],
+    "files": []
+}
