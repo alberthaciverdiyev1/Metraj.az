@@ -7,9 +7,9 @@
     "Base": true,
     "City": true,
     "Dealer": true,
-    "WebUI": true,
-    "AdminUI": true,
     "Test": true,
     "Resource": true,
-    "Feature": true
+    "Feature": true,
+    "District": true,
+    "Town": true
 }
