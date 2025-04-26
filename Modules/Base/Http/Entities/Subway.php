@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\$STUDLY_NAME$\Entities;
+namespace Modules\Base\Http\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class $CLASS$ extends Model
+class Subway extends Model
 {
     /**
      * The table associated with the model.

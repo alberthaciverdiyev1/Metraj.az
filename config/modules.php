@@ -27,18 +27,20 @@ return [
         'enabled' => false,
         'path' => base_path('stubs/nwidart-stubs'),
         'files' => [
-//            'routes/web' => 'Routes/web.php',
             'routes/api' => 'Routes/api.php',
-            'views/index' => 'Resources/views/index.blade.php',
-            'views/includes/cart' => 'Resources/views/includes/cart.blade.php',
             'scaffold/config' => 'Config/config.php',
             'composer' => 'composer.json',
-            'assets/js/app' => 'Resources/assets/js/app.js',
-            'assets/sass/app' => 'Resources/assets/sass/app.scss',
-            'vite' => 'vite.config.js',
             'package' => 'package.json',
             'migration' => 'Database/Migrations/' . date('Y_m_d_His') . '_create_$CLASS$_table.php',
             'model' => 'Http/Entities/Model.php',
+
+
+            //            'routes/web' => 'Routes/web.php',
+            //            'views/index' => 'Resources/views/index.blade.php',
+            //            'views/includes/cart' => 'Resources/views/includes/cart.blade.php',
+            //            'assets/js/app' => 'Resources/assets/js/app.js',
+            //            'assets/sass/app' => 'Resources/assets/sass/app.scss',
+            //            'vite' => 'vite.config.js',
         ],
         'replacements' => [
             /**
@@ -57,12 +59,12 @@ return [
              *
              * Note: Keys should be in UPPERCASE.
              */
-//            'routes/web' => ['LOWER_NAME', 'STUDLY_NAME', 'PLURAL_LOWER_NAME', 'KEBAB_NAME', 'MODULE_NAMESPACE', 'CONTROLLER_NAMESPACE'],
+            //            'routes/web' => ['LOWER_NAME', 'STUDLY_NAME', 'PLURAL_LOWER_NAME', 'KEBAB_NAME', 'MODULE_NAMESPACE', 'CONTROLLER_NAMESPACE'],
             'routes/api' => ['LOWER_NAME', 'STUDLY_NAME', 'PLURAL_LOWER_NAME', 'KEBAB_NAME', 'MODULE_NAMESPACE', 'CONTROLLER_NAMESPACE'],
-            'vite' => ['LOWER_NAME', 'STUDLY_NAME', 'KEBAB_NAME'],
+            //            'vite' => ['LOWER_NAME', 'STUDLY_NAME', 'KEBAB_NAME'],
             'json' => ['LOWER_NAME', 'STUDLY_NAME', 'KEBAB_NAME', 'MODULE_NAMESPACE', 'PROVIDER_NAMESPACE'],
-            'views/index' => ['LOWER_NAME'],
-            'views/master' => ['LOWER_NAME', 'STUDLY_NAME', 'KEBAB_NAME'],
+            //            'views/index' => ['LOWER_NAME'],
+            //            'views/master' => ['LOWER_NAME', 'STUDLY_NAME', 'KEBAB_NAME'],
             'scaffold/config' => ['STUDLY_NAME'],
             'composer' => [
                 'LOWER_NAME',
@@ -173,9 +175,9 @@ return [
             'lang' => ['path' => 'Lang', 'generate' => false],
 
             // resource/
-            'assets' => ['path' => 'Resources/assets', 'generate' => true],
-            'component-view' => ['path' => 'Resources/Views/Components', 'generate' => false],
-            'views' => ['path' => 'Resources/views', 'generate' => true],
+                //            'assets' => ['path' => 'Resources/assets', 'generate' => true],
+                //            'component-view' => ['path' => 'Resources/Views/Components', 'generate' => false],
+                //            'views' => ['path' => 'Resources/views', 'generate' => true],
 
             // routes/
             'routes' => ['path' => 'Routes', 'generate' => true],
