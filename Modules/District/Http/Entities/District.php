@@ -1,20 +1,22 @@
 <?php
 
-namespace Modules\Base\Http\Entities;
+namespace Modules\District\Http\Entities;
 
+use Database\Factories\DistrictFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Subway extends Model
+class District extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
 
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'subways';
+    protected $table = 'districts';
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +26,7 @@ class Subway extends Model
     protected $fillable = [
         'slug',
         'name',
+        'city_id',
     ];
 
     /**
@@ -32,15 +35,12 @@ class Subway extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'city_id' => 'integer',
         'deleted_at' => 'datetime',
     ];
 
-    /**
-     * Relations
-     */
-    // Subways may have many properties related to them
-    public function properties()
+    public static function newFactory():DistrictFactory
     {
-        return $this->hasMany(Property::class);
+        return DistrictFactory::new();
     }
 }

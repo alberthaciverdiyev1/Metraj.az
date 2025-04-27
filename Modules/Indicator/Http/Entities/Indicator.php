@@ -1,20 +1,23 @@
 <?php
 
-namespace Modules\Base\Http\Entities;
+namespace Modules\Indicator\Http\Entities;
 
+use Database\Factories\DistrictFactory;
+use Database\Factories\IndicatorFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Subway extends Model
+class Indicator extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
 
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'subways';
+    protected $table = 'indicators';
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +27,7 @@ class Subway extends Model
     protected $fillable = [
         'slug',
         'name',
+        'icon',
     ];
 
     /**
@@ -35,12 +39,8 @@ class Subway extends Model
         'deleted_at' => 'datetime',
     ];
 
-    /**
-     * Relations
-     */
-    // Subways may have many properties related to them
-    public function properties()
+    public static function newFactory(): IndicatorFactory
     {
-        return $this->hasMany(Property::class);
+        return IndicatorFactory::new();
     }
 }

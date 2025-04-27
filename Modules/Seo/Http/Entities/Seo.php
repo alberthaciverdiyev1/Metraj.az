@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Base\Http\Entities;
+namespace Modules\Seo\Http\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Subway extends Model
+class Seo extends Model
 {
     use SoftDeletes;
 
@@ -14,7 +14,7 @@ class Subway extends Model
      *
      * @var string
      */
-    protected $table = 'subways';
+    protected $table = 'seos';
 
     /**
      * The attributes that are mass assignable.
@@ -22,8 +22,11 @@ class Subway extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'slug',
-        'name',
+        'title',
+        'description',
+        'meta_tags',
+        'other_codes',
+        'page',
     ];
 
     /**
@@ -38,9 +41,9 @@ class Subway extends Model
     /**
      * Relations
      */
-    // Subways may have many properties related to them
-    public function properties()
+    // SEO, çoğu zaman bir sayfa ile ilişkilendirilebilir. İlgili sayfa modeli ile ilişki kurmak istenirse:
+    public function pageable()
     {
-        return $this->hasMany(Property::class);
+        return $this->morphTo();
     }
 }

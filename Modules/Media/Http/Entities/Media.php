@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Base\Http\Entities;
+namespace Modules\Media\Http\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Subway extends Model
+class Media extends Model
 {
     use SoftDeletes;
 
@@ -14,7 +14,7 @@ class Subway extends Model
      *
      * @var string
      */
-    protected $table = 'subways';
+    protected $table = 'media';
 
     /**
      * The attributes that are mass assignable.
@@ -22,8 +22,9 @@ class Subway extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'slug',
-        'name',
+        'image_path',
+        'imageable_id',
+        'imageable_type',
     ];
 
     /**
@@ -36,11 +37,10 @@ class Subway extends Model
     ];
 
     /**
-     * Relations
+     * Define the polymorphic relationship.
      */
-    // Subways may have many properties related to them
-    public function properties()
+    public function imageable()
     {
-        return $this->hasMany(Property::class);
+        return $this->morphTo();
     }
 }
