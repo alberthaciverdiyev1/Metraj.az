@@ -8,5 +8,7 @@
     "User": true,
     "Realtor": true,
     "Indicator": true,
-    "Media": true
+    "Media": true,
+    "Seo": true,
+    "Keyword": true
 }
