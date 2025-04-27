@@ -4,11 +4,11 @@ namespace Modules\Base\Http\Controllers;
 
 use AllowDynamicProperties;
 use App\Http\Controllers\Controller;
-use Modules\Base\Enums\BodyType;
+use Modules\Base\Enums\PropertyType;
 use Modules\Base\Enums\Currency;
-use Modules\Base\Enums\FuelType;
+use Modules\Base\Enums\RepairType;
 use Modules\Base\Enums\Gear;
-use Modules\Base\Enums\GearBox;
+use Modules\Base\Enums\RoomCount;
 
 #[AllowDynamicProperties] class EnumController extends Controller
 {
@@ -28,7 +28,7 @@ use Modules\Base\Enums\GearBox;
 
     public function fuelTypes()
     {
-        $this->fuel_types = collect(FuelType::cases())->map(function (FuelType $type) {
+        $this->fuel_types = collect(RepairType::cases())->map(function (RepairType $type) {
             return [
                 'key' => $type->name,
                 'value' => $type->value,
@@ -52,7 +52,7 @@ use Modules\Base\Enums\GearBox;
     }
     public function gearBox()
     {
-        $this->gearbox = collect(GearBox::cases())->map(function (GearBox $gear) {
+        $this->gearbox = collect(RoomCount::cases())->map(function (RoomCount $gear) {
             return [
                 'key' => $gear->name,
                 'value' => $gear->value,
@@ -64,7 +64,7 @@ use Modules\Base\Enums\GearBox;
     }
     public function bodyTypes()
     {
-        $this->body_types = collect(BodyType::cases())->map(function (BodyType $type) {
+        $this->body_types = collect(PropertyType::cases())->map(function (PropertyType $type) {
             return [
                 'key' => $type->name,
                 'value' => $type->value,
