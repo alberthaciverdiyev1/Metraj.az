@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\Base\Http\Entities\Subway;
 use Modules\City\Http\Entities\City;
 use Modules\District\Http\Entities\District;
+use Modules\Keyword\Http\Entities\Keyword;
 use Modules\Town\Http\Entities\Town;
 
 class KeywordFactory extends Factory
 {
+    protected $model = Keyword::class;
     public function definition(): array
     {
         return [

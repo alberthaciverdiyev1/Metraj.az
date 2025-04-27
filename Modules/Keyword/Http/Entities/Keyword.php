@@ -2,6 +2,7 @@
 
 namespace Modules\Keyword\Http\Entities;
 
+use Database\Factories\KeywordFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -75,5 +76,10 @@ class Keyword extends Model
     public function subway()
     {
         return $this->belongsTo(\Modules\Base\Http\Entities\Subway::class);
+    }
+
+    public static function newFactory(): KeywordFactory
+    {
+        return KeywordFactory::new();
     }
 }

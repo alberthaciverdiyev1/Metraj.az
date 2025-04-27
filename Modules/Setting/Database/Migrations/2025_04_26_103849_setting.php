@@ -35,6 +35,8 @@ return new class extends Migration {
             $table->longText('terms_and_conditions')->nullable();
             $table->longText('privacy_and_policy')->nullable();
 
+            $table->timestamps();
+
         });
     }
 

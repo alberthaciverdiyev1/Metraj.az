@@ -20,8 +20,6 @@ class SettingFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'phone_1' => $this->faker->phoneNumber,
             'phone_2' => $this->faker->phoneNumber,
-            'phone_3' => $this->faker->phoneNumber,
-            'phone_4' => $this->faker->phoneNumber,
             'address' => $this->faker->address,
             'google_map_url' => $this->faker->url,
             'whatsapp_number' => $this->faker->phoneNumber,

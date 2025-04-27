@@ -15,6 +15,6 @@ use Illuminate\Http\Request;
 
 
 Route::middleware('auth:api')->group(function () {
-    Route::resource('/{setting}', \Modules\{Setting}\Http\Controllers\{Setting}Controller::class);
+    Route::resource('/setting', \Modules\Setting\Http\Controllers\SettingController::class);
 });
 

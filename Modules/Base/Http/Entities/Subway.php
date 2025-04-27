@@ -2,12 +2,14 @@
 
 namespace Modules\Base\Http\Entities;
 
+use Database\Factories\SubwayFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Subway extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes,HasFactory;
 
     /**
      * The table associated with the model.
@@ -42,5 +44,9 @@ class Subway extends Model
     public function properties()
     {
         return $this->hasMany(Property::class);
+    }
+
+    public static function newFactory(): SubwayFactory{
+        return SubwayFactory::new();
     }
 }

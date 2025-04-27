@@ -2,6 +2,8 @@
 
 namespace Modules\Setting\Http\Entities;
 
+use Database\Factories\SettingFactory;
+use Database\Factories\SubwayFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -39,14 +41,17 @@ class Setting extends Model
         'privacy_and_policy'
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
     protected $attributes = [
         'is_offline' => false,
     ];
+
+    public static function newFactory(): SettingFactory{
+        return SettingFactory::new();
+    }
 }
 

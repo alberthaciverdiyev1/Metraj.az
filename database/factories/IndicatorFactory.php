@@ -3,9 +3,12 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Indicator\Http\Entities\Indicator;
 
 class IndicatorFactory extends Factory
 {
+    protected $model = Indicator::class;
+
     public function definition(): array
     {
         return [
