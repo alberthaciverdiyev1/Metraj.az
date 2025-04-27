@@ -6,5 +6,7 @@
     "District": true,
     "Town": true,
     "User": true,
-    "Realtor": true
+    "Realtor": true,
+    "Indicator": true,
+    "Media": true
 }
