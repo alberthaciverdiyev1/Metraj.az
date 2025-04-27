@@ -22,8 +22,10 @@ return new class extends Migration
 
             $table->string('ad_type')->nullable();
             $table->string('property_type')->nullable();
-
-
+            $table->integer('number_of_rooms')->nullable();
+            $table->integer('number_of_floors')->nullable();
+            $table->boolean('in_credit')->default(false);
+            $table->boolean('document')->default(false);
 
             $table->timestamps();
             $table->softDeletes();

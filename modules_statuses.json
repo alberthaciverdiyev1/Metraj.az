@@ -10,5 +10,6 @@
     "Indicator": true,
     "Media": true,
     "Seo": true,
-    "Keyword": true
+    "Keyword": true,
+    "Property": true
 }
