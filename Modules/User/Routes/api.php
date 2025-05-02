@@ -13,8 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('user', [\Modules\User\Http\Controllers\UserController::class, 'list']);
 
-Route::middleware('auth:api')->group(function () {
-    Route::resource('/user', \Modules\User\Http\Controllers\UserController::class);
-});
+//Route::middleware('auth:api')->group(function () {
+//    Route::resource('/user', \Modules\User\Http\Controllers\UserController::class);
+//});
 

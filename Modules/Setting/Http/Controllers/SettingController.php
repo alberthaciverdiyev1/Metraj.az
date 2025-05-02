@@ -6,29 +6,30 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Nwidart\Modules\Facades\Module;
+use Modules\Setting\Http\Entities\Setting;
 
 class SettingController extends Controller
 {
 
     public function __construct()
     {
-        if (Module::find('Roles')->isEnabled()) {
-            $this->middleware('permission:view settings')->only('index');
-            $this->middleware('permission:create setting')->only('create');
-            $this->middleware('permission:store setting')->only('store');
-            $this->middleware('permission:edit setting')->only('edit');
-            $this->middleware('permission:update setting')->only('update');
-            $this->middleware('permission:destroy setting')->only('destroy');
-        }
+//        if (Module::find('Roles')->isEnabled()) {
+//            $this->middleware('permission:view settings')->only('index');
+//            $this->middleware('permission:create setting')->only('create');
+//            $this->middleware('permission:store setting')->only('store');
+//            $this->middleware('permission:edit setting')->only('edit');
+//            $this->middleware('permission:update setting')->only('update');
+//            $this->middleware('permission:destroy setting')->only('destroy');
+//        }
     }
 
 
     /**
     * Display a listing of the resource.
     */
-    public function index()
+    public function list()
     {
-        return view('setting::index');
+        return Setting::first();
     }
 
     /**

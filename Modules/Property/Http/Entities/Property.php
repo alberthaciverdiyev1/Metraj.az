@@ -95,12 +95,12 @@ class Property extends Model
 
     public function user()
     {
-        return $this->belongsTo(\App\Models\User::class);
+        return $this->belongsTo(\Modules\User\Http\Entities\User::class);
     }
 
     public function realtor()
     {
-        return $this->belongsTo(\App\Models\User::class, 'realtor_id');
+        return $this->belongsTo(\Modules\User\Http\Entities\User::class, 'realtor_id');
     }
 
     public function media()

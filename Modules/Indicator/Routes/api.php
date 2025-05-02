@@ -14,7 +14,11 @@ use Illuminate\Http\Request;
 */
 
 
-Route::middleware('auth:api')->group(function () {
-    Route::resource('/indicator', \Modules\Indicator\Http\Controllers\IndicatorController::class);
-});
+Route::get('indicator', [\Modules\Indicator\Http\Controllers\IndicatorController::class, 'list']);
+
+
+
+//Route::middleware('auth:api')->group(function () {
+//    Route::resource('/indicator', \Modules\Indicator\Http\Controllers\IndicatorController::class);
+//});
 

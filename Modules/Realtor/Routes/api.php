@@ -13,8 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('realtor', [\Modules\Realtor\Http\Controllers\RealtorController::class, 'list']);
 
-Route::middleware('auth:api')->group(function () {
-    Route::resource('/realtor', \Modules\Realtor\Http\Controllers\RealtorController::class);
-});
+
+//Route::middleware('auth:api')->group(function () {
+//    Route::resource('/realtor', \Modules\Realtor\Http\Controllers\RealtorController::class);
+//});
 

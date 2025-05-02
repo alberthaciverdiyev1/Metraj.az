@@ -5,6 +5,7 @@ namespace Modules\Realtor\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Realtor\Http\Entities\Realtor;
 use Nwidart\Modules\Facades\Module;
 
 class RealtorController extends Controller
@@ -12,23 +13,24 @@ class RealtorController extends Controller
 
     public function __construct()
     {
-        if (Module::find('Roles')->isEnabled()) {
-            $this->middleware('permission:view realtors')->only('index');
-            $this->middleware('permission:create realtor')->only('create');
-            $this->middleware('permission:store realtor')->only('store');
-            $this->middleware('permission:edit realtor')->only('edit');
-            $this->middleware('permission:update realtor')->only('update');
-            $this->middleware('permission:destroy realtor')->only('destroy');
-        }
+//        if (Module::find('Roles')->isEnabled()) {
+//            $this->middleware('permission:view realtors')->only('index');
+//            $this->middleware('permission:create realtor')->only('create');
+//            $this->middleware('permission:store realtor')->only('store');
+//            $this->middleware('permission:edit realtor')->only('edit');
+//            $this->middleware('permission:update realtor')->only('update');
+//            $this->middleware('permission:destroy realtor')->only('destroy');
+//        }
     }
 
 
     /**
     * Display a listing of the resource.
     */
-    public function index()
+    public function list()
     {
-        return view('realtor::index');
+        $realtors = Realtor::all();
+        return $realtors;
     }
 
     /**

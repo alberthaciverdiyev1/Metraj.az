@@ -13,8 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('property', [\Modules\Property\Http\Controllers\PropertyController::class, 'list']);
 
-Route::middleware('auth:api')->group(function () {
-    Route::resource('/property', \Modules\Property\Http\Controllers\PropertyController::class);
-});
+
+
+//Route::middleware('auth:api')->group(function () {
+//    Route::resource('/property', \Modules\Property\Http\Controllers\PropertyController::class);
+//});
 

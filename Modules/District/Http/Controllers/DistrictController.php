@@ -5,6 +5,7 @@ namespace Modules\District\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\District\Http\Entities\District;
 use Nwidart\Modules\Facades\Module;
 
 class DistrictController extends Controller
@@ -12,23 +13,24 @@ class DistrictController extends Controller
 
     public function __construct()
     {
-        if (Module::find('Roles')->isEnabled()) {
-            $this->middleware('permission:view districts')->only('index');
-            $this->middleware('permission:create district')->only('create');
-            $this->middleware('permission:store district')->only('store');
-            $this->middleware('permission:edit district')->only('edit');
-            $this->middleware('permission:update district')->only('update');
-            $this->middleware('permission:destroy district')->only('destroy');
-        }
+//        if (Module::find('Roles')->isEnabled()) {
+//            $this->middleware('permission:view districts')->only('index');
+//            $this->middleware('permission:create district')->only('create');
+//            $this->middleware('permission:store district')->only('store');
+//            $this->middleware('permission:edit district')->only('edit');
+//            $this->middleware('permission:update district')->only('update');
+//            $this->middleware('permission:destroy district')->only('destroy');
+//        }
     }
 
 
     /**
     * Display a listing of the resource.
     */
-    public function index()
+    public function list()
     {
-        return view('district::index');
+        $districts = District::with('city')->get();
+        return $districts;
     }
 
     /**

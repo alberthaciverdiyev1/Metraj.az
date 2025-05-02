@@ -5,30 +5,32 @@ namespace Modules\Town\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Town\Http\Entities\Town;
 use Nwidart\Modules\Facades\Module;
 
 class TownController extends Controller
 {
 
-    public function __construct()
-    {
-        if (Module::find('Roles')->isEnabled()) {
-            $this->middleware('permission:view towns')->only('index');
-            $this->middleware('permission:create town')->only('create');
-            $this->middleware('permission:store town')->only('store');
-            $this->middleware('permission:edit town')->only('edit');
-            $this->middleware('permission:update town')->only('update');
-            $this->middleware('permission:destroy town')->only('destroy');
-        }
-    }
+//    public function __construct()
+//    {
+//        if (Module::find('Roles')->isEnabled()) {
+//            $this->middleware('permission:view towns')->only('index');
+//            $this->middleware('permission:create town')->only('create');
+//            $this->middleware('permission:store town')->only('store');
+//            $this->middleware('permission:edit town')->only('edit');
+//            $this->middleware('permission:update town')->only('update');
+//            $this->middleware('permission:destroy town')->only('destroy');
+//        }
+//    }
 
 
     /**
     * Display a listing of the resource.
     */
-    public function index()
+    public function list()
     {
-        return view('town::index');
+        $towns = Town::with('district')->get();
+        return $towns;
     }
 
     /**

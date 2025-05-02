@@ -6,29 +6,32 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Nwidart\Modules\Facades\Module;
-
+use Modules\Property\Http\Entities\Property;
 class PropertyController extends Controller
 {
 
     public function __construct()
     {
-        if (Module::find('Roles')->isEnabled()) {
-            $this->middleware('permission:view propertys')->only('index');
-            $this->middleware('permission:create property')->only('create');
-            $this->middleware('permission:store property')->only('store');
-            $this->middleware('permission:edit property')->only('edit');
-            $this->middleware('permission:update property')->only('update');
-            $this->middleware('permission:destroy property')->only('destroy');
-        }
+//        if (Module::find('Roles')->isEnabled()) {
+//            $this->middleware('permission:view propertys')->only('index');
+//            $this->middleware('permission:create property')->only('create');
+//            $this->middleware('permission:store property')->only('store');
+//            $this->middleware('permission:edit property')->only('edit');
+//            $this->middleware('permission:update property')->only('update');
+//            $this->middleware('permission:destroy property')->only('destroy');
+//        }
     }
 
 
     /**
     * Display a listing of the resource.
     */
-    public function index()
+    public function list()
     {
-        return view('property::index');
+        $properties = Property::with([
+            'city','town','district','subway','user','realtor','media'
+        ])->get();
+        return $properties;
     }
 
     /**
