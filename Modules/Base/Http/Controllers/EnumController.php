@@ -3,11 +3,10 @@
 namespace Modules\Base\Http\Controllers;
 
 use AllowDynamicProperties;
-use App\Http\Controllers\Controller;
 use Modules\Base\Enums\PropertyType;
 use Modules\Base\Enums\Currency;
 use Modules\Base\Enums\RepairType;
-use Modules\Base\Enums\Gear;
+use Illuminate\Routing\Controller;
 use Modules\Base\Enums\RoomCount;
 
 #[AllowDynamicProperties] class EnumController extends Controller
@@ -26,9 +25,9 @@ use Modules\Base\Enums\RoomCount;
         return response()->json($currencies);
     }
 
-    public function fuelTypes()
+    public function propertyTypes()
     {
-        $this->fuel_types = collect(RepairType::cases())->map(function (RepairType $type) {
+        $this->property_types = collect(PropertyType::cases())->map(function (PropertyType $type) {
             return [
                 'key' => $type->name,
                 'value' => $type->value,
@@ -36,11 +35,11 @@ use Modules\Base\Enums\RoomCount;
             ];
         });
 
-        return response()->json($this->fuel_types);
+        return response()->json($this->property_types);
     }
-    public function gears()
+    public function repairTypes()
     {
-        $this->gears = collect(Gear::cases())->map(function (Gear $gear) {
+        $this->repairTypes = collect(RepairType::cases())->map(function (RepairType $gear) {
             return [
                 'key' => $gear->name,
                 'value' => $gear->value,
@@ -48,11 +47,11 @@ use Modules\Base\Enums\RoomCount;
             ];
         });
 
-        return response()->json($this->gears);
+        return response()->json($this->repairTypes);
     }
-    public function gearBox()
+    public function roomCount()
     {
-        $this->gearbox = collect(RoomCount::cases())->map(function (RoomCount $gear) {
+        $this->roomCount = collect(RoomCount::cases())->map(function (RoomCount $gear) {
             return [
                 'key' => $gear->name,
                 'value' => $gear->value,
@@ -60,18 +59,6 @@ use Modules\Base\Enums\RoomCount;
             ];
         });
 
-        return response()->json($this->gearbox);
-    }
-    public function bodyTypes()
-    {
-        $this->body_types = collect(PropertyType::cases())->map(function (PropertyType $type) {
-            return [
-                'key' => $type->name,
-                'value' => $type->value,
-                'label' => $type->label(),
-            ];
-        });
-
-        return response()->json($this->body_types);
+        return response()->json($this->roomCount);
     }
 }
