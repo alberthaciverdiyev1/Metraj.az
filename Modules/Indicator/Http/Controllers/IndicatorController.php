@@ -5,6 +5,7 @@ namespace Modules\Indicator\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Indicator\Http\Entities\Indicator;
 use Nwidart\Modules\Facades\Module;
 
 class IndicatorController extends Controller
@@ -12,23 +13,24 @@ class IndicatorController extends Controller
 
     public function __construct()
     {
-        if (Module::find('Roles')->isEnabled()) {
-            $this->middleware('permission:view indicators')->only('index');
-            $this->middleware('permission:create indicator')->only('create');
-            $this->middleware('permission:store indicator')->only('store');
-            $this->middleware('permission:edit indicator')->only('edit');
-            $this->middleware('permission:update indicator')->only('update');
-            $this->middleware('permission:destroy indicator')->only('destroy');
-        }
+//        if (Module::find('Roles')->isEnabled()) {
+//            $this->middleware('permission:view indicators')->only('index');
+//            $this->middleware('permission:create indicator')->only('create');
+//            $this->middleware('permission:store indicator')->only('store');
+//            $this->middleware('permission:edit indicator')->only('edit');
+//            $this->middleware('permission:update indicator')->only('update');
+//            $this->middleware('permission:destroy indicator')->only('destroy');
+//        }
     }
 
 
     /**
     * Display a listing of the resource.
     */
-    public function index()
+    public function list()
     {
-        return view('indicator::index');
+        $indicators = Indicator::all();
+        return $indicators;
     }
 
     /**

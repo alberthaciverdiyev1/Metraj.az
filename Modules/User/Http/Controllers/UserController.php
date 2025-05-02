@@ -6,29 +6,30 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Nwidart\Modules\Facades\Module;
-
+use Modules\User\Http\Entities\User;
 class UserController extends Controller
 {
 
     public function __construct()
     {
-        if (Module::find('Roles')->isEnabled()) {
-            $this->middleware('permission:view users')->only('index');
-            $this->middleware('permission:create user')->only('create');
-            $this->middleware('permission:store user')->only('store');
-            $this->middleware('permission:edit user')->only('edit');
-            $this->middleware('permission:update user')->only('update');
-            $this->middleware('permission:destroy user')->only('destroy');
-        }
+//        if (Module::find('Roles')->isEnabled()) {
+//            $this->middleware('permission:view users')->only('index');
+//            $this->middleware('permission:create user')->only('create');
+//            $this->middleware('permission:store user')->only('store');
+//            $this->middleware('permission:edit user')->only('edit');
+//            $this->middleware('permission:update user')->only('update');
+//            $this->middleware('permission:destroy user')->only('destroy');
+//        }
     }
 
 
     /**
     * Display a listing of the resource.
     */
-    public function index()
+    public function list()
     {
-        return view('user::index');
+        $users = User::all();
+        return $users;
     }
 
     /**

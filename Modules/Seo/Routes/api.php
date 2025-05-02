@@ -13,8 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('seo', [\Modules\Seo\Http\Controllers\SeoController::class, 'list']);
 
-Route::middleware('auth:api')->group(function () {
-    Route::resource('/seo', \Modules\Seo\Http\Controllers\SeoController::class);
-});
+
+//Route::middleware('auth:api')->group(function () {
+//    Route::resource('/seo', \Modules\Seo\Http\Controllers\SeoController::class);
+//});
 

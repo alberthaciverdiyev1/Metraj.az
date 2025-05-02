@@ -13,7 +13,7 @@ class BaseController extends Controller
     /**
     * Display a listing of the resource.
     */
-    public function index()
+    public function sub()
     {
         return view('base::index');
     }

@@ -13,8 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('setting', [\Modules\Setting\Http\Controllers\SettingController::class, 'list']);
 
-Route::middleware('auth:api')->group(function () {
-    Route::resource('/setting', \Modules\Setting\Http\Controllers\SettingController::class);
-});
+
+//Route::middleware('auth:api')->group(function () {
+//    Route::resource('/setting', \Modules\Setting\Http\Controllers\SettingController::class);
+//});
 

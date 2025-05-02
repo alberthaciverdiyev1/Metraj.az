@@ -14,7 +14,11 @@ use Illuminate\Http\Request;
 */
 
 
-Route::middleware('auth:api')->group(function () {
-    Route::resource('/keyword', \Modules\Keyword\Http\Controllers\KeywordController::class);
-});
+Route::get('keyword', [\Modules\Keyword\Http\Controllers\KeywordController::class, 'list']);
+
+
+
+//Route::middleware('auth:api')->group(function () {
+//    Route::resource('/keyword', \Modules\Keyword\Http\Controllers\KeywordController::class);
+//});
 

@@ -1,37 +1,23 @@
 <?php
 
-namespace Modules\Keyword\Http\Controllers;
+namespace Modules\Base\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Keyword\Http\Entities\Keyword;
+use Modules\Base\Http\Entities\Subway;
 use Nwidart\Modules\Facades\Module;
 
-class KeywordController extends Controller
+class SubwayController extends Controller
 {
-
-    public function __construct()
-    {
-//        if (Module::find('Roles')->isEnabled()) {
-//            $this->middleware('permission:view keywords')->only('index');
-//            $this->middleware('permission:create keyword')->only('create');
-//            $this->middleware('permission:store keyword')->only('store');
-//            $this->middleware('permission:edit keyword')->only('edit');
-//            $this->middleware('permission:update keyword')->only('update');
-//            $this->middleware('permission:destroy keyword')->only('destroy');
-//        }
-    }
-
 
     /**
     * Display a listing of the resource.
     */
     public function list()
     {
-        $keywords = Keyword::with(['city','town','district','subway'])->get();
-
-        return $keywords;
+        $subways = Subway::all();
+        return $subways ;
     }
 
     /**
@@ -39,7 +25,7 @@ class KeywordController extends Controller
      */
     public function create()
     {
-        return view('keyword::create');
+        return view('base::create');
     }
 
     /**
@@ -62,7 +48,7 @@ class KeywordController extends Controller
      */
     public function show()
     {
-        return view('keyword::show');
+        return view('base::show');
     }
 
     /**
@@ -70,7 +56,7 @@ class KeywordController extends Controller
      */
     public function edit()
     {
-        return view('keyword::edit');
+        return view('base::edit');
     }
 
     /**

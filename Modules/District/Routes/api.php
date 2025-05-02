@@ -13,8 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('district', [\Modules\District\Http\Controllers\DistrictController::class, 'list']);
 
-Route::middleware('auth:api')->group(function () {
-    Route::resource('/district', \Modules\District\Http\Controllers\DistrictController::class);
-});
+//Route::middleware('auth:api')->group(function () {
+//    Route::resource('/district', \Modules\District\Http\Controllers\DistrictController::class);
+//});
 

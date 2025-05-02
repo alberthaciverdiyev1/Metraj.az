@@ -36,6 +36,11 @@ Route::prefix('gearbox')->group(function () {
     Route::get('/list', [\Modules\Base\Http\Controllers\EnumController::class, 'gearBox']);
 });
 
+Route::prefix('subway')->group(function () {
+    Route::get('/', [\Modules\Base\Http\Controllers\SubwayController::class, 'list']);
+});
+
+
 Route::middleware('auth:api')->get('/base', function (Request $request) {
     return $request->user();
 });
