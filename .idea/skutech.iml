@@ -47,6 +47,67 @@
       <sourceFolder url="file://$MODULE_DIR$/Modules/WebUI/app" isTestSource="false" packagePrefix="Modules\WebUI\" />
       <sourceFolder url="file://$MODULE_DIR$/Modules/WebUI/database/factories" isTestSource="false" packagePrefix="Modules\WebUI\Database\Factories\" />
       <sourceFolder url="file://$MODULE_DIR$/Modules/WebUI/database/seeders" isTestSource="false" packagePrefix="Modules\WebUI\Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules" isTestSource="false" packagePrefix="Modules\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Base/app" isTestSource="false" packagePrefix="Modules\Base\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Base/database/factories" isTestSource="false" packagePrefix="Modules\Base\Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Base/database/seeders" isTestSource="false" packagePrefix="Modules\Base\Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Base/tests" isTestSource="true" packagePrefix="Modules\Base\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/City/app" isTestSource="false" packagePrefix="Modules\City\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/City/database/factories" isTestSource="false" packagePrefix="Modules\City\Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/City/database/seeders" isTestSource="false" packagePrefix="Modules\City\Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/City/tests" isTestSource="true" packagePrefix="Modules\City\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/District/app" isTestSource="false" packagePrefix="Modules\District\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/District/database/factories" isTestSource="false" packagePrefix="Modules\District\Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/District/database/seeders" isTestSource="false" packagePrefix="Modules\District\Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/District/tests" isTestSource="true" packagePrefix="Modules\District\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Feature/app" isTestSource="false" packagePrefix="Modules\Feature\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Feature/database/factories" isTestSource="false" packagePrefix="Modules\Feature\Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Feature/database/seeders" isTestSource="false" packagePrefix="Modules\Feature\Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Feature/tests" isTestSource="true" packagePrefix="Modules\Feature\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Indicator/app" isTestSource="false" packagePrefix="Modules\Indicator\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Indicator/database/factories" isTestSource="false" packagePrefix="Modules\Indicator\Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Indicator/database/seeders" isTestSource="false" packagePrefix="Modules\Indicator\Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Indicator/tests" isTestSource="true" packagePrefix="Modules\Indicator\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Keyword/app" isTestSource="false" packagePrefix="Modules\Keyword\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Keyword/database/factories" isTestSource="false" packagePrefix="Modules\Keyword\Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Keyword/database/seeders" isTestSource="false" packagePrefix="Modules\Keyword\Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Keyword/tests" isTestSource="true" packagePrefix="Modules\Keyword\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Media/app" isTestSource="false" packagePrefix="Modules\Media\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Media/database/factories" isTestSource="false" packagePrefix="Modules\Media\Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Media/database/seeders" isTestSource="false" packagePrefix="Modules\Media\Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Media/tests" isTestSource="true" packagePrefix="Modules\Media\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Price/app" isTestSource="false" packagePrefix="Modules\Price\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Price/database/factories" isTestSource="false" packagePrefix="Modules\Price\Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Price/database/seeders" isTestSource="false" packagePrefix="Modules\Price\Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Price/tests" isTestSource="true" packagePrefix="Modules\Price\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Property/app" isTestSource="false" packagePrefix="Modules\Property\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Property/database/factories" isTestSource="false" packagePrefix="Modules\Property\Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Property/database/seeders" isTestSource="false" packagePrefix="Modules\Property\Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Property/tests" isTestSource="true" packagePrefix="Modules\Property\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Realtor/app" isTestSource="false" packagePrefix="Modules\Realtor\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Realtor/database/factories" isTestSource="false" packagePrefix="Modules\Realtor\Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Realtor/database/seeders" isTestSource="false" packagePrefix="Modules\Realtor\Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Realtor/tests" isTestSource="true" packagePrefix="Modules\Realtor\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Seo/app" isTestSource="false" packagePrefix="Modules\Seo\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Seo/database/factories" isTestSource="false" packagePrefix="Modules\Seo\Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Seo/database/seeders" isTestSource="false" packagePrefix="Modules\Seo\Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Seo/tests" isTestSource="true" packagePrefix="Modules\Seo\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Setting/app" isTestSource="false" packagePrefix="Modules\Setting\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Setting/database/factories" isTestSource="false" packagePrefix="Modules\Setting\Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Setting/database/seeders" isTestSource="false" packagePrefix="Modules\Setting\Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Setting/tests" isTestSource="true" packagePrefix="Modules\Setting\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Town/app" isTestSource="false" packagePrefix="Modules\Town\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Town/database/factories" isTestSource="false" packagePrefix="Modules\Town\Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Town/database/seeders" isTestSource="false" packagePrefix="Modules\Town\Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/Town/tests" isTestSource="true" packagePrefix="Modules\Town\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/User/app" isTestSource="false" packagePrefix="Modules\User\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/User/database/factories" isTestSource="false" packagePrefix="Modules\User\Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/User/database/seeders" isTestSource="false" packagePrefix="Modules\User\Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/Modules/User/tests" isTestSource="true" packagePrefix="Modules\User\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/app" isTestSource="false" packagePrefix="App\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/database/factories" isTestSource="false" packagePrefix="Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/database/seeders" isTestSource="false" packagePrefix="Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/API/tests" isTestSource="true" packagePrefix="Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/Modules/WebUI/tests" isTestSource="true" packagePrefix="Modules\WebUI\Tests\" />
       <excludeFolder url="file://$MODULE_DIR$/storage/app" />
       <excludeFolder url="file://$MODULE_DIR$/storage/framework" />
@@ -167,6 +228,123 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/livewire/livewire" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/php-debugbar/php-debugbar" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/inertiajs/inertia-laravel" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/barryvdh/laravel-debugbar" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/brick/math" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/carbonphp/carbon-doctrine-types" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/dflydev/dot-access-data" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/doctrine/inflector" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/doctrine/lexer" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/dragonmantank/cron-expression" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/egulias/email-validator" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/fakerphp/faker" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/filp/whoops" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/fruitcake/php-cors" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/graham-campbell/result-type" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/guzzlehttp/guzzle" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/guzzlehttp/promises" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/guzzlehttp/psr7" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/guzzlehttp/uri-template" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/hamcrest/hamcrest-php" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/inertiajs/inertia-laravel" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/laravel/framework" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/laravel/pail" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/laravel/pint" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/laravel/prompts" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/laravel/sail" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/laravel/serializable-closure" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/laravel/tinker" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/league/commonmark" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/league/config" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/league/flysystem" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/league/flysystem-local" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/league/mime-type-detection" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/league/uri" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/league/uri-interfaces" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/livewire/livewire" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/mockery/mockery" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/monolog/monolog" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/myclabs/deep-copy" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/nesbot/carbon" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/nette/schema" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/nette/utils" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/nikic/php-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/nunomaduro/collision" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/nunomaduro/termwind" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/nwidart/laravel-modules" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/phar-io/manifest" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/phar-io/version" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/php-debugbar/php-debugbar" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/phpoption/phpoption" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/phpunit/php-code-coverage" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/phpunit/php-file-iterator" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/phpunit/php-invoker" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/phpunit/php-text-template" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/phpunit/php-timer" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/phpunit/phpunit" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/psr/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/psr/container" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/psr/event-dispatcher" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/psr/http-client" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/psr/http-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/psr/http-message" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/psr/simple-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/psy/psysh" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/ralouphie/getallheaders" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/ramsey/collection" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/ramsey/uuid" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/sebastian/cli-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/sebastian/code-unit" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/sebastian/code-unit-reverse-lookup" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/sebastian/comparator" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/sebastian/complexity" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/sebastian/diff" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/sebastian/environment" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/sebastian/exporter" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/sebastian/global-state" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/sebastian/lines-of-code" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/sebastian/object-enumerator" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/sebastian/object-reflector" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/sebastian/recursion-context" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/sebastian/type" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/sebastian/version" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/staabm/side-effects-detector" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/console" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/css-selector" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/deprecation-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/error-handler" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/event-dispatcher" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/event-dispatcher-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/finder" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/http-foundation" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/http-kernel" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/mailer" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/mime" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/polyfill-ctype" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/polyfill-intl-grapheme" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/polyfill-intl-idn" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/polyfill-intl-normalizer" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/polyfill-mbstring" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/polyfill-php80" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/polyfill-php83" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/polyfill-uuid" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/process" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/routing" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/service-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/string" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/translation" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/translation-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/uid" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/var-dumper" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/symfony/yaml" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/theseer/tokenizer" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/tijsverkoyen/css-to-inline-styles" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/vlucas/phpdotenv" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/voku/portable-ascii" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/API/vendor/wikimedia/composer-merge-plugin" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
