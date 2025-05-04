@@ -103,7 +103,9 @@ class WebUIServiceProvider extends ServiceProvider
     public function registerViews(): void
     {
         $viewPath = resource_path('views/modules/'.$this->nameLower);
-        $sourcePath = module_path($this->name, '');
+//        $sourcePath = module_path($this->name, '');
+        $sourcePath = module_path($this->name, 'Resources');
+
 
         $this->publishes([$sourcePath => $viewPath], ['views', $this->nameLower.'-module-views']);
 

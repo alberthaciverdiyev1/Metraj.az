@@ -1,0 +1,14 @@
+{
+  "Resources/react/src/main.css": {
+    "file": "assets/main-69e04c16.css",
+    "src": "Resources/react/src/main.css"
+  },
+  "Resources/react/src/main.jsx": {
+    "css": [
+      "assets/main-69e04c16.css"
+    ],
+    "file": "assets/main-ee415aa4.js",
+    "isEntry": true,
+    "src": "Resources/react/src/main.jsx"
+  }
+}

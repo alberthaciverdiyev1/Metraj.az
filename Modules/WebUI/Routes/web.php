@@ -16,7 +16,6 @@ use Illuminate\Http\Request;
 
 
 Route::get('/',function(){
-//    return view('welcome');
-    return 'welcome to metraj.az';
+    return view('webui::react.index');
 });
 

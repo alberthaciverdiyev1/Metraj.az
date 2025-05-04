@@ -34,22 +34,12 @@ class PropertyController extends Controller
         return $properties;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('property::create');
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function add(Request $request)
     {
         try {
 
-            //TODO:STORE FUNCTIONS
+            Property::create();
 
             return response()->json(__('Data successfully created!'));
         } catch (Exception $e) {
