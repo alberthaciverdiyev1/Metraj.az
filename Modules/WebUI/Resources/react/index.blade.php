@@ -10,7 +10,7 @@
 <body>
 <div id="root"></div>
 @vite('Modules/WebUI/Resources/react/src/main.jsx')
-{{--<script type="module" src="./src/main.jsx"></script>--}}
+<script type="module" src="./src/main.jsx"></script>
 
 </body>
 </html>
