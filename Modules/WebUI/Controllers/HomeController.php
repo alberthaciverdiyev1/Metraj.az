@@ -12,7 +12,13 @@ class HomeController extends Controller
     */
     public function index()
     {
-        return view('webui::index');
+        $css = [
+            'home.css',
+        ];
+        $js = [
+            'home.js',
+        ];
+        return view('webui::home.index', compact('css', 'js'));
     }
 
 }

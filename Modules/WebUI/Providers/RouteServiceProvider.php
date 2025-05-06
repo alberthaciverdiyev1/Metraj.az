@@ -11,8 +11,20 @@ class RouteServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        parent::boot();
+        $cssSource = module_path('WebUI', 'Resources/css');
+        $jsSource = module_path('WebUI', 'Resources/js');
+        $cssTarget = public_path('webui/css');
+        $jsTarget = public_path('webui/js');
+
+        if (!file_exists($cssTarget)) {
+            symlink($cssSource, $cssTarget);
+        }
+
+        if (!file_exists($jsTarget)) {
+            symlink($jsSource, $jsTarget);
+        }
     }
+
 
     public function map(): void
     {
