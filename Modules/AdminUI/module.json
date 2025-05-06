@@ -1,0 +1,11 @@
+{
+    "name": "AdminUI",
+    "alias": "adminui",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\AdminUI\\Providers\\AdminUIServiceProvider"
+    ],
+    "files": []
+}

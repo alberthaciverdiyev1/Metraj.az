@@ -1,24 +1,24 @@
 <?php
 
-namespace Modules\WebUI\Http\Controllers;
+namespace Modules\AdminUI\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Nwidart\Modules\Facades\Module;
 
-class WebUIController extends Controller
+class AdminUIController extends Controller
 {
 
     public function __construct()
     {
         if (Module::find('Roles')->isEnabled()) {
-            $this->middleware('permission:view webuis')->only('index');
-            $this->middleware('permission:create webui')->only('create');
-            $this->middleware('permission:store webui')->only('store');
-            $this->middleware('permission:edit webui')->only('edit');
-            $this->middleware('permission:update webui')->only('update');
-            $this->middleware('permission:destroy webui')->only('destroy');
+            $this->middleware('permission:view adminuis')->only('index');
+            $this->middleware('permission:create adminui')->only('create');
+            $this->middleware('permission:store adminui')->only('store');
+            $this->middleware('permission:edit adminui')->only('edit');
+            $this->middleware('permission:update adminui')->only('update');
+            $this->middleware('permission:destroy adminui')->only('destroy');
         }
     }
 
@@ -28,7 +28,7 @@ class WebUIController extends Controller
     */
     public function index()
     {
-        return view('webui::index');
+        return view('adminui::index');
     }
 
     /**
@@ -36,7 +36,7 @@ class WebUIController extends Controller
      */
     public function create()
     {
-        return view('webui::create');
+        return view('adminui::create');
     }
 
     /**
@@ -59,7 +59,7 @@ class WebUIController extends Controller
      */
     public function show()
     {
-        return view('webui::show');
+        return view('adminui::show');
     }
 
     /**
@@ -67,7 +67,7 @@ class WebUIController extends Controller
      */
     public function edit()
     {
-        return view('webui::edit');
+        return view('adminui::edit');
     }
 
     /**

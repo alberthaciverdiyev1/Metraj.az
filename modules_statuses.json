@@ -13,5 +13,6 @@
     "Keyword": true,
     "Property": true,
     "Setting": true,
-    "WebUI": true
+    "WebUI": true,
+    "AdminUI": true
 }

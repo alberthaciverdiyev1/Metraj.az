@@ -16,3 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
+
+//web: function () {
+//    require base_path('/Modules/WebUI/Routes/web.php');
+//    require base_path('/Modules/AdminUI/Routes/web.php');
+//},

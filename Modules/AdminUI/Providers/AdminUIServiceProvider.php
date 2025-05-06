@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\WebUI\Providers;
+namespace Modules\AdminUI\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -8,13 +8,13 @@ use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-class WebUIServiceProvider extends ServiceProvider
+class AdminUIServiceProvider extends ServiceProvider
 {
     use PathNamespace;
 
-    protected string $name = 'WebUI';
+    protected string $name = 'AdminUI';
 
-    protected string $nameLower = 'webui';
+    protected string $nameLower = 'adminui';
 
     /**
      * Boot the application events.
@@ -26,6 +26,7 @@ class WebUIServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
+        $this->loadMigrationsFrom(module_path($this->name, 'Database/Migrations'));
     }
 
     /**
@@ -123,10 +124,10 @@ class WebUIServiceProvider extends ServiceProvider
     {
         $viewPath = resource_path('views/modules/'.$this->nameLower);
         $sourcePath = module_path($this->name, '');
+
         $this->publishes([$sourcePath => $viewPath], ['views', $this->nameLower.'-module-views']);
 
-//        $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->nameLower);
-        $this->loadViewsFrom(module_path($this->name, 'Resources/views'), $this->nameLower);
+        $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->nameLower);
 
         Blade::componentNamespace(config('modules.namespace').'\\' . $this->name . '\\View\\Components', $this->nameLower);
     }
