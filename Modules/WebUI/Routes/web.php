@@ -1,7 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
-use Modules\WebUI\Http\Controllers\HomeController;
+use Modules\WebUI\Controllers\HomeController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');

@@ -1,11 +1,8 @@
 <?php
 
-namespace Modules\WebUI\Http\Controllers;
+namespace Modules\WebUI\Controllers;
 
-use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Nwidart\Modules\Facades\Module;
 
 class HomeController extends Controller
 {
