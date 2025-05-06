@@ -12,5 +12,6 @@
     "Seo": true,
     "Keyword": true,
     "Property": true,
-    "Setting": true
+    "Setting": true,
+    "WebUI": true
 }
