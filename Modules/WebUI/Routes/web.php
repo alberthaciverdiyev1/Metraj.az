@@ -3,8 +3,12 @@
 use Modules\WebUI\Controllers\HomeController;
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-
+Route::domain(config('app.url'))->prefix(config('app.url'))->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+//    Route::controller(HomeController::class)->group(function () {
+//        Route::get('/', 'index')->name('home');
+//    });
+});
 //Route::controller(HomeController::class)->group(function () {
 //    Route::get('/', 'index')->name('home');
 //    Route::get('/contact-us', 'contact')->name('contact');

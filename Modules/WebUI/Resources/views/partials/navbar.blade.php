@@ -1,17 +1,3 @@
-<div class="preview__header bg-black">
-    <div class="preview__envato-logo">
-        <a class="header-envato_market" href="https://themeforest.net/item/proty-real-estate-html-template/55502374">Envato
-            Market</a>
-    </div>
-
-    <div id="js-preview__actions" class="preview__actions">
-        <div class="preview__action--buy">
-            <a class="header-buy-now e-btn--3d -color-primary"
-               href="https://themeforest.net/checkout/from_item/55502374?license=regular&amp;support=bundle_6month">Buy
-                now</a>
-        </div>
-    </div>
-</div>
 <header class="bg-white shadow-md">
     <div class=" mx-12 px-4 py-4 flex flex-wrap items-center justify-between">
         <!-- Logo -->
@@ -30,7 +16,7 @@
         <nav class="hidden md:flex space-x-7 items-center">
             <a href="#" class="text-orange-400 font-bold">Home</a>
             <a href="#" class="text-gray-700">Listing</a>
-            <a href="#" class="text-gray-700">Pages</a>
+            <a href="#" class="text-gray-700">Agencies</a>
             <a href="#" class="text-gray-700">Blog</a>
             <a href="" class="text-gray-700">Contact</a>
         </nav>

@@ -32,4 +32,12 @@
         </div>
     </section>
 
+    <div>
+        <h1> Cities </h1>
+        @forelse($cities as $city)
+            <p> {{$city->name}}</p>
+        @empty
+        @endforelse
+    </div>
+
 @endsection

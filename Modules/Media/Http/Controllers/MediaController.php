@@ -12,14 +12,14 @@ class MediaController extends Controller
 
     public function __construct()
     {
-        if (Module::find('Roles')->isEnabled()) {
-            $this->middleware('permission:view medias')->only('index');
-            $this->middleware('permission:create media')->only('create');
-            $this->middleware('permission:store media')->only('store');
-            $this->middleware('permission:edit media')->only('edit');
-            $this->middleware('permission:update media')->only('update');
-            $this->middleware('permission:destroy media')->only('destroy');
-        }
+//        if (Module::find('Roles')->isEnabled()) {
+//            $this->middleware('permission:view medias')->only('index');
+//            $this->middleware('permission:create media')->only('create');
+//            $this->middleware('permission:store media')->only('store');
+//            $this->middleware('permission:edit media')->only('edit');
+//            $this->middleware('permission:update media')->only('update');
+//            $this->middleware('permission:destroy media')->only('destroy');
+//        }
     }
 
 
