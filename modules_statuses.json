@@ -14,5 +14,6 @@
     "Property": true,
     "Setting": true,
     "WebUI": true,
-    "AdminUI": true
+    "AdminUI": true,
+    "Blog": true
 }
