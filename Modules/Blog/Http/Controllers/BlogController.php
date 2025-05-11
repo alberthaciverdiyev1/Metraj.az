@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Blog\Http\Entities\Blog;
 use Modules\Blog\Http\Entities\Tag;
+use Modules\Blog\Http\Transformers\BlogDetailsResource;
+use Modules\Blog\Http\Transformers\BlogListResource;
 use Modules\Keyword\Http\Entities\Keyword;
 use Nwidart\Modules\Facades\Module;
 
@@ -29,11 +31,25 @@ class BlogController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function blogs()
+    public function blogs(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $blogs = Blog::all();
+        $blogs = Blog::with(['category'])->latest()->get();
+        return BlogListResource::collection($blogs);
+    }
 
-        return $blogs;
+    public function blog(string $slug): BlogDetailsResource
+    {
+//        $blog = Blog::with(['category','tags'])->where('slug', $slug)->first();
+
+        $blog = Blog::query()
+            ->select(['id', 'name', 'slug', 'description', 'author_name', 'category_id'])
+            ->with([
+                'category:id,name,slug',
+                'tags:id,name,slug'
+            ])
+            ->where('slug', $slug)->first();
+
+        return BlogDetailsResource::make($blog);
     }
 
     public function tags()

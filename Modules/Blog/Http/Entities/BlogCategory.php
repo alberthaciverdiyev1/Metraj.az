@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Blog\Database\Factories\BlogCategoryFactory;
 use Modules\Blog\Database\Factories\BlogFactory;
-use Modules\Blog\Traits\BlogRelations;
 
-class Blog extends Model
+class BlogCategory extends Model
 {
-    use HasFactory,SoftDeletes,BlogRelations;
+    use HasFactory,SoftDeletes;
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'blogs';
+    protected $table = 'blog_categories';
 
     /**
      * The attributes that are mass assignable.
@@ -27,8 +27,6 @@ class Blog extends Model
     protected $fillable = [
         'name',
         'slug',
-        'description',
-        'author_name'
     ];
 
     /**
@@ -39,8 +37,9 @@ class Blog extends Model
     protected $casts = [
 
     ];
-    public static function newFactory(): BlogFactory
+
+    public static function newFactory(): BlogCategoryFactory
     {
-        return BlogFactory::new();
+        return BlogCategoryFactory::new();
     }
 }

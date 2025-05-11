@@ -18,6 +18,7 @@ use Modules\Blog\Http\Controllers\BlogController;
 
 Route::controller(BlogController::class)->group(function () {
     Route::get('blog', 'blogs')->name('blog.list');
+    Route::get('blog/{slug}', 'blog');
     Route::get('tag', 'tags')->name('tag.list');
 });
 

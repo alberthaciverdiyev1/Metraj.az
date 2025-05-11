@@ -151,7 +151,7 @@ return [
             'policies' => ['path' => 'Policies', 'generate' => false],
             'provider' => ['path' => 'Providers', 'generate' => true],
             'repository' => ['path' => 'Repositories', 'generate' => false],
-            'resource' => ['path' => 'Transformers', 'generate' => false],
+            'resource' => ['path' => 'Http/Transformers', 'generate' => false],
             'route-provider' => ['path' => 'Providers', 'generate' => true],
             'rules' => ['path' => 'Rules', 'generate' => false],
             'services' => ['path' => 'Services', 'generate' => false],

@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Modules\Base\Http\Entities\Subway;
 use Modules\Blog\Http\Entities\Blog;
+use Modules\Blog\Http\Entities\BlogCategory;
 use Modules\Blog\Http\Entities\Tag;
 use Modules\City\Http\Entities\City;
 use Modules\District\Http\Entities\District;
@@ -33,8 +34,9 @@ class DatabaseSeeder extends Seeder
         Setting::factory()->count(1)->create();
         Keyword::factory()->count(10)->create();
 //        User::factory()->count(10000)->create();
-        Blog::factory()->count(1000)->create();
         Tag::factory()->count(1000)->create();
+        BlogCategory::factory()->count(10)->create();
+        Blog::factory()->count(1000)->create();
 
 
     }

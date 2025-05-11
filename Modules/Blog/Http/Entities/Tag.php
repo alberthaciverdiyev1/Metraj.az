@@ -34,7 +34,7 @@ class Tag extends Model
      * @var array<string, string>
      */
     protected $casts = [
-
+        'slug' => 'string',
     ];
 
     public static function newFactory(): TagFactory
