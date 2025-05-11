@@ -2,11 +2,15 @@
 
 namespace Modules\Blog\Http\Entities;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Blog\Database\Factories\TagFactory;
 
 class Tag extends Model
 {
+    use HasFactory,SoftDeletes;
     /**
      * The table associated with the model.
      *
@@ -20,7 +24,8 @@ class Tag extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-
+        'slug',
+        'name',
     ];
 
     /**
@@ -32,7 +37,12 @@ class Tag extends Model
 
     ];
 
-    public function blogs():MorphToMany
+    public static function newFactory(): TagFactory
+    {
+        return TagFactory::new();
+    }
+
+    public function blogs(): MorphToMany
     {
         return $this->morphedByMany(Blog::class, 'taggable');
     }

@@ -5,6 +5,9 @@ namespace Modules\Blog\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Blog\Http\Entities\Blog;
+use Modules\Blog\Http\Entities\Tag;
+use Modules\Keyword\Http\Entities\Keyword;
 use Nwidart\Modules\Facades\Module;
 
 class BlogController extends Controller
@@ -12,23 +15,31 @@ class BlogController extends Controller
 
     public function __construct()
     {
-        if (Module::find('Roles')->isEnabled()) {
-            $this->middleware('permission:view blogs')->only('index');
-            $this->middleware('permission:create blog')->only('create');
-            $this->middleware('permission:store blog')->only('store');
-            $this->middleware('permission:edit blog')->only('edit');
-            $this->middleware('permission:update blog')->only('update');
-            $this->middleware('permission:destroy blog')->only('destroy');
-        }
+//        if (Module::find('Roles')->isEnabled()) {
+//            $this->middleware('permission:view blogs')->only('index');
+//            $this->middleware('permission:create blog')->only('create');
+//            $this->middleware('permission:store blog')->only('store');
+//            $this->middleware('permission:edit blog')->only('edit');
+//            $this->middleware('permission:update blog')->only('update');
+//            $this->middleware('permission:destroy blog')->only('destroy');
+//        }
     }
 
 
     /**
-    * Display a listing of the resource.
-    */
-    public function index()
+     * Display a listing of the resource.
+     */
+    public function blogs()
     {
-        return view('blog::index');
+        $blogs = Blog::all();
+
+        return $blogs;
+    }
+
+    public function tags()
+    {
+        $tags = Tag::all();
+        return $tags;
     }
 
     /**

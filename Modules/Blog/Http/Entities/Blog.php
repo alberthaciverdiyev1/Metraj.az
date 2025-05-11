@@ -2,11 +2,15 @@
 
 namespace Modules\Blog\Http\Entities;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Blog\Database\Factories\BlogFactory;
 
 class Blog extends Model
 {
+    use HasFactory,SoftDeletes;
     /**
      * The table associated with the model.
      *
@@ -20,7 +24,10 @@ class Blog extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-
+        'name',
+        'slug',
+        'description',
+        'author_name'
     ];
 
     /**
@@ -31,6 +38,11 @@ class Blog extends Model
     protected $casts = [
 
     ];
+
+    public static function newFactory(): BlogFactory
+    {
+        return BlogFactory::new();
+    }
 
     public function tags():MorphToMany
     {

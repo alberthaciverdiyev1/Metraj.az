@@ -5,6 +5,8 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Modules\Base\Http\Entities\Subway;
+use Modules\Blog\Http\Entities\Blog;
+use Modules\Blog\Http\Entities\Tag;
 use Modules\City\Http\Entities\City;
 use Modules\District\Http\Entities\District;
 use Modules\Feature\Http\Entities\Feature;
@@ -30,7 +32,9 @@ class DatabaseSeeder extends Seeder
         Town::factory()->count(100)->create();
         Setting::factory()->count(1)->create();
         Keyword::factory()->count(10)->create();
-        User::factory()->count(10000)->create();
+//        User::factory()->count(10000)->create();
+        Blog::factory()->count(1000)->create();
+        Tag::factory()->count(1000)->create();
 
 
     }

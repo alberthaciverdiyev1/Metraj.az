@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Modules\Blog\Http\Controllers\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +15,13 @@ use Illuminate\Http\Request;
 */
 
 
-Route::middleware('auth:api')->group(function () {
-    Route::resource('/blog', \Modules\Blog\Http\Controllers\BlogController::class);
+
+Route::controller(BlogController::class)->group(function () {
+    Route::get('blog', 'blogs')->name('blog.list');
+    Route::get('tag', 'tags')->name('tag.list');
 });
+
+//Route::middleware('auth:api')->group(function () {
+//    Route::resource('/blog', \Modules\Blog\Http\Controllers\BlogController::class);
+//});
 
