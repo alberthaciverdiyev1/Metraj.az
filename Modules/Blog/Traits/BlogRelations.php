@@ -10,8 +10,6 @@ use Modules\Blog\Http\Entities\Tag;
 
 trait BlogRelations
 {
-
-
     public function tags(): MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');

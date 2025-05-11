@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Modules\Blog\Http\Controllers\BlogController;
+use Modules\Blog\Http\Controllers\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +16,16 @@ use Modules\Blog\Http\Controllers\BlogController;
 */
 
 
-
 Route::controller(BlogController::class)->group(function () {
     Route::get('blog', 'blogs')->name('blog.list');
-    Route::get('blog/{slug}', 'blog');
+    Route::get('blog/{slug}', 'blog')->name('blog.details');
+    Route::post('blog', 'store')->name('blog.store');
+    Route::put('blog/{slug}', 'update')->name('blog.update');
+    Route::delete('blog/{slug}', 'destroy')->name('blog.delete');
+});
+
+Route::controller(TagController::class)->group(function () {
+
     Route::get('tag', 'tags')->name('tag.list');
 });
 

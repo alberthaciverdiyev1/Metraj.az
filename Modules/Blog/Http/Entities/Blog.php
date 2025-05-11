@@ -28,7 +28,8 @@ class Blog extends Model
         'name',
         'slug',
         'description',
-        'author_name'
+        'author_name',
+        'category_id',
     ];
 
     /**
@@ -39,8 +40,8 @@ class Blog extends Model
     protected $casts = [
 
     ];
-    public static function newFactory(): BlogFactory
-    {
-        return BlogFactory::new();
-    }
+//    public static function newFactory(): BlogFactory
+//    {
+//        return BlogFactory::new();
+//    }
 }

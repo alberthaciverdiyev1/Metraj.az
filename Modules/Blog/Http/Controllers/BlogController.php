@@ -3,14 +3,19 @@
 namespace Modules\Blog\Http\Controllers;
 
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\View\AnonymousComponent;
 use Modules\Blog\Http\Entities\Blog;
 use Modules\Blog\Http\Entities\Tag;
+use Modules\Blog\Http\Requests\BlogStoreRequest;
 use Modules\Blog\Http\Transformers\BlogDetailsResource;
 use Modules\Blog\Http\Transformers\BlogListResource;
 use Modules\Keyword\Http\Entities\Keyword;
 use Nwidart\Modules\Facades\Module;
+use \Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BlogController extends Controller
 {
@@ -31,71 +36,64 @@ class BlogController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function blogs(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    public function blogs(): AnonymousResourceCollection
     {
-        $blogs = Blog::with(['category'])->latest()->get();
+//        $blogs = Blog::with(['category'])->latest()->get();
+        $blogs = Blog::query()
+            ->select('id', 'name', 'slug', 'created_at', 'category_id')
+            ->with([
+                'category' => function ($query) {
+                    $query->select('id', 'name', 'slug');
+                }
+            ])
+            ->latest()
+            ->get();
+
+
         return BlogListResource::collection($blogs);
     }
 
-    public function blog(string $slug): BlogDetailsResource
+    public function blog(string $slug)
     {
-//        $blog = Blog::with(['category','tags'])->where('slug', $slug)->first();
-
         $blog = Blog::query()
             ->select(['id', 'name', 'slug', 'description', 'author_name', 'category_id'])
             ->with([
                 'category:id,name,slug',
                 'tags:id,name,slug'
             ])
-            ->where('slug', $slug)->first();
+            ->where('slug', $slug)
+            ->first();
+
+        if (!$blog) {
+            return response()->json([
+                'success' => 400,
+                'message' => __('Blog not found!')
+            ]);
+        }
 
         return BlogDetailsResource::make($blog);
-    }
-
-    public function tags()
-    {
-        $tags = Tag::all();
-        return $tags;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('blog::create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BlogStoreRequest $request): JsonResponse
     {
+
         try {
+            $validatedData = $request->safe()->toArray();
 
-            //TODO:STORE FUNCTIONS
+            Blog::query()->create($validatedData);
 
-            return response()->json(__('Data successfully created!'));
+            return response()->json([
+                'message' => 'Blog created successfully.',
+                'status_code' => 201
+            ]);
         } catch (Exception $e) {
             return response()->json($e->getMessage());
         }
     }
 
-    /**
-     * Show the specified resource.
-     */
-    public function show()
-    {
-        return view('blog::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit()
-    {
-        return view('blog::edit');
-    }
 
     /**
      * Update the specified resource in storage.
@@ -104,9 +102,11 @@ class BlogController extends Controller
     {
         try {
 
-            //TODO:UPDATE FUNCTIONS
-
-            return response()->json(__('Data successfully updated!'));
+            Blog::query()->update(request()->all());
+            return response()->json([
+                'message' => 'Blog updated successfully.',
+                'status_code' => 201
+            ]);
         } catch (Exception $e) {
             return response()->json($e->getMessage());
         }
@@ -115,13 +115,14 @@ class BlogController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy()
+    public function destroy(string $slug): JsonResponse
     {
         try {
-
-            //TODO:DESTROY FUNCTIONS
-
-            return response()->json(__('Data successfully deleted!'));
+            Blog::query()->where('slug', $slug)->delete();
+            return response()->json([
+                'message' => 'Blog deleted successfully.',
+                'status_code' => 200
+            ]);
         } catch (Exception $e) {
             return response()->json($e->getMessage());
         }
