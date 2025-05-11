@@ -1,10 +1,9 @@
 <?php
 
-namespace Modules\Blog\Traits;
+namespace Modules\Blog\Http\Traits;
 
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Modules\Blog\Database\Factories\BlogFactory;
 use Modules\Blog\Http\Entities\BlogCategory;
 use Modules\Blog\Http\Entities\Tag;
 

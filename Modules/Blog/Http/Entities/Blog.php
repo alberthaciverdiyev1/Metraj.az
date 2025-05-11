@@ -4,14 +4,13 @@ namespace Modules\Blog\Http\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Modules\Blog\Database\Factories\BlogFactory;
-use Modules\Blog\Traits\BlogRelations;
+use Modules\Base\Traits\Slug;
+use Modules\Blog\Http\Traits\BlogRelations;
 
 class Blog extends Model
 {
-    use HasFactory,SoftDeletes,BlogRelations;
+    use HasFactory,SoftDeletes,BlogRelations,Slug;
     /**
      * The table associated with the model.
      *

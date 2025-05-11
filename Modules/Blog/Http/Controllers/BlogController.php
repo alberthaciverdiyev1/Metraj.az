@@ -4,18 +4,14 @@ namespace Modules\Blog\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\View\AnonymousComponent;
+use Illuminate\Support\Str;
 use Modules\Blog\Http\Entities\Blog;
-use Modules\Blog\Http\Entities\Tag;
 use Modules\Blog\Http\Requests\BlogStoreRequest;
+use Modules\Blog\Http\Requests\BlogUpdateRequest;
 use Modules\Blog\Http\Transformers\BlogDetailsResource;
 use Modules\Blog\Http\Transformers\BlogListResource;
-use Modules\Keyword\Http\Entities\Keyword;
-use Nwidart\Modules\Facades\Module;
 use \Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BlogController extends Controller
 {
@@ -98,15 +94,25 @@ class BlogController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(string $slug ,BlogUpdateRequest $request)
     {
         try {
+            $validatedData = $request->safe()->toArray();
+            $validatedData['slug'] = Str::slug($validatedData['name']) .'-'.rand(10,1000000);
 
-            Blog::query()->update(request()->all());
-            return response()->json([
-                'message' => 'Blog updated successfully.',
-                'status_code' => 201
-            ]);
+            $updated = Blog::query()->where('slug', $slug)->update($validatedData);
+            if ($updated) {
+                return response()->json([
+                    'message' => 'Blog updated successfully.',
+                    'status_code' => 200
+                ]);
+            } else {
+                return response()->json([
+                    'message' => 'Blog not found or no changes detected.',
+                    'status_code' => 404
+                ]);
+            }
+
         } catch (Exception $e) {
             return response()->json($e->getMessage());
         }

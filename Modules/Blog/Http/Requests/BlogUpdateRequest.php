@@ -3,11 +3,8 @@
 namespace Modules\Blog\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Validator;
 
-class BlogStoreRequest extends FormRequest
+class BlogUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -46,5 +43,4 @@ class BlogStoreRequest extends FormRequest
             'author_name.required' => __('Author name is required!'),
         ];
     }
-
 }
