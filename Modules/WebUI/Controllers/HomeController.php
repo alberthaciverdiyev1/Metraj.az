@@ -13,7 +13,6 @@ class HomeController extends Controller
     */
     public function index()
     {
-        dd("aaafjafal");
         $css = [
             'home.css',
         ];
@@ -21,13 +20,9 @@ class HomeController extends Controller
             'home.js',
         ];
 
-        $response = Http::get(config('app.api_url') . '/blog');
+     $cities = [];
 
-        $blogs = $response->successful() ? $response->json() : [];
-
-        dd($blogs);
-
-        return view('webui::home.index', compact('css', 'js'));
+        return view('webui::home.index', compact('css', 'js','cities'));
     }
 
 }

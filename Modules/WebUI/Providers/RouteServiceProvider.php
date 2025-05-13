@@ -29,6 +29,8 @@ class RouteServiceProvider extends ServiceProvider
         if (!file_exists($imageTarget)) {
             symlink($imageSource, $imageTarget);
         }
+
+
     }
 
 
