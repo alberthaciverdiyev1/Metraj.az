@@ -1,5 +1,5 @@
 <header class="bg-white shadow-md">
-    <div class=" mx-12 px-4 py-4 flex flex-wrap items-center justify-between">
+    <div class=" mx-auto container px-4 py-4 flex flex-wrap items-center justify-between">
         <!-- Logo -->
         <div class="flex items-center space-x-2">
             <div class="bg-orange-400 p-2 rounded-full text-white">

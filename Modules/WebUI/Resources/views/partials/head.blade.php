@@ -10,6 +10,7 @@
 {{--    @vite('Resources/css/app.css')--}}
 
     @forelse($css as $c)
+       
         <link rel="stylesheet" href="{{ asset('webui/css/'.$c) }}">
     @empty
 

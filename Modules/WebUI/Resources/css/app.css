@@ -3,3 +3,10 @@
 @tailwind utilities;
 
 
+
+:root {
+    --primary: #f1913d;
+    --text-color:#2C2E33;
+}
+
+

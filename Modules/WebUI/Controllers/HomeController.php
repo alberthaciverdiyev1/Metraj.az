@@ -8,7 +8,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $css = ['home.css'];
+        $css = ['home.css','app.css'];
         $js = ['home.js'];
         $cities = [];
 
@@ -17,8 +17,9 @@ class HomeController extends Controller
 
     public function listing()
     {
-        $css = ['listing.css'];
+        $css = ['listing.css','app.css'];
         $js = ['listing.js'];
+    
 
         return view('webui::home.listing', compact('css', 'js'));
     }
