@@ -3,26 +3,23 @@
 namespace Modules\WebUI\Controllers;
 
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
-
-    /**
-    * Display a listing of the resource.
-    */
     public function index()
     {
-        $css = [
-            'home.css',
-        ];
-        $js = [
-            'home.js',
-        ];
+        $css = ['home.css'];
+        $js = ['home.js'];
+        $cities = [];
 
-     $cities = [];
-
-        return view('webui::home.index', compact('css', 'js','cities'));
+        return view('webui::home.index', compact('css', 'js', 'cities'));
     }
 
+    public function listing()
+    {
+        $css = ['listing.css'];
+        $js = ['listing.js'];
+
+        return view('webui::home.listing', compact('css', 'js'));
+    }
 }

@@ -1,10 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use Modules\WebUI\Controllers\HomeController;
 
-    Route::controller(HomeController::class)->group(function () {
-        Route::get('/', 'index')->name('home');
-    });
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/', 'index')->name('home');
+    Route::get('/listing', 'listing')->name('listing');
+});
+
 
 //
 //Route::domain(config('app.url'))->prefix(config('app.url'))->group(function () {
