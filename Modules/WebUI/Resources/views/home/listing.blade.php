@@ -42,18 +42,19 @@
                 </h2>
 
                 <div class="flex flex-wrap items-center gap-2">
-                    <button class="flex items-center gap-1 border border-[var(--border-color)] rounded-lg px-3 py-2 hover:text-[color:var(--primary)] transition">
-                        Filter
-                        <i class="fas fa-sliders-h text-[color:var(--primary)]"></i>
-                    </button>
 
-                    <button class="bg-[color:var(--primary)] text-white px-3 py-2 rounded-md">
+                    @include('webui::components.filter-modal')
+                    <button id="gridViewBtn" class="px-3 grid-btn py-2 rounded-md active-filter" data-view="grid">
                         <i class="bi bi-grid-3x3-gap"></i>
                     </button>
 
-                    <button class="px-3 py-2 border border-[var(--border-color)] rounded-md">
-                        <i class="fas fa-list text-[color:var(--icon-grey)] hover:text-[color:var(--primary)]"></i>
+                    <button id="listViewBtn" class=" px-3 py-2 list border border-[var(--border-color)] rounded-md" data-view="list">
+                        <i class="fas fa-list text-[color:var(--icon-grey)] "></i>
                     </button>
+
+
+
+
 
                     <div class="relative">
                         <button class="flex items-center border border-[var(--border-color)] px-4 py-2 rounded-md">
@@ -63,7 +64,7 @@
                 </div>
             </div>
 
-            <div class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-7">
+            <div id="propertyContainer" class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-7">
                 <!-- Property Card 1 -->
                 <div class="border border-[color:var(--border-color)] rounded-2xl overflow-hidden group relative transition-all duration-300">
                     <div class="relative overflow-hidden">
@@ -104,7 +105,7 @@
 
                         <div class="flex justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
                             <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">$8.600</span>
-                            <button class="flex items-center gap-1 text-sm text-[color:#2C2E33] hover:text-[color:var(--primary)] transition-colors">
+                            <button class="flex  compare items-center gap-1 text-sm text-[color:#2C2E33] hover:text-[color:var(--primary)] transition-colors">
                                 <i class="fas fa-random"></i> Compare
                             </button>
                             <a href="#" class="relative inline-block px-4 py-2 rounded-xl border border-[color:var(--primary)] text-sm text-[color:var(--primary)] overflow-hidden transition-all duration-300 hover-effect-button">
@@ -155,7 +156,7 @@
 
                         <div class="flex justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
                             <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">$8.600</span>
-                            <button class="flex items-center gap-1 text-sm text-[color:#2C2E33] hover:text-[color:var(--primary)] transition-colors">
+                            <button class="flex  compare  items-center gap-1 text-sm text-[color:#2C2E33] hover:text-[color:var(--primary)] transition-colors">
                                 <i class="fas fa-random"></i> Compare
                             </button>
                             <a href="#" class="relative inline-block px-4 py-2 rounded-xl border border-[color:var(--primary)] text-sm text-[color:var(--primary)] overflow-hidden transition-all duration-300 hover-effect-button">
@@ -206,7 +207,7 @@
 
                         <div class="flex justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
                             <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">$8.600</span>
-                            <button class="flex items-center gap-1 text-sm text-[color:#2C2E33] hover:text-[color:var(--primary)] transition-colors">
+                            <button class="  compare flex items-center gap-1 text-sm text-[color:#2C2E33] hover:text-[color:var(--primary)] transition-colors">
                                 <i class="fas fa-random"></i> Compare
                             </button>
                             <a href="#" class="relative inline-block px-4 py-2 rounded-xl border border-[color:var(--primary)] text-sm text-[color:var(--primary)] overflow-hidden transition-all duration-300 hover-effect-button">
@@ -256,7 +257,7 @@
 
                         <div class="flex justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
                             <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">$8.600</span>
-                            <button class="flex items-center gap-1 text-sm text-[color:#2C2E33] hover:text-[color:var(--primary)] transition-colors">
+                            <button class="flex  compare  items-center gap-1 text-sm text-[color:#2C2E33] hover:text-[color:var(--primary)] transition-colors">
                                 <i class="fas fa-random"></i> Compare
                             </button>
                             <a href="#" class="relative inline-block px-4 py-2 rounded-xl border border-[color:var(--primary)] text-sm text-[color:var(--primary)] overflow-hidden transition-all duration-300 hover-effect-button">
@@ -306,7 +307,7 @@
 
                         <div class="flex justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
                             <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">$8.600</span>
-                            <button class="flex items-center gap-1 text-sm text-[color:#2C2E33] hover:text-[color:var(--primary)] transition-colors">
+                            <button class="flex  compare  items-center gap-1 text-sm text-[color:#2C2E33] hover:text-[color:var(--primary)] transition-colors">
                                 <i class="fas fa-random"></i> Compare
                             </button>
                             <a href="#" class="relative inline-block px-4 py-2 rounded-xl border border-[color:var(--primary)] text-sm text-[color:var(--primary)] overflow-hidden transition-all duration-300 hover-effect-button">
@@ -354,7 +355,7 @@
                             <span><span class="text-[color:#2C2E33]">4,043</span> Sqft</span>
                         </div>
 
-                        <div class="flex justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
+                        <div class="flex  compare  justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
                             <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">$8.600</span>
                             <button class="flex items-center gap-1 text-sm text-[color:#2C2E33] hover:text-[color:var(--primary)] transition-colors">
                                 <i class="fas fa-random"></i> Compare
@@ -404,7 +405,7 @@
                             <span><span class="text-[color:#2C2E33]">4,043</span> Sqft</span>
                         </div>
 
-                        <div class="flex justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
+                        <div class="flex  compare  justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
                             <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">$8.600</span>
                             <button class="flex items-center gap-1 text-sm text-[color:#2C2E33] hover:text-[color:var(--primary)] transition-colors">
                                 <i class="fas fa-random"></i> Compare
@@ -454,7 +455,7 @@
                             <span><span class="text-[color:#2C2E33]">4,043</span> Sqft</span>
                         </div>
 
-                        <div class="flex justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
+                        <div class="flex  compare  justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
                             <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">$8.600</span>
                             <button class="flex items-center gap-1 text-sm text-[color:#2C2E33] hover:text-[color:var(--primary)] transition-colors">
                                 <i class="fas fa-random"></i> Compare
@@ -504,7 +505,7 @@
                             <span><span class="text-[color:#2C2E33]">4,043</span> Sqft</span>
                         </div>
 
-                        <div class="flex justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
+                        <div class="flex  compare  justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
                             <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">$8.600</span>
                             <button class="flex items-center gap-1 text-sm text-[color:#2C2E33] hover:text-[color:var(--primary)] transition-colors">
                                 <i class="fas fa-random"></i> Compare
@@ -554,7 +555,7 @@
                             <span><span class="text-[color:#2C2E33]">4,043</span> Sqft</span>
                         </div>
 
-                        <div class="flex justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
+                        <div class="flex  compare  justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
                             <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">$8.600</span>
                             <button class="flex items-center gap-1 text-sm text-[color:#2C2E33] hover:text-[color:var(--primary)] transition-colors">
                                 <i class="fas fa-random"></i> Compare
@@ -604,7 +605,7 @@
                             <span><span class="text-[color:#2C2E33]">4,043</span> Sqft</span>
                         </div>
 
-                        <div class="flex justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
+                        <div class="flex  compare  justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
                             <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">$8.600</span>
                             <button class="flex items-center gap-1 text-sm text-[color:#2C2E33] hover:text-[color:var(--primary)] transition-colors">
                                 <i class="fas fa-random"></i> Compare
@@ -654,7 +655,7 @@
                             <span><span class="text-[color:#2C2E33]">4,043</span> Sqft</span>
                         </div>
 
-                        <div class="flex justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
+                        <div class="flex  compare  justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
                             <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">$8.600</span>
                             <button class="flex items-center gap-1 text-sm text-[color:#2C2E33] hover:text-[color:var(--primary)] transition-colors">
                                 <i class="fas fa-random"></i> Compare
