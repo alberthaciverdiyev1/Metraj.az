@@ -16,7 +16,7 @@
         <nav class="hidden md:flex space-x-7 items-center">
             <a href="{{ route('home') }}" class="text-orange-400 font-bold">Home</a>
             <a href="{{ route('listing') }}" class="">Listing</a>
-            <a href="#" class="text-gray-700">Agencies</a>
+            <a href="{{ route('agencies') }}" class="text-gray-700">Agencies</a>
             <a href="#" class="text-gray-700">Blog</a>
             <a href="" class="text-gray-700">Contact</a>
         </nav>

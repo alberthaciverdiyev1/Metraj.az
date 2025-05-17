@@ -23,4 +23,13 @@ class HomeController extends Controller
 
         return view('webui::home.listing', compact('css', 'js'));
     }
+
+     public function agencies()
+    {
+        $css = ['agencies.css','app.css','listing.css'];
+        $js = ['agencies.js','listing.js'];
+    
+
+        return view('webui::home.agencies', compact('css', 'js'));
+    }
 }

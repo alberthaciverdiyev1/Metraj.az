@@ -6,6 +6,7 @@ use Modules\WebUI\Controllers\HomeController;
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home');
     Route::get('/listing', 'listing')->name('listing');
+        Route::get('/agencies', 'agencies')->name('agencies');
 });
 
 
