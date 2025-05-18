@@ -16,9 +16,7 @@
     </div>
 </section>
 
-
-
-<section id="listing-detail">
+<section id="listing-detail-gallery">
     <div class="container mx-auto px-4">
         <div class="gallery-grid">
             <figure onclick="openModal(0)">
@@ -86,6 +84,7 @@
 <section id="side">
     <div class="container mx-auto px-4">
         <div class="side">
+
             <div class="side-left">
                 <div class="info-box">
                     <div class="info-box-title mb-4">
@@ -233,6 +232,9 @@
                         </div>
                     </div>
                 </section>
+                <x-property-details
+                    :details="$property['details']"
+                    :extra="$property['extra']" />
 
             </div>
             <div class="side-right">
@@ -246,7 +248,8 @@
 
 
 
-</ul>
+
+
 <div class="property-detail">
 
 

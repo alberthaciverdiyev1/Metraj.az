@@ -41,7 +41,7 @@ class HomeController extends Controller
                 'year_built' => 2022,
                 'type' => 'Villa',
                 'status' => 'For sale',
-                'garage' => 1,
+                'garage' => 3,
                 'rent_price' => '$250,00 /month',
             ],
             'amenities' => [
@@ -163,17 +163,21 @@ class HomeController extends Controller
         return view('webui::home.agencies', compact('css', 'js'));
     }
 
-    public function propertyDetail($id)
-    {
-        if (!isset($this->properties[$id])) {
-            abort(404);
-        }
-
-        $css = ['listing-details.css', 'app.css']; 
-        $js = ['listing-detail.js', 'app.js'];    
-
-        $property = $this->properties[$id];
-        $property['image'] = asset($property['image']);
-        return view('webui::home.property-detail', compact('css', 'js', 'property'));
+ public function propertyDetail($id)
+{
+    if (!isset($this->properties[$id])) {
+        abort(404);
     }
+
+    $css = ['listing-details.css', 'app.css']; 
+    $js = ['listing-detail.js', 'app.js'];    
+
+    $property = $this->properties[$id];
+    $property['image'] = asset($property['image']);
+    
+    // Ensure all required fields are set
+    $property['extra']['baths'] = $property['baths'] ?? null;
+    
+    return view('webui::home.property-detail', compact('css', 'js', 'property'));
+}
 }
