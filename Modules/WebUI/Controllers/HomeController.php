@@ -11,11 +11,19 @@ class HomeController extends Controller
             'image' => 'webui/images/box-house.jpg',
             'title' => 'Elegant studio flat',
             'address' => '102 Ingraham St, Brooklyn, NY 11237',
-            'beds' => 3,
+            'beds' => 4,
             'baths' => 3,
             'area' => '4,043',
             'price' => '8,600',
+           'video' => 'https://www.youtube.com/embed/MLpWrANjFbI',
+
             'description' => 'This is a detailed description of the elegant studio flat...',
+            'altimages' => [
+                'first_image' => 'webui/images/property-detail-3.jpg',
+                'second_image' => 'webui/images/property-detail-4.jpg',
+                'third_image' => 'webui/images/property-detail-5.jpg',
+                'fourth_image' => 'webui/images/property-detail-6.jpg'
+            ],
             'details' => [
                 'units' => '3 Units in North Hollywood with upside potential through construction of an ADU (buyer to verify).',
                 'unit_mix' => '(3) 3+1 bath units',
@@ -25,7 +33,7 @@ class HomeController extends Controller
                 'metering' => 'Separately metered for gas and electricity',
             ],
             'extra' => [
-                'id' => '#1234',
+                'id' => '1234',
                 'price_text' => '$7,500',
                 'size' => '150 sqft',
                 'rooms' => 9,
@@ -138,7 +146,6 @@ class HomeController extends Controller
         $css = ['listing.css', 'app.css'];
         $js = ['listing.js'];
 
-        // asset() tətbiqi blade faylında olacaq
         $properties = collect($this->properties)->map(function ($property, $id) {
             $property['id'] = $id;
             $property['image'] = asset($property['image']);
@@ -156,19 +163,17 @@ class HomeController extends Controller
         return view('webui::home.agencies', compact('css', 'js'));
     }
 
-  public function propertyDetail($id)
-{
-    if (!isset($this->properties[$id])) {
-        abort(404);
+    public function propertyDetail($id)
+    {
+        if (!isset($this->properties[$id])) {
+            abort(404);
+        }
+
+        $css = ['listing-details.css', 'app.css']; 
+        $js = ['listing-detail.js', 'app.js'];    
+
+        $property = $this->properties[$id];
+        $property['image'] = asset($property['image']);
+        return view('webui::home.property-detail', compact('css', 'js', 'property'));
     }
-
-    $css = ['property-detail.css', 'app.css']; // buraya stil fayllarını əlavə et
-    $js = ['property-detail.js', 'app.js'];    // lazım olsa js də
-
-    $property = $this->properties[$id];
-    $property['image'] = asset($property['image']);
-
-    return view('webui::home.property-detail', compact('css', 'js', 'property'));
-}
-
 }

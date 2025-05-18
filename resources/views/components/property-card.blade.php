@@ -39,10 +39,10 @@
             <button class="flex compare items-center gap-1 text-sm text-[color:#2C2E33] hover:text-[color:var(--primary)] transition-colors">
                 <i class="fas fa-random"></i> Compare
             </button>
-           <a href="{{ route('property.detail', ['id' => $id]) }}" class="relative inline-block px-4 py-2 rounded-xl border border-[color:var(--primary)] text-sm text-[color:var(--primary)] overflow-hidden transition-all duration-300 hover-effect-button">
-    <span class="absolute inset-0 w-0 h-full bg-[color:var(--primary)] transition-all duration-300 ease-in-out z-0 hover-effect-button-fill"></span>
-    <span class="relative z-10">Details</span>
-</a>
+            <a href="{{ route('property.detail', ['id' => $id]) }}" class="relative inline-block px-4 py-2 rounded-xl border border-[color:var(--primary)] text-sm text-[color:var(--primary)] overflow-hidden transition-all duration-300 hover-effect-button">
+                <span class="absolute inset-0 w-0 h-full bg-[color:var(--primary)] transition-all duration-300 ease-in-out z-0 hover-effect-button-fill"></span>
+                <span class="relative z-10">Details</span>
+            </a>
 
         </div>
     </div>
