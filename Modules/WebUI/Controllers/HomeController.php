@@ -141,8 +141,8 @@ class HomeController extends Controller
             abort(404);
         }
 
-        $css = ['listing-details.css', 'app.css'];
-        $js = ['listing-detail.js', 'app.js'];
+        $css = ['listing-details.css', 'app.css','components.css'];
+        $js = ['listing-detail.js', 'app.js','gotop.js'];
 
         $property = $this->properties[$id];
         $property['image'] = asset($property['image']);
