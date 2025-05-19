@@ -15,7 +15,7 @@ class HomeController extends Controller
             'baths' => 3,
             'area' => '4,043',
             'price' => '8,600',
-           'video' => 'https://www.youtube.com/embed/MLpWrANjFbI',
+            'video' => 'https://www.youtube.com/embed/MLpWrANjFbI',
 
             'description' => 'This is a detailed description of the elegant studio flat...',
             'altimages' => [
@@ -60,31 +60,47 @@ class HomeController extends Controller
                 'Dishwasher',
                 'Coffee maker',
             ],
-            //burada floor-> bed ->2
         
+
             'floor_plan' => [
-                'first_floor' => '2 bedrooms, 3 bathrooms',
-                'second_floor' => '1 bedroom, 1 bathroom',
+                [
+                    'floor' => 'First Floor',
+                    'bedrooms' => 2,
+                    'bathrooms' => 3,
+                    'image' => 'https://themesflat.co/html/proty/images/section/floor.jpg',
+                ],
+                [
+                    'floor' => 'Second Floor',
+                    'bedrooms' => 1,
+                    'bathrooms' => 5,
+                    'image' => 'https://themesflat.co/html/proty/images/section/floor.jpg',
+                ],
             ],
+
             'nearby' => [
+
                 'School' => '0.7 km',
                 'University' => '1.3 km',
                 'Grocery center' => '0.6 km',
                 'Market' => '1.1 km',
             ],
             'map' => [
-                'latitude' => 40.7128,
-                'longitude' => -74.0060,
-                'address' => '150',
-                'city' => '#1234',
-                'state' => 'New York',
-                'postal_code' => '10001',
-                'area'=>7345,
-                'country' => 'USA',
+                'latitude' => 40.5812895,
+                'longitude' => 49.6735533,
+                'address' => 'Sumgait beach',
+                'city' => 'Sumgait',
+                'state' => 'Absheron',
+                'postal_code' => 'AZ5000',
+                'area' => 7345,
+                'country' => 'Azerbaijan',
+            ],
+            'virtual_tour' => [
+                'link' => 'https://www.youtube.com/embed/MLpWrANjFbI',
+                'image' => 'https://themesflat.co/html/proty/images/section/property-detail-2.jpg',
             ],
             'comments' => [],
         ],
-       
+
     ];
 
 
@@ -119,21 +135,20 @@ class HomeController extends Controller
         return view('webui::home.agencies', compact('css', 'js'));
     }
 
- public function propertyDetail($id)
-{
-    if (!isset($this->properties[$id])) {
-        abort(404);
+    public function propertyDetail($id)
+    {
+        if (!isset($this->properties[$id])) {
+            abort(404);
+        }
+
+        $css = ['listing-details.css', 'app.css'];
+        $js = ['listing-detail.js', 'app.js'];
+
+        $property = $this->properties[$id];
+        $property['image'] = asset($property['image']);
+
+        $property['extra']['baths'] = $property['baths'] ?? null;
+
+        return view('webui::home.property-detail', compact('css', 'js', 'property'));
     }
-
-    $css = ['listing-details.css', 'app.css']; 
-    $js = ['listing-detail.js', 'app.js'];    
-
-    $property = $this->properties[$id];
-    $property['image'] = asset($property['image']);
-    
-    // Ensure all required fields are set
-    $property['extra']['baths'] = $property['baths'] ?? null;
-    
-    return view('webui::home.property-detail', compact('css', 'js', 'property'));
-}
 }

@@ -235,73 +235,169 @@
                     :extra="$property['extra']" />
 
                 <x-amenities :amenities="$property['amenities']" :columns="3" />
-                <div class="map-detail">
-                    <div class="map">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12120.809245605833!2d49.6735533!3d40.581289549999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x403097a58506ef15%3A0x698ff01b1e2a5565!2sSumgait%20beach!5e0!3m2!1sen!2saz!4v1747627310183!5m2!1sen!2saz" width="100%" height="450" style="border-radius:24px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
-                    <div class="map-info px-4">
-                        <ul class="map-info-list">
-                            <li>
-                                <p>Adress</p>
-                                <p> {{ $property['map']['address'] }}</p>
-                            </li>
-                            <li>
-                                <p>City</p>
-                                <p> {{ $property['map']['city'] }}</p>
-                            </li>
-                            <li>
-                                <p>State</p>
-                                <p> {{ $property['map']['state'] }}</p>
-                            </li>
-                            
-                            </li>
-                        </ul>
-                        <ul class="map-info-list">
-                            <li>
-                                <p>Postal Code</p>
-                                <p> {{ $property['map']['postal_code'] }}</p>
-                            </li>
-                            <li>
-                                <p>Country</p>
-                                <p> {{ $property['map']['country'] }}</p>
-                                <li>
-                                <p>Postal Code</p>
-                                <p> {{ $property['map']['postal_code'] }}</p>
-                            </li>
-                             
-                          
-                        </ul>
+                <x-property-map
+                    :mapData="$property['map']"
+                    :zoom="15" />
+                <!--burdakilari componente cixartmaq-->
+                <!--floor-plan-->
+                <div class="floor-plan">
+                    <div class="accordion-container">
+                        <h2>Floor Plans</h2>
+
+                        @foreach($property['floor_plan'] as $plan)
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <div class="accordion-title">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                    {{ $plan['floor'] }}
+                                </div>
+                                <div class="accordion-icons">
+                                    <div><i class="fa-solid fa-bed"></i> {{ $plan['bedrooms'] }} Bedroom</div>
+                                    <div><i class="fa-solid fa-bath"></i> {{ $plan['bathrooms'] }} Bathroom</div>
+                                </div>
+                            </div>
+                            <div class="accordion-body">
+                                <img src="{{ $plan['image'] }}" alt="{{ $plan['floor'] }} Plan">
+                            </div>
+                        </div>
+                        @endforeach
+
                     </div>
                 </div>
 
-                <div class="floor-plan">
-                    <h3>Floor Plan</h3>
-                    <div class="accordions-floor-pla">
-                        <div class="floor-plan-accordion">
-                            <div class="left">
-                                <i></i>
-                                <h4>First Floor</h4>
-                              
+                <!--Attachment-box-->
+                <div class="attachment-box">
+                    <h2>File Attachments</h2>
+                    <div class="file-list">
+                        <div class="file-item">
+                            <div class="file-icon">
+                                <i class="fa-regular fa-file fa-2x"></i>
+                                <span>PDF</span>
                             </div>
-                            <div class="right">
-                                <div class="bed">
-                                    
-                                </div>
-
+                            <div class="file-name">Villa-Document.pdf</div>
+                            <div class="download-icon">
+                                <a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" download>
+                                    <i class="bi bi-download"></i>
+                                </a>
                             </div>
+                        </div>
 
-
+                        <div class="file-item">
+                            <div class="file-icon">
+                                <i class="fa-regular fa-file fa-2x"></i>
+                                <span style="background: #00bcd4;">DOC</span>
+                            </div>
+                            <div class="file-name">Villa-Document.docx</div>
+                            <div class="download-icon">
+                                <a href="https://file-examples.com/wp-content/uploads/2017/02/file-sample_100kB.doc" download>
+                                    <i class="bi bi-download"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <x-virtual-tour :property="$property" />
+
+
+                <!--calculator -->
+              <x-loan-calculator />
+
+
+                <section id="what-is-nearby">
+                    <div class="what-is-nearby">
+                        <h3>What’s Nearby?</h3>
+                        <p>Explore nearby amenities to precisely locate your property and identify surrounding conveniences, providing a comprehensive overview of the living environment and the property's convenience.</p>
+                        <div class="nearby-info flex">
+                            <ul class="nearby-info-list ">
+                                <li class="flex">
+                                    <p>School</p>
+                                    <p>{{ $property['nearby']['School'] }}</p>
+                                </li>
+                                <li class="flex">
+                                    <p>University</p>
+                                    <p>{{ $property['nearby']['University'] }}</p>
+                                </li>
+                                <li class="flex">
+                                    <p>School</p>
+                                    <p>0.7km</p>
+                                </li>
+                                <li class="flex">
+                                    <p>School</p>
+                                    <p>0.7km</p>
+                                </li>
+
+                            </ul>
+                            <ul class="nearby-info-list ">
+                                <li class="flex">
+                                    <p>School</p>
+                                    <p>{{ $property['nearby']['School'] }}</p>
+                                </li>
+                                <li class="flex">
+                                    <p>University</p>
+                                    <p>{{ $property['nearby']['University'] }}</p>
+                                </li>
+                                <li class="flex">
+                                    <p>School</p>
+                                    <p>0.7km</p>
+                                </li>
+                                <li class="flex">
+                                    <p>School</p>
+                                    <p>0.7km</p>
+                                </li>
+
+                            </ul>
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+
+
+
+
+
 
             </div>
+            <div class="side-right">
+                <div class="sticky">
+                    <div class="contact-card">
+                        <h3>Contact Sellers</h3>
+                        <div class="flex avatar-info">
+                            <img src="https://themesflat.co/html/proty/images/avatar/seller.jpg" alt="Shara Conner" class="avatar">
+                            <div class="avatar-info-text">
+                                <h4>Shara Conner</h4>
+                                <p><a href="tel:1-333-345-6868" class="phone"><i class="bi bi-telephone"></i> 1-333-345-6868</a></p>
+                                <p><a href="mailto:themesflat@gmail.com" class="email">
+                                        <i class="bi bi-envelope"></i> themesflat@gmail.com</a></p>
+                            </div>
 
-        </div>
-        <div class="side-right">
-            kdsjk
+                        </div>
 
+
+
+                        <form id="contact-form">
+                            <input type="text" id="name" name="name" placeholder="Full Name" required>
+                            <textarea id="message" name="message" placeholder="How can an agent help" required></textarea>
+                            <button
+                                class="send-message-btn all-btn button-hover"
+                                type="submit">Send message</button>
+                        </form>
+                    </div>
+                    <x-connect-agent />
+                    <x-moreabouttisproperty />
+
+                </div>
+
+
+
+
+
+            </div>
         </div>
+
 
     </div>
 </section>
