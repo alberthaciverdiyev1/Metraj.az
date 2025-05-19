@@ -60,9 +60,11 @@ class HomeController extends Controller
                 'Dishwasher',
                 'Coffee maker',
             ],
+            //burada floor-> bed ->2
+        
             'floor_plan' => [
                 'first_floor' => '2 bedrooms, 3 bathrooms',
-                'second_floor' => '3 bedrooms',
+                'second_floor' => '1 bedroom, 1 bathroom',
             ],
             'nearby' => [
                 'School' => '0.7 km',
@@ -70,65 +72,19 @@ class HomeController extends Controller
                 'Grocery center' => '0.6 km',
                 'Market' => '1.1 km',
             ],
-            'comments' => [],
-        ],
-        2 => [
-            'image' => 'webui/images/box-house.jpg',
-            'title' => 'Elegant studio flat 2',
-            'address' => '103 Ingraham St, Brooklyn, NY 11237',
-            'beds' => 3,
-            'baths' => 3,
-            'area' => '4,043',
-            'price' => '8,600',
-            'description' => 'This is a detailed description of the elegant studio flat...',
-            'details' => [
-                'units' => '3 Units in North Hollywood with upside potential through construction of an ADU (buyer to verify).',
-                'unit_mix' => '(3) 3+1 bath units',
-                'building_size' => '2,660 sqft',
-                'lot_size' => '6,001 sqft',
-                'access' => 'Easy access to the 101, 170, and 134 freeways.',
-                'metering' => 'Separately metered for gas and electricity',
-            ],
-            'extra' => [
-                'id' => '#1234',
-                'price_text' => '$7,500',
-                'size' => '150 sqft',
-                'rooms' => 9,
-                'beds_exact' => 7.328,
-                'year_built' => 2022,
-                'type' => 'Villa',
-                'status' => 'For sale',
-                'garage' => 1,
-                'rent_price' => '$250,00 /month',
-            ],
-            'amenities' => [
-                'Smoke alarm',
-                'Carbon monoxide alarm',
-                'First aid kit',
-                'Self check-in with lockbox',
-                'Security cameras',
-                'Hangers',
-                'Bed linens',
-                'Extra pillows & blankets',
-                'Iron',
-                'TV with standard cable',
-                'Refrigerator',
-                'Microwave',
-                'Dishwasher',
-                'Coffee maker',
-            ],
-            'floor_plan' => [
-                'first_floor' => '2 bedrooms, 3 bathrooms',
-                'second_floor' => '3 bedrooms',
-            ],
-            'nearby' => [
-                'School' => '0.7 km',
-                'University' => '1.3 km',
-                'Grocery center' => '0.6 km',
-                'Market' => '1.1 km',
+            'map' => [
+                'latitude' => 40.7128,
+                'longitude' => -74.0060,
+                'address' => '150',
+                'city' => '#1234',
+                'state' => 'New York',
+                'postal_code' => '10001',
+                'area'=>7345,
+                'country' => 'USA',
             ],
             'comments' => [],
         ],
+       
     ];
 
 

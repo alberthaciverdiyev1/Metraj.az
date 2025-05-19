@@ -15,7 +15,6 @@
             </a>
         </div>
     </section>
-
     <section id="settings-icon">
         <div class="container mx-auto px-4">
             <div class="settings-icon">
@@ -23,8 +22,6 @@
             </div>
         </div>
     </section>
-
-    
     <div class="gotop" id="scrollToTop">
         <svg class="progress-circle" width="45" height="45">
             <circle class="bg" cx="22.5" cy="22.5" r="18"></circle>
@@ -34,9 +31,6 @@
             <i class="bi bi-arrow-up-short"></i>
         </div>
     </div>
-
-
-
     <section class="property-listing py-4">
         <div class="container mx-auto px-4">
             <div class="flex  flex-col lg:flex-row justify-between gap-4 mb-5">

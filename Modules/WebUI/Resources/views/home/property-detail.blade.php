@@ -84,7 +84,6 @@
 <section id="side">
     <div class="container mx-auto px-4">
         <div class="side">
-
             <div class="side-left">
                 <div class="info-box">
                     <div class="info-box-title mb-4">
@@ -223,7 +222,6 @@
                     <button class="question-btn all-btn button-hover">Ask a question</button>
 
                 </div>
-
                 <section id="video" class="video-section">
                     <div class="video-container">
                         <iframe id="video-frame" src="{{ $property['video'] }}" allowfullscreen></iframe>
@@ -236,13 +234,76 @@
                     :details="$property['details']"
                     :extra="$property['extra']" />
 
-            </div>
-            <div class="side-right">
-                kdsjk
+                <x-amenities :amenities="$property['amenities']" :columns="3" />
+                <div class="map-detail">
+                    <div class="map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12120.809245605833!2d49.6735533!3d40.581289549999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x403097a58506ef15%3A0x698ff01b1e2a5565!2sSumgait%20beach!5e0!3m2!1sen!2saz!4v1747627310183!5m2!1sen!2saz" width="100%" height="450" style="border-radius:24px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div class="map-info px-4">
+                        <ul class="map-info-list">
+                            <li>
+                                <p>Adress</p>
+                                <p> {{ $property['map']['address'] }}</p>
+                            </li>
+                            <li>
+                                <p>City</p>
+                                <p> {{ $property['map']['city'] }}</p>
+                            </li>
+                            <li>
+                                <p>State</p>
+                                <p> {{ $property['map']['state'] }}</p>
+                            </li>
+                            
+                            </li>
+                        </ul>
+                        <ul class="map-info-list">
+                            <li>
+                                <p>Postal Code</p>
+                                <p> {{ $property['map']['postal_code'] }}</p>
+                            </li>
+                            <li>
+                                <p>Country</p>
+                                <p> {{ $property['map']['country'] }}</p>
+                                <li>
+                                <p>Postal Code</p>
+                                <p> {{ $property['map']['postal_code'] }}</p>
+                            </li>
+                             
+                          
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="floor-plan">
+                    <h3>Floor Plan</h3>
+                    <div class="accordions-floor-pla">
+                        <div class="floor-plan-accordion">
+                            <div class="left">
+                                <i></i>
+                                <h4>First Floor</h4>
+                              
+                            </div>
+                            <div class="right">
+                                <div class="bed">
+                                    
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
         </div>
+        <div class="side-right">
+            kdsjk
+
+        </div>
+
+    </div>
 </section>
 
 
