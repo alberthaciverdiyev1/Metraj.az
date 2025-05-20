@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+
+:root {
+    --primary: #f1913d;
+    --text-color:#2C2E33;
+    --border-color:#ECECEC;
+    --icon-grey:#8E8E93;
+    --white:white;
+    --grey-text:#5C5E61;
+    --dark-grey:#2C2E33;
+    --button-border:#ececec;
+    --font-sm:14px;
+    --shadow: box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+*{
+     font-family: "Lexend", sans-serif;
+}
+
+
+.button-hover {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.button-hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  z-index: -1;
+  transition: 0.4s ease;
+  background-color: var(--primary); 
+}
+
+.all-btn.button-hover::before {
+  background-color: var(--text-color);
+}
+
+.button-hover:hover::before {
+  width: 100%;
+}
+
+.all-btn.button-hover:hover {
+  color: var(--white);
+}
+
