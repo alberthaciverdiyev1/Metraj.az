@@ -9,6 +9,9 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/agencies', 'agencies')->name('agencies');
     Route::get('/fake-listing', 'fakeListing')->name('fake.listing');
     Route::get('/property/{id}', [HomeController::class, 'propertyDetail'])->name('property.detail');
+    Route::get('/agency-detail/{id}', [HomeController::class, 'agencyDetail'])->name('agency.detail');
+    Route::get('/agencies/{id}', [HomeController::class, 'agencyDetail'])->name('agency.details');
+
 
 
 

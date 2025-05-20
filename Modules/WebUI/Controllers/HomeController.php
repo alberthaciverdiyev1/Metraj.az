@@ -60,7 +60,7 @@ class HomeController extends Controller
                 'Dishwasher',
                 'Coffee maker',
             ],
-        
+
 
             'floor_plan' => [
                 [
@@ -127,13 +127,41 @@ class HomeController extends Controller
         return view('webui::home.listing', compact('css', 'js', 'properties'));
     }
 
-    public function agencies()
-    {
-        $css = ['agencies.css', 'app.css', 'listing.css'];
-        $js = ['agencies.js', 'listing.js'];
+   public function agencies()
+{
+    $css = ['agencies.css', 'app.css', 'listing.css'];
+    $js = ['agencies.js', 'listing.js'];
 
-        return view('webui::home.agencies', compact('css', 'js'));
-    }
+    $agencies = [
+        1 => [
+            'name' => 'Lorem House',
+            'address' => '2118 Thornridge Cir. Syracuse, Connecticut 35624',
+            'location' => '102 Ingraham St, Brooklyn, NY 11237',
+            'listing_count' => 7.328,
+            'image'=>'https://themesflat.co/html/proty/images/section/agencies-1.jpg',
+            'hotline' => '+7-445-556-8337',
+            'phone' => '+7-445-556-8337',
+            'email' => 'loremhouse@gmail.com',
+            'about' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam risus leo, blandit vitae diam a, vestibulum viverra nisi...',
+            'logo' =>'https://themesflat.co/html/proty/images/brands/brand-7.jpg',
+        ],
+        2 => [
+            'name' => 'Lorem House-2',
+            'address' => '2118 Thornridge Cir. Syracuse, Connecticut 35624',
+            'location' => '102 Ingraham St, Brooklyn, NY 11237',
+            'listing_count' => 9.328,
+            'hotline' => '+7-445-556-8337',
+            'phone' => '+7-445-556-8337',
+            'email' => 'loremhouse@gmail.com',
+            'image'=>'https://themesflat.co/html/proty/images/section/agencies-2.jpg',
+            'about' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam risus leo, blandit vitae diam a, vestibulum viverra nisi...',
+            'logo' => 'https://themesflat.co/html/proty/images/brands/brand-1.jpg',
+        ]
+    ];
+
+    return view('webui::home.agencies', compact('css', 'js', 'agencies'));
+}
+
 
     public function propertyDetail($id)
     {
@@ -141,8 +169,8 @@ class HomeController extends Controller
             abort(404);
         }
 
-        $css = ['listing-details.css', 'app.css','components.css'];
-        $js = ['listing-detail.js', 'app.js','gotop.js'];
+        $css = ['listing-details.css', 'app.css', 'components.css'];
+        $js = ['listing-detail.js', 'app.js', 'gotop.js'];
 
         $property = $this->properties[$id];
         $property['image'] = asset($property['image']);
@@ -150,5 +178,45 @@ class HomeController extends Controller
         $property['extra']['baths'] = $property['baths'] ?? null;
 
         return view('webui::home.property-detail', compact('css', 'js', 'property'));
+    }
+    public function agencyDetail($id)
+    {
+        $agencies = [
+            1 => [
+                'name' => 'Lorem House',
+                'address' => '2118 Thornridge Cir. Syracuse, Connecticut 35624',
+                'location' => '102 Ingraham St, Brooklyn, NY 11237',
+                'listing_count' => 7.328,
+                'hotline' => '+7-445-556-8337',
+                'phone' => '+7-445-556-8337',
+                'image'=>'https://themesflat.co/html/proty/images/section/agencies-1.jpg',
+                'email' => 'loremhouse@gmail.com',
+                'about' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam risus leo, blandit vitae diam a, vestibulum viverra nisi...',
+                'logo' => asset('webui/images/agency-logo.png'),
+            ],
+            2 => [
+                'name' => 'Lorem House-2',
+                'address' => '2118 Thornridge Cir. Syracuse, Connecticut 35624',
+                'location' => '102 Ingraham St, Brooklyn, NY 11237',
+                'listing_count' => 9.328,
+                'hotline' => '+7-445-556-8337',
+                'phone' => '+7-445-556-8337',
+                'image'=>'https://themesflat.co/html/proty/images/section/agencies-2.jpg',
+                'email' => 'loremhouse@gmail.com',
+                'about' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam risus leo, blandit vitae diam a, vestibulum viverra nisi...',
+                'logo' => asset('webui/images/agency-logo.png'),
+            ]
+        ];
+
+        if (!isset($agencies[$id])) {
+            abort(404);
+        }
+
+        $css = ['agency-detail.css', 'app.css', 'components.css','agencies.css'];
+        $js = ['agency-detail.js', 'app.js'];
+
+        $agency = $agencies[$id];
+
+        return view('webui::home.agency-detail', compact('css', 'js', 'agency'));
     }
 }
