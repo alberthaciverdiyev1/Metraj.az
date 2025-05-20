@@ -73,11 +73,11 @@
                     </div>
 
 
-                    <div class="listing-cards">
-
-                        @foreach ($properties as $property)
-                        @foreach ($properties as $property)
+                    <div class="listing-cards g-3" id="property-listing">
+                        @foreach ($properties->chunk(3) as $pageIndex => $chunk)
+                        @foreach ($chunk as $property)
                         <x-property-card
+                            class="properti-card property-card"
                             :id="$property['id']"
                             :image="$property['image']"
                             :title="$property['title']"
@@ -87,13 +87,31 @@
                             :area="$property['area']"
                             :price="$property['price']"
                             data-status="{{ strtolower(str_replace(' ', '', $property['extra']['status'] ?? 'all')) }}"
-                            class="property-card" />
-                        @endforeach
-
-
+                            data-page="{{ $pageIndex + 1 }}" />
 
                         @endforeach
+                        @endforeach
+                    </div>
 
+                    <div class="pagination-agencies">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination mb-0">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <i class="bi bi-chevron-left"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item active" aria-current="page"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                                <li class="page-item"><a class="page-link" href="#">20</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <i class="bi bi-chevron-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
 
 
@@ -101,67 +119,9 @@
             </section>
             <section class="side-right sticky">
                 <div class="">
-                    <section id="contact-detail">
-                        <div class="contact-form">
-                            <form action="">
-                                <h3>Contact Me</h3>
-                                <input type="text" placeholder="Your name" />
-                                <input type="email" placeholder="Email" />
-                                <input type="tel" placeholder="Phone" />
-                                <textarea placeholder="Message"></textarea>
-                                <div class="buttons">
-                                    <button class="send-btn">
-                                        <i class="fa fa-envelope"></i> Send message
-                                    </button>
-                                    <button class="call-btn">
-                                        <i class="fa fa-phone"></i> Call
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-
-                    </section>
-                    <div class="feature-listings">
-                        <h3>Featured Listings</h3>
-                        <div class="featured-listings-cards">
-
-                            <!-- Card 1 -->
-                            <div class="featured-listing-card">
-                                <figure>
-                                    <img class="image-agency" src="https://themesflat.co/html/proty/images/section/box-listing-1.jpg                                                                  " alt="House Image">
-                                </figure>
-                                <div class="card-info">
-                                    <h4>Casa Lomas de Machalí Machas</h4>
-                                    <div class="details">
-                                        <span>3 <span class="grey">Bed</span></span>
-                                        <span>3 <span class="grey">Bath</span></span>
-                                        <span>4,043 <span class="grey">Sqft</span></span>
-                                    </div>
-                                    <div class="price">$7250,00</div>
-                                </div>
-                            </div>
-                            <div class="featured-listing-card">
-                                <figure>
-                                    <img class="image-agency" src="https://themesflat.co/html/proty/images/section/box-listing-1.jpg" alt="House Image">
-                                </figure>
-                                <div class="card-info">
-                                    <h4>Casa Lomas de Machalí Machas</h4>
-                                    <div class="details">
-                                        <span>3 <span class="grey">Bed</span></span>
-                                        <span>3 <span class="grey">Bath</span></span>
-                                        <span>4,043 <span class="grey">Sqft</span></span>
-                                    </div>
-                                    <div class="price">$7250,00</div>
-                                </div>
-                            </div>
-
-
-
-
-
-                        </div>
-                    </div>
-                    <x-connect-agent />
+                    <x-contact-form />
+                 <x-feature--listings/>
+                    <x-connect-agent  />
                 </div>
 
 

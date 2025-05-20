@@ -21,3 +21,63 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const cards = document.querySelectorAll(".property-card");
+    const pagination = document.querySelector(".pagination");
+    if (!pagination) return; 
+
+    const pageLinks = pagination.querySelectorAll(".page-link:not([aria-label])");
+    const prevBtn = pagination.querySelector('[aria-label="Previous"]');
+    const nextBtn = pagination.querySelector('[aria-label="Next"]');
+    let currentPage = 1;
+    const totalPages = parseInt(document.getElementById("totalPages").value);
+
+    function showPage(page) {
+        currentPage = page;
+        cards.forEach(card => {
+            const pageNum = parseInt(card.dataset.page);
+            card.style.display = (pageNum === page) ? "block" : "none";
+        });
+
+        pageLinks.forEach(link => {
+            link.parentElement.classList.remove("active");
+            if (parseInt(link.textContent) === page) {
+                link.parentElement.classList.add("active");
+            }
+        });
+
+        prevBtn.parentElement.classList.toggle("disabled", currentPage === 1);
+        nextBtn.parentElement.classList.toggle("disabled", currentPage === totalPages);
+    }
+
+    pageLinks.forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const selectedPage = parseInt(this.textContent);
+            if (!isNaN(selectedPage)) {
+                showPage(selectedPage);
+            }
+        });
+    });
+
+    prevBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (currentPage > 1) {
+            showPage(currentPage - 1);
+        }
+    });
+
+    nextBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (currentPage < totalPages) {
+            showPage(currentPage + 1);
+        }
+    });
+
+    showPage(currentPage);
+});

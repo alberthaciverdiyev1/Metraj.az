@@ -1215,7 +1215,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
                 'about' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam risus leo, blandit vitae diam a, vestibulum viverra nisi...',
                 'logo' => 'https://themesflat.co/html/proty/images/brands/brand-1.jpg',
             ],
-            4 => [
+              4 => [
                 'name' => 'Lorem House-4',
                 'address' => '2118 Thornridge Cir. Syracuse, Connecticut 35624',
                 'location' => '102 Ingraham St, Brooklyn, NY 11237',
@@ -1226,8 +1226,8 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
                 'image' => 'https://themesflat.co/html/proty/images/section/agencies-4.jpg',
                 'about' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam risus leo, blandit vitae diam a, vestibulum viverra nisi...',
                 'logo' => 'https://themesflat.co/html/proty/images/brands/brand-1.jpg',
-            ],
-            5 => [
+              ],
+                5 => [
                 'name' => 'Lorem House-3',
                 'address' => '2118 Thornridge Cir. Syracuse, Connecticut 35624',
                 'location' => '102 Ingraham St, Brooklyn, NY 11237',
@@ -1238,8 +1238,8 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
                 'image' => 'https://themesflat.co/html/proty/images/section/agencies-5.jpg',
                 'about' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam risus leo, blandit vitae diam a, vestibulum viverra nisi...',
                 'logo' => 'https://themesflat.co/html/proty/images/brands/brand-1.jpg',
-            ],
-            6 => [
+                ],
+                  6 => [
                 'name' => 'Lorem House-3',
                 'address' => '2118 Thornridge Cir. Syracuse, Connecticut 35624',
                 'location' => '102 Ingraham St, Brooklyn, NY 11237',
@@ -1247,7 +1247,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
                 'hotline' => '+7-445-556-8337',
                 'phone' => '+7-445-556-8337',
                 'email' => 'loremhouse@gmail.com',
-                'image' => 'https://themesflat.co/html/proty/images/section/agencies-6.jpg',
+                'image' => 'https://themesflat.co/html/proty/images/section/agencies-.jpg',
                 'about' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam risus leo, blandit vitae diam a, vestibulum viverra nisi...',
                 'logo' => 'https://themesflat.co/html/proty/images/brands/brand-1.jpg',
             ]
@@ -1311,7 +1311,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
         }
 
         $css = ['agency-detail.css', 'app.css', 'components.css', 'agencies.css'];
-        $js = ['agency-detail.js', 'app.js'];
+        $js = ['agency-detail.js', 'app.js', 'gotop.js'];
 
         $agency = $agencies[$id];
         $properties = collect($this->properties)
@@ -1320,7 +1320,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
                 $property['image'] = asset($property['image']);
                 return $property;
             })
-            ->take(5)
+            ->take(limit:8)
             ->values();
         return view('webui::home.agency-detail', compact('css', 'js', 'agency', 'properties'));
     }

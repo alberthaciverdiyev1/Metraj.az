@@ -335,9 +335,9 @@ display: none;
 .feature-listings {
   background: var(--white);
   padding: 20px;
-  border-radius: 12px;
   max-width: 100%;
   font-family: sans-serif;
+
 }
 
 .feature-listings h3 {
@@ -346,6 +346,8 @@ display: none;
   color: var(--text-color);
   margin-bottom: 20px;
 }
+
+
 
 .featured-listings-cards {
   display: flex;

@@ -1,14 +1,12 @@
-<div>
-    <!-- The biggest battle is the war against ignorance. - Mustafa Kemal Atatürk -->
-</div>
-<div class="feature-listings">
+
+<div class="feature-listings py-4 mx-auto">
     <h3>Featured Listings</h3>
     <div class="featured-listings-cards">
 
         <!-- Card 1 -->
         <div class="featured-listing-card">
             <figure>
-                <img class="image-agency" src="webui/images/agencies-1.jpg" alt="House Image">
+                <img class="image-agency" src="https://themesflat.co/html/proty/images/section/box-listing-4.jpg" alt="House Image">
             </figure>
             <div class="card-info">
                 <h4>Casa Lomas de Machalí Machas</h4>
