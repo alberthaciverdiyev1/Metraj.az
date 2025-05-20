@@ -85,7 +85,7 @@
 </section>
 <section id="side">
     <div class="container mx-auto px-4">
-        <div class="side">
+        <div class="lg:flex-row md:flex-row flex-col side">
             <div class="side-left">
                 <div class="info-box">
                     <div class="info-box-title mb-4">
