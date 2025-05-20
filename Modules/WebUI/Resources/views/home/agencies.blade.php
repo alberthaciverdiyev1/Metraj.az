@@ -120,63 +120,8 @@
             </div>
         </section>
         <section id="contact">
-            <div class="contact-form">
-                <form action="">
-                    <h3>Contact Me</h3>
-                    <input type="text" placeholder="Your name" />
-                    <input type="email" placeholder="Email" />
-                    <input type="tel" placeholder="Phone" />
-                    <textarea placeholder="Message"></textarea>
-                    <div class="buttons">
-                        <button class="send-btn">
-                            <i class="fa fa-envelope"></i> Send message
-                        </button>
-                        <button class="call-btn">
-                            <i class="fa fa-phone"></i> Call
-                        </button>
-                    </div>
-                </form>
-            </div>
-            <div class="feature-listings">
-                <h3>Featured Listings</h3>
-                <div class="featured-listings-cards">
-
-                    <!-- Card 1 -->
-                    <div class="featured-listing-card">
-                        <figure>
-                            <img class="image-agency" src="webui/images/agencies-1.jpg" alt="House Image">
-                        </figure>
-                        <div class="card-info">
-                            <h4>Casa Lomas de Machalí Machas</h4>
-                            <div class="details">
-                                <span>3 <span class="grey">Bed</span></span>
-                                <span>3 <span class="grey">Bath</span></span>
-                                <span>4,043 <span class="grey">Sqft</span></span>
-                            </div>
-                            <div class="price">$7250,00</div>
-                        </div>
-                    </div>
-                    <div class="featured-listing-card">
-                        <figure>
-                            <img class="image-agency" src="webui/images/agencies-1.jpg" alt="House Image">
-                        </figure>
-                        <div class="card-info">
-                            <h4>Casa Lomas de Machalí Machas</h4>
-                            <div class="details">
-                                <span>3 <span class="grey">Bed</span></span>
-                                <span>3 <span class="grey">Bath</span></span>
-                                <span>4,043 <span class="grey">Sqft</span></span>
-                            </div>
-                            <div class="price">$7250,00</div>
-                        </div>
-                    </div>
-
-
-
-
-
-                </div>
-            </div>
+            <x-contact-form />
+            <x-feature--listings />
             <x-connect-agent />
 
 

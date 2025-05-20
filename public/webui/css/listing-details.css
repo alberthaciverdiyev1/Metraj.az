@@ -52,7 +52,7 @@
 }
 
 .modal {
-    display: none;
+    display: flex;
     position: fixed;
     top: 0;
     left: 0;
@@ -64,6 +64,11 @@
     flex-direction: column;
     z-index: 1000;
 }
+
+.modal--hidden {
+  display: none;
+}
+
 .modal-header {
     position: absolute;
     top: 10px;
@@ -865,9 +870,7 @@ form {
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #e67c00;
-}
+
 .avatar-info {
     gap: 30px;
     margin-top: 20px;
@@ -1357,7 +1360,9 @@ circle.progress {
 .hover-effect-button:hover span:not(.hover-effect-button-fill) {
     color: white;
 }
-
+.modal-navigation{
+    gap: 4rem;
+}
 
 
 

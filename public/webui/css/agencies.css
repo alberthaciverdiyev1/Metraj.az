@@ -226,6 +226,9 @@ display: none;
 }
 #contact{
   width: 35%;
+      position: sticky;
+    max-height: 1300px;
+    top: 20px;
 }
 .contact-form {
   width: 100%;
@@ -371,10 +374,19 @@ display: none;
 }
 
 .image-agency {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 75px;
   object-fit: cover;
   border-radius: 8px;
+}
+.image-agency:hover {
+  transform: scale(1.05);
+ 
+  transition: all 0.3s ease;
+}
+.featured-listing-card figure{
+ border-radius: 8px;
+  overflow: hidden;
 }
 
 .card-info h4 {
@@ -402,14 +414,16 @@ display: none;
   font-weight: 700;
   color: var(--primary);
 }
-
+.details{
+  margin-top: 10px;
+}
 
 
 .connect {
     position: relative;
     border-radius: 15px;
     overflow: hidden;
-    max-width: 400px;
+    width: 100%;
     font-family: Arial, sans-serif;
 }
 .agencies-card.list-view{
@@ -504,3 +518,16 @@ display: none;
   }
   
 }
+
+@media (max-width:768px) {
+  .agencies-cards{
+    flex-direction: column;
+  }
+  .agencies-card{
+    width: 100%;
+  }
+  .agencies-card.list-view {
+    flex-direction: column;
+  }
+}
+

@@ -7,16 +7,20 @@ const images = [
   let currentIndex = 0;
   let slideshow;
 
+  
+
+
+function closeModal() {
+  document.getElementById("modal").classList.add("modal--hidden");
+  clearInterval(slideshow);
+}
+
   function openModal(index) {
     currentIndex = index;
     document.getElementById("modal").style.display = "flex";
     updateModal();
   }
 
-  function closeModal() {
-    document.getElementById("modal").style.display = "none";
-    clearInterval(slideshow);
-  }
 
   function updateModal() {
     document.getElementById("modal-image").src = images[currentIndex];
