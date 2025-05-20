@@ -61,42 +61,42 @@
                     </div>
                 </div>
             </div>
-         <div class="agencies-cards">
-    @foreach($agencies as $id => $agency)
-    <div class="agencies-card">
-        <figure>
-            <img class="image-agency" src="{{ $agency['image'] }}" alt="House Image">
-        </figure>
-        <div class="logo">
-            <img src="{{ $agency['logo'] }}" alt="Logo">
-        </div>
-        <div class="text">
-            <div class="header">{{ $agency['name'] }}</div>
-            <p>{{ $agency['address'] }}</p>
+            <div class="agencies-cards">
+                @foreach($agencies as $id => $agency)
+                <div class="agencies-card">
+                    <figure>
+                        <img class="image-agency" src="{{ $agency['image'] }}" alt="House Image">
+                    </figure>
+                    <div class="logo">
+                        <img src="{{ $agency['logo'] }}" alt="Logo">
+                    </div>
+                    <div class="text">
+                        <div class="header">{{ $agency['name'] }}</div>
+                        <p>{{ $agency['address'] }}</p>
 
-            <div class="desc">{{ \Illuminate\Support\Str::limit($agency['about'], 150) }}</div>
-            <div class="info"><span>Listing:</span> {{ $agency['listing_count'] }}</div>
-            <div class="info"><span>Hotline:</span> {{ $agency['hotline'] }}</div>
-            <div class="info"><span>Phone:</span> {{ $agency['phone'] }}</div>
-            <div class="info"><span>Email:</span> {{ $agency['email'] }}</div>
+                        <div class="desc">{{ \Illuminate\Support\Str::limit($agency['about'], 150) }}</div>
+                        <div class="info"><span>Listing:</span> {{ $agency['listing_count'] }}</div>
+                        <div class="info"><span>Hotline:</span> {{ $agency['hotline'] }}</div>
+                        <div class="info"><span>Phone:</span> {{ $agency['phone'] }}</div>
+                        <div class="info"><span>Email:</span> {{ $agency['email'] }}</div>
 
-            <div class="footer">
-                <div class="icons">
-                    <i class="bi bi-telephone-fill"></i>
-                    <i class="bi bi-envelope-fill"></i>
-                    <i class="bi bi-globe2"></i>
+                        <div class="footer">
+                            <div class="icons">
+                                <i class="bi bi-telephone-fill"></i>
+                                <i class="bi bi-envelope-fill"></i>
+                                <i class="bi bi-globe2"></i>
+                            </div>
+                            <div class="details-button">
+                                <a href="{{ route('agency.details', $id) }}" class="relative inline-block px-6 py-3 rounded-xl border border-[color:var(--primary)] text-sm text-[color:var(--primary)] overflow-hidden transition-all duration-300 hover-effect-button">
+                                    <span class="absolute inset-0 w-0 h-full bg-[color:var(--primary)] transition-all duration-300 ease-in-out z-0 hover-effect-button-fill"></span>
+                                    <span class="relative z-10">Details</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="details-button">
-                    <a href="{{ route('agency.details', $id) }}" class="relative inline-block px-6 py-3 rounded-xl border border-[color:var(--primary)] text-sm text-[color:var(--primary)] overflow-hidden transition-all duration-300 hover-effect-button">
-                        <span class="absolute inset-0 w-0 h-full bg-[color:var(--primary)] transition-all duration-300 ease-in-out z-0 hover-effect-button-fill"></span>
-                        <span class="relative z-10">Details</span>
-                    </a>
-                </div>
+                @endforeach
             </div>
-        </div>
-    </div>
-    @endforeach
-</div>
 
             <div class="pagination-agencies">
                 <nav aria-label="Page navigation">

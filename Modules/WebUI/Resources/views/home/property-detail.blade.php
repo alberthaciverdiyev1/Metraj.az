@@ -16,7 +16,7 @@
     </div>
 </section>
 <x-settings-icon />
-  <x-scroll-to-top />
+<x-scroll-to-top />
 
 <section id="listing-detail-gallery">
     <div class="container mx-auto px-4">

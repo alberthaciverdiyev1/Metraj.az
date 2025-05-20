@@ -128,7 +128,7 @@
                             <!-- Card 1 -->
                             <div class="featured-listing-card">
                                 <figure>
-                                    <img class="image-agency" src="https://themesflat.co/html/proty/images/section/box-listing-1.jpg" alt="House Image">
+                                    <img class="image-agency" src="https://themesflat.co/html/proty/images/section/box-listing-1.jpg                                                                  " alt="House Image">
                                 </figure>
                                 <div class="card-info">
                                     <h4>Casa Lomas de Machalí Machas</h4>
