@@ -1,5 +1,6 @@
 @props(['id', 'image', 'title', 'address', 'beds', 'baths', 'area', 'price'])
-<div class="border border-[color:var(--border-color)] rounded-2xl overflow-hidden group relative transition-all duration-300">
+<div {{ $attributes->merge(['class' => 'border border-[color:var(--border-color)] rounded-2xl overflow-hidden group relative transition-all duration-300']) }}>
+
     <div class="relative overflow-hidden">
         <img src="{{ $image }}" alt="{{ $title }}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" />
         <div class="absolute inset-0 flex items-center justify-center overflow-hidden">
