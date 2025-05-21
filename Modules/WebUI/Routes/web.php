@@ -11,6 +11,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/property/{id}', [HomeController::class, 'propertyDetail'])->name('property.detail');
     Route::get('/agency-detail/{id}', [HomeController::class, 'agencyDetail'])->name('agency.detail');
     Route::get('/agencies/{id}', [HomeController::class, 'agencyDetail'])->name('agency.details');
+    Route::get('/contact', 'contact')->name('contact');
 
 
 

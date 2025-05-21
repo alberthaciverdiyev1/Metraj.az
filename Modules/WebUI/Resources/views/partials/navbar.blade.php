@@ -18,7 +18,7 @@
             <a href="{{ route('listing') }}" class="">Listing</a>
             <a href="{{ route('agencies') }}" class="text-gray-700">Agencies</a>
             <a href="#" class="text-gray-700">Blog</a>
-            <a href="" class="text-gray-700">Contact</a>
+            <a href="{{ route('contact') }}" class="text-gray-700">Contact</a>
         </nav>
 
         <!-- Right -->

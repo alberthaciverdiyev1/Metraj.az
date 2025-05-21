@@ -15,6 +15,7 @@
     --button-border:#ececec;
     --font-sm:14px;
     --shadow: box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    --light-grey:rgba(44, 46, 51, 0.6);
 }
 *{
      font-family: "Lexend", sans-serif;
