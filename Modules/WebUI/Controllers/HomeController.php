@@ -1257,22 +1257,27 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
     }
 
 
-    public function propertyDetail($id)
-    {
-        if (!isset($this->properties[$id])) {
-            abort(404);
-        }
-
-        $css = ['listing-details.css', 'app.css', 'components.css'];
-        $js = ['listing-detail.js', 'app.js', 'gotop.js'];
-
-        $property = $this->properties[$id];
-        $property['image'] = asset($property['image']);
-
-        $property['extra']['baths'] = $property['baths'] ?? null;
-
-        return view('webui::home.property-detail', compact('css', 'js', 'property'));
+public function propertyDetail($id)
+{
+    if (!isset($this->properties[$id])) {
+        abort(404);
     }
+
+    // CSS dosyalarını öncelik sırasına göre düzenle
+    $css = [
+        'app.css',           // Ana CSS dosyası önce
+        'components.css',    // Componentler ikinci
+        'listing-details.css' // Sayfa özel CSS son
+    ];
+    
+    $js = ['listing-detail.js', 'app.js', 'gotop.js'];
+
+    $property = $this->properties[$id];
+    $property['image'] = asset($property['image']);
+    $property['extra']['baths'] = $property['baths'] ?? null;
+
+    return view('webui::home.property-detail', compact('css', 'js', 'property'));
+}
     public function agencyDetail($id)
     {
         $agencies = [

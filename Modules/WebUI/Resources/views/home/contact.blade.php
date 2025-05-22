@@ -100,7 +100,49 @@
                 <img src="https://themesflat.co/html/proty/images/section/section-contact-2.jpg" alt="">
             </div>
         </div>
-    </main>
+        <div class="work-together">
+
+        <div class=" mx-auto py-3 container">
+            <div class="title">
+                <h2>Let’s Work Together</h2>
+                <p>Thousands of luxury home enthusiasts just like you visit our website.</p>
+            </div>
+            <div class="carousels">
+               <div class="carousel">
+                <div class="carousel-track">
+                    <div class="partner-item"><img src="webui/images/spark.svg  " alt="Normal"></div>
+                    <div class="partner-item"><img src="webui/images/quora.svg" alt="Hover"></div>
+                    <div class="partner-item"><img src="webui/images/spark.svg " alt="Normal"></div>
+                    <div class="partner-item"><img src="webui/images/quora.svg" alt="Hover"></div>
+                    <div class="partner-item"><img src="webui/images/spark.svg  " alt="Normal"></div>
+                    <div class="partner-item"><img src="webui/images/quora.svg" alt="Hover"></div>
+                    <div class="partner-item"><img src="webui/images/spark.svg " alt="Normal"></div>
+                    <div class="partner-item"><img src="webui/images/quora.svg" alt="Hover"></div>
+                </div>
+
+            </div>
+
+
+            <div class="carousel">
+                <div class="carousel-track reverse">
+                    <div class="partner-item"><img src="webui/images/quora.svg" alt="Normal"></div>
+                    <div class="partner-item"><img src="webui/images/spark.svg" alt="Hover"></div>
+                    <div class="partner-item"><img src="webui/images/quora.svg" alt="Normal"></div>
+                    <div class="partner-item"><img src="webui/images/spark.svg" alt="Hover"></div>
+                    <div class="partner-item"><img src="webui/images/quora.svg" alt="Normal"></div>
+                    <div class="partner-item"><img src="webui/images/spark.svg" alt="Hover"></div>
+                    <div class="partner-item"><img src="webui/images/quora.svg" alt="Normal"></div>
+                    <div class="partner-item"><img src="webui/images/spark.svg" alt="Hover"></div>
+                </div>
+            </div>    
+            </div>
+           
+        </div>
+          
+        </div>
+
+</div>
+</main>
 
 </div>
 @endsection
