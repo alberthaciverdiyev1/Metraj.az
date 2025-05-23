@@ -1339,7 +1339,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
 
      public function faqs()
     {
-        $css = ['faqs.css', 'app.css', 'components.css','listing-details.css'];
+        $css = ['faqs.css', 'app.css', 'components.css','listing-details.css','agencies.css'];
         $js = ['faqs.js','gotop.js'];
         $cities = [];
         return view('webui::home.faqs', compact('css', 'js'));
