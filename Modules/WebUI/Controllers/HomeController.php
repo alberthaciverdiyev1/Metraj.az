@@ -1257,27 +1257,26 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
     }
 
 
-public function propertyDetail($id)
-{
-    if (!isset($this->properties[$id])) {
-        abort(404);
+    public function propertyDetail($id)
+    {
+        if (!isset($this->properties[$id])) {
+            abort(404);
+        }
+
+        $css = [
+            'app.css',           
+            'components.css',   
+            'listing-details.css' 
+        ];
+
+        $js = ['listing-detail.js', 'app.js', 'gotop.js'];
+
+        $property = $this->properties[$id];
+        $property['image'] = asset($property['image']);
+        $property['extra']['baths'] = $property['baths'] ?? null;
+
+        return view('webui::home.property-detail', compact('css', 'js', 'property'));
     }
-
-    // CSS dosyalarını öncelik sırasına göre düzenle
-    $css = [
-        'app.css',           // Ana CSS dosyası önce
-        'components.css',    // Componentler ikinci
-        'listing-details.css' // Sayfa özel CSS son
-    ];
-    
-    $js = ['listing-detail.js', 'app.js', 'gotop.js'];
-
-    $property = $this->properties[$id];
-    $property['image'] = asset($property['image']);
-    $property['extra']['baths'] = $property['baths'] ?? null;
-
-    return view('webui::home.property-detail', compact('css', 'js', 'property'));
-}
     public function agencyDetail($id)
     {
         $agencies = [
@@ -1335,5 +1334,14 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
         $js = ['contact.js', 'gotop.js'];
 
         return view('webui::home.contact', compact('css', 'js'));
+    }
+
+
+     public function faqs()
+    {
+        $css = ['faqs.css', 'app.css', 'components.css','listing-details.css'];
+        $js = ['faqs.js','gotop.js'];
+        $cities = [];
+        return view('webui::home.faqs', compact('css', 'js'));
     }
 }

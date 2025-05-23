@@ -26,6 +26,7 @@ class WebUIServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
+        //  $this->loadViewsFrom(__DIR__.'/../Resources/views', 'webui');
     }
 
     /**
@@ -119,18 +120,22 @@ class WebUIServiceProvider extends ServiceProvider
     /**
      * Register views.
      */
-    public function registerViews(): void
-    {
-        $viewPath = resource_path('views/modules/'.$this->nameLower);
-        $sourcePath = module_path($this->name, '');
-        $this->publishes([$sourcePath => $viewPath], ['views', $this->nameLower.'-module-views']);
+  public function registerViews(): void
+{
+    $viewPath = resource_path('views/modules/'.$this->nameLower);
+    $sourcePath = module_path($this->name, 'Resources/views');
 
-//        $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->nameLower);
-        $this->loadViewsFrom(module_path($this->name, 'Resources/views'), $this->nameLower);
+    $this->publishes([$sourcePath => $viewPath], ['views', $this->nameLower.'-module-views']);
 
-        Blade::componentNamespace(config('modules.namespace').'\\' . $this->name . '\\View\\Components', $this->nameLower);
-    }
-
+    // Əsas namespace
+    $this->loadViewsFrom($sourcePath, $this->nameLower);
+    
+    // Xüsusi error views üçün ayrı namespace
+    $this->loadViewsFrom($sourcePath.'/errors', $this->nameLower.'-errors');
+    
+    // Layouts üçün ayrı namespace
+    $this->loadViewsFrom($sourcePath.'/layouts', $this->nameLower.'-layouts');
+}
     /**
      * Get the services provided by the provider.
      */

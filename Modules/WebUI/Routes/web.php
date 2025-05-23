@@ -12,10 +12,17 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/agency-detail/{id}', [HomeController::class, 'agencyDetail'])->name('agency.detail');
     Route::get('/agencies/{id}', [HomeController::class, 'agencyDetail'])->name('agency.details');
     Route::get('/contact', 'contact')->name('contact');
+    Route::get('/check-real-404-path', function () {
+        $path = base_path('Modules/WebUI/Resources/views/errors/404.blade.php');
 
-
-
-
+        return response()->json([
+            'correct_path' => $path,
+            'file_exists' => file_exists($path),
+            'file_content' => file_exists($path) ? file_get_contents($path) : null,
+            'directory_listing' => scandir(dirname($path))
+        ]);
+    });
+    Route::get('/faqs', 'faqs')->name('faqs');
 });
 
 

@@ -1,6 +1,7 @@
 <?php
 
 return [
-    'name' => 'WebUI',
+    'name' => 'webui',
     'icon' => 'WebUI',
+    
 ];

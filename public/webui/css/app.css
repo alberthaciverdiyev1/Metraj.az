@@ -118,7 +118,10 @@
     border: 1px solid var(--border-color);
     transition: 0.3s;
 }
-
+a{
+    text-decoration: none;
+    /* color: black; */
+}
 .page-item.disabled .page-link {
     color: #6c757d;
     pointer-events: none;
@@ -132,4 +135,45 @@
     background-color: var(--primary);
     color: white;
     border: none;
+}
+
+.primary-btn {
+  flex: 1;
+  padding: 15px;
+  font-size: 15px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  display: flex;              
+  align-items: center;        
+  justify-content: center;     
+  gap: 8px;                
+  font-weight: bold;
+
+  background-color: var(--primary);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.primary-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  z-index: -1;
+  background-color: var(--text-color);
+  transition: 0.4s ease;
+}
+
+.primary-btn:hover::before {
+  width: 100%;
+}
+
+.primary-btn:hover {
+  color: var(--white);
 }

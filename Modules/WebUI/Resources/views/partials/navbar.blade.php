@@ -19,6 +19,7 @@
             <a href="{{ route('agencies') }}" class="text-gray-700">Agencies</a>
             <a href="#" class="text-gray-700">Blog</a>
             <a href="{{ route('contact') }}" class="text-gray-700">Contact</a>
+             <a href="{{ route('faqs') }}" class="text-gray-700">FAQS</a>
         </nav>
 
         <!-- Right -->
