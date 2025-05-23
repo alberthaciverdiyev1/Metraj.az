@@ -187,7 +187,19 @@
     flex-direction: column;
     align-items: flex-start;
   }
+.connect img {
+    height: 500px;
+    /* background-image: cover; */
+}
 
+.contact-background{
+    height: 500px;
+}
+.contact-content{
+    flex-direction: column;
+    justify-content:start ;
+    /* align-items: flex-start; */
+}
   .contact-title {
     font-size: 28px;
   }
