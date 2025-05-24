@@ -1333,7 +1333,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
         $css = ['contact.css', 'app.css', 'components.css', 'agencies.css'];
         $js = ['contact.js', 'gotop.js'];
 
-        return view('webui::home.contact', compact('css', 'js'));
+        return view('webui::Pages.contact', compact('css', 'js'));
     }
 
 
@@ -1342,6 +1342,13 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
         $css = ['faqs.css', 'app.css', 'components.css','listing-details.css','agencies.css'];
         $js = ['faqs.js','gotop.js'];
         $cities = [];
-        return view('webui::home.faqs', compact('css', 'js'));
+        return view('webui::Pages.faqs', compact('css', 'js'));
+    }
+    public function blog()
+    {
+        $css = ['blog.css', 'app.css', 'components.css', 'listing-details.css', 'agencies.css'];
+        $js = ['blog.js', 'gotop.js'];
+        $cities = [];
+        return view('webui::Pages.blog', compact('css', 'js'));
     }
 }

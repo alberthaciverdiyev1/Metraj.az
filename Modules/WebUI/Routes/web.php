@@ -23,6 +23,8 @@ Route::controller(HomeController::class)->group(function () {
         ]);
     });
     Route::get('/faqs', 'faqs')->name('faqs');
+     Route::get('/blog', 'blog')->name('blog');
+
 });
 
 
