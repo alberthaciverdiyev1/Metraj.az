@@ -1,7 +1,11 @@
 
+@props([
+    'title' => 'Guest Reviews',
+    'formTitle' => 'Add Review',
+])
 
 <div class="reviews-container">
-    <h2>Guest Reviews</h2>
+    <h2>{{ $title }}</h2>
 
     @foreach ($reviews as $review)
     <div class="review-card  ">
@@ -42,7 +46,7 @@
 
     <div class="review-form">
 
-    <h2>Add Review</h2>
+        <h2>{{ $formTitle }}</h2>
     <p>Your email address will not be published</p>
     <form action="mailto:arzuuimammadova@gmail.com" method="POST" enctype="text/plain">
       <div class="input-row">

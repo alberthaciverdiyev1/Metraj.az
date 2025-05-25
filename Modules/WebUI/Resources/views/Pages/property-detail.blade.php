@@ -1,23 +1,12 @@
 @extends('webui::layout')
 @props(['id', 'image', 'title', 'address', 'beds', 'baths', 'area', 'price'])
-
 @section('content')
-
-
-<section id="navigation" class="py-3">
-    <div class="container mx-auto px-4 flex items-center gap-2">
-        <a href="{{ route('home') }}" class="text-[color:var(--primary)] font-bold flex items-center hover:text-black">
-            Home
-        </a>
-        <span class="text-gray-400">›</span>
-        <a href="{{ route('listing') }}" class="text-gray-600">
-            Property Listing
-        </a>
-    </div>
-</section>
+<x-breadcrumb :items="[
+    ['label' => 'Home', 'url' => route('home')],
+    ['label' => 'Property Listing ', 'url' => route('listing')],
+]" />
 <x-settings-icon />
 <x-scroll-to-top />
-
 <section id="listing-detail-gallery">
     <div class="container mx-auto px-4">
         <div class="gallery-grid">
@@ -35,9 +24,6 @@
             </figure>
         </div>
     </div>
-
-
-
     <div id="modal" class="modal">
         <div class="modal-header">
             <span id="counter">1/4</span>
@@ -61,8 +47,6 @@
             <img src="{{ asset($property['altimages']['fourth_image'] ?? '') }}" onclick="openModal(3)">
         </div>
     </div>
-
-
     <div id="imgModal" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content modal-content-custom">
@@ -80,8 +64,6 @@
             </div>
         </div>
     </div>
-
-
 </section>
 <section id="side">
     <div class="container mx-auto px-4">
@@ -235,39 +217,14 @@
                 <x-property-details
                     :details="$property['details']"
                     :extra="$property['extra']" />
-
                 <x-amenities :amenities="$property['amenities']" :columns="3" />
                 <x-property-map
                     :mapData="$property['map']"
                     :zoom="15" />
-                <!--burdakilari componente cixartmaq-->
-                <!--floor-plan-->
-                <div class="floor-plan">
-                    <div class="accordion-container">
-                        <h2>Floor Plans</h2>
 
-                        @foreach($property['floor_plan'] as $plan)
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <div class="accordion-title">
-                                    <i class="fa-solid fa-chevron-down"></i>
-                                    {{ $plan['floor'] }}
-                                </div>
-                                <div class="accordion-icons">
-                                    <div><i class="fa-solid fa-bed"></i> {{ $plan['bedrooms'] }} Bedroom</div>
-                                    <div><i class="fa-solid fa-bath"></i> {{ $plan['bathrooms'] }} Bathroom</div>
-                                </div>
-                            </div>
-                            <div class="accordion-body">
-                                <img src="{{ $plan['image'] }}" alt="{{ $plan['floor'] }} Plan">
-                            </div>
-                        </div>
-                        @endforeach
+                <x-floor-plan :plans="$property['floor_plan']" />
 
-                    </div>
-                </div>
 
-                <!--Attachment-box-->
                 <div class="attachment-box">
                     <h2>File Attachments</h2>
                     <div class="file-list">
@@ -299,69 +256,13 @@
                     </div>
                 </div>
                 <x-virtual-tour :property="$property" />
-
-
-
                 <x-loan-calculator />
+                <x-nearby :nearby="$property['nearby']" />
 
+                <x-reviews
 
-                <section id="what-is-nearby">
-                    <div class="what-is-nearby">
-                        <h3>What’s Nearby?</h3>
-                        <p>Explore nearby amenities to precisely locate your property and identify surrounding conveniences, providing a comprehensive overview of the living environment and the property's convenience.</p>
-                        <div class="nearby-info flex">
-                            <ul class="nearby-info-list ">
-                                <li class="flex">
-                                    <p>School</p>
-                                    <p>{{ $property['nearby']['School'] }}</p>
-                                </li>
-                                <li class="flex">
-                                    <p>University</p>
-                                    <p>{{ $property['nearby']['University'] }}</p>
-                                </li>
-                                <li class="flex">
-                                    <p>School</p>
-                                    <p>0.7km</p>
-                                </li>
-                                <li class="flex">
-                                    <p>School</p>
-                                    <p>0.7km</p>
-                                </li>
-
-                            </ul>
-                            <ul class="nearby-info-list ">
-                                <li class="flex">
-                                    <p>School</p>
-                                    <p>{{ $property['nearby']['School'] }}</p>
-                                </li>
-                                <li class="flex">
-                                    <p>University</p>
-                                    <p>{{ $property['nearby']['University'] }}</p>
-                                </li>
-                                <li class="flex">
-                                    <p>School</p>
-                                    <p>0.7km</p>
-                                </li>
-                                <li class="flex">
-                                    <p>School</p>
-                                    <p>0.7km</p>
-                                </li>
-
-                            </ul>
-                        </div>
-
-
-                    </div>
-
-                </section>
-                <x-reviews />
-
-
-
-
-
-
-
+                    title="Guest Reviews"
+                    formTitle="Add Reviews" />
 
 
             </div>

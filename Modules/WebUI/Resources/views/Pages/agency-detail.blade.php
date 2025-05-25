@@ -3,27 +3,12 @@
 @section('title', $agency['name'])
 
 @section('content')
-<section id="navigation" class="py-3">
-    <div class="container mx-auto px-4 flex items-center gap-2">
-        <a href="{{ route('home') }}" class="text-[color:var(--primary)] font-bold flex items-center hover:text-black">
-            Home
-        </a>
-        <span class="text-gray-400">›</span>
-        <a href="{{ route('agencies') }}" class="text-gray-600">
-            Agencies
-        </a>
-    </div>
-</section>
+<x-breadcrumb :items="[
+    ['label' => 'Home', 'url' => route('home')],
+    ['label' => 'Agencies', 'url' => route('agencies')],
+]" />
 <x-settings-icon />
-<div class="gotop" id="scrollToTop">
-    <svg class="progress-circle" width="45" height="45">
-        <circle class="bg" cx="22.5" cy="22.5" r="18"></circle>
-        <circle class="progress" cx="22.5" cy="22.5" r="18"></circle>
-    </svg>
-    <div class="up">
-        <i class="bi bi-arrow-up-short"></i>
-    </div>
-</div>
+<x-scroll-to-top />
 <section id="side">
     <div class="container mx-auto px-4 ">
         <div class="side-agency">
@@ -120,8 +105,8 @@
             <section class="side-right sticky">
                 <div class="">
                     <x-contact-form />
-                 <x-feature--listings/>
-                    <x-connect-agent  />
+                    <x-feature--listings />
+                    <x-connect-agent />
                 </div>
 
 

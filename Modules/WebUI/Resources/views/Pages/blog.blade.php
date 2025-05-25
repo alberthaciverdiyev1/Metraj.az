@@ -6,21 +6,14 @@
 @section('content')
 <x-settings-icon />
 <x-scroll-to-top />
-<section id="navigation" class="py-3">
-    <div class="container mx-auto px-4 flex items-center gap-2">
-        <a href="{{ route('home') }}" class="text-[color:var(--primary)] font-bold flex items-center hover:text-black">
-            Home
-        </a>
-        <span class="text-gray-400">›</span>
-        <a href="{{ route('listing') }}" class="text-gray-600">
-            Blog grid
-        </a>
-    </div>
-</section>
+<x-breadcrumb :items="[
+    ['label' => 'Home', 'url' => route('home')],
+    ['label' => 'Blog', 'url' => route('blog')],
+]" />
 <header>
     <div class="container mx-auto px-4">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-start gap-4 md:gap-6">
-            <h2 class="text-2xl lg:text-4xl font-bold text-[color:var(--text-color)]">
+            <h2 class="text-2xl lg:text-4xl font-bold py-4 text-[color:var(--text-color)]">
                 Blog grid
             </h2>
 

@@ -6,17 +6,10 @@
 @section('content')
 <x-settings-icon />
 <x-scroll-to-top />
-<section id="navigation" class="py-3">
-    <div class="container mx-auto px-4 flex items-center gap-2">
-        <a href="{{ route('home') }}" class="text-[color:var(--primary)] font-bold flex items-center hover:text-black">
-            Home
-        </a>
-        <span class="text-gray-400">›</span>
-        <a href="{{ route('listing') }}" class="text-gray-600">
-            Blog details
-        </a>
-    </div>
-</section>
+<x-breadcrumb :items="[
+    ['label' => 'Home', 'url' => route('home')],
+    ['label' => 'Blog', 'url' => route('blog')],
+]" />
 
 <main>
     <section id="side ">
@@ -94,11 +87,9 @@
                     </div>
 
 
-                    <x-reviews />
-
-
-
-
+                    <x-reviews
+                        title="Comments"
+                        formTitle="Leave A Comment" />
                 </div>
                 <div class="right-side">
                     <div class="blog-sidebar">
