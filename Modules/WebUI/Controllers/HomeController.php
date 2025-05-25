@@ -1400,16 +1400,24 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
         return view('webui::Pages.blog', compact('css', 'js', 'cities', 'blog'));
     }
 
-   public function blogDetail($id)
-    {
-        if (!isset($this->blog[$id])) {
-            abort(404);
-        }
-
-        $css = ['blog-detail.css', 'app.css', 'components.css', 'listing-details.css', 'agencies.css'];
-        $js = ['blog-detail.js', 'gotop.js'];
-
-        $blog = $this->blog[$id];
-        return view('webui::Pages.blog-detail', compact('css', 'js', 'blog'));
+public function blogDetail($id)
+{
+    if (!isset($this->blog[$id])) {
+        abort(404);
     }
+
+    $css = ['blog-detail.css', 'app.css', 'components.css', 'listing-details.css', 'agencies.css','blog.css'];
+    $js = ['blog-detail.js', 'gotop.js'];
+
+    $blog = $this->blog[$id];
+    
+   
+    $relatedPosts = array_filter($this->blog, function($key) use ($id) {
+        return $key != $id;
+    }, ARRAY_FILTER_USE_KEY);
+    
+    $relatedPosts = array_slice($relatedPosts, 0, 3);
+    
+    return view('webui::Pages.blog-detail', compact('css', 'js', 'blog', 'relatedPosts'));
+}
 }
