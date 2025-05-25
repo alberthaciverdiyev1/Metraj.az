@@ -1158,7 +1158,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
             'date' => '26 August, 2024',
             'category' => 'Real Estate',
             'author' => 'Kathryn Murphy',
-            'description'=>'The housing sector has long been a focal point for investors seeking stability and growth. Understanding the dynamics of housing stocks and effectively trading within this sector can lead to substantial gains.',
+            'description' => 'The housing sector has long been a focal point for investors seeking stability and growth. Understanding the dynamics of housing stocks and effectively trading within this sector can lead to substantial gains.',
             'images' => [
                 'https://themesflat.co/html/proty/images/blog/blog-grid-1.jpg',
                 'https://themesflat.co/html/proty/images/blog/blog-grid-2.jpg',
@@ -1179,7 +1179,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
             'date' => '27 August, 2024',
             'category' => 'Real Estate',
             'author' => 'Kathryn Murphy',
-               'description'=>'The housing sector has long been a focal point for investors seeking stability and growth. Understanding the dynamics of housing stocks and effectively trading within this sector can lead to substantial gains.',
+            'description' => 'The housing sector has long been a focal point for investors seeking stability and growth. Understanding the dynamics of housing stocks and effectively trading within this sector can lead to substantial gains.',
             'images' => [
                 'https://themesflat.co/html/proty/images/blog/blog-grid-2.jpg',
                 'https://themesflat.co/html/proty/images/blog/blog-grid-2.jpg',
@@ -1193,13 +1193,13 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
                 "Identify Emerging Trends: Stay informed about emerging trends in the housing market, such as the demand for sustainable homes, technological advancements, and demographic shifts. Companies aligning with these trends may present attractive investment opportunities.",
                 "Take a long-term investment approach if you believe in the stability and growth potential of the housing sector. Look for companies with solid fundamentals and a track record of success. For short-term traders, capitalize on market fluctuations driven by economic reports, interest rate changes, or industry-specific news. Keep a close eye on earnings reports and government housing data releases."
             ]
-            ],
-         3 => [
+        ],
+        3 => [
             'title' => 'Building gains into housing stocks and how to trade the sector',
             'date' => '27 August, 2024',
             'category' => 'Real Estate',
             'author' => 'Kathryn Murphy',
-               'description'=>'The housing sector has long been a focal point for investors seeking stability and growth. Understanding the dynamics of housing stocks and effectively trading within this sector can lead to substantial gains.',
+            'description' => 'The housing sector has long been a focal point for investors seeking stability and growth. Understanding the dynamics of housing stocks and effectively trading within this sector can lead to substantial gains.',
             'images' => [
                 'https://themesflat.co/html/proty/images/blog/blog-grid-2.jpg',
                 'https://themesflat.co/html/proty/images/blog/blog-grid-2.jpg',
@@ -1233,7 +1233,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
             return $property;
         })->values();
 
-        return view('webui::home.listing', compact('css', 'js', 'properties'));
+        return view('webui::Pages.listing', compact('css', 'js', 'properties'));
     }
 
     public function agencies()
@@ -1316,7 +1316,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
             ]
         ];
 
-        return view('webui::home.agencies', compact('css', 'js', 'agencies'));
+        return view('webui::Pages.agencies', compact('css', 'js', 'agencies'));
     }
 
 
@@ -1338,7 +1338,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
         $property['image'] = asset($property['image']);
         $property['extra']['baths'] = $property['baths'] ?? null;
 
-        return view('webui::home.property-detail', compact('css', 'js', 'property'));
+        return view('webui::Pages.property-detail', compact('css', 'js', 'property'));
     }
     public function agencyDetail($id)
     {
@@ -1389,7 +1389,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
             })
             ->take(limit: 8)
             ->values();
-        return view('webui::home.agency-detail', compact('css', 'js', 'agency', 'properties'));
+        return view('webui::Pages.agency-detail', compact('css', 'js', 'agency', 'properties'));
     }
     public function contact()
     {
@@ -1407,37 +1407,37 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
         $cities = [];
         return view('webui::Pages.faqs', compact('css', 'js'));
     }
-   
+
     public function blog()
     {
         $css = ['blog.css', 'app.css', 'components.css', 'listing-details.css', 'agencies.css'];
         $js = ['blog.js', 'gotop.js'];
         $cities = [];
 
-        $blog = $this->blog;  
+        $blog = $this->blog;
 
 
         return view('webui::Pages.blog', compact('css', 'js', 'cities', 'blog'));
     }
 
-public function blogDetail($id)
-{
-    if (!isset($this->blog[$id])) {
-        abort(404);
+    public function blogDetail($id)
+    {
+        if (!isset($this->blog[$id])) {
+            abort(404);
+        }
+
+        $css = ['blog-detail.css', 'app.css', 'components.css', 'listing-details.css', 'agencies.css', 'blog.css'];
+        $js = ['blog-detail.js', 'gotop.js'];
+
+        $blog = $this->blog[$id];
+
+
+        $relatedPosts = array_filter($this->blog, function ($key) use ($id) {
+            return $key != $id;
+        }, ARRAY_FILTER_USE_KEY);
+
+        $relatedPosts = array_slice($relatedPosts, 0, 3);
+
+        return view('webui::Pages.blog-detail', compact('css', 'js', 'blog', 'relatedPosts'));
     }
-
-    $css = ['blog-detail.css', 'app.css', 'components.css', 'listing-details.css', 'agencies.css','blog.css'];
-    $js = ['blog-detail.js', 'gotop.js'];
-
-    $blog = $this->blog[$id];
-    
-   
-    $relatedPosts = array_filter($this->blog, function($key) use ($id) {
-        return $key != $id;
-    }, ARRAY_FILTER_USE_KEY);
-    
-    $relatedPosts = array_slice($relatedPosts, 0, 3);
-    
-    return view('webui::Pages.blog-detail', compact('css', 'js', 'blog', 'relatedPosts'));
-}
 }
