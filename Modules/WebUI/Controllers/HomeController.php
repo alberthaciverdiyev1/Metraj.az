@@ -1500,4 +1500,12 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
 
         return view('webui::Pages.blog-detail', compact('css', 'js', 'blog', 'relatedPosts'));
     }
+   public function comingSoon()
+    {
+        $css = ['coming-soon.css', 'app.css'];
+        $js = ['coming-soon.js'];
+        $cities = [];
+        return view('webui::Pages.coming-soon', compact('css', 'js'));
+    }
+  
 }
