@@ -47,84 +47,52 @@
     <section id="blog-cards">
         <div class="container mx-auto px-3">
             <div class="blog-cards">
+                @foreach($blog as $id => $post)
                 <div class="blog-card">
                     <div class="blog-card-image">
-                        <img src="https://themesflat.co/html/proty/images/blog/blog-grid-1.jpg" alt="blog-card-image">
-                        <span>Real estate</span>
+                        <img src="{{ $post['images'][0] }}" alt="blog-card-image">
+                        <span>{{ $post['category'] }}</span>
                     </div>
                     <div class="blog-card-info">
                         <div class="blog-time">
-                            <i><i class="bi bi-clock-history"></i></i>
-                            <p>26 August, 2024</p>
+                            <i class="bi bi-clock-history"></i>
+                            <p>{{ $post['date'] }}</p>
                         </div>
                         <div class="blog-title">
-                            <h3>How to choose the rightproperty for your family...</h3>
-
+                            <h3>{{ Str::limit($post['title'], 50) }}</h3>
                         </div>
-                        <div class="blog-button">Read More <i class="bi bi-arrow-right-circle"></i></div>
-                    </div>
 
+                        <a href="{{ route('blog.details', ['id' => $id]) }}" class="blog-button">
+                            Read More <i class="bi bi-arrow-right-circle"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="blog-card">
-                    <div class="blog-card-image">
-                        <img src="https://themesflat.co/html/proty/images/blog/blog-grid-1.jpg" alt="blog-card-image">
-                        <span>Real estate</span>
-                    </div>
-                    <div class="blog-card-info">
-                        <div class="blog-time">
-                            <i><i class="bi bi-clock-history"></i></i>
-                            <p>26 August, 2024</p>
-                        </div>
-                        <div class="blog-title">
-                            <h3>How to choose the rightproperty for your family...</h3>
-
-                        </div>
-                        <div class="blog-button">Read More <i class="bi bi-arrow-right-circle"></i></div>
-                    </div>
-
-                </div>
-                <div class="blog-card">
-                    <div class="blog-card-image">
-                        <img src="https://themesflat.co/html/proty/images/blog/blog-grid-1.jpg" alt="blog-card-image">
-                        <span>Real estate</span>
-                    </div>
-                    <div class="blog-card-info">
-                        <div class="blog-time">
-                            <i><i class="bi bi-clock-history"></i></i>
-                            <p>26 August, 2024</p>
-                        </div>
-                        <div class="blog-title">
-                            <h3>How to choose the rightproperty for your family...</h3>
-
-                        </div>
-                        <div class="blog-button">Read More <i class="bi bi-arrow-right-circle"></i></div>
-                    </div>
-
-                </div>
+                @endforeach
             </div>
+
         </div>
 
     </section>
-      <div class="pagination-blog">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination mb-0">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <i class="bi bi-chevron-left"></i>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item active" aria-current="page"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#">20</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <i class="bi bi-chevron-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+    <div class="pagination-blog mx-auto">
+        <nav aria-label="Page navigation" class="w-[20%] mx-auto py-3">
+            <ul class="pagination mb-0">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active" aria-current="page"><a class="page-link" href="#">2</a></li>
+                <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                <li class="page-item"><a class="page-link" href="#">20</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 
 
 </main>
