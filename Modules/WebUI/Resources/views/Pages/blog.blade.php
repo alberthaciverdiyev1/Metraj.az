@@ -19,9 +19,9 @@
 </section>
 <header>
     <div class="container mx-auto px-4">
-        <div class="flex  flex-col lg:flex-row justify-between gap-4 mb-5 mt-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-start gap-4 md:gap-6">
             <h2 class="text-2xl lg:text-4xl font-bold text-[color:var(--text-color)]">
-                Property listing
+                Blog grid
             </h2>
 
             <div class="flex flex-wrap items-center gap-2">
