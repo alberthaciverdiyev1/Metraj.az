@@ -88,7 +88,7 @@ h1{
 }
 
 #ready{
-    text-align: center;
+    /* text-align: center; */
     padding: 3rem 0rem ;
     max-width: 65%;
     margin: 0 auto;
@@ -103,6 +103,7 @@ h1{
 #ready p{
     margin-top: 10px;
     width: 60%;
+    text-align: center;
     font-size: 1.3rem;
 }
 
@@ -119,6 +120,7 @@ form input{
     border-radius: 20px;
     width: 450px;
     outline: none;
+    color: var(--text-color);
     
 }
 a{
@@ -130,15 +132,17 @@ a{
 .email{
     display: flex;
     gap: 1rem;
-align-items: flex-start;
-    flex-direction:column;
 }
 
+label{
+    text-align: start;
+}
 form{
-    display: flex;
     padding: 3rem 0rem;
-    align-items: flex-end;
     gap: 8px;
+}
+.email{
+    display: flex;
 }
 #ready h3{
     font-size:3rem;
@@ -150,12 +154,14 @@ form{
     font-size: 18px;
     width: 200px;
     cursor: pointer;
+    /* height: 40px; */
 }
   .error {
       color: red;
       font-size: 14px;
       display: none;
       margin-top: 5px;
+      
     }
 
  .email input.error-border {
@@ -179,4 +185,49 @@ form{
     .copyright a{
         text-decoration: underline;
 
+    }
+
+
+    @media (max-width:992px) {
+        h1{
+            font-size: 80px;
+        }
+        h3{
+            font-size: 30px;
+        }
+        
+    }
+
+    @media (max-width:768px) {
+        h1{
+            font-size: 60px;
+        }
+        h3{
+            font-size: 20px;
+        }
+        .time{
+            font-size: 2rem;
+        }
+        .time-part p{
+            font-size: 0.8rem;
+        }
+        .scroll-down a{
+            font-size: 1.1rem;
+        }
+        form{
+            flex-direction: column;
+        }
+        #ready p{
+            width: 90%;
+        }
+        form input{
+            width: 350px;
+        }
+        form{
+            align-items: flex-start;
+        }
+        footer{
+            flex-direction: column;
+        }
+        
     }

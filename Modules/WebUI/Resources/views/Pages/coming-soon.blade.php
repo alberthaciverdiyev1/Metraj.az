@@ -59,14 +59,16 @@
 
         <p class="desc">Be the first to hear when we go live</p>
 
-        <form id="emailForm">
-            <div class="email">
-                <label for="email">Email*</label>
+        <form id="emailForm">        
+                 <label for="email">Email*</label>
+            <div class="email-input">
+                
                 <input type="text" name="email" id="emailInput">
-                <div class="error" id="errorMsg">Enter an email address like example@mysite.com.</div>
+                <button type="submit" class="send-btn">Notify Me</button>
             </div>
 
-            <button type="submit" class="send-btn">Notify Me</button>
+                         <span class="error" id="errorMsg">Enter an email address like example@mysite.com.</span>
+            
         </form>
 
         </p>
