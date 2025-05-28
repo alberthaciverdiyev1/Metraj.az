@@ -1277,8 +1277,8 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
     ];
     public function index()
     {
-        $css = ['home.css', 'app.css'];
-        $js = ['home.js'];
+        $css = ['home.css', 'app.css','components.css'];
+        $js = ['home.js','components.js'];
         $cities = [];
         return view('webui::home.index', compact('css', 'js', 'cities'));
     }
