@@ -1275,13 +1275,21 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
             ]
         ]
     ];
-    public function index()
-    {
-        $css = ['home.css', 'app.css','components.css'];
-        $js = ['home.js','components.js'];
-        $cities = [];
-        return view('webui::home.index', compact('css', 'js', 'cities'));
-    }
+   public function index() 
+{
+    $css = ['home.css', 'app.css', 'components.css'];
+    $js = ['home.js', 'components.js'];
+    $cities = [];
+
+    $properties = collect($this->properties)->map(function ($property, $id) {
+        $property['id'] = $id;
+        $property['image'] = asset($property['image']);
+        return $property;
+    })->values();
+
+    return view('webui::home.index', compact('css', 'js', 'cities', 'properties'));
+}
+
     public function listing()
     {
         $css = ['listing.css', 'app.css'];

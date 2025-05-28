@@ -3,17 +3,7 @@
 <x-settings-icon />
 <x-scroll-to-top />
 
-<style>
-    .select-wrapper .select-arrow {
-        transition: transform 0.2s ease-in-out;
-    }
 
-    .select-wrapper.focused .select-arrow {
-        transform: rotate(180deg);
-    }
-
-   
-</style>
 <main>
     <section id="hero" class="relative bg-cover bg-fixed bg-center py-20" style="background-image: url('{{ asset('webui/images/bg-hero.jpg') }}')">
         <div class="absolute inset-0 bg-black/40"></div>
@@ -142,69 +132,56 @@
             </div>
         </div>
     </section>
+    <section id="luxury-listings">
+
+        <div class="container mx-auto px-3">
+            <x-title
+                title="Today’s Luxury Listings"
+                subtitle="Thousands of luxury home enthusiasts just like you visit our website." />
+
+            <div class="luxury-listings">
+                <div id="propertyContainer" class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-7">
+
+                    @foreach ($properties->take(6) as $property)
+                    <x-property-card
+                        :id="$property['id']"
+                        :image="$property['image']"
+                        :title="$property['title']"
+                        :address="$property['address']"
+                        :beds="$property['beds']"
+                        :baths="$property['baths']"
+                        :area="$property['area']"
+                        :price="$property['price']" />
+
+                    @endforeach
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="discover-how-we-can-help">
+        <div class="container">
+            <div class="discover-how-we-can-help">
+                   <x-title
+                title="Discover how we can help"
+                subtitle="Thousands of luxury home enthusiasts just like you visit our website." />
+
+
+            </div>
+        </div>
+        
+
+    </section>
+
+
+
 </main>
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const toggleButtons = document.querySelectorAll(".toggle-btn");
-        const inactiveButtonBaseClasses = ["bg-white", "text-black", "border", "border-gray-300"];
-        const inactiveButtonHoverClasses = ["hover:bg-gray-100", "hover:text-black"]; 
-        const activeButtonClasses = ["bg-red-400", "text-white"];
 
-        toggleButtons.forEach(btn => {
-          
-            if (!btn.classList.contains("bg-red-400")) {
-                btn.classList.add(...inactiveButtonHoverClasses);
-            }
-
-            btn.addEventListener("click", () => {
-                toggleButtons.forEach(b => {
-                    b.classList.remove(...activeButtonClasses);
-                    b.classList.add(...inactiveButtonBaseClasses);
-                    b.classList.add(...inactiveButtonHoverClasses);
-                    b.parentElement.querySelector(".triangle-indicator").classList.add("hidden");
-                });
-
-                btn.classList.remove(...inactiveButtonBaseClasses);
-                btn.classList.remove(...inactiveButtonHoverClasses); 
-                btn.classList.add(...activeButtonClasses);
-                btn.parentElement.querySelector(".triangle-indicator").classList.remove("hidden");
-            });
-        });
-
-        const filterBtn = document.getElementById('filterButton');
-        const modal = document.getElementById('filterModal');
-
-        filterBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (modal.classList.contains('invisible')) {
-                modal.classList.remove('invisible', 'opacity-0', '-translate-y-3');
-                modal.classList.add('visible', 'opacity-100', 'translate-y-0');
-            } else {
-                modal.classList.remove('visible', 'opacity-100', 'translate-y-0');
-                modal.classList.add('invisible', 'opacity-0', '-translate-y-3');
-            }
-        });
-
-        document.addEventListener('click', (e) => {
-            if (modal.classList.contains('visible') && !modal.contains(e.target) && !filterBtn.contains(e.target)) {
-                modal.classList.remove('visible', 'opacity-100', 'translate-y-0');
-                modal.classList.add('invisible', 'opacity-0', '-translate-y-3');
-            }
-        });
-
-        const selectWrappers = document.querySelectorAll('.select-wrapper');
-        selectWrappers.forEach(wrapper => {
-            const select = wrapper.querySelector('.custom-select');
-            select.addEventListener('focus', () => {
-                wrapper.classList.add('focused');
-            });
-            select.addEventListener('blur', () => {
-                wrapper.classList.remove('focused');
-            });
-        });
-    });
-</script>
 
 @endsection

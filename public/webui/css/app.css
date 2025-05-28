@@ -177,3 +177,30 @@ a{
 .primary-btn:hover {
   color: var(--white);
 }
+
+
+.title-section{
+  text-align: center;
+  padding-top: 6rem;
+  margin-bottom: 2rem;
+}
+
+.title-section h2{
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.title-section p{
+  color: var(--light-grey);
+}
+
+
+
+
+
+
+@media (max-width:756px) {
+.title-section h2{
+  font-size: 24px;
+}  
+}
