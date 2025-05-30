@@ -17,7 +17,7 @@
             <div class="side">
                 <div class="left-side">
                     <div class="header">
-                        <h2>{{ $blog['title'] }}</h2>
+                        <h2>{{ $blog['name'] }}</h2>
 
                         <div class="blog-short-info">
                             <div class="author">
@@ -25,7 +25,7 @@
                             </div>
 
                             <div class="category">
-                                <i class="bi bi-tags"></i> {{ $blog['category'] }}
+                                <i class="bi bi-tags"></i> {{ $blog['category']['name'] }}
                             </div>
 
                             <div class="comments">
@@ -162,7 +162,7 @@
                 <div class="blog-cards">
 
 
-                    @foreach($relatedPosts as $postId => $post)
+                    @foreach($relatedPosts as $post)
                     <div class="blog-card">
                         <div class="blog-card-image">
                             <img src="{{ $post['images'][0] }}" alt="blog-card-image">
@@ -174,9 +174,9 @@
                                 <p>{{ $post['date'] }}</p>
                             </div>
                             <div class="blog-title">
-                                <h3>{{ Str::limit($post['title'], 50) }}</h3>
+                                <h3>{{ Str::limit($post['name'], 50) }}</h3>
                             </div>
-                            <a href="{{ route('blog.details', ['id' => $postId]) }}" class="blog-button">
+                            <a href="{{ route('blog.details', ['slug' => $post["slug"]]) }}" class="blog-button">
                                 Read More <i class="bi bi-arrow-right-circle"></i>
                             </a>
                         </div>

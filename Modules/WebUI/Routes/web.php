@@ -24,7 +24,7 @@ Route::controller(HomeController::class)->group(function () {
     });
     Route::get('/faqs', 'faqs')->name('faqs');
     Route::get('/blog', 'blog')->name('blog');
-    Route::get('/blog-detail/{id}', 'blogDetail')->name('blog.details');
+    Route::get('/blog-detail/{slug}', 'blogDetail')->name('blog.details');
     Route::get('/coming-soon',action:'comingSoon')->name(name:'comingSoon');
 });
 

@@ -1153,134 +1153,13 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
 
 
     ];
-    private  $blog = [
-        1 => [
-            'title' => 'Building gains into housing stocks and how to trade the sector',
-            'date' => '26 August, 2024',
-            'category' => 'Real Estate',
-            'author' => 'Kathryn Murphy',
-            'description' => 'The housing sector has long been a focal point for investors seeking stability and growth. Understanding the dynamics of housing stocks and effectively trading within this sector can lead to substantial gains.',
-            'images' => [
-                'https://themesflat.co/html/proty/images/blog/blog-grid-1.jpg',
-                'https://themesflat.co/html/proty/images/blog/blog-grid-2.jpg',
-                'https://themesflat.co/html/proty/images/blog/blog-grid-3.jpg',
-                'https://themesflat.co/html/proty/images/blog/blog-grid-4.jpg',
-            ],
-            'content' => [
-                "The housing sector has long been a focal point for investors seeking stability and growth. Understanding the dynamics of housing stocks and effectively trading within this sector can lead to substantial gains.",
-                "Understanding Housing Stocks: Housing stocks encompass companies involved in various aspects of the real estate industry, including homebuilders, developers, and related service providers. Factors influencing these stocks range from interest rates and economic indicators to trends in homeownership rates.",
-                "Pay close attention to economic indicators such as employment rates, GDP growth, and consumer confidence. A strong economy often correlates with increased demand for housing, benefiting related stocks.",
-                "Identify Emerging Trends: Stay informed about emerging trends in the housing market, such as the demand for sustainable homes, technological advancements, and demographic shifts. Companies aligning with these trends may present attractive investment opportunities.",
-                "Take a long-term investment approach if you believe in the stability and growth potential of the housing sector. Look for companies with solid fundamentals and a track record of success. For short-term traders, capitalize on market fluctuations driven by economic reports, interest rate changes, or industry-specific news. Keep a close eye on earnings reports and government housing data releases."
-            ]
-        ],
 
-        2 => [
-            'title' => 'Building gains into housing stocks and how to trade the sector',
-            'date' => '27 August, 2024',
-            'category' => 'Real Estate',
-            'author' => 'Kathryn Murphy',
-            'description' => 'The housing sector has long been a focal point for investors seeking stability and growth. Understanding the dynamics of housing stocks and effectively trading within this sector can lead to substantial gains.',
-            'images' => [
-                'https://themesflat.co/html/proty/images/blog/blog-grid-2.jpg',
-                'https://themesflat.co/html/proty/images/blog/blog-grid-2.jpg',
-                'https://themesflat.co/html/proty/images/blog/blog-grid-3.jpg',
-                'https://themesflat.co/html/proty/images/blog/blog-grid-4.jpg',
-            ],
-            'content' => [
-                "The housing sector has long been a focal point for investors seeking stability and growth. Understanding the dynamics of housing stocks and effectively trading within this sector can lead to substantial gains.",
-                "Understanding Housing Stocks: Housing stocks encompass companies involved in various aspects of the real estate industry, including homebuilders, developers, and related service providers. Factors influencing these stocks range from interest rates and economic indicators to trends in homeownership rates.",
-                "Pay close attention to economic indicators such as employment rates, GDP growth, and consumer confidence. A strong economy often correlates with increased demand for housing, benefiting related stocks.",
-                "Identify Emerging Trends: Stay informed about emerging trends in the housing market, such as the demand for sustainable homes, technological advancements, and demographic shifts. Companies aligning with these trends may present attractive investment opportunities.",
-                "Take a long-term investment approach if you believe in the stability and growth potential of the housing sector. Look for companies with solid fundamentals and a track record of success. For short-term traders, capitalize on market fluctuations driven by economic reports, interest rate changes, or industry-specific news. Keep a close eye on earnings reports and government housing data releases."
-            ]
-        ],
-        3 => [
-            'title' => 'Building gains into housing stocks and how to trade the sector',
-            'date' => '27 August, 2024',
-            'category' => 'Real Estate',
-            'author' => 'Kathryn Murphy',
-            'description' => 'The housing sector has long been a focal point for investors seeking stability and growth. Understanding the dynamics of housing stocks and effectively trading within this sector can lead to substantial gains.',
-            'images' => [
-                'https://themesflat.co/html/proty/images/blog/blog-grid-2.jpg',
-                'https://themesflat.co/html/proty/images/blog/blog-grid-2.jpg',
-                'https://themesflat.co/html/proty/images/blog/blog-grid-3.jpg',
-                'https://themesflat.co/html/proty/images/blog/blog-grid-4.jpg',
-            ],
-            'content' => [
-                "The housing sector has long been a focal point for investors seeking stability and growth. Understanding the dynamics of housing stocks and effectively trading within this sector can lead to substantial gains.",
-                "Understanding Housing Stocks: Housing stocks encompass companies involved in various aspects of the real estate industry, including homebuilders, developers, and related service providers. Factors influencing these stocks range from interest rates and economic indicators to trends in homeownership rates.",
-                "Pay close attention to economic indicators such as employment rates, GDP growth, and consumer confidence. A strong economy often correlates with increased demand for housing, benefiting related stocks.",
-                "Identify Emerging Trends: Stay informed about emerging trends in the housing market, such as the demand for sustainable homes, technological advancements, and demographic shifts. Companies aligning with these trends may present attractive investment opportunities.",
-                "Take a long-term investment approach if you believe in the stability and growth potential of the housing sector. Look for companies with solid fundamentals and a track record of success. For short-term traders, capitalize on market fluctuations driven by economic reports, interest rate changes, or industry-specific news. Keep a close eye on earnings reports and government housing data releases."
-            ]
-        ],
-        4 => [
-            'title' => 'Building gains into housing stocks and how to trade the sector',
-            'date' => '28 August, 2024',
-            'category' => 'News',
-            'author' => 'Kathryn Murphy',
-            'description' => 'The housing sector has long been a focal point for investors seeking stability and growth. Understanding the dynamics of housing stocks and effectively trading within this sector can lead to substantial gains.',
-            'images' => [
-                'https://themesflat.co/html/proty/images/blog/blog-grid-3.jpg',
-                'https://themesflat.co/html/proty/images/blog/blog-grid-2.jpg',
-                'https://themesflat.co/html/proty/images/blog/blog-grid-3.jpg',
-                'https://themesflat.co/html/proty/images/blog/blog-grid-4.jpg',
-            ],
-            'content' => [
-                "The housing sector has long been a focal point for investors seeking stability and growth. Understanding the dynamics of housing stocks and effectively trading within this sector can lead to substantial gains.",
-                "Understanding Housing Stocks: Housing stocks encompass companies involved in various aspects of the real estate industry, including homebuilders, developers, and related service providers. Factors influencing these stocks range from interest rates and economic indicators to trends in homeownership rates.",
-                "Pay close attention to economic indicators such as employment rates, GDP growth, and consumer confidence. A strong economy often correlates with increased demand for housing, benefiting related stocks.",
-                "Identify Emerging Trends: Stay informed about emerging trends in the housing market, such as the demand for sustainable homes, technological advancements, and demographic shifts. Companies aligning with these trends may present attractive investment opportunities.",
-                "Take a long-term investment approach if you believe in the stability and growth potential of the housing sector. Look for companies with solid fundamentals and a track record of success. For short-term traders, capitalize on market fluctuations driven by economic reports, interest rate changes, or industry-specific news. Keep a close eye on earnings reports and government housing data releases."
-            ]
-        ],
-        5 => [
-            'title' => 'Building gains into housing stocks and how to trade the sector',
-            'date' => '23 August, 2024',
-            'category' => 'News',
-            'author' => 'Kathryn Murphy',
-            'description' => 'The housing sector has long been a focal point for investors seeking stability and growth. Understanding the dynamics of housing stocks and effectively trading within this sector can lead to substantial gains.',
-            'images' => [
-                'https://themesflat.co/html/proty/images/blog/blog-grid-4.jpg',
-                'https://themesflat.co/html/proty/images/blog/blog-grid-2.jpg',
-                'https://themesflat.co/html/proty/images/blog/blog-grid-3.jpg',
-                'https://themesflat.co/html/proty/images/blog/blog-grid-4.jpg',
-            ],
-            'content' => [
-                "The housing sector has long been a focal point for investors seeking stability and growth. Understanding the dynamics of housing stocks and effectively trading within this sector can lead to substantial gains.",
-                "Understanding Housing Stocks: Housing stocks encompass companies involved in various aspects of the real estate industry, including homebuilders, developers, and related service providers. Factors influencing these stocks range from interest rates and economic indicators to trends in homeownership rates.",
-                "Pay close attention to economic indicators such as employment rates, GDP growth, and consumer confidence. A strong economy often correlates with increased demand for housing, benefiting related stocks.",
-                "Identify Emerging Trends: Stay informed about emerging trends in the housing market, such as the demand for sustainable homes, technological advancements, and demographic shifts. Companies aligning with these trends may present attractive investment opportunities.",
-                "Take a long-term investment approach if you believe in the stability and growth potential of the housing sector. Look for companies with solid fundamentals and a track record of success. For short-term traders, capitalize on market fluctuations driven by economic reports, interest rate changes, or industry-specific news. Keep a close eye on earnings reports and government housing data releases."
-            ]
-        ],
-        6 => [
-            'title' => 'Building gains into housing stocks and how to trade the sector',
-            'date' => '28 August, 2024',
-            'category' => 'News',
-            'author' => 'Kathryn Murphy',
-            'description' => 'The housing sector has long been a focal point for investors seeking stability and growth. Understanding the dynamics of housing stocks and effectively trading within this sector can lead to substantial gains.',
-            'images' => [
-                'https://themesflat.co/html/proty/images/blog/blog-grid-3.jpg',
-                'https://themesflat.co/html/proty/images/blog/blog-grid-2.jpg',
-                'https://themesflat.co/html/proty/images/blog/blog-grid-3.jpg',
-                'https://themesflat.co/html/proty/images/blog/blog-grid-4.jpg',
-            ],
-            'content' => [
-                "The housing sector has long been a focal point for investors seeking stability and growth. Understanding the dynamics of housing stocks and effectively trading within this sector can lead to substantial gains.",
-                "Understanding Housing Stocks: Housing stocks encompass companies involved in various aspects of the real estate industry, including homebuilders, developers, and related service providers. Factors influencing these stocks range from interest rates and economic indicators to trends in homeownership rates.",
-                "Pay close attention to economic indicators such as employment rates, GDP growth, and consumer confidence. A strong economy often correlates with increased demand for housing, benefiting related stocks.",
-                "Identify Emerging Trends: Stay informed about emerging trends in the housing market, such as the demand for sustainable homes, technological advancements, and demographic shifts. Companies aligning with these trends may present attractive investment opportunities.",
-                "Take a long-term investment approach if you believe in the stability and growth potential of the housing sector. Look for companies with solid fundamentals and a track record of success. For short-term traders, capitalize on market fluctuations driven by economic reports, interest rate changes, or industry-specific news. Keep a close eye on earnings reports and government housing data releases."
-            ]
-        ]
-    ];
    public function index()
 {
+    $response = Http::get(config('app.api_url') . '/api/city')->json();
+    $cities = $response['data'] ?? [];
     $css = ['home.css', 'app.css', 'components.css'];
     $js = ['home.js', 'components.js'];
-    $cities = [];
 
     $properties = collect($this->properties)->map(function ($property, $id) {
         $property['id'] = $id;
@@ -1488,20 +1367,16 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
         return view('webui::Pages.blog', compact('css', 'js', 'cities', 'blog'));
     }
 
-    public function blogDetail($id)
+    public function blogDetail($slug)
     {
-        if (!isset($this->blog[$id])) {
-            abort(404);
-        }
-
         $css = ['blog-detail.css', 'app.css', 'components.css', 'listing-details.css', 'agencies.css', 'blog.css'];
         $js = ['blog-detail.js', 'gotop.js'];
 
-        $blog = $this->blog[$id];
+        $response = Http::get(config('app.api_url') . "/api/blog/{$slug}")->json();
+        $blog = $response['data'] ?? abort(404);;
 
-
-        $relatedPosts = array_filter($this->blog, function ($key) use ($id) {
-            return $key != $id;
+        $relatedPosts = array_filter($this->blog, function ($key) use ($slug) {
+            return $key != $slug;
         }, ARRAY_FILTER_USE_KEY);
 
         $relatedPosts = array_slice($relatedPosts, 0, 3);

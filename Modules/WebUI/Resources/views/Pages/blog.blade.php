@@ -40,7 +40,7 @@
     <section id="blog-cards">
         <div class="container mx-auto px-3">
             <div class="blog-cards">
-                @forelse($blog as $id => $post)
+                @forelse($blog as $post)
                 <div class="blog-card">
                     <div class="blog-card-image">
                         <img src="{{ $post['images'][0] }}" alt="blog-card-image">
@@ -55,7 +55,7 @@
                             <h3>{{ Str::limit($post['name'], 50) }}</h3>
                         </div>
 
-                        <a href="{{ route('blog.details', ['id' => $id]) }}" class="blog-button">
+                        <a href="{{ route('blog.details', ['slug' => $post['slug']]) }}" class="blog-button">
                             Read More <i class="bi bi-arrow-right-circle"></i>
                         </a>
                     </div>
