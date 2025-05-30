@@ -1,6 +1,0 @@
-<?php
-
-return [
-    'name' => '$STUDLY_NAME$',
-    'icon' => '$STUDLY_NAME$',
-];

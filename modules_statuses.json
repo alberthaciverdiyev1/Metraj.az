@@ -1,19 +1,4 @@
 {
-    "Price": true,
-    "Base": true,
-    "City": true,
-    "Feature": true,
-    "District": true,
-    "Town": true,
-    "User": true,
-    "Realtor": true,
-    "Indicator": true,
-    "Media": true,
-    "Seo": true,
-    "Keyword": true,
-    "Property": true,
-    "Setting": true,
     "WebUI": true,
-    "AdminUI": true,
-    "Blog": true
+    "AdminUI": true
 }
