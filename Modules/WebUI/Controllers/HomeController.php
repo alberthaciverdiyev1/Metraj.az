@@ -3,6 +3,7 @@
 namespace Modules\WebUI\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
@@ -1275,7 +1276,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
             ]
         ]
     ];
-   public function index() 
+   public function index()
 {
     $css = ['home.css', 'app.css', 'components.css'];
     $js = ['home.js', 'components.js'];
@@ -1482,9 +1483,8 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
         $js = ['blog.js', 'gotop.js'];
         $cities = [];
 
-        $blog = $this->blog;
-
-
+        $response = Http::get(config('app.api_url') . '/api/blog')->json();
+        $blog = $response['data'] ?? [];
         return view('webui::Pages.blog', compact('css', 'js', 'cities', 'blog'));
     }
 
@@ -1515,5 +1515,5 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
         $cities = [];
         return view('webui::Pages.coming-soon', compact('css', 'js'));
     }
-  
+
 }

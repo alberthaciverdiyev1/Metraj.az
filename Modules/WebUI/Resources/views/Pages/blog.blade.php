@@ -40,11 +40,11 @@
     <section id="blog-cards">
         <div class="container mx-auto px-3">
             <div class="blog-cards">
-                @foreach($blog as $id => $post)
+                @forelse($blog as $id => $post)
                 <div class="blog-card">
                     <div class="blog-card-image">
                         <img src="{{ $post['images'][0] }}" alt="blog-card-image">
-                        <span>{{ $post['category'] }}</span>
+                        <span>{{ $post['category']['name'] }}</span>
                     </div>
                     <div class="blog-card-info">
                         <div class="blog-time">
@@ -52,7 +52,7 @@
                             <p>{{ $post['date'] }}</p>
                         </div>
                         <div class="blog-title">
-                            <h3>{{ Str::limit($post['title'], 50) }}</h3>
+                            <h3>{{ Str::limit($post['name'], 50) }}</h3>
                         </div>
 
                         <a href="{{ route('blog.details', ['id' => $id]) }}" class="blog-button">
@@ -60,7 +60,8 @@
                         </a>
                     </div>
                 </div>
-                @endforeach
+                @empty
+                @endforelse
             </div>
 
         </div>
