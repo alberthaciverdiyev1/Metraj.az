@@ -1,8 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap");
 
-* {
-    /* background-color: orange; */
-}
+
 :root {
     --primary: #f1913d;
 }
@@ -57,4 +55,127 @@
   left: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
+}
+#lets-work {
+  position: relative;
+  min-height: 1100px;
+}
+
+.box {
+  position: absolute;
+  left: 50%;
+  bottom: 100px;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff6ef;
+  border-radius: 30px;
+  width: 90%;
+  max-width: 1200px;
+  overflow: hidden;
+  z-index: 10;
+  flex-wrap: wrap;
+}
+
+.lets-work-main {
+  padding: 10rem 0rem;
+}
+
+.left {
+  max-width: 50%;
+  padding: 50px;
+  z-index: 2;
+}
+
+.left h2 {
+  font-size: 37px;
+  color:var(--text-color);
+  font-weight: 600;
+  margin: 0 0 20px;
+}
+
+.left p {
+  color: #7c7c7c;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.info-box-btn {
+  background-color: var(--primary);
+  border: none;
+  color: white;
+  padding: 15px 25px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.right img {
+  z-index: 2;
+  padding-right: 100px;
+  position: relative;
+  max-width: 100%;
+  height: auto;
+}
+
+.bg-image {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+@media (max-width: 1024px) {
+  .left {
+    padding: 40px;
+    max-width: 100%;
+  }
+
+  .right {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 30px;
+
+  display: none;
+  }
+
+  .right img {
+    padding-right: 0;
+  }
+
+  .box {
+    flex-direction: column;
+    bottom: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .box {
+    position: static;
+    transform: none;
+    margin: 0 auto;
+  }
+  .right{
+    display: none;
+  }
+}
+
+
+.hover-effect-button:hover .hover-effect-button-fill {
+    width: 100%;
+}
+
+.hover-effect-button-fill {
+    transition: width 0.3s ease-in-out;
+}
+
+.hover-effect-button:hover .hover-effect-button-fill {
+    width: 100%;
 }
