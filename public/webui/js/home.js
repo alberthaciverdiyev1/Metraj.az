@@ -115,3 +115,31 @@
       document.getElementById('homeInsurance').value = '1200';
       document.getElementById('paymentDisplay').textContent = '$0';
     }
+
+
+    //AOS DISCOVER
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+
+ 
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabs = document.querySelectorAll('.tab-btn');
+        const contents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+               
+                tabs.forEach(btn => btn.classList.remove('active'));
+                contents.forEach(content => content.classList.remove('active'));
+
+              
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+
+                AOS.refresh();
+            });
+        });
+    });
