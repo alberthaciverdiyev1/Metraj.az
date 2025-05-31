@@ -57,7 +57,7 @@ return [
 
     'admin_url' => env('ADMIN_URL', 'http://localhost:8000/'),
 
-    'api_url' => env('APP_ENV') === 'local' ? 'http://localhost:8000' : 'https://api.portfolio.space',
+    'api_url' => env('APP_ENV') === 'local' ? 'http://localhost:8000' : 'https://api.porfolio.space',
 
     /*
     |--------------------------------------------------------------------------
