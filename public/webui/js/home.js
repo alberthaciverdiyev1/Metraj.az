@@ -143,3 +143,47 @@
             });
         });
     });
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+   function animateText(element) {
+    const text = element.textContent;
+    element.textContent = '';
+
+    for (let i = 0; i < text.length; i++) {
+        const span = document.createElement('span');
+
+        if (text[i] === ' ') {
+            span.innerHTML = '&nbsp;';
+        } else {
+            span.textContent = text[i];
+        }
+
+        span.style.animationDelay = (i * 0.1) + 's';
+        element.appendChild(span);
+    }
+}
+
+
+    function handleScroll() {
+        const sections = document.querySelectorAll('.title-section');
+        const windowHeight = window.innerHeight;
+
+        sections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+
+            if (!section.classList.contains('animated') && rect.top < windowHeight - 200) {
+                const title = section.querySelector('.animate-title');
+                const subtitle = section.querySelector('.animate-subtitle');
+
+                if (title) animateText(title);
+                if (subtitle) subtitle.classList.add('visible');
+
+                section.classList.add('animated'); 
+            }
+        });
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+});

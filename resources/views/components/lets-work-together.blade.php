@@ -2,6 +2,8 @@
     <div class="container mx-auto py-3">
         <div class="bg-[#2C2E33]  lets-work-main">
          <div class="text-center mb-10">
+
+         
             <h2 class="text-3xl md:text-4xl font-bold">Let’s Work Together</h2>
             <p class="text-gray-300 mt-2">Thousands of luxury home enthusiasts just like you visit our website.</p>
         </div>

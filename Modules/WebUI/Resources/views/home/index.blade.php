@@ -218,7 +218,7 @@
         <div class="container">
             <div class="discover-how-we-can-help">
                 <x-title
-                    title="Discover how we can help"
+                    title="Discover  how  we can help"
                     subtitle="Thousands of luxury home enthusiasts just like you visit our website." />
                 <x-discover-how-can-help />
 

@@ -1,4 +1,9 @@
 <div class="title-section">
-    <h2>{{ $title }}</h2>
-    <p>{{ $subtitle }}</p>
+    <h2 class="animate-title">{{ $title }}</h2>
+    <p class="animate-subtitle">{{ $subtitle }}</p>
 </div>
+
+
+
+
+
