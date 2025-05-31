@@ -1,4 +1,4 @@
-<div class="bg-[#2C2E33] px-6 py-6 text-white border-b border-[#3a3a3d]">
+<div class="bg-[#2C2E33] px-6 py-6 mt-8 text-white border-b border-[#3a3a3d]">
   <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
 
     <div class="flex items-center gap-3">

@@ -59,3 +59,59 @@
             });
         });
     });
+
+    document.getElementById('downPayment').addEventListener('input', function() {
+      const total = parseFloat(document.getElementById('totalAmount').value) || 0;
+      const downPayment = parseFloat(this.value) || 0;
+      const percent = (downPayment / total * 100).toFixed(2);
+      document.getElementById('downPaymentPercent').value = percent;
+    });
+
+    document.getElementById('downPaymentPercent').addEventListener('input', function() {
+      const total = parseFloat(document.getElementById('totalAmount').value) || 0;
+      const percent = parseFloat(this.value) || 0;
+      const downPayment = (total * percent / 100).toFixed(2);
+      document.getElementById('downPayment').value = downPayment;
+    });
+
+    function calculatePayment() {
+      const total = parseFloat(document.getElementById('totalAmount').value) || 0;
+      const down = parseFloat(document.getElementById('downPayment').value) || 0;
+      const interest = parseFloat(document.getElementById('interestRate').value) / 100 / 12;
+      const years = parseInt(document.getElementById('amortizationPeriod').value);
+      const months = years * 12;
+      const tax = (parseFloat(document.getElementById('propertyTax').value) || 0) / 12;
+      const insurance = (parseFloat(document.getElementById('homeInsurance').value) || 0) / 12;
+
+      let principal = total - down;
+      let monthly = 0;
+
+      if (interest > 0 && months > 0) {
+        monthly = (principal * interest * Math.pow(1 + interest, months)) / (Math.pow(1 + interest, months) - 1);
+      } else if (months > 0) {
+        monthly = principal / months;
+      }
+
+      const payment = Math.round(monthly + tax + insurance);
+
+      document.getElementById('paymentDisplay').textContent = `$${payment.toLocaleString()}`;
+      document.getElementById('modalPayment').textContent = `$${payment.toLocaleString()}`;
+      document.getElementById('modal').classList.remove('hidden');
+      document.getElementById('modal').classList.add('flex');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+      document.getElementById('modal').classList.remove('flex');
+    }
+
+    function resetForm() {
+      document.getElementById('totalAmount').value = '100000';
+      document.getElementById('downPayment').value = '20000';
+      document.getElementById('downPaymentPercent').value = '20';
+      document.getElementById('interestRate').value = '5';
+      document.getElementById('amortizationPeriod').value = '0';
+      document.getElementById('propertyTax').value = '3000';
+      document.getElementById('homeInsurance').value = '1200';
+      document.getElementById('paymentDisplay').textContent = '$0';
+    }
