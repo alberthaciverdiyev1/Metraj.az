@@ -54,10 +54,10 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'api_url' => env('API_URL', 'http://localhost:8000/'),
 
     'admin_url' => env('ADMIN_URL', 'http://localhost:8000/'),
 
+    'api_url' => env('APP_ENV') === 'local' ? 'http://localhost:8000' : 'https://api.portfolio.space',
 
     /*
     |--------------------------------------------------------------------------
