@@ -1391,4 +1391,6 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
         return view('webui::Pages.coming-soon', compact('css', 'js'));
     }
 
+   
+
 }

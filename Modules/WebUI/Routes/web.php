@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\WebUI\Controllers\HomeController;
+use Modules\WebUI\Http\Controllers\Auth\LoginController;
+use Modules\WebUI\Http\Controllers\Auth\RegisterController;
+
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home');
@@ -26,7 +29,13 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/blog', 'blog')->name('blog');
     Route::get('/blog-detail/{slug}', 'blogDetail')->name('blog.details');
     Route::get('/coming-soon',action:'comingSoon')->name(name:'comingSoon');
+   
 });
+
+Route::get('/register', [RegisterController::class, 'register'])->name('register');
+Route::get(uri:'/login',action:[LoginController::class,'login'])->name(name:'login');
+
+
 
 
 
