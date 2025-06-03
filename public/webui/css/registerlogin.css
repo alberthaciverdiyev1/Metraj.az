@@ -171,6 +171,8 @@ label{
   border: none;
   border-radius: 5px;
   font-weight: bold;
+  width: 12rem;
+  margin-top: 2rem;
   cursor: pointer;
 }
 

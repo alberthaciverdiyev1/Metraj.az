@@ -1,55 +1,57 @@
  @include('webui::partials.head')
 
  <div class="container">
-        <div class="register">
-              <x-auth.left-section 
-    logo="https://harnishdesign.net/demo/html/oxyy/images/logo-teal.png" 
-    subtitle="Looks like you're new here!
+     <div class="register">
+         <x-auth.left-section
+             logo="https://harnishdesign.net/demo/html/oxyy/images/logo-teal.png"
+             subtitle="Looks like you're new here!
 
-" 
-    title="Join the largest Designer community in the world." 
-/>
+"
+             title="Join the largest Designer community in the world." />
 
-            <!-- Right Section -->
-            <div class="register-right">
-                <div class="signin-link">
-                    <p>Already a member? <a href="#">Sign In</a></p>
-                </div>
-                <h2 class="form-title">Sign up to Oxyy</h2>
+         <div class="register-right">
+             <div class="signin-link">
+                 <p>Already a member? <a href="/login">Sign In</a></p>
+             </div>
+             <h2 class="form-title">Sign up to Oxyy</h2>
 
-                <!-- Social Buttons -->
-                <div class="social-buttons">
-                    <button class="google-btn">G Sign up with Google</button>
-                    <button class="social-btn facebook">F</button>
-                    <button class="social-btn twitter">T</button>
-                    <button class="social-btn linkedin">in</button>
-                    <button class="social-btn apple"></button>
-                </div>
+             <div class="social-buttons">
+                 <button class="google-btn">
+                     <i class="bi bi-google"></i>
+                     <span>Sign in with Google</span>
+                 </button>
 
-                <div class="divider">
-                    <hr>
-                    <span>Or with Email</span>
-                    <hr>
-                </div>
+                 <button class="social-btn facebook">
+                     <i class="bi bi-facebook"></i>
+                 </button>
+                 <button class="social-btn twitter"><i class="bi bi-twitter"></i></button>
+                 <button class="social-btn linkedin"><i class="bi bi-linkedin"></i></button>
+                 <button class="social-btn apple"><i class="bi bi-apple"></i></button>
+             </div>
 
-                <!-- Form -->
-                <form class="signup-form">
-                    <label>Full Name</label>
-                    <input type="text" placeholder="Enter Your Name">
+             <div class="divider">
+                 <hr>
+                 <span>Or with Email</span>
+                 <hr>
+             </div>
 
-                    <label>Email Address</label>
-                    <input type="email" placeholder="Enter Your Email Address">
+             <form class="signup-form">
+                 <label>Full Name</label>
+                 <input type="text" placeholder="Enter Your Name">
 
-                    <label>Password</label>
-                    <input type="password" placeholder="Enter Password">
+                 <label>Email Address</label>
+                 <input type="email" placeholder="Enter Your Email Address">
 
-                    <div class="checkbox">
-                        <input type="checkbox">
-                        <p>I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
-                    </div>
+                 <label>Password</label>
+                 <input type="password" placeholder="Enter Password">
 
-                    <button type="submit" class="submit-btn">Create Account</button>
-                </form>
-            </div>
-        </div>
-    </div>
+                 <div class="checkbox">
+                     <input type="checkbox">
+                     <p>I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
+                 </div>
+
+                 <button type="submit" class="submit-btn">Create Account</button>
+             </form>
+         </div>
+     </div>
+ </div>

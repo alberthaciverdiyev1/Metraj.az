@@ -10,15 +10,15 @@
 
          <div class="login-right">
              <div class="signin-link">
-                 <p>Not a member? <a href="#">Sign In</a></p>
+                 <p>Not a member? <a href="/register">Sign Up</a></p>
              </div>
              <h2 class="form-title">Sign in to Oxyy</h2>
 
              <div class="social-buttons">
-                <button class="google-btn">
-  <i class="bi bi-google"></i>
-  <span>Sign in with Google</span>
-</button>
+                 <button class="google-btn">
+                     <i class="bi bi-google"></i>
+                     <span>Sign in with Google</span>
+                 </button>
 
                  <button class="social-btn facebook">
                      <i class="bi bi-facebook"></i>
@@ -45,12 +45,9 @@
 
                  <input type="password" placeholder="Enter Password">
 
-                 <div class="checkbox">
-                     <input type="checkbox">
-                     <p>I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
-                 </div>
+               
 
-                 <button type="submit" class="submit-btn">Create Account</button>
+                 <button type="submit" class="submit-btn">Sign in</button>
              </form>
          </div>
      </div>
