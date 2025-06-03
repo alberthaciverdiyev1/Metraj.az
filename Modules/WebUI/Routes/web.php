@@ -1,16 +1,28 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\WebUI\Controllers\BlogController;
 use Modules\WebUI\Controllers\HomeController;
+use Modules\WebUI\Controllers\PropertyController;
+
+Route::controller(BlogController::class)->group(function () {
+    Route::get('/blog', 'blog')->name('blog');
+    Route::get('/blog-detail/{slug}', 'blogDetail')->name('blog.details');
+});
+Route::controller(PropertyController::class)->group(function () {
+    Route::get('/listing', 'listing')->name('listing');
+    Route::get('/property/{id}', 'propertyDetail')->name('property.detail');
+
+});
+Route::controller(\Modules\WebUI\Controllers\AgencyController::class)->group(function () {
+    Route::get('/agency-detail/{id}', 'agencyDetail')->name('agency.detail');
+    Route::get('/agencies/{id}', 'agencyDetail')->name('agency.details');
+    Route::get('/agencies', 'agencies')->name('agencies');
+});
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home');
-    Route::get('/listing', 'listing')->name('listing');
-    Route::get('/agencies', 'agencies')->name('agencies');
     Route::get('/fake-listing', 'fakeListing')->name('fake.listing');
-    Route::get('/property/{id}', [HomeController::class, 'propertyDetail'])->name('property.detail');
-    Route::get('/agency-detail/{id}', [HomeController::class, 'agencyDetail'])->name('agency.detail');
-    Route::get('/agencies/{id}', [HomeController::class, 'agencyDetail'])->name('agency.details');
     Route::get('/contact', 'contact')->name('contact');
     Route::get('/check-real-404-path', function () {
         $path = base_path('Modules/WebUI/Resources/views/errors/404.blade.php');
@@ -23,8 +35,6 @@ Route::controller(HomeController::class)->group(function () {
         ]);
     });
     Route::get('/faqs', 'faqs')->name('faqs');
-    Route::get('/blog', 'blog')->name('blog');
-    Route::get('/blog-detail/{slug}', 'blogDetail')->name('blog.details');
     Route::get('/coming-soon',action:'comingSoon')->name(name:'comingSoon');
 });
 

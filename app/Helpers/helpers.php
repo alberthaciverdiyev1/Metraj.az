@@ -15,7 +15,6 @@ if (!function_exists('get_data')) {
             $fullUrl = rtrim(config('app.api_url'), '/') . '/api/' . ltrim($url, '/');
 
             $response = Http::get($fullUrl, $queryParams);
-
             return $response->json('data') ?? [];
         }
     }

@@ -135,47 +135,13 @@
                     <div class="mt-6">
                         <p class="text-gray-500 text-sm font-medium mb-2">Amenities:</p>
                         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-4 gap-y-2">
+                            @forelse($features as $feature)
                             <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400"> Bed
-                                linens</label>
-                            <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400"> Carbon
-                                alarm</label>
-                            <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400"> Check-in
-                                lockbox</label>
-                            <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400"> Extra
-                                pillows</label>
-                            <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400"> First
-                                aid kit</label>
-                            <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400"> Hangers</label>
-                            <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400">
-                                Refrigerator</label>
-                            <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400"> Security
-                                cameras</label>
-                            <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400"> Smoke
-                                alarm</label>
-                            <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400"> Coffee
-                                maker</label>
-                            <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400">
-                                Dishwasher</label>
-                            <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400">
-                                Microwave</label>
-                            <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400">
-                                Iron</label>
-                            <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400">
-                                Fireplace</label>
+                                    class="mr-2 accent-orange-400"> {{$feature['name']}} </label>
+                            @empty
+                                <label class="flex items-center text-sm"><input type="checkbox"
+                                                                                class="mr-2 accent-orange-400"> @lang('Indicators not found.')</label>
+                            @endforelse
                         </div>
                     </div>
                 </div>
