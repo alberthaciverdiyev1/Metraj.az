@@ -1,6 +1,6 @@
  @include('webui::partials.head')
 
- <div class="container">
+ <div class="">
      <div class="register">
          <x-auth.left-section
              logo="https://harnishdesign.net/demo/html/oxyy/images/logo-teal.png"
