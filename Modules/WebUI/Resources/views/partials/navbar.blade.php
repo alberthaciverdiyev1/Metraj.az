@@ -25,10 +25,10 @@
 
         <!-- Right -->
         <div class="flex items-center space-x-4">
-            <button class="hidden md:inline-flex items-center space-x-1 text-gray-700">
+            <a href="{{ route(name:'login') }}" class="hidden md:inline-flex items-center space-x-1 text-gray-700">
                 <i class="fas fa-user text-gray-400 border px-4 py-3 rounded-lg border-orange-400"></i>
                 <span>Themesflat</span>
-            </button>
+            </a>
             <button class="border border-orange-400 text-black rounded-lg hover:text-white px-4 py-2 rounded-md hover:bg-orange-400">Add property</button>
         </div>
     </div>

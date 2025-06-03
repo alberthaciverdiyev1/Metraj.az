@@ -9,7 +9,7 @@ class ForgotPasswordController extends Controller
 {
     public function login()
     {
-        $css = ['registerlogin.css', 'app.css'];
+        $css = ['forgot.css', 'app.css'];
         $js = [''];
         $cities = [];
 

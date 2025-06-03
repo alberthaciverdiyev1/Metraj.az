@@ -11,7 +11,7 @@
 
          <div class="register-right">
              <div class="signin-link">
-                 <p>Already a member? <a href="/login">Sign In</a></p>
+                 <p>Already a member? <a href="{{ route(name:'login') }}">Sign In</a></p>
              </div>
              <h2 class="form-title">Sign up to Oxyy</h2>
 

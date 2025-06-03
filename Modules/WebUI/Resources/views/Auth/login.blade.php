@@ -10,7 +10,7 @@
 
          <div class="login-right">
              <div class="signin-link">
-                 <p>Not a member? <a href="/register">Sign Up</a></p>
+                 <p>Not a member? <a href="{{ route(name:'register') }}">Sign Up</a></p>
              </div>
              <h2 class="form-title">Sign in to Oxyy</h2>
 
@@ -40,7 +40,7 @@
                  <input type="email" placeholder="Enter Your Email Address">
                  <div class="password-text">
                      <label>Password</label>
-                     <a href="">Forgot Password?</a>
+                     <a href="{{ route(name:'forgot-password') }}">Forgot Password?</a>
                  </div>
 
                  <input type="password" placeholder="Enter Password">
