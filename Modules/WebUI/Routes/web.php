@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\WebUI\Controllers\HomeController;
+use Modules\WebUI\Http\Controllers\Auth\ForgotPasswordController;
 use Modules\WebUI\Http\Controllers\Auth\LoginController;
 use Modules\WebUI\Http\Controllers\Auth\RegisterController;
 use Modules\WebUI\Http\Controllers\Auth\OtpController;
@@ -36,6 +37,7 @@ Route::get('/register', [RegisterController::class, 'register'])->name('register
 Route::get(uri:'/login',action:[LoginController::class,'login'])->name(name:'login');
 
 Route::get(uri:'/otp',action:[OtpController::class,'otp'])->name(name:'otp');
+Route::get('/forgot-password', [ForgotPasswordController::class, 'login'])->name('forgot-password');
 
 
 
