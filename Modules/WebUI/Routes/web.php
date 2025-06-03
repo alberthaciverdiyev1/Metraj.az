@@ -6,6 +6,7 @@ use Modules\WebUI\Http\Controllers\Auth\ForgotPasswordController;
 use Modules\WebUI\Http\Controllers\Auth\LoginController;
 use Modules\WebUI\Http\Controllers\Auth\RegisterController;
 use Modules\WebUI\Http\Controllers\Auth\OtpController;
+use Modules\WebUI\Http\Controllers\Auth\ResetPasswordController;
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home');
@@ -38,6 +39,9 @@ Route::get(uri:'/login',action:[LoginController::class,'login'])->name(name:'log
 
 Route::get(uri:'/otp',action:[OtpController::class,'otp'])->name(name:'otp');
 Route::get('/forgot-password', [ForgotPasswordController::class, 'login'])->name('forgot-password');
+Route::get('/reset-password', [ResetPasswordController::class, 'resetpassword'])->name('reset-password');
+
+
 
 
 
