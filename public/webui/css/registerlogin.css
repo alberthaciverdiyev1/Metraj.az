@@ -127,15 +127,31 @@ font-weight: 600;
   gap: 15px;
 }
 
-.signup-form input[type=\"text\"],
-.signup-form input[type=\"email\"],
-.signup-form input[type=\"password\"] {
-  padding: 10px;
+
+
+input{
+   padding: 15px;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  background: #f3f4f6;
+  border-radius: 8px;
+  background: #F5F5F6;
+  border: none;
 }
 
+.password-text{
+  display: flex;
+  justify-content: space-between;
+}
+.password-text a{
+  color: #009c6e;
+  text-decoration: underline;
+  font-size: 14px;
+}
+
+label{
+  font-size: 16px;
+  font-weight: 500;
+  color:var(--grey-text);
+}
 .checkbox {
   display: flex;
   align-items: center;
@@ -160,4 +176,39 @@ font-weight: 600;
 
 .submit-btn:hover {
   background: #009c6e;
+}
+
+
+@media (max-width: 768px) {
+  .register, .login {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .register-right, .login-right,
+  .left {
+    width: 100%;
+    padding: 1rem 2rem;
+    height: 100vh;
+  }
+
+  .social-buttons {
+    /* flex-wrap: wrap; */
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .google-btn span {
+    display: none; 
+  }
+
+  .google-btn {
+    flex: 1 1 100%; 
+    justify-content: center;
+  }
+
+  .social-btn {
+    flex: 1 1 calc(25% - 10px);
+    min-width: 40px;
+  }
 }

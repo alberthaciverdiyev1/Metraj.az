@@ -10,14 +10,18 @@
 
          <div class="login-right">
              <div class="signin-link">
-                 <p>Not a member?  <a href="#">Sign In</a></p>
+                 <p>Not a member? <a href="#">Sign In</a></p>
              </div>
              <h2 class="form-title">Sign in to Oxyy</h2>
 
              <div class="social-buttons">
-                 <button class="google-btn"><i class="bi bi-google"></i>Sign in with Google</button>
+                <button class="google-btn">
+  <i class="bi bi-google"></i>
+  <span>Sign in with Google</span>
+</button>
+
                  <button class="social-btn facebook">
-                    <i class="bi bi-facebook"></i>
+                     <i class="bi bi-facebook"></i>
                  </button>
                  <button class="social-btn twitter"><i class="bi bi-twitter"></i></button>
                  <button class="social-btn linkedin"><i class="bi bi-linkedin"></i></button>
@@ -34,8 +38,11 @@
 
                  <label>Email Address</label>
                  <input type="email" placeholder="Enter Your Email Address">
+                 <div class="password-text">
+                     <label>Password</label>
+                     <a href="">Forgot Password?</a>
+                 </div>
 
-                 <label>Password</label>
                  <input type="password" placeholder="Enter Password">
 
                  <div class="checkbox">
