@@ -5,13 +5,11 @@ use Modules\WebUI\Controllers\BaseController;
 use Modules\WebUI\Controllers\BlogController;
 use Modules\WebUI\Controllers\HomeController;
 use Modules\WebUI\Controllers\PropertyController;
-
-Route::controller(BaseController::class)->group(function () {
-    Route::get('/rooms', 'rooms')->name('rooms');
-    Route::get('/property-types', 'property_types')->name('property-types');
-    Route::get('/cities', 'cities')->name('cities');
-    Route::get('/features', 'features')->name('features');
-});
+use Modules\WebUI\Http\Controllers\Auth\ForgotPasswordController;
+use Modules\WebUI\Http\Controllers\Auth\LoginController;
+use Modules\WebUI\Http\Controllers\Auth\RegisterController;
+use Modules\WebUI\Http\Controllers\Auth\OtpController;
+use Modules\WebUI\Http\Controllers\Auth\ResetPasswordController;
 
 Route::controller(BlogController::class)->group(function () {
     Route::get('/blog', 'blog')->name('blog');
@@ -46,6 +44,16 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/faqs', 'faqs')->name('faqs');
     Route::get('/coming-soon', action: 'comingSoon')->name(name: 'comingSoon');
 });
+
+Route::get('/register', [RegisterController::class, 'register'])->name('register');
+Route::get(uri:'/login',action:[LoginController::class,'login'])->name(name:'login');
+
+Route::get(uri:'/otp',action:[OtpController::class,'otp'])->name(name:'otp');
+Route::get('/forgot-password', [ForgotPasswordController::class, 'login'])->name('forgot-password');
+Route::get('/reset-password', [ResetPasswordController::class, 'resetpassword'])->name('reset-password');
+
+
+
 
 
 

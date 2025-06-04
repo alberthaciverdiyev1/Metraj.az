@@ -1,0 +1,200 @@
+.forgot, .register {
+    font-family: "Poppins", sans-serif!important;
+  }
+  
+  .register, .forgot {
+    display: flex;
+    min-height: 100vh;
+    gap: 4rem;
+  }
+  
+  .left {
+    width: 42%;
+    background: #B6F0E2;
+    padding: 40px 65px;
+  }
+  
+.text{
+    height: 100%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    text-align: start;
+  }
+  .text p{
+    color: var(--grey-text);
+  }
+  .text h2{
+  font-size: 34px;
+  width: 80%;
+  font-weight: 600;
+  }
+  .left figure img {
+    width: 80px;
+    height: 30px;
+  }
+  
+  .register-right, .forgot-right {
+    width: 55%;
+    padding: 2rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: start;
+  }
+  
+  .signin-link {
+    text-align: right;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--grey-text);
+  }
+  .signin-link a {
+    color: #00b37e;
+    text-decoration: none;
+  }
+  
+  .form-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  
+  .social-buttons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  .google-btn {
+    background: #ea4335;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  .google-btn i {
+    margin-right: 5px;
+    font-weight: 400;
+  }
+  
+  .social-btn {
+    background: #ccc;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    width: 40px;
+    text-align: center;
+    font-weight: bold;
+  }
+  .social-btn.facebook { background: #1877f2; }
+  .social-btn.twitter { background: #1da1f2; }
+  .social-btn.linkedin { background: #0a66c2; }
+  .social-btn.apple { background: #000; }
+  
+  .divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+  }
+  .divider hr {
+    flex: 1;
+    border: none;
+    border-top: 1px solid #ccc;
+  }
+  .divider span {
+    margin: 0 10px;
+    color: #888;
+    font-size: 14px;
+  }
+  
+  .signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  input {
+    padding: 15px;
+    background: #F5F5F6;
+    border-radius: 8px;
+    border: none;
+  }
+  
+  .password-text {
+    display: flex;
+    justify-content: space-between;
+  }
+  .password-text a {
+    color: #009c6e;
+    text-decoration: underline;
+    font-size: 14px;
+  }
+  
+  label {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--grey-text);
+  }
+  .checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+  }
+  .checkbox a {
+    color: #00b37e;
+    text-decoration: none;
+  }
+  
+  .submit-btn {
+    background: #00b37e;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    width: 12rem;
+    margin-top: 2rem;
+    cursor: pointer;
+  }
+  .submit-btn:hover {
+    background: #009c6e;
+  }
+  
+  @media (max-width: 768px) {
+    .register, .forgot {
+      flex-direction: column;
+      gap: 2rem;
+    }
+  
+    .register-right, .forgot-right,
+    .left {
+      width: 100%;
+      padding: 1rem 2rem;
+      height: 100vh;
+    }
+  
+    .social-buttons {
+      justify-content: space-between;
+      gap: 10px;
+    }
+  
+    .google-btn span {
+      display: none; 
+    }
+  
+    .google-btn {
+      flex: 1 1 100%; 
+      justify-content: center;
+    }
+  
+    .social-btn {
+      flex: 1 1 calc(25% - 10px);
+      min-width: 40px;
+    }
+  }
+  

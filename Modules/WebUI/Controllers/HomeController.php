@@ -52,4 +52,6 @@ class HomeController extends Controller
         return view('webui::Pages.coming-soon', compact('css', 'js'));
     }
 
+   
+
 }

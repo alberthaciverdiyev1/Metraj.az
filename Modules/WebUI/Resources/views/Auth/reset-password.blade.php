@@ -1,0 +1,27 @@
+@include('webui::partials.head')
+
+<div class="">
+    <div class="reset-password"> 
+        <x-auth.left-section
+            logo="https://harnishdesign.net/demo/html/oxyy/images/logo-teal.png"
+            subtitle="Reset your password,"
+            title="Enter your new password." />
+
+        <div class="reset-password-right">
+            <div class="signin-link">
+                <p>Return to <a href="{{ route(name:'login') }}">Sign in</a></p>
+            </div>
+            <h2 class="form-title">Reset Password</h2>
+
+            <form class="signup-form">
+                <p class="text-[var(--grey-text)]">Enter your new password below.</p>
+                <label>Password</label>
+                <input type="password" placeholder="Enter Your New Password">
+                <label>Confirm Password</label>
+                <input type="password" placeholder="Confirm Your New Password">
+                <button type="submit" class="submit-btn mt-0">Reset Password</button>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -10,5 +10,7 @@
         @include('webui::partials.footer')
 
         @include('webui::partials.js')
+        <!-- @yield('js') -->
+
     </body>
 </html>
