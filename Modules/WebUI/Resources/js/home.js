@@ -1,6 +1,9 @@
-document.addEventListener("DOMContentLoaded", function() {
-
-// alert("aaaaaaaaaaaaaa")
-F1913d
-});
-
+function propertyTypeComponent() {
+    return {
+        propertyTypes: [],
+        async fetchPropertyTypes() {
+            const res = await fetch('/property-types');
+            this.propertyTypes = await res.json();
+        }
+    }
+}

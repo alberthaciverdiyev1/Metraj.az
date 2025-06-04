@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Http;
 
 if (!function_exists('get_data')) {
     if (!function_exists('get_data')) {
-        function get_data(string $url, array $params = []): array
+        function get_data(string $url, array $params = [],bool $enum = false): array
         {
             $defaultParams = [
                 'page'  => 1,
@@ -15,7 +15,8 @@ if (!function_exists('get_data')) {
             $fullUrl = rtrim(config('app.api_url'), '/') . '/api/' . ltrim($url, '/');
 
             $response = Http::get($fullUrl, $queryParams);
-            return $response->json('data') ?? [];
+
+            return $enum ? $response->json(): ($response->json('data') ?? []);
         }
     }
 }

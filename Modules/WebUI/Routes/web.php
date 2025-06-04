@@ -1,14 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\WebUI\Controllers\BaseController;
 use Modules\WebUI\Controllers\BlogController;
 use Modules\WebUI\Controllers\HomeController;
 use Modules\WebUI\Controllers\PropertyController;
+
+Route::controller(BaseController::class)->group(function () {
+    Route::get('/rooms', 'rooms')->name('rooms');
+    Route::get('/property-types', 'property_types')->name('property-types');
+    Route::get('/cities', 'cities')->name('cities');
+    Route::get('/features', 'features')->name('features');
+});
 
 Route::controller(BlogController::class)->group(function () {
     Route::get('/blog', 'blog')->name('blog');
     Route::get('/blog-detail/{slug}', 'blogDetail')->name('blog.details');
 });
+
 Route::controller(PropertyController::class)->group(function () {
     Route::get('/listing', 'listing')->name('listing');
     Route::get('/property/{id}', 'propertyDetail')->name('property.detail');
@@ -35,7 +44,7 @@ Route::controller(HomeController::class)->group(function () {
         ]);
     });
     Route::get('/faqs', 'faqs')->name('faqs');
-    Route::get('/coming-soon',action:'comingSoon')->name(name:'comingSoon');
+    Route::get('/coming-soon', action: 'comingSoon')->name(name: 'comingSoon');
 });
 
 

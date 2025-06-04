@@ -10,9 +10,10 @@ class HomeController extends Controller
    public function index()
 {
     $response = Http::get(config('app.api_url') . '/api/city')->json();
-    $features = get_data('feature');
-
     $cities = $response['data'] ?? [];
+    $features = get_data('feature');
+    $rooms = get_data('room-count',[],true);
+    $property_types = get_data('property-types',[],true);
     $css = ['home.css', 'app.css', 'components.css'];
     $js = ['home.js', 'components.js'];
 
@@ -23,7 +24,7 @@ class HomeController extends Controller
     ]);
 
 
-    return view('webui::home.index', compact('css', 'js', 'cities', 'properties', 'features'));
+    return view('webui::home.index', compact('css', 'js', 'cities', 'properties', 'features','rooms', 'property_types'));
 }
 
     public function contact()
