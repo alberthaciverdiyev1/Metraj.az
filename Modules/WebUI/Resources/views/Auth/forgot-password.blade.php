@@ -1,7 +1,7 @@
 @include('webui::partials.head')
 
 <div class="">
-    <div class="forgot"> 
+    <div class="forgot">
         <x-auth.left-section
             logo="https://harnishdesign.net/demo/html/oxyy/images/logo-teal.png"
             subtitle="Don't worry,"
@@ -27,15 +27,12 @@
             </div>
 
             <div class="social-buttons">
-                <button class="google-btn">
-                    <i class="bi bi-google"></i>
+                <a href="#" class="google-btn">
+                    <img src="webui/images/googlelogo.png" alt="">
                     <span>Sign in with Google</span>
-                </button>
-                <button class="social-btn facebook"><i class="bi bi-facebook"></i></button>
-                <button class="social-btn twitter"><i class="bi bi-twitter"></i></button>
-                <button class="social-btn linkedin"><i class="bi bi-linkedin"></i></button>
-                <button class="social-btn apple"><i class="bi bi-apple"></i></button>
+                </a>
             </div>
+
         </div>
     </div>
 </div>

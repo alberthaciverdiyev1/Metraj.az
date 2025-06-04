@@ -72,19 +72,24 @@ font-weight: 600;
   gap: 15px;
   margin-bottom: 20px;
 }
-
 .google-btn {
-  background: #ea4335;
-  color: white;
-  border: none;
+  border: 1px solid rgb(224, 223, 223);
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 12px;
   font-size: 14px;
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+  gap: 0.7rem;
+  align-items: center;
+  font-weight: 500;
+  width: 100%;
 }
-.google-btn i{
-  margin-right: 5px;
-  font-weight: 400;
+.google-btn img{
+  width: 30px;
+  height:30px;
 }
+
 
 .social-btn {
   background: #ccc;
@@ -96,11 +101,6 @@ font-weight: 600;
   text-align: center;
   font-weight: bold;
 }
-
-.social-btn.facebook { background: #1877f2; }
-.social-btn.twitter { background: #1da1f2; }
-.social-btn.linkedin { background: #0a66c2; }
-.social-btn.apple { background: #000; }
 
 .divider {
   display: flex;
