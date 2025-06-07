@@ -52,7 +52,7 @@
 }
 
 .modal {
-    display: none;
+    display: flex;
     position: fixed;
     top: 0;
     left: 0;
@@ -64,6 +64,11 @@
     flex-direction: column;
     z-index: 1000;
 }
+
+.modal--hidden {
+  display: none;
+}
+
 .modal-header {
     position: absolute;
     top: 10px;
@@ -865,9 +870,7 @@ form {
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #e67c00;
-}
+
 .avatar-info {
     gap: 30px;
     margin-top: 20px;
@@ -1356,4 +1359,68 @@ circle.progress {
 
 .hover-effect-button:hover span:not(.hover-effect-button-fill) {
     color: white;
+}
+.modal-navigation{
+    gap: 4rem;
+}
+
+
+
+@media (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "first first"
+            "second third"
+            "fourth fourth";
+    }
+    .gallery-grid figure:nth-child(1) {
+        grid-area: first;
+    }
+    .gallery-grid figure:nth-child(2) {
+        grid-area: second;
+    }
+    .gallery-grid figure:nth-child(3) {
+        grid-area: third;
+    }
+    .gallery-grid figure:nth-child(4) {
+        grid-area: fourth;
+    }
+   
+}
+
+@media (max-width:992px) {
+    .flex {
+        flex-direction: column;
+    }
+     .side {
+        flex-direction: column;
+        width: 100%;
+    }
+    .side-left{
+        width: 100%!important;
+    }
+    .side-right{
+        width: 100%;
+    }
+    .info-box-desc{
+        flex-direction: column;
+        gap: 4rem;
+    }
+    .accordion-icons{
+        flex-direction: column;
+        gap: 10px;
+    }
+    .file-item{
+        flex-direction: column;
+    }
+    .col .form-group input {
+        width: 80%;
+    }
+    .col .form-group select{
+        width: 80%;
+    }
+    .review-card{
+        flex-direction: column;
+    }
 }

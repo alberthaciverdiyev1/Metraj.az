@@ -2,7 +2,7 @@
 #settings-icon {
     top: 25%;
     right: 5px;
-    z-index: 1;
+    z-index: 1100;
     position: fixed;
 }
 
@@ -100,7 +100,7 @@ circle.progress {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    z-index: 1000;
+    z-index: 1100;
     border-radius: 50%;
     background-color: var(--white);
 }
@@ -108,7 +108,7 @@ circle.progress {
 .gotop .up {
     border-radius: 50%;
     position: absolute;
-    z-index: 2;
+    z-index: 1100;
 }
 
 .gotop .up i {
@@ -122,7 +122,7 @@ circle.progress {
     top: 0;
     left: 0;
     transform: rotate(-90deg);
-    z-index: 1;
+    z-index: 1100;
 }
 
 circle {

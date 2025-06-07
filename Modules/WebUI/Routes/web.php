@@ -31,14 +31,14 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/faqs', 'faqs')->name('faqs');
     Route::get('/blog', 'blog')->name('blog');
     Route::get('/blog-detail/{slug}', 'blogDetail')->name('blog.details');
-    Route::get('/coming-soon',action:'comingSoon')->name(name:'comingSoon');
-   
+    Route::get('/coming-soon','comingSoon')->name('comingSoon');
+
 });
 
-Route::get('/register', [RegisterController::class, 'register'])->name('register');
-Route::get(uri:'/login',action:[LoginController::class,'login'])->name(name:'login');
+Route::match(['get', 'post'], '/register', [RegisterController::class, 'register'])->name('register');
+Route::match(['get','post'],'/login',[LoginController::class,'login'])->name('login');
 
-Route::get(uri:'/otp',action:[OtpController::class,'otp'])->name(name:'otp');
+Route::get('/otp',[OtpController::class,'otp'])->name('otp');
 Route::get('/forgot-password', [ForgotPasswordController::class, 'login'])->name('forgot-password');
 Route::get('/reset-password', [ResetPasswordController::class, 'resetpassword'])->name('reset-password');
 Route::get('/add-property', [AddProperty::class, 'addproperty'])->name('add-property');

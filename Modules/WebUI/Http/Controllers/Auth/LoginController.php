@@ -7,12 +7,18 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    public function login()
+    public function login(Request $request)
     {
-        $css = ['registerlogin.css', 'app.css'];
-        $js = ['faqs.js', 'gotop.js'];
-        $cities = [];
+        if ($request->isMethod('POST')) {
 
-        return view('webui::Auth.login', compact('css', 'js'));
+            $credentials = $request->only('email', 'password');
+
+        } else {
+            $css = ['registerlogin.css', 'app.css'];
+            $js = ['faqs.js', 'gotop.js'];
+            $cities = [];
+
+            return view('webui::Auth.login', compact('css', 'js'));
+        }
     }
 }

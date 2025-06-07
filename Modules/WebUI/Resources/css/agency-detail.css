@@ -14,7 +14,7 @@
     position: sticky;
     top: 0;
     z-index: 1;
-    max-height: 1000px;
+    max-height: 1700px;
 }
 .agencies-header {
     position: relative;
@@ -168,7 +168,9 @@
   cursor: pointer;
   transition: color 0.3s ease;
 }
-
+.properti-card{
+  width: 45%;
+}
 .tab-btn:hover {
   color: #FF7A00;
 }
@@ -188,6 +190,9 @@
   background-color: #FF7A00;
   border-radius: 4px;
 }
+.connect {
+  margin-top: 30px;
+}
 @media (max-width:992px) {
   .side-agency{
     flex-direction: column;
@@ -201,5 +206,17 @@
   .connect{
     width: 100%!important;
     height: 400px;
+  }
+}
+.properti-card{
+  width: 47%!important;
+}
+
+@media (max-width:768px) {
+  .listing-cards{
+    flex-direction: column;
+  }
+  .properti-card{
+    width: 100%!important;
   }
 }

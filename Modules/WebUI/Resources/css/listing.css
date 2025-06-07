@@ -232,3 +232,21 @@ circle.progress {
     flex-direction: column;
     justify-content: space-between;
 }
+
+@media (max-width:992px) {
+    .list-view{
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .list-view .group > .relative{
+        width: 100%;
+       
+    }
+    .list-view{
+        flex-direction: column;
+    }    
+    .result{
+        flex-direction: column;
+        gap:3rem;
+    }
+}
