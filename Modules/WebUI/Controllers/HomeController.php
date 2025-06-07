@@ -1159,7 +1159,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
     $response = Http::get(config('app.api_url') . '/api/city')->json();
     $cities = $response['data'] ?? [];
     $css = ['home.css', 'app.css', 'components.css'];
-    $js = ['home.js', 'components.js'];
+    $js = ['home.js','navbar.js', 'components.js'];
 
     $properties = collect($this->properties)->map(function ($property, $id) {
         $property['id'] = $id;

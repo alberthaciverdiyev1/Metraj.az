@@ -24,12 +24,41 @@
         </nav>
 
         <!-- Right -->
-        <div class="flex items-center space-x-4">
-            <a href="{{ route(name:'login') }}" class="hidden md:inline-flex items-center space-x-1 text-gray-700">
-                <i class="fas fa-user text-gray-400 border px-4 py-3 rounded-lg border-orange-400"></i>
+        <div class="relative inline-block text-left">
+            <!-- Dropdown trigger -->
+            <button id="dropdownButton" class="flex items-center space-x-2 px-4 py-2 border rounded-lg text-gray-700 bg-white hover:bg-gray-50">
+                <i class="fas fa-user text-gray-400"></i>
                 <span>Themesflat</span>
-            </a>
-            <button class="border border-orange-400 text-black rounded-lg hover:text-white px-4 py-2 rounded-md hover:bg-orange-400">Add property</button>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+
+            <!-- Dropdown menu -->
+            <div id="dropdownMenu" class="absolute left-0 mt-2 w-60 bg-white rounded-xl shadow-lg ring-1 ring-gray-200 hidden z-50">
+                <ul class="py-2 text-sm text-gray-700">
+                    <li><a href="#" class="flex rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i class="bi bi-grid mr-3"></i> Dashboards</a></li>
+                    <li><a href="#" class="flex  rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i class="bi bi-person-gear mr-3"></i> My profile</a></li>
+                    <li><a href="#" class="flex  rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i class="bi bi-bag-check mr-3"></i> My package</a></li>
+                    <li><a href="#" class="flex  rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i class="bi bi-heart mr-3"></i> My favorites (1)</a></li>
+                    <li><a href="#" class="flex  rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i class="bi bi-folder2-open mr-3"></i> My save searches</a></li>
+                    <li><a href="#" class="flex  rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i class="bi bi-chat-left-text mr-3"></i> Reviews</a></li>
+                    <li><a href="{{ route(name:'login') }}" class="flex  rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i class="bi bi-folder-check mr-3"></i> My properties</a></li>
+                    <li>
+                        <a href="{{ route(name:'add-property') }}"
+                            class="flex items-center px-4 py-2 bg-white  rounded-md hover:bg-orange-400 hover:text-white transition">
+                            <i class="bi bi-file-earmark-plus mr-3"></i> Add property
+                        </a>
+                    </li>
+                    <li><a href="{{ route('login') }}" class="flex items-center px-4 py-2 bg-white  rounded-md hover:bg-orange-400 hover:text-white transition"><i class="bi bi-person mr-3"></i> Login / Register</a></li>
+                    <li><a href="#" class="flex items-center px-4 py-2 bg-white  rounded-md hover:bg-orange-400 hover:text-white transition"><i class="bi bi-box-arrow-right mr-3"></i> Logout</a></li>
+                </ul>
+
+            </div>
         </div>
+        <button class="flex items-center px-4 py-2 bg-white  rounded-md hover:bg-orange-400 hover:text-white transition">Add property</button>
+    </div>
     </div>
 </header>
+
+
