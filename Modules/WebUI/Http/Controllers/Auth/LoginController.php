@@ -36,4 +36,9 @@ class LoginController extends Controller
             return view('webui::Auth.login', compact('css', 'js'));
         }
     }
+    public function logout(Request $request){
+        post_data('/logout');
+        $request->session()->flush();
+        return redirect('/');
+    }
 }

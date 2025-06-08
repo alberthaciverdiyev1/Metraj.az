@@ -1156,6 +1156,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
 
    public function index()
 {
+
     $response = Http::get(config('app.api_url') . '/api/city')->json();
     $cities = $response['data'] ?? [];
     $css = ['home.css', 'app.css', 'components.css'];
@@ -1391,6 +1392,6 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
         return view('webui::Pages.coming-soon', compact('css', 'js'));
     }
 
-   
+
 
 }

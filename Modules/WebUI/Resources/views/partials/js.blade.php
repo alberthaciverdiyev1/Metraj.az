@@ -6,6 +6,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
 <!-- Dinamik skriptlər -->
+    <script src="{{ asset('webui/js/navbar.js') }}"></script>
 @forelse($js as $j)
     <script src="{{ asset('webui/js/'.$j) }}"></script>
 @empty

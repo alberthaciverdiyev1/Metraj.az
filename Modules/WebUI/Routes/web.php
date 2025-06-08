@@ -37,6 +37,7 @@ Route::controller(HomeController::class)->group(function () {
 
 Route::match(['get', 'post'], '/register', [RegisterController::class, 'register'])->name('register');
 Route::match(['get','post'],'/login',[LoginController::class,'login'])->name('login');
+Route::match(['get','post'],'/logout',[LoginController::class,'logout'])->name('logout');
 
 Route::get('/otp',[OtpController::class,'otp'])->name('otp');
 Route::get('/forgot-password', [ForgotPasswordController::class, 'login'])->name('forgot-password');
