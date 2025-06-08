@@ -11,7 +11,7 @@ if (!function_exists('get_data')) {
 
         $response = Http::get($fullUrl, $queryParams);
 
-        return $response->json('data') ?? [];
+        return $enum ? $response->json() : $response->json('data');
     }
 }
 

@@ -46,5 +46,10 @@ Route::get('/reset-password', [ResetPasswordController::class, 'resetpassword'])
 Route::get('/add-property', [AddProperty::class, 'addproperty'])->name('add-property');
 
 Route::controller(BaseController::class)->group(function () {
+    Route::get('/subways', 'subways')->name('subways');
+    Route::get('/cities', 'cities')->name('cities');
     Route::get('/features', 'features')->name('features');
+    Route::get('/property-types', 'propertyTypes')->name('property-types');
+    Route::get('/repair-types', 'repairTypes')->name('repair-types');
+    Route::get('/room-count', 'roomCount')->name('room-count');
 });

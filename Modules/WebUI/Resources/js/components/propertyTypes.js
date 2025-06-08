@@ -1,6 +1,7 @@
-export async function getFeatures() {
+
+export async function getPropertyTypes() {
     try {
-        const res = await fetch('/features', {
+        const res = await fetch('/property-types', {
             headers: {
                 'Accept': 'application/json'
             }
@@ -10,8 +11,7 @@ export async function getFeatures() {
 
         return await res.json() ?? [];
     } catch (error) {
-        console.error('Xüsusiyyətlər alınamadı:', error);
+        console.error('Property Types alınamadı:', error);
         return [];
     }
 }
-

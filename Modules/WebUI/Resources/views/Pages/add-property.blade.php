@@ -88,74 +88,6 @@
             <div class="right-side">
                 <main>
 
-                    <section id="property-information">
-                        <div class="p-6 bg-white rounded-xl shadow-md max-w-5xl mx-auto mt-6">
-                            <h2 class="text-2xl font-bold mb-4">Information</h2>
-
-                            <form method="POST" action="">
-                                @csrf
-
-                                <div class="mb-4">
-                                    <label for="slug" class="block font-semibold mb-1">Title:*</label>
-                                    <input type="text" name="slug" id="slug" placeholder="Choose"
-                                           class="w-full border border-gray-300 rounded-md px-4 py-2">
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="description" class="block font-semibold mb-1">Description:</label>
-                                    <textarea name="description" id="description" placeholder="Your Description"
-                                              rows="4"
-                                              class="w-full border border-gray-300 rounded-md px-4 py-2"></textarea>
-                                </div>
-
-                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                                        <div>
-                                            <label for="address" class="block font-semibold mb-1">Full Address:*</label>
-                                            <input type="text" name="address" id="address"
-                                                   placeholder="Enter property full address"
-                                                   class="w-full border border-gray-300 rounded-md px-4 py-2">
-                                            <button type="button" id="searchAddress"
-                                                    class="mt-2 rounded-lg mt-2 bg-[var(--primary)] text-white px-4 py-1 rounded-hover:bg-blue-600">
-                                                Search on Map
-                                            </button>
-                                        </div>
-
-                                        <div>
-                                            <label for="add_no" class="block font-semibold mb-1">Zip Code:*</label>
-                                            <input type="text" name="add_no" id="add_no"
-                                                   placeholder="Enter property zip code"
-                                                   class="w-full border border-gray-300 rounded-md px-4 py-2">
-                                        </div>
-
-                                        <div>
-                                            <label for="city_id" class="block font-semibold mb-1">Country:*</label>
-                                            <select name="city_id" id="city_id"
-                                                    class="w-full border border-gray-300 rounded-md px-4 py-2">
-                                                <option value="">Select Country</option>
-                                                <option value="1">Azerbaijan</option>
-                                                <option value="2">Other...</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                <div class="mb-4">
-                                    <label class="block font-semibold mb-1">Location on Map:</label>
-                                    <div id="map" style="height: 400px; width: 100%;  border-radius: 0.375rem;"></div>
-                                    <input type="hidden" name="latitude" id="latitude">
-                                    <input type="hidden" name="longitude" id="longitude">
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="google_map_location" class="block font-semibold mb-1">Google Maps Link
-                                        (optional):</label>
-                                    <input type="text" name="google_map_location" id="google_map_location"
-                                           placeholder="https://maps.google.com/..."
-                                           class="w-full border border-gray-300 rounded-md px-4 py-2">
-                                </div>
-                            </form>
-
-                        </div>
-                    </section>
                     <div class="bg-white mt-2 p-5 max-w-5xl mx-auto rounded-lg shadow-md">
                         <h2 class="text-2xl font-bold mb-6">Additional Information</h2>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -163,107 +95,124 @@
                             <!-- Property Type -->
                             <div>
                                 <label class="block font-medium mb-1">Property Type:<span class="text-red-500">*</span></label>
-                                <select
-                                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <select id="property-type"
+                                        class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                     <option disabled selected>Choose</option>
-                                    <option>Villa</option>
-                                    <option>Office</option>
                                 </select>
                             </div>
-
                             <!-- Property Status -->
                             <div>
                                 <label class="block font-medium mb-1">Property Status:<span
                                         class="text-red-500">*</span></label>
-                                <select
-                                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <select id="property-status"
+                                        class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                     <option disabled selected>Choose</option>
-                                    <option>For Sale</option>
-                                    <option>For Rent</option>
+                                    <option value="sale">For Sale</option>
+                                    <option value="rent">For Rent</option>
                                 </select>
                             </div>
-
-
                             <!-- Property Label -->
                             <div>
-                                <label class="block font-medium mb-1">Property Label:<span class="text-red-500">*</span></label>
+                                <label class="block font-medium mb-1">Təmir:<span class="text-red-500">*</span></label>
                                 <select
                                     class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    <option>Choose</option>
+                                    <option selected disabled>Choose</option>
+                                    <option value="repaired">Təmirli</option>
+                                    <option value="unrepaired">Təmirsiz</option>
                                     <!-- options -->
                                 </select>
                             </div>
 
                             <!-- Size -->
-                            <div>
-                                <label class="block font-medium mb-1">Size (SqFt):<span
+                            <div id="size">
+                                <label class="block font-medium mb-1">Size (m²):<span
                                         class="text-red-500">*</span></label>
                                 <input type="text"
                                        class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
                             </div>
-
                             <!-- Land Area -->
-                            <div>
-                                <label class="block font-medium mb-1">Land Area (SqFt):<span
+                            <div id="land-area" class="d-none">
+                                <label class="block font-medium mb-1">Land Area (m²):<span
                                         class="text-red-500">*</span></label>
                                 <input type="text"
                                        class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
                             </div>
 
-                            <!-- Property ID -->
+                            <!-- Price -->
                             <div>
-                                <label class="block font-medium mb-1">Property ID:<span
+                                <label class="block font-medium mb-1">Price:<span
                                         class="text-red-500">*</span></label>
-                                <input type="text"
+                                <input type="number" value="0"
                                        class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+
+                                <div class="d-none">
+                                    <select id="property-period"
+                                            class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <option value="daily"> Günlük</option>
+                                        <option value="monthly">Aylıq</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <!-- Rooms -->
                             <div>
-                                <label class="block font-medium mb-1">Rooms:<span class="text-red-500">*</span></label>
-                                <input type="number"
-                                       class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                                <label class="block font-medium mb-1">Room Count:<span
+                                        class="text-red-500">*</span></label>
+                                <select id="room-count"
+                                        class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option disabled selected>Choose</option>
+                                    @for($i = 1; $i <= 20; $i++)
+                                        <option value="{{ $i }}">{{ $i }} otaqlı</option>
+                                    @endfor
+
+                                </select>
                             </div>
 
                             <!-- Bedrooms -->
                             <div>
-                                <label class="block font-medium mb-1">Bedrooms:<span
+                                <label class="block font-medium mb-1">Mərtəbə:<span
                                         class="text-red-500">*</span></label>
-                                <input type="number"
-                                       class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                                <select id="room-count"
+                                        class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option disabled selected>Choose</option>
+                                    @for($i = 1; $i <= 100; $i++)
+                                        <option value="{{ $i }}">{{ $i }}-ci mərtəbə</option>
+                                    @endfor
+
+                                </select>
                             </div>
 
                             <!-- Bathrooms -->
                             <div>
-                                <label class="block font-medium mb-1">Bathrooms:<span
+                                <label class="block font-medium mb-1">Mərtəbə sayı:<span
                                         class="text-red-500">*</span></label>
-                                <input type="number"
-                                       class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                                <select id="room-count"
+                                        class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option disabled selected>Choose</option>
+                                    @for($i = 1; $i <= 100; $i++)
+                                        <option value="{{ $i }}">{{ $i }} mərtəbəli</option>
+                                    @endfor
+
+                                </select>
                             </div>
 
                             <!-- Garages -->
                             <div>
-                                <label class="block font-medium mb-1">Garages:<span
+                                <label class="block font-medium mb-1">Kredit:<span
                                         class="text-red-500">*</span></label>
-                                <input type="number"
+                                <input type="checkbox"
                                        class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
                             </div>
 
-                            <!-- Garage Size -->
-                            <div>
-                                <label class="block font-medium mb-1">Garages Size (SqFt):<span
-                                        class="text-red-500">*</span></label>
-                                <input type="text"
-                                       class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                        </div>
+                        <div class="bg-white rounded-xl max-w-5xl mx-auto mt-6">
+                            <div class="mb-4">
+                                <label for="description" class="block font-semibold mb-1">Description:</label>
+                                <textarea name="description" id="description" placeholder="Your Description"
+                                          rows="4"
+                                          class="w-full border border-gray-300 rounded-md px-4 py-2"></textarea>
                             </div>
 
-                            <!-- Year Built -->
-                            <div>
-                                <label class="block font-medium mb-1">Year Built:<span
-                                        class="text-red-500">*</span></label>
-                                <input type="text"
-                                       class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
-                            </div>
 
                         </div>
                     </div>
@@ -285,10 +234,84 @@
 
                             <div id="gallery"
                                  class="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
+                            <div class="my-4">
+                                <label for="video" class="block font-semibold mb-1">Video:</label>
+                                <input type="file" placeholder="Video"
+                                       class="w-full border border-gray-300 rounded-md px-4 py-2">
+                            </div>
+
+                            <div class="my-4">
+                                <label for="document" class="block font-semibold mb-1">Document:</label>
+                                <input type="file" placeholder="Document"
+                                       class="w-full border border-gray-300 rounded-md px-4 py-2">
+                            </div>
                         </div>
+
+
                     </section>
 
                     <x-amenities-add-property/>
+
+                    <section id="property-information">
+                        <div class="p-6 bg-white rounded-xl shadow-md max-w-5xl mx-auto mt-6">
+                            <h2 class="text-2xl font-bold mb-4">Information</h2>
+
+                            <form method="POST" action="">
+                                @csrf
+                                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                                    <div>
+                                        <label for="city" class="block font-semibold mb-1">Şəhər:*</label>
+                                        <select id="city"
+                                                class="w-full border border-gray-300 rounded-md px-4 py-2"> </select>
+                                    </div>
+                                    <div class="d-none">
+                                        <label for="district" class="block font-semibold mb-1">Rayon:*</label>
+                                        <select id="district"
+                                                class="w-full border border-gray-300 rounded-md px-4 py-2"> </select>
+                                    </div>
+                                    <div class="d-none">
+                                        <label for="town" class="block font-semibold mb-1">Qəsəbə:*</label>
+                                        <select id="town"
+                                                class="w-full border border-gray-300 rounded-md px-4 py-2"> </select>
+                                    </div>
+                                    <div>
+                                        <label for="city_id" class="block font-semibold mb-1">Metro:*</label>
+                                        <select id="city_id"
+                                                class="w-full border border-gray-300 rounded-md px-4 py-2"> </select>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="address" class="block font-semibold mb-1">Full Adress:*</label>
+                                    <input type="text" name="address" id="address"
+                                           placeholder="Enter property full address"
+                                           class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                    <button type="button" id="searchAddress"
+                                            class="mt-2 rounded-lg mt-2 bg-[var(--primary)] text-white px-4 py-1 rounded-hover:bg-blue-600">
+                                        Search on Map
+                                    </button>
+                                </div>
+
+
+                                <div class="mb-4">
+                                    <label class="block font-semibold mb-1">Location on Map:</label>
+                                    <div id="map" style="height: 400px; width: 100%;  border-radius: 0.375rem;"></div>
+                                    <input type="hidden" name="latitude" id="latitude">
+                                    <input type="hidden" name="longitude" id="longitude">
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="google_map_location" class="block font-semibold mb-1">Google Maps Link
+                                        (optional):</label>
+                                    <input type="text" name="google_map_location" id="google_map_location"
+                                           placeholder="https://maps.google.com/..."
+                                           class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                </div>
+                            </form>
+
+                        </div>
+                    </section>
+
+
                     <x-agent-info/>
 
                     <div class="flex justify-center items-center space-x-4 mt-6">
@@ -296,13 +319,6 @@
                             class=" sm:w-auto bg-[color:var(--primary)] text-white px-6 py-3 rounded-xl flex items-center justify-center button-hover all-btn hover:bg-orange-500 focus:outline-none">
                             Add Property
                         </button>
-                        <button
-                            class="relative inline-block px-5 py-2 rounded-xl border border-[color:var(--primary)] text-[color:var(--primary)] overflow-hidden transition-all duration-300 hover-effect-button">
-                            <span
-                                class="absolute inset-0 w-0 h-full bg-[color:var(--primary)] transition-all duration-300 ease-in-out z-0 hover-effect-button-fill"></span>
-                            <span class="relative z-10">Save & Prewiev</span>
-                        </button>
-
                     </div>
 
 

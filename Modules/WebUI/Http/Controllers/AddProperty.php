@@ -15,6 +15,7 @@ class AddProperty extends Controller
             'map-find-adress.js',
             'components/features.js',
             'components/cities.js',
+            'components/propertyTypes.js',
         ];
 
         return view('webui::Pages.add-property', compact('css', 'js'));

@@ -4,7 +4,7 @@
 
     <div class="agent-info-options">
         @if(session('user'))
-            <label class="agent-info-label">
+            <label class="agent-info-label mb-3">
                 <input type="radio" name="agent-info" class="agent-info-radio" value="{{session('user')['id']}}"
                        checked/>
                 <span class="agent-info-custom-radio">
@@ -60,7 +60,7 @@
     </div>
     <div class="mb-4">
         <label for="mail" class="block font-semibold mb-1">Email:*</label>
-        <input type="mail" id="mail" placeholder="Email"
+        <input type="email" id="mail" placeholder="Email"
                class="w-full border border-gray-300 rounded-md px-4 py-2">
     </div>
 

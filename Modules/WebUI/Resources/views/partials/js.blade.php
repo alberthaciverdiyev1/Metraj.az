@@ -8,6 +8,6 @@
 <!-- Dinamik skriptlər -->
     <script src="{{ asset('webui/js/navbar.js') }}"></script>
 @forelse($js as $j)
-    <script src="{{ asset('webui/js/'.$j) }}"></script>
+    <script type="module" src="{{ asset('webui/js/'.$j) }}"></script>
 @empty
 @endforelse
