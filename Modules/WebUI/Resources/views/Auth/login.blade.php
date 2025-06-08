@@ -27,21 +27,24 @@
                  <hr>
              </div>
 
-             <form class="signup-form">
-
+             <form class="signup-form" method="POST" action="{{ route('login') }}" id="login-form">
+                 @csrf
                  <label>Email Address</label>
-                 <input type="email" placeholder="Enter Your Email Address">
+                 <input type="email" name="email" placeholder="Enter Your Email Address" required>
+
                  <div class="password-text">
                      <label>Password</label>
                      <a href="{{ route(name:'forgot-password') }}">Forgot Password?</a>
                  </div>
 
-                 <input type="password" placeholder="Enter Password">
+                 <input type="password" name="password" placeholder="Enter Password">
 
-               
+                 <p style="color: red; margin-left: 20px" id="error-message"></p>
 
-                 <button type="submit" class="submit-btn">Sign in</button>
+                 <button type="submit" class="submit-btn" id="login-btn">Sign in</button>
              </form>
          </div>
      </div>
  </div>
+
+ @extends('webui::partials.js')

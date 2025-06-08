@@ -11,7 +11,7 @@
             <div class="signin-link">
                 <p>Already a member? <a href="{{ route(name:'login') }}">Sign In</a></p>
             </div>
-            <h2 class="form-title">Sign up to Metraj</h2>
+            <h2 class="form-title">Sign up to Metraj.az</h2>
 
             <div class="social-buttons">
                 <a href="#" class="google-btn">
