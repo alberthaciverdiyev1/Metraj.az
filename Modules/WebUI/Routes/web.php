@@ -8,6 +8,7 @@ use Modules\WebUI\Http\Controllers\Auth\LoginController;
 use Modules\WebUI\Http\Controllers\Auth\RegisterController;
 use Modules\WebUI\Http\Controllers\Auth\OtpController;
 use Modules\WebUI\Http\Controllers\Auth\ResetPasswordController;
+use Modules\WebUI\Http\Controllers\Base\BaseController;
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home');
@@ -31,42 +32,19 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/faqs', 'faqs')->name('faqs');
     Route::get('/blog', 'blog')->name('blog');
     Route::get('/blog-detail/{slug}', 'blogDetail')->name('blog.details');
-    Route::get('/coming-soon','comingSoon')->name('comingSoon');
+    Route::get('/coming-soon', 'comingSoon')->name('comingSoon');
 
 });
 
 Route::match(['get', 'post'], '/register', [RegisterController::class, 'register'])->name('register');
-Route::match(['get','post'],'/login',[LoginController::class,'login'])->name('login');
-Route::match(['get','post'],'/logout',[LoginController::class,'logout'])->name('logout');
+Route::match(['get', 'post'], '/login', [LoginController::class, 'login'])->name('login');
+Route::match(['get', 'post'], '/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/otp',[OtpController::class,'otp'])->name('otp');
+Route::get('/otp', [OtpController::class, 'otp'])->name('otp');
 Route::get('/forgot-password', [ForgotPasswordController::class, 'login'])->name('forgot-password');
 Route::get('/reset-password', [ResetPasswordController::class, 'resetpassword'])->name('reset-password');
 Route::get('/add-property', [AddProperty::class, 'addproperty'])->name('add-property');
 
-
-
-
-
-
-
-//
-//Route::domain(config('app.url'))->prefix(config('app.url'))->group(function () {
-//    Route::get('/', [HomeController::class, 'index'])->name('home');
-////    Route::controller(HomeController::class)->group(function () {
-////        Route::get('/', 'index')->name('home');
-////    });
-//});
-//
-//
-
-//Route::controller(HomeController::class)->group(function () {
-//    Route::get('/', 'index')->name('home');
-//    Route::get('/contact-us', 'contact')->name('contact');
-//    Route::get('/about/{variable}', 'about')->name('about');
-//    Route::get('/service/{slug}', 'serviceDetails')->name('service');
-//    Route::get('/news', 'news')->name('news');
-//    Route::get('/news/{slug}', 'newsDetails')->name('newsDetails');
-//    Route::post('/contact-us', 'contactRequest')->name('contactRequest');
-//    Route::get('/search', 'search')->name('search');
-//});
+Route::controller(BaseController::class)->group(function () {
+    Route::get('/features', 'features')->name('features');
+});

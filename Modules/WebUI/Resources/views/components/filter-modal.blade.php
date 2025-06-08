@@ -40,7 +40,7 @@
             </div>
 
             <div class="mt-6">
-                <p class="font-medium text-[var(--text-color)] mb-2">Amenities:</p>
+                <p class="font-medium text-[var(--text-color)] mb-2">Xüsusiyyətlər:</p>
                 <div class="grid grid-cols-3 gap-2 text-sm text-[var(--grey-text)]">
                     <label><input type="checkbox" class="mr-1">Bed linens</label>
                     <label><input type="checkbox" class="mr-1">Carbon alarm</label>

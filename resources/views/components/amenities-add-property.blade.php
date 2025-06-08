@@ -1,97 +1,27 @@
-<div class="p-8 max-w-5xl mx-auto rounded-lg shadow-md  mt-3 font-sans bg-white text-gray-800">
+<div
+    x-data="featuresComponent()"
+    x-init="fetchFeatures()"
+    class="p-8 max-w-5xl mx-auto rounded-lg shadow-md mt-3 font-sans bg-white text-gray-800"
+>
+    <h2 class="text-xl font-semibold mb-4">
+        Xüsusiyyətlər <span style="color: red">*</span>
+    </h2>
 
- 
-<h2 class="amenities-title">Amenities<span style="color: red">*</span></h2>
+    <template x-if="loading">
+        <p>Yüklənir...</p>
+    </template>
 
-<div class="amenities-section">
+    <template x-if="!loading && features.length === 0">
+        <p>Xüsusiyyət tapılmadı.</p>
+    </template>
 
-  <div class="amenities-category">
-    <h3 class="amenities-category-title">Home safety:</h3>
-    <div class="amenities-checkbox-group">
-      <label class="amenities-label">
-        <input type="checkbox" class="amenities-checkbox-input" checked />
-        <span class="amenities-custom-checkbox"></span>
-        Smoke alarm
-      </label>
-
-      <label class="amenities-label">
-        <input type="checkbox" class="amenities-checkbox-input" />
-        <span class="amenities-custom-checkbox"></span>
-        Self check-in with lockbox
-      </label>
-
-      <label class="amenities-label">
-        <input type="checkbox" class="amenities-checkbox-input" />
-        <span class="amenities-custom-checkbox"></span>
-        Carbon monoxide alarm
-      </label>
-
-      <label class="amenities-label">
-        <input type="checkbox" class="amenities-checkbox-input" />
-        <span class="amenities-custom-checkbox"></span>
-        Security cameras
-      </label>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" x-show="!loading">
+        <template x-for="feature in features" :key="feature.id">
+            <label class="flex items-center space-x-2">
+                <input type="checkbox" name="amenities[]" :value="feature.id" class="form-checkbox text-blue-600">
+                <span x-text="feature.name"></span>
+            </label>
+        </template>
     </div>
-  </div>
-
-  <div class="amenities-category">
-    <h3 class="amenities-category-title">Bedroom:</h3>
-    <div class="amenities-checkbox-group">
-      <label class="amenities-label">
-        <input type="checkbox" class="amenities-checkbox-input" />
-        <span class="amenities-custom-checkbox"></span>
-        Hangers
-      </label>
-
-      <label class="amenities-label">
-        <input type="checkbox" class="amenities-checkbox-input" />
-        <span class="amenities-custom-checkbox"></span>
-        Extra pillows & blankets
-      </label>
-
-      <label class="amenities-label">
-        <input type="checkbox" class="amenities-checkbox-input" />
-        <span class="amenities-custom-checkbox"></span>
-        Bed linens
-      </label>
-
-      <label class="amenities-label">
-        <input type="checkbox" class="amenities-checkbox-input" />
-        <span class="amenities-custom-checkbox"></span>
-        TV with standard cable
-      </label>
-    </div>
-  </div>
-
-  <div class="amenities-category">
-    <h3 class="amenities-category-title">Kitchen:</h3>
-    <div class="amenities-checkbox-group">
-      <label class="amenities-label">
-        <input type="checkbox" class="amenities-checkbox-input" />
-        <span class="amenities-custom-checkbox"></span>
-        Refrigerator
-      </label>
-
-      <label class="amenities-label">
-        <input type="checkbox" class="amenities-checkbox-input" />
-        <span class="amenities-custom-checkbox"></span>
-        Dishwasher
-      </label>
-
-      <label class="amenities-label">
-        <input type="checkbox" class="amenities-checkbox-input" />
-        <span class="amenities-custom-checkbox"></span>
-        Microwave
-      </label>
-
-      <label class="amenities-label">
-        <input type="checkbox" class="amenities-checkbox-input" />
-        <span class="amenities-custom-checkbox"></span>
-        Coffee maker
-      </label>
-    </div>
-  </div>
-
 </div>
 
-</div>

@@ -3,13 +3,9 @@
 use Illuminate\Support\Facades\Http;
 
 if (!function_exists('get_data')) {
-    function get_data(string $url, array $params = []): array
+    function get_data(string $url, array $params = [], bool $enum = false, bool $allData = false): array
     {
-        $defaultParams = [
-            'page' => 1,
-        ];
-
-        $queryParams = array_merge($defaultParams, $params);
+        $queryParams = $allData ? $params : array_merge(['page' => 1], $params);
 
         $fullUrl = rtrim(config('app.api_url'), '/') . '/api' . $url;
 
