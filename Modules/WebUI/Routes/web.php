@@ -1,7 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Modules\WebUI\Controllers\HomeController;
+use Modules\WebUI\Controllers\PropertyController;
 use Modules\WebUI\Http\Controllers\AddProperty;
 use Modules\WebUI\Http\Controllers\Auth\ForgotPasswordController;
 use Modules\WebUI\Http\Controllers\Auth\LoginController;
@@ -52,4 +55,27 @@ Route::controller(BaseController::class)->group(function () {
     Route::get('/property-types', 'propertyTypes')->name('property-types');
     Route::get('/repair-types', 'repairTypes')->name('repair-types');
     Route::get('/room-count', 'roomCount')->name('room-count');
+});
+
+Route::controller(PropertyController::class)->group(function () {
+   Route::get('/properties', 'properties')->name('properties');
+});
+
+
+
+Route::post('/webhook/deploy', function (Request $request) {
+    $secret = env('GITHUB_WEBHOOK_SECRET');
+
+    $signature = $request->header('X-Hub-Signature-256');
+    $payload = $request->getContent();
+    $hash = 'sha256=' . hash_hmac('sha256', $payload, $secret);
+
+    if (!hash_equals($hash, $signature)) {
+        Log::warning('Webhook signature mismatch.');
+        abort(403, 'Invalid signature');
+    }
+
+    exec(base_path('deploy.sh') . ' > /dev/null 2>&1 &');
+
+    return response()->json(['message' => 'Deploy triggered']);
 });

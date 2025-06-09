@@ -1151,25 +1151,23 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
         ],
 
 
-
     ];
 
-   public function index()
-{
+    public function index()
+    {
+        $response = Http::get(config('app.api_url') . '/api/city')->json();
+        $cities = $response['data'] ?? [];
+        $css = ['home.css', 'app.css', 'components.css'];
+        $js = ['home.js'];
 
-    $response = Http::get(config('app.api_url') . '/api/city')->json();
-    $cities = $response['data'] ?? [];
-    $css = ['home.css', 'app.css', 'components.css'];
-    $js = ['home.js'];
+        $properties = collect($this->properties)->map(function ($property, $id) {
+            $property['id'] = $id;
+            $property['image'] = asset($property['image']);
+            return $property;
+        })->values();
 
-    $properties = collect($this->properties)->map(function ($property, $id) {
-        $property['id'] = $id;
-        $property['image'] = asset($property['image']);
-        return $property;
-    })->values();
-
-    return view('webui::home.index', compact('css', 'js', 'cities', 'properties'));
-}
+        return view('webui::home.index', compact('css', 'js', 'cities', 'properties'));
+    }
 
     public function listing()
     {
@@ -1289,6 +1287,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
 
         return view('webui::Pages.property-detail', compact('css', 'js', 'property'));
     }
+
     public function agencyDetail($id)
     {
         $agencies = [
@@ -1340,6 +1339,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
             ->values();
         return view('webui::Pages.agency-detail', compact('css', 'js', 'agency', 'properties'));
     }
+
     public function contact()
     {
         $css = ['contact.css', 'app.css', 'components.css', 'agencies.css'];
@@ -1384,14 +1384,14 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
 
         return view('webui::Pages.blog-detail', compact('css', 'js', 'blog', 'relatedPosts'));
     }
-   public function comingSoon()
+
+    public function comingSoon()
     {
         $css = ['coming-soon.css', 'app.css'];
         $js = ['coming-soon.js'];
         $cities = [];
         return view('webui::Pages.coming-soon', compact('css', 'js'));
     }
-
 
 
 }

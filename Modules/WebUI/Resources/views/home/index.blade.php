@@ -190,21 +190,7 @@
                 subtitle="Thousands of luxury home enthusiasts just like you visit our website." />
 
             <div class="luxury-listings">
-                <div id="propertyContainer"
-                    class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-7">
-
-                    @foreach ($properties->take(6) as $property)
-                    <x-property-card
-                        :id="$property['id']"
-                        :image="$property['image']"
-                        :title="$property['title']"
-                        :address="$property['address']"
-                        :beds="$property['beds']"
-                        :baths="$property['baths']"
-                        :area="$property['area']"
-                        :price="$property['price']" />
-
-                    @endforeach
+                <div id="propertyContainer" class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-7">
 
 
                 </div>
