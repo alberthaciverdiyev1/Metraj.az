@@ -2,30 +2,30 @@
 
 namespace Modules\WebUI\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Request;
 
 class PropertyController extends Controller
 {
     public function properties(Request $request)
     {
-        $params = [
-            'type' => $request->query('type'),
-            'add_no' => $request->query('addNo'),
-            'town_id' => $request->query('townId'),
-            'subway_id' => $request->query('subwayId'),
-            'district_id' => $request->query('districtId'),
-            'city_id' => $request->query('cityId'),
-            'property_type' => $request->query('propertyType'),
-            'add_type' => $request->query('addType'),
-            'number_of_floors' => $request->query('numberOfFloors'),
-            'number_of_rooms' => $request->query('numberOfRooms'),
-            'floor_located' => $request->query('floorLocated'),
-            'area' => $request->query('area'),
-            'field_area' => $request->query('fieldArea'),
-            'in_credit' => $request->query('inCredit'),
-        ];
+        $params = $request->only([
+            'type',
+            'addNo',
+            'townId',
+            'subwayId',
+            'districtId',
+            'cityId',
+            'propertyType',
+            'addType',
+            'numberOfFloors',
+            'numberOfRooms',
+            'floorLocated',
+            'area',
+            'fieldArea',
+            'inCredit',
+        ]);
 
         return get_data('/property', $params, false, false, false);
     }
