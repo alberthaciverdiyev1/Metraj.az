@@ -1,19 +1,28 @@
 <?php
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 if (!function_exists('get_data')) {
-    function get_data(string $url, array $params = [], bool $enum = false, bool $allData = false): array
+    function get_data(string $url, array $params = [], bool $enum = false, bool $allData = false, bool $cache = true): array
     {
         $queryParams = $allData ? $params : array_merge(['page' => 1], $params);
-
         $fullUrl = rtrim(config('app.api_url'), '/') . '/api' . $url;
 
-        $response = Http::get($fullUrl, $queryParams);
+        if ($cache) {
+            $cacheKey = 'api_' . md5($fullUrl . json_encode($queryParams));
 
-        return $enum ? $response->json() : $response->json('data');
+            return Cache::remember($cacheKey, now()->addDays(10), function () use ($fullUrl, $queryParams, $enum) {
+                $response = Http::get($fullUrl, $queryParams);
+                return $enum ? $response->json() : ($response->json('data') ?? []);
+            });
+        } else {
+            $response = Http::get($fullUrl, $queryParams);
+            return $enum ? $response->json() : ($response->json('data') ?? []);
+        }
     }
 }
+
 
 if (!function_exists('post_data')) {
 
