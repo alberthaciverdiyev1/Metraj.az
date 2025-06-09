@@ -29,6 +29,10 @@
                         <i class="fas fa-list text-[color:var(--icon-grey)] "></i>
                     </button>
 
+
+
+
+
                     <div class="relative">
                         <button class="flex items-center border border-[var(--border-color)] px-4 py-2 rounded-md">
                             Sort by (Default) <i class="fas fa-chevron-down ml-2"></i>
@@ -40,10 +44,13 @@
             <div id="propertyContainer" class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-7">
                     {{-- Property List--}}
             </div>
-
         </div>
 
+
         <div class="result">
+            <div class="text">
+                Showing 1-9 of 12 results.
+            </div>
             <nav aria-label="Page navigation">
                 <ul class="pagination mb-0">
                     <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><i class="bi bi-chevron-left"></i></a></li>
