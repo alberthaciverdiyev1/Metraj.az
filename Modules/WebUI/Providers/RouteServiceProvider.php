@@ -9,15 +9,16 @@ class RouteServiceProvider extends ServiceProvider
 {
     protected string $name = 'WebUI';
 
-    public function boot(): void
-    {
-        $cssSource = module_path('WebUI', 'Resources/css');
-        $jsSource = module_path('WebUI', 'Resources/js');
-        $imageSource = module_path('WebUI', 'Resources/images');
-        $cssTarget = public_path('webui/css');
-        $jsTarget = public_path('webui/js');
-        $imageTarget = public_path('webui/images');
+   public function boot(): void
+{
+    $cssSource = module_path('WebUI', 'Resources/css');
+    $jsSource = module_path('WebUI', 'Resources/js');
+    $imageSource = module_path('WebUI', 'Resources/images');
+    $cssTarget = public_path('webui/css');
+    $jsTarget = public_path('webui/js');
+    $imageTarget = public_path('webui/images');
 
+    try {
         if (!file_exists($cssTarget)) {
             symlink($cssSource, $cssTarget);
         }
@@ -29,9 +30,11 @@ class RouteServiceProvider extends ServiceProvider
         if (!file_exists($imageTarget)) {
             symlink($imageSource, $imageTarget);
         }
-
-
+    } catch (\Exception $e) {
+        logger()->error('Symlink error: ' . $e->getMessage());
     }
+}
+
 
 
     public function map(): void
