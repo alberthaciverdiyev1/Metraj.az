@@ -33,7 +33,7 @@ class PropertyController extends Controller
     public function listing()
     {
         $css = ['listing.css', 'app.css'];
-        $js = ['listing.js'];
+        $js = ['listing.js','app.js'];
 
         $properties = collect($this->properties)->map(function ($property, $id) {
             $property['id'] = $id;

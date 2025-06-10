@@ -1157,8 +1157,8 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
     {
         $response = Http::get(config('app.api_url') . '/api/city')->json();
         $cities = $response['data'] ?? [];
-        $css = ['home.css', 'app.css', 'components.css','search-button.css'];
-        $js = ['home.js','search-button.js'];
+        $css = ['home.css', 'app.css', 'components.css'];
+        $js = ['home.js','app.js'];
 
         $properties = collect($this->properties)->map(function ($property, $id) {
             $property['id'] = $id;
@@ -1172,7 +1172,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
     public function listing()
     {
         $css = ['listing.css', 'app.css'];
-        $js = ['listing.js'];
+        $js = ['listing.js','app.js'];
 
         $properties = collect($this->properties)->map(function ($property, $id) {
             $property['id'] = $id;
@@ -1186,7 +1186,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
     public function agencies()
     {
         $css = ['agencies.css', 'app.css', 'listing.css'];
-        $js = ['agencies.js', 'listing.js'];
+        $js = ['agencies.js', 'listing.js','app.js'];
 
         $agencies = [
             1 => [
@@ -1343,7 +1343,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
     public function contact()
     {
         $css = ['contact.css', 'app.css', 'components.css', 'agencies.css'];
-        $js = ['contact.js', 'gotop.js'];
+        $js = ['contact.js', 'gotop.js','app.js'];
 
         return view('webui::Pages.contact', compact('css', 'js'));
     }
@@ -1352,7 +1352,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
     public function faqs()
     {
         $css = ['faqs.css', 'app.css', 'components.css', 'listing-details.css', 'agencies.css'];
-        $js = ['faqs.js', 'gotop.js'];
+        $js = ['faqs.js', 'gotop.js','app.js'];
         $cities = [];
         return view('webui::Pages.faqs', compact('css', 'js'));
     }
@@ -1360,7 +1360,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
     public function blog()
     {
         $css = ['blog.css', 'app.css', 'components.css', 'listing-details.css', 'agencies.css'];
-        $js = ['blog.js', 'gotop.js'];
+        $js = ['blog.js', 'gotop.js','app.js'];
         $cities = [];
 
         $response = Http::get(config('app.api_url') . '/api/blog')->json();
@@ -1371,7 +1371,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
     public function blogDetail($slug)
     {
         $css = ['blog-detail.css', 'app.css', 'components.css', 'listing-details.css', 'agencies.css', 'blog.css'];
-        $js = ['blog-detail.js', 'gotop.js'];
+        $js = ['blog-detail.js', 'gotop.js','app.js'];
 
         $response = Http::get(config('app.api_url') . "/api/blog/{$slug}")->json();
         $blog = $response['data'] ?? abort(404);;
@@ -1387,7 +1387,7 @@ Aliquam non lorem consequat, luctus dui et, auctor nisi. Aenean placerat sapien 
 
     public function comingSoon()
     {
-        $css = ['coming-soon.css', 'app.css'];
+        $css = ['coming-soon.css', 'app.css','app.css'];
         $js = ['coming-soon.js'];
         $cities = [];
         return view('webui::Pages.coming-soon', compact('css', 'js'));
