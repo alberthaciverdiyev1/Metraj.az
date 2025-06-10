@@ -71,7 +71,7 @@
     }
 
     .pill {
-      padding: .45rem .9rem;
+      padding: .4rem .5rem;
       border: 1px solid #f1913d;
       border-radius: 50px;
       background: #fff;
@@ -82,21 +82,46 @@
 
     .pill:hover { background: #fef3e8; }
 
-    .dropdown {
-      position: fixed;
-      top: 20vh; left: 50%;
-      transform: translateX(-50%);
-      width: 90%;
-      max-width: 420px;
-      background: #fff;
-      border: 1px solid #d2d2d2;
-      border-radius: 10px;
-      box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
-      padding: 1rem;
-      z-index: 99;
-    }
+ .dropdown-wrapper {
+  position: relative;
+}
 
-    .dropdown.hidden { display: none; }
+.dropdown {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: -20px;
+ width: 250px;
+  max-height: 230px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #d2d2d2;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 1rem;
+  z-index: 101;
+}
+
+.dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+}
+
+.dd-item  {
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+ .dd-item:hover {
+  background: #fef3e8;
+}
+
+.dd-item .hidden {
+  display: none;
+}
+
 
     .tags { grid-column: 1/-1; }
     .tag {
@@ -110,6 +135,7 @@
       font-size: .8rem;
       margin: .25rem .35rem .25rem 0;
     }
+   
     .tag button {
       border: none;
       background: transparent;
@@ -215,3 +241,45 @@
       border-radius: 0.4rem;
      
     }
+
+    @media (max-width:1024px) {
+        .filter-panel{
+            max-width: 992px;
+        }
+
+        .modal-content {
+      max-width: 992px;
+    }
+
+
+        
+    }
+
+    @media (max-width: 992px) {
+
+          .filter-panel{
+            max-width: 756x;
+        }
+
+        .modal-content {
+      max-width: 756px;
+    }
+  .filter-panel {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width:576px) {
+      .range{
+        flex-direction: column;
+      }
+      .range input {
+        width: 100%;
+      }
+}

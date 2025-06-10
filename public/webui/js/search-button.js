@@ -33,7 +33,7 @@
       const dropdown = document.querySelector(`#${id}`);
 
       dropdown.innerHTML = dropdownData[id]
-        .map(item => `<button class="dd-item">${item}</button>`)
+        .map(item => `<li class="dd-item">${item}</li>`)
         .join('');
 
       dropdown.classList.remove('hidden');
@@ -105,7 +105,7 @@
       }));
 
       console.log('FILTER PAYLOAD:', query);
-      alert('Konsolda "FILTER PAYLOAD"-a baxın 😉');
+      alert('filter payloada yazildi');
       closeModal();
     }
 
