@@ -16,6 +16,7 @@ class AddProperty extends Controller
             'components/features.js',
             'components/cities.js',
             'components/propertyTypes.js',
+            'app.js'
         ];
 
         return view('webui::Pages.add-property', compact('css', 'js'));

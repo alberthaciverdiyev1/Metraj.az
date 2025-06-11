@@ -1,3 +1,6 @@
+import {getPropertiesList} from "./components/property.js";
+import {propertyCard} from "./cards/property.js";
+
 const gotop = document.getElementById('scrollToTop');
 const progress = document.querySelector('.progress-circle .progress');
 const radius = 18;
@@ -144,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'lg:grid-cols-2',
             'xl:grid-cols-3'
         );
-        showPage(currentPage); 
+        showPage(currentPage);
     });
 
     listBtn.addEventListener('click', () => {
@@ -162,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initPagination();
 });
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const gridBtn = document.getElementById('gridViewBtn');
     const listBtn = document.getElementById('listViewBtn');
     const container = document.getElementById('propertyContainer');
@@ -181,4 +184,16 @@ document.addEventListener('DOMContentLoaded', () => {
         container.classList.add('list-view');
         container.classList.remove('grid', 'grid-cols-1', 'sm:grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-2', 'xl:grid-cols-3');
     });
+
+    async function properties() {
+        let properties = await getPropertiesList()
+        let h = '';
+        properties.forEach(property => {
+            h += propertyCard(property);
+        })
+
+        container.innerHTML = h;
+    }
+
+    await properties();
 });

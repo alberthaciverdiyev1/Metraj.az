@@ -13,6 +13,54 @@
     <x-scroll-to-top />
     <section class="property-listing py-4">
         <div class="container mx-auto px-4">
+
+            <div class="flex items-center w-full gap-2 py-6 flex-wrap">
+                <input type="text" placeholder="Address, City, ZIP..."
+                    class="w-full md:w-[38%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 placeholder-gray-400 focus:outline-none" />
+
+                <select class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
+                    <option value="status">Status</option>
+                    <option value="rent">For Rent</option>
+                    <option value="sale">For Sale</option>
+                </select>
+
+                <select class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
+                    <option value="">Type</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="house">House</option>
+                    <option value="villa">Villa</option>
+                </select>
+
+                <select class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
+                    <option value="">Bath</option>
+                    <option value="1">1 Bath</option>
+                    <option value="2">2 Baths</option>
+                    <option value="3">3+ Baths</option>
+                </select>
+
+                <select class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
+                    <option value="">Beds</option>
+                    <option value="1">1 Bed</option>
+                    <option value="2">2 Beds</option>
+                    <option value="3">3+ Beds</option>
+                </select>
+
+                @include('webui::components.filter-modal')
+
+                <button
+                    class="bg-orange-400 hover:bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold flex items-center mt-2 md:mt-0">
+                    Search
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-4.35-4.35M16.65 16.65A7.5 7.5 0 1116.65 2.5a7.5 7.5 0 010 14.15z" />
+                    </svg>
+                </button>
+            </div>
+
+
+
+
             <div class="flex  flex-col lg:flex-row justify-between gap-4 mb-5">
                 <h2 class="text-2xl lg:text-4xl font-bold text-[color:var(--text-color)]">
                     Property listing
@@ -21,11 +69,11 @@
                 <div class="flex flex-wrap items-center gap-2">
 
                     @include('webui::components.filter-modal')
-                    <button id="gridViewBtn" class="px-3 grid-btn py-2 rounded-md active-filter" data-view="grid">
+                    <button id="gridViewBtn" class="px-4 grid-btn py-3 rounded-md active-filter" data-view="grid">
                         <i class="bi bi-grid-3x3-gap"></i>
                     </button>
 
-                    <button id="listViewBtn" class=" px-3 py-2 list border border-[var(--border-color)] rounded-md" data-view="list">
+                    <button id="listViewBtn" class=" px-4 py-3 list border border-[var(--border-color)] rounded-md" data-view="list">
                         <i class="fas fa-list text-[color:var(--icon-grey)] "></i>
                     </button>
 
@@ -34,7 +82,7 @@
 
 
                     <div class="relative">
-                        <button class="flex items-center border border-[var(--border-color)] px-4 py-2 rounded-md">
+                        <button class="flex items-center border border-[var(--border-color)] px-4 py-3 rounded-md">
                             Sort by (Default) <i class="fas fa-chevron-down ml-2"></i>
                         </button>
                     </div>
@@ -42,7 +90,7 @@
             </div>
 
             <div id="propertyContainer" class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-7">
-                    {{-- Property List--}}
+                {{-- Property List--}}
             </div>
         </div>
 

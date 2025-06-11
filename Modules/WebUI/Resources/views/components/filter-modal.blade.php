@@ -1,13 +1,12 @@
-
 <div x-data="{ open: false }">
     <button @click="open = true"
-        class="flex items-center gap-1 border border-[var(--border-color)] rounded-lg px-3 py-2 hover:text-[color:var(--primary)] transition">
-        Filter
+        class="flex items-center gap-1 border border-[var(--border-color)] rounded-lg px-4 py-4 hover:text-[color:var(--primary)] transition">
+
         <i class="fas fa-sliders-h text-[color:var(--primary)]"></i>
     </button>
 
-<div x-show="open" x-cloak
-    class="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(0,0,0,0.1)] backdrop-blur-sm">
+    <div x-show="open" x-cloak
+        class="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(0,0,0,0.1)] backdrop-blur-sm">
 
         <div class="bg-white rounded-xl p-6 w-full max-w-xl relative">
             <button @click="open = false" class="absolute top-4 right-4 text-2xl text-[var(--grey-text)]">&times;</button>
