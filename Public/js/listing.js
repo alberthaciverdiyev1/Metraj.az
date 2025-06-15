@@ -194,6 +194,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         container.innerHTML = h;
     }
+    document.querySelector('[data-role="property-type"]').addEventListener('change', async (event) => {
+        const selectedValue = event.target.value;
+        console.log('Selected value:', selectedValue);
+
+        const currentUrl = new URL(window.location.href);
+
+        currentUrl.searchParams.set('property-type', selectedValue);
+
+        window.history.replaceState({}, '', currentUrl.toString());
+
+        await properties();
+
+    });
+
+
+
 
     await properties();
 });

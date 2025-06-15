@@ -61,7 +61,7 @@ async function addView(request, reply) {
     return reply.view('Pages/Property/Add.hbs', view)
 }
 
-export async function listApi(request, reply) {
+export async function listApi(req, res) {
     const allowedParams = [
         'type',
         'addNo',
@@ -69,22 +69,21 @@ export async function listApi(request, reply) {
         'subwayId',
         'districtId',
         'cityId',
-        'propertyType',
+        'property-type',
         'addType',
         'numberOfFloors',
         'numberOfRooms',
         'floorLocated',
         'area',
         'fieldArea',
-        'inCredit'
+        'inCredit',
     ];
 
     const params = Object.fromEntries(
-        Object.entries(request.query).filter(([key]) => allowedParams.includes(key))
+        Object.entries(req.query).filter(([key]) => allowedParams.includes(key))
     );
-
     const result = await getData('/property', params, false, false, false);
-    return reply.send(result);
+    return res.send(result);
 }
 
 
