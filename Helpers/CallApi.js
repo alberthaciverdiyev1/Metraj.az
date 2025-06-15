@@ -5,10 +5,10 @@ const cache = new NodeCache({ stdTTL: 864000 }) // 10 day
 
 const API_URL = process.env.API_URL?.replace(/\/$/, '') || 'http://localhost:8000'
 
-export async function getData(url, params = {}, enumMode = false, allData = false, useCache = true) {
+export async function getData( url, params = {}, enumMode = false, allData = false, useCache = true) {
     const queryParams = allData ? params : { page: 1, ...params }
     const fullUrl = `${API_URL}/api${url}`
-    const cacheKey = `api_${fullUrl}_${JSON.stringify(queryParams)}`
+    const cacheKey = `api_${fullUrl}`
 
     if (useCache) {
         const cached = cache.get(cacheKey)

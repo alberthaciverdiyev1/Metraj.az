@@ -1,26 +1,26 @@
 import {getData} from "../Helpers/CallApi.js";
 
 async function Cities(request, reply) {
-    return await getData('/city', [], false, false, false);
+    return await getData('/city', [], false, false, true);
 }
 
 async function Features(request, reply) {
-    return await getData('/feature', [], false, false, false);
+    return await getData('/feature', [], false, false, true);
 }
 
 async function Subways(request, reply) {
-    return await getData('/subway', [], false, false, false);
+    return await getData('/subway', [], false, false, true);
 }
 async function PropertyTypes(request, reply) {
-    return await getData('/property-types', [], true, false, false);
+    return await getData('/property-types', [], true, false, true);
 }
 
 async function RepairTypes(request, reply) {
-    return await getData('/repair-types', [], true, false, false);
+    return await getData('/repair-types', [], true, false, true);
 }
 
 async function RoomCount(request, reply) {
-    return await getData('/room-count', [], true, false, false);
+    return await getData('/room-count', [], true, false, true);
 }
 
 

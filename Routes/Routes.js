@@ -11,11 +11,13 @@ export default async function route(fastify, options) {
     fastify.get('/property', Property.listView)
     fastify.get('/property/:id', Property.detailsView)
     fastify.get('/properties', Property.listApi)
-    fastify.get('/add-property', Property.AddView)
+    fastify.get('/add-property', Property.addView)
 
     fastify.get('/agencies', Agency.listView)
+    fastify.get('/agency/:id', Agency.Details)
 
     fastify.get('/blog', Blog.listView);
+    fastify.get('/blog/:slug', Blog.Details);
     fastify.get('/contact', Static.ContactView);
     fastify.get('/faqs', Static.Faqs);
     fastify.get('/comingSoon', Static.ComingSoon);
