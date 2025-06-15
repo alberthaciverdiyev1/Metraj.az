@@ -1,0 +1,79 @@
+
+.otp-right{
+    width: 55%;
+    padding: 2rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: start;
+}
+
+.otp-right .card h2 {
+    font-weight: 600;
+     font-size: 24px;
+     margin-bottom: 2rem;
+
+   
+}
+
+.card img{
+    width: 70px;
+    height: 80px;
+
+}
+
+.card p{
+    color: var(--grey-text);
+    margin-top: 2rem;
+}
+form{
+    margin-top: 2rem;
+}
+.otp-inputs {
+  display: flex;
+  padding: 1rem 0rem;
+  gap: 2rem;
+}
+
+.otp-inputs input {
+  width: calc(100% / 4 - 2rem);
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  -moz-appearance: textfield; 
+}
+
+.otp-inputs input::-webkit-outer-spin-button,
+.otp-inputs input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.otp-inputs input:focus {
+  border-color: rgb(92, 92, 211);
+  outline: none;
+}
+
+.form-footer{
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.verify-btn{
+    padding: 0.7rem 1rem;
+    background-color: #00b37e;
+    color: white;
+    border-radius: 12px;
+    margin-top: 1rem;
+
+}
+.resend{
+    font-size: 14px;
+}
+.resend a{
+  color: #00b37e;
+}

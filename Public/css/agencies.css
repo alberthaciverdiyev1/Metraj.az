@@ -1,0 +1,537 @@
+.side{
+    display: flex;
+    gap: 2rem;
+
+}
+
+#agencies{
+    width: 65%;
+}
+ .agencies-card {
+      width:calc(100%/2 - 1rem);
+      border:1px solid var(--border-color);
+      border-radius: 15px;
+      overflow: hidden;
+      background: #fff;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .agencies-card figure {
+      margin: 0;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .agencies-card figure img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .agencies-card .logo {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #fff;
+      position: relative;
+      top: -40px;
+      left: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .agencies-card .logo img {
+      width: 90%;
+      height: auto;
+    }
+
+    .agencies-card .text {
+      padding: 0 20px 20px;
+    }
+
+    .agencies-card .header {
+      font-weight: 700;
+      font-size: 20px;
+      margin-top: -20px;
+    }
+
+    .agencies-card p {
+      color: #666;
+      margin: 5px 0 15px;
+    }
+
+    .agencies-card .info {
+      font-size: 15px;
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    .agencies-card .info span {
+      font-weight: 600;
+      margin-right: 5px;
+    }
+
+    .agencies-card .icons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+   .agencies-card .icons i {
+  background: #FEF4EB;
+  color: #ff914d;
+  width: 30px;
+  padding: 15px;
+  height: 30px;
+  font-size: 14px;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+    .agencies-card .details-button {
+      margin-left: auto;
+      margin-top: 10px;
+    }
+
+    .agencies-card .details-button button {
+      border: 1px solid #ff914d;
+      color: #ff914d;
+      background: #fff;
+      border-radius: 10px;
+      padding: 8px 24px;
+      font-weight: 400;
+    }
+.details-button a span{
+    font-weight: 400;
+    font-size: 16px;
+}
+    .agencies-card .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #eee;
+    }
+
+
+
+
+
+    .agencies-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+ 
+  transition: all 0.3s ease;
+}
+
+.agencies-card.list-view {
+  flex-direction: row;
+  padding-top:4rem;
+   width: 100%;
+}
+.agencies-card.list-view .image-agency{
+    display: none;
+}
+.agencies-card.list-view  figure{
+  display: none;
+}
+.agencies-card figure,
+.agencies-card .logo {
+  flex-shrink: 0;
+}
+.desc{
+    display: none;
+    color:#666;
+}
+.view-toggle.active {
+    background-color: var(--primary);
+    color: white;
+  }
+
+.agencies-card.list-view figure img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 0.75rem;
+}
+.agencies-card.list-view .logo {
+position: relative;
+}
+.agencies-card.list-view .logo {
+border: 1px solid var(--border-color);
+border-radius: 0px;
+box-shadow: none;
+}
+.agencies-card.list-view .desc{
+    display:flex;
+}
+.agencies-card .logo img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
+.agencies-card.list-view .figure img{
+display: none;
+}
+
+.agencies-card .text {
+  flex: 1;
+}
+
+.agencies-card.list-view .text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.agencies-card.list-view .info{
+ display: none;
+}
+.agencies-card .footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+}
+
+.agencies-card .icons i {
+  background: #fff4e6;
+  color: #ff914d;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
+
+.pagination-agencies{
+  padding: 3rem 0rem;
+}
+#contact{
+  width: 35%;
+      position: sticky;
+    max-height: 1700px;
+    top: 20px;
+}
+.contact-form {
+  width: 100%;
+  padding: 30px;
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  background-color: var(--white);
+}
+.contact-form .form{
+  width: 100;
+}
+.contact-form h3 {
+  margin-bottom: 20px;
+  color: var(--text-color);
+  font-size: 22px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 15px;
+  color: var(--text-color);
+  resize: none;
+}
+
+.contact-form textarea {
+  height: 100px;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.send-btn,
+.call-btn {
+  flex: 1;
+  padding: 12px;
+  font-size: 15px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: bold;
+}
+
+.send-btn {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+}
+
+.call-btn {
+  background-color: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+.send-btn,
+.call-btn {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.send-btn::before,
+.call-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  z-index: -1;
+  transition: 0.4s ease;
+}
+
+.send-btn:hover::before {
+  width: 100%;
+  background-color:var(--text-color);
+}
+
+.send-btn:hover {
+  color: var(--white);
+}
+
+.call-btn::before {
+  background-color: var(--primary);
+}
+
+.call-btn:hover::before {
+  width: 100%;
+}
+
+.call-btn:hover {
+  color: white;
+}
+
+
+.feature-listings {
+  background: var(--white);
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 100%;
+  font-family: sans-serif;
+    border-radius: 24px;
+  padding: 24px;
+  border: 1px solid var(--border-color);
+  margin-top: 20px;
+}
+
+.feature-listings h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 20px;
+}
+
+.featured-listings-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.featured-listing-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 15px;
+}
+
+.featured-listing-card:last-child {
+  border-bottom: none;
+}
+
+.featured-listing-card figure {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.image-agency {
+  width: 100px;
+  height: 75px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.image-agency:hover {
+  transform: scale(1.05);
+ 
+  transition: all 0.3s ease;
+}
+.featured-listing-card figure{
+ border-radius: 8px;
+  overflow: hidden;
+}
+
+.card-info h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: var(--text-color);
+}
+
+.details {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-color);
+  margin-bottom: 5px;
+}
+
+.details .grey {
+  color: var(--icon-grey);
+  font-weight: 400;
+}
+
+.price {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary);
+}
+.details{
+  margin-top: 10px;
+}
+
+
+.connect {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    width: 100%;
+    font-family: Arial, sans-serif;
+}
+.agencies-card.list-view{
+  display: flex!important;
+}
+.connect img {
+    width: 100%;
+    display: block;
+    filter: brightness(50%);
+}
+
+.connect .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: var(--white);
+    padding: 31px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between
+}
+
+.connect .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.connect .logo img {
+    height: 30px;
+}
+
+.connect h2 {
+    font-size: 20px;
+    margin: 10px 0;
+    font-weight: bold;
+    color: var(--white);
+}
+
+.connect p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: var(--white);
+}
+
+.connect button {
+    position: relative;
+    overflow: hidden;
+    background: var(--primary);
+    border: none;
+    color: var(--white);
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 1;
+    transition: color 0.3s ease-in-out;
+}
+
+.connect button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--text-color);
+    z-index: -1;
+    transition: left 0.4s ease-in-out;
+}
+
+.connect button:hover::before {
+    left: 0;
+}
+
+.agencies-cards{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+@media (max-width:992px) {
+  .side{
+    flex-direction: column;
+  }
+  #agencies{
+    width: 100%;
+  }
+  #contact{
+    width: 100%;
+  }
+  
+}
+
+@media (max-width:768px) {
+  .agencies-cards{
+    flex-direction: column;
+  }
+  .agencies-card{
+    width: 100%;
+  }
+  .agencies-card.list-view {
+    flex-direction: column;
+  }
+}
+

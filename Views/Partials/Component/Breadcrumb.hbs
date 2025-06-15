@@ -1,0 +1,18 @@
+<section id="navigation" class="py-3">
+    <div class="container mx-auto px-4 flex items-center gap-2">
+        {{#each items}}
+            {{#unless @first}}
+                <span class="text-gray-400">›</span>
+            {{/unless}}
+
+            {{#if url}}
+                <a href="{{url}}"
+                   class="{{#if @last}}text-gray-600{{else}}text-[color:var(--primary)] font-bold flex items-center hover:text-black{{/if}}">
+                    {{label}}
+                </a>
+            {{else}}
+                <span class="text-gray-600">{{label}}</span>
+            {{/if}}
+        {{/each}}
+    </div>
+</section>
