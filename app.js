@@ -3,20 +3,18 @@ import pointOfView from '@fastify/view'
 import handlebars from 'handlebars'
 import routes from './Routes/Routes.js'
 import fastifyStatic from "@fastify/static"
+import * as path from "node:path"
 import fastifySession from '@fastify/session'
 import fastifyCookie from '@fastify/cookie'
 import { globSync } from 'glob'
-import path from 'path'
 
 const partialsDir = path.join(process.cwd(), 'Views', 'Partials')
 const partials = {}
 
 globSync('**/*.hbs', { cwd: partialsDir }).forEach(file => {
-    const normalizedFile = file.replace(/\\/g, '/');
-    const name = normalizedFile.replace(/\.hbs$/, '').replace(/\//g, '.')
-    partials[name] = `Partials/${normalizedFile}`
+    const name = file.replace(/\.hbs$/, '').replace(/\//g, '.')
+    partials[name] = path.join('Partials', file)
 })
-
 
 const fastify = Fastify({
     logger: true

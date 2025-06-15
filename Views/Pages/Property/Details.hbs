@@ -8,13 +8,13 @@
                 <img src="{{ property.images.[0]}}" alt="Property Image">
             </figure>
             <figure onclick="openModal(1)">
-                <img src="{{property.images.[1] ?? '' }}" alt="Property Image">
+                <img src="{{property.images.[1]  }}" alt="Property Image">
             </figure>
             <figure onclick="openModal(2)">
-                <img src="{{property.images.[2] ?? '' }}" alt="Property Image">
+                <img src="{{property.images.[2]  }}" alt="Property Image">
             </figure>
             <figure onclick="openModal(3)">
-                <img src="{{ property.images.[3] ?? ''}}" alt="Property Image">
+                <img src="{{ property.images.[3] }}" alt="Property Image">
             </figure>
         </div>
     </div>
@@ -35,10 +35,10 @@
             <button onclick="nextImage()"><i class="bi bi-arrow-right"></i></button>
         </div>
         <div class="thumbnails" id="thumbnails">
-            <img src="{{  property.images.[0] ?? '' }}" onclick="openModal(0)">
-            <img src="{{  property.images.[1] ?? '' }}" onclick="openModal(1)">
-            <img src="{{  property.images.[2] ?? '' }}" onclick="openModal(2)">
-            <img src="{{  property.images.[3] ?? '' }}" onclick="openModal(3)">
+            <img src="{{  property.images.[0]  }}" onclick="openModal(0)">
+            <img src="{{  property.images.[1]  }}" onclick="openModal(1)">
+            <img src="{{  property.images.[2]  }}" onclick="openModal(2)">
+            <img src="{{  property.images.[3]  }}" onclick="openModal(3)">
         </div>
     </div>
     <div id="imgModal" class="modal fade" tabindex="-1">
@@ -107,7 +107,7 @@
                                 <i class="bi bi-house-door"></i>
                                 <div class="">
                                     <p>ID:</p>
-                                    <p>{4343</p>
+                                    <p>4343</p>
                                 </div>
 
 
@@ -117,7 +117,7 @@
                                 <i class="bi bi-sliders"></i>
                                 <div class="">
                                     <p>Type</p>
-                                    <p>{Type</p>
+                                    <p>Type</p>
                                 </div>
 
 
@@ -127,7 +127,7 @@
                                 <i class="bi bi-house-door"></i>
                                 <div class="">
                                     <p>ID:</p>
-                                    <p>{4343</p>
+                                    <p>4343</p>
                                 </div>
 
 
@@ -137,7 +137,7 @@
                                 <i class="bi bi-house-door"></i>
                                 <div class="">
                                     <p>ID:</p>
-                                    <p>{4343</p>
+                                    <p>4343</p>
                                 </div>
 
 
@@ -147,7 +147,7 @@
                                 <i class="bi bi-house-door"></i>
                                 <div class="">
                                     <p>ID:</p>
-                                    <p>{4343</p>
+                                    <p>4343</p>
                                 </div>
 
 
@@ -208,15 +208,15 @@
                         </div>
                     </div>
                 </section>
-                <x-property-details
-                        :details="$property['details']"
-                        :extra="$property['extra']" />
-                <x-amenities :amenities="$property['amenities']" :columns="3" />
-                <x-property-map
-                        :mapData="$property['map']"
-                        :zoom="15" />
+<!--                <x-property-details-->
+<!--                        :details="$property['details']"-->
+<!--                        :extra="$property['extra']" />-->
+<!--                <x-amenities :amenities="$property['amenities']" :columns="3" />-->
+<!--                <x-property-map-->
+<!--                        :mapData="$property['map']"-->
+<!--                        :zoom="15" />-->
 
-                <x-floor-plan :plans="$property['floor_plan']" />
+<!--                <x-floor-plan :plans="$property['floor_plan']" />-->
 
 
                 <div class="attachment-box">
@@ -229,7 +229,7 @@
                             </div>
                             <div class="file-name">Villa-Document.pdf</div>
                             <div class="download-icon">
-                                <a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" download>
+                                <a href="{{ property.document}}" download>
                                     <i class="bi bi-download"></i>
                                 </a>
                             </div>
@@ -249,14 +249,14 @@
                         </div>
                     </div>
                 </div>
-                <x-virtual-tour :property="$property" />
-                <x-loan-calculator />
-                <x-nearby :nearby="$property['nearby']" />
+<!--                <x-virtual-tour :property="$property" />-->
+<!--                <x-loan-calculator />-->
+<!--                <x-nearby :nearby="$property['nearby']" />-->
 
-                <x-reviews
+<!--                <x-reviews-->
 
-                        title="Guest Reviews"
-                        formTitle="Add Reviews" />
+<!--                        title="Guest Reviews"-->
+<!--                        formTitle="Add Reviews" />-->
 
 
             </div>
@@ -285,8 +285,8 @@
                                     type="submit">Send message</button>
                         </form>
                     </div>
-                    <x-connect-agent />
-                    <x-moreabouttisproperty />
+<!--                    <x-connect-agent />-->
+<!--                    <x-moreabouttisproperty />-->
 
                 </div>
 
