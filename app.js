@@ -6,12 +6,12 @@ import fastifyStatic from "@fastify/static"
 import * as path from "node:path"
 import fastifySession from '@fastify/session'
 import fastifyCookie from '@fastify/cookie'
-import { globSync } from 'glob'
+import {globSync} from 'glob'
 
 const partialsDir = path.join(process.cwd(), 'Views', 'Partials')
 const partials = {}
 
-globSync('**/*.hbs', { cwd: partialsDir }).forEach(file => {
+globSync('**/*.hbs', {cwd: partialsDir}).forEach(file => {
     const name = file.replace(/\.hbs$/, '').replace(/\//g, '.')
     partials[name] = path.join('Partials', file)
 })
@@ -29,7 +29,7 @@ fastify.register(fastifyCookie)
 
 fastify.register(fastifySession, {
     secret: 'a_very_secret_key_that_is_at_least_32_characters',
-    cookie: { secure: false },
+    cookie: {secure: false},
     saveUninitialized: false
 })
 
@@ -40,7 +40,7 @@ handlebars.registerHelper('strLimit', function (text, limit) {
 });
 
 
-handlebars.registerHelper('forLoop', function(n, block) {
+handlebars.registerHelper('forLoop', function (n, block) {
     let accum = '';
     for (let i = 1; i <= n; ++i) {
         accum += block.fn(i);
@@ -48,12 +48,24 @@ handlebars.registerHelper('forLoop', function(n, block) {
     return accum;
 });
 
-handlebars.registerHelper('range', function(start, end, options) {
+handlebars.registerHelper('range', function (start, end, options) {
     let accum = [];
     for (let i = start; i <= end; ++i)
         accum.push(i);
     return accum;
 });
+
+handlebars.registerHelper('splitArray', function (array, parts, options) {
+    const chunkSize = Math.ceil(array.length / parts);
+    const chunks = [];
+
+    for (let i = 0; i < parts; i++) {
+        chunks.push(array.slice(i * chunkSize, (i + 1) * chunkSize));
+    }
+
+    return chunks.map(chunk => options.fn(chunk)).join('');
+});
+
 
 //End Helpers
 
@@ -83,11 +95,11 @@ fastify.addHook('onRequest', async (req, reply) => {
     reply.locals.user = req.session.get('user') || null
 })
 
-fastify.register(routes, { prefix: '/' })
+fastify.register(routes, {prefix: '/'})
 
 const start = async () => {
     try {
-        await fastify.listen({ port: 3300 })
+        await fastify.listen({port: 3300})
         console.log('Server started: http://localhost:3300')
     } catch (err) {
         fastify.log.error(err)

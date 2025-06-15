@@ -3,9 +3,9 @@ import NodeCache from 'node-cache'
 
 const cache = new NodeCache({ stdTTL: 864000 }) // 10 day
 
-//const API_URL = process.env.API_URL?.replace(/\/$/, '') || 'http://localhost:8000'
+const API_URL = process.env.API_URL?.replace(/\/$/, '') || 'http://localhost:8000'
 
-const API_URL = 'https://api.porfolio.space';
+//const API_URL = 'https://api.porfolio.space';
 
 export async function getData( url, params = {}, enumMode = false, allData = false, useCache = true) {
     const queryParams = allData ? params : { page: 1, ...params }

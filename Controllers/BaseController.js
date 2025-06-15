@@ -11,6 +11,7 @@ async function Features(request, reply) {
 async function Subways(request, reply) {
     return await getData('/subway', [], false, false, true);
 }
+
 async function PropertyTypes(request, reply) {
     return await getData('/property-types', [], true, false, true);
 }
@@ -23,5 +24,9 @@ async function RoomCount(request, reply) {
     return await getData('/room-count', [], true, false, true);
 }
 
+async function NotFound(request, reply) {
+    return reply.view('Pages/Error/404.hbs', {useLayout: false});
 
-export default {Cities, Features,Subways,PropertyTypes,RepairTypes,RoomCount};
+}
+
+export default {Cities, Features, Subways, PropertyTypes, RepairTypes, RoomCount, NotFound};

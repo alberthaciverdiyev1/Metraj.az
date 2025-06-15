@@ -1,6 +1,7 @@
 {{>Component.Breadcrumb items=breadcrumbs}}
 
 {{>Component.ScrollTop}}
+
 <section id="listing-detail-gallery">
     <div class="container mx-auto px-4">
         <div class="gallery-grid">
@@ -82,9 +83,8 @@
                                     </span></div>
                                 <div class="bed-info-desc">{{ property.area }}<span>
                                         Sqft
-                                    </span> </div>
+                                    </span></div>
                             </div>
-
 
 
                         </div>
@@ -97,7 +97,6 @@
                         </div>
 
                     </div>
-
 
 
                     <div class="flex flex-wrap gap-4 mb-4">
@@ -208,16 +207,9 @@
                         </div>
                     </div>
                 </section>
-<!--                <x-property-details-->
-<!--                        :details="$property['details']"-->
-<!--                        :extra="$property['extra']" />-->
-<!--                <x-amenities :amenities="$property['amenities']" :columns="3" />-->
-<!--                <x-property-map-->
-<!--                        :mapData="$property['map']"-->
-<!--                        :zoom="15" />-->
-
-<!--                <x-floor-plan :plans="$property['floor_plan']" />-->
-
+                {{>Component.Property.Specs item=property}}
+                {{>Component.Property.Features features=property.features column=3}}
+                {{>Component.Property.Map location=property.location zoom=15}}
 
                 <div class="attachment-box">
                     <h2>File Attachments</h2>
@@ -234,30 +226,11 @@
                                 </a>
                             </div>
                         </div>
-
-                        <div class="file-item">
-                            <div class="file-icon">
-                                <i class="fa-regular fa-file fa-2x"></i>
-                                <span style="background: #00bcd4;">DOC</span>
-                            </div>
-                            <div class="file-name">Villa-Document.docx</div>
-                            <div class="download-icon">
-                                <a href="https://file-examples.com/wp-content/uploads/2017/02/file-sample_100kB.doc" download>
-                                    <i class="bi bi-download"></i>
-                                </a>
-                            </div>
-                        </div>
                     </div>
                 </div>
-<!--                <x-virtual-tour :property="$property" />-->
-<!--                <x-loan-calculator />-->
-<!--                <x-nearby :nearby="$property['nearby']" />-->
-
-<!--                <x-reviews-->
-
-<!--                        title="Guest Reviews"-->
-<!--                        formTitle="Add Reviews" />-->
-
+                {{>Component.Property.VirtualTour tour=property.virtual_tour}}
+                {{>Component.LoanCalculator}}
+                {{>Component.Property.NearbyObjects objects = property.nearby_objects}}
 
             </div>
             <div class="side-right">
@@ -265,10 +238,12 @@
                     <div class="contact-card">
                         <h3>Contact Sellers</h3>
                         <div class="flex avatar-info">
-                            <img src="https://themesflat.co/html/proty/images/avatar/seller.jpg" alt="Shara Conner" class="avatar">
+                            <img src="https://themesflat.co/html/proty/images/avatar/seller.jpg" alt="Shara Conner"
+                                 class="avatar">
                             <div class="avatar-info-text">
                                 <h4>Shara Conner</h4>
-                                <p><a href="tel:1-333-345-6868" class="phone"><i class="bi bi-telephone"></i> 1-333-345-6868</a></p>
+                                <p><a href="tel:1-333-345-6868" class="phone"><i class="bi bi-telephone"></i>
+                                    1-333-345-6868</a></p>
                                 <p><a href="mailto:themesflat@gmail.com" class="email">
                                     <i class="bi bi-envelope"></i> themesflat@gmail.com</a></p>
                             </div>
@@ -276,22 +251,19 @@
                         </div>
 
 
-
                         <form id="contact-form">
                             <input type="text" id="name" name="name" placeholder="Full Name" required>
-                            <textarea id="message" name="message" placeholder="How can an agent help" required></textarea>
+                            <textarea id="message" name="message" placeholder="How can an agent help"
+                                      required></textarea>
                             <button
                                     class="send-message-btn all-btn button-hover"
-                                    type="submit">Send message</button>
+                                    type="submit">Send message
+                            </button>
                         </form>
                     </div>
-<!--                    <x-connect-agent />-->
-<!--                    <x-moreabouttisproperty />-->
+                    {{>Component.ConnectAgent}}
 
                 </div>
-
-
-
 
 
             </div>

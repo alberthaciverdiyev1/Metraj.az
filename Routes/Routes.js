@@ -36,5 +36,5 @@ export default async function route(fastify, options) {
     fastify.get('/repair-types', Base.RepairTypes);
     fastify.get('/room-count', Base.RoomCount);
 
-
+    fastify.setNotFoundHandler(Base.NotFound);
 }

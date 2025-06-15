@@ -1,0 +1,20 @@
+<section id="what-is-nearby">
+    <div class="what-is-nearby">
+        <h3>What’s Nearby?</h3>
+        <p>
+            Explore nearby amenities to precisely locate your property and identify surrounding conveniences,
+            providing a comprehensive overview of the living environment and the property's convenience.
+        </p>
+
+        <div class="nearby-info flex flex-wrap gap-6">
+            <ul class="nearby-info-list">
+                {{#each objects}}
+                    <li class="flex justify-between">
+                        <p>{{ this.range }}</p>
+                        <p>{{ this.name }}</p>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</section>
