@@ -12,8 +12,9 @@ const partialsDir = path.join(process.cwd(), 'Views', 'Partials')
 const partials = {}
 
 globSync('**/*.hbs', { cwd: partialsDir }).forEach(file => {
-    const name = file.replace(/\.hbs$/, '').replace(/\//g, '.')
-    partials[name] = path.posix.join('Partials', file)
+    const normalizedFile = file.replace(/\\/g, '/');
+    const name = normalizedFile.replace(/\.hbs$/, '').replace(/\//g, '.')
+    partials[name] = `Partials/${normalizedFile}`
 })
 
 
