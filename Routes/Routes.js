@@ -24,6 +24,9 @@ export default async function route(fastify, options) {
 
     fastify.get('/login', Auth.LoginView);
     fastify.get('/register', Auth.RegisterView);
+    fastify.post('/register',Auth.Register)
+    fastify.post('/login',Auth.Login)
+    fastify.post('/logout',Auth.Logout)
     fastify.get('/otp', Auth.OtpView);
     fastify.get('/forgot-password', Auth.ForgotPasswordView);
     fastify.get('/reset-password', Auth.ResetPasswordView);

@@ -24,8 +24,7 @@
                 <hr>
             </div>
 
-            <form class="signup-form" method="POST" action="/login" id="login-form">
-                @csrf
+            <div class="signup-form" id="login-form">
                 <label>Email Address</label>
                 <input type="email" name="email" placeholder="Enter Your Email Address" required>
 
@@ -39,7 +38,7 @@
                 <p style="color: red; margin-left: 20px" id="error-message"></p>
 
                 <button type="submit" class="submit-btn" id="login-btn">Sign in</button>
-            </form>
+            </div>
         </div>
     </div>
 </div>

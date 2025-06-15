@@ -24,29 +24,34 @@
                 <hr>
             </div>
 
-            <form class="signup-form" method="POST" action="/register" id="register-form">
+            <div class="signup-form" id="register-form">
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
                 <label>Full Name</label>
-                <input type="text" name="name" placeholder="Enter Your Name" required>
+                <input type="text" name="name" placeholder="Enter Your Name" required />
 
                 <label>Email Address</label>
-                <input type="email" name="email" placeholder="Enter Your Email Address" required>
+                <input type="email" name="email" placeholder="Enter Your Email Address" required />
 
                 <label>Password</label>
-                <input type="password" name="password" placeholder="Enter Password" required>
+                <input type="password" name="password" placeholder="Enter Password" required />
 
                 <label>Confirm Password</label>
-                <input type="password" name="password_confirmation" placeholder="Re-type Password" required>
+                <input type="password" name="password_confirmation" placeholder="Re‑type Password" required />
 
                 <div class="checkbox">
-                    <input type="checkbox" id="terms" required>
-                    <label for="terms">I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</label>
+                    <input type="checkbox" id="terms" required />
+                    <label for="terms">
+                        I agree to the <a href="#">Terms</a> and
+                        <a href="#">Privacy Policy</a>.
+                    </label>
                 </div>
 
-                <p style="color: red; margin-left: 20px" id="error-message"></p>
+                <p id="error-message" style="color:red; margin-left:20px;"></p>
 
+                <button class="submit-btn" id="register-submit-btn">Create Account</button>
+            </div>
 
-                <button type="submit" class="submit-btn" id="register-btn">Create Account</button>
-            </form>
         </div>
     </div>
 </div>
