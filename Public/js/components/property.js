@@ -1,8 +1,13 @@
 export async function getPropertiesList() {
     try {
-        const res = await fetch('/properties', {
+        const params = new URLSearchParams(window.location.search);
+        const queryString = params.toString();
+
+        const url = '/properties' + (queryString ? `?${queryString}` : '');
+
+        const res = await fetch(url, {
             headers: {
-                'Accept': 'application/json'
+                'Accept': 'application/json',
             }
         });
 
@@ -14,4 +19,3 @@ export async function getPropertiesList() {
         return [];
     }
 }
-
