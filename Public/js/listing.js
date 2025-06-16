@@ -22,9 +22,8 @@ window.addEventListener('scroll', () => {
 });
 
 gotop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({top: 0, behavior: 'smooth'});
 });
-
 
 
 //PAGINATION
@@ -127,14 +126,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const toggleButtons = [gridBtn, listBtn];
 
- toggleButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-        toggleButtons.forEach(b => {
-            b.classList.remove("active", "bg-primary");
+    toggleButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            toggleButtons.forEach(b => {
+                b.classList.remove("active", "bg-primary");
+            });
+            btn.classList.add("active", "bg-primary");
         });
-        btn.classList.add("active", "bg-primary");
     });
-});
 
 
     gridBtn.addEventListener('click', () => {
@@ -209,6 +208,41 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
 
+
+
+    async function applyFilter(selectedValue, selector) {
+        console.log('Selected value:', selectedValue);
+
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set(selector, selectedValue);
+
+        window.history.replaceState({}, '', currentUrl.toString());
+
+        await properties();
+    }
+
+    document.querySelector('[data-role="property-condition"]').addEventListener('change', async (event) => {
+        const selectedValue = event.target.value;
+        await applyFilter(selectedValue, 'property-condition')
+
+    });
+    document.querySelector('[data-role="property-type"]').addEventListener('change', async (event) => {
+        const selectedValue = event.target.value;
+        await applyFilter(selectedValue, 'property-type')
+
+    });
+    document.querySelector('[data-role="building-type"]').addEventListener('change', async (event) => {
+        const selectedValue = event.target.value;
+        await applyFilter(selectedValue, 'building-type')
+    });
+    document.querySelector('[data-role="room-count"]').addEventListener('change', async (event) => {
+        const selectedValue = event.target.value;
+        await applyFilter(selectedValue, 'room-count')
+    });
+    document.querySelector('[data-role="city-id"]').addEventListener('change', async (event) => {
+        const selectedValue = event.target.value;
+        await applyFilter(selectedValue, 'city-id')
+    });
 
 
     await properties();
