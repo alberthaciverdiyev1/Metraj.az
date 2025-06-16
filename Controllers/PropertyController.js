@@ -1,6 +1,8 @@
 import {getData} from "../Helpers/CallApi.js";
 
 async function listView(request, reply) {
+    const buildingTypes = await getData(`/property-types`, false, true, true, true);
+
     const view = {
         title: 'Listing Page',
         css: ['listing.css', 'app.css'],
@@ -8,7 +10,10 @@ async function listView(request, reply) {
         breadcrumbs: [
             {label: 'Home', url: '/'},
             {label: 'Property Listing', url: '/listing'}
-        ]
+        ],
+        params: {
+            buildingTypes
+        }
     }
 
     return reply.view('Pages/Property/List.hbs', view)
@@ -25,7 +30,7 @@ async function detailsView(request, reply) {
             'components.css',
             'listing-details.css'],
         js: ['listing-detail.js', 'app.js', 'gotop.js'],
-        property:Property,
+        property: Property,
         breadcrumbs: [
             {label: 'Home', url: '/'},
             {label: 'Property Listing', url: '/listing'},
@@ -63,20 +68,24 @@ async function addView(request, reply) {
 
 export async function listApi(req, res) {
     const allowedParams = [
-        'type',
-        'addNo',
-        'townId',
-        'subwayId',
-        'districtId',
-        'cityId',
         'property-type',
-        'addType',
-        'numberOfFloors',
-        'numberOfRooms',
-        'floorLocated',
+        'property-condition',
+        'building-type',
+        'room-count',
+        'city-id',
+
+
+        'type',
+        'add-no',
+        'town-id',
+        'subway-id',
+        'district-id',
+        'add-type',
+        'number-of-floors',
+        'floor-located',
         'area',
-        'fieldArea',
-        'inCredit',
+        'field-area',
+        'in-credit',
     ];
 
     const params = Object.fromEntries(

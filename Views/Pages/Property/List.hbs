@@ -10,31 +10,32 @@
                 <input type="text" placeholder="Address, City, ZIP..."
                        class="w-full md:w-[38%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 placeholder-gray-400 focus:outline-none"/>
 
-                <select data-role="property-type" class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
-                    <option disabled>Status</option>
-                    <option value="rent">For Rent</option>
-                    <option value="sale">For Sale</option>
+                <select data-role="property-type"
+                        class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
+                    <option value="rent">Alış</option>
+                    <option value="sale">Kirayə</option>
                 </select>
 
-                <select class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
-                    <option value="">Type</option>
-                    <option value="apartment">Apartment</option>
-                    <option value="house">House</option>
-                    <option value="villa">Villa</option>
+                <select data-role="building-type"
+                        class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
+                    <option selected disabled value="">Building Type</option>
+                    {{#each params.buildingTypes}}
+                        <option value="{{this.key}}">{{this.label}}</option>
+                    {{/each}}
+
                 </select>
 
-                <select class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
-                    <option value="">Bath</option>
-                    <option value="1">1 Bath</option>
-                    <option value="2">2 Baths</option>
-                    <option value="3">3+ Baths</option>
+                <select data-role="property-condition"
+                        class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
+                    <option value="repaired">Təmirli</option>
+                    <option value="unrepaired">Təmirsiz</option>
                 </select>
 
-                <select class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
-                    <option value="">Beds</option>
-                    <option value="1">1 Bed</option>
-                    <option value="2">2 Beds</option>
-                    <option value="3">3+ Beds</option>
+                <select data-role="room-count" class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
+                    <option value="">Otaq Sayı</option>
+                    {{#forLoop 20}}
+                        <option value="{{this}}">{{this}} otaqlı</option>
+                    {{/forLoop}}
                 </select>
 
                 {{>Component.FilterModal}}
