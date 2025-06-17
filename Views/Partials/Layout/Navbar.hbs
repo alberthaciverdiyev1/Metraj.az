@@ -21,10 +21,11 @@
             <a href="/contact" class="text-gray-700">Contact</a>
             <a href="/faqs" class="text-gray-700">FAQS</a>
             <a href="/comingSoon" class="text-gray-700">Coming Soon</a>
-        </nav>
-        <a href="/add-property"
+            <a href="/add-property"
            class="flex items-center px-4 py-2 bg-white  rounded-md hover:bg-orange-400 hover:text-white transition">Add
             property</a>
+        </nav>
+        
         <button class="open-search-btn" id="openSearchBtn">Axtarış et</button>
         {{> Component.FilterNavbar}}
         <!-- Right -->
@@ -88,6 +89,24 @@
                         class="bi bi-person mr-3"></i> Login / Register</a>
             {{/if}}
         </div>
+       <i id="burgerBtn" class="bi bi-list text-2xl md:hidden cursor-pointer"></i>
+
+       
+<nav id="mobileMenu" class="hidden flex-col space-y-3 md:hidden mt-4 w-full">
+    <div class="flex flex-col space-y-2">
+        <a href="/" class="text-orange-400 font-bold">Home</a>
+        <a href="/property">Listing</a>
+        <a href="/agencies" class="text-gray-700">Agencies</a>
+        <a href="/blog" class="text-gray-700">Blog</a>
+        <a href="/contact" class="text-gray-700">Contact</a>
+        <a href="/faqs" class="text-gray-700">FAQS</a>
+        <a href="/comingSoon" class="text-gray-700">Coming Soon</a>
+         <a href="/add-property" class="text-gray-700">Add Property</a>
+    </div>
+</nav>
+
+
+
     </div>
 </header>
 

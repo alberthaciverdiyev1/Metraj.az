@@ -66,34 +66,61 @@ async function addView(request, reply) {
     return reply.view('Pages/Property/Add.hbs', view)
 }
 
-export async function listApi(req, res) {
-    const allowedParams = [
-        'property-type',
-        'property-condition',
-        'building-type',
-        'room-count',
-        'city-id',
+// export async function listApi(req, res) {
+//     const allowedParams = [
+//         'property-type',
+//         'property-condition',
+//         'building-type',
+//         'room-count',
+//         'city-id',
 
 
-        'type',
-        'add-no',
-        'town-id',
-        'subway-id',
-        'district-id',
-        'add-type',
-        'number-of-floors',
-        'floor-located',
-        'area',
-        'field-area',
-        'in-credit',
-    ];
+//         'type',
+//         'add-no',
+//         'town-id',
+//         'subway-id',
+//         'district-id',
+//         'add-type',
+//         'number-of-floors',
+//         'floor-located',
+//         'area',
+//         'field-area',
+//         'in-credit',
+//     ];
 
-    const params = Object.fromEntries(
-        Object.entries(req.query).filter(([key]) => allowedParams.includes(key))
-    );
-    const result = await getData('/property', params, false, false, false);
-    return res.send(result);
+//     const params = Object.fromEntries(
+//         Object.entries(req.query).filter(([key]) => allowedParams.includes(key))
+//     );
+//     const result = await getData('/property', params, false, false, false);
+//     return res.send(result);
+// }
+
+export async function listApi(req, reply) {
+    try {
+        const allowedParams = [
+            'property-type', 'property-condition', 'building-type', 
+            'room-count', 'city-id', 'type', 'add-no', 'town-id',
+            'subway-id', 'district-id', 'add-type', 'number-of-floors',
+            'floor-located', 'area', 'field-area', 'in-credit'
+        ];
+
+        const params = Object.fromEntries(
+            Object.entries(req.query).filter(([key]) => allowedParams.includes(key))
+        );
+
+        const properties = await getData('/property', params, false, false, false);
+        
+        return reply.send({
+            success: true,
+            data: properties,
+            count: properties.length
+        });
+    } catch (error) {
+        console.error('Error fetching properties:', error);
+        return reply.status(500).send({
+            success: false,
+            message: 'Error fetching properties'
+        });
+    }
 }
-
-
 export default {listApi, detailsView, listView, addView}
