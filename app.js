@@ -9,6 +9,8 @@ import secureSession from '@fastify/secure-session'
 import {globSync} from 'glob'
 import fs from 'fs'
 import {getData} from "./Helpers/CallApi.js";
+import dotenv from 'dotenv';
+dotenv.config();
 
 
 const partialsDir = path.join(process.cwd(), 'Views', 'Partials')
@@ -64,6 +66,15 @@ handlebars.registerHelper('splitArray', function (array, parts, options) {
     return chunks.map(chunk => options.fn(chunk)).join('')
 })
 
+handlebars.registerHelper('ifNo', function(value, options) {
+    if (!value) {
+        return options.fn(this);
+    } else {
+        return options.inverse(this);
+    }
+});
+
+
 // Static files
 fastify.register(fastifyStatic, {
     root: path.join(process.cwd(), 'Public'),
@@ -85,9 +96,10 @@ fastify.register(pointOfView, {
     },
     defaultContext: {
         useLayout: true,
+        isProduction: process.env.NODE_ENV === 'production',
     }
 })
-
+console.log(process.env.NODE_ENV)
 fastify.addHook('onRequest', async (request, reply) => {
     console.log(`[${new Date().toISOString()}] ${request.method} ${request.url}`)
 })
