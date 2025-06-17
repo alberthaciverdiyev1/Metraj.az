@@ -26,7 +26,7 @@ export default async function route(fastify, options) {
     fastify.get('/register', Auth.RegisterView);
     fastify.post('/register',Auth.Register)
     fastify.post('/login',Auth.Login)
-    fastify.post('/logout',Auth.Logout)
+    fastify.get('/logout',Auth.Logout)
     fastify.get('/otp', Auth.OtpView);
     fastify.get('/forgot-password', Auth.ForgotPasswordView);
     fastify.get('/reset-password', Auth.ResetPasswordView);
@@ -38,6 +38,8 @@ export default async function route(fastify, options) {
     fastify.get('/property-types', Base.PropertyTypes);
     fastify.get('/repair-types', Base.RepairTypes);
     fastify.get('/room-count', Base.RoomCount);
+    fastify.get('/setting', Base.Setting);
+    fastify.get('/clear-cache', Base.clearAllCache);
 
     fastify.setNotFoundHandler(Base.NotFound);
 }

@@ -1,13 +1,15 @@
 import {getPropertyTypes} from "./components/propertyTypes.js";
 import {getFeatures} from "./components/features.js";
 import {getCities} from "./components/cities.js";
+import {getSubways} from "./components/subways.js";
 
 let cityArray = [];
+let subwayArray = [];
 let district_id = null;
 let city_id = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
-    await Promise.all([propertyTypes(), featureList(), cityList()]);
+    await Promise.all([propertyTypes(), featureList(), cityList(),subwayList()]);
 
     const dropzone = document.getElementById("dropzone");
     const fileInput = document.getElementById("fileInput");
@@ -131,6 +133,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         element.innerHTML = `<option value="">Select City</option>` + h;
     }
+    async function subwayList() {
+        const element = document.getElementById('subway');
+
+        if (subwayArray.length === 0) {
+            subwayArray = await getSubways();
+        }
+
+        let h = '';
+        subwayArray.forEach(subway => {
+            h += `<option value="${subway.slug}">${subway.name}</option>`;
+        });
+
+        element.innerHTML = `<option value="">Select Subway</option>` + h;
+    }
 
 
     document.getElementById("property-status").addEventListener("change", async (e) => {
@@ -195,6 +211,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.getElementById("town").closest('div').classList.add('d-none');
         }
     });
+
+
 
 });
 

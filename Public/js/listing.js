@@ -239,10 +239,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const selectedValue = event.target.value;
         await applyFilter(selectedValue, 'room-count')
     });
-    document.querySelector('[data-role="city-id"]').addEventListener('change', async (event) => {
-        const selectedValue = event.target.value;
-        await applyFilter(selectedValue, 'city-id')
-    });
+    //document.querySelector('[data-role="city-id"]').addEventListener('change', async (event) => {
+    //    const selectedValue = event.target.value;
+    //    await applyFilter(selectedValue, 'city-id')
+    //});
 
 
     await properties();

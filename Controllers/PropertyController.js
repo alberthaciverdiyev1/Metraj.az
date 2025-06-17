@@ -89,7 +89,7 @@ export async function listApi(req, res) {
     ];
 
     const params = Object.fromEntries(
-        Object.entries(request.query).filter(([key]) => allowedParams.includes(key))
+        Object.entries(req.query).filter(([key]) => allowedParams.includes(key))
     );
     const result = await getData('/property', params, false, false, false);
     return res.send(result);

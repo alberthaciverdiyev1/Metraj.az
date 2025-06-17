@@ -6,13 +6,15 @@ import fastifyStatic from '@fastify/static'
 import * as path from 'node:path'
 import fastifyCookie from '@fastify/cookie'
 import secureSession from '@fastify/secure-session'
-import { globSync } from 'glob'
+import {globSync} from 'glob'
 import fs from 'fs'
+import {getData} from "./Helpers/CallApi.js";
+
 
 const partialsDir = path.join(process.cwd(), 'Views', 'Partials')
 const partials = {}
 
-globSync('**/*.hbs', { cwd: partialsDir }).forEach(file => {
+globSync('**/*.hbs', {cwd: partialsDir}).forEach(file => {
     const name = file.replace(/\.hbs$/, '').replace(/\//g, '.')
     partials[name] = path.join('Partials', file)
 })
@@ -71,8 +73,9 @@ fastify.register(fastifyStatic, {
 //End Helpers
 
 console.log({partials})
+
 fastify.register(pointOfView, {
-    engine: { handlebars },
+    engine: {handlebars},
     root: path.join(process.cwd(), 'Views'),
     layout: 'Main',
     viewExt: 'hbs',
@@ -92,19 +95,20 @@ fastify.addHook('onRequest', async (request, reply) => {
 fastify.addHook('preHandler', async (request, reply) => {
     const originalView = reply.view.bind(reply)
 
-    reply.view = (template, data = {}, opts = {}) => {
+    reply.view = async (template, data = {}, opts = {}) => {
         const user = request.session.get('user') || null
         const jwt_token = request.session.get('jwt_token') || null
 
-        data.session = { user, jwt_token }
+        data.session = {user, jwt_token}
         data.user = user
+        data.setting = await getData('/setting', [], false, true, true)
         return originalView(template, data, opts)
     }
 })
 
-fastify.register(routes, { prefix: '/' })
+fastify.register(routes, {prefix: '/'})
 
-fastify.listen({ port: 3300 }, err => {
+fastify.listen({port: 3300}, err => {
     if (err) throw err
     console.log('http://localhost:3300')
 })
