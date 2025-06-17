@@ -2,7 +2,9 @@
     {{>Component.Breadcrumb items=breadcrumbs}}
 
     {{>Component.ScrollTop}}
-
+<div id="loadTimeTracker" class="load-time-tracker">
+  Page loaded in: <span id="loadTimeValue">0.00</span> san
+</div>
     <section class="property-listing py-4">
         <div class="container mx-auto px-4">
 
@@ -79,11 +81,17 @@
             </div>
 
             <div id="propertyContainer"
-                 class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-7">
-                <!--Property List-->
-            </div>
-        </div>
+     class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-7 relative min-h-[300px]">
 
+    <div class="absolute inset-28 flex justify-center items-center z-20" id="loadingOverlay">
+        <div class="flex flex-col items-center gap-3">
+            <div class="loader"></div>
+        </div>
+    </div>
+
+</div>
+
+        </div>
 
         <div class="result">
             <div class="text">

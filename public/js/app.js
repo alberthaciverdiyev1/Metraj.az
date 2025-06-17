@@ -1,146 +1,177 @@
-const tagContainer = document.querySelector('#selectedTags');
-const modal = document.querySelector('#filterModal');
-const openBtn = document.querySelector('#openSearchBtn');
-const closeBtn = document.querySelector('#closeModalBtn');
-const filterForm = document.querySelector('#filterForm');
-const resetBtn = document.querySelector('#resetBtn');
-const toggleBtn = document.querySelector('#toggleBtn');
-const filterPanel = document.querySelector('.filter-panel');
+    const tagContainer = document.querySelector('#selectedTags');
+    const modal = document.querySelector('#filterModal');
+    const openBtn = document.querySelector('#openSearchBtn');
+    const closeBtn = document.querySelector('#closeModalBtn');
+    const filterForm = document.querySelector('#filterForm');
+    const resetBtn = document.querySelector('#resetBtn');
+    const toggleBtn = document.querySelector('#toggleBtn');
+    const filterPanel = document.querySelector('.filter-panel');
 
-const dropdownData = {
-  districts: ['Binəqədi', 'Nərimanov', 'Nəsimi', 'Xətai', 'Yasamal'],
-  metros: ['28 May', 'Gənclik', 'Elmlər', 'İnşaatçılar'],
-  landmarks: ['Gənclik Mall', 'Targovu', 'Flame Towers', 'Təhsil Nazirliyi']
-};
+    const dropdownData = {
+      districts: ['Binəqədi', 'Nərimanov', 'Nəsimi', 'Xətai', 'Yasamal'],
+      metros: ['28 May', 'Gənclik', 'Elmlər', 'İnşaatçılar'],
+      landmarks: ['Gənclik Mall', 'Targovu', 'Flame Towers', 'Təhsil Nazirliyi']
+    };
 
-function initToggleButtons() {
-  document.querySelectorAll('.toggle-group .toggle').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const group = e.target.closest('.toggle-group');
-      group.querySelectorAll('.toggle').forEach(b => b.classList.remove('active'));
-      e.target.classList.add('active');
-    });
-  });
-}
-
-function initLocationPills() {
-  document.querySelectorAll('.pill').forEach(pill => {
-    pill.addEventListener('click', () => openDropdown(pill.dataset.target));
-  });
-}
-
-function openDropdown(id) {
-  const dropdown = document.querySelector(`#${id}`);
-
-  dropdown.innerHTML = dropdownData[id]
-    .map(item => `<li class="dd-item">${item}</li>`)
-    .join('');
-
-  dropdown.classList.remove('hidden');
-
-  const outsideClickHandler = (e) => {
-    if (!dropdown.contains(e.target)) {
-      dropdown.classList.add('hidden');
-      window.removeEventListener('click', outsideClickHandler);
+    function initToggleButtons() {
+      document.querySelectorAll('.toggle-group .toggle').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const group = e.target.closest('.toggle-group');
+          group.querySelectorAll('.toggle').forEach(b => b.classList.remove('active'));
+          e.target.classList.add('active');
+        });
+      });
     }
-  };
 
-  setTimeout(() => window.addEventListener('click', outsideClickHandler));
+    function initLocationPills() {
+      document.querySelectorAll('.pill').forEach(pill => {
+        pill.addEventListener('click', () => openDropdown(pill.dataset.target));
+      });
+    }
 
-  document.querySelectorAll('.dd-item', dropdown).forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      addTag(e.target.textContent, id);
-      dropdown.classList.add('hidden');
-      window.removeEventListener('click', outsideClickHandler);
-    });
-  });
-}
+    function openDropdown(id) {
+      const dropdown = document.querySelector(`#${id}`);
 
-function addTag(label, scope) {
-  if (document.querySelectorAll(`.tag[data-scope="${scope}"][data-value="${label}"]`).length) return;
+      dropdown.innerHTML = dropdownData[id]
+        .map(item => `<li class="dd-item">${item}</li>`)
+        .join('');
 
-  const tag = document.createElement('span');
-  tag.className = 'tag';
-  tag.dataset.scope = scope;
-  tag.dataset.value = label;
-  tag.innerHTML = `${label} <button aria-label="Sil">&times;</button>`;
+      dropdown.classList.remove('hidden');
 
-  tag.querySelector('button').onclick = () => tag.remove();
+      const outsideClickHandler = (e) => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.add('hidden');
+          window.removeEventListener('click', outsideClickHandler);
+        }
+      };
 
-  tagContainer.appendChild(tag);
-}
+      setTimeout(() => window.addEventListener('click', outsideClickHandler));
 
-function resetForm() {
-  filterForm.reset();
+      document.querySelectorAll('.dd-item', dropdown).forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          addTag(e.target.textContent, id);
+          dropdown.classList.add('hidden');
+          window.removeEventListener('click', outsideClickHandler);
+        });
+      });
+    }
 
-  document.querySelectorAll('.toggle-group').forEach(group => {
-    group.querySelectorAll('.toggle').forEach(btn => btn.classList.remove('active'));
-    group.querySelector('.toggle').classList.add('active');
-  });
+    function addTag(label, scope) {
+      if (document.querySelectorAll(`.tag[data-scope="${scope}"][data-value="${label}"]`).length) return;
 
-  tagContainer.innerHTML = '';
-}
-function togglePanelCollapse() {
-  filterPanel.classList.toggle('collapsed');
+      const tag = document.createElement('span');
+      tag.className = 'tag';
+      tag.dataset.scope = scope;
+      tag.dataset.value = label;
+      tag.innerHTML = `${label} <button aria-label="Sil">&times;</button>`;
 
-  toggleBtn.innerHTML = filterPanel.classList.contains('collapsed')
-    ? 'Genişləndir <i class="bi bi-chevron-down"></i>'
-    : 'Gizlət <i class="bi bi-chevron-up"></i>';
-}
+      tag.querySelector('button').onclick = () => tag.remove();
 
-function handleFormSubmit(e) {
-  e.preventDefault();
+      tagContainer.appendChild(tag);
+    }
 
-  const formData = new FormData(e.target);
-  const query = Object.fromEntries(formData.entries());
+    function resetForm() {
+      filterForm.reset();
 
-  const activeRepairButton = document.querySelector('.toggle-group[data-name="repair"] .toggle.active');
-  if (activeRepairButton) {
-      query.repair = activeRepairButton.dataset.value;
-  }
+      document.querySelectorAll('.toggle-group').forEach(group => {
+        group.querySelectorAll('.toggle').forEach(btn => btn.classList.remove('active'));
+        group.querySelector('.toggle').classList.add('active');
+      });
 
-  query.selected = [...document.querySelectorAll('.tag')].map(tag => ({
-    scope: tag.dataset.scope,
-    value: tag.dataset.value
-  }));
+      tagContainer.innerHTML = '';
+    }
+    function togglePanelCollapse() {
+      filterPanel.classList.toggle('collapsed');
 
-  console.log('FILTER PAYLOAD:', query);
-  alert('filter payloada yazildi');
-  closeModal();
-}
+      toggleBtn.innerHTML = filterPanel.classList.contains('collapsed')
+        ? 'Genişləndir <i class="bi bi-chevron-down"></i>'
+        : 'Gizlət <i class="bi bi-chevron-up"></i>';
+    }
 
-function openModal() {
-  modal.style.display = 'block';
-  document.body.style.overflow = 'hidden';
-}
+    function handleFormSubmit(e) {
+      e.preventDefault();
 
-function closeModal() {
-  modal.style.display = 'none';
-  document.body.style.overflow = 'auto';
-}
+      const formData = new FormData(e.target);
+      const query = Object.fromEntries(formData.entries());
 
-function initEventListeners() {
-  filterForm.addEventListener('submit', handleFormSubmit);
+      const activeRepairButton = document.querySelector('.toggle-group[data-name="repair"] .toggle.active');
+      if (activeRepairButton) {
+          query.repair = activeRepairButton.dataset.value;
+      }
 
-  resetBtn.addEventListener('click', resetForm);
+      query.selected = [...document.querySelectorAll('.tag')].map(tag => ({
+        scope: tag.dataset.scope,
+        value: tag.dataset.value
+      }));
 
-  toggleBtn.addEventListener('click', togglePanelCollapse);
-
-  openBtn.addEventListener('click', openModal);
-  closeBtn.addEventListener('click', closeModal);
-
-  window.addEventListener('click', (e) => {
-    if (e.target === modal) {
+      console.log('FILTER PAYLOAD:', query);
+      alert('filter payloada yazildi');
       closeModal();
     }
+
+    function openModal() {
+      modal.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    function initEventListeners() {
+      filterForm.addEventListener('submit', handleFormSubmit);
+
+      resetBtn.addEventListener('click', resetForm);
+
+      toggleBtn.addEventListener('click', togglePanelCollapse);
+
+      openBtn.addEventListener('click', openModal);
+      closeBtn.addEventListener('click', closeModal);
+
+      window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+modal.style.display = 'none';
+  document.body.style.overflow = 'auto';
+      initToggleButtons();
+      initLocationPills();
+      initEventListeners();
+    });
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const startTime = performance.now();
+      const loadTimeTracker = document.getElementById('loadTimeTracker');
+  
+      function hideTracker() {
+          loadTimeTracker.style.opacity = '0';
+          setTimeout(() => {
+              loadTimeTracker.style.display = 'none';
+          }, 500);
+      }
+  
+      window.addEventListener('load', function () {
+          const endTime = performance.now();
+          const loadTime = (endTime - startTime) / 1000;
+  
+          document.getElementById('loadTimeValue').textContent = loadTime.toFixed(2);
+  
+          setTimeout(hideTracker, 1000);
+      });
+  
+      setTimeout(function () {
+          if (loadTimeTracker.style.display !== 'none') {
+              const endTime = performance.now();
+              const loadTime = (endTime - startTime) / 1000;
+              document.getElementById('loadTimeValue').textContent = loadTime.toFixed(2);
+              hideTracker();
+          }
+      }, 5000);
   });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-document.body.style.overflow = 'auto';
-  initToggleButtons();
-  initLocationPills();
-  initEventListeners();
-});
-
-
