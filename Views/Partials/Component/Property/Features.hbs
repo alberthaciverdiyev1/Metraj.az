@@ -1,0 +1,15 @@
+<div class="amenities-and-features">
+    <h3>Amenities And Features</h3>
+    <div class="boxes-feature">
+        {{#splitArray features column}}
+            <div class="box-feature">
+                <ul>
+                    {{#each this}}
+                        <li class="feature-item">{{ this }}</li>
+                    {{/each}}
+                </ul>
+            </div>
+        {{/splitArray}}
+
+    </div>
+</div>

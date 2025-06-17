@@ -1,0 +1,59 @@
+<section id="property-detail">
+    <h3>Property Details</h3>
+    <p class="units">
+        {{ item.description }}.
+    </p>
+    <div class="read-more">Read more
+        <i class="bi bi-arrow-down-circle"></i>
+    </div>
+    <div class="box">
+        <ul>
+            <li class="flex">
+                <p class="fw-6">ID</p>
+                <p>{{ item.add_no }}</p>
+            </li>
+            <li class="flex">
+                <p class="fw-6">Price</p>
+                <p>{{ item.price }}</p>
+            </li>
+            <li class="flex">
+                <p class="fw-6">Area</p>
+                <p>{{ item.area }}</p>
+            </li>
+            <li class="flex">
+                <p class="fw-6">Field Area</p>
+                <p>{{ item.field_area }}</p>
+            </li>
+            <li class="flex">
+                <p class="fw-6">Rooms</p>
+                <p>{{ item.number_of_rooms }}</p>
+            </li>
+            <li class="flex">
+                <p class="fw-6">Baths</p>
+                <p>{{ item.number_of_rooms}}</p>
+            </li>
+        </ul>
+        <ul>
+            <li class="flex">
+                <p class="fw-6">Beds</p>
+                <p>{{ item.number_of_rooms }}</p>
+            </li>
+            <li class="flex">
+                <p class="fw-6">Year built</p>
+                <p>{{ item.number_of_rooms }}</p>
+            </li>
+            <li class="flex">
+                <p class="fw-6">Type</p>
+                <p>{{ item.type }}</p>
+            </li>
+            <li class="flex">
+                <p class="fw-6">Status</p>
+                <p>{{ item.building_type }}</p>
+            </li>
+            <li class="flex">
+                <p class="fw-6">Garage</p>
+                <p>{{ item.number_of_rooms }}</p>
+            </li>
+        </ul>
+    </div>
+</section>

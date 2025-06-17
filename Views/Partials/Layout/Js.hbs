@@ -1,0 +1,18 @@
+<!-- webui::Partials/js.blade.php -->
+
+<!-- Statik skriptlər -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+<!-- Dinamik skriptlər -->
+<script src="/js/navbar.js"></script>
+<script type="module" src="/js/app.js"></script>
+<script type="module" src="/js/gotop.js"></script>
+
+{{#if js}}
+    {{#each js}}
+        <script type="module" src="/js/{{this}}"></script>
+    {{/each}}
+{{/if}}
+

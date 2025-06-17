@@ -1,0 +1,57 @@
+
+<div class="">
+    <div class="register">
+        {{> Component.Auth.LeftSection logo="https://harnishdesign.net/demo/html/oxyy/images/logo-teal.png"
+                subtitle="Looks like you're new here!"
+                title="Join the largest Designer community in the world."}}
+
+        <div class="register-right">
+            <div class="signin-link">
+                <p>Already a member? <a href="/login">Sign In</a></p>
+            </div>
+            <h2 class="form-title">Sign up to Metraj.az</h2>
+
+            <div class="social-buttons">
+                <a href="#" class="google-btn">
+                    <img src="/images/googlelogo.png" alt="">
+                    <span>Sign in with Google</span>
+                </a>
+            </div>
+
+            <div class="divider">
+                <hr>
+                <span>Or with Email</span>
+                <hr>
+            </div>
+
+            <div class="signup-form" id="register-form">
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+                <label>Full Name</label>
+                <input type="text" name="name" placeholder="Enter Your Name" required />
+
+                <label>Email Address</label>
+                <input type="email" name="email" placeholder="Enter Your Email Address" required />
+
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter Password" required />
+
+                <label>Confirm Password</label>
+                <input type="password" name="password_confirmation" placeholder="Re‑type Password" required />
+
+                <div class="checkbox">
+                    <input type="checkbox" id="terms" required />
+                    <label for="terms">
+                        I agree to the <a href="#">Terms</a> and
+                        <a href="#">Privacy Policy</a>.
+                    </label>
+                </div>
+
+                <p id="error-message" style="color:red; margin-left:20px;"></p>
+
+                <button class="submit-btn" id="register-submit-btn">Create Account</button>
+            </div>
+
+        </div>
+    </div>
+</div>

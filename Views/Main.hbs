@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+{{> Layout.Head}}
+<body>
+{{#if useLayout}}
+
+    {{> Layout.Navbar}}
+
+    {{{ body}}}
+
+    {{> Layout.Footer}}
+
+{{else}}
+    {{{body}}}
+{{/if}}
+
+{{> Layout.Js}}
+</body>
+</html>

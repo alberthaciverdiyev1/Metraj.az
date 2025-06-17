@@ -1,0 +1,35 @@
+<div class="">
+    <div class="login">
+
+        {{> Component.Auth.LeftSection logo="https://harnishdesign.net/demo/html/oxyy/images/logo-teal.png"
+                subtitle="We are glad to see you again!"
+                title="Join the largest Designer community in the world."}}
+
+
+        <div class="otp-right">
+            <div class="card">
+                <h2>Two-Step Verification</h2>
+                <img src="https://harnishdesign.net/demo/html/oxyy/images/otp-icon.png" alt="Phone Icon" class="icon" />
+                <p>Please enter the OTP (one time password) to verify your account. A Code has been sent to <strong>+1 ******179</strong></p>
+                <form>
+                    <label for="otp">Enter 4 digit code</label>
+                    <div class="otp-inputs">
+                        <input type="number" maxlength="1" min="0" max="9" />
+                        <input type="number" maxlength="1" min="0" max="9" />
+                        <input type="number" maxlength="1" min="0" max="9" />
+                        <input type="number" maxlength="1" min="0" max="9" />
+                    </div>
+
+
+                    <div class="form-footer">
+                        <button type="submit" class="verify-btn">Verify</button>
+                        <div class="">
+                            <p class="resend">Didn't get the code? <a href="#">Resend it</a></p>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
