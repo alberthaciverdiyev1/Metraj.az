@@ -1,10 +1,10 @@
 import {formatPrice} from '../helpers/price.js';
 export function propertyCard(property) {
     const price = formatPrice(property.price?.[0]?.price ?? 0);
-
+console.log(property);
     return `<div class="border border-[color:var(--border-color)] rounded-2xl overflow-hidden group relative transition-all duration-300">
                 <div class="relative overflow-hidden">
-                    <img src="${property.image}" alt="${property.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <img src="${property.media.path}" alt="${property.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" />
                     <div class="absolute inset-0 flex items-center justify-center overflow-hidden">
                         <div class="absolute inset-0 bg-black/40 transition-all duration-500 ease-in-out transform -translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 z-0"></div>
                         <div class="z-10 flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">

@@ -12,18 +12,18 @@
                 <p class="fw-6">ID</p>
                 <p>{{ item.add_no }}</p>
             </li>
-            <li class="flex">
-                <p class="fw-6">Price</p>
-                <p>{{ item.price }}</p>
-            </li>
-            <li class="flex">
-                <p class="fw-6">Area</p>
-                <p>{{ item.area }}</p>
-            </li>
-            <li class="flex">
-                <p class="fw-6">Field Area</p>
-                <p>{{ item.field_area }}</p>
-            </li>
+            {{#if item.area }}
+                <li class="flex">
+                    <p class="fw-6">Area</p>
+                    <p>{{ item.area }}</p>
+                </li>
+            {{/if}}
+            {{#if item.field_area }}
+                <li class="flex">
+                    <p class="fw-6">Field Area</p>
+                    <p>{{ item.field_area }}</p>
+                </li>
+            {{/if}}
             <li class="flex">
                 <p class="fw-6">Rooms</p>
                 <p>{{ item.number_of_rooms }}</p>

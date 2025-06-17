@@ -73,7 +73,9 @@ handlebars.registerHelper('ifNo', function(value, options) {
         return options.inverse(this);
     }
 });
-
+handlebars.registerHelper('equal', function (a, b) {
+    return a === b;
+});
 
 // Static files
 fastify.register(fastifyStatic, {
