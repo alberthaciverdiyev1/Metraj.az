@@ -171,4 +171,4 @@ test/https/fastify.cert
 test/https/fastify.key
 /test/types/import.js
 
-./secret-key
+secret-key
