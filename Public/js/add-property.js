@@ -1,13 +1,16 @@
 import {getPropertyTypes} from "./components/propertyTypes.js";
 import {getFeatures} from "./components/features.js";
 import {getCities} from "./components/cities.js";
+import {getSubways} from "./components/subways.js";
+import {getNearbyObjects} from "./components/nearbyObjects.js";
 
 let cityArray = [];
+let subwayArray = [];
 let district_id = null;
 let city_id = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
-    await Promise.all([propertyTypes(), featureList(), cityList()]);
+    await Promise.all([propertyTypes(), featureList(), cityList(),subwayList(),nearbyObjectsList()]);
 
     const dropzone = document.getElementById("dropzone");
     const fileInput = document.getElementById("fileInput");
@@ -109,8 +112,23 @@ document.addEventListener("DOMContentLoaded", async () => {
         features.forEach(feature => {
             h += `
             <label class="flex items-center space-x-2 mb-2">
-                <input type="checkbox" name="amenities[]" value="${feature.id}" class="form-checkbox text-blue-600">
+                <input type="checkbox" name="features[]" value="${feature.id}" class="form-checkbox text-blue-600">
                 <span>${feature.name}</span>
+            </label>`;
+        });
+
+        element.innerHTML = h;
+    }
+    async function nearbyObjectsList() {
+        const element = document.getElementById('nearby-objects');
+        const objects = await getNearbyObjects();
+
+        let h = '';
+        objects.forEach(object => {
+            h += `
+            <label class="flex items-center space-x-2 mb-2">
+                <input type="checkbox" name="nearby-objects[]" value="${object.id}" class="form-checkbox text-blue-600">
+                <span>${object.name}</span>
             </label>`;
         });
 
@@ -130,6 +148,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
         element.innerHTML = `<option value="">Select City</option>` + h;
+    }
+    async function subwayList() {
+        const element = document.getElementById('subway');
+
+        if (subwayArray.length === 0) {
+            subwayArray = await getSubways();
+        }
+
+        let h = '';
+        subwayArray.forEach(subway => {
+            h += `<option value="${subway.slug}">${subway.name}</option>`;
+        });
+
+        element.innerHTML = `<option value="">Select Subway</option>` + h;
     }
 
 
@@ -195,6 +227,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.getElementById("town").closest('div').classList.add('d-none');
         }
     });
+
+
 
 });
 

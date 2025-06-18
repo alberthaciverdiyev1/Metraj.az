@@ -102,7 +102,9 @@ async function ResetPasswordView(request, reply) {
 }
 
 async function Logout(req, res) {
-    await req.session.destroy();
+    console.log(req.session)
+    await req.session.delete();
+
     res.redirect('/');
 }
 

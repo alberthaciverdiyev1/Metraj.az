@@ -193,6 +193,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         container.innerHTML = h;
     }
+    document.querySelector('[data-role="property-type"]').addEventListener('change', async (event) => {
+        const selectedValue = event.target.value;
+        console.log('Selected value:', selectedValue);
+
+        const currentUrl = new URL(window.location.href);
+
+        currentUrl.searchParams.set('property-type', selectedValue);
+
+        window.history.replaceState({}, '', currentUrl.toString());
+
+        await properties();
+
+    });
+
+
+
 
     async function applyFilter(selectedValue, selector) {
         console.log('Selected value:', selectedValue);
@@ -223,10 +239,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const selectedValue = event.target.value;
         await applyFilter(selectedValue, 'room-count')
     });
-    document.querySelector('[data-role="city-id"]').addEventListener('change', async (event) => {
-        const selectedValue = event.target.value;
-        await applyFilter(selectedValue, 'city-id')
-    });
+    //document.querySelector('[data-role="city-id"]').addEventListener('change', async (event) => {
+    //    const selectedValue = event.target.value;
+    //    await applyFilter(selectedValue, 'city-id')
+    //});
 
 
     await properties();

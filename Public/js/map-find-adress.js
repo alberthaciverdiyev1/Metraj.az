@@ -24,9 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (addr.city) formatted += addr.city;
         else if (addr.town) formatted += addr.town;
         else if (addr.village) formatted += addr.village;
-        
-        if (addr.postcode) formatted += ', ' + addr.postcode;
-        
+
         if (addr.country) formatted += ', ' + addr.country;
         
         return formatted || data.display_name;
@@ -34,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     document.getElementById('searchAddress').addEventListener('click', function() {
         const address = document.getElementById('address').value.trim();
-        const country = document.getElementById('city_id').value;
+        const country = document.getElementById('city').value;
         
         if (!address) {
             alert('Please enter an address');
@@ -72,10 +70,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     document.getElementById('latitude').value = lat;
                     document.getElementById('longitude').value = lon;
-                    
-                    if (bestMatch.address && bestMatch.address.postcode) {
-                        document.getElementById('add_no').value = bestMatch.address.postcode;
-                    }
+
+
                     
                     map.setView([lat, lon], 16);
                     
@@ -91,9 +87,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         .then(response => response.json())
                         .then(details => {
                             document.getElementById('address').value = formatAddress(details);
-                            if (details.address && details.address.postcode) {
-                                document.getElementById('add_no').value = details.address.postcode;
-                            }
                         });
                 } else {
                     alert('Address not found. Please try a more specific address.');
@@ -124,10 +117,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.display_name) {
                     const formattedAddress = formatAddress(data);
                     document.getElementById('address').value = formattedAddress;
-                    
-                    if (data.address && data.address.postcode) {
-                        document.getElementById('add_no').value = data.address.postcode;
-                    }
                     
                     marker.bindPopup(formattedAddress).openPopup();
                 }

@@ -5,18 +5,13 @@
 <section id="listing-detail-gallery">
     <div class="container mx-auto px-4">
         <div class="gallery-grid">
-            <figure onclick="openModal(0)">
-                <img src="{{ property.images.[0]}}" alt="Property Image">
-            </figure>
-            <figure onclick="openModal(1)">
-                <img src="{{property.images.[1]  }}" alt="Property Image">
-            </figure>
-            <figure onclick="openModal(2)">
-                <img src="{{property.images.[2]  }}" alt="Property Image">
-            </figure>
-            <figure onclick="openModal(3)">
-                <img src="{{ property.images.[3] }}" alt="Property Image">
-            </figure>
+
+            {{#each property.media.images}}
+                <figure onclick="openModal({{@index}})">
+                    <img src="{{this.path}}">
+                </figure>
+            {{/each}}
+
         </div>
     </div>
     <div id="modal" class="modal">
@@ -36,10 +31,9 @@
             <button onclick="nextImage()"><i class="bi bi-arrow-right"></i></button>
         </div>
         <div class="thumbnails" id="thumbnails">
-            <img src="{{  property.images.[0]  }}" onclick="openModal(0)">
-            <img src="{{  property.images.[1]  }}" onclick="openModal(1)">
-            <img src="{{  property.images.[2]  }}" onclick="openModal(2)">
-            <img src="{{  property.images.[3]  }}" onclick="openModal(3)">
+            {{#each property.media.images}}
+                <img src="{{this.path}}" onclick="openModal({{@index}})">
+            {{/each}}
         </div>
     </div>
     <div id="imgModal" class="modal fade" tabindex="-1">
@@ -67,7 +61,9 @@
                 <div class="info-box">
                     <div class="info-box-title mb-4">
                         <h2>{{ property.title }}</h2>
-                        <h2>${{ property.price }} <span>/month</span></h2>
+                        {{#each  property.prices}}
+                            <h2>₼{{ this.price }} <span>/month</span></h2>
+                        {{/each}}
                     </div>
 
                     <div class="info-box-desc">
@@ -199,38 +195,52 @@
                     <button class="question-btn all-btn button-hover">Ask a question</button>
 
                 </div>
-                <section id="video" class="video-section">
-                    <div class="video-container">
-                        <iframe id="video-frame" src="{{ property.video}}" allowfullscreen></iframe>
-                        <div class="play-button">
-                            <i class="bi bi-play-fill"></i>
-                        </div>
-                    </div>
-                </section>
+                {{#if property.media.video}}
+                    {{#each property.media.video}}
+
+                        <section id="video" class="video-section">
+                            <div class="video-container">
+
+                                <iframe id="video-frame" src="{{this.path}}" allowfullscreen></iframe>
+                                <div class="play-button">
+                                    <i class="bi bi-play-fill"></i>
+                                </div>
+                            </div>
+                        </section>
+                    {{/each}}
+                {{/if}}
+
                 {{>Component.Property.Specs item=property}}
                 {{>Component.Property.Features features=property.features column=3}}
+                {{>Component.Property.NearbyObjects objects = property.nearby column=3}}
                 {{>Component.Property.Map location=property.location zoom=15}}
 
-                <div class="attachment-box">
-                    <h2>File Attachments</h2>
-                    <div class="file-list">
-                        <div class="file-item">
-                            <div class="file-icon">
-                                <i class="fa-regular fa-file fa-2x"></i>
-                                <span>PDF</span>
-                            </div>
-                            <div class="file-name">Villa-Document.pdf</div>
-                            <div class="download-icon">
-                                <a href="{{ property.document}}" download>
-                                    <i class="bi bi-download"></i>
-                                </a>
-                            </div>
+                {{#if property.media.document}}
+                    <div class="attachment-box">
+                        <h2>File Attachments</h2>
+                        <div class="file-list">
+                            {{#each property.media.document}}
+                                <div class="file-item">
+                                    <div class="file-icon">
+                                        <i class="fa-regular fa-file fa-2x"></i>
+                                        <span>PDF</span>
+                                    </div>
+                                    <div class="file-name">Document {{@index}}</div>
+                                    <div class="download-icon">
+                                        <a href="{{ this.path}}" download>
+                                            <i class="bi bi-download"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            {{/each}}
                         </div>
                     </div>
-                </div>
+                {{/if}}
+
+
                 {{>Component.Property.VirtualTour tour=property.virtual_tour}}
                 {{>Component.LoanCalculator}}
-                {{>Component.Property.NearbyObjects objects = property.nearby_objects}}
+
 
             </div>
             <div class="side-right">

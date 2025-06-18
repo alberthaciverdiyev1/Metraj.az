@@ -5,6 +5,8 @@ import Blog from '../Controllers/BlogController.js'
 import Static from '../Controllers/StaticController.js'
 import Auth from '../Controllers/AuthController.js'
 import Base from '../Controllers/BaseController.js'
+import i18next from "i18next";
+import fastifyCookie from '@fastify/cookie'
 
 export default async function route(fastify, options) {
     fastify.get('/', homePage)
@@ -24,9 +26,9 @@ export default async function route(fastify, options) {
 
     fastify.get('/login', Auth.LoginView);
     fastify.get('/register', Auth.RegisterView);
-    fastify.post('/register',Auth.Register)
-    fastify.post('/login',Auth.Login)
-    fastify.post('/logout',Auth.Logout)
+    fastify.post('/register', Auth.Register)
+    fastify.post('/login', Auth.Login)
+    fastify.get('/logout', Auth.Logout)
     fastify.get('/otp', Auth.OtpView);
     fastify.get('/forgot-password', Auth.ForgotPasswordView);
     fastify.get('/reset-password', Auth.ResetPasswordView);
@@ -34,10 +36,24 @@ export default async function route(fastify, options) {
     fastify.get('/subways', Base.Subways);
     fastify.get('/cities', Base.Cities);
     fastify.get('/features', Base.Features);
+    fastify.get('/nearby-objects', Base.NearbyObjects);
 
     fastify.get('/property-types', Base.PropertyTypes);
     fastify.get('/repair-types', Base.RepairTypes);
     fastify.get('/room-count', Base.RoomCount);
+    fastify.get('/setting', Base.Setting);
+    fastify.get('/clear-cache', Base.clearAllCache);
+
+    fastify.get('/change-lang/:lang', async (request, reply) => {
+        const lang = request.params.lang || 'en'
+        reply.setCookie('lang', lang, {
+            path: '/',
+            httpOnly: false,
+            sameSite: 'lax',
+        })
+        return {success: true}
+    })
+
 
     fastify.setNotFoundHandler(Base.NotFound);
 }

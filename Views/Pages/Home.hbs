@@ -1,8 +1,4 @@
 <main>
-    <div id="loadTimeTracker" class="load-time-tracker">
-  Page loaded in: <span id="loadTimeValue">0.00</span> san
-</div>
- {{>Component.ScrollTop}}
     <section id="hero" class="relative bg-cover bg-fixed bg-center py-20"
              style="background-image: url('/images/bg-hero.jpg')">
         <div class="absolute inset-0 bg-black/40"></div>
@@ -15,7 +11,7 @@
                 <div class="relative group">
                     <button data-type="rent"
                             class="toggle-btn px-6 py-3 bg-red-400 text-sm text-white font-semibold rounded-[16px] focus:outline-none">
-                        For Rent
+                        Kirayə
                     </button>
                     <div
                             class="triangle-indicator absolute left-1/2 -translate-x-1/2 -bottom-1 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-red-400"></div>
@@ -24,7 +20,7 @@
                 <div class="relative group">
                     <button data-type="sale"
                             class="text-sm toggle-btn px-6 py-3 bg-white text-black font-semibold rounded-[16px] border border-gray-300 hover:bg-gray-100 hover:text-black">
-                        For Sale
+                        Alış
                     </button>
                     <div
                             class="triangle-indicator hidden absolute left-1/2 -translate-x-1/2 -bottom-1 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-red-400"></div>
@@ -187,8 +183,7 @@
         <div class="container mx-auto px-3">
             {{> Component.Title title="Today’s Luxury Listings" subtitle="Thousands of luxury home enthusiasts just like you visit our website." }}
 
-
-            <div class="luxury-listings">
+   <div class="luxury-listings">
                 <div id="propertyContainer"
                      class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-7">
 
@@ -205,7 +200,7 @@
 
     </section>
 
-    <section id="discover-how-we-can-help" class="my-6">
+      <section id="discover-how-we-can-help" class="my-6">
         <div class="container mx-auto">
             {{> Component.Title title="Today’s Luxury Listings" subtitle="Thousands of luxury home enthusiasts just like you visit our website." }}
 
@@ -220,6 +215,3 @@
     {{>Component.LetsWorkTogether}}
 
 </main>
-
-
-

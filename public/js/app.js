@@ -143,35 +143,3 @@ modal.style.display = 'none';
       initLocationPills();
       initEventListeners();
     });
-
-
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const startTime = performance.now();
-      const loadTimeTracker = document.getElementById('loadTimeTracker');
-  
-      function hideTracker() {
-          loadTimeTracker.style.opacity = '0';
-          setTimeout(() => {
-              loadTimeTracker.style.display = 'none';
-          }, 500);
-      }
-  
-      window.addEventListener('load', function () {
-          const endTime = performance.now();
-          const loadTime = (endTime - startTime) / 1000;
-  
-          document.getElementById('loadTimeValue').textContent = loadTime.toFixed(2);
-  
-          setTimeout(hideTracker, 1000);
-      });
-  
-      setTimeout(function () {
-          if (loadTimeTracker.style.display !== 'none') {
-              const endTime = performance.now();
-              const loadTime = (endTime - startTime) / 1000;
-              document.getElementById('loadTimeValue').textContent = loadTime.toFixed(2);
-              hideTracker();
-          }
-      }, 5000);
-  });
