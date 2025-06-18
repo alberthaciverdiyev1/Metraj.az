@@ -11,6 +11,7 @@
                     <img src="{{this.path}}">
                 </figure>
             {{/each}}
+
         </div>
     </div>
     <div id="modal" class="modal">
@@ -208,6 +209,7 @@
                         </section>
                     {{/each}}
                 {{/if}}
+
                 {{>Component.Property.Specs item=property}}
                 {{>Component.Property.Features features=property.features column=3}}
                 {{>Component.Property.Map location=property.location zoom=15}}
@@ -233,6 +235,8 @@
                         </div>
                     </div>
                 {{/if}}
+
+
                 {{>Component.Property.VirtualTour tour=property.virtual_tour}}
                 {{>Component.LoanCalculator}}
                 {{>Component.Property.NearbyObjects objects = property.nearby_objects}}

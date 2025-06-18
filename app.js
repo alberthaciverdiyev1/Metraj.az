@@ -10,6 +10,9 @@ import {globSync} from 'glob'
 import fs from 'fs'
 import {getData} from "./Helpers/CallApi.js";
 import dotenv from 'dotenv';
+import i18n from './Plugins/i18n.js';
+import i18next from "i18next";
+
 dotenv.config();
 
 
@@ -21,11 +24,10 @@ globSync('**/*.hbs', {cwd: partialsDir}).forEach(file => {
     partials[name] = path.join('Partials', file)
 })
 
-const fastify = Fastify({
-    logger: false
-})
+const fastify = Fastify({logger: false})
+await fastify.register(fastifyCookie)
+await fastify.register(i18n)
 
-fastify.register(fastifyCookie)
 
 fastify.register(secureSession, {
     key: fs.readFileSync(path.join(process.cwd(), 'secret-key')),
@@ -56,6 +58,21 @@ handlebars.registerHelper('range', function (start, end, options) {
     for (let i = start; i <= end; ++i) accum.push(i)
     return accum
 })
+handlebars.registerHelper('t', function (key, options) {
+    const lang = options?.data?.root?.lang || 'en';
+    console.log({lang})
+
+    try {
+        const t = i18next.getFixedT(lang);
+        console.log(t(key))
+        return t(key);
+    } catch (e) {
+        console.warn('Translation error:', e);
+        return key;
+    }
+});
+
+
 
 handlebars.registerHelper('splitArray', function (array, parts, options) {
     const chunkSize = Math.ceil(array.length / parts)
@@ -66,7 +83,7 @@ handlebars.registerHelper('splitArray', function (array, parts, options) {
     return chunks.map(chunk => options.fn(chunk)).join('')
 })
 
-handlebars.registerHelper('ifNo', function(value, options) {
+handlebars.registerHelper('ifNo', function (value, options) {
     if (!value) {
         return options.fn(this);
     } else {
@@ -116,11 +133,17 @@ fastify.addHook('preHandler', async (request, reply) => {
         data.session = {user, jwt_token}
         data.user = user
         data.setting = await getData('/setting', [], false, true, true)
+        data.lang = request.cookies.lang || 'en'
         return originalView(template, data, opts)
     }
 })
 
 fastify.register(routes, {prefix: '/'})
+fastify.get('/aaa', async (request, reply) => {
+    return {
+        message: request.t('hello')
+    }
+})
 
 fastify.listen({port: 3300}, err => {
     if (err) throw err

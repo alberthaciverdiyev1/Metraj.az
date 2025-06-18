@@ -1,0 +1,22 @@
+{
+  "hello": "Hello!",
+  "welcome": "Welcome to our site",
+  "Home": "Home",
+  "Listing": "Listing",
+  "Agencies": "Agencies",
+  "Blog": "Blog",
+  "Contact": "Contact",
+  "FAQS": "FAQS",
+  "Coming Soon": "Coming Soon",
+  "Add property": "Add property",
+  "Search": "Search",
+  "Dashboards": "Dashboards",
+  "My profile": "My profile",
+  "My package": "My package",
+  "My favorites": "My favorites",
+  "My save searches": "My save searches",
+  "Reviews": "Reviews",
+  "My properties": "My properties",
+  "Logout": "Logout",
+  "Login / Register": "Login / Register"
+}
