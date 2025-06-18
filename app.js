@@ -12,6 +12,7 @@ import {getData} from "./Helpers/CallApi.js";
 import dotenv from 'dotenv';
 import i18n from './Plugins/i18n.js';
 import i18next from "i18next";
+import multipart from '@fastify/multipart'
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ globSync('**/*.hbs', {cwd: partialsDir}).forEach(file => {
 const fastify = Fastify({logger: false})
 await fastify.register(fastifyCookie)
 await fastify.register(i18n)
+await fastify.register(multipart)
 
 
 fastify.register(secureSession, {

@@ -14,6 +14,7 @@ export default async function route(fastify, options) {
     fastify.get('/property/:id', Property.detailsView)
     fastify.get('/properties', Property.listApi)
     fastify.get('/add-property', Property.addView)
+    fastify.post('/add-property', Property.add)
 
     fastify.get('/agencies', Agency.listView)
     fastify.get('/agency/:id', Agency.Details)

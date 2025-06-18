@@ -28,7 +28,9 @@ body{
   z-index: 1;
   transition: color 0.3s ease;
 }
-
+.d-none {
+    display: none !important;
+}
 .button-hover::before {
   content: '';
   position: absolute;
