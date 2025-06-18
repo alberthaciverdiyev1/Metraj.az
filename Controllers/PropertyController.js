@@ -22,7 +22,7 @@ async function listView(request, reply) {
 async function detailsView(request, reply) {
     const {id} = request.params;
     const Property = await getData(`/property/${id}`, false, false, false, false);
-console.log(Property.media.video);
+console.log(Property);
 
     const view = {
         title: 'Property Detail',

@@ -212,6 +212,7 @@
 
                 {{>Component.Property.Specs item=property}}
                 {{>Component.Property.Features features=property.features column=3}}
+                {{>Component.Property.NearbyObjects objects = property.nearby column=3}}
                 {{>Component.Property.Map location=property.location zoom=15}}
 
                 {{#if property.media.document}}
@@ -239,7 +240,7 @@
 
                 {{>Component.Property.VirtualTour tour=property.virtual_tour}}
                 {{>Component.LoanCalculator}}
-                {{>Component.Property.NearbyObjects objects = property.nearby_objects}}
+
 
             </div>
             <div class="side-right">

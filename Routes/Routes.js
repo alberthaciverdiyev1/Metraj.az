@@ -36,6 +36,7 @@ export default async function route(fastify, options) {
     fastify.get('/subways', Base.Subways);
     fastify.get('/cities', Base.Cities);
     fastify.get('/features', Base.Features);
+    fastify.get('/nearby-objects', Base.NearbyObjects);
 
     fastify.get('/property-types', Base.PropertyTypes);
     fastify.get('/repair-types', Base.RepairTypes);
