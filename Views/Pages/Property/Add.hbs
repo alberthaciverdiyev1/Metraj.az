@@ -1,5 +1,7 @@
-<x-go-top/>
-<x-settings-icon/>
+{{>Component.Breadcrumb items=breadcrumbs}}
+
+{{>Component.ScrollTop}}
+
 <section id="add-property">
     <div class="side">
         <div class="left-side">
@@ -90,20 +92,20 @@
 
                         <!-- Property Type -->
                         <div>
-                            <label class="block font-medium mb-1">Property Type:<span
+                            <label class="block font-medium mb-1">{{t "Building Type"}}:<span
                                     class="text-red-500">*</span></label>
-                            <select id="property-type"
+                            <select id="building-type"
                                     class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <option disabled selected>Choose</option>
+                                <option disabled selected>{{t "Choose"}}</option>
                             </select>
                         </div>
-                        <!-- Property Status -->
+                        <!-- Add Type -->
                         <div>
-                            <label class="block font-medium mb-1">Property Status:<span
+                            <label class="block font-medium mb-1">{{t "Add type"}}:<span
                                     class="text-red-500">*</span></label>
-                            <select id="property-status"
+                            <select id="add-type"
                                     class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <option disabled selected>Choose</option>
+                                <option disabled selected>{{t "Choose"}}</option>
                                 <option value="sale">For Sale</option>
                                 <option value="rent">For Rent</option>
                             </select>
@@ -111,25 +113,24 @@
                         <!-- Property Label -->
                         <div>
                             <label class="block font-medium mb-1">Təmir:<span class="text-red-500">*</span></label>
-                            <select
-                                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <option selected disabled>Choose</option>
-                                <option value="repaired">Təmirli</option>
-                                <option value="unrepaired">Təmirsiz</option>
+                            <select id="repair-type" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option selected disabled>{{t "Choose"}}</option>
+                                <option value="repaired">{{t "Repaired"}}</option>
+                                <option value="unrepaired">{{t "Unrepaired"}}</option>
                                 <!-- options -->
                             </select>
                         </div>
 
                         <!-- Size -->
                         <div id="size">
-                            <label class="block font-medium mb-1">Size (m²):<span
+                            <label class="block font-medium mb-1">{{t "Size"}} (m²):<span
                                     class="text-red-500">*</span></label>
                             <input type="text"
                                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
                         </div>
                         <!-- Land Area -->
                         <div id="land-area" class="d-none">
-                            <label class="block font-medium mb-1">Land Area (m²):<span
+                            <label class="block font-medium mb-1">{{t "Land area"}} (m²):<span
                                     class="text-red-500">*</span></label>
                             <input type="text"
                                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
@@ -137,9 +138,9 @@
 
                         <!-- Price -->
                         <div>
-                            <label class="block font-medium mb-1">Price:<span
+                            <label class="block font-medium mb-1">{{t "Price"}}:<span
                                     class="text-red-500">*</span></label>
-                            <input type="number" value="0"
+                            <input id="price" type="number" value="0"
                                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
 
                             <div class="d-none">
@@ -170,7 +171,7 @@
                         <div>
                             <label class="block font-medium mb-1">Mərtəbə:<span
                                     class="text-red-500">*</span></label>
-                            <select id="room-count"
+                            <select id="located-floor"
                                     class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <option disabled selected>Choose</option>
                                 {{#forLoop 100}}
@@ -185,7 +186,7 @@
                         <div>
                             <label class="block font-medium mb-1">Mərtəbə sayı:<span
                                     class="text-red-500">*</span></label>
-                            <select id="room-count"
+                            <select id="floor-count"
                                     class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <option disabled selected>Choose</option>
 
@@ -200,7 +201,7 @@
                         <div>
                             <label class="block font-medium mb-1">Kredit:<span
                                     class="text-red-500">*</span></label>
-                            <input type="checkbox"
+                            <input id="is-credit" type="checkbox"
                                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
                         </div>
 
@@ -212,8 +213,14 @@
                                       rows="4"
                                       class="w-full border border-gray-300 rounded-md px-4 py-2"></textarea>
                         </div>
-
-
+                    </div>
+                    <div class="bg-white rounded-xl max-w-5xl mx-auto mt-6">
+                        <div class="mb-4">
+                            <label for="note-to-admin" class="block font-semibold mb-1">{{t "Note to admin"}}:</label>
+                            <textarea name="note-to-admin" id="note-to-admin" placeholder="{{t "Note to admin"}}"
+                                      rows="4"
+                                      class="w-full border border-gray-300 rounded-md px-4 py-2"></textarea>
+                        </div>
                     </div>
                 </div>
 
@@ -236,13 +243,13 @@
                              class="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
                         <div class="my-4">
                             <label for="video" class="block font-semibold mb-1">Video:</label>
-                            <input type="file" placeholder="Video"
+                            <input id="video" type="file" placeholder="Video"
                                    class="w-full border border-gray-300 rounded-md px-4 py-2">
                         </div>
 
                         <div class="my-4">
                             <label for="document" class="block font-semibold mb-1">Document:</label>
-                            <input type="file" placeholder="Document"
+                            <input id="document" type="file" placeholder="Document"
                                    class="w-full border border-gray-300 rounded-md px-4 py-2">
                         </div>
                     </div>
@@ -323,8 +330,7 @@
                 {{>Component.AgentInfo}}
 
                 <div class="flex justify-center items-center space-x-4 mt-6">
-                    <button
-                            class=" sm:w-auto bg-[color:var(--primary)] text-white px-6 py-3 rounded-xl flex items-center justify-center button-hover all-btn hover:bg-orange-500 focus:outline-none">
+                    <button id="add-property-btn" class=" sm:w-auto bg-[color:var(--primary)] text-white px-6 py-3 rounded-xl flex items-center justify-center button-hover all-btn hover:bg-orange-500 focus:outline-none">
                         Add Property
                     </button>
                 </div>

@@ -19,5 +19,15 @@
   "My properties": "Mənim əmlaklarım",
   "Logout": "Çıxış",
   "Login / Register": "Daxil ol / Qeydiyyat",
-  "Nearby objects": "Yaxınlıqdakı obyektlər"
+  "Nearby objects": "Yaxınlıqdakı obyektlər",
+  "Building Type": "Əmlak növü",
+  "Add type": "Elanın növü",
+  "Choose": "Seçin",
+  "Repaired": "Təmirli",
+  "Unrepaired": "Təmirsiz",
+  "Size": "Sahə",
+  "Land area": "Torpaq sahəsi",
+  "Price": "Qiymət",
+  "Note to admin": "Adminə not",
+  
 }
