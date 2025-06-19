@@ -1,12 +1,12 @@
 import {formatPrice} from '../helpers/price.js';
 
 export function propertyCard(property) {
-    const price = property.price
-        ? formatPrice(typeof property.price === 'string'
-            ? parseFloat(property.price.replace(/,/g, ''))
-            : property.price)
-        : formatPrice(0);
-    console.log('Property Card:', property);
+
+
+    const latestPrice = property.price?.[0]?.price ?? 0;
+    const price = new Intl.NumberFormat().format(typeof latestPrice === 'string' ? parseFloat(latestPrice.replace(/,/g, ''))  : latestPrice)
+
+
 
     return `<div class="border border-[color:var(--border-color)] rounded-2xl overflow-hidden group relative transition-all duration-300">
         <div class="relative overflow-hidden">
@@ -38,7 +38,7 @@ export function propertyCard(property) {
                 <span><span class="text-[#2C2E33]">${property.area}</span> Sqft</span>
             </div>
             <div class="flex justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
-                <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">$${property.price[0].price}</span>
+                <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">${price} AZN</span>
                 <button class="flex compare items-center gap-1 text-sm text-[#2C2E33] hover:text-[color:var(--primary)] transition-colors">
                     <i class="fas fa-random"></i> Compare
                 </button>
