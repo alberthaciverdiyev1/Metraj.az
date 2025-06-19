@@ -12,6 +12,7 @@ import {getData} from "./Helpers/CallApi.js";
 import dotenv from 'dotenv';
 import i18n from './Plugins/i18n.js';
 import i18next from "i18next";
+import multipart from '@fastify/multipart'
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ files.forEach(file => {
 const fastify = Fastify({logger: false})
 await fastify.register(fastifyCookie)
 await fastify.register(i18n)
+await fastify.register(multipart)
 
 fastify.register(secureSession, {
     key: fs.readFileSync(path.join(process.cwd(), 'secret-key')),
@@ -65,11 +67,8 @@ handlebars.registerHelper('range', function (start, end, options) {
 
 handlebars.registerHelper('t', function (key, options) {
     const lang = options?.data?.root?.lang || 'en';
-    console.log({lang})
-
     try {
         const t = i18next.getFixedT(lang);
-        console.log(t(key))
         return t(key);
     } catch (e) {
         console.warn('Translation error:', e);
@@ -104,8 +103,6 @@ fastify.register(fastifyStatic, {
     prefix: '/',
 })
 
-console.log({partials})
-
 fastify.register(pointOfView, {
     engine: {handlebars},
     root: path.join(process.cwd(), 'Views'),
@@ -121,7 +118,6 @@ fastify.register(pointOfView, {
     }
 })
 
-console.log(process.env.NODE_ENV)
 
 fastify.addHook('onRequest', async (request, reply) => {
     console.log(`[${new Date().toISOString()}] ${request.method} ${request.url}`)

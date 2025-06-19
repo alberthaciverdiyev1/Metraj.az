@@ -10,7 +10,7 @@ let district_id = null;
 let city_id = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
-    await Promise.all([propertyTypes(), featureList(), cityList(),subwayList(),nearbyObjectsList()]);
+    await Promise.all([propertyTypes(), featureList(), cityList(), subwayList(), nearbyObjectsList()]);
 
     const dropzone = document.getElementById("dropzone");
     const fileInput = document.getElementById("fileInput");
@@ -43,53 +43,93 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     });
 
+    // function handleFiles(e) {
+    //     const files = Array.from(e.target.files).slice(0, 10 - images.length);
+    //     files.forEach(file => {
+    //         const reader = new FileReader();
+    //         reader.onload = () => {
+    //             images.push(reader.result);
+    //             renderGallery();
+    //         };
+    //         reader.readAsDataURL(file);
+    //     });
+    // }
     function handleFiles(e) {
         const files = Array.from(e.target.files).slice(0, 10 - images.length);
         files.forEach(file => {
+            images.push(file);
             const reader = new FileReader();
             reader.onload = () => {
-                images.push(reader.result);
                 renderGallery();
             };
             reader.readAsDataURL(file);
         });
     }
 
+
+    // function renderGallery() {
+    //     gallery.innerHTML = "";
+    //     images.forEach((src, index) => {
+    //         const div = document.createElement("div");
+    //         div.className = "relative group";
+    //
+    //         const img = document.createElement("img");
+    //         img.src = src;
+    //         img.className = "rounded-lg w-full h-auto object-cover";
+    //
+    //         const delBtn = document.createElement("button");
+    //         delBtn.className = "absolute top-1 right-1 bg-black/50 hover:bg-black/70 text-white p-1 rounded-full transition";
+    //         delBtn.innerHTML = '<i class="bi bi-trash"></i>';
+    //         delBtn.onclick = () => {
+    //             images.splice(index, 1);
+    //             if (coverIndex === index) coverIndex = null;
+    //             else if (coverIndex > index) coverIndex--;
+    //             renderGallery();
+    //         };
+    //
+    //         if (coverIndex === index) {
+    //             const coverIcon = document.createElement("div");
+    //             coverIcon.className = "absolute bottom-1 left-1 bg-blue-500 text-white p-1 rounded-full text-xs";
+    //             coverIcon.innerHTML = '<i class="bi bi-check-lg"></i>';
+    //             div.appendChild(coverIcon);
+    //         }
+    //
+    //         div.onclick = () => {
+    //             coverIndex = index;
+    //             renderGallery();
+    //         };
+    //
+    //         div.appendChild(img);
+    //         div.appendChild(delBtn);
+    //         gallery.appendChild(div);
+    //     });
+    // }
+
     function renderGallery() {
         gallery.innerHTML = "";
-        images.forEach((src, index) => {
-            const div = document.createElement("div");
-            div.className = "relative group";
+        images.forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const div = document.createElement("div");
+                div.className = "relative group";
 
-            const img = document.createElement("img");
-            img.src = src;
-            img.className = "rounded-lg w-full h-auto object-cover";
+                const img = document.createElement("img");
+                img.src = reader.result;
+                img.className = "rounded-lg w-full h-auto object-cover";
 
-            const delBtn = document.createElement("button");
-            delBtn.className = "absolute top-1 right-1 bg-black/50 hover:bg-black/70 text-white p-1 rounded-full transition";
-            delBtn.innerHTML = '<i class="bi bi-trash"></i>';
-            delBtn.onclick = () => {
-                images.splice(index, 1);
-                if (coverIndex === index) coverIndex = null;
-                else if (coverIndex > index) coverIndex--;
-                renderGallery();
+                const delBtn = document.createElement("button");
+                delBtn.className = "absolute top-1 right-1 bg-black/50 hover:bg-black/70 text-white p-1 rounded-full transition";
+                delBtn.innerHTML = '<i class="bi bi-trash"></i>';
+                delBtn.onclick = () => {
+                    images.splice(index, 1);
+                    renderGallery();
+                };
+
+                div.appendChild(img);
+                div.appendChild(delBtn);
+                gallery.appendChild(div);
             };
-
-            if (coverIndex === index) {
-                const coverIcon = document.createElement("div");
-                coverIcon.className = "absolute bottom-1 left-1 bg-blue-500 text-white p-1 rounded-full text-xs";
-                coverIcon.innerHTML = '<i class="bi bi-check-lg"></i>';
-                div.appendChild(coverIcon);
-            }
-
-            div.onclick = () => {
-                coverIndex = index;
-                renderGallery();
-            };
-
-            div.appendChild(img);
-            div.appendChild(delBtn);
-            gallery.appendChild(div);
+            reader.readAsDataURL(file);
         });
     }
 
@@ -119,6 +159,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         element.innerHTML = h;
     }
+
     async function nearbyObjectsList() {
         const element = document.getElementById('nearby-objects');
         const objects = await getNearbyObjects();
@@ -149,6 +190,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         element.innerHTML = `<option value="">Select City</option>` + h;
     }
+
     async function subwayList() {
         const element = document.getElementById('subway');
 
@@ -158,14 +200,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         let h = '';
         subwayArray.forEach(subway => {
-            h += `<option value="${subway.slug}">${subway.name}</option>`;
+            h += `<option value="${subway.id}">${subway.name}</option>`;
         });
 
         element.innerHTML = `<option value="">Select Subway</option>` + h;
     }
 
-
-    document.getElementById("property-status").addEventListener("change", async (e) => {
+    document.getElementById("add-type").addEventListener("change", async (e) => {
         const value = e.target.value;
         console.log(value);
 
@@ -177,13 +218,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     })
 
-    document.getElementById('property-type').addEventListener('change', async function (e) {
+    document.getElementById('building-type').addEventListener('change', async function (e) {
         if (this.value === 'LAND') {
             document.getElementById('size').classList.add('d-none');
-            document.getElementById('land-area').classList.remove('d-none');
+            document.getElementById('field-area').classList.remove('d-none');
         } else {
             document.getElementById('size').classList.remove('d-none');
-            document.getElementById('land-area').classList.add('d-none');
+            document.getElementById('field-area').classList.add('d-none');
         }
     });
 
@@ -228,7 +269,79 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
 
+    document.getElementById('add-property-btn').addEventListener('click', async function (e) {
+        e.preventDefault();
+
+        const fileInput = document.getElementById('fileInput');
+        const videoInput = document.getElementById('video');
+        const documentInput = document.getElementById('document');
+
+        const formData = new FormData();
+        console.log(document.getElementById('building-type').value);
+
+        formData.append('buildingType', document.getElementById('building-type').value);
+        formData.append('addType', document.getElementById('add-type').value);
+        formData.append('propertyCondition', document.getElementById('repair-type').value);
+        formData.append('price', document.getElementById('price').value);
+        formData.append('propertyPeriod', document.getElementById('property-period').value);
+        formData.append('roomCount', document.getElementById('room-count').value);
+        formData.append('floorCount', document.getElementById('floor-count').value);
+        formData.append('locatedFloor', document.getElementById('located-floor').value);
+        formData.append('isCredit', document.getElementById('is-credit').checked ? 1 : 0);
+        formData.append('description', document.getElementById('description').value);
+        formData.append('noteToAdmin', document.getElementById('note-to-admin').value);
+        formData.append('cityId', document.getElementById('city').value);
+        formData.append('area', document.querySelector('#area input')?.value || null);
+        formData.append('fieldArea', document.querySelector('#field-area input')?.value || null);
+        formData.append('districtId', document.getElementById('district').value);
+        formData.append('townId', document.getElementById('town').value);
+        formData.append('subwayId', document.getElementById('subway').value);
+        formData.append('address', document.getElementById('address').value);
+        formData.append('map', document.getElementById('map').value);
+        formData.append('advertiser', document.getElementById('advertiser')?.value || '');
+        formData.append('advertiserName', document.getElementById('advertiser-name')?.value || '');
+        formData.append('phone1', document.getElementById('phone_1').value);
+        formData.append('phone2', document.getElementById('phone_2').value);
+        formData.append('phone3', document.getElementById('phone_3').value);
+        formData.append('phone4', document.getElementById('phone_4').value);
+        formData.append('email', document.getElementById('email').value);
+
+        Array.from(document.querySelectorAll('#features input[name="features[]"]:checked')).forEach((cb, i) => {
+            formData.append(`features[${i}]`, cb.value);
+        });
+
+        Array.from(document.querySelectorAll('#nearby-objects input[name="nearby-objects[]"]:checked')).forEach((cb, i) => {
+            formData.append(`nearbyObjects[${i}]`, cb.value);
+        });
+
+        images.forEach((file, index) => {
+            formData.append(`media[${index}][type]`, 'image');
+            formData.append(`media[${index}][file]`, file);
+        });
+
+        if (videoInput.files.length > 0) {
+            const index = images.length;
+            formData.append(`media[${index}][type]`, 'video');
+            formData.append(`media[${index}][file]`, videoInput.files[0]);
+        }
+
+        if (documentInput.files.length > 0) {
+            const index = images.length + (videoInput.files.length ? 1 : 0);
+            formData.append(`media[${index}][type]`, 'document');
+            formData.append(`media[${index}][file]`, documentInput.files[0]);
+        }
+console.log({formData});
+        try {
+            const response = await axios.post('/add-property', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            console.log(' Uğurla göndərildi:', response.data);
+        } catch (error) {
+            console.error('Error:', error.response?.data || error.message);
+        }
+    });
 
 
 });
-
