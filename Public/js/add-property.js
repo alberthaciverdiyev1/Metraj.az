@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     async function propertyTypes() {
-        const selectElement = document.getElementById('property-type');
+        const selectElement = document.getElementById('building-type');
         const propertyTypes = await getPropertyTypes();
 
         let h = '';

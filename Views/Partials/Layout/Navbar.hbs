@@ -26,31 +26,30 @@
            class="flex items-center px-4 py-2 bg-white  rounded-md hover:bg-orange-400 hover:text-white transition">Add
             property</a>
         <button class="open-search-btn" id="openSearchBtn">Axtarış et</button>
-        
+
         {{> Component.FilterNavbar}}
         <!-- Right -->
 
- <div class="relative ml-0.5">
+        <div class="relative ml-0.5">
                 <span
-                    class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-[var(--primary)] transition duration-300 group-hover:text-orange-500">
+                        class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-[var(--primary)] transition duration-300 group-hover:text-orange-500">
                     <i class="bi bi-translate"></i>
                 </span>
 
-                <select id="lang-select" onchange="changeLang(this.value)"
-                    class="appearance-none w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md shadow-sm text-gray-700 
+            <select id="lang-select" onchange="changeLang(this.value)"
+                    class="appearance-none w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md shadow-sm text-gray-700
            focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)]
            transition duration-300 ease-in-out transform hover:scale-[1.01] hover:border-orange-500 hover:shadow-md group">
-                    <option value="az">Az</option>
-                    <option value="en">En</option>
-                    <option value="ru">Py</option>
-                </select>
+                <option value="az">Az</option>
+                <option value="en">En</option>
+                <option value="ru">Py</option>
+            </select>
 
 
-
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
-                    <i class="bi bi-chevron-down transition-transform duration-300 group-focus-within:rotate-180"></i>
-                </div>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
+                <i class="bi bi-chevron-down transition-transform duration-300 group-focus-within:rotate-180"></i>
             </div>
+        </div>
 
 
         <div class="relative inline-block text-left">
