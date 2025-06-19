@@ -6,10 +6,11 @@ export function propertyCard(property) {
             ? parseFloat(property.price.replace(/,/g, '')) 
             : property.price)
         : formatPrice(0);
+        console.log('Property Card:', property);
 
         return `<div class="border border-[color:var(--border-color)] rounded-2xl overflow-hidden group relative transition-all duration-300">
         <div class="relative overflow-hidden">
-            <img src="${property.image}" alt="${property.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" />
+            <img src="${property.media.path}" alt="${property.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" />
             <div class="absolute inset-0 flex items-center justify-center overflow-hidden">
                 <div class="absolute inset-0 bg-black/40 transition-all duration-500 ease-in-out transform -translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 z-0"></div>
                 <div class="z-10 flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -38,7 +39,7 @@ export function propertyCard(property) {
                 <span><span class="text-[#2C2E33]">${property.area}</span> Sqft</span>
             </div>
             <div class="flex justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
-                <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">$${property.price}</span>
+                <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">$${property.price[0].price}</span>
                 <button class="flex compare items-center gap-1 text-sm text-[#2C2E33] hover:text-[color:var(--primary)] transition-colors">
                     <i class="fas fa-random"></i> Compare
                 </button>
