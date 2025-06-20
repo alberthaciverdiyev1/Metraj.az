@@ -106,27 +106,25 @@ export async function add(req, res) {
     }
 
     const data = {
-        add_no: fields.add_no || null,
-        slug: fields.slug,
-        town_id: parseInt(+fields.town_id),
-        subway_id: parseInt(+fields.subway_id),
-        district_id: parseInt(+fields.district_id),
-        city_id: parseInt(+fields.city_id),
+        town_id: fields.townId ? parseInt(+fields.townId) : null,
+        subway_id: fields.subwayId ? parseInt(+fields.subwayId) : null,
+        district_id: fields.district_id ? parseInt(+fields.districtId) : null,
+        city_id: fields.cityId ? parseInt(+fields.cityId) : null,
         address: fields.address,
-        property_condition: fields.property_condition,
-        add_type: fields.add_type,
-        building_type: fields.building_type,
+        property_condition: fields.propertyCondition,
+        add_type: fields.addType,
+        building_type: fields.buildingType,
         number_of_floors: parseInt(+fields.floorCount),
         number_of_rooms: parseInt(+fields.roomCount),
         floor_located: parseInt(+fields.locatedFloor),
-        area: parseInt(+fields.area),
-        field_area: parseInt(+fields.field_area),
+        area:fields.area ? parseInt(+fields.area) : null,
+        field_area: +fields.fieldArea ? parseInt(+fields.fieldArea) : null,
         advertiser: fields.advertiser,
-        advertiser_name: fields.advertiser_name,
-        phone_1: fields.phone_1,
-        phone_2: fields.phone_2 || null,
-        phone_3: fields.phone_3 || null,
-        phone_4: fields.phone_4 || null,
+        advertiser_name: fields.advertiserName,
+        phone_1: fields.phone1,
+        phone_2: fields.phone2 || null,
+        phone_3: fields.phone3 || null,
+        phone_4: fields.phone4 || null,
         mail: fields.email,
         description: fields.description,
         in_credit: fields.isCredit === 'true',
@@ -134,7 +132,7 @@ export async function add(req, res) {
         has_video: media.some(m => m.type === 'video'),
         google_map_location: fields.map,
         is_active: true,
-        is_premium: true,
+        is_premium: false,
         user_id: 1,
         realtor_id: 1,
         price: parseInt(+fields.price),
@@ -142,8 +140,8 @@ export async function add(req, res) {
         features,
         nearby_objects: nearbyObjects,
     };
-
-    return await postData('/property', data)
+console.log(data)
+        return await postData('/property', data)
     //return res.send({status: 'ok', data});
 }
 
