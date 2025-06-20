@@ -1,6 +1,6 @@
 
 .otp-right{
-    width: 55%;
+    /* width: 55%; */
     padding: 2rem 5rem;
     display: flex;
     flex-direction: column;
@@ -39,7 +39,8 @@ form{
   width: calc(100% / 4 - 2rem);
   text-align: center;
   font-size: 1.5rem;
-  padding: 0.5rem;
+  /* padding: 0.5rem; */
+  padding: 1rem 2rem;
   border: 1px solid #ccc;
   border-radius: 10px;
   -moz-appearance: textfield; 
@@ -65,7 +66,7 @@ form{
 
 .verify-btn{
     padding: 0.7rem 1rem;
-    background-color: #00b37e;
+    background-color:rgb(232, 155, 13);
     color: white;
     border-radius: 12px;
     margin-top: 1rem;
@@ -75,5 +76,17 @@ form{
     font-size: 14px;
 }
 .resend a{
-  color: #00b37e;
+  color: var(--primary);
+}
+
+@media (max-width: 768px) {
+  .otp-inputs{
+    gap: 0.5rem;
+  }
+  .otp-inputs input {
+    width: calc(100% / 4 - 0.5rem);}
+
+    .form-footer{
+      flex-direction: column;
+    }
 }

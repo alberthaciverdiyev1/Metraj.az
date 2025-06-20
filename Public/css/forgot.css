@@ -51,7 +51,7 @@
     color: var(--grey-text);
   }
   .signin-link a {
-    color: #00b37e;
+    color: var(--primary);
     text-decoration: none;
   }
   
@@ -64,6 +64,7 @@
   .social-buttons {
     display: flex;
     gap: 15px;
+    width: 100%;
     margin-bottom: 20px;
   }
   
@@ -115,7 +116,7 @@
   input {
     padding: 15px;
     background: #F5F5F6;
-    border-radius: 8px;
+    border-radius: 12px;
     border: none;
   }
   
@@ -141,23 +142,24 @@
     font-size: 14px;
   }
   .checkbox a {
-    color: #00b37e;
+    color: var(--primary);
     text-decoration: none;
   }
   
   .submit-btn {
-    background: #00b37e;
+    background: var(--primary);
     color: white;
     padding: 12px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     font-weight: bold;
     width: 12rem;
     margin-top: 2rem;
     cursor: pointer;
+    width: 100%;
   }
   .submit-btn:hover {
-    background: #009c6e;
+    background:var(--primary);
   }
   
   @media (max-width: 768px) {
