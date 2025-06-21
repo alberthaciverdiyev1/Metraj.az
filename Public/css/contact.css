@@ -44,7 +44,7 @@
     width: 90%;
     margin: 0 auto;
     padding: 60px 0;
-    top: 80%;
+    top: 50%;
     left: 5%;
     position: absolute;
     display: flex;
@@ -137,7 +137,7 @@
 
 .re-container {
     display: flex;
-    margin: 254px auto;
+    margin: 54px auto;
 }
 
 .re-content {
