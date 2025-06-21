@@ -25,20 +25,19 @@
           onchange="toggleFields()"
         >
           <option value="">Select role</option>
-          <option value="agent">Makler</option>
+          <option value="agent">Vasitəçi</option>
           <option value="user">İstifadəçi</option>
         </select>
       </div>
 
       <form method="POST" action="/register">
-        {{!-- @csrf --}}
 
         <div class="input-with-icon ">
-          <label for="username">İstifadəçi adı</label>
+          <label for="full-name">Tam ad</label>
           <input
             type="text"
-            name="username"
-            id="username"
+            name="full-name"
+            id="full-name"
             required
             placeholder="Adınızı daxil edin"
             class="w-full border rounded-md px-4 py-2"

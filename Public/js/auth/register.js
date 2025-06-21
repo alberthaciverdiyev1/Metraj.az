@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const formData = new FormData(form);
             const data = {
                 role: formData.get("role"),
-                username: formData.get("username"),
+                name: formData.get("full-name"),
                 agency_name: formData.get("agency_name"),
                 email: formData.get("email"),
                 password: formData.get("password"),
