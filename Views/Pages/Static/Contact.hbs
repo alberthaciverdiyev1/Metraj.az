@@ -49,7 +49,7 @@
                 <p class="re-description">Estimate your payment with our easy-to-use loan calculator. Then get pre-qualified to buy by a local lender.</p>
 
                 <div class="re-contact-info">
-                    <div class="re-contact-item">
+                    {{!-- <div class="re-contact-item">
                         <div class="re-icon-box">
                             <svg class="re-icon" viewBox="0 0 24 24">
                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -60,7 +60,7 @@
                             <span class="re-contact-label">Office address</span>
                             <span class="re-contact-address">102 Ingraham St, Brooklyn, NY 11237</span>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="re-contact-item">
                         <div class="re-icon-box">
@@ -69,8 +69,12 @@
                             </svg>
                         </div>
                         <div class="re-contact-text">
-                            <span class="re-contact-label">Office address</span>
-                            <span class="re-contact-phone">(603) 555-0123</span>
+                            <span class="re-contact-label">Office phone</span>
+
+                            {{#if setting.phone}}
+                            <span class="re-contact-phone">{{setting.phone}}</span>
+
+                            {{/if}}
                         </div>
                     </div>
 
@@ -82,8 +86,11 @@
                             </svg>
                         </div>
                         <div class="re-contact-text">
-                            <span class="re-contact-label">Office address</span>
-                            <span class="re-contact-email">themesflat@gmail.com</span>
+                            <span class="re-contact-label">Office email</span>
+                            {{#if setting.email}}
+                            <span class="re-contact-email">{{setting.email}}</span>
+
+                            {{/if}}
                         </div>
                     </div>
                 </div>

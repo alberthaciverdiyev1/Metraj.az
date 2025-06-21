@@ -1,7 +1,7 @@
 <header class="bg-white shadow-md">
     <div class=" mx-auto container px-4 py-4 flex flex-wrap items-center justify-between">
         <!-- Logo -->
-        <div class="flex items-center space-x-2">
+        {{!-- <div class="flex items-center space-x-2">
             <div class="bg-orange-400 p-2 rounded-full text-white">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                     <path
@@ -10,7 +10,18 @@
             </div>
             <span class="font-bold text-lg text-gray-800">Metraj <span
                     class="text-sm text-gray-500">.az</span></span>
-        </div>
+        </div> --}}
+        {{#if setting}}
+        <a href="/" class="flex gap-0.5">  <img src="{{setting.logo}}" alt="logo">
+          <span class="font-bold text-lg text-gray-800">{{setting.name}} <span
+                    class="text-sm text-gray-500">.az</span></span>
+        </a>
+      
+
+        
+
+
+        {{/if}}
 
         <!-- Nav -->
         <nav class="hidden md:flex space-x-7 items-center">

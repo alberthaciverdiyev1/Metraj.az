@@ -252,10 +252,16 @@
                                  class="avatar">
                             <div class="avatar-info-text">
                                 <h4>Shara Conner</h4>
-                                <p><a href="tel:1-333-345-6868" class="phone"><i class="bi bi-telephone"></i>
-                                    1-333-345-6868</a></p>
-                                <p><a href="mailto:themesflat@gmail.com" class="email">
-                                    <i class="bi bi-envelope"></i> themesflat@gmail.com</a></p>
+                                {{#if setting.phone}}
+                                 <p><a href="tel:{{setting.phone}}" class="phone"><i class="bi bi-telephone"></i>
+                                {{setting.phone}}</a></p>
+                                {{/if}}
+                               
+                               {{#if setting.email}}
+                                 <p><a href="mailto:{{setting.email}}" class="email">
+                                    <i class="bi bi-envelope"></i> {{setting.email}}</a></p>
+                               {{/if}}
+                              
                             </div>
 
                         </div>
