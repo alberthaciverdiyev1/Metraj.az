@@ -4,12 +4,11 @@ body {
 
 .side {
     display: flex;
-    gap: 1rem;
     padding: 0.4rem 0rem;
 }
 
 .left-side {
-    width: 23%;
+    width: 26%;
 }
 aside {
     border-radius: 14px;

@@ -3,76 +3,76 @@
 {{>Component.ScrollTop}}
 
 <section id="add-property">
-    <div class="side">
+    <div class="side container px-4 mx-auto">
         <div class="left-side">
             <aside>
                 <ul class="py-2 text-base text-gray-800 space-y-1">
                     <li>
                         <a href="#"
-                           class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
+                            class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
                             <i class="bi bi-grid mr-3 text-gray-400 group-hover:text-white transition"></i>
                             Dashboards
                         </a>
                     </li>
                     <li>
                         <a href="#"
-                           class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
+                            class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
                             <i class="bi bi-person-gear mr-3 text-gray-400 group-hover:text-white transition"></i>
                             My profile
                         </a>
                     </li>
                     <li>
                         <a href="#"
-                           class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
+                            class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
                             <i class="bi bi-bag-check mr-3 text-gray-400 group-hover:text-white transition"></i> My
                             package
                         </a>
                     </li>
                     <li>
                         <a href="#"
-                           class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
+                            class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
                             <i class="bi bi-heart mr-3 text-gray-400 group-hover:text-white transition"></i> My
                             favorites (1)
                         </a>
                     </li>
                     <li>
                         <a href="#"
-                           class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
+                            class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
                             <i class="bi bi-folder2-open mr-3 text-gray-400 group-hover:text-white transition"></i>
                             My save searches
                         </a>
                     </li>
                     <li>
                         <a href="#"
-                           class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
+                            class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
                             <i class="bi bi-chat-left-text mr-3 text-gray-400 group-hover:text-white transition"></i>
                             Reviews
                         </a>
                     </li>
                     <li>
                         <a href="/login"
-                           class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
+                            class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
                             <i class="bi bi-folder-check mr-3 text-gray-400 group-hover:text-white transition"></i>
                             My properties
                         </a>
                     </li>
                     <li>
                         <a href="/add-property"
-                           class="flex items-center px-5 py-4 bg-white rounded-lg hover:bg-orange-400 hover:text-white group transition">
+                            class="flex items-center px-5 py-4 bg-white rounded-lg hover:bg-orange-400 hover:text-white group transition">
                             <i class="bi bi-file-earmark-plus mr-3 text-gray-400 group-hover:text-white transition"></i>
                             Add property
                         </a>
                     </li>
                     <li>
                         <a href="/login"
-                           class="flex items-center px-5 py-4 bg-white rounded-lg hover:bg-orange-400 hover:text-white group transition">
+                            class="flex items-center px-5 py-4 bg-white rounded-lg hover:bg-orange-400 hover:text-white group transition">
                             <i class="bi bi-person mr-3 text-gray-400 group-hover:text-white transition"></i> Login
                             / Register
                         </a>
                     </li>
                     <li>
                         <a href="/logout"
-                           class="flex items-center px-5 py-4 bg-white rounded-lg hover:bg-orange-400 hover:text-white group transition">
+                            class="flex items-center px-5 py-4 bg-white rounded-lg hover:bg-orange-400 hover:text-white group transition">
                             <i class="bi bi-box-arrow-right mr-3 text-gray-400 group-hover:text-white transition"></i>
                             Logout
                         </a>
@@ -95,7 +95,7 @@
                             <label class="block font-medium mb-1">{{t "Building Type"}}:<span
                                     class="text-red-500">*</span></label>
                             <select id="building-type"
-                                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <option disabled selected>{{t "Choose"}}</option>
                             </select>
                         </div>
@@ -104,7 +104,7 @@
                             <label class="block font-medium mb-1">{{t "Add type"}}:<span
                                     class="text-red-500">*</span></label>
                             <select id="add-type"
-                                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <option disabled selected>{{t "Choose"}}</option>
                                 <option value="sale">For Sale</option>
                                 <option value="rent">For Rent</option>
@@ -113,7 +113,8 @@
                         <!-- Property Label -->
                         <div>
                             <label class="block font-medium mb-1">Təmir:<span class="text-red-500">*</span></label>
-                            <select id="repair-type" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <select id="repair-type"
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <option selected disabled>{{t "Choose"}}</option>
                                 <option value="repaired">{{t "Repaired"}}</option>
                                 <option value="unrepaired">{{t "Unrepaired"}}</option>
@@ -126,14 +127,14 @@
                             <label class="block font-medium mb-1">{{t "Size"}} (m²):<span
                                     class="text-red-500">*</span></label>
                             <input type="number"
-                                   class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                         </div>
                         <!-- Field Area -->
                         <div id="field-area" class="d-none">
                             <label class="block font-medium mb-1">{{t "Field area"}} (m²):<span
                                     class="text-red-500">*</span></label>
                             <input type="number"
-                                   class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                         </div>
 
                         <!-- Price -->
@@ -141,11 +142,11 @@
                             <label class="block font-medium mb-1">{{t "Price"}}:<span
                                     class="text-red-500">*</span></label>
                             <input id="price" type="number" value="0"
-                                   class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
 
                             <div class="d-none">
                                 <select id="property-period"
-                                        class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                     <option value="daily"> Günlük</option>
                                     <option value="monthly">Aylıq</option>
                                 </select>
@@ -154,13 +155,12 @@
 
                         <!-- Rooms -->
                         <div>
-                            <label class="block font-medium mb-1">Room Count:<span
-                                    class="text-red-500">*</span></label>
+                            <label class="block font-medium mb-1">Room Count:<span class="text-red-500">*</span></label>
                             <select id="room-count"
-                                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <option disabled selected>Choose</option>
                                 {{#forLoop 20}}
-                                    <option value="{{this}}">{{this}} otaqlı</option>
+                                <option value="{{this}}">{{this}} otaqlı</option>
                                 {{/forLoop}}
 
 
@@ -169,13 +169,12 @@
 
                         <!-- Bedrooms -->
                         <div>
-                            <label class="block font-medium mb-1">Mərtəbə:<span
-                                    class="text-red-500">*</span></label>
+                            <label class="block font-medium mb-1">Mərtəbə:<span class="text-red-500">*</span></label>
                             <select id="located-floor"
-                                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <option disabled selected>Choose</option>
                                 {{#forLoop 100}}
-                                    <option value="{{this}}">{{this}}-ci mərtəbə</option>
+                                <option value="{{this}}">{{this}}-ci mərtəbə</option>
                                 {{/forLoop}}
 
 
@@ -187,11 +186,11 @@
                             <label class="block font-medium mb-1">Mərtəbə sayı:<span
                                     class="text-red-500">*</span></label>
                             <select id="floor-count"
-                                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <option disabled selected>Choose</option>
 
                                 {{#forLoop 100}}
-                                    <option value="{{this}}">{{this}} mərtəbəli</option>
+                                <option value="{{this}}">{{this}} mərtəbəli</option>
 
                                 {{/forLoop}}
                             </select>
@@ -199,27 +198,24 @@
 
                         <!-- Garages -->
                         <div>
-                            <label class="block font-medium mb-1">Kredit:<span
-                                    class="text-red-500">*</span></label>
+                            <label class="block font-medium mb-1">Kredit:<span class="text-red-500">*</span></label>
                             <input id="is-credit" type="checkbox"
-                                   class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                         </div>
 
                     </div>
                     <div class="bg-white rounded-xl max-w-5xl mx-auto mt-6">
                         <div class="mb-4">
                             <label for="description" class="block font-semibold mb-1">Description:</label>
-                            <textarea name="description" id="description" placeholder="Your Description"
-                                      rows="4"
-                                      class="w-full border border-gray-300 rounded-md px-4 py-2"></textarea>
+                            <textarea name="description" id="description" placeholder="Your Description" rows="4"
+                                class="w-full border border-gray-300 rounded-md px-4 py-2"></textarea>
                         </div>
                     </div>
                     <div class="bg-white rounded-xl max-w-5xl mx-auto mt-6">
                         <div class="mb-4">
                             <label for="note-to-admin" class="block font-semibold mb-1">{{t "Note to admin"}}:</label>
-                            <textarea name="note-to-admin" id="note-to-admin" placeholder="{{t "Note to admin"}}"
-                                      rows="4"
-                                      class="w-full border border-gray-300 rounded-md px-4 py-2"></textarea>
+                            <textarea name="note-to-admin" id="note-to-admin" placeholder="{{t " Note to admin"}}"
+                                rows="4" class="w-full border border-gray-300 rounded-md px-4 py-2"></textarea>
                         </div>
                     </div>
                 </div>
@@ -229,9 +225,9 @@
                         <h2 class="text-3xl font-bold mb-4">Upload Media</h2>
 
                         <div id="dropzone"
-                             class="border-2 border-dashed border-gray-300 rounded-lg py-14 flex flex-col items-center justify-center text-center min-h-[340px] transition">
+                            class="border-2 border-dashed border-gray-300 rounded-lg py-14 flex flex-col items-center justify-center text-center min-h-[340px] transition">
                             <label
-                                    class="bg-[var(--primary)] text-white px-6 py-4 rounded-xl font-semibold hover:bg-orange-500 transition-all cursor-pointer mb-2">
+                                class="bg-[var(--primary)] text-white px-6 py-4 rounded-xl font-semibold hover:bg-orange-500 transition-all cursor-pointer mb-2">
                                 <i class="bi bi-paperclip"></i> Select photos
                                 <input id="fileInput" type="file" multiple accept="image/*" class="hidden">
                             </label>
@@ -240,17 +236,17 @@
 
 
                         <div id="gallery"
-                             class="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
+                            class="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
                         <div class="my-4">
                             <label for="video" class="block font-semibold mb-1">Video:</label>
                             <input id="video" type="file" placeholder="Video"
-                                   class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                class="w-full border border-gray-300 rounded-md px-4 py-2">
                         </div>
 
                         <div class="my-4">
                             <label for="document" class="block font-semibold mb-1">Document:</label>
                             <input id="document" type="file" placeholder="Document"
-                                   class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                class="w-full border border-gray-300 rounded-md px-4 py-2">
                         </div>
                     </div>
 
@@ -277,35 +273,39 @@
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                                 <div>
                                     <label for="city" class="block font-semibold mb-1">Şəhər:*</label>
-                                    <select id="city"
-                                            class="w-full border border-gray-300 rounded-md px-4 py-2"> </select>
+                                    <select id="city" class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                    </select>
                                 </div>
                                 <div class="d-none">
                                     <label for="district" class="block font-semibold mb-1">Rayon:*</label>
-                                    <select id="district"
-                                            class="w-full border border-gray-300 rounded-md px-4 py-2"> </select>
+                                    <select id="district" class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                    </select>
                                 </div>
                                 <div class="d-none">
                                     <label for="town" class="block font-semibold mb-1">Qəsəbə:*</label>
-                                    <select id="town"
-                                            class="w-full border border-gray-300 rounded-md px-4 py-2"> </select>
+                                    <select id="town" class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                    </select>
                                 </div>
                                 <div>
                                     <label for="subway" class="block font-semibold mb-1">Metro:*</label>
-                                    <select id="subway"
-                                            class="w-full border border-gray-300 rounded-md px-4 py-2"> </select>
+                                    <select id="subway" class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                    </select>
                                 </div>
                             </div>
-                            <div class="mb-4">
-                                <label for="address" class="block font-semibold mb-1">Full Adress:*</label>
-                                <input type="text" name="address" id="address"
-                                       placeholder="Enter property full address"
-                                       class="w-full border border-gray-300 rounded-md px-4 py-2">
+                            <div class="mb-4 gap-2 flex flex-col lg:flex-row justify-center items-center">
+                                <div class="flex flex-col gap-4 w-full lg:w-[80%]">
+                                    <label for="address" class="block font-semibold mb-1">Full Address:*</label>
+                                    <input type="text" name="address" id="address"
+                                        placeholder="Enter property full address"
+                                        class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                </div>
+
                                 <button type="button" id="searchAddress"
-                                        class="mt-2 rounded-lg mt-2 bg-[var(--primary)] text-white px-4 py-1 rounded-hover:bg-blue-600">
+                                    class="w-full lg:w-[20%] mt-4 lg:mt-[44px] rounded-lg text-sm bg-[var(--primary)] text-white px-3 py-3 hover:bg-orange-600">
                                     Search on Map
                                 </button>
                             </div>
+
 
 
                             <div class="mb-4">
@@ -319,8 +319,8 @@
                                 <label for="google_map_location" class="block font-semibold mb-1">Google Maps Link
                                     (optional):</label>
                                 <input type="text" name="google_map_location" id="google_map_location"
-                                       placeholder="https://maps.google.com/..."
-                                       class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                    placeholder="https://maps.google.com/..."
+                                    class="w-full border border-gray-300 rounded-md px-4 py-2">
                             </div>
                         </form>
 
@@ -330,7 +330,8 @@
                 {{>Component.AgentInfo}}
 
                 <div class="flex justify-center items-center space-x-4 mt-6">
-                    <button id="add-property-btn" class=" sm:w-auto bg-[color:var(--primary)] text-white px-6 py-3 rounded-xl flex items-center justify-center button-hover all-btn hover:bg-orange-500 focus:outline-none">
+                    <button id="add-property-btn"
+                        class=" sm:w-auto bg-[color:var(--primary)] text-white px-6 py-3 rounded-xl flex items-center justify-center button-hover all-btn hover:bg-orange-500 focus:outline-none">
                         Add Property
                     </button>
                 </div>
