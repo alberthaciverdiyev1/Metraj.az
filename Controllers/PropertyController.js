@@ -117,7 +117,7 @@ export async function add(req, res) {
         number_of_floors: parseInt(+fields.floorCount),
         number_of_rooms: parseInt(+fields.roomCount),
         floor_located: parseInt(+fields.locatedFloor),
-        area:fields.area ? parseInt(+fields.area) : null,
+        area: fields.area ? parseInt(+fields.area) : null,
         field_area: +fields.fieldArea ? parseInt(+fields.fieldArea) : null,
         advertiser: fields.advertiser,
         advertiser_name: fields.advertiserName,
@@ -140,8 +140,8 @@ export async function add(req, res) {
         features,
         nearby_objects: nearbyObjects,
     };
-console.log(data)
-        return await postData('/property', data)
+    console.log(data)
+    return await postData('/property', data)
     //return res.send({status: 'ok', data});
 }
 

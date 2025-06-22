@@ -220,10 +220,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     document.getElementById('building-type').addEventListener('change', async function (e) {
         if (this.value === 'LAND') {
-            document.getElementById('size').classList.add('d-none');
+            document.getElementById('area').classList.add('d-none');
             document.getElementById('field-area').classList.remove('d-none');
         } else {
-            document.getElementById('size').classList.remove('d-none');
+            document.getElementById('area').classList.remove('d-none');
             document.getElementById('field-area').classList.add('d-none');
         }
     });
