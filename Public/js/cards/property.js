@@ -3,8 +3,8 @@ import {formatPrice} from '../helpers/price.js';
 export function propertyCard(property) {
     const price = property.price 
         ? formatPrice(typeof property.price === 'string' 
-            ? parseFloat( property.price[0].price.replace(/,/g, ''))
-            :  property.price[0].price)
+            ? parseFloat( property.price[0]?.price.replace(/,/g, ''))
+            :  property.price[0]?.price)
         : formatPrice(0);
 
 

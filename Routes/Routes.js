@@ -20,6 +20,7 @@ export default async function route(fastify, options) {
 
     fastify.get('/agencies', Agency.listView)
     fastify.get('/agency/:id', Agency.Details)
+    fastify.get('/related-properties/:id', Agency.RelatedProperties)
 
     fastify.get('/blog', Blog.listView);
     fastify.get('/blog/:slug', Blog.Details);

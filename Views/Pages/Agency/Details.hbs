@@ -1,15 +1,15 @@
 {{>Component.Breadcrumb items=breadcrumbs}}
 
 {{>Component.ScrollTop}}
-<section id="side">
+<section id="side" data-agency-id="{{ agency.id }}">
     <div class="container mx-auto px-4 ">
         <div class="side-agency">
             <section class="side-left">
                 <div class="agencies-header">
-                    <img src="{{ agency.image }}" alt="">
+                    <img src="{{ agency.background_image }}" alt="">
                     <div class="agency-header-info">
                         <div class="logo">
-                            <img src="{{ agency.logo }}" alt="Logo">
+                            <img src="{{ agency.profile_image }}" alt="Logo">
                         </div>
                         <div class="">
                             <h2 class="text-2xl lg:text-4xl font-bold text-[color:var(--text-color)]">
@@ -24,7 +24,7 @@
                 </div>
                 <div class="agencies-info">
                     <h2>About {{ agency.name }}</h2>
-                    <p>{{ agency.description }}</p>
+                    <p>{{ agency.short_description }}</p>
                     <h2 class="title">Location</h2>
                     <div class="map">
                         <iframe
@@ -50,10 +50,10 @@
                     </div>
 
 
-                    <div class="listing-cards g-3" id="property-listing">
-                        {{#forLoop 30 }}
-                            {{>Component.Cards.Property}}
-                        {{/forLoop}}
+                    <div class="listing-cards g-3" id="related-properties">
+                        <div class="col-span-full flex justify-center items-center py-[200px]">
+                            <span class="loader"></span>
+                        </div>
 
                     </div>
 

@@ -1,24 +1,23 @@
 import axios from 'axios'
 import NodeCache from 'node-cache'
 
-const cache = new NodeCache({ stdTTL: 864000 }) // 10 day
+const cache = new NodeCache({stdTTL: 864000}) // 10 day
 
- const API_URL = process.env.API_URL?.replace(/\/$/, '') || 'http://localhost:8000'
+const API_URL = process.env.API_URL?.replace(/\/$/, '') || 'http://localhost:8002'
 
 //const API_URL = 'https://api.porfolio.space';
 
-export async function getData( url, params = {}, enumMode = false, allData = false, useCache = true) {
-    const queryParams = allData ? params : { page: 1, ...params }
+export async function getData(url, params = {}, enumMode = false, allData = false, useCache = true) {
+    const queryParams = allData ? params : {page: 1, ...params}
     const fullUrl = `${API_URL}/api${url}`
     const cacheKey = `api_${fullUrl}`
-
     if (useCache) {
         const cached = cache.get(cacheKey)
         if (cached) return cached
     }
 
     try {
-        const response = await axios.get(fullUrl, { params: queryParams })
+        const response = await axios.get(fullUrl, {params: queryParams})
         const result = enumMode ? response.data : (response.data?.data || [])
         if (useCache) cache.set(cacheKey, result)
         return result
@@ -33,7 +32,7 @@ export async function postData(url, payload = {}) {
 
     try {
         const response = await axios.post(fullUrl, payload, {
-            headers: { Accept: 'application/json' }
+            headers: {Accept: 'application/json'}
         })
         return response.data
     } catch (error) {
@@ -51,7 +50,7 @@ export async function putData(url, payload = {}) {
 
     try {
         const response = await axios.put(fullUrl, payload, {
-            headers: { Accept: 'application/json' }
+            headers: {Accept: 'application/json'}
         })
         return response.data?.data || []
     } catch (error) {
@@ -78,7 +77,7 @@ export async function deleteData(url, payload = {}) {
     try {
         const response = await axios.delete(fullUrl, {
             data: payload,
-            headers: { 'Content-Type': 'application/json' }
+            headers: {'Content-Type': 'application/json'}
         })
         return response.data?.data || []
     } catch (error) {

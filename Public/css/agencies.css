@@ -148,7 +148,7 @@
   flex-shrink: 0;
 }
 .desc{
-    display: none;
+    display: block;
     color:#666;
 }
 .view-toggle.active {
