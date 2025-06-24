@@ -223,11 +223,11 @@ a{
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
       gap: 1rem 1.5rem;
-      background: #fff;
       border-radius: 12px;
       padding: 1.5rem;
-      box-shadow: 0 4px 16px rgb(0 0 0 / 6%);
-      max-width: 1200px;
+   
+      width: 100%;
+      transition: max-height 0.3s ease-out;
       margin: 0 auto;
     }
 
@@ -418,49 +418,44 @@ a{
       .buttons { justify-content: space-between; }
     }
 
+    
     .modal {
       display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 100;
-      overflow-y: auto;
-      padding: 20px;
       justify-content: center;
       align-items: center;
+      transition: max-height 0.4s ease-in-out, padding 0.3s ease-in-out;
     }
+    .modal-content {
+      max-height: 90vh; 
+    }
+    
 
     .modal-content {
       background: white;
       margin: 2rem auto;
+      color: black;
       border-radius: 12px;
-      max-width: 1200px;
+      width: 100%;
+      position: relative;
     }
 
     .close-modal {
-      position: absolute;
-      top: 15px;
-      right: 15px;
       font-size: 1.5rem;
       cursor: pointer;
+      position:absolute;
+      top:-5px;
+      right:20px;
       background: none;
       border: none;
-      color: #555;
+      color: rgb(75, 73, 73);
     }
 
-    .open-search-btn {
-     
-      padding: 0.5rem 0.7rem;
-      background: #f1913d;
-      color: white;
-      border: none;
-      border-radius: 0.4rem;
-     
-    }
+    
 
+    
+   
     @media (max-width:1024px) {
         .filter-panel{
             max-width: 992px;

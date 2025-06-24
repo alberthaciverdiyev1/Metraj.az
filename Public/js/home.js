@@ -200,3 +200,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     await properties();
 
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const filterSearchButton = document.querySelector('[data-role="filter-search-button"]');
+    filterSearchButton.addEventListener('click', function () {
+        alert('Button clicked');
+    });
+});

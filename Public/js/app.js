@@ -111,11 +111,12 @@
 
     function openModal() {
       modal.style.display = 'block';
-      document.body.style.overflow = 'hidden';
+      // document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
       modal.style.display = 'none';
+      
       document.body.style.overflow = 'auto';
     }
 
@@ -126,10 +127,18 @@
 
       toggleBtn.addEventListener('click', togglePanelCollapse);
 
-      openBtn.addEventListener('click', openModal);
+      openBtn.addEventListener('click',()=> { if (modal.style.display==='none') {
+          openModal()
+          
+        } else {
+          closeModal()
+          
+        }}
+       
+      );
       closeBtn.addEventListener('click', closeModal);
 
-      window.addEventListener('click', (e) => {
+      window.addEventListener('click', (e) => {z
         if (e.target === modal) {
           closeModal();
         }
@@ -143,3 +152,5 @@ modal.style.display = 'none';
       initLocationPills();
       initEventListeners();
     });
+
+    
