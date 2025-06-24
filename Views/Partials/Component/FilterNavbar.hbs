@@ -1,99 +1,87 @@
-<div id="filterModal" class="modal text-black">
-    <div class="modal-content">
-        {{!-- <button class="close-modal" id="closeModalBtn">&times; </button> --}}
+  <div id="filterModal"
+                    class="filter-modal text-black absolute z-50 mt-2 right-0 w-[100%] p-6 bg-white rounded-2xl shadow-xl">
 
-        <form id="filterForm" class="filter-panel">
-            <fieldset class="fieldset repair">
-                <legend>Təmir vəziyyəti</legend>
-                <div class="toggle-group" data-name="repair">
-                    <button type="button" class="toggle active" data-value="">Hamısı</button>
-                    <button type="button" class="toggle" data-value="renovated">Təmirli</button>
-                    <button type="button" class="toggle" data-value="unrenovated">Təmirsiz</button>
-                </div>
-            </fieldset>
+                    <form id="filterForm" class="filter-panel mt-6">
+                        <fieldset class="fieldset repair">
+                            <legend>Təmir vəziyyəti</legend>
+                            <div class="toggle-group" data-name="repair">
+                                <button type="button" class="toggle active" data-value="">Hamısı</button>
+                                <button type="button" class="toggle" data-value="renovated">Təmirli</button>
+                                <button type="button" class="toggle" data-value="unrenovated">Təmirsiz</button>
+                            </div>
+                        </fieldset>
 
-            <fieldset class="fieldset range-field">
-                <legend>Sahə, m²</legend>
-                <div class="range">
-                    <input type="number" placeholder="min." name="areaMin" min="0" />
-                    <span>—</span>
-                    <input type="number" placeholder="maks." name="areaMax" min="0" />
-                </div>
-            </fieldset>
+                        <fieldset class="fieldset range-field">
+                            <legend>Sahə, m²</legend>
+                            <div class="range">
+                                <input type="number" placeholder="min." name="areaMin" min="0" />
+                                <span>—</span>
+                                <input type="number" placeholder="maks." name="areaMax" min="0" />
+                            </div>
+                        </fieldset>
 
-            <fieldset class="fieldset range-field">
-                <legend>Mərtəbə</legend>
-                <div class="range">
-                    <input type="number" placeholder="min." name="floorMin" min="0" />
-                    <span>—</span>
-                    <input type="number" placeholder="maks." name="floorMax" min="0" />
-                </div>
-            </fieldset>
+                        <fieldset class="fieldset range-field">
+                            <legend>Mərtəbə</legend>
+                            <div class="range">
+                                <input type="number" placeholder="min." name="floorMin" min="0" />
+                                <span>—</span>
+                                <input type="number" placeholder="maks." name="floorMax" min="0" />
+                            </div>
+                        </fieldset>
 
+                        <fieldset class="fieldset location">
+                            <legend>Yerləşmə</legend>
+                            <div class="pill-group">
+                                <div class="dropdown-wrapper">
+                                    <button type="button" class="pill" data-target="districts">Rayon və qəsəbələr <i
+                                            class="bi bi-chevron-down"></i></button>
+                                    <div id="districts" class="dropdown hidden">
+                                        <ul></ul>
+                                    </div>
+                                </div>
 
-            <fieldset class="fieldset location">
-                <legend>Yerləşmə</legend>
-                <div class="pill-group">
-                    <div class="dropdown-wrapper">
-                        <button type="button" class="pill" data-target="districts">Rayon və qəsəbələr <i class="bi bi-chevron-down"></i></button>
-                        <div id="districts" class="dropdown hidden">
-                            <ul>
+                                <div class="dropdown-wrapper">
+                                    <button type="button" class="pill" data-target="metros">Metrostansiyalar <i
+                                            class="bi bi-chevron-down"></i></button>
+                                    <div id="metros" class="dropdown hidden">
+                                        <ul></ul>
+                                    </div>
+                                </div>
 
-                            </ul>
+                                <div class="dropdown-wrapper">
+                                    <button type="button" class="pill" data-target="landmarks">Nişangahlar <i
+                                            class="bi bi-chevron-down"></i></button>
+                                    <div id="landmarks" class="dropdown hidden">
+                                        <ul></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="fieldset range-field">
+                            <legend>Qiymət, AZN</legend>
+                            <div class="range">
+                                <input type="number" placeholder="min." name="priceMin" min="0" />
+                                <span>—</span>
+                                <input type="number" placeholder="maks." name="priceMax" min="0" />
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="fieldset extra">
+                            <legend>Elan nömrəsi</legend>
+                            <input type="text" name="postId" placeholder="№" />
+                            <label><input type="checkbox" name="extraction" /> Çıxarış var</label>
+                            <label><input type="checkbox" name="mortgage" /> İpoteka var</label>
+                        </fieldset>
+
+                        <div id="selectedTags" class="tags"></div>
+
+                        <div class="buttons">
+                            <button type="button" id="resetBtn" class="btn ghost">Sıfırla</button>
+                            <button type="button" id="toggleBtn" class="btn ghost">Gizlət
+                                <i class="bi bi-chevron-up"></i>
+                            </button>
+                            <button type="submit" id="searchBtn" class="btn primary">Axtar</button>
                         </div>
-                    </div>
-
-                    <div class="dropdown-wrapper">
-                        <button type="button" class="pill" data-target="metros">Metrostansiyalar <i class="bi bi-chevron-down"></i></button>
-                        <div id="metros" class="dropdown hidden">
-                            <ul>
-
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="dropdown-wrapper">
-                        <button type="button" class="pill" data-target="landmarks">Nişangahlar <i class="bi bi-chevron-down"></i></button>
-                        <div id="landmarks" class="dropdown hidden">
-                            <ul>
-
-                            </ul>
-                        </div>
-                    </div>
+                    </form>
                 </div>
-            </fieldset>
-
-
-            <fieldset class="fieldset range-field">
-                <legend>Qiymət, AZN</legend>
-                <div class="range">
-                    <input type="number" placeholder="min." name="priceMin" min="0" />
-                    <span>—</span>
-                    <input type="number" placeholder="maks." name="priceMax" min="0" />
-                </div>
-            </fieldset>
-
-            <fieldset class="fieldset extra">
-                <legend>Elan nömrəsi</legend>
-                <input type="text" name="postId" placeholder="№" />
-                <label><input type="checkbox" name="extraction" /> Çıxarış var</label>
-                <label><input type="checkbox" name="mortgage" /> İpoteka var</label>
-            </fieldset>
-
-            <div id="selectedTags" class="tags"></div>
-
-            <div class="buttons">
-                <button type="button" id="resetBtn" class="btn ghost">Sıfırla</button>
-                <button type="button" id="toggleBtn" class="btn ghost">Gizlət
-                    <i class="bi bi-chevron-up"></i>
-
-                </button>
-                <button type="submit" id="searchBtn" class="btn primary">Axtar</button>
-            </div>
-        </form>
-
-
-    </div>
-</div>
-
-
