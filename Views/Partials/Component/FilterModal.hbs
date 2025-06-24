@@ -1,70 +1,171 @@
-<div x-data="{ open: false }">
-    <button @click="open = true"
-            class="flex items-center gap-1 border border-[var(--border-color)] rounded-lg px-4 py-4 hover:text-[color:var(--primary)] transition">
 
-        <i class="fas fa-sliders-h text-[color:var(--primary)]"></i>
-    </button>
 
-    <div x-show="open" x-cloak
-         class="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(0,0,0,0.1)] backdrop-blur-sm">
+    <div x-show="open" x-cloak x-transition.opacity
+         class=" w-full absolute inset-0 top-[350px]   z-5 flex items-center justify-center
+                ">
 
-        <div class="bg-white rounded-xl p-6 w-full max-w-xl relative">
-            <button @click="open = false" class="absolute top-4 right-4 text-2xl text-[var(--grey-text)]">&times;</button>
-            <h2 class="text-xl font-bold text-[var(--text-color)] mb-4">Advanced Search</h2>
+        <div class="bg-white rounded-xl p-6 w-full  relative"
+             @click.outside="open = false">
+            <button @click="open = false"
+                    class="absolute top-4 right-3 text-2xl text-[var(--grey-text)]">&times;</button>
 
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-medium text-[var(--grey-text)] mb-1">Price from <span class="text-[var(--primary)]">$100</span> to <span class="text-[var(--primary)]">$500,000</span></label>
-                    <input type="range" min="100" max="500000" class="w-full accent-[var(--primary)]">
+            <form @submit.prevent="submit" style=" margin: 0 auto;" class="filter-panel mx-auto "
+                  :class="{ 'collapsed': collapsed }">
+                <fieldset class="fieldset repair">
+                    <legend>Təmir vəziyyəti</legend>
+                    <div class="toggle-group" data-name="repair">
+                        <template x-for="opt in repairs" :key="opt.value">
+                            <button type="button"
+                                    @click="form.repair = opt.value"
+                                    class="toggle"
+                                    :class="{ 'active': form.repair === opt.value }"
+                                    x-text="opt.label"></button>
+                        </template>
+                    </div>
+                </fieldset>
+
+                <fieldset class="fieldset range-field">
+                    <legend>Sahə, m²</legend>
+                    <div class="range">
+                        <input type="number" placeholder="min." x-model.number="form.areaMin" min="0">
+                        <span>—</span>
+                        <input type="number" placeholder="maks." x-model.number="form.areaMax" min="0">
+                    </div>
+                </fieldset>
+
+                <fieldset class="fieldset range-field">
+                    <legend>Mərtəbə</legend>
+                    <div class="range">
+                        <input type="number" placeholder="min." x-model.number="form.floorMin" min="0">
+                        <span>—</span>
+                        <input type="number" placeholder="maks." x-model.number="form.floorMax" min="0">
+                    </div>
+                </fieldset>
+
+                <fieldset class="fieldset location">
+                    <legend>Yerləşmə</legend>
+                    <div class="pill-group">
+                        <template x-for="(label, id) in locationLabels" :key="id">
+                            <div class="dropdown-wrapper" x-data="{ openDd: false }">
+                                <button type="button" class="pill" @click="openDd = !openDd">
+                                    <span x-text="label"></span>
+                                    <i class="bi bi-chevron-down"></i>
+                                </button>
+
+                                <ul x-show="openDd" x-transition x-cloak class="dropdown">
+                                    <template x-for="item in dropdownData[id]" :key="item">
+                                        <li class="dd-item"
+                                            @click="addTag(id, item); openDd = false"
+                                            x-text="item"></li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </template>
+                    </div>
+                </fieldset>
+
+                <fieldset class="fieldset range-field">
+                    <legend>Qiymət, AZN</legend>
+                    <div class="range">
+                        <input type="number" placeholder="min." x-model.number="form.priceMin" min="0">
+                        <span>—</span>
+                        <input type="number" placeholder="maks." x-model.number="form.priceMax" min="0">
+                    </div>
+                </fieldset>
+
+                <fieldset class="fieldset extra">
+                    <legend>Elan nömrəsi</legend>
+                    <input type="text" x-model="form.postId" placeholder="№">
+                    <label><input type="checkbox" x-model="form.extraction"> Çıxarış var</label>
+                    <label><input type="checkbox" x-model="form.mortgage"> İpoteka var</label>
+                </fieldset>
+
+                <div id="selectedTags" class="tags flex flex-wrap gap-2">
+                    <template x-for="(tag, i) in tags" :key="tag.scope + tag.value">
+                        <span class="tag" :data-scope="tag.scope" :data-value="tag.value">
+                            <span x-text="tag.value"></span>
+                            <button type="button" aria-label="Sil" @click="removeTag(i)">&times;</button>
+                        </span>
+                    </template>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-[var(--grey-text)] mb-1">Size range from <span class="text-[var(--primary)]">0</span> to <span class="text-[var(--primary)]">1,000</span></label>
-                    <input type="range" min="0" max="1000" class="w-full accent-[var(--primary)]">
-                </div>
-            </div>
 
-            <div class="grid grid-cols-2 gap-4 mt-4">
-                <select class="border border-[var(--border-color)] rounded-lg px-3 py-2 w-full">
-                    <option>Province / States</option>
-                </select>
-                <select class="border border-[var(--border-color)] rounded-lg px-3 py-2 w-full">
-                    <option>1</option>
-                </select>
-                <select class="border border-[var(--border-color)] rounded-lg px-3 py-2 w-full">
-                    <option>Bath: Any</option>
-                </select>
-                <select class="border border-[var(--border-color)] rounded-lg px-3 py-2 w-full">
-                    <option>Beds: Any</option>
-                </select>
-            </div>
+                <div class="buttons mt-4 flex gap-2">
+                    <button type="button" class="btn ghost" @click="reset">Sıfırla</button>
 
-            <div class="mt-6">
-                <p class="font-medium text-[var(--text-color)] mb-2">Xüsusiyyətlər:</p>
-                <div class="grid grid-cols-3 gap-2 text-sm text-[var(--grey-text)]">
-                    <label><input type="checkbox" class="mr-1">Bed linens</label>
-                    <label><input type="checkbox" class="mr-1">Carbon alarm</label>
-                    <label><input type="checkbox" class="mr-1">Check-in lockbox</label>
-                    <label><input type="checkbox" class="mr-1">Coffee maker</label>
-                    <label><input type="checkbox" class="mr-1">Fireplace</label>
-                    <label><input type="checkbox" class="mr-1">Extra pillows</label>
-                    <label><input type="checkbox" class="mr-1">First aid kit</label>
-                    <label><input type="checkbox" class="mr-1">Hangers</label>
-                    <label><input type="checkbox" class="mr-1">Iron</label>
-                    <label><input type="checkbox" class="mr-1">Microwave</label>
-                    <label><input type="checkbox" class="mr-1">Refrigerator</label>
-                    <label><input type="checkbox" class="mr-1">Security cameras</label>
-                    <label><input type="checkbox" class="mr-1">Smoke alarm</label>
-                    <label><input type="checkbox" class="mr-1">Fireplace</label>
+                    {{!-- <button type="button" class="btn ghost" @click="collapsed = !collapsed">
+                        <span x-text="collapsed ? 'Genişləndir' : 'Gizlət'"></span>
+                        <i class="bi" :class="collapsed ? 'bi-chevron-down' : 'bi-chevron-up'"></i>
+                    </button> --}}
+
+                    <button type="submit" class="btn primary">Axtar</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
-</div>
+
+
+<script>
+function filterModal () {
+    return {
+        open:      false,
+        collapsed: false,
+
+        repairs: [
+            { label: 'Hamısı',   value: '' },
+            { label: 'Təmirli',  value: 'renovated' },
+            { label: 'Təmirsiz', value: 'unrenovated' }
+        ],
+        dropdownData: {
+            districts: ['Binəqədi', 'Nərimanov', 'Nəsimi', 'Xətai', 'Yasamal'],
+            metros:    ['28 May', 'Gənclik', 'Elmlər', 'İnşaatçılar'],
+            landmarks: ['Gənclik Mall', 'Targovu', 'Flame Towers', 'Təhsil Nazirliyi']
+        },
+        locationLabels: {
+            districts: 'Rayon və qəsəbələr',
+            metros:    'Metrostansiyalar',
+            landmarks: 'Nişangahlar'
+        },
+        tags: [],
+
+        form: {
+            repair:    '',
+            areaMin:   '',
+            areaMax:   '',
+            floorMin:  '',
+            floorMax:  '',
+            priceMin:  '',
+            priceMax:  '',
+            postId:    '',
+            extraction:false,
+            mortgage:  false
+        },
+
+        addTag (scope, value) {
+            if (this.tags.find(t => t.scope === scope && t.value === value)) return;
+            this.tags.push({ scope, value });
+        },
+        removeTag (idx) { this.tags.splice(idx, 1); },
+
+        reset () {
+            this.form = {
+                repair: '', areaMin: '', areaMax: '', floorMin: '', floorMax: '',
+                priceMin: '', priceMax: '', postId: '', extraction: false, mortgage: false
+            };
+            this.tags      = [];
+            this.collapsed = false;
+        },
+
+        submit () {
+            const payload = { ...this.form, selected: this.tags };
+            console.log('FILTER PAYLOAD:', payload);
+            alert('filter payloada yazildi');
+            this.open = false;
+        }
+    }
+}
+</script>
 
 <style>
-    [x-cloak] {
-        display: none !important;
-    }
-</style>
+[x-cloak] { display: none !important; }
 
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</style>

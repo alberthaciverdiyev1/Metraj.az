@@ -26,6 +26,7 @@ gotop.addEventListener('click', () => {
 });
 
 
+
 //PAGINATION
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -6,7 +6,7 @@
     <section class="property-listing py-4">
         <div class="container mx-auto px-4">
 
-            <div class="flex items-center w-full gap-2 py-6 flex-wrap">
+            <div class="flex items-center w-full gap-2 py-6 flex-wrap relative">
                 <input type="text" placeholder="Address, City, ZIP..."
                        class="w-full md:w-[38%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 placeholder-gray-400 focus:outline-none"/>
 
@@ -38,8 +38,17 @@
                         <option value="{{this}}">{{this}} otaqlı</option>
                     {{/forLoop}}
                 </select>
+                
+<div x-data="filterModal()" @keyup.escape.window="open = false">
+  <button @click="open = true" class="flex items-center gap-1 border border-[var(--border-color)] rounded-lg px-4 py-4 hover:text-[color:var(--primary)] transition">
+    <i class="fas fa-sliders-h text-[color:var(--primary)]"></i>
+  </button>
+                    {{>Component.FilterModal}}
+  
+ 
+</div>
 
-                {{>Component.FilterModal}}
+              
 
                 <button
                         class="bg-orange-400 hover:bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold flex items-center mt-2 md:mt-0">
@@ -60,7 +69,6 @@
 
                 <div class="flex flex-wrap items-center gap-2">
 
-                    {{>Component.FilterModal}}
                     <button id="gridViewBtn" class="px-4 grid-btn py-3 rounded-md active-filter" data-view="grid">
                         <i class="bi bi-grid-3x3-gap"></i>
                     </button>
@@ -110,3 +118,83 @@
         </div>
     </section>
 </main>
+
+<script>
+function filterModal () {
+    return {
+        open:      false,
+        collapsed: false,
+
+        repairs: [
+            { label: 'Hamısı',   value: '' },
+            { label: 'Təmirli',  value: 'renovated' },
+            { label: 'Təmirsiz', value: 'unrenovated' }
+        ],
+        dropdownData: {
+            districts: ['Binəqədi', 'Nərimanov', 'Nəsimi', 'Xətai', 'Yasamal'],
+            metros:    ['28 May', 'Gənclik', 'Elmlər', 'İnşaatçılar'],
+            landmarks: ['Gənclik Mall', 'Targovu', 'Flame Towers', 'Təhsil Nazirliyi']
+        },
+        locationLabels: {
+            districts: 'Rayon və qəsəbələr',
+            metros:    'Metrostansiyalar',
+            landmarks: 'Nişangahlar'
+        },
+        tags: [],
+
+        form: {
+            repair:    '',
+            areaMin:   '',
+            areaMax:   '',
+            floorMin:  '',
+            floorMax:  '',
+            priceMin:  '',
+            priceMax:  '',
+            postId:    '',
+            extraction:false,
+            mortgage:  false
+        },
+
+        addTag (scope, value) {
+            if (this.tags.find(t => t.scope === scope && t.value === value)) return;
+            this.tags.push({ scope, value });
+        },
+        removeTag (idx) { this.tags.splice(idx, 1); },
+
+        reset () {
+            this.form = {
+                repair: '', areaMin: '', areaMax: '', floorMin: '', floorMax: '',
+                priceMin: '', priceMax: '', postId: '', extraction: false, mortgage: false
+            };
+            this.tags      = [];
+            this.collapsed = false;
+        },
+
+        submit () {
+            const payload = { ...this.form, selected: this.tags };
+            console.log('FILTER PAYLOAD:', payload);
+            alert('filter payloada yazildi');
+            this.open = false;
+        }
+    }
+}
+</script>
+
+<style>
+    [x-cloak] { display: none !important; }
+
+.filter-panel {
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.filter-panel.collapsed {
+  max-height: 0;
+  opacity: 0;
+}
+
+.filter-panel:not(.collapsed) {
+  max-height: 1000px;
+  opacity: 1;
+}
+</style>
