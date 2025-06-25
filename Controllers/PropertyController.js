@@ -5,6 +5,7 @@ import {randomUUID} from 'crypto'
 import pump from 'pump'
 import {uploadToBunny} from "../Helpers/bunnyCDN.js";
 import axios from 'axios'
+import {css, js} from "../Helpers/assets.js";
 async function listView(request, reply) {
     const buildingTypes = await getData(`/property-types`, false, true, true, true);
     const citiesResponse = await axios.get('https://api.porfolio.space/api/city');
@@ -13,8 +14,8 @@ async function listView(request, reply) {
 
     const view = {
         title: 'Listing Page',
-        css: ['listing.css', 'app.css'],
-        js: ['listing.js'],
+        css: css(['listing.css', 'app.css']),
+        js: js(['listing.js']),
         breadcrumbs: [
             {label: 'Home', url: '/'},
             {label: 'Property Listing', url: '/listing'}
@@ -35,10 +36,10 @@ async function detailsView(request, reply) {
 
     const view = {
         title: 'Property Detail',
-        css: ['app.css',
+        css: css(['app.css',
             'components.css',
-            'listing-details.css'],
-        js: ['listing-detail.js', 'app.js', 'gotop.js'],
+            'listing-details.css']),
+        js: js(['listing-detail.js', 'app.js', 'gotop.js']),
         property: Property,
         breadcrumbs: [
             {label: 'Home', url: '/'},
@@ -55,17 +56,17 @@ async function detailsView(request, reply) {
 async function addView(request, reply) {
     const view = {
         title: 'Add Property Page',
-        css: ['add-property.css',
+        css: css(['add-property.css',
             'app.css',
             'components.css'
-        ],
-        js: ['add-property.js',
+        ]),
+        js: css(['add-property.js',
             'map-find-adress.js',
             'components/features.js',
             'components/cities.js',
             'components/propertyTypes.js',
             'app.js'
-        ],
+        ]),
         breadcrumbs: [
             {label: 'Home', url: '/'},
             {label: 'Property Listing', url: '/listing'}

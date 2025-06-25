@@ -6,7 +6,7 @@ async function listView(request, reply) {
 
     const cssFiles = css(['agencies.css', 'app.css', 'listing.css']);
     const jsFiles = js(['agencies.js']);
-console.log({jsFiles,cssFiles})
+
     const view = {
         title: 'Agency Page',
         css: cssFiles,

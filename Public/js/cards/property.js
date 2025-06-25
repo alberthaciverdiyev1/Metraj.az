@@ -1,7 +1,9 @@
 import { formatPrice } from '../helpers/price.js';
 
+export function propertyCard(property, { onlyPremium = false } = {}) {
 
-export function propertyCard(property) {
+    if (onlyPremium && !property.is_premium) return '';
+
     const price = property.price
         ? formatPrice(
             typeof property.price === 'string'
@@ -11,9 +13,9 @@ export function propertyCard(property) {
         : formatPrice(0);
 
     const detailUrl = `/property/${property.id}`;
-const premiumBadge = property.is_premium
-    ? `<span class="absolute top-3 right-4 bg-red-400 text-white font-semibold text-[14px] px-3 py-1 rounded-full">Premium</span>`
-    : '';
+    const premiumBadge = property.is_premium
+        ? `<span class="absolute top-3 right-4 bg-red-400 text-white font-semibold text-[14px] px-3 py-1 rounded-full">Premium</span>`
+        : '';
 
     return `<div
         onclick="window.location.href='${detailUrl}'"
@@ -25,15 +27,13 @@ const premiumBadge = property.is_premium
             <img src="${property.media.path}" alt="${property.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" />
             <div class="absolute inset-0 flex items-center justify-center overflow-hidden">
                 <div class="absolute inset-0 bg-black/40 transition-all duration-500 ease-in-out transform -translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 z-0"></div>
-                <div class="z-10 flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                </div>
+                <div class="z-10 flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             </div>
             <div class="absolute top-3 left-4 flex gap-2">
                 <span class="bg-[color:var(--primary)] text-white text-[14px] font-semibold px-3 py-1 rounded-full">Kirayə</span>
                 <span class="bg-[#80807F] text-white font-semibold text-[14px] px-3 py-1 rounded-full">Satışda</span>
             </div>
             ${premiumBadge}
-
         </div>
 
         <div class="p-5">

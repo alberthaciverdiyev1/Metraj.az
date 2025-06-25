@@ -1,6 +1,5 @@
 import {getPropertiesList} from "./components/property.js";
 import {propertyCard} from "./cards/property.js";
-import {premiumCard} from './cards/premiumCards.js'
 const gotop = document.getElementById('scrollToTop');
 const progress = document.querySelector('.progress-circle .progress');
 const radius = 18;
@@ -192,9 +191,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         let premiumCards = '';
 
         properties.forEach(property => {
-            if (property.is_premium) {
-                premiumCards += premiumCard(property);
-            }
+            premiumCards += propertyCard(property, { onlyPremium: true });
+
             allCards += propertyCard(property);
         });
 

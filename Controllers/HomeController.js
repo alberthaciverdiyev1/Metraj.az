@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {css, js} from "../Helpers/assets.js";
 
 export async function homePage(request, reply) {
     try {
@@ -9,8 +10,8 @@ export async function homePage(request, reply) {
 
         const view = {
             title: 'Home Page',
-            css: ['home.css', 'app.css', 'components.css'],
-            js: ['home.js', 'app.js'],
+            css: css(['home.css', 'app.css', 'components.css']),
+            js: js(['home.js', 'app.js']),
             cities
         };
 
