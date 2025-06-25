@@ -1,12 +1,15 @@
 import {formatPrice} from '../helpers/price.js';
 
+
 export function propertyCard(property) {
     const price = property.price 
         ? formatPrice(typeof property.price === 'string' 
             ? parseFloat( property.price[0]?.price.replace(/,/g, ''))
             :  property.price[0]?.price)
         : formatPrice(0);
-
+const premiumBadge = property.is_premium
+    ? `<span class="absolute top-3 right-4 bg-red-400 text-white font-semibold text-[14px] px-3 py-1 rounded-full">Premium</span>`
+    : '';
 
         return `<div class="border border-[color:var(--border-color)] rounded-2xl overflow-hidden group relative transition-all duration-300">
         <div class="relative overflow-hidden">
@@ -22,7 +25,8 @@ export function propertyCard(property) {
                 <span class="bg-[color:var(--primary)] text-white text-[14px] font-semibold px-3 py-1 rounded-full">Kirayə</span>
                 <span class="bg-[#80807F] text-white font-semibold text-[14px] px-3 py-1 rounded-full">Satışda</span>
             </div>
-               <span class="absolute top-3 right-4 bg-red-400 text-white font-semibold text-[14px] px-3 py-1 rounded-full">Premium</span>
+            ${premiumBadge}
+
         </div>
 
         <div class="p-5">
