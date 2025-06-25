@@ -16,7 +16,7 @@ async function listView(request, reply) {
 async function Details(request, reply) {
     const { id } = request.params;
     const Agency = await getData(`/agency/${id}`);
-
+console.log(Agency)
     const view = {
         title: 'Agency Page',
         css: ['agency-detail.css', 'app.css', 'components.css', 'agencies.css'],

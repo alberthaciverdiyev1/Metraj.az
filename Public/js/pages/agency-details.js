@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getRelatedProperties() {
         const agencyId = document.getElementById('side').dataset.agencyId;
+        console.log(agencyId);
         axios.get(`/related-properties/${agencyId}`).then(res => {
             let h = "";
             console.log(res.data);
