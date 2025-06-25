@@ -8,29 +8,27 @@ import fastifyCookie from '@fastify/cookie'
 import secureSession from '@fastify/secure-session'
 import {globSync} from 'glob'
 import fs from 'fs'
-import {getData} from "./Helpers/CallApi.js";
-import dotenv from 'dotenv';
-import i18n from './Plugins/i18n.js';
-import i18next from "i18next";
+import {getData} from './Helpers/CallApi.js'
+import dotenv from 'dotenv'
+import i18n from './Plugins/i18n.js'
+import i18next from 'i18next'
 import multipart from '@fastify/multipart'
+import fastifyMinify from 'fastify-minify'
 
-dotenv.config();
+dotenv.config()
 
-// Fix for Windows paths
 const partialsDir = path.join(process.cwd(), 'Views', 'Partials')
 const partials = {}
-
-// Use path.posix for consistent forward slashes in glob patterns
 const globPattern = path.posix.join('**', '*.hbs')
 const files = globSync(globPattern, {cwd: partialsDir, posix: true})
 
 files.forEach(file => {
-    // Use path.posix for consistent forward slashes
     const name = file.replace(/\.hbs$/, '').replace(/\//g, '.')
     partials[name] = path.posix.join('Partials', file)
 })
 
 const fastify = Fastify({logger: false})
+
 await fastify.register(fastifyCookie)
 await fastify.register(i18n)
 await fastify.register(multipart)
@@ -40,12 +38,29 @@ fastify.register(secureSession, {
     cookie: {
         path: '/',
         httpOnly: true,
-        secure: false, // prod true
-        maxAge: 30 * 24 * 60 * 60 // 30 day
-    }
+        secure: false,
+        maxAge: 30 * 24 * 60 * 60,
+    },
 })
 
-// Handlebars helpers
+await fastify.register(fastifyStatic, {
+    root: path.join(process.cwd(), process.env.NODE_ENV === 'production' ? 'Dist' : 'Public'),
+    prefix: '/',
+});
+
+
+await fastify.register(fastifyMinify, {
+    cache: 2000,
+    global: true,
+    minInfix: false,
+    validate: (req, reply, payload) => {
+        const contentType = reply.getHeader('content-type') || '';
+        return contentType.includes('application/json') && typeof payload === 'string';
+    },
+});
+
+
+//  handlebars helpers
 handlebars.registerHelper('strLimit', function (text, limit) {
     if (!text || typeof text !== 'string') return ''
     return text.length > limit ? text.substring(0, limit) + '...' : text
@@ -66,15 +81,15 @@ handlebars.registerHelper('range', function (start, end, options) {
 })
 
 handlebars.registerHelper('t', function (key, options) {
-    const lang = options?.data?.root?.lang || 'en';
+    const lang = options?.data?.root?.lang || 'az'
     try {
-        const t = i18next.getFixedT(lang);
-        return t(key);
+        const t = i18next.getFixedT(lang)
+        return t(key)
     } catch (e) {
-        console.warn('Translation error:', e);
-        return key;
+        console.warn('Translation error:', e)
+        return key
     }
-});
+})
 
 handlebars.registerHelper('splitArray', function (array, parts, options) {
     const chunkSize = Math.ceil(array.length / parts)
@@ -87,22 +102,17 @@ handlebars.registerHelper('splitArray', function (array, parts, options) {
 
 handlebars.registerHelper('ifNo', function (value, options) {
     if (!value) {
-        return options.fn(this);
+        return options.fn(this)
     } else {
-        return options.inverse(this);
+        return options.inverse(this)
     }
-});
-
-handlebars.registerHelper('equal', function (a, b) {
-    return a === b;
-});
-
-// Static files
-fastify.register(fastifyStatic, {
-    root: path.join(process.cwd(), 'Public'),
-    prefix: '/',
 })
 
+handlebars.registerHelper('equal', function (a, b) {
+    return a === b
+})
+
+// HBS SSR render
 fastify.register(pointOfView, {
     engine: {handlebars},
     root: path.join(process.cwd(), 'Views'),
@@ -110,14 +120,13 @@ fastify.register(pointOfView, {
     viewExt: 'hbs',
     options: {
         partials,
-        cache: false, // production true
+        cache: false,
     },
     defaultContext: {
         useLayout: true,
         isProduction: process.env.NODE_ENV === 'production',
-    }
+    },
 })
-
 
 fastify.addHook('onRequest', async (request, reply) => {
     console.log(`[${new Date().toISOString()}] ${request.method} ${request.url}`)
@@ -139,11 +148,13 @@ fastify.addHook('preHandler', async (request, reply) => {
 })
 
 fastify.register(routes, {prefix: '/'})
+
 fastify.get('/aaa', async (request, reply) => {
     return {
-        message: request.t('hello')
+        message: request.t('hello'),
     }
 })
+
 
 fastify.listen({port: 3300}, err => {
     if (err) throw err

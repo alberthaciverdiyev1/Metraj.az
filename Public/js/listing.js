@@ -186,7 +186,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     async function properties() {
-        let properties = await getPropertiesList()
+        let properties = await getPropertiesList();
+        console.log(properties);
         let h = '';
         properties.forEach(property => {
             h += propertyCard(property);

@@ -1,17 +1,22 @@
 import {getData} from "../Helpers/CallApi.js";
+import {js,css} from "../Helpers/assets.js";
 
 async function listView(request, reply) {
     let agencies = await getData('/agency', [], false, false, false);
 
+    const cssFiles = css(['agencies.css', 'app.css', 'listing.css']);
+    const jsFiles = js(['agencies.js']);
+console.log({jsFiles,cssFiles})
     const view = {
         title: 'Agency Page',
-        css: ['agencies.css', 'app.css', 'listing.css'],
-        js: ['agencies.js'],
-        agencies: agencies
+        css: cssFiles,
+        js: jsFiles,
+        agencies
     };
 
     return reply.view('Pages/Agency/List.hbs', view);
 }
+
 
 async function Details(request, reply) {
     const { id } = request.params;

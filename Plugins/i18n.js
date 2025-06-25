@@ -8,14 +8,14 @@ export default fp(async function (fastify, opts) {
         backend: {
             loadPath: path.resolve('./Locales/{{lng}}.json')
         },
-        fallbackLng: 'en',
+        fallbackLng: 'az',
         preload: ['en', 'az','ru'],
         debug: false
     })
 
     fastify.decorateRequest('t', null)
     fastify.addHook('onRequest', async (request, reply) => {
-        const lang = request.cookies?.lang || 'en'
+        const lang = request.cookies?.lang || 'az'
         request.t = i18next.getFixedT(lang)
     })
 
