@@ -29,7 +29,8 @@
                 </div>
             </div>
 
-            <div class="bg-white  search-panel rounded-xl p-6 mt-8 w-[100%]">
+
+            <!-- <div class="bg-white  search-panel rounded-xl p-6 mt-8 w-[100%]">
                 <div class="flex flex-col sm:flex-row flex-wrap items-center gap-3 md:gap-4">
                     <input type="text" placeholder="Address, City, ZIP..."
                         class="px-4 py-3 rounded-xl w-full sm:flex-1 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-300 text-black order-1" />
@@ -88,7 +89,42 @@
                     
                 </div>
                   {{> Component.FilterNavbar }}
+            </div>-->
+
+            <div class="bg-white search-panel rounded-xl p-6 mt-8 w-full">
+                <div class="flex flex-col sm:flex-row flex-wrap gap-4 w-full text-black">
+
+                    <select name="city" id="city"
+                        class="border border-gray-300 rounded-lg px-4 py-2 w-full sm:flex-1 focus:ring-2 focus:ring-orange-300">
+                        <option value="">Şəhər seçin</option>
+                        {{#each cities}}
+                        <option value="{{this.id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+
+                    <select name="condition" id="condition"
+                        class="border border-gray-300 rounded-lg px-4 py-2 w-full sm:flex-1 focus:ring-2 focus:ring-orange-300">
+                        <option value="">Əmlakın vəziyyəti</option>
+                        <option value="new">Yeni</option>
+                        <option value="old">Köhnə</option>
+                    </select>
+
+                    <select name="priceRange" id="priceRange"
+                        class="border border-gray-300 rounded-lg px-4 py-2 w-full sm:flex-1 focus:ring-2 focus:ring-orange-300">
+                        <option value="">Qiymət aralığı</option>
+                        <option value="0-50000">0 - 50,000 AZN</option>
+                        <option value="50000-100000">50,000 - 100,000 AZN</option>
+                        <option value="100000-200000">100,000 - 200,000 AZN</option>
+                        <option value="200000+">200,000+ AZN</option>
+                    </select>
+                    <button class="bg-[var(--primary)] py-3 px-5 rounded-lg text-white" >Axtar</button>
+
+                </div>
             </div>
+
+
+
+
 
             <div class="relative">
                 <div id="filterModal" class="text-black absolute z-50 mt-2 right-0 w-[100%] p-6 bg-white rounded-2xl shadow-xl
@@ -176,6 +212,8 @@
                     </div>
                 </div>
             </div>
+
+
         </div>
     </section>
     <section id="luxury-listings">
