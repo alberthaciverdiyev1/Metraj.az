@@ -29,6 +29,18 @@ async function ComingSoon(request, reply) {
 }
 
 
-export default {ContactView,Faqs,ComingSoon}
+async function AboutUs(request, reply) {
+    const view = {
+        title: 'About Us',
+        css:  [ 'app.css', 'components.css', 'agencies.css','about-us.css'],
+        js:  ['gotop.js','app.js'],
+    };
+
+    
+
+    return reply.view('Pages/Static/AboutUs.hbs', view);
+
+}
+export default {ContactView,Faqs,ComingSoon,AboutUs}
 
 

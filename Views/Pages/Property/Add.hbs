@@ -3,8 +3,8 @@
 {{>Component.ScrollTop}}
 
 <section id="add-property">
-    <div class="side container px-4 mx-auto">
-        <div class="left-side">
+    <div class=" container px-4 mx-auto">
+        {{!-- <div class="left-side">
             <aside>
                 <ul class="py-2 text-base text-gray-800 space-y-1">
                     <li>
@@ -81,12 +81,12 @@
 
 
             </aside>
-        </div>
+        </div> --}}
 
-        <div class="right-side">
+        <div class="w-full">
             <main>
 
-                <div class="bg-white mt-2 p-5 max-w-5xl mx-auto rounded-lg shadow-md">
+                <div class="bg-white mt-2 p-5 mx-auto rounded-lg shadow-md">
                     <h2 class="text-2xl font-bold mb-6">Additional Information</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
@@ -204,14 +204,14 @@
                         </div>
 
                     </div>
-                    <div class="bg-white rounded-xl max-w-5xl mx-auto mt-6">
+                    <div class="bg-white rounded-xl w-full mx-auto mt-6">
                         <div class="mb-4">
                             <label for="description" class="block font-semibold mb-1">Description:</label>
                             <textarea name="description" id="description" placeholder="Your Description" rows="4"
                                 class="w-full border border-gray-300 rounded-md px-4 py-2"></textarea>
                         </div>
                     </div>
-                    <div class="bg-white rounded-xl max-w-5xl mx-auto mt-6">
+                    <div class="bg-white rounded-xl w-full mx-auto mt-6">
                         <div class="mb-4">
                             <label for="note-to-admin" class="block font-semibold mb-1">{{t "Note to admin"}}:</label>
                             <textarea name="note-to-admin" id="note-to-admin" placeholder="{{t " Note to admin"}}"
@@ -221,7 +221,7 @@
                 </div>
 
                 <section id="upload-image">
-                    <div class="px-6  mt-2 py-10 bg-white rounded-xl shadow-md max-w-5xl mx-auto">
+                    <div class="px-6  mt-2 py-10 bg-white rounded-xl shadow-md  w-full    mx-auto">
                         <h2 class="text-3xl font-bold mb-4">Upload Media</h2>
 
                         <div id="dropzone"
@@ -253,20 +253,20 @@
 
                 </section>
 
-                <div class="p-8 max-w-5xl mx-auto rounded-lg shadow-md mt-3 font-sans bg-white text-gray-800">
+                <div class="p-8 w-full mx-auto rounded-lg shadow-md mt-3 font-sans bg-white text-gray-800">
                     <h2 class="text-xl font-semibold mb-4">{{t "Features"}} <span style="color: red">*</span></h2>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="features"></div>
                 </div>
 
-                <div class="p-8 max-w-5xl mx-auto rounded-lg shadow-md mt-3 font-sans bg-white text-gray-800">
+                <div class="p-8 w-full mx-auto rounded-lg shadow-md mt-3 font-sans bg-white text-gray-800">
                     <h2 class="text-xl font-semibold mb-4">{{t "Nearby objects"}} <span style="color: red">*</span></h2>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="nearby-objects"></div>
                 </div>
 
                 <section id="property-information">
-                    <div class="p-6 bg-white rounded-xl shadow-md max-w-5xl mx-auto mt-6">
+                    <div class="p-6 bg-white rounded-xl shadow-md w-full mx-auto mt-6">
                         <h2 class="text-2xl font-bold mb-4">Information</h2>
 
                         <form method="POST" action="">

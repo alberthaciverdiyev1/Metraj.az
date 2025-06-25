@@ -4,9 +4,12 @@ import path from 'path'
 import {randomUUID} from 'crypto'
 import pump from 'pump'
 import {uploadToBunny} from "../Helpers/bunnyCDN.js";
-
+import axios from 'axios'
 async function listView(request, reply) {
     const buildingTypes = await getData(`/property-types`, false, true, true, true);
+    const citiesResponse = await axios.get('https://api.porfolio.space/api/city');
+    const cities = citiesResponse?.data?.data || [];
+    
 
     const view = {
         title: 'Listing Page',
@@ -16,6 +19,8 @@ async function listView(request, reply) {
             {label: 'Home', url: '/'},
             {label: 'Property Listing', url: '/listing'}
         ],
+        cities 
+,
         params: {
             buildingTypes
         }

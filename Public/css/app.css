@@ -26,6 +26,7 @@ body{
 button{
   cursor: pointer;
 }
+
 .button-hover {
   position: relative;
   overflow: hidden;
