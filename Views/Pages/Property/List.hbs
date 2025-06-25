@@ -1,4 +1,3 @@
-
 <div class="w-full bg-white">
     <div class="flex  mx-auto px-2 lg:px-6">
 
@@ -9,157 +8,183 @@
         </aside>
 
 
-<main class="w-full">
-    {{>Component.Breadcrumb items=breadcrumbs}}
+        <main class="w-full">
+            {{>Component.Breadcrumb items=breadcrumbs}}
 
-    {{>Component.ScrollTop}}
+            {{>Component.ScrollTop}}
 
-    <section class="property-listing py-4">
-        <div class="container mx-auto px-4">
+            <section class="property-listing py-4">
+                <div class="container mx-auto px-4">
 
-            <div class="flex items-center w-full gap-2 py-6 flex-wrap relative">
-                <input type="text" placeholder="Address, City, ZIP..."
-                    class="w-full md:w-[38%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 placeholder-gray-400 focus:outline-none" />
+                    <div class="flex items-center w-full gap-2 py-6 flex-wrap relative">
+                        <input type="text" placeholder="Address, City, ZIP..."
+                            class="w-full md:w-[38%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 placeholder-gray-400 focus:outline-none" />
 
-                <select data-role="property-type"
-                    class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
-                    <option value="" disabled selected> Select Add Type</option>
-                    <option value="sale">Alış</option>
-                    <option value="rent">Kirayə</option>
-                </select>
+                        <select data-role="property-type"
+                            class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
+                            <option value="" disabled selected> Select Add Type</option>
+                            <option value="sale">Alış</option>
+                            <option value="rent">Kirayə</option>
+                        </select>
 
-                <select data-role="building-type"
-                    class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
-                    <option selected disabled value="">Building Type</option>
-                    {{#each params.buildingTypes}}
-                    <option value="{{this.key}}">{{this.label}}</option>
-                    {{/each}}
+                        <select data-role="building-type"
+                            class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
+                            <option selected disabled value="">Building Type</option>
+                            {{#each params.buildingTypes}}
+                            <option value="{{this.key}}">{{this.label}}</option>
+                            {{/each}}
 
-                </select>
+                        </select>
 
-                <select data-role="property-condition"
-                    class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
-                    <option value="repaired">Təmirli</option>
-                    <option value="unrepaired">Təmirsiz</option>
-                </select>
+                        <select data-role="property-condition"
+                            class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
+                            <option value="repaired">Təmirli</option>
+                            <option value="unrepaired">Təmirsiz</option>
+                        </select>
 
-                <select data-role="room-count"
-                    class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
-                    <option value="">Otaq Sayı</option>
-                    {{#forLoop 20}}
-                    <option value="{{this}}">{{this}} otaqlı</option>
-                    {{/forLoop}}
-                </select>
+                        <select data-role="room-count"
+                            class="w-[48%] md:w-[11%] px-4 py-3 rounded-lg border border-gray-200 text-gray-700 focus:outline-none">
+                            <option value="">Otaq Sayı</option>
+                            {{#forLoop 20}}
+                            <option value="{{this}}">{{this}} otaqlı</option>
+                            {{/forLoop}}
+                        </select>
 
-                <div x-data="filterModal()" @keyup.escape.window="open = false">
-                    <button @click="open = true"
-                        class="flex items-center gap-1 border border-[var(--border-color)] rounded-lg px-4 py-4 hover:text-[color:var(--primary)] transition">
-                        <i class="fas fa-sliders-h text-[color:var(--primary)]"></i>
-                    </button>
-                    {{>Component.FilterModal}}
-
-
-                </div>
+                        <div x-data="filterModal()" @keyup.escape.window="open = false">
+                            <button @click="open = true"
+                                class="flex items-center gap-1 border border-[var(--border-color)] rounded-lg px-4 py-4 hover:text-[color:var(--primary)] transition">
+                                <i class="fas fa-sliders-h text-[color:var(--primary)]"></i>
+                            </button>
+                            {{>Component.FilterModal}}
 
 
-
-                <button
-                    class="bg-orange-400 hover:bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold flex items-center mt-2 md:mt-0">
-                    Search
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M21 21l-4.35-4.35M16.65 16.65A7.5 7.5 0 1116.65 2.5a7.5 7.5 0 010 14.15z" />
-                    </svg>
-                </button>
-            </div>
-
-            <div class="flex mb-5 flex-col sm:flex-row flex-wrap gap-4 w-full text-black">
-
-                <select name="city" id="city"
-                    class="border border-gray-300 rounded-lg px-4 py-2 w-full sm:flex-1 focus:ring-2 focus:ring-orange-300">
-                    <option value="">Şəhər seçin</option>
-                    {{#each cities}}
-                    <option value="{{this.id}}">{{this.name}}</option>
-                    {{/each}}
-                </select>
-
-                <select name="condition" id="condition"
-                    class="border border-gray-300 rounded-lg px-4 py-2 w-full sm:flex-1 focus:ring-2 focus:ring-orange-300">
-                    <option value="">Əmlakın vəziyyəti</option>
-                    <option value="new">Yeni</option>
-                    <option value="old">Köhnə</option>
-                </select>
-
-                <select name="priceRange" id="priceRange"
-                    class="border border-gray-300 rounded-lg px-4 py-2 w-full sm:flex-1 focus:ring-2 focus:ring-orange-300">
-                    <option value="">Qiymət aralığı</option>
-                    <option value="0-50000">0 - 50,000 AZN</option>
-                    <option value="50000-100000">50,000 - 100,000 AZN</option>
-                    <option value="100000-200000">100,000 - 200,000 AZN</option>
-                    <option value="200000+">200,000+ AZN</option>
-                </select>
-                <button class="bg-[var(--primary)] py-3 px-5 rounded-lg text-white">Axtar</button>
-
-            </div>
+                        </div>
 
 
-            <div class="flex  flex-col lg:flex-row justify-between gap-4 mb-5">
-                <h2 class="text-2xl lg:text-4xl font-bold text-[color:var(--text-color)]">
-                    Property listing
-                </h2>
 
-                <div class="flex flex-wrap items-center gap-2">
-
-                    <button id="gridViewBtn" class="px-4 grid-btn py-3 rounded-md active-filter" data-view="grid">
-                        <i class="bi bi-grid-3x3-gap"></i>
-                    </button>
-
-                    <button id="listViewBtn" class=" px-4 py-3 list border border-[var(--border-color)] rounded-md"
-                        data-view="list">
-                        <i class="fas fa-list text-[color:var(--icon-grey)] "></i>
-                    </button>
-
-
-                    <div class="relative">
-                        <button class="flex items-center border border-[var(--border-color)] px-4 py-3 rounded-md">
-                            Sort by (Default) <i class="fas fa-chevron-down ml-2"></i>
+                        <button
+                            class="bg-orange-400 hover:bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold flex items-center mt-2 md:mt-0">
+                            Search
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-4.35-4.35M16.65 16.65A7.5 7.5 0 1116.65 2.5a7.5 7.5 0 010 14.15z" />
+                            </svg>
                         </button>
                     </div>
-                </div>
-            </div>
 
-            <div id="propertyContainer"
-                class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-7 relative min-h-[300px]">
+                    <div class="flex mb-5 flex-col sm:flex-row flex-wrap gap-4 w-full text-black">
 
-                <div class="absolute inset-28 flex justify-center items-center z-20" id="loadingOverlay">
-                    <div class="flex flex-col items-center gap-3">
-                        <div class="loader"></div>
+                        <select name="city" id="city"
+                            class="border border-gray-300 rounded-lg px-4 py-2 w-full sm:flex-1 focus:ring-2 focus:ring-orange-300">
+                            <option value="">Şəhər seçin</option>
+                            {{#each cities}}
+                            <option value="{{this.id}}">{{this.name}}</option>
+                            {{/each}}
+                        </select>
+
+                        <select name="condition" id="condition"
+                            class="border border-gray-300 rounded-lg px-4 py-2 w-full sm:flex-1 focus:ring-2 focus:ring-orange-300">
+                            <option value="">Əmlakın vəziyyəti</option>
+                            <option value="new">Yeni</option>
+                            <option value="old">Köhnə</option>
+                        </select>
+
+                        <select name="priceRange" id="priceRange"
+                            class="border border-gray-300 rounded-lg px-4 py-2 w-full sm:flex-1 focus:ring-2 focus:ring-orange-300">
+                            <option value="">Qiymət aralığı</option>
+                            <option value="0-50000">0 - 50,000 AZN</option>
+                            <option value="50000-100000">50,000 - 100,000 AZN</option>
+                            <option value="100000-200000">100,000 - 200,000 AZN</option>
+                            <option value="200000+">200,000+ AZN</option>
+                        </select>
+                        <button class="bg-[var(--primary)] py-3 px-5 rounded-lg text-white">Axtar</button>
+
                     </div>
-                </div>
-
-            </div>
 
 
-            <div class="result">
-                <div class="text">
-                    Showing 1-9 of 12 results.
-                </div>
-                <nav aria-label="Page navigation">
-                    <ul class="pagination mb-0">
-                        <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><i
-                                    class="bi bi-chevron-left"></i></a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item active" aria-current="page"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#">20</a></li>
-                        <li class="page-item"><a class="page-link" href="#" aria-label="Next"><i
-                                    class="bi bi-chevron-right"></i></a></li>
-                    </ul>
-                </nav>
-            </div>
-    </section>
-</main>
+                    <div class="flex  flex-col lg:flex-row justify-between gap-4 mb-5">
+                        <h2 class="text-2xl lg:text-4xl font-bold text-[color:var(--text-color)]">
+                            Property listing
+                        </h2>
+
+                        <div class="flex flex-wrap items-center gap-2">
+
+                            <button id="gridViewBtn" class="px-4 grid-btn py-3 rounded-md active-filter"
+                                data-view="grid">
+                                <i class="bi bi-grid-3x3-gap"></i>
+                            </button>
+
+                            <button id="listViewBtn"
+                                class=" px-4 py-3 list border border-[var(--border-color)] rounded-md" data-view="list">
+                                <i class="fas fa-list text-[color:var(--icon-grey)] "></i>
+                            </button>
+
+
+                            <div class="relative">
+                                <button
+                                    class="flex items-center border border-[var(--border-color)] px-4 py-3 rounded-md">
+                                    Sort by (Default) <i class="fas fa-chevron-down ml-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="text-xl   text-gray-700 ">
+                        <span class="text-red-500">Premium</span> elanlar  ilə tanış ol!
+
+                    </h2>
+
+                    <div id="premiumCard"
+                     class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-7 relative min-h-[300px]">
+                             <div class="absolute inset-28 flex justify-center items-center z-20" id="loadingOverlay">
+                            <div class="flex flex-col items-center gap-3">
+                                <div class="loader"></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <hr class="text-gray-300 mt-7">
+                    <h2 class="text-xl  text-gray-700 mt-6 ">
+                        Bütün elanlar
+
+                    </h2>
+
+
+
+                    <div id="propertyContainer"
+                        class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-7 relative min-h-[300px]">
+
+                        <div class="absolute inset-28 flex justify-center items-center z-20" id="loadingOverlay">
+                            <div class="flex flex-col items-center gap-3">
+                                <div class="loader"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="result">
+                        <div class="text">
+                            Showing 1-9 of 12 results.
+                        </div>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination mb-0">
+                                <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><i
+                                            class="bi bi-chevron-left"></i></a></li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item active" aria-current="page"><a class="page-link" href="#">2</a>
+                                </li>
+                                <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                                <li class="page-item"><a class="page-link" href="#">20</a></li>
+                                <li class="page-item"><a class="page-link" href="#" aria-label="Next"><i
+                                            class="bi bi-chevron-right"></i></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+            </section>
+        </main>
         <aside class="hidden xl:block w-[160px] mt-8">
             <div class="sticky top-24">
                 <img src="https://placehold.co/200x1300" alt="Sağ Reklam" class="rounded-lg shadow w-full" />
