@@ -8,6 +8,7 @@ import Base from '../Controllers/BaseController.js'
 import i18next from "i18next";
 import fastifyCookie from '@fastify/cookie'
 
+
 export default async function route(fastify, options) {
     fastify.get('/', homePage)
     fastify.get('/property', Property.listView)
@@ -27,7 +28,7 @@ export default async function route(fastify, options) {
     fastify.get('/contact', Static.ContactView);
     fastify.get('/faqs', Static.Faqs);
     fastify.get('/comingSoon', Static.ComingSoon);
-
+    fastify.get('/about-us', Static.AboutUs);
     fastify.get('/login', Auth.LoginView);
     fastify.get('/register', Auth.RegisterView);
     fastify.post('/register', Auth.Register)
