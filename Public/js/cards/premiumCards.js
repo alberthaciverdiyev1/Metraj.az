@@ -1,32 +1,30 @@
-import {formatPrice} from '../helpers/price.js';
+import { formatPrice } from '../helpers/price.js';
 
 
-export function propertyCard(property) {
+export function premiumCard(property) {
+    if (!property.is_premium) return '';
+
     const price = property.price 
         ? formatPrice(typeof property.price === 'string' 
-            ? parseFloat( property.price[0]?.price.replace(/,/g, ''))
-            :  property.price[0]?.price)
+            ? parseFloat(property.price[0]?.price.replace(/,/g, ''))
+            : property.price[0]?.price)
         : formatPrice(0);
-const premiumBadge = property.is_premium
-    ? `<span class="absolute top-3 right-4 bg-red-400 text-white font-semibold text-[14px] px-3 py-1 rounded-full">Premium</span>`
-    : '';
 
-        return `<div class="border border-[color:var(--border-color)] rounded-2xl overflow-hidden group relative transition-all duration-300">
+    const premiumBadge = `<span class="absolute top-3 right-4 bg-red-400 text-white font-semibold text-[14px] px-3 py-1 rounded-full">Premium</span>`;
+
+    return `
+    <div class="border border-[color:var(--border-color)] rounded-2xl overflow-hidden group relative transition-all duration-300">
         <div class="relative overflow-hidden">
             <img src="${property.media.path}" alt="${property.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" />
             <div class="absolute inset-0 flex items-center justify-center overflow-hidden">
                 <div class="absolute inset-0 bg-black/40 transition-all duration-500 ease-in-out transform -translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 z-0"></div>
-                <div class="z-10 flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    
-                  
-                </div>
+                <div class="z-10 flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             </div>
             <div class="absolute top-3 left-4 flex gap-2">
                 <span class="bg-[color:var(--primary)] text-white text-[14px] font-semibold px-3 py-1 rounded-full">Kirayə</span>
                 <span class="bg-[#80807F] text-white font-semibold text-[14px] px-3 py-1 rounded-full">Satışda</span>
             </div>
             ${premiumBadge}
-
         </div>
 
         <div class="p-5">
@@ -47,8 +45,7 @@ const premiumBadge = property.is_premium
                 <button class="flex compare items-center gap-1 text-sm text-[#2C2E33] hover:text-[color:var(--primary)] transition-colors">
                     <i class="fas fa-random"></i> Compare
                 </button>
-               
             </div>
         </div>
-    </div>`
+    </div>`;
 }

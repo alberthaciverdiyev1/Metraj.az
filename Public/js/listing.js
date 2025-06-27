@@ -1,5 +1,6 @@
 import {getPropertiesList} from "./components/property.js";
 import {propertyCard} from "./cards/property.js";
+import {premiumCard} from './cards/premiumCards.js'
 const gotop = document.getElementById('scrollToTop');
 const progress = document.querySelector('.progress-circle .progress');
 const radius = 18;
@@ -186,23 +187,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function properties() {
         let properties = await getPropertiesList();
-
+    
         let allCards = '';
         let premiumCards = '';
-
+    
         properties.forEach(property => {
-            premiumCards += propertyCard(property, { onlyPremium: true });
-
-            allCards += propertyCard(property);
+            if (property.is_premium) {
+                premiumCards += premiumCard(property); 
+            }
+            allCards += propertyCard(property); 
         });
-
+    
         document.getElementById('premiumCard').innerHTML = premiumCards;
         document.getElementById('propertyContainer').innerHTML = allCards;
-
+    
         showPage(1);
     }
-
-
+    
+    
 
     document.querySelector('[data-role="property-type"]').addEventListener('change', async (event) => {
         const selectedValue = event.target.value;
