@@ -5,8 +5,7 @@
   "scripts": {
     "start": "node app.js",
     "tailwind:init": "tailwindcss init -p",
-    "build:css": "tailwindcss -i ./Public/css/input.css -o ./Public/css/style.css --watch",
-    "build": "vite build"
+    "build:css": "tailwindcss -i ./Public/css/input.css -o ./Public/css/style.css --watch"
   },
   "dependencies": {
     "@fastify/cookie": "^11.0.2",
@@ -19,7 +18,7 @@
     "@fastify/view": "^11.1.0",
     "axios": "^1.10.0",
     "connect-redis": "^9.0.0",
-    "dotenv": "^16.5.0",
+    "dotenv": "^16.6.0",
     "ejs": "^3.1.10",
     "fastify": "^5.3.3",
     "fastify-minify": "^1.2.0",
@@ -37,7 +36,6 @@
   "devDependencies": {
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.4",
-    "tailwindcss": "^3.3.5",
-    "vite": "^7.0.0"
+    "tailwindcss": "^3.3.5"
   }
 }

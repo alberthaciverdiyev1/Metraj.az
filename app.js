@@ -4,11 +4,12 @@ import handlebars from 'handlebars'
 import routes from './Routes/Routes.js'
 import fastifyStatic from '@fastify/static'
 import * as path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import fastifyCookie from '@fastify/cookie'
 import secureSession from '@fastify/secure-session'
-import {globSync} from 'glob'
+import { globSync } from 'glob'
 import fs from 'fs'
-import {getData} from './Helpers/CallApi.js'
+import { getData } from './Helpers/CallApi.js'
 import dotenv from 'dotenv'
 import i18n from './Plugins/i18n.js'
 import i18next from 'i18next'
@@ -17,24 +18,26 @@ import fastifyMinify from 'fastify-minify'
 
 dotenv.config()
 
-const partialsDir = path.join(process.cwd(), 'Views', 'Partials')
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+const partialsDir = path.join(__dirname, 'Views', 'Partials')
 const partials = {}
-const globPattern = path.posix.join('**', '*.hbs')
-const files = globSync(globPattern, {cwd: partialsDir, posix: true})
+const globPattern = path.join('**', '*.hbs').replace(/\\/g, '/') 
+const files = globSync(globPattern, { cwd: partialsDir, posix: true })
 
 files.forEach(file => {
     const name = file.replace(/\.hbs$/, '').replace(/\//g, '.')
-    partials[name] = path.posix.join('Partials', file)
+    partials[name] = path.join('Partials', file).replace(/\\/g, '/') 
 })
 
-const fastify = Fastify({logger: false})
+const fastify = Fastify({ logger: false })
 
 await fastify.register(fastifyCookie)
 await fastify.register(i18n)
 await fastify.register(multipart)
 
 fastify.register(secureSession, {
-    key: fs.readFileSync(path.join(process.cwd(), 'secret-key')),
+    key: fs.readFileSync(path.join(__dirname, 'secret-key')),
     cookie: {
         path: '/',
         httpOnly: true,
@@ -44,23 +47,20 @@ fastify.register(secureSession, {
 })
 
 await fastify.register(fastifyStatic, {
-    root: path.join(process.cwd(), process.env.NODE_ENV === 'production' ? 'Dist' : 'Public'),
+    root: path.join(__dirname, process.env.NODE_ENV === 'production' ? 'Dist' : 'Public'),
     prefix: '/',
-});
-
+})
 
 await fastify.register(fastifyMinify, {
     cache: 2000,
     global: true,
     minInfix: false,
     validate: (req, reply, payload) => {
-        const contentType = reply.getHeader('content-type') || '';
-        return contentType.includes('application/json') && typeof payload === 'string';
+        const contentType = reply.getHeader('content-type') || ''
+        return contentType.includes('application/json') && typeof payload === 'string'
     },
-});
+})
 
-
-//  handlebars helpers
 handlebars.registerHelper('strLimit', function (text, limit) {
     if (!text || typeof text !== 'string') return ''
     return text.length > limit ? text.substring(0, limit) + '...' : text
@@ -112,10 +112,19 @@ handlebars.registerHelper('equal', function (a, b) {
     return a === b
 })
 
-// HBS SSR render
+handlebars.registerHelper('css', function (file) {
+    const prefix = process.env.NODE_ENV === 'production' ? '/assets/css/' : '/css/'
+    return new handlebars.SafeString(`<link rel="stylesheet" href="${prefix}${file}">`)
+})
+
+handlebars.registerHelper('js', function (file) {
+    const prefix = process.env.NODE_ENV === 'production' ? '/assets/js/' : '/js/'
+    return new handlebars.SafeString(`<script src="${prefix}${file}"></script>`)
+})
+
 fastify.register(pointOfView, {
-    engine: {handlebars},
-    root: path.join(process.cwd(), 'Views'),
+    engine: { handlebars },
+    root: path.join(__dirname, 'Views'),
     layout: 'Main',
     viewExt: 'hbs',
     options: {
@@ -139,7 +148,7 @@ fastify.addHook('preHandler', async (request, reply) => {
         const user = request.session.get('user') || null
         const jwt_token = request.session.get('jwt_token') || null
 
-        data.session = {user, jwt_token}
+        data.session = { user, jwt_token }
         data.user = user
         data.setting = await getData('/setting', [], false, true, true)
         data.lang = request.cookies.lang || 'en'
@@ -147,16 +156,19 @@ fastify.addHook('preHandler', async (request, reply) => {
     }
 })
 
-fastify.register(routes, {prefix: '/'})
+fastify.register(routes, { prefix: '/' })
 
-fastify.get('/aaa', async (request, reply) => {
+// Example route
+fastify.get('/test', async (request, reply) => {
     return {
         message: request.t('hello'),
     }
 })
 
-
-fastify.listen({port: 3300}, err => {
-    if (err) throw err
-    console.log('http://localhost:3300')
+fastify.listen({ port: 3300, host: '0.0.0.0' }, err => {
+    if (err) {
+        console.error(err)
+        process.exit(1)
+    }
+    console.log('Server running on http://localhost:3300')
 })
