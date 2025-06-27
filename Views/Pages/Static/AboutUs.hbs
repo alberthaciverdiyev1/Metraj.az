@@ -1,7 +1,7 @@
 <main>
 
     <section id="hero"
-        class=" mx-auto bg-[url('https://themesflat.co/html/proty/images/section/page-title-loan.jpg')]   bg-top min-h-[370px] flex flex-col justify-center items-center">
+        class=" bg-no-repeat bg-cover  mx-auto bg-[url('https://themesflat.co/html/proty/images/section/page-title-loan.jpg')]   bg-top min-h-[370px] flex flex-col justify-center items-center">
 
 
         <h2 class="text-center  text-4xl text-black">Home Loan Process
@@ -187,28 +187,34 @@
 
     </section>
 
-<section class="relative w-7xl flex rounded-3xl mt-6 mx-auto bg-[var(--primary)] px-9 overflow-hidden">
+    <section
+        class="relative sm:flex    max-w-7xl  flex flex-col rounded-3xl mt-6 mx-auto bg-[var(--primary)] px-9 overflow-hidden">
 
-    <div class="absolute inset-0 bg-[url('https://themesflat.co/html/proty/images/section/cta-4.png')] bg-no-repeat bg-left bg-contain opacity-100 pointer-events-none z-10"></div>
+        <div
+            class="absolute inset-0 bg-[url('https://themesflat.co/html/proty/images/section/cta-4.png')] bg-no-repeat bg-left bg-contain opacity-100 pointer-events-none z-10">
+        </div>
 
-    <div class="relative z-20 flex flex-1 justify-between items-center w-full">
-        <div class="left text-white max-w-xl ">
-             <div class="logo">
-                {{#if setting.logo}}
-                <img src="{{setting.logo}}" class="w-[170px] h-[50px]" alt="">
-                {{/if}}
+        <div class="relative z-20 flex sm:flex-row flex-col flex-1 justify-between items-center w-full">
+            <div class="left text-white max-w-xl ">
+                <div class="logo">
+                    {{#if setting.logo}}
+                    <img src="{{setting.logo}}" class="w-[170px] h-[50px]" alt="">
+                    {{/if}}
 
 
+                </div>
+                <h2 class="text-4xl sm:text-md mt-5 font-bold">Find a Local Real Estate Agent Today</h2>
+                <p class="my-4">If you’re looking to buy or sell a home. We’ll help you make the most money possible.
+                </p>
+                <button
+                    class="bg-white sm:py-1 sm:px-3 text-[var(--primary)] px-6 py-4 rounded-xl font-semibold hover:bg-gray-100 transition mt-6">Find
+                    your Location agent</button>
             </div>
-            <h2 class="text-4xl mt-5 font-bold">Find a Local Real Estate Agent Today</h2>
-            <p class="my-4">If you’re looking to buy or sell a home. We’ll help you make the most money possible.</p>
-            <button class="bg-white text-[var(--primary)] px-6 py-4 rounded-xl font-semibold hover:bg-gray-100 transition mt-6">Find your Location agent</button>
+            <div class="right ">
+                <img src="https://themesflat.co/html/proty/images/section/person-2.png" alt="">
+            </div>
         </div>
-        <div class="right">
-            <img src="https://themesflat.co/html/proty/images/section/person-2.png" alt="">
-        </div>
-    </div>
-</section>
+    </section>
 
 
 
