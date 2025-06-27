@@ -159,37 +159,57 @@
                 </div>
             </div>
         </div>
-  </section>
-        <section class="container mt-6 border border-gray-200  rounded-3xl mx-auto max-w-7xl">
+    </section>
+    <section class="container mt-6 border border-gray-200  rounded-3xl mx-auto max-w-7xl">
 
-            <section class="container mx-auto max-w-7xl overflow-hidden rounded-t-3xl">
-                <div class="relative h-[400px] rounded-t-3xl overflow-hidden">
-                    <div
-                        class="absolute w-full inset-0 bg-[url('https://themesflat.co/html/proty/images/section/section-calculate.jpg')] bg-fixed bg-top  bg-contain bg-no-repeat">
-                    </div>
+        <section class="container mx-auto max-w-7xl overflow-hidden rounded-t-3xl">
+            <div class="relative h-[400px] rounded-t-3xl overflow-hidden">
+                <div
+                    class="absolute w-full inset-0 bg-[url('https://themesflat.co/html/proty/images/section/section-calculate.jpg')] bg-fixed bg-top  bg-contain bg-no-repeat">
                 </div>
-
-               
-
-
-                 
-                    <div class="md:w-full space-y-6 p-8">
-                        {{>Component.DoYouNeedLoan}}
-                    </div>
-
-             
-            </section>
+            </div>
 
 
 
 
+
+            <div class="md:w-full space-y-6 p-8">
+                {{>Component.DoYouNeedLoan}}
+            </div>
 
 
         </section>
 
 
 
-  
+
+
+
+    </section>
+
+<section class="relative w-7xl flex rounded-3xl mt-6 mx-auto bg-[var(--primary)] px-9 overflow-hidden">
+
+    <div class="absolute inset-0 bg-[url('https://themesflat.co/html/proty/images/section/cta-4.png')] bg-no-repeat bg-left bg-contain opacity-100 pointer-events-none z-10"></div>
+
+    <div class="relative z-20 flex flex-1 justify-between items-center w-full">
+        <div class="left text-white max-w-xl ">
+             <div class="logo">
+                {{#if setting.logo}}
+                <img src="{{setting.logo}}" class="w-[170px] h-[50px]" alt="">
+                {{/if}}
+
+
+            </div>
+            <h2 class="text-4xl mt-5 font-bold">Find a Local Real Estate Agent Today</h2>
+            <p class="my-4">If you’re looking to buy or sell a home. We’ll help you make the most money possible.</p>
+            <button class="bg-white text-[var(--primary)] px-6 py-4 rounded-xl font-semibold hover:bg-gray-100 transition mt-6">Find your Location agent</button>
+        </div>
+        <div class="right">
+            <img src="https://themesflat.co/html/proty/images/section/person-2.png" alt="">
+        </div>
+    </div>
+</section>
+
 
 
 </main>
