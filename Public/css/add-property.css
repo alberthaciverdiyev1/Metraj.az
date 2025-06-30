@@ -6,7 +6,10 @@ body {
     display: flex;
     padding: 0.4rem 0rem;
 }
-
+#add-property-btn{
+    margin: 2rem 0rem;
+    width: 50%;
+}
 .left-side {
     width: 26%;
 }
