@@ -11,7 +11,9 @@ let city_id = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
     await Promise.all([propertyTypes(), featureList(), cityList(), subwayList(), nearbyObjectsList()]);
-
+    const addBtn       = document.getElementById('add-property-btn'); 
+    const termsCheckbox = document.getElementById('terms');
+  
     const dropzone = document.getElementById("dropzone");
     const fileInput = document.getElementById("fileInput");
     const gallery = document.getElementById("gallery");
@@ -20,6 +22,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     fileInput.addEventListener("change", handleFiles);
 
+     addBtn.disabled = !termsCheckbox.checked;    
+  addBtn.classList.toggle('opacity-50', !termsCheckbox.checked);
+  addBtn.classList.toggle('cursor-not-allowed', !termsCheckbox.checked);
     ["dragenter", "dragover"].forEach(event => {
         dropzone.addEventListener(event, e => {
             e.preventDefault();
@@ -269,8 +274,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
 
-    document.getElementById('add-property-btn').addEventListener('click', async function (e) {
+    termsCheckbox.addEventListener('change', e => {
+        const accepted = e.target.checked;
+        addBtn.disabled = !accepted;
+        addBtn.classList.toggle('opacity-50', !accepted);
+        addBtn.classList.toggle('cursor-not-allowed', !accepted);
+    });
+    addBtn.addEventListener('click', async function (e) {
         e.preventDefault();
+        if (!termsCheckbox.checked) {
+            alert('Elanı yerləşdirməzdən əvvəl istifadəçi razılaşmasını qəbul etməlisiniz.');
+            return;
+          }
 
         const fileInput = document.getElementById('fileInput');
         const videoInput = document.getElementById('video');
