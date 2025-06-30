@@ -25,7 +25,6 @@ function assets(files, type = 'js') {
 }
 
 export function css(files) {
-    console.log(assets(files, 'css'))
     return assets(files, 'css');
 }
 

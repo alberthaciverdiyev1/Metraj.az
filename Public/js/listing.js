@@ -187,20 +187,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function properties() {
         let properties = await getPropertiesList();
-    
-        let allCards = '';
+
         let premiumCards = '';
-    
+        let allCards = '';
+
         properties.forEach(property => {
+            const cardHtml = propertyCard(property);
+            allCards += cardHtml;
+
             if (property.is_premium) {
-                premiumCards += premiumCard(property); 
+                premiumCards += cardHtml;
             }
-            allCards += propertyCard(property); 
         });
-    
+
         document.getElementById('premiumCard').innerHTML = premiumCards;
         document.getElementById('propertyContainer').innerHTML = allCards;
-    
+
         showPage(1);
     }
     
