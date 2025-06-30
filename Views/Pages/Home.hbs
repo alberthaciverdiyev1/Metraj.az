@@ -29,8 +29,7 @@
                 </div>
             </div>
 
-
-            <!-- <div class="bg-white  search-panel rounded-xl p-6 mt-8 w-[100%]">
+<!--  <div class="bg-white  search-panel rounded-xl p-6 mt-8 w-[100%]">
                 <div class="flex flex-col sm:flex-row flex-wrap items-center gap-3 md:gap-4">
                     <input type="text" placeholder="Address, City, ZIP..."
                         class="px-4 py-3 rounded-xl w-full sm:flex-1 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-300 text-black order-1" />
@@ -72,11 +71,7 @@
                             class="bg-orange-300 text-white px-5 py-4 rounded-xl flex items-center justify-center flex-shrink-0 hover:bg-orange-400 focus:outline-none">
                             
                         </button> --}}
-                          <button
-                            class="open-search-btn bg-orange-300 text-white px-5 py-4 rounded-xl flex items-center justify-center flex-shrink-0 hover:bg-orange-400 focus:outline-none"
-                            id="openSearchBtn">
-                            <i class="fa-solid fa-sliders"></i>
-                        </button>
+                          
 
                        
                         <button
@@ -90,8 +85,11 @@
                 </div>
                   {{> Component.FilterNavbar }}
             </div>-->
+           
 
             <div class="bg-white search-panel rounded-xl p-6 mt-8 w-full">
+                    {{> Component.FilterNavbar }}
+              
                 <div class="flex flex-col sm:flex-row flex-wrap gap-4 w-full text-black">
 
                     <select name="city" id="city"
@@ -117,6 +115,11 @@
                         <option value="100000-200000">100,000 - 200,000 AZN</option>
                         <option value="200000+">200,000+ AZN</option>
                     </select>
+                      <button
+                            class="open-search-btn bg-orange-300 text-white px-5 py-4 rounded-xl flex items-center justify-center flex-shrink-0 hover:bg-orange-400 focus:outline-none"
+                            id="openSearchBtn">
+                            <i class="fa-solid fa-sliders"></i>
+                        </button>
                     <button class="bg-[var(--primary)] py-3 px-5 rounded-lg text-white" >Axtar</button>
 
                 </div>
@@ -127,7 +130,7 @@
 
 
             <div class="relative">
-                <div id="filterModal" class="text-black absolute z-50 mt-2 right-0 w-[100%] p-6 bg-white rounded-2xl shadow-xl
+                <div id="filterModal" class="text-black absolute z-50  right-0 w-[100%] p-6 bg-white rounded-2xl shadow-xl
                                          opacity-0 -translate-y-3 invisible
                                          transition-all duration-300 ease-out">
                     <div class="flex flex-col md:flex-row items-center gap-6">

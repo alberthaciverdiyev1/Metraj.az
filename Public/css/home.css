@@ -179,6 +179,9 @@
 .hover-effect-button:hover .hover-effect-button-fill {
     width: 100%;
 }
+#filterModal{
+  margin-top: 30px;
+}
 /*discpver*/
   .tabs {
     text-align: center;
