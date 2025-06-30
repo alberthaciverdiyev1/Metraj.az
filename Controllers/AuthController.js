@@ -1,12 +1,13 @@
-import {getData, postData, setData} from "../Helpers/CallApi.js";
+import {postData} from "../Helpers/CallApi.js";
+import {css, js} from "../Helpers/assets.js";
 
 async function LoginView(request, reply) {
 
     const view = {
         title: 'Login Page',
-        css: ['registerlogin.css', 'app.css'],
-        js: ['gotop.js',
-            'auth/login.js'],
+        css: css(['registerlogin.css', 'app.css']),
+        js: js(['gotop.js',
+            'auth/login.js']),
         useLayout: false
     };
 
@@ -36,9 +37,8 @@ async function RegisterView(request, reply) {
 
     const view = {
         title: 'Register Page',
-        css: ['registerlogin.css', 'app.css'],
-        js: ['gotop.js',
-            'auth/register.js'],
+        css: css(['registerlogin.css', 'app.css']),
+        js: js(['gotop.js','auth/register.js']),
         useLayout: false
 
     };
@@ -69,8 +69,8 @@ async function OtpView(request, reply) {
 
     const view = {
         title: 'Otp Page',
-        css: ['registerlogin.css', 'app.css', 'otp.css'],
-        js: ['otp.js'],
+        css: css(['registerlogin.css', 'app.css', 'otp.css']),
+        js: js(['otp.js']),
         useLayout: false
 
     };
@@ -93,7 +93,7 @@ async function ResetPasswordView(request, reply) {
 
     const view = {
         title: 'Reset Password Page',
-        css: ['reset.css', 'app.css'],
+        css: css(['reset.css', 'app.css']),
         js: [],
         useLayout: false
 

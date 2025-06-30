@@ -1,12 +1,13 @@
 import {getData} from "../Helpers/CallApi.js";
+import {css, js} from "../Helpers/assets.js";
 
 async function listView(request, reply) {
     const Blogs = await getData('/blog', [], false, false, false);
 
     const view = {
         title: 'Home Page',
-        css: ['blog.css', 'app.css', 'components.css', 'listing-details.css', 'agencies.css'],
-        js: ['blog.js', 'gotop.js', 'app.js'],
+        css: css(['blog.css', 'app.css', 'components.css', 'listing-details.css', 'agencies.css']),
+        js: js(['blog.js', 'gotop.js', 'app.js']),
         blogs: Blogs
     };
 
@@ -20,8 +21,8 @@ async function Details(request, reply) {
     console.log(Blog)
     const view = {
         title: Blog.title || 'Blog Details',
-        css: ['blog-detail.css', 'app.css', 'components.css', 'listing-details.css', 'agencies.css', 'blog.css'],
-        js: ['blog-detail.js', 'gotop.js', 'app.js'],
+        css: css(['blog-detail.css', 'app.css', 'components.css', 'listing-details.css', 'agencies.css', 'blog.css']),
+        js: js(['blog-detail.js', 'gotop.js', 'app.js']),
         blog: Blog,
         relatedPosts:[],
         breadcrumbs: [

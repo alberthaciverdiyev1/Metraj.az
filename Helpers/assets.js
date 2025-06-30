@@ -1,5 +1,4 @@
 import fs from 'fs'
-import path from 'path'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -20,11 +19,13 @@ function assets(files, type = 'js') {
 
         const entry = manifest[key];
 
+        console.log('/' + entry.file)
         return '/' + entry.file;
     }).filter(Boolean);
 }
 
 export function css(files) {
+    console.log(assets(files, 'css'))
     return assets(files, 'css');
 }
 

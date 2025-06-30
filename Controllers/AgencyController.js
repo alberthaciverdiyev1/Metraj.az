@@ -21,11 +21,11 @@ async function listView(request, reply) {
 async function Details(request, reply) {
     const { id } = request.params;
     const Agency = await getData(`/agency/${id}`);
-console.log(Agency)
+
     const view = {
         title: 'Agency Page',
-        css: ['agency-detail.css', 'app.css', 'components.css', 'agencies.css'],
-        js: ['pages/agency-details.js', 'app.js', 'gotop.js'],
+        css: css(['agency-detail.css', 'app.css', 'components.css', 'agencies.css']),
+        js: js(['pages/agency-details.js', 'app.js', 'gotop.js']),
         agency: Agency,
         breadcrumbs: [
             {label: 'Home', url: '/'},
@@ -36,7 +36,7 @@ console.log(Agency)
     return reply.view('Pages/Agency/Details.hbs', view);
 
 }
-async function RelatedProperties(req, res) {
+async function RelatedProperties(req) {
     const {id} = req.params;
     return await getData('/agency-property/' + id, [], false, false, false);
 }
