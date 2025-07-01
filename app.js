@@ -142,19 +142,36 @@ fastify.addHook('onRequest', async (request, reply) => {
 })
 
 fastify.addHook('preHandler', async (request, reply) => {
-    const originalView = reply.view.bind(reply)
+    const statics = /\.(css|js|png|jpg|jpeg|gif|webp|svg|ico|woff2?|ttf|eot|json)$/i;
+
+    if (statics.test(request.raw.url)) {
+        return;
+    }
+
+    const accept = request.headers['accept'] || '';
+    if (accept.includes('application/json')) {
+        return;
+    }
+
+    const originalView = reply.view.bind(reply);
 
     reply.view = async (template, data = {}, opts = {}) => {
-        const user = request.session.get('user') || null
-        const jwt_token = request.session.get('jwt_token') || null
+        const user = request.session.get('user') || null;
+        const jwtToken = request.session.get('jwt_token') || null;
 
-        data.session = { user, jwt_token }
-        data.user = user
-        data.setting = await getData('/setting', [], false, true, true)
-        data.lang = request.cookies.lang || 'en'
-        return originalView(template, data, opts)
-    }
-})
+        const currentRoute = request.routerPath || request.raw.url || '';
+
+        data.session = { user, jwtToken };
+        data.user = user;
+        data.setting = await getData('/setting', [], false, true, true);
+        data.seo = await getData(`/seo${currentRoute}`, [], false, true, true);
+        console.log(data.seo);
+        data.lang = request.cookies.lang || 'en';
+
+        return originalView(template, data, opts);
+    };
+});
+
 
 fastify.register(routes, { prefix: '/' })
 
