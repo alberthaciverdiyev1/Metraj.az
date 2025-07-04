@@ -5,28 +5,28 @@
             <div class="bg-orange-400 p-2 rounded-full text-white">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                     <path
-                            d="M12 2C8.13 2 5 5.13 5 9c0 6 7 13 7 13s7-7 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+                        d="M12 2C8.13 2 5 5.13 5 9c0 6 7 13 7 13s7-7 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
                 </svg>
             </div>
-            <span class="font-bold text-lg text-gray-800">Metraj <span
-                    class="text-sm text-gray-500">.az</span></span>
+            <span class="font-bold text-lg text-gray-800">Metraj <span class="text-sm text-gray-500">.az</span></span>
         </div> --}}
         {{!-- {{#if setting}}
-        <a href="/" class="flex gap-0.5">  <img src="{{setting.logo}}" width="40" alt="logo">
-          <span class="font-bold text-lg text-gray-800">{{setting.name}} <span
+        <a href="/" class="flex gap-0.5"> <img src="{{setting.logo}}" width="40" alt="logo">
+            <span class="font-bold text-lg text-gray-800">{{setting.name}} <span
                     class="text-sm text-gray-500">.az</span></span>
         </a>
         {{/if}} --}}
 
- <div class="flex items-center space-x-3">
-  <img class="h-10 w-auto object-contain" src="/images/metrajlogo1.png" alt="sekil" />
+        <div class="flex items-center space-x-3">
+            <img class="h-10 w-auto object-contain" src="/images/metrajlogo1.png" alt="sekil" />
 
- <div class="leading-tight">
-  <div class="text-xl font-extrabold text-[#545454] tracking-tight">Metraj.az</div>
-  <div class="text-[8px] text-gray-500 underline underline-offset-4 uppercase tracking-[0.2em]">sənin əmlakın</div>
-</div>
+            <div class="leading-tight">
+                <div class="text-xl font-extrabold text-[#545454] tracking-tight">Metraj.az</div>
+                <div class="text-[8px] text-gray-500 underline underline-offset-4 uppercase tracking-[0.2em]">sənin
+                    əmlakın</div>
+            </div>
 
-</div>
+        </div>
 
 
 
@@ -38,23 +38,23 @@
             <a href="/agencies" class="text-gray-700">{{t "Agencies"}}</a>
             <a href="/blog" class="text-gray-700">{{t "Blog"}}</a>
 
-              <a href="/about-us" class="text-gray-700">{{t "About Us "}}</a>
+            <a href="/about-us" class="text-gray-700">{{t "About Us "}}</a>
             <a href="/contact" class="text-gray-700">{{t "Contact"}}</a>
         </nav>
         <a href="/add-property"
-           class="flex items-center px-4 py-2 bg-white  rounded-md hover:bg-orange-400 hover:text-white transition">Add
+            class="flex items-center px-4 py-2 bg-white  rounded-md hover:bg-orange-400 hover:text-white transition">Add
             property</a>
-       
+
         <!-- Right -->
 
         <div class="relative ml-0.5">
-                <span
-                        class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-[var(--primary)] transition duration-300 group-hover:text-orange-500">
-                    <i class="bi bi-translate"></i>
-                </span>
+            <span
+                class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-[var(--primary)] transition duration-300 group-hover:text-orange-500">
+                <i class="bi bi-translate"></i>
+            </span>
 
             <select id="lang-select" onchange="changeLang(this.value)"
-                    class="appearance-none w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md shadow-sm text-gray-700
+                class="appearance-none w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md shadow-sm text-gray-700
            focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)]
            transition duration-300 ease-in-out transform hover:scale-[1.01] hover:border-orange-500 hover:shadow-md group">
                 <option value="az">Az</option>
@@ -72,61 +72,59 @@
         <div class="relative inline-block text-left">
             <!-- Dropdown trigger -->
             {{#if user}}
-                <button id="dropdownButton"
-                        class="flex items-center space-x-2 px-4 py-2 border rounded-lg text-gray-700 bg-white hover:bg-gray-50">
-                    <i class="fas fa-user text-gray-400"></i>
+            <button id="dropdownButton"
+                class="flex items-center space-x-2 px-4 py-2 border rounded-lg text-gray-700 bg-white hover:bg-gray-50">
+                <i class="fas fa-user text-gray-400"></i>
 
-                    <span>{{user.name}}</span>
+                <span>{{user.name}}</span>
 
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
 
-                <!-- Dropdown menu -->
-                <div id="dropdownMenu"
-                     class="absolute left-0 mt-2 w-60 bg-white rounded-xl shadow-lg ring-1 ring-gray-200 hidden z-50">
-                    <ul class="py-2 text-sm text-gray-700">
-                        <li><a href="#"
-                               class="flex rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i
+            <!-- Dropdown menu -->
+            <div id="dropdownMenu"
+                class="absolute left-0 mt-2 w-60 bg-white rounded-xl shadow-lg ring-1 ring-gray-200 hidden z-50">
+                <ul class="py-2 text-sm text-gray-700">
+                    <li><a href="#"
+                            class="flex rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i
                                 class="bi bi-grid mr-3"></i> {{t "Dashboards"}}</a></li>
-                        <li><a href="#"
-                               class="flex  rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i
+                    <li><a href="#"
+                            class="flex  rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i
                                 class="bi bi-person-gear mr-3"></i>{{t " My profile"}}</a></li>
-                        <li><a href="#"
-                               class="flex  rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i
-                                class="bi bi-bag-check mr-3"></i>  {{t " My package"}}</a></li>
-                        <li><a href="#"
-                               class="flex  rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i
-                                class="bi bi-heart mr-3"></i>  {{t "My favorites"}}  (1)</a></li>
-                        <li><a href="#"
-                               class="flex  rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i
-                                class="bi bi-folder2-open mr-3"></i>  {{t "My save searches"}} </a></li>
-                        <li><a href="#"
-                               class="flex  rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i
-                                class="bi bi-chat-left-text mr-3"></i>  {{t "Reviews"}} </a></li>
-                        <li><a href="/login"
-                               class="flex  rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i
-                                class="bi bi-folder-check mr-3"></i>  {{t "My properties"}} </a></li>
-                        <li>
-                            <a href="/add-property"
-                               class="flex items-center px-2 py-1 bg-white  rounded-md hover:bg-orange-400 hover:text-white transition">
-                                <i class="bi bi-file-earmark-plus mr-3"></i>  {{t " Add property"}}
-                            </a>
-                        </li>
-                        <li><a href="/logout"
-                               class="flex items-center px-2 py-1 bg-white  rounded-md hover:bg-orange-400 hover:text-white transition"><i
-                                class="bi bi-box-arrow-right mr-3"></i>  {{t "Logout"}} </a></li>
-                    </ul>
+                    <li><a href="#"
+                            class="flex  rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i
+                                class="bi bi-bag-check mr-3"></i> {{t " My package"}}</a></li>
+                    <li><a href="#"
+                            class="flex  rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i
+                                class="bi bi-heart mr-3"></i> {{t "My favorites"}} (1)</a></li>
+                    <li><a href="#"
+                            class="flex  rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i
+                                class="bi bi-folder2-open mr-3"></i> {{t "My save searches"}} </a></li>
+                    <li><a href="#"
+                            class="flex  rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i
+                                class="bi bi-chat-left-text mr-3"></i> {{t "Reviews"}} </a></li>
+                    <li><a href="/login"
+                            class="flex  rounded-md items-center px-4 py-2 hover:bg-orange-400 hover:text-white"><i
+                                class="bi bi-folder-check mr-3"></i> {{t "My properties"}} </a></li>
+                    <li>
+                        <a href="/add-property"
+                            class="flex items-center px-2 py-1 bg-white  rounded-md hover:bg-orange-400 hover:text-white transition">
+                            <i class="bi bi-file-earmark-plus mr-3"></i> {{t " Add property"}}
+                        </a>
+                    </li>
+                    <li><a href="/logout"
+                            class="flex items-center px-2 py-1 bg-white  rounded-md hover:bg-orange-400 hover:text-white transition"><i
+                                class="bi bi-box-arrow-right mr-3"></i> {{t "Logout"}} </a></li>
+                </ul>
 
-                </div>
+            </div>
             {{else}}
-                <a href="/login"
-                   class="flex items-center px-4 py-2 bg-white  rounded-md hover:bg-orange-400 hover:text-white transition"><i
-                        class="bi bi-person mr-3"></i> {{t "Login / Register"}}</a>
+            <a href="/login"
+                class="flex items-center px-4 py-2 bg-white  rounded-md hover:bg-orange-400 hover:text-white transition"><i
+                    class="bi bi-person mr-3"></i> {{t "Login / Register"}}</a>
             {{/if}}
         </div>
     </div>
 </header>
-
-

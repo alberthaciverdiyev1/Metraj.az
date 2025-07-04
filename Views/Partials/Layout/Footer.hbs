@@ -28,11 +28,21 @@
               <p class="text-sm text-gray-400 tracking-wider">REAL ESTATE</p>
             </div> -->
 
-            <div class="logo">
+            {{!-- <div class="logo">
                 {{#if setting.logo}}
                 <img src="{{setting.logo}}" class="w-[170px] h-[50px]" alt="">
                 {{/if}}
 
+
+            </div> --}}
+            <div class="flex items-center space-x-3">
+                <img class="h-10 w-auto object-contain" src="/images/metrajlogo1-remove.png" alt="sekil" />
+
+                <div class="leading-tight">
+                    <div class="text-xl font-extrabold text-[#a7a5a5] tracking-tight">Metraj.az</div>
+                    <div class="text-[8px] text-gray-400 underline underline-offset-4 uppercase tracking-[0.2em]">sənin
+                        əmlakın</div>
+                </div>
 
             </div>
 
@@ -93,17 +103,17 @@
                         <i class="bi bi-chevron-right text-[var(--primary)]"></i>Work with us <span
                             class="link-underline"></span></a></li> --}}
 
-               <li><a href="/property" class="group inline-block relative">
+                <li><a href="/property" class="group inline-block relative">
                         <i class="bi bi-chevron-right text-[var(--primary)]"></i>Listing <span
                             class="link-underline"></span></a></li>
-                
-             <li><a href="/agencies" class="group inline-block relative">
+
+                <li><a href="/agencies" class="group inline-block relative">
                         <i class="bi bi-chevron-right text-[var(--primary)]"></i>Agencies <span
                             class="link-underline"></span></a></li>
 
-                      
 
-                      <li><a href="/blog" class="group inline-block relative">
+
+                <li><a href="/blog" class="group inline-block relative">
                         <i class="bi bi-chevron-right text-[var(--primary)]"></i>Blog <span
                             class="link-underline"></span></a></li>
             </ul>
@@ -112,9 +122,11 @@
         <div>
             <h4 class="font-semibold text-white text-[18px] mb-5">Popular house</h4>
             <ul class="space-y-2 text-sm">
-                <li><a href="/faqs" class="group inline-block relative">{{t "FAQS"}} <span class="link-underline"></span></a>
+                <li><a href="/faqs" class="group inline-block relative">{{t "FAQS"}} <span
+                            class="link-underline"></span></a>
                 </li>
-                <li><a href="/comingSoon" class="group inline-block relative">{{t "Coming soon"}} <span class="link-underline"></span></a></li>
+                <li><a href="/comingSoon" class="group inline-block relative">{{t "Coming soon"}} <span
+                            class="link-underline"></span></a></li>
                 <li><a href="#" class="group inline-block relative">#Smart home <span class="link-underline"></span></a>
                 </li>
                 <li><a href="#" class="group inline-block relative">#Apartments <span class="link-underline"></span></a>
@@ -132,18 +144,18 @@
                 <li><a href="/property" class="group inline-block relative">
                         <i class="bi bi-chevron-right text-[var(--primary)]"></i>Listing <span
                             class="link-underline"></span></a></li>
-                 <li><a href="/add-property" class="group inline-block relative">
+                <li><a href="/add-property" class="group inline-block relative">
                         <i class="bi bi-chevron-right text-[var(--primary)]"></i>Add-Property <span
                             class="link-underline"></span></a></li>
 
-                     
-             <li><a href="/agencies" class="group inline-block relative">
+
+                <li><a href="/agencies" class="group inline-block relative">
                         <i class="bi bi-chevron-right text-[var(--primary)]"></i>Agencies <span
                             class="link-underline"></span></a></li>
 
-                      
 
-                      <li><a href="/blog" class="group inline-block relative">
+
+                <li><a href="/blog" class="group inline-block relative">
                         <i class="bi bi-chevron-right text-[var(--primary)]"></i>Blog <span
                             class="link-underline"></span></a></li>
             </ul>
@@ -176,36 +188,36 @@
         <div class="flex gap-4 mt-4 md:mt-0 text-xl">
 
             {{#if setting.facebook_url}}
-         <a href="{{setting.facebook_url}}"
+            <a href="{{setting.facebook_url}}"
                 class="w-10 h-10 flex items-center justify-center rounded-full border border-[#323439] text-gray-400 hover:bg-[#F7923A] hover:text-white transition">
                 <i class="bi bi-facebook"></i>
             </a>
             {{/if}}
 
             {{#if setting.whatsapp_number}}
-<a href="tel:{{setting.whatsapp_number}}"
+            <a href="tel:{{setting.whatsapp_number}}"
                 class="w-10 h-10 flex items-center justify-center rounded-full border border-[#323439] text-gray-400 hover:bg-[#F7923A] hover:text-white transition">
                 <i class="bi bi-whatsapp"></i>
             </a>
             {{/if}}
-           
-           {{#if setting.linkedin_url}}
+
+            {{#if setting.linkedin_url}}
             <a href="{{setting.linkedin_url}}"
                 class="w-10 h-10 flex items-center justify-center rounded-full border border-[#323439] text-gray-400 hover:bg-[#F7923A] hover:text-white transition">
                 <i class="bi bi-linkedin"></i>
             </a>
 
-           {{/if}}
+            {{/if}}
 
-           {{#if setting.instagram_url}}
+            {{#if setting.instagram_url}}
             <a href="{{setting.instagram_url}}"
                 class="w-10 h-10 flex items-center justify-center rounded-full border border-[#323439] text-gray-400 hover:bg-[#F7923A] hover:text-white transition">
                 <i class="bi bi-instagram"></i>
             </a>
-           {{/if}}
-            
-           
-           
+            {{/if}}
+
+
+
         </div>
 
 
