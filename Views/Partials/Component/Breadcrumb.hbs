@@ -7,7 +7,7 @@
 
             {{#if url}}
                 <a href="{{url}}"
-                   class="{{#if @last}}text-gray-600{{else}}text-[color:var(--primary)] font-bold flex items-center hover:text-black{{/if}}">
+                   class="{{#if @last}}text-[color:var(--primary)]{{else}} text-gray-600 font-bold flex items-center hover:text-black{{/if}}">
                     {{label}}
                 </a>
             {{else}}

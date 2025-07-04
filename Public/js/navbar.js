@@ -36,6 +36,27 @@
         const menu = document.getElementById('dropdownMenu');
         const burgerBtn = document.getElementById('burgerBtn');
         const mobileMenu = document.getElementById('mobileMenu');
+        const links=document.querySelectorAll("nav a")
+        const linkaddproperty=document.querySelector(".add-property-link")
+        const currentPath=window.location.pathname;
+        console.log(currentPath);
+    
+       
+        links.forEach(link=>{
+            if(link.getAttribute("href")===currentPath){
+                link.classList.add("text-orange-400");
+                link.classList.add("font-bold");
+
+            }
+            else{
+                link.classList.add("text-gray-700")
+
+            }
+        })
+        if(linkaddproperty.getAttribute("href")===currentPath){
+            linkaddproperty.classList.add("text-orange-400");
+        }
+        
     
         btn?.addEventListener('click', () => {
             menu.classList.toggle('hidden');
