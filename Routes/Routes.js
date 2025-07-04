@@ -16,6 +16,7 @@ export default async function route(fastify, options) {
     fastify.get('/properties', Property.listApi)
     fastify.get('/add-property', Property.addView)
 
+    
     fastify.post('/add-property', Property.add)
 
 
