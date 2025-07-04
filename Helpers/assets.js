@@ -1,5 +1,6 @@
 import fs from 'fs'
 import dotenv from 'dotenv'
+
 dotenv.config()
 
 function assets(files, type = 'js') {
@@ -25,6 +26,11 @@ function assets(files, type = 'js') {
 }
 
 export function css(files) {
+    const defaultFiles = [
+        'global.css',
+        'app.css'
+    ];
+    files = [...defaultFiles, ...files];
     return assets(files, 'css');
 }
 

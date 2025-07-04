@@ -1,12 +1,11 @@
 <div x-show="open" x-cloak x-transition.opacity
-     class=" w-full absolute inset-0 top-[600px]   z-5 flex items-center justify-center ">
+     class="fixed inset-0 bg-black/10 backdrop-blur-sm z-0"></div>
 
-    <div class="bg-white rounded-xl p-6 w-full  relative"
+<div x-show="open" x-cloak x-transition.opacity
+     class=" w-full absolute inset-0 top-[500px]   z-5 flex items-center justify-center ">
+
+    <div class="bg-white rounded-xl w-full  relative"
          @click.outside="open = false">
-        <button @click="open = false"
-                class="absolute top-4 right-3 text-2xl text-[var(--grey-text)]">&times;
-        </button>
-
         <form @submit.prevent="submit" style=" margin: 0 auto;" class="filter-panel mx-auto "
               :class="{ 'collapsed': collapsed }">
             <fieldset class="fieldset repair">
