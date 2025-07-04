@@ -150,3 +150,78 @@ document.addEventListener('DOMContentLoaded', () => {
     initLocationPills();
     initEventListeners();
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  function initCustomSelect(config) {
+    const {
+      containerId,
+      buttonId,
+      optionsId,
+      textId,
+      inputId,
+      iconId
+    } = config;
+
+    const container = document.getElementById(containerId);
+    const button = document.getElementById(buttonId);
+    const optionsList = document.getElementById(optionsId);
+    const textSpan = document.getElementById(textId);
+    const hiddenInput = document.getElementById(inputId);
+    const icon = document.getElementById(iconId);
+
+    if (!container || !button || !optionsList || !textSpan || !hiddenInput || !icon) return;
+
+    button.addEventListener("click", () => {
+      optionsList.classList.toggle("hidden");
+      icon.classList.toggle("rotate-180");
+    });
+
+    optionsList.querySelectorAll("li").forEach((option) => {
+      option.addEventListener("click", () => {
+        const value = option.getAttribute("data-value");
+        const text = option.textContent;
+
+        textSpan.textContent = text;
+        hiddenInput.value = value;
+
+        optionsList.classList.add("hidden");
+        icon.classList.remove("rotate-180");
+      });
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!container.contains(e.target)) {
+        optionsList.classList.add("hidden");
+        icon.classList.remove("rotate-180");
+      }
+    });
+  }
+
+  initCustomSelect({
+    containerId: "customSelectContainer",
+    buttonId: "customSelectButton",
+    optionsId: "customSelectOptions",
+    textId: "customSelectText",
+    inputId: "selectedCityInput",
+    iconId: "dropdownIcon",
+  });
+
+  initCustomSelect({
+    containerId: "customConditionContainer",
+    buttonId: "customConditionButton",
+    optionsId: "customConditionOptions",
+    textId: "customConditionText",
+    inputId: "selectedConditionInput",
+    iconId: "conditionIcon",
+  });
+
+  initCustomSelect({
+    containerId: "customPriceContainer",
+    buttonId: "customPriceButton",
+    optionsId: "customPriceOptions",
+    textId: "customPriceText",
+    inputId: "selectedPriceInput",
+    iconId: "priceIcon",
+  });
+});

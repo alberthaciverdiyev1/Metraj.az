@@ -103,7 +103,7 @@
                             <label class="block font-medium mb-1">{{t "Building Type"}}:<span
                                     class="text-red-500">*</span></label>
                             <select id="building-type"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                 <option disabled selected>{{t "Choose"}}</option>
                             </select>
                         </div>
@@ -112,7 +112,7 @@
                             <label class="block font-medium mb-1">{{t "Add type"}}:<span
                                     class="text-red-500">*</span></label>
                             <select id="add-type"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                 <option disabled selected>{{t "Choose"}}</option>
                                 <option value="sale">For Sale</option>
                                 <option value="rent">For Rent</option>
@@ -122,7 +122,7 @@
                         <div>
                             <label class="block font-medium mb-1">Təmir:<span class="text-red-500">*</span></label>
                             <select id="repair-type"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                 <option selected disabled>{{t "Choose"}}</option>
                                 <option value="repaired">{{t "Repaired"}}</option>
                                 <option value="unrepaired">{{t "Unrepaired"}}</option>
@@ -135,14 +135,14 @@
                             <label class="block font-medium mb-1">{{t "Size"}} (m²):<span
                                     class="text-red-500">*</span></label>
                             <input type="number"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
                         </div>
                         <!-- Field Area -->
                         <div id="field-area" class="d-none">
                             <label class="block font-medium mb-1">{{t "Field area"}} (m²):<span
                                     class="text-red-500">*</span></label>
                             <input type="number"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
                         </div>
 
                         <!-- Price -->
@@ -150,11 +150,11 @@
                             <label class="block font-medium mb-1">{{t "Price"}}:<span
                                     class="text-red-500">*</span></label>
                             <input id="price" type="number" value="0"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
 
                             <div class="d-none">
                                 <select id="property-period"
-                                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                     <option value="daily"> Günlük</option>
                                     <option value="monthly">Aylıq</option>
                                 </select>
@@ -165,7 +165,7 @@
                         <div>
                             <label class="block font-medium mb-1">Room Count:<span class="text-red-500">*</span></label>
                             <select id="room-count"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                 <option disabled selected>Choose</option>
                                 {{#forLoop 20}}
                                 <option value="{{this}}">{{this}} otaqlı</option>
@@ -179,7 +179,7 @@
                         <div>
                             <label class="block font-medium mb-1">Mərtəbə:<span class="text-red-500">*</span></label>
                             <select id="located-floor"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                 <option disabled selected>Choose</option>
                                 {{#forLoop 100}}
                                 <option value="{{this}}">{{this}}-ci mərtəbə</option>
@@ -194,7 +194,7 @@
                             <label class="block font-medium mb-1">Mərtəbə sayı:<span
                                     class="text-red-500">*</span></label>
                             <select id="floor-count"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                 <option disabled selected>Choose</option>
 
                                 {{#forLoop 100}}
@@ -336,12 +336,12 @@
                 </section>
 
                 {{>Component.AgentInfo}}
-                <div class="flex items-start mt-6">
+                <div class="flex  mt-6 items-center">
                     <input id="terms" type="checkbox"
                         class="mt-1 mr-2 w-4 h-4 text-[var(--primary)] border-gray-300 rounded focus:ring-0">
                     <label for="terms" class="select-none">
                         <a href="/istifadeci-razilasi" target="_blank"
-                            class="text-blue-600 underline hover:text-blue-800 transition">
+                            class="text-[var(--primary)] underline hover:text-orange-500 transition">
                             İstifadəçi razılaşmasını
                         </a> oxudum və qəbul edirəm
                         <span class="text-red-500">*</span>
@@ -456,6 +456,7 @@
 
 
     });
+    
 </script>
 
 {{css 'components.css'}}
