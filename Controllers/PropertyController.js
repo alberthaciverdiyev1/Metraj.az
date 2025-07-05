@@ -60,7 +60,7 @@ async function addView(request, reply) {
             'app.css',
             'components.css'
         ]),
-        js: css(['add-property.js',
+        js: js(['add-property.js',
             'map-find-adress.js',
             'components/features.js',
             'components/cities.js',
