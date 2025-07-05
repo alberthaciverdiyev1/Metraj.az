@@ -1,4 +1,4 @@
-<div class="blog-card">
+<div onclick="window.location.href='/blog/{{slug}}'"  class="blog-card cursor-pointer">
     <div class="blog-card-image">
         <img src="{{images.[0]}}" alt="blog-card-image">
         <span>{{category.name}}</span>
@@ -12,7 +12,7 @@
             <h3>{{strLimit name 50}}</h3>
         </div>
 
-        <a href="/blog/{{slug}}" class="blog-button">
+        <a href="/blog/{{slug}}" onclick="event.stopPropagation()" class="blog-button">
             Read More <i class="bi bi-arrow-right-circle"></i>
         </a>
     </div>

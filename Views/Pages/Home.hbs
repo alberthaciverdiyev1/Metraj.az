@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-<!--  <div class="bg-white  search-panel rounded-xl p-6 mt-8 w-[100%]">
+            <!--  <div class="bg-white  search-panel rounded-xl p-6 mt-8 w-[100%]">
                 <div class="flex flex-col sm:flex-row flex-wrap items-center gap-3 md:gap-4">
                     <input type="text" placeholder="Address, City, ZIP..."
                         class="px-4 py-3 rounded-xl w-full sm:flex-1 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-300 text-black order-1" />
@@ -85,43 +85,95 @@
                 </div>
                   {{> Component.FilterNavbar }}
             </div>-->
-           
+
 
             <div class="bg-white search-panel rounded-xl p-6 mt-8 w-full">
-                    {{> Component.FilterNavbar }}
-              
+                {{> Component.FilterNavbar }}
+
                 <div class="flex flex-col sm:flex-row flex-wrap gap-4 w-full text-black">
 
-                    <select name="city" id="city"
-                        class="border border-gray-300 rounded-lg px-4 py-2 w-full sm:flex-1 focus:ring-2 focus:ring-orange-300">
-                        <option value="">Şəhər seçin</option>
-                        {{#each cities}}
-                        <option value="{{this.id}}">{{this.name}}</option>
-                        {{/each}}
-                    </select>
-
-                    <select name="condition" id="condition"
-                        class="border border-gray-300 rounded-lg px-4 py-2 w-full sm:flex-1 focus:ring-2 focus:ring-orange-300">
-                        <option value="">Əmlakın vəziyyəti</option>
-                        <option value="new">Yeni</option>
-                        <option value="old">Köhnə</option>
-                    </select>
-
-                    <select name="priceRange" id="priceRange"
-                        class="border border-gray-300 rounded-lg px-4 py-2 w-full sm:flex-1 focus:ring-2 focus:ring-orange-300">
-                        <option value="">Qiymət aralığı</option>
-                        <option value="0-50000">0 - 50,000 AZN</option>
-                        <option value="50000-100000">50,000 - 100,000 AZN</option>
-                        <option value="100000-200000">100,000 - 200,000 AZN</option>
-                        <option value="200000+">200,000+ AZN</option>
-                    </select>
-                      <button
-                            class="open-search-btn bg-orange-300 text-white px-5 py-4 rounded-xl flex items-center justify-center flex-shrink-0 hover:bg-orange-400 focus:outline-none"
-                            id="openSearchBtn">
-                            <i class="fa-solid fa-sliders"></i>
+                    <div class="relative w-full sm:flex-1" id="customSelectContainer">
+                        <button type="button" id="customSelectButton"
+                            class="bg-white border border-gray-300 rounded-lg px-4 py-2 w-full text-left flex justify-between items-center focus:ring-2 focus:ring-orange-300 transition duration-200">
+                            <span id="customSelectText">Şəhər seçin</span>
+                            <svg class="w-4 h-4 ml-2 transition-transform duration-200" id="dropdownIcon"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
                         </button>
-                        
-                    <button class="bg-[var(--primary)] py-3 px-5 rounded-lg text-white" >Axtar</button>
+
+                        <ul id="customSelectOptions"
+                            class="absolute z-10 mt-2 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto hidden transition-all duration-300">
+                            <li data-value="" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Şəhər seçin</li>
+                            {{#each cities}}
+                            <li data-value="{{this.id}}" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">
+                                {{this.name}}</li>
+                            {{/each}}
+                        </ul>
+
+                        <input type="hidden" name="city" id="selectedCityInput" value="">
+                    </div>
+
+                    <div class="relative w-full sm:flex-1" id="customConditionContainer">
+                        <button type="button" id="customConditionButton"
+                            class="bg-white border border-gray-300 rounded-lg px-4 py-2 w-full text-left flex justify-between items-center focus:ring-2 focus:ring-orange-300 transition duration-200">
+                            <span id="customConditionText">Əmlakın vəziyyəti</span>
+                            <svg class="w-4 h-4 ml-2 transition-transform duration-200" id="conditionIcon"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+
+                        <ul id="customConditionOptions"
+                            class="absolute z-10 mt-2 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto hidden transition-all duration-300">
+                            <li data-value="" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Əmlakın vəziyyəti
+                            </li>
+                            <li data-value="new" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Yeni</li>
+                            <li data-value="old" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Köhnə</li>
+                        </ul>
+
+                        <input type="hidden" name="condition" id="selectedConditionInput" value="">
+                    </div>
+
+                    <div class="relative w-full sm:flex-1" id="customPriceContainer">
+                        <button type="button" id="customPriceButton"
+                            class="bg-white border border-gray-300 rounded-lg px-4 py-2 w-full text-left flex justify-between items-center focus:ring-2 focus:ring-orange-300 transition duration-200">
+                            <span id="customPriceText">Qiymət aralığı</span>
+                            <svg class="w-4 h-4 ml-2 transition-transform duration-200" id="priceIcon"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+
+                        <ul id="customPriceOptions"
+                            class="absolute z-10 mt-2 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto hidden transition-all duration-300">
+                            <li data-value="" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Qiymət aralığı</li>
+                            <li data-value="0-50000" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">0 - 50,000 AZN
+                            </li>
+                            <li data-value="50000-100000" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">50,000 -
+                                100,000 AZN</li>
+                            <li data-value="100000-200000" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">100,000
+                                - 200,000 AZN</li>
+                            <li data-value="200000+" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">200,000+ AZN
+                            </li>
+                        </ul>
+
+                        <input type="hidden" name="priceRange" id="selectedPriceInput" value="">
+                    </div>
+
+                    <button
+                        class="open-search-btn bg-orange-300 text-white px-5 py-4 rounded-xl flex items-center justify-center flex-shrink-0 hover:bg-orange-400 focus:outline-none"
+                        id="openSearchBtn">
+                        <i class="fa-solid fa-sliders"></i>
+                    </button>
+
+                    <button class="bg-[var(--primary)] py-3 px-5 rounded-lg text-white">Axtar</button>
 
                 </div>
             </div>
@@ -254,32 +306,33 @@
 
     </section>
 
-    
+
     <section class="w-full bg-white ">
-    <div class="container mx-auto px-3">
-        <div class="max-w-7xl mx-auto px-4 md:flex md:items-center md:justify-between gap-8">
-            <div class="md:w-1/2 space-y-6">
-             {{>Component.DoYouNeedLoan}}
-            </div>
-          
-            <div
-                    class="bg-fixed  md:w-1/2 mt-10 h-[700px] md:mt-0 rounded-xl "
+        <div class="container mx-auto px-3">
+            <div class="max-w-7xl mx-auto px-4 md:flex md:items-center md:justify-between gap-8">
+                <div class="md:w-1/2 space-y-6">
+                    {{>Component.DoYouNeedLoan}}
+                </div>
+
+                <div class="bg-fixed  md:w-1/2 mt-10 h-[700px] md:mt-0 rounded-xl "
                     style="background-image: url('/images/section-pre-approved.jpg');"></div>
 
-        </div>
-
-        <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-            <div class="bg-white rounded-lg p-6 shadow-xl max-w-sm w-full">
-                <h2 class="text-xl font-bold text-gray-800 mb-4">Monthly Payment</h2>
-                <p class="text-lg text-gray-700">Your estimated monthly payment is <span id="modalPayment" class="font-bold text-orange-500"></span></p>
-                <button onclick="closeModal()" class="mt-4 w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition-colors">Close</button>
             </div>
+
+            <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+                <div class="bg-white rounded-lg p-6 shadow-xl max-w-sm w-full">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Monthly Payment</h2>
+                    <p class="text-lg text-gray-700">Your estimated monthly payment is <span id="modalPayment"
+                            class="font-bold text-orange-500"></span></p>
+                    <button onclick="closeModal()"
+                        class="mt-4 w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition-colors">Close</button>
+                </div>
+            </div>
+
         </div>
 
-    </div>
 
-
-</section>
+    </section>
 
 
     {{>Component.LetsWorkTogether}}

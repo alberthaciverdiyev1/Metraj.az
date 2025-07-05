@@ -1,4 +1,4 @@
-<div class="agencies-card">
+<div   onclick="window.location.href='/agency/{{id}}'"  class="agencies-card cursor-pointer">
     <figure>
         <img class="image-agency" src="{{background_image}}" alt="House Image">
     </figure>
@@ -20,7 +20,7 @@
                 <i class="bi bi-globe2"></i>
             </div>
             <div class="details-button">
-                <a href="/agency/{{id}}" class="relative inline-block px-6 py-3 rounded-xl border border-[color:var(--primary)] text-sm text-[color:var(--primary)] overflow-hidden transition-all duration-300 hover-effect-button">
+                <a href="/agency/{{id}}" onclick="event.stopPropagation()" class="relative inline-block px-6 py-3 rounded-xl border border-[color:var(--primary)] text-sm text-[color:var(--primary)] overflow-hidden transition-all duration-300 hover-effect-button">
                     <span class="absolute inset-0 w-0 h-full bg-[color:var(--primary)] transition-all duration-300 ease-in-out z-0 hover-effect-button-fill"></span>
                     <span class="relative z-10">Details</span>
                 </a>
