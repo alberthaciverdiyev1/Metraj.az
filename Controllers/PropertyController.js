@@ -22,7 +22,7 @@ async function listView(request, reply) {
         ],
         cities 
 ,
-        params: {
+        data: {
             buildingTypes
         }
     }

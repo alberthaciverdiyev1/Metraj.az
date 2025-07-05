@@ -3,7 +3,7 @@
 
         <aside class="hidden xl:block w-[160px] mt-8">
             <div class="sticky top-24">
-                <img src="https://placehold.co/200x1300" alt="Sol Reklam" class="rounded-lg shadow w-full" />
+                <img src="https://placehold.co/200x1300" alt="Sol Reklam" class="rounded-lg shadow w-full"/>
             </div>
         </aside>
 
@@ -14,12 +14,13 @@
             {{>Component.ScrollTop}}
 
             <section class="bg-white p-6 max-w-full mx-auto relative z-10"
-                x-data="{ categoryOpen: false, cityOpen: false, addressOpen: false }">
+                     x-data="{ categoryOpen: false, cityOpen: false, addressOpen: false ,buildingTypesOpen:false}">
                 <div class="flex justify-between items-center mb-3">
                     <div class="flex gap-2 border border-gray-200 rounded-lg">
                         <button class="px-4 py-2 rounded-lg font-semibold text-gray-100 bg-[color:var(--primary)] hover:bg-gray-100">
                             {{t "Sale"}}</button>
-                        <button class="px-4 py-2 rounded-lg font-semibold text-gray-700 hover:bg-gray-100">{{t "Rent"}}</button>
+                        <button class="px-4 py-2 rounded-lg font-semibold text-gray-700 hover:bg-gray-100">{{t
+                                "Rent"}}</button>
                     </div>
 
                     <button class="px-4 py-1 border border-gray-300 rounded-lg hover:bg-gray-100">
@@ -27,41 +28,56 @@
                     </button>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-
-                    <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                        <div class="flex items-center gap-2">
-                            <i class="bi bi-geo-alt text-orange-500 text-xl"></i>
-                            <input type="text" placeholder="Enter address..."
-                                class="w-full rounded-lg focus:outline-none " />
-                        </div>
-
-                    </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
 
 
-                    <div class="relative p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer"
-                        @click="categoryOpen = !categoryOpen; addressOpen = false; cityOpen = false">
+                    <div class="relative p-3 bg-white rounded-lg border border-gray-200 cursor-pointer"
+                         @click="buildingTypesOpen = !buildingTypesOpen; addressOpen = false; cityOpen = false,categoryOpen = false">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-2">
-                                <i class="bi bi-layers text-orange-500 text-xl"></i>
-                                <span class="text-gray-700">All Categories</span>
+                                <i class="bi bi-buildings text-orange-500 text-xl"></i>
+                                <span class="text-gray-700">Building Type</span>
+                            </div>
+                            <i class="bi bi-chevron-down text-orange-500"></i>
+                        </div>
+                        <template x-if="buildingTypesOpen">
+                            <div
+                                    class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-10">
+                                <ul class="divide-y divide-gray-100">
+                                    {{#each data.buildingTypes}}
+                                        <li class="p-2 hover:bg-gray-100 cursor-pointer"
+                                            data-value="{{this.key}}">{{this.label}}</li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="relative p-3 bg-white rounded-lg border border-gray-200 cursor-pointer"
+                         @click="categoryOpen = !categoryOpen; addressOpen = false; cityOpen = false">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <i class="bi bi-currency-dollar text-orange-500 text-xl"></i>
+                                <span class="text-gray-700">{{t "Price"}} (AZN)</span>
                             </div>
                             <i class="bi bi-chevron-down text-orange-500"></i>
                         </div>
                         <template x-if="categoryOpen">
                             <div
-                                class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-10">
-                                <ul class="divide-y divide-gray-100">
-                                    <li class="p-2 hover:bg-gray-100 cursor-pointer">Apartment</li>
-                                    <li class="p-2 hover:bg-gray-100 cursor-pointer">Villa</li>
-                                    <li class="p-2 hover:bg-gray-100 cursor-pointer">Office</li>
-                                </ul>
+                                    class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-10">
+                                <div class="flex gap-2">
+                                    <input type="number" placeholder="Min qiymət"
+                                           class="w-1/2 px-3 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none"/>
+                                    <input type="number" placeholder="Max qiymət"
+                                           class="w-1/2 px-3 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none"/>
+                                </div>
                             </div>
                         </template>
                     </div>
 
-                    <div class="relative p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer"
-                        @click="cityOpen = !cityOpen; addressOpen = false; categoryOpen = false">
+
+
+                    <div class="relative p-3 bg-white rounded-lg border border-gray-200 cursor-pointer"
+                         @click="cityOpen = !cityOpen; addressOpen = false; categoryOpen = false">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-2">
                                 <i class="bi bi-buildings text-orange-500 text-xl"></i>
@@ -71,71 +87,38 @@
                         </div>
                         <template x-if="cityOpen">
                             <div
-                                class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-10">
+                                    class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-10">
                                 <ul class="divide-y divide-gray-100">
                                     {{#each cities}}
-                                    <li class="p-2 hover:bg-gray-100 cursor-pointer" value="{{this.id}}">{{this.name}}
-                                    </li>
+                                        <li class="p-2 hover:bg-gray-100 cursor-pointer"
+                                            value="{{this.id}}">{{this.name}} </li>
                                     {{/each}}
 
                                 </ul>
                             </div>
                         </template>
+
                     </div>
 
-                </div>
-                <!-- Price and Size Filters -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                    <div class="flex flex-col  gap-2 md:flex-row md:items-end w-full">
+                        <div x-data="filterModal()" @keyup.escape.window="open = false">
+                            <button @click="open = true"
+                                    class=" w-full flex items-center gap-1px-4 px-6 py-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100  md:w-auto hover:text-[color:var(--primary)] transition">
+                                <i class="fa-solid fa-sliders"></i>
+                            </button>
+                            {{>Component.FilterModal}}
 
-                    <!-- Price Filter -->
-                    <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                        <label class="block text-gray-700 font-semibold mb-2 flex items-center gap-2">
-                            <i class="bi bi-currency-dollar text-orange-500 text-xl"></i>
-                            Price (AZN)
-                        </label>
-                        <div class="flex gap-2">
-                            <input type="number" placeholder="Min qiymət"
-                                class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none" />
-                            <input type="number" placeholder="Max qiymət"
-                                class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none" />
+
                         </div>
-                    </div>
-
-                    <!-- Size Filter -->
-                    <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                        <label class="block text-gray-700 font-semibold mb-2 flex items-center gap-2">
-                            <i class="bi bi-fullscreen text-orange-500 text-xl"></i>
-                            Area (m²)
-                        </label>
-                        <div class="flex gap-2">
-                            <input type="number" placeholder="Min ölçü"
-                                class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none" />
-                            <input type="number" placeholder="Max ölçü"
-                                class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none" />
-                        </div>
-                    </div>
-                  
-                    <!-- Buttons -->
-                    <div class="flex flex-col  gap-2 md:flex-row md:items-end p-4 w-full">
-                         <div x-data="filterModal()" @keyup.escape.window="open = false">
-                        <button @click="open = true"
-                            class=" w-full flex items-center gap-1px-4 px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100  md:w-auto hover:text-[color:var(--primary)] transition">
-                             + More Options
-                        </button>
-                        {{>Component.FilterModal}}
-
-
-                    </div>
-                        <button class="px-25 py-2  bg-black text-white rounded-lg hover:bg-gray-800 w-full md:w-auto">
+                        <button class="px-25 py-3  bg-black text-white rounded-lg hover:bg-gray-800 w-full md:w-auto">
                             Search
                         </button>
                     </div>
-                </div>
 
+                </div>
             </section>
             <section class="property-listing py-4">
                 <div class="container mx-auto px-4">
-
 
 
                     {{!-- <div class="relative flex mb-7 flex-col sm:flex-row flex-wrap gap-4 w-full text-black">
@@ -186,19 +169,20 @@
                         <div class="flex flex-wrap items-center gap-2">
 
                             <button id="gridViewBtn" class="px-4 grid-btn py-3 rounded-md active-filter"
-                                data-view="grid">
+                                    data-view="grid">
                                 <i class="bi bi-grid-3x3-gap"></i>
                             </button>
 
                             <button id="listViewBtn"
-                                class=" px-4 py-3 list border border-[var(--border-color)] rounded-md" data-view="list">
+                                    class=" px-4 py-3 list border border-[var(--border-color)] rounded-md"
+                                    data-view="list">
                                 <i class="fas fa-list text-[color:var(--icon-grey)] "></i>
                             </button>
 
 
                             <div class="relative">
                                 <button
-                                    class="flex items-center border border-[var(--border-color)] px-4 py-3 rounded-md">
+                                        class="flex items-center border border-[var(--border-color)] px-4 py-3 rounded-md">
                                     Sort by (Default) <i class="fas fa-chevron-down ml-2"></i>
                                 </button>
                             </div>
@@ -211,7 +195,7 @@
                     </h2>
 
                     <div id="premiumCard"
-                        class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-7 relative min-h-[300px]">
+                         class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-7 relative min-h-[300px]">
                         <div class="absolute inset-28 flex justify-center items-center z-20" id="loadingOverlay">
                             <div class="flex flex-col items-center gap-3">
                                 <div class="loader"></div>
@@ -227,9 +211,8 @@
                     </h2>
 
 
-
                     <div id="propertyContainer"
-                        class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-7 relative min-h-[300px]">
+                         class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-7 relative min-h-[300px]">
 
                         <div class="absolute inset-28 flex justify-center items-center z-20" id="loadingOverlay">
                             <div class="flex flex-col items-center gap-3">
@@ -247,14 +230,14 @@
                         <nav aria-label="Page navigation">
                             <ul class="pagination mb-0">
                                 <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><i
-                                            class="bi bi-chevron-left"></i></a></li>
+                                        class="bi bi-chevron-left"></i></a></li>
                                 <li class="page-item"><a class="page-link" href="#">1</a></li>
                                 <li class="page-item active" aria-current="page"><a class="page-link" href="#">2</a>
                                 </li>
                                 <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
                                 <li class="page-item"><a class="page-link" href="#">20</a></li>
                                 <li class="page-item"><a class="page-link" href="#" aria-label="Next"><i
-                                            class="bi bi-chevron-right"></i></a></li>
+                                        class="bi bi-chevron-right"></i></a></li>
                             </ul>
                         </nav>
                     </div>
@@ -262,72 +245,12 @@
         </main>
         <aside class="hidden xl:block w-[160px] mt-8">
             <div class="sticky top-24">
-                <img src="https://placehold.co/200x1300" alt="Sağ Reklam" class="rounded-lg shadow w-full" />
+                <img src="https://placehold.co/200x1300" alt="Sağ Reklam" class="rounded-lg shadow w-full"/>
             </div>
         </aside>
     </div>
 </div>
 
-<script>
-    function filterModal() {
-        return {
-            open: false,
-            collapsed: false,
-
-            repairs: [
-                { label: 'Hamısı', value: '' },
-                { label: 'Təmirli', value: 'renovated' },
-                { label: 'Təmirsiz', value: 'unrenovated' }
-            ],
-            dropdownData: {
-                districts: ['Binəqədi', 'Nərimanov', 'Nəsimi', 'Xətai', 'Yasamal'],
-                metros: ['28 May', 'Gənclik', 'Elmlər', 'İnşaatçılar'],
-                landmarks: ['Gənclik Mall', 'Targovu', 'Flame Towers', 'Təhsil Nazirliyi']
-            },
-            locationLabels: {
-                districts: 'Rayon və qəsəbələr',
-                metros: 'Metrostansiyalar',
-                landmarks: 'Nişangahlar'
-            },
-            tags: [],
-
-            form: {
-                repair: '',
-                areaMin: '',
-                areaMax: '',
-                floorMin: '',
-                floorMax: '',
-                priceMin: '',
-                priceMax: '',
-                postId: '',
-                extraction: false,
-                mortgage: false
-            },
-
-            addTag(scope, value) {
-                if (this.tags.find(t => t.scope === scope && t.value === value)) return;
-                this.tags.push({ scope, value });
-            },
-            removeTag(idx) { this.tags.splice(idx, 1); },
-
-            reset() {
-                this.form = {
-                    repair: '', areaMin: '', areaMax: '', floorMin: '', floorMax: '',
-                    priceMin: '', priceMax: '', postId: '', extraction: false, mortgage: false
-                };
-                this.tags = [];
-                this.collapsed = false;
-            },
-
-            submit() {
-                const payload = { ...this.form, selected: this.tags };
-                console.log('FILTER PAYLOAD:', payload);
-                alert('filter payloada yazildi');
-                this.open = false;
-            }
-        }
-    }
-</script>
 
 <style>
     [x-cloak] {
