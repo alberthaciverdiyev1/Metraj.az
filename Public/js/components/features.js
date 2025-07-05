@@ -1,4 +1,5 @@
 export async function getFeatures() {
+    
     try {
         const res = await fetch('/features', {
             headers: {

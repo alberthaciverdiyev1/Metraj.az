@@ -5,7 +5,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 const cache = new NodeCache({stdTTL: 864000}) // 10 day
 
- const API_URL = process.env.API_URL?.replace(/\/$/, '') || 'http://localhost:8002'
+//  const API_URL = process.env.API_URL?.replace(/\/$/, '') || 'http://localhost:8002'
+const API_URL = 'http://api.metraj.loc:8000';
+
 
 export async function getData(url, params = {}, enumMode = false, allData = false, useCache = true) {
     const queryParams = allData ? params : {page: 1, ...params}
