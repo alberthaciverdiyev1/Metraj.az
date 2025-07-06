@@ -286,3 +286,24 @@ aside {
         flex-direction: column;
     }
 }
+
+
+
+/* add-property.css */
+
+/* Bu sinif məzmunu ilkin olaraq qısaldır */
+#nearby-objects-container.collapsed {
+    max-height: 12rem; /* Hündürlüyü tənzimləyin */
+    overflow: hidden;
+}
+
+/* Bu sinif məzmunu tamamilə göstərir */
+#nearby-objects-container.expanded {
+    max-height: none;
+    overflow: visible;
+}
+
+/* Solğun overlay (zərurət yoxdursa silə bilərsiniz) */
+.fade-overlay.hidden {
+    display: none;
+}

@@ -358,5 +358,25 @@ console.log({formData});
         }
     });
 
+    const nearbyObjectsContainer = document.getElementById('nearby-objects-container');
+    const toggleButton = document.getElementById('toggle-nearby-objects');
+    const fadeOverlay = nearbyObjectsContainer.querySelector('.fade-overlay');
 
+    nearbyObjectsContainer.classList.add('collapsed');
+
+    toggleButton.addEventListener('click', () => {
+        if (nearbyObjectsContainer.classList.contains('collapsed')) {
+            nearbyObjectsContainer.classList.remove('collapsed');
+            nearbyObjectsContainer.classList.add('expanded');
+            fadeOverlay.classList.add('hidden'); 
+            toggleButton.textContent = 'Daha az göstər';
+        } else {
+            nearbyObjectsContainer.classList.remove('expanded');
+            nearbyObjectsContainer.classList.add('collapsed');
+            fadeOverlay.classList.remove('hidden'); 
+            toggleButton.textContent = 'Daha çox göstər';
+        }
+    });
 });
+
+
