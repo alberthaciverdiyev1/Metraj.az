@@ -261,13 +261,23 @@
 
                 </section>
 
+               
                 <div class="p-8 w-full mx-auto rounded-lg shadow-md mt-3 font-sans bg-white text-gray-800">
                     <h2 class="text-xl font-semibold mb-4">{{t "Features"}} <span style="color: red">*</span></h2>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="features"></div>
+                    <div id="features-container" class="relative overflow-hidden max-h-48">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="features"></div>
+                        <div
+                            class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none fade-overlay">
+                        </div>
+                    </div>
+                    <button id="toggle-features"
+                        class="mt-4 text-[var(--primary)] hover:text-orange-500 font-semibold focus:outline-none">
+                        Daha çox göstər
+                    </button>
                 </div>
 
-              
+
 
                 <div class="p-8 w-full mx-auto rounded-lg shadow-md mt-3 font-sans bg-white text-gray-800">
                     <h2 class="text-xl font-semibold mb-4">{{t "Nearby objects"}} <span style="color: red">*</span></h2>

@@ -1,8 +1,8 @@
-import {getPropertyTypes} from "./components/propertyTypes.js";
-import {getFeatures} from "./components/features.js";
-import {getCities} from "./components/cities.js";
-import {getSubways} from "./components/subways.js";
-import {getNearbyObjects} from "./components/nearbyObjects.js";
+import { getPropertyTypes } from "./components/propertyTypes.js";
+import { getFeatures } from "./components/features.js";
+import { getCities } from "./components/cities.js";
+import { getSubways } from "./components/subways.js";
+import { getNearbyObjects } from "./components/nearbyObjects.js";
 
 let cityArray = [];
 let subwayArray = [];
@@ -11,9 +11,9 @@ let city_id = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
     await Promise.all([propertyTypes(), featureList(), cityList(), subwayList(), nearbyObjectsList()]);
-    const addBtn       = document.getElementById('add-property-btn'); 
+    const addBtn = document.getElementById('add-property-btn');
     const termsCheckbox = document.getElementById('terms');
-  
+
     const dropzone = document.getElementById("dropzone");
     const fileInput = document.getElementById("fileInput");
     const gallery = document.getElementById("gallery");
@@ -22,9 +22,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     fileInput.addEventListener("change", handleFiles);
 
-     addBtn.disabled = !termsCheckbox.checked;    
-  addBtn.classList.toggle('opacity-50', !termsCheckbox.checked);
-  addBtn.classList.toggle('cursor-not-allowed', !termsCheckbox.checked);
+    addBtn.disabled = !termsCheckbox.checked;
+    addBtn.classList.toggle('opacity-50', !termsCheckbox.checked);
+    addBtn.classList.toggle('cursor-not-allowed', !termsCheckbox.checked);
     ["dragenter", "dragover"].forEach(event => {
         dropzone.addEventListener(event, e => {
             e.preventDefault();
@@ -285,7 +285,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (!termsCheckbox.checked) {
             alert('Elanı yerləşdirməzdən əvvəl istifadəçi razılaşmasını qəbul etməlisiniz.');
             return;
-          }
+        }
 
         const fileInput = document.getElementById('fileInput');
         const videoInput = document.getElementById('video');
@@ -345,7 +345,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             formData.append(`media[${index}][type]`, 'document');
             formData.append(`media[${index}][file]`, documentInput.files[0]);
         }
-console.log({formData});
+        console.log({ formData });
         try {
             const response = await axios.post('/add-property', formData, {
                 headers: {
@@ -368,15 +368,36 @@ console.log({formData});
         if (nearbyObjectsContainer.classList.contains('collapsed')) {
             nearbyObjectsContainer.classList.remove('collapsed');
             nearbyObjectsContainer.classList.add('expanded');
-            fadeOverlay.classList.add('hidden'); 
+            fadeOverlay.classList.add('hidden');
             toggleButton.textContent = 'Daha az göstər';
         } else {
             nearbyObjectsContainer.classList.remove('expanded');
             nearbyObjectsContainer.classList.add('collapsed');
-            fadeOverlay.classList.remove('hidden'); 
+            fadeOverlay.classList.remove('hidden');
             toggleButton.textContent = 'Daha çox göstər';
         }
     });
+    const featuresContainer = document.getElementById('features-container');
+    const toggleFeaturesButton = document.getElementById('toggle-features');
+    const featuresFadeOverlay = featuresContainer.querySelector('.fade-overlay');
+
+    if (featuresContainer && toggleFeaturesButton && featuresFadeOverlay) {
+        featuresContainer.classList.add('collapsed');
+
+        toggleFeaturesButton.addEventListener('click', () => {
+            if (featuresContainer.classList.contains('collapsed')) {
+                featuresContainer.classList.remove('collapsed');
+                featuresContainer.classList.add('expanded');
+                featuresFadeOverlay.classList.add('hidden');
+                toggleFeaturesButton.textContent = 'Daha az göstər';
+            } else {
+                featuresContainer.classList.remove('expanded');
+                featuresContainer.classList.add('collapsed');
+                featuresFadeOverlay.classList.remove('hidden');
+                toggleFeaturesButton.textContent = 'Daha çox göstər';
+            }
+        });
+    }
 });
 
 
