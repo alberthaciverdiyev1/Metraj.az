@@ -103,12 +103,15 @@
                             <label class="block font-medium mb-1">{{t "Building Type"}}:<span
                                     class="text-red-500">*</span></label>
                             <select id="building-type"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-300">
                                 <option disabled selected>{{t "Choose"}}</option>
+                                <option disabled selected>{{t "Choose"}}</option>
+
+
                             </select>
                         </div>
                         <!-- Add Type -->
-                        <div>
+                        {{!-- <div>
                             <label class="block font-medium mb-1">{{t "Add type"}}:<span
                                     class="text-red-500">*</span></label>
                             <select id="add-type"
@@ -117,7 +120,42 @@
                                 <option value="sale">For Sale</option>
                                 <option value="rent">For Rent</option>
                             </select>
+                        </div> --}}
+                        <select id="add-type" name="type" class="sr-only" {{!-- ekranda görünmür, ancaq forma dəyər
+                            ötürür --}}>
+                            <option disabled selected>{{t "Choose"}}</option>
+                            <option value="sale">For Sale</option>
+                            <option value="rent">For Rent</option>
+                        </select>
+
+                        <div id="customTypeContainer" class="relative w-full">
+                            <label class="block font-medium mb-1">
+                                {{t "Add type"}}:<span class="text-red-500">*</span>
+                            </label>
+
+                            <button id="customTypeButton" type="button"
+                                class="w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
+                                <span id="customTypeText">{{t "Choose"}}</span>
+                                <svg id="typeIcon" class="w-4 h-4 ml-2 transition-transform transform"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+
+                            <ul id="customTypeOptions"
+                                class="absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
+                                <li data-value="sale" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">For Sale</li>
+                                <li data-value="rent" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">For Rent</li>
+                            </ul>
+
+                            <input type="hidden" id="selectedTypeInput" name="type">
                         </div>
+
+
+
+
                         <!-- Property Label -->
                         <div>
                             <label class="block font-medium mb-1">Təmir:<span class="text-red-500">*</span></label>
@@ -261,7 +299,7 @@
 
                 </section>
 
-               
+
                 <div class="p-8 w-full mx-auto rounded-lg shadow-md mt-3 font-sans bg-white text-gray-800">
                     <h2 class="text-xl font-semibold mb-4">{{t "Features"}} <span style="color: red">*</span></h2>
 

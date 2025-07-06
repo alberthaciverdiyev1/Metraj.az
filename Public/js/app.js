@@ -162,6 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
       inputId,
       iconId
     } = config;
+    
 
     const container = document.getElementById(containerId);
     const button = document.getElementById(buttonId);

@@ -398,6 +398,65 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         });
     }
+
+    function initCustomSelect(config) {
+        const container = document.getElementById(config.containerId);
+        const button = document.getElementById(config.buttonId);
+        const optionsList = document.getElementById(config.optionsId);
+        const textSpan = document.getElementById(config.textId);
+        const inputField = document.getElementById(config.inputId);
+        const icon = document.getElementById(config.iconId);
+    
+        // Toggle options list visibility
+        button.addEventListener("click", function() {
+            const isHidden = optionsList.classList.contains("hidden");
+            if (isHidden) {
+                optionsList.classList.remove("hidden");
+                optionsList.classList.add("fade-in"); // Optional: for a fade-in animation
+                icon.classList.add("rotate-180"); // Rotate icon when open
+            } else {
+                optionsList.classList.add("hidden");
+                optionsList.classList.remove("fade-in");
+                icon.classList.remove("rotate-180"); // Reset icon when closed
+            }
+        });
+    
+        // Handle option selection
+        optionsList.addEventListener("click", function(event) {
+            const selectedOption = event.target.closest("li");
+            if (selectedOption) {
+                const value = selectedOption.dataset.value;
+                const text = selectedOption.textContent.trim();
+    
+                textSpan.textContent = text; // Update displayed text
+                inputField.value = value;   // Update hidden input value
+    
+                optionsList.classList.add("hidden"); // Hide options after selection
+                optionsList.classList.remove("fade-in");
+                icon.classList.remove("rotate-180"); // Reset icon
+            }
+        });
+    
+        // Close options if clxicked outside
+        document.addEventListener("click", function(event) {
+            if (!container.contains(event.target)) {
+                optionsList.classList.add("hidden");
+                optionsList.classList.remove("fade-in");
+                icon.classList.remove("rotate-180");
+            }
+        });
+    }
+    
+    initCustomSelect({
+        containerId: "customTypeContainer",
+        buttonId: "customTypeButton",
+        optionsId: "customTypeOptions",
+        textId: "customTypeText",
+        inputId: "selectedTypeInput",
+        iconId: "typeIcon",
+      });
+      
+    
 });
 
 
