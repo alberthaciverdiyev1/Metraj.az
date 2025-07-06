@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const circumference = 2 * Math.PI * radius;
   
     if (!gotop || !progress) {
-      console.warn('❌ scrollToTop elementi və ya progress tapılmadı!');
+      console.warn(' scrollToTop elementi və ya progress tapılmadı!');
       return;
     }
   
@@ -31,6 +31,5 @@ document.addEventListener('DOMContentLoaded', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   
-    console.log('✅ goTop script işə düşdü');
   });
   
