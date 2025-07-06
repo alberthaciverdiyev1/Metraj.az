@@ -62,9 +62,6 @@ async function addView(request, reply) {
         ]),
         js: js(['add-property.js',
             'map-find-adress.js',
-            'components/features.js',
-            'components/cities.js',
-            'components/propertyTypes.js',
             'app.js'
         ]),
         breadcrumbs: [
