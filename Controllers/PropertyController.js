@@ -56,14 +56,23 @@ async function detailsView(request, reply) {
 async function addView(request, reply) {
     const view = {
         title: 'Add Property Page',
-        css: css(['add-property.css',
-            'app.css',
-            'components.css'
-        ]),
-        js: js(['add-property.js',
+        js: js([
+            'add-property.js',
             'map-find-adress.js',
-            'app.js'
-        ]),
+            'components/cities.js',
+            'components/features.js',
+            'components/propertyTypes.js',
+            'gotop.js',
+            'app.js',
+          ]),
+          css: css([
+            'add-property.css',
+            'components.css',
+            'app.css',
+            'listing.css'
+            
+          ])
+,          
         breadcrumbs: [
             {label: 'Home', url: '/'},
             {label: 'Property Listing', url: '/listing'}
