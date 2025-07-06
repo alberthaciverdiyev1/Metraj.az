@@ -1,6 +1,6 @@
 <main>
     <section id="hero" class="relative bg-cover bg-fixed bg-center py-20"
-        style="background-image: url('/images/bg-hero.jpg')">
+             style="background-image: url('/images/bg-hero.jpg')">
         <div class="absolute inset-0 bg-black/40"></div>
 
         <div class="container mx-auto px-5 my-[100px] text-left text-white relative z-10">
@@ -10,21 +10,21 @@
             <div class="flex space-x-4 mt-8" id="toggleButtons">
                 <div class="relative group">
                     <button data-type="rent"
-                        class="toggle-btn px-6 py-3 bg-red-400 text-sm text-white font-semibold rounded-[16px] focus:outline-none">
+                            class="toggle-btn px-6 py-3 bg-red-400 text-sm text-white font-semibold rounded-[16px] focus:outline-none">
                         Kirayə
                     </button>
                     <div
-                        class="triangle-indicator absolute left-1/2 -translate-x-1/2 -bottom-1 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-red-400">
+                            class="triangle-indicator absolute left-1/2 -translate-x-1/2 -bottom-1 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-red-400">
                     </div>
                 </div>
 
                 <div class="relative group">
                     <button data-type="sale"
-                        class="text-sm toggle-btn px-6 py-3 bg-white text-black font-semibold rounded-[16px] border border-gray-300 hover:bg-gray-100 hover:text-black">
+                            class="text-sm toggle-btn px-6 py-3 bg-white text-black font-semibold rounded-[16px] border border-gray-300 hover:bg-gray-100 hover:text-black">
                         Alış
                     </button>
                     <div
-                        class="triangle-indicator hidden absolute left-1/2 -translate-x-1/2 -bottom-1 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-red-400">
+                            class="triangle-indicator hidden absolute left-1/2 -translate-x-1/2 -bottom-1 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-red-400">
                     </div>
                 </div>
             </div>
@@ -94,13 +94,13 @@
 
                     <div class="relative w-full sm:flex-1" id="customSelectContainer">
                         <button type="button" id="customSelectButton"
-                            class="bg-white border border-gray-300 rounded-lg px-4 py-2 w-full text-left flex justify-between items-center focus:ring-2 focus:ring-orange-300 transition duration-200">
+                                class="bg-white border border-gray-300 rounded-lg px-4 py-2 w-full text-left flex justify-between items-center focus:ring-2 focus:ring-orange-300 transition duration-200">
                             <span id="customSelectText">Şəhər seçin</span>
                             <svg class="w-4 h-4 ml-2 transition-transform duration-200" id="dropdownIcon"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
+                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
+                                      d="M19 9l-7 7-7-7"/>
                             </svg>
                         </button>
 
@@ -108,8 +108,8 @@
                             class="absolute z-10 mt-2 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto hidden transition-all duration-300">
                             <li data-value="" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Şəhər seçin</li>
                             {{#each cities}}
-                            <li data-value="{{this.id}}" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">
-                                {{this.name}}</li>
+                                <li data-value="{{this.id}}" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">
+                                    {{this.name}}</li>
                             {{/each}}
                         </ul>
 
@@ -118,13 +118,13 @@
 
                     <div class="relative w-full sm:flex-1" id="customConditionContainer">
                         <button type="button" id="customConditionButton"
-                            class="bg-white border border-gray-300 rounded-lg px-4 py-2 w-full text-left flex justify-between items-center focus:ring-2 focus:ring-orange-300 transition duration-200">
+                                class="bg-white border border-gray-300 rounded-lg px-4 py-2 w-full text-left flex justify-between items-center focus:ring-2 focus:ring-orange-300 transition duration-200">
                             <span id="customConditionText">Əmlakın vəziyyəti</span>
                             <svg class="w-4 h-4 ml-2 transition-transform duration-200" id="conditionIcon"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
+                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
+                                      d="M19 9l-7 7-7-7"/>
                             </svg>
                         </button>
 
@@ -141,13 +141,13 @@
 
                     <div class="relative w-full sm:flex-1" id="customPriceContainer">
                         <button type="button" id="customPriceButton"
-                            class="bg-white border border-gray-300 rounded-lg px-4 py-2 w-full text-left flex justify-between items-center focus:ring-2 focus:ring-orange-300 transition duration-200">
+                                class="bg-white border border-gray-300 rounded-lg px-4 py-2 w-full text-left flex justify-between items-center focus:ring-2 focus:ring-orange-300 transition duration-200">
                             <span id="customPriceText">Qiymət aralığı</span>
                             <svg class="w-4 h-4 ml-2 transition-transform duration-200" id="priceIcon"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
+                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
+                                      d="M19 9l-7 7-7-7"/>
                             </svg>
                         </button>
 
@@ -157,9 +157,11 @@
                             <li data-value="0-50000" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">0 - 50,000 AZN
                             </li>
                             <li data-value="50000-100000" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">50,000 -
-                                100,000 AZN</li>
+                                100,000 AZN
+                            </li>
                             <li data-value="100000-200000" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">100,000
-                                - 200,000 AZN</li>
+                                - 200,000 AZN
+                            </li>
                             <li data-value="200000+" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">200,000+ AZN
                             </li>
                         </ul>
@@ -168,18 +170,15 @@
                     </div>
 
                     <button
-                        class="open-search-btn bg-orange-300 text-white px-5 py-4 rounded-xl flex items-center justify-center flex-shrink-0 hover:bg-orange-400 focus:outline-none"
-                        id="openSearchBtn">
+                            class="open-search-btn bg-orange-300 text-white px-5 py-4 rounded-xl flex items-center justify-center flex-shrink-0 hover:bg-orange-400 focus:outline-none"
+                            id="openSearchBtn">
                         <i class="fa-solid fa-sliders"></i>
                     </button>
 
-                    <button class="bg-[var(--primary)] py-3 px-5 rounded-lg text-white">Axtar</button>
+                    <button class="bg-[var(--primary)] py-3 px-5 rounded-lg text-white">{{t "Search"}}</button>
 
                 </div>
             </div>
-
-
-
 
 
             <div class="relative">
@@ -192,30 +191,30 @@
                                 <span class="text-red-500">$500,000</span>
                             </p>
                             <input type="range" class="w-full accent-orange-500 bg-gray-300 h-1 rounded-md" step="10000"
-                                min="100" max="500000">
+                                   min="100" max="500000">
                         </div>
                         <div class="w-full md:w-1/2">
                             <p class="font-semibold">Size range from <span class="text-red-500">0 m²</span> to <span
                                     class="text-red-500">1,000 m²</span></p>
                             <input type="range" class="w-full accent-orange-500 bg-gray-300 h-1 rounded-md" step="50"
-                                min="0" max="1000">
+                                   min="0" max="1000">
                         </div>
                     </div>
                     <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <select
-                            class="border border-gray-300 rounded-xl px-4 py-2 w-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-300">
+                                class="border border-gray-300 rounded-xl px-4 py-2 w-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-300">
                             <option>Province / States</option>
                         </select>
                         <select
-                            class="border border-gray-300 rounded-xl px-4 py-2 w-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-300">
+                                class="border border-gray-300 rounded-xl px-4 py-2 w-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-300">
                             <option>Rooms</option>
                         </select>
                         <select
-                            class="border border-gray-300 rounded-xl px-4 py-2 w-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-300">
+                                class="border border-gray-300 rounded-xl px-4 py-2 w-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-300">
                             <option>Bath: Any</option>
                         </select>
                         <select
-                            class="border border-gray-300 rounded-xl px-4 py-2 w-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-300">
+                                class="border border-gray-300 rounded-xl px-4 py-2 w-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-300">
                             <option>Beds: Any</option>
                         </select>
                     </div>
@@ -223,46 +222,46 @@
                         <p class="text-gray-500 text-sm font-medium mb-2">Amenities:</p>
                         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-4 gap-y-2">
                             <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400"> Bed
+                                                                            class="mr-2 accent-orange-400"> Bed
                                 linens</label>
                             <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400"> Carbon
+                                                                            class="mr-2 accent-orange-400"> Carbon
                                 alarm</label>
                             <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400"> Check-in
+                                                                            class="mr-2 accent-orange-400"> Check-in
                                 lockbox</label>
                             <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400"> Extra
+                                                                            class="mr-2 accent-orange-400"> Extra
                                 pillows</label>
                             <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400"> First
+                                                                            class="mr-2 accent-orange-400"> First
                                 aid kit</label>
                             <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400">
+                                                                            class="mr-2 accent-orange-400">
                                 Hangers</label>
                             <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400">
+                                                                            class="mr-2 accent-orange-400">
                                 Refrigerator</label>
                             <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400"> Security
+                                                                            class="mr-2 accent-orange-400"> Security
                                 cameras</label>
                             <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400"> Smoke
+                                                                            class="mr-2 accent-orange-400"> Smoke
                                 alarm</label>
                             <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400"> Coffee
+                                                                            class="mr-2 accent-orange-400"> Coffee
                                 maker</label>
                             <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400">
+                                                                            class="mr-2 accent-orange-400">
                                 Dishwasher</label>
                             <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400">
+                                                                            class="mr-2 accent-orange-400">
                                 Microwave</label>
                             <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400">
+                                                                            class="mr-2 accent-orange-400">
                                 Iron</label>
                             <label class="flex items-center text-sm"><input type="checkbox"
-                                    class="mr-2 accent-orange-400">
+                                                                            class="mr-2 accent-orange-400">
                                 Fireplace</label>
                         </div>
                     </div>
@@ -280,7 +279,7 @@
 
             <div class="luxury-listings">
                 <div id="propertyContainer"
-                    class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-7">
+                     class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-7">
 
                     <div class="col-span-full flex justify-center items-center py-[200px]">
                         <span class="loader"></span>
@@ -337,7 +336,7 @@
                 </div>
 
                 <div class="bg-fixed  md:w-1/2 mt-10 h-[700px] md:mt-0 rounded-xl "
-                    style="background-image: url('/images/section-pre-approved.jpg');"></div>
+                     style="background-image: url('/images/section-pre-approved.jpg');"></div>
 
             </div>
 
@@ -345,9 +344,12 @@
                 <div class="bg-white rounded-lg p-6 shadow-xl max-w-sm w-full">
                     <h2 class="text-xl font-bold text-gray-800 mb-4">Monthly Payment</h2>
                     <p class="text-lg text-gray-700">Your estimated monthly payment is <span id="modalPayment"
-                            class="font-bold text-orange-500"></span></p>
+                                                                                             class="font-bold text-orange-500"></span>
+                    </p>
                     <button onclick="closeModal()"
-                        class="mt-4 w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition-colors">Close</button>
+                            class="mt-4 w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition-colors">
+                        Close
+                    </button>
                 </div>
             </div>
 
