@@ -160,23 +160,24 @@ export async function add(req, res) {
 
 export async function listApi(req, res) {
     const allowedParams = [
-        'propertyType',
-        'propertyCondition',
-        'buildingType',
-        'roomCount',
-        'cityId',
+        'property-type',
+        'property-condition',
+        'building-type',
+        'room-count',
+        'city-id',
+
 
         'type',
-        'addNo',
-        'townId',
-        'subwayId',
-        'districtId',
-        'addType',
-        'numberOfFloors',
-        'floorLocated',
+        'add-no',
+        'town-id',
+        'subway-id',
+        'district-id',
+        'add-type',
+        'number-of-floors',
+        'floor-located',
         'area',
-        'fieldArea',
-        'inCredit',
+        'field-area',
+        'in-credit',
     ];
 
     const params = Object.fromEntries(

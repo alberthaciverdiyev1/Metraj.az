@@ -1,5 +1,6 @@
-import {getPropertiesList} from "./components/property.js";
-import {propertyCard} from "./cards/property.js";
+import { getPropertiesList } from "./components/property.js";
+import { propertyCard } from "./cards/property.js";
+
 const gotop = document.getElementById('scrollToTop');
 const progress = document.querySelector('.progress-circle .progress');
 const radius = 18;
@@ -21,41 +22,45 @@ window.addEventListener('scroll', () => {
 });
 
 gotop.addEventListener('click', () => {
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-
-
-//PAGINATION
-
-document.addEventListener('DOMContentLoaded', () => {
+// PAGINATION
+document.addEventListener('DOMContentLoaded', async () => {
     const itemsPerPage = 9;
     const paginationContainer = document.querySelector('.pagination');
     const resultsText = document.querySelector('.result .text');
     const gridBtn = document.getElementById("gridViewBtn");
     const listBtn = document.getElementById("listViewBtn");
-    const container = document.getElementById('propertyContainer');
+    const propertyContainer = document.getElementById('propertyContainer');
+    const premiumCardContainer = document.getElementById('premiumCard');
 
-    if (!container) {
-        console.error('Element with id="propertyContainer" not found!');
+    // Get references to the loading overlays using their new IDs
+    const premiumLoadingOverlay = document.getElementById('premiumLoadingOverlay');
+    const allPropertiesLoadingOverlay = document.getElementById('allPropertiesLoadingOverlay');
+
+
+    if (!propertyContainer || !premiumCardContainer || !premiumLoadingOverlay || !allPropertiesLoadingOverlay) {
+        console.error('One or more required elements (containers or loading overlays) not found!');
         return;
     }
 
     let currentPage = 1;
+    let currentAddType = 'all'; // Default to 'all' to show all properties initially
 
-    function getPropertyCards() {
-        return container.querySelectorAll(':scope > div');
+    function getPropertyCards(containerElement) {
+        return containerElement.querySelectorAll(':scope > div');
     }
 
-    function getTotalPages() {
-        return Math.ceil(getPropertyCards().length / itemsPerPage);
+    function getTotalPages(containerElement) {
+        return Math.ceil(getPropertyCards(containerElement).length / itemsPerPage);
     }
 
-    function showPage(page) {
+    function showPage(page, containerElement) {
         currentPage = page;
-        const propertyCards = getPropertyCards();
+        const propertyCards = getPropertyCards(containerElement);
         const totalItems = propertyCards.length;
-        const totalPages = getTotalPages();
+        const totalPages = getTotalPages(containerElement);
         const startIndex = (page - 1) * itemsPerPage;
         const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
 
@@ -70,11 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         resultsText.textContent = `Showing ${startIndex + 1}-${endIndex} of ${totalItems} results.`;
-        updatePaginationUI();
+        updatePaginationUI(containerElement);
     }
 
-    function updatePaginationUI() {
-        const totalPages = getTotalPages();
+    function updatePaginationUI(containerElement) {
+        const totalPages = getTotalPages(containerElement);
         const pageItems = document.querySelectorAll('.pagination .page-item');
 
         pageItems.forEach(item => {
@@ -98,8 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function initPagination() {
-        showPage(currentPage);
+    function initPagination(containerElement) {
+        showPage(currentPage, containerElement);
     }
 
     paginationContainer.addEventListener('click', function (e) {
@@ -109,16 +114,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const target = e.target.closest('.page-link');
             const action = target.getAttribute('aria-label');
 
-            const totalPages = getTotalPages();
+            const totalPages = getTotalPages(propertyContainer);
 
             if (action === 'Previous' && currentPage > 1) {
-                showPage(currentPage - 1);
+                showPage(currentPage - 1, propertyContainer);
             } else if (action === 'Next' && currentPage < totalPages) {
-                showPage(currentPage + 1);
+                showPage(currentPage + 1, propertyContainer);
             } else if (!action) {
                 const pageNumber = parseInt(target.textContent);
                 if (!isNaN(pageNumber)) {
-                    showPage(pageNumber);
+                    showPage(pageNumber, propertyContainer);
                 }
             }
         }
@@ -129,135 +134,118 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleButtons.forEach(btn => {
         btn.addEventListener("click", () => {
             toggleButtons.forEach(b => {
-                b.classList.remove("active", "bg-primary");
+                b.classList.remove("active-filter");
             });
-            btn.classList.add("active", "bg-primary");
+            btn.classList.add("active-filter");
         });
     });
 
-
     gridBtn.addEventListener('click', () => {
-        container.classList.remove('list-view');
-        container.classList.add(
+        propertyContainer.classList.remove('list-view');
+        propertyContainer.classList.add(
             'grid',
             'grid-cols-1',
             'sm:grid-cols-1',
             'md:grid-cols-2',
             'lg:grid-cols-2',
-            'xl:grid-cols-3'
+            'xl:grid-cols-4'
         );
-        showPage(currentPage);
-    });
-
-    listBtn.addEventListener('click', () => {
-        container.classList.add('list-view');
-        container.classList.remove(
+        premiumCardContainer.classList.remove('list-view');
+        premiumCardContainer.classList.add(
             'grid',
             'grid-cols-1',
             'sm:grid-cols-1',
             'md:grid-cols-2',
             'lg:grid-cols-2',
-            'xl:grid-cols-3'
+            'xl:grid-cols-4'
         );
-        showPage(currentPage);
-    });
-
-    initPagination();
-});
-document.addEventListener('DOMContentLoaded', async () => {
-    const gridBtn = document.getElementById('gridViewBtn');
-    const listBtn = document.getElementById('listViewBtn');
-    const container = document.getElementById('propertyContainer');
-
-    if (!container) {
-        console.error('Element with id="propertyContainer" not found!');
-        return;
-    }
-
-    gridBtn.addEventListener('click', () => {
-        container.classList.remove('list-view');
-        container.classList.add('grid', 'grid-cols-1', 'sm:grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-2', 'xl:grid-cols-3');
+        showPage(currentPage, propertyContainer);
     });
 
     listBtn.addEventListener('click', () => {
-        container.classList.add('list-view');
-        container.classList.remove('grid', 'grid-cols-1', 'sm:grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-2', 'xl:grid-cols-3');
+        propertyContainer.classList.add('list-view');
+        propertyContainer.classList.remove(
+            'grid',
+            'grid-cols-1',
+            'sm:grid-cols-1',
+            'md:grid-cols-2',
+            'lg:grid-cols-2',
+            'xl:grid-cols-4'
+        );
+        premiumCardContainer.classList.add('list-view');
+        premiumCardContainer.classList.remove(
+            'grid',
+            'grid-cols-1',
+            'sm:grid-cols-1',
+            'md:grid-cols-2',
+            'lg:grid-cols-2',
+            'xl:grid-cols-4'
+        );
+        showPage(currentPage, propertyContainer);
     });
 
-    async function properties() {
+    async function fetchAndRenderProperties(addTypeFilter) {
+        // Use the newly defined loading overlay variables
+        premiumLoadingOverlay.style.display = 'flex';
+        allPropertiesLoadingOverlay.style.display = 'flex';
+
         let properties = await getPropertiesList();
 
-        let premiumCards = '';
-        let allCards = '';
+        const filteredProperties = properties.filter(property => {
+            if (addTypeFilter === 'all') {
+                return true; // Show all properties
+            }
+            return property.add_type === addTypeFilter;
+        });
 
-        properties.forEach(property => {
+        let premiumCardsHtml = '';
+        let allCardsHtml = '';
+
+        filteredProperties.forEach(property => {
             const cardHtml = propertyCard(property);
-            allCards += cardHtml;
+            allCardsHtml += cardHtml;
 
             if (property.is_premium) {
-                premiumCards += cardHtml;
+                premiumCardsHtml += cardHtml;
             }
         });
 
-        document.getElementById('premiumCard').innerHTML = premiumCards;
-        document.getElementById('propertyContainer').innerHTML = allCards;
+        premiumCardContainer.innerHTML = premiumCardsHtml;
+        propertyContainer.innerHTML = allCardsHtml;
 
-        showPage(1);
-    }
-    
-    
+        premiumLoadingOverlay.style.display = 'none';
+        allPropertiesLoadingOverlay.style.display = 'none';
 
-    // document.querySelector('[data-role="property-type"]').addEventListener('change', async (event) => {
-    //     const selectedValue = event.target.value;
-    //     console.log('Selected value:', selectedValue);
-    //
-    //     const currentUrl = new URL(window.location.href);
-    //
-    //     currentUrl.searchParams.set('property-type', selectedValue);
-    //
-    //     window.history.replaceState({}, '', currentUrl.toString());
-    //
-    //     await properties();
-    //
-    // });
-
-
-
-
-    async function applyFilter(selectedValue, selector) {
-        console.log('Selected value:', selectedValue);
-
-        const currentUrl = new URL(window.location.href);
-        currentUrl.searchParams.set(selector, selectedValue);
-
-        window.history.replaceState({}, '', currentUrl.toString());
-
-        await properties();
+        initPagination(propertyContainer);
     }
 
-    // document.querySelector('[data-role="property-condition"]').addEventListener('change', async (event) => {
-    //     const selectedValue = event.target.value;
-    //     await applyFilter(selectedValue, 'property-condition')
-    //
-    // });
-    // document.querySelector('[data-role="property-type"]').addEventListener('change', async (event) => {
-    //     const selectedValue = event.target.value;
-    //     await applyFilter(selectedValue, 'property-type')
-    //
-    // });
-    // document.querySelector('[data-role="building-type"]').addEventListener('change', async (event) => {
-    //     const selectedValue = event.target.value;
-    //     await applyFilter(selectedValue, 'building-type')
-    // });
-    // document.querySelector('[data-role="room-count"]').addEventListener('change', async (event) => {
-    //     const selectedValue = event.target.value;
-    //     await applyFilter(selectedValue, 'room-count')
-    // });
-    //document.querySelector('[data-role="city-id"]').addEventListener('change', async (event) => {
-    //    const selectedValue = event.target.value;
-    //    await applyFilter(selectedValue, 'city-id')
-    //});
+    // Get all filter buttons
+    const filterButtons = document.querySelectorAll('button[data-add-type]');
 
+    filterButtons.forEach(button => {
+        button.addEventListener('click', async () => {
+            const selectedAddType = button.getAttribute('data-add-type');
+            currentAddType = selectedAddType;
 
-    await properties();
+            // Remove active classes from all filter buttons
+            filterButtons.forEach(btn => {
+                btn.classList.remove('bg-[color:var(--primary)]', 'text-white');
+                btn.classList.add('bg-white', 'text-gray-700', 'hover:bg-gray-100');
+            });
+
+            // Add active class to the clicked button
+            button.classList.add('bg-[color:var(--primary)]', 'text-white');
+            button.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100');
+
+            await fetchAndRenderProperties(selectedAddType);
+        });
+    });
+
+    // Set the initial active state for the 'All' button and fetch properties
+    const allButton = document.querySelector('button[data-add-type="all"]');
+    if (allButton) {
+        allButton.classList.add('bg-[color:var(--primary)]', 'text-white');
+        allButton.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100'); // Ensure other classes are removed
+        fetchAndRenderProperties('all'); // Fetch all properties on initial load
+    }
 });
