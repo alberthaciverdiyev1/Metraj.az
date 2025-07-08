@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const propertyContainer = document.getElementById('propertyContainer');
     const premiumCardContainer = document.getElementById('premiumCard');
 
-    // Get references to the loading overlays using their new IDs
     const premiumLoadingOverlay = document.getElementById('premiumLoadingOverlay');
     const allPropertiesLoadingOverlay = document.getElementById('allPropertiesLoadingOverlay');
 
@@ -46,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     let currentPage = 1;
-    let currentAddType = 'all'; // Default to 'all' to show all properties initially
+    let currentAddType = 'all'; 
 
     function getPropertyCards(containerElement) {
         return containerElement.querySelectorAll(':scope > div');
@@ -185,7 +184,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     async function fetchAndRenderProperties(addTypeFilter) {
-        // Use the newly defined loading overlay variables
         premiumLoadingOverlay.style.display = 'flex';
         allPropertiesLoadingOverlay.style.display = 'flex';
 
@@ -193,7 +191,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const filteredProperties = properties.filter(property => {
             if (addTypeFilter === 'all') {
-                return true; // Show all properties
+                return true; 
             }
             return property.add_type === addTypeFilter;
         });
@@ -219,7 +217,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         initPagination(propertyContainer);
     }
 
-    // Get all filter buttons
     const filterButtons = document.querySelectorAll('button[data-add-type]');
 
     filterButtons.forEach(button => {
@@ -227,25 +224,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             const selectedAddType = button.getAttribute('data-add-type');
             currentAddType = selectedAddType;
 
-            // Remove active classes from all filter buttons
             filterButtons.forEach(btn => {
                 btn.classList.remove('bg-[color:var(--primary)]', 'text-white');
                 btn.classList.add('bg-white', 'text-gray-700', 'hover:bg-gray-100');
             });
 
-            // Add active class to the clicked button
             button.classList.add('bg-[color:var(--primary)]', 'text-white');
             button.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100');
 
             await fetchAndRenderProperties(selectedAddType);
         });
     });
-
-    // Set the initial active state for the 'All' button and fetch properties
     const allButton = document.querySelector('button[data-add-type="all"]');
     if (allButton) {
         allButton.classList.add('bg-[color:var(--primary)]', 'text-white');
-        allButton.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100'); // Ensure other classes are removed
-        fetchAndRenderProperties('all'); // Fetch all properties on initial load
+        allButton.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100'); 
+        fetchAndRenderProperties('all'); 
     }
 });

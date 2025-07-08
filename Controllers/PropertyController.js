@@ -154,7 +154,6 @@ export async function add(req, res) {
     };
     console.log(data)
     return await postData('/property', data)
-    //return res.send({status: 'ok', data});
 }
 
 
