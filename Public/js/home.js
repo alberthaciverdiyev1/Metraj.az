@@ -1,5 +1,6 @@
-import {getPropertiesList} from "./components/property.js";
-import {propertyCard} from "./cards/property.js";
+import { getPropertiesList } from "./components/property.js";
+import { propertyCard } from "./cards/property.js";
+import { propertySkeletonCard } from "./cards/propertySkeleton.js"; 
 
 document.addEventListener('DOMContentLoaded', function () {
     const toggleButtons = document.querySelectorAll(".toggle-btn");
@@ -31,58 +32,88 @@ document.addEventListener('DOMContentLoaded', function () {
     const filterBtn = document.getElementById('filterButton');
     const modal = document.getElementById('filterModal');
 
-    filterBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (modal.classList.contains('invisible')) {
-            modal.classList.remove('invisible', 'opacity-0', '-translate-y-3');
-            modal.classList.add('visible', 'opacity-100', 'translate-y-0');
-        } else {
-            modal.classList.remove('visible', 'opacity-100', 'translate-y-0');
-            modal.classList.add('invisible', 'opacity-0', '-translate-y-3');
-        }
-    });
+    if (filterBtn && modal) {
+        filterBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (modal.classList.contains('invisible')) {
+                modal.classList.remove('invisible', 'opacity-0', '-translate-y-3');
+                modal.classList.add('visible', 'opacity-100', 'translate-y-0');
+            } else {
+                modal.classList.remove('visible', 'opacity-100', 'translate-y-0');
+                modal.classList.add('invisible', 'opacity-0', '-translate-y-3');
+            }
+        });
 
-    document.addEventListener('click', (e) => {
-        if (modal.classList.contains('visible') && !modal.contains(e.target) && !filterBtn.contains(e.target)) {
-            modal.classList.remove('visible', 'opacity-100', 'translate-y-0');
-            modal.classList.add('invisible', 'opacity-0', '-translate-y-3');
-        }
-    });
+        document.addEventListener('click', (e) => {
+            if (modal.classList.contains('visible') && !modal.contains(e.target) && !filterBtn.contains(e.target)) {
+                modal.classList.remove('visible', 'opacity-100', 'translate-y-0');
+                modal.classList.add('invisible', 'opacity-0', '-translate-y-3');
+            }
+        });
+    }
 
     const selectWrappers = document.querySelectorAll('.select-wrapper');
     selectWrappers.forEach(wrapper => {
         const select = wrapper.querySelector('.custom-select');
-        select.addEventListener('focus', () => {
-            wrapper.classList.add('focused');
-        });
-        select.addEventListener('blur', () => {
-            wrapper.classList.remove('focused');
-        });
+        if (select) { 
+            select.addEventListener('focus', () => {
+                wrapper.classList.add('focused');
+            });
+            select.addEventListener('blur', () => {
+                wrapper.classList.remove('focused');
+            });
+        }
     });
 });
 
-document.getElementById('downPayment').addEventListener('input', function () {
-    const total = parseFloat(document.getElementById('totalAmount').value) || 0;
-    const downPayment = parseFloat(this.value) || 0;
-    const percent = (downPayment / total * 100).toFixed(2);
-    document.getElementById('downPaymentPercent').value = percent;
-});
+const downPaymentInput = document.getElementById('downPayment');
+const downPaymentPercentInput = document.getElementById('downPaymentPercent');
 
-document.getElementById('downPaymentPercent').addEventListener('input', function () {
-    const total = parseFloat(document.getElementById('totalAmount').value) || 0;
-    const percent = parseFloat(this.value) || 0;
-    const downPayment = (total * percent / 100).toFixed(2);
-    document.getElementById('downPayment').value = downPayment;
-});
+if (downPaymentInput) {
+    downPaymentInput.addEventListener('input', function () {
+        const total = parseFloat(document.getElementById('totalAmount').value) || 0;
+        const downPayment = parseFloat(this.value) || 0;
+        const percent = (downPayment / total * 100).toFixed(2);
+        if (document.getElementById('downPaymentPercent')) {
+            document.getElementById('downPaymentPercent').value = percent;
+        }
+    });
+}
+
+if (downPaymentPercentInput) {
+    downPaymentPercentInput.addEventListener('input', function () {
+        const total = parseFloat(document.getElementById('totalAmount').value) || 0;
+        const percent = parseFloat(this.value) || 0;
+        const downPayment = (total * percent / 100).toFixed(2);
+        if (document.getElementById('downPayment')) {
+            document.getElementById('downPayment').value = downPayment;
+        }
+    });
+}
 
 function calculatePayment() {
-    const total = parseFloat(document.getElementById('totalAmount').value) || 0;
-    const down = parseFloat(document.getElementById('downPayment').value) || 0;
-    const interest = parseFloat(document.getElementById('interestRate').value) / 100 / 12;
-    const years = parseInt(document.getElementById('amortizationPeriod').value);
+    const totalInput = document.getElementById('totalAmount');
+    const downInput = document.getElementById('downPayment');
+    const interestInput = document.getElementById('interestRate');
+    const yearsInput = document.getElementById('amortizationPeriod');
+    const taxInput = document.getElementById('propertyTax');
+    const insuranceInput = document.getElementById('homeInsurance');
+    const paymentDisplay = document.getElementById('paymentDisplay');
+    const modalPayment = document.getElementById('modalPayment');
+    const modal = document.getElementById('modal');
+
+    if (!totalInput || !downInput || !interestInput || !yearsInput || !taxInput || !insuranceInput || !paymentDisplay || !modalPayment || !modal) {
+        console.warn("One or more mortgage calculator elements not found.");
+        return;
+    }
+
+    const total = parseFloat(totalInput.value) || 0;
+    const down = parseFloat(downInput.value) || 0;
+    const interest = parseFloat(interestInput.value) / 100 / 12;
+    const years = parseInt(yearsInput.value);
     const months = years * 12;
-    const tax = (parseFloat(document.getElementById('propertyTax').value) || 0) / 12;
-    const insurance = (parseFloat(document.getElementById('homeInsurance').value) || 0) / 12;
+    const tax = (parseFloat(taxInput.value) || 0) / 12;
+    const insurance = (parseFloat(insuranceInput.value) || 0) / 12;
 
     let principal = total - down;
     let monthly = 0;
@@ -95,57 +126,70 @@ function calculatePayment() {
 
     const payment = Math.round(monthly + tax + insurance);
 
-    document.getElementById('paymentDisplay').textContent = `$${payment.toLocaleString()}`;
-    document.getElementById('modalPayment').textContent = `$${payment.toLocaleString()}`;
-    document.getElementById('modal').classList.remove('hidden');
-    document.getElementById('modal').classList.add('flex');
+    paymentDisplay.textContent = `$${payment.toLocaleString()}`;
+    modalPayment.textContent = `$${payment.toLocaleString()}`;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
 }
 
 function closeModal() {
-    document.getElementById('modal').classList.add('hidden');
-    document.getElementById('modal').classList.remove('flex');
+    const modal = document.getElementById('modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
 }
 
 function resetForm() {
-    document.getElementById('totalAmount').value = '100000';
-    document.getElementById('downPayment').value = '20000';
-    document.getElementById('downPaymentPercent').value = '20';
-    document.getElementById('interestRate').value = '5';
-    document.getElementById('amortizationPeriod').value = '0';
-    document.getElementById('propertyTax').value = '3000';
-    document.getElementById('homeInsurance').value = '1200';
-    document.getElementById('paymentDisplay').textContent = '$0';
+    if (document.getElementById('totalAmount')) document.getElementById('totalAmount').value = '100000';
+    if (document.getElementById('downPayment')) document.getElementById('downPayment').value = '20000';
+    if (document.getElementById('downPaymentPercent')) document.getElementById('downPaymentPercent').value = '20';
+    if (document.getElementById('interestRate')) document.getElementById('interestRate').value = '5';
+    if (document.getElementById('amortizationPeriod')) document.getElementById('amortizationPeriod').value = '0';
+    if (document.getElementById('propertyTax')) document.getElementById('propertyTax').value = '3000';
+    if (document.getElementById('homeInsurance')) document.getElementById('homeInsurance').value = '1200';
+    if (document.getElementById('paymentDisplay')) document.getElementById('paymentDisplay').textContent = '$0';
 }
 
 //AOS DISCOVER
-AOS.init({
-    duration: 800,
-    once: true
-});
+if (typeof AOS !== 'undefined') { 
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+}
+
 
 document.addEventListener('DOMContentLoaded', function () {
     const tabs = document.querySelectorAll('.tab-btn');
     const contents = document.querySelectorAll('.tab-content');
 
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
+    if (tabs.length > 0 && contents.length > 0) { 
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
 
-            tabs.forEach(btn => btn.classList.remove('active'));
-            contents.forEach(content => content.classList.remove('active'));
+                tabs.forEach(btn => btn.classList.remove('active'));
+                contents.forEach(content => content.classList.remove('active'));
 
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                const targetContent = document.getElementById(tabId);
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                }
 
-            tab.classList.add('active');
-            const tabId = tab.getAttribute('data-tab');
-            document.getElementById(tabId).classList.add('active');
-
-            AOS.refresh();
+                if (typeof AOS !== 'undefined') {
+                    AOS.refresh();
+                }
+            });
         });
-    });
+    }
 });
 
 
 document.addEventListener("DOMContentLoaded", async function () {
     function animateText(element) {
+        if (!element) return; 
         const text = element.textContent;
         element.textContent = '';
 
@@ -184,30 +228,50 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll();
+    handleScroll(); 
 
 
-    async function properties() {
-        let properties = await getPropertiesList()
-        let h = '';
-        properties.forEach(property => {
-            h += propertyCard(property);
-        })
+    const homePropertyContainer = document.getElementById('propertyContainer');
+    const homePropertiesLoadingOverlay = document.getElementById('homePropertiesLoadingOverlay');
 
-        document.getElementById('propertyContainer').innerHTML = h;
+    function renderSkeletons(container, count) {
+        if (!container) return;
+        let skeletonsHtml = '';
+        for (let i = 0; i < count; i++) {
+            skeletonsHtml += propertySkeletonCard();
+        }
+        container.innerHTML = skeletonsHtml;
     }
 
-    await properties();
+    async function properties() {
+        if (!homePropertyContainer) {
+            console.error("Home property container not found.");
+            return;
+        }
 
+        if (homePropertiesLoadingOverlay) {
+            homePropertiesLoadingOverlay.style.display = 'flex';
+        }
+
+        renderSkeletons(homePropertyContainer, 10); 
+
+        let propertiesData = [];
+        try {
+            propertiesData = await getPropertiesList();
+            let html = '';
+            propertiesData.forEach(property => {
+                html += propertyCard(property);
+            });
+            homePropertyContainer.innerHTML = html; 
+        } catch (error) {
+            console.error("Error fetching home properties:", error);
+            homePropertyContainer.innerHTML = '<p class="text-red-500 text-center col-span-full">Elanlar yüklənərkən xəta baş verdi.</p>';
+        } finally {
+            if (homePropertiesLoadingOverlay) {
+                homePropertiesLoadingOverlay.style.display = 'none';
+            }
+        }
+    }
+
+    await properties(); 
 });
-
-// document.addEventListener('DOMContentLoaded', function () {
-//     const filterSearchButton = document.querySelector('[data-role="filter-search-button"]');
-//     filterSearchButton.addEventListener('click', function () {
-//         alert('Button clicked');
-//     });
-// });
-
-
-
-
