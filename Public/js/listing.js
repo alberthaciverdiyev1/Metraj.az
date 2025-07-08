@@ -38,14 +38,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     const premiumLoadingOverlay = document.getElementById('premiumLoadingOverlay');
     const allPropertiesLoadingOverlay = document.getElementById('allPropertiesLoadingOverlay');
 
+    const addressInput = document.getElementById('addressInput');
+    const addressSuggestionsDiv = document.getElementById('addressSuggestions');
+    const suggestionsList = document.getElementById('suggestionsList');
+    const searchButton = document.querySelector('button.bg-black'); 
 
+    let allPropertiesData = [];
     if (!propertyContainer || !premiumCardContainer || !premiumLoadingOverlay || !allPropertiesLoadingOverlay) {
         console.error('One or more required elements (containers or loading overlays) not found!');
         return;
     }
-
+    try {
+        allPropertiesData = await getPropertiesList();
+    } catch (error) {
+        console.error("Error fetching properties for autocomplete:", error);
+    }
     let currentPage = 1;
-    let currentAddType = 'all'; 
+    let currentAddType = 'all';
+    let currentAddressQuery = ''; 
 
     function getPropertyCards(containerElement) {
         return containerElement.querySelectorAll(':scope > div');
@@ -183,23 +193,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         showPage(currentPage, propertyContainer);
     });
 
-    async function fetchAndRenderProperties(addTypeFilter) {
+    async function filterAndRenderProperties() {
         premiumLoadingOverlay.style.display = 'flex';
         allPropertiesLoadingOverlay.style.display = 'flex';
 
-        let properties = await getPropertiesList();
+        let propertiesToFilter = [...allPropertiesData];
 
-        const filteredProperties = properties.filter(property => {
-            if (addTypeFilter === 'all') {
-                return true; 
-            }
-            return property.add_type === addTypeFilter;
-        });
+        if (currentAddType !== 'all') {
+            propertiesToFilter = propertiesToFilter.filter(property =>
+                property.add_type === currentAddType
+            );
+        }
+
+        if (currentAddressQuery) {
+            const lowerCaseAddressQuery = currentAddressQuery.toLowerCase();
+            propertiesToFilter = propertiesToFilter.filter(property =>
+                property.address && property.address.toLowerCase().includes(lowerCaseAddressQuery)
+            );
+        }
 
         let premiumCardsHtml = '';
         let allCardsHtml = '';
 
-        filteredProperties.forEach(property => {
+        propertiesToFilter.forEach(property => {
             const cardHtml = propertyCard(property);
             allCardsHtml += cardHtml;
 
@@ -222,7 +238,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     filterButtons.forEach(button => {
         button.addEventListener('click', async () => {
             const selectedAddType = button.getAttribute('data-add-type');
-            currentAddType = selectedAddType;
+            currentAddType = selectedAddType; 
 
             filterButtons.forEach(btn => {
                 btn.classList.remove('bg-[color:var(--primary)]', 'text-white');
@@ -232,13 +248,64 @@ document.addEventListener('DOMContentLoaded', async () => {
             button.classList.add('bg-[color:var(--primary)]', 'text-white');
             button.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100');
 
-            await fetchAndRenderProperties(selectedAddType);
+            await filterAndRenderProperties();
         });
     });
+
+    function updateAddressSuggestions(query) {
+        suggestionsList.innerHTML = ''; 
+        if (query.length < 2) { 
+            addressSuggestionsDiv.classList.add('hidden');
+            return;
+        }
+
+        const uniqueAddresses = new Set();
+        const lowerCaseQuery = query.toLowerCase();
+
+        allPropertiesData.forEach(property => {
+            if (property.address && property.address.toLowerCase().includes(lowerCaseQuery)) {
+                uniqueAddresses.add(property.address);
+            }
+        });
+
+        if (uniqueAddresses.size > 0) {
+            addressSuggestionsDiv.classList.remove('hidden');
+            uniqueAddresses.forEach(address => {
+                const li = document.createElement('li');
+                li.classList.add('p-2', 'hover:bg-gray-100', 'cursor-pointer');
+                li.textContent = address;
+                li.addEventListener('click', () => {
+                    addressInput.value = address;
+                    currentAddressQuery = address;
+                    addressSuggestionsDiv.classList.add('hidden');
+                    filterAndRenderProperties(); 
+                });
+                suggestionsList.appendChild(li);
+            });
+        } else {
+            addressSuggestionsDiv.classList.add('hidden');
+        }
+    }
+
+    addressInput.addEventListener('input', (event) => {
+        currentAddressQuery = event.target.value; 
+        updateAddressSuggestions(currentAddressQuery);
+    });
+
+    searchButton.addEventListener('click', () => {
+        filterAndRenderProperties(); 
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!addressInput.contains(event.target) && !addressSuggestionsDiv.contains(event.target)) {
+            addressSuggestionsDiv.classList.add('hidden');
+        }
+    });
+
     const allButton = document.querySelector('button[data-add-type="all"]');
     if (allButton) {
         allButton.classList.add('bg-[color:var(--primary)]', 'text-white');
-        allButton.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100'); 
-        fetchAndRenderProperties('all'); 
+        allButton.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100');
+        filterAndRenderProperties(); 
     }
 });
