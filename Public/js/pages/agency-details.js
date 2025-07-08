@@ -28,19 +28,25 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(agencyId);
         axios.get(`/related-properties/${agencyId}`).then(res => {
             let h = "";
-            Object.entries(res.data).forEach(([key, value]) => {
-                if (value.length === 0) return;
-                h+=`<h3 class="text-2xl font-bold mb-4">${key}</h3> <br>`;
-                value.forEach(property => {
+            if (Array.isArray(res.data)) {
+                res.data.forEach(property => {
                     h += propertyCard(property);
                 });
-            });
-
-            // res.data.forEach(property => {
-            // console.log("data"+property);
-            // })
+            } else {
+                Object.entries(res.data).forEach(([key, value]) => {
+                    if (value.length === 0) return;
+                    h += `<h3 class="text-2xl font-bold mb-4">${key}</h3> <br>`;
+                    value.forEach(property => {
+                        h += propertyCard(property);
+                    });
+                });
+            }
             document.getElementById("related-properties").innerHTML = h;
         })
+        .catch(error => {
+            console.error("Error fetching related properties:", error);
+            document.getElementById("related-properties").innerHTML = "<p>Failed to load properties. Please try again later.</p>";
+        });
     }
 
     getRelatedProperties();
