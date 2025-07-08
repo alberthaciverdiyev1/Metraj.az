@@ -43,6 +43,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const suggestionsList = document.getElementById('suggestionsList');
     const searchButton = document.querySelector('button.bg-black'); 
 
+    const minAreaInput = document.querySelector('input[placeholder="Min ölçü"]');
+    const maxAreaInput = document.querySelector('input[placeholder="Max ölçü"]');
+
+    const minPriceInput = document.getElementById('minPriceInput');
+    const maxPriceInput = document.getElementById('maxPriceInput');
+
     let allPropertiesData = [];
     if (!propertyContainer || !premiumCardContainer || !premiumLoadingOverlay || !allPropertiesLoadingOverlay) {
         console.error('One or more required elements (containers or loading overlays) not found!');
@@ -55,7 +61,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     let currentPage = 1;
     let currentAddType = 'all';
-    let currentAddressQuery = ''; 
+    let currentAddressQuery = '';
+    let currentMinArea = '';
+    let currentMaxArea = '';
+    let currentMinPrice = ''; 
+    let currentMaxPrice = ''; 
 
     function getPropertyCards(containerElement) {
         return containerElement.querySelectorAll(':scope > div');
@@ -212,6 +222,34 @@ document.addEventListener('DOMContentLoaded', async () => {
             );
         }
 
+        const minArea = parseFloat(currentMinArea);
+        const maxArea = parseFloat(currentMaxArea);
+
+        if (!isNaN(minArea)) {
+            propertiesToFilter = propertiesToFilter.filter(property =>
+                property.area !== undefined && property.area >= minArea
+            );
+        }
+        if (!isNaN(maxArea)) {
+            propertiesToFilter = propertiesToFilter.filter(property =>
+                property.area !== undefined && property.area <= maxArea
+            );
+        }
+
+        const minPrice = parseFloat(currentMinPrice);
+        const maxPrice = parseFloat(currentMaxPrice);
+
+        if (!isNaN(minPrice)) {
+            propertiesToFilter = propertiesToFilter.filter(property =>
+                property.price !== undefined && property.price >= minPrice
+            );
+        }
+        if (!isNaN(maxPrice)) {
+            propertiesToFilter = propertiesToFilter.filter(property =>
+                property.price !== undefined && property.price <= maxPrice
+            );
+        }
+
         let premiumCardsHtml = '';
         let allCardsHtml = '';
 
@@ -238,7 +276,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     filterButtons.forEach(button => {
         button.addEventListener('click', async () => {
             const selectedAddType = button.getAttribute('data-add-type');
-            currentAddType = selectedAddType; 
+            currentAddType = selectedAddType;
 
             filterButtons.forEach(btn => {
                 btn.classList.remove('bg-[color:var(--primary)]', 'text-white');
@@ -253,8 +291,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     function updateAddressSuggestions(query) {
-        suggestionsList.innerHTML = ''; 
-        if (query.length < 2) { 
+        suggestionsList.innerHTML = '';
+        if (query.length < 2) {
             addressSuggestionsDiv.classList.add('hidden');
             return;
         }
@@ -278,7 +316,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     addressInput.value = address;
                     currentAddressQuery = address;
                     addressSuggestionsDiv.classList.add('hidden');
-                    filterAndRenderProperties(); 
+                    filterAndRenderProperties();
                 });
                 suggestionsList.appendChild(li);
             });
@@ -288,12 +326,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     addressInput.addEventListener('input', (event) => {
-        currentAddressQuery = event.target.value; 
+        currentAddressQuery = event.target.value;
         updateAddressSuggestions(currentAddressQuery);
     });
 
+    minAreaInput.addEventListener('input', (event) => {
+        currentMinArea = event.target.value;
+    });
+
+    maxAreaInput.addEventListener('input', (event) => {
+        currentMaxArea = event.target.value;
+    });
+
+    minPriceInput.addEventListener('input', (event) => {
+        currentMinPrice = event.target.value;
+    });
+
+    maxPriceInput.addEventListener('input', (event) => {
+        currentMaxPrice = event.target.value;
+    });
+
+
     searchButton.addEventListener('click', () => {
-        filterAndRenderProperties(); 
+        filterAndRenderProperties();
     });
 
     document.addEventListener('click', (event) => {
@@ -306,6 +361,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (allButton) {
         allButton.classList.add('bg-[color:var(--primary)]', 'text-white');
         allButton.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100');
-        filterAndRenderProperties(); 
+        filterAndRenderProperties();
     }
 });
