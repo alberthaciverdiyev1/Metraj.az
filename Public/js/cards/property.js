@@ -1,3 +1,4 @@
+
 import { formatPrice } from '../helpers/price.js';
 
 export function propertyCard(property) {

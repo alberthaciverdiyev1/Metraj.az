@@ -1,5 +1,6 @@
 import { getPropertiesList } from "./components/property.js";
 import { propertyCard } from "./cards/property.js";
+import { propertySkeletonCard } from "./cards/propertySkeleton.js"; 
 
 const gotop = document.getElementById('scrollToTop');
 const progress = document.querySelector('.progress-circle .progress');
@@ -54,11 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('One or more required elements (containers or loading overlays) not found!');
         return;
     }
-    try {
-        allPropertiesData = await getPropertiesList();
-    } catch (error) {
-        console.error("Error fetching properties for autocomplete:", error);
-    }
+    
     let currentPage = 1;
     let currentAddType = 'all';
     let currentAddressQuery = '';
@@ -203,11 +200,33 @@ document.addEventListener('DOMContentLoaded', async () => {
         showPage(currentPage, propertyContainer);
     });
 
+    function renderSkeletons(container, count) {
+        let skeletonsHtml = '';
+        for (let i = 0; i < count; i++) {
+            skeletonsHtml += propertySkeletonCard();
+        }
+        container.innerHTML = skeletonsHtml;
+    }
+
     async function filterAndRenderProperties() {
         premiumLoadingOverlay.style.display = 'flex';
         allPropertiesLoadingOverlay.style.display = 'flex';
 
-        let propertiesToFilter = [...allPropertiesData];
+        renderSkeletons(premiumCardContainer, 4); 
+        renderSkeletons(propertyContainer, itemsPerPage);
+
+        let propertiesToFilter = [];
+        try {
+            allPropertiesData = await getPropertiesList(); 
+            propertiesToFilter = [...allPropertiesData];
+        } catch (error) {
+            console.error("Error fetching properties:", error);
+            premiumCardContainer.innerHTML = '<p class="text-red-500 text-center col-span-full">Premium elanlar yüklənərkən xəta baş verdi.</p>';
+            propertyContainer.innerHTML = '<p class="text-red-500 text-center col-span-full">Elanlar yüklənərkən xəta baş verdi.</p>';
+            premiumLoadingOverlay.style.display = 'none';
+            allPropertiesLoadingOverlay.style.display = 'none';
+            return; 
+        }
 
         if (currentAddType !== 'all') {
             propertiesToFilter = propertiesToFilter.filter(property =>
@@ -241,12 +260,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (!isNaN(minPrice)) {
             propertiesToFilter = propertiesToFilter.filter(property =>
-                property.price !== undefined && property.price >= minPrice
+                property.price !== undefined && property.price[0]?.price && parseFloat(property.price[0].price.replace(/,/g, '')) >= minPrice
             );
         }
         if (!isNaN(maxPrice)) {
             propertiesToFilter = propertiesToFilter.filter(property =>
-                property.price !== undefined && property.price <= maxPrice
+                property.price !== undefined && property.price[0]?.price && parseFloat(property.price[0].price.replace(/,/g, '')) <= maxPrice
             );
         }
 
@@ -346,7 +365,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         currentMaxPrice = event.target.value;
     });
 
-
     searchButton.addEventListener('click', () => {
         filterAndRenderProperties();
     });
@@ -361,6 +379,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (allButton) {
         allButton.classList.add('bg-[color:var(--primary)]', 'text-white');
         allButton.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100');
-        filterAndRenderProperties();
+        filterAndRenderProperties(); 
     }
 });
