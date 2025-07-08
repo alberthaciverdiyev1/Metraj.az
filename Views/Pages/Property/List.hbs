@@ -15,7 +15,7 @@
             {{>Component.ScrollTop}}
 
 
-            <section class="property-listing py-4">
+            <section class="property-listing py-4" x-data="filterModal()">
                 <div class="container mx-auto px-4">
                     <section class="bg-white py-6 max-w-full mx-auto relative z-10 " x-data="{ 
     categoryOpen: false, 
@@ -26,11 +26,19 @@
 }">
                         <div class=" flex justify-between items-center mb-3">
                             <div class="flex gap-2 border border-gray-200 rounded-lg">
-                                <button
-                                    class="px-4 py-2 rounded-lg font-semibold text-gray-100 bg-[color:var(--primary)] hover:bg-gray-100">
-                                    {{t "Sale"}}</button>
-                                <button class="px-4 py-2 rounded-lg font-semibold text-gray-700 hover:bg-gray-100">{{t
-                                    "Rent"}}</button>
+                                <!-- Sale Button -->
+                                <button @click="form.addType = 'sale'"
+                                        :class="form.addType === 'sale' ? 'bg-[color:var(--primary)] text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
+                                        class="px-4 py-2 rounded-lg font-semibold transition" >
+                                          {{ t "Sale" }}
+                                </button>
+
+                                <!-- Rent Button -->
+                                <button @click="form.addType = 'rent'"
+                                        :class="form.addType === 'rent'  ? 'bg-[color:var(--primary)] text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
+                                        class="px-4 py-2 rounded-lg font-semibold transition" >
+                                          {{ t "Rent" }}
+                                </button>
                             </div>
 
                             <button class="px-4 py-1 border border-gray-300 rounded-lg hover:bg-gray-100">
@@ -322,6 +330,7 @@
                 priceMin: '',
                 priceMax: '',
                 postId: '',
+                addType: 'sale',
                 extraction: false,
                 mortgage: false
             },

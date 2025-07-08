@@ -95,7 +95,7 @@
                     <div class="relative w-full sm:flex-1" id="customSelectContainer">
                         <button type="button" id="customSelectButton"
                                 class="bg-white border border-gray-300 rounded-lg px-4 py-2 w-full text-left flex justify-between items-center focus:ring-2 focus:ring-orange-300 transition duration-200">
-                            <span id="customSelectText">Şəhər seçin</span>
+                            <span id="customSelectText">{{t "Choose City"}}</span>
                             <svg class="w-4 h-4 ml-2 transition-transform duration-200" id="dropdownIcon"
                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  stroke="currentColor">
@@ -106,7 +106,7 @@
 
                         <ul id="customSelectOptions"
                             class="absolute z-10 mt-2 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto hidden transition-all duration-300">
-                            <li data-value="" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Şəhər seçin</li>
+                            <li data-value="" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">{{t "Choose City"}}</li>
                             {{#each cities}}
                                 <li data-value="{{this.id}}" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">
                                     {{this.name}}</li>
