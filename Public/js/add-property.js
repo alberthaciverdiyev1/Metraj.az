@@ -369,12 +369,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             nearbyObjectsContainer.classList.remove('collapsed');
             nearbyObjectsContainer.classList.add('expanded');
             fadeOverlay.classList.add('hidden');
-            toggleButton.textContent = 'Daha az göstər';
+            toggleButton.innerHTML = 'Daha az göstər <i class="bi bi-chevron-up"></i>';
         } else {
             nearbyObjectsContainer.classList.remove('expanded');
             nearbyObjectsContainer.classList.add('collapsed');
             fadeOverlay.classList.remove('hidden');
-            toggleButton.textContent = 'Daha çox göstər';
+            toggleButton.innerHTML = 'Daha çox göstər <i class="bi bi-chevron-down"></i>';
         }
     });
     const featuresContainer = document.getElementById('features-container');
@@ -389,12 +389,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                 featuresContainer.classList.remove('collapsed');
                 featuresContainer.classList.add('expanded');
                 featuresFadeOverlay.classList.add('hidden');
-                toggleFeaturesButton.textContent = 'Daha az göstər';
+                toggleFeaturesButton.innerHTML = 'Daha az göstər <i class="bi bi-chevron-up"></i> ';
             } else {
                 featuresContainer.classList.remove('expanded');
                 featuresContainer.classList.add('collapsed');
                 featuresFadeOverlay.classList.remove('hidden');
-                toggleFeaturesButton.textContent = 'Daha çox göstər';
+                toggleFeaturesButton.innerHTML = 'Daha çox göstər <i class="bi bi-chevron-down"></i>';
             }
         });
     }
