@@ -7,10 +7,14 @@ export function propertyCard(property) {
             : property.price[0]?.price)
         : formatPrice(0);
 
-    // Premium badge varsa əlavə et, yoxdursa boş string
     const premiumBadge = property.is_premium
-        ? `<span class="absolute top-3 right-4 bg-red-400 text-white font-semibold text-sm px-2 py-1 rounded-full">Premium</span>`
-        : '';
+        ? `<span class="absolute top-3 right-4 bg-red-400 text-white font-semibold text-sm px-2 py-1 rounded-full">Premium</span>` : '';
+    const addTypeBadge =
+        property.add_type === 'rent'
+            ? `<span class="bg-[color:var(--primary)] text-white text-sm font-semibold px-2 py-1 rounded-full">Kirayə</span>`
+            : property.add_type === 'sale'
+                ? `<span class="bg-[#80807F] text-white font-semibold text-sm px-2 py-1 rounded-full">Satışda</span>`
+                : '';
 
     return `
     <div onclick="window.location.href='/property/${property.id}'" class="cursor-pointer border border-[color:var(--border-color)] rounded-2xl overflow-hidden group relative transition-all duration-300">
@@ -21,8 +25,7 @@ export function propertyCard(property) {
                 <div class="z-10 flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             </div>
             <div class="absolute top-3 left-4 flex gap-1">
-                <span class="bg-[color:var(--primary)] text-white text-sm font-semibold px-2 py-1 rounded-full">Kirayə</span>
-                <span class="bg-[#80807F] text-white font-semibold text-sm px-2 py-1 rounded-full">Satışda</span>
+            ${addTypeBadge}
             </div>
             ${premiumBadge}
         </div>

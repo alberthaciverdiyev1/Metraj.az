@@ -38,7 +38,7 @@ async function Details(request, reply) {
 }
 async function RelatedProperties(req) {
     const {id} = req.params;
-    return await getData('/agency-property/' + id, [], false, false, false);
+    return await getData(`/agency-property/${id}`, [], false, true, false);
 }
 
 export default {listView,Details,RelatedProperties}

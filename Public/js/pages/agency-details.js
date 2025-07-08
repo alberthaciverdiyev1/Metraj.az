@@ -28,10 +28,17 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(agencyId);
         axios.get(`/related-properties/${agencyId}`).then(res => {
             let h = "";
-            console.log(res.data);
-            res.data.forEach(property => {
-                h += propertyCard(property);
-            })
+            Object.entries(res.data).forEach(([key, value]) => {
+                if (value.length === 0) return;
+                h+=`<h3 class="text-2xl font-bold mb-4">${key}</h3> <br>`;
+                value.forEach(property => {
+                    h += propertyCard(property);
+                });
+            });
+
+            // res.data.forEach(property => {
+            // console.log("data"+property);
+            // })
             document.getElementById("related-properties").innerHTML = h;
         })
     }
