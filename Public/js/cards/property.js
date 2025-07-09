@@ -1,11 +1,15 @@
 import { formatPrice } from '../helpers/price.js';
 
 export function propertyCard(property) {
-    const price = property.price
-        ? formatPrice(typeof property.price === 'string'
-            ? parseFloat(property.price[0]?.price.replace(/,/g, ''))
-            : property.price[0]?.price)
-        : formatPrice(0);
+    const rawPrice = property.price && property.price[0]?.price;
+    let priceValue = 0;
+
+    if (rawPrice) {
+        priceValue = parseFloat(rawPrice.toString().replace(/,/g, ''));
+    }
+
+    const price = formatPrice(priceValue); 
+
 
     const premiumBadge = property.is_premium
         ? `<span class="absolute top-3 right-4 bg-red-400 text-white font-semibold text-sm px-2 py-1 rounded-full">Premium</span>` : '';
@@ -39,14 +43,14 @@ export function propertyCard(property) {
                 ${property.address}
             </p>
             <div class="flex items-center text-sm sm:text-base md:text-[16px] text-[#959699] gap-4 mb-4">
-                <span><span class="text-[#2C2E33]">${property.beds}</span> Beds</span>
-                <span><span class="text-[#2C2E33]">${property.baths}</span> Baths</span>
-                <span><span class="text-[#2C2E33]">${property.area}</span> Sqft</span>
+                <span><span class="text-[#2C2E33]">${property.beds}</span> Yataq</span>
+                <span><span class="text-[#2C2E33]">${property.baths}</span> Hamam</span>
+                <span><span class="text-[#2C2E33]">${property.area}</span> Kvm</span>
             </div>
             <div class="flex justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
                 <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">${price} AZN</span>
                 <button onclick="event.stopPropagation()" class="flex compare items-center gap-1 text-sm text-[#2C2E33] hover:text-[color:var(--primary)] transition-colors">
-                    <i class="fas fa-random"></i> Compare
+                    <i class="fas fa-random"></i> Müqayisə
                 </button>
             </div>
         </div>

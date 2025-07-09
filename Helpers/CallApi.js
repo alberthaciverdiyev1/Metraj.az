@@ -10,24 +10,30 @@ const API_URL = 'http://api.metraj.loc:8000';
 
 
 export async function getData(url, params = {}, enumMode = false, allData = false, useCache = true) {
-    const queryParams = allData ? params : {page: 1, ...params}
-    const fullUrl = `${API_URL}/api${url}`
-    const cacheKey = `api_${fullUrl}`
+    // params obyekti artıq istədiyimiz query parametrlərini ehtiva edir
+    // Əgər allData false-dursa, 'page: 1' əlavə edirik
+    const finalQueryParams = allData ? params : {page: 1, ...params};
+
+    const fullUrl = `${API_URL}/api${url}`; // URL-i query parametrləri olmadan qururuq
+
+    const cacheKey = `api_${fullUrl}_${JSON.stringify(finalQueryParams)}`; // Cache key-ə parametrləri də əlavə edirik
     if (useCache) {
-        const cached = cache.get(cacheKey)
-        if (cached) return cached
+        const cached = cache.get(cacheKey);
+        if (cached) return cached;
     }
 
     try {
-        const response = await axios.get(fullUrl, {params: queryParams})
-        const result = enumMode ? response.data : (response.data?.data || [])
-        if (useCache) cache.set(cacheKey, result)
-        return result
+        // Axios.get funksiyasına query parametrlərini params obyekti olaraq ötürürük
+        const response = await axios.get(fullUrl, {params: finalQueryParams}); // <- Əsas dəyişiklik burada!
+        const result = enumMode ? response.data : (response.data?.data || []);
+        if (useCache) cache.set(cacheKey, result);
+        return result;
     } catch (error) {
-        console.error('GET error:', error?.response?.data || error.message)
-        return []
+        console.error('GET error:', error?.response?.data || error.message);
+        return [];
     }
 }
+
 
 export async function postData(url, payload = {}) {
     const fullUrl = `${API_URL}/api${url}`

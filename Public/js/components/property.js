@@ -1,32 +1,41 @@
-export async function getPropertiesList(body = null) {
-    try {
-        const params = new URLSearchParams(window.location.search);
 
-        if (body && typeof body === 'object') {
-            Object.entries(body).forEach(([key, value]) => {
-                if (value !== undefined && value !== null) {
-                    params.set(key, value);
+export async function getPropertiesList(searchParams = {}) {
+    try {
+        const url = new URL('http://127.0.0.1:8000/api/property');
+
+        if (searchParams && typeof searchParams === 'object') {
+            Object.entries(searchParams).forEach(([key, value]) => {
+                if (value !== undefined && value !== null && value !== '' && value !== 'all') {
+                    let paramKey = key;
+                    if (key === 'adType') paramKey = 'add_type';
+                    if (key === 'minArea') paramKey = 'min_area';
+                    if (key === 'maxArea') paramKey = 'max_area';
+                    if (key === 'minPrice') paramKey = 'min_price';
+                    if (key === 'maxPrice') paramKey = 'max_price';
+
+                    url.searchParams.set(paramKey, value);
                 }
             });
         }
 
-        const queryString = params.toString();
+        console.log('API Request URL:', url.toString());
 
-        console.log('Query string:', queryString);
-        const url = '/properties' + (queryString ? `?${queryString}` : '');
-
-        const res = await fetch(url, {
+        const res = await fetch(url.toString(), {
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
             }
         });
 
-        if (!res.ok) throw new Error('API error');
+        if (!res.ok) {
+            const errorText = await res.text();
+            throw new Error(`API xətası! Status: ${res.status}, Mesaj: ${errorText}`);
+        }
 
-        return await res.json() ?? [];
+        const data = await res.json();
+        return data; 
     } catch (error) {
-        console.error('Əmlak alınamadı:', error);
-        return [];
+        console.error('Əmlak alınarkən xəta:', error);
+        return { data: {} };
     }
 }

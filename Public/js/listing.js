@@ -1,12 +1,11 @@
-import {getPropertiesList} from "./components/property.js";
-import {propertyCard} from "./cards/property.js";
-import {propertySkeletonCard} from "./cards/propertySkeleton.js";
+import { getPropertiesList } from "./components/property.js";
+import { propertyCard } from "./cards/property.js";
+import { propertySkeletonCard } from "./cards/propertySkeleton.js";
 
 const gotop = document.getElementById('scrollToTop');
 const progress = document.querySelector('.progress-circle .progress');
 const radius = 18;
 const circumference = 2 * Math.PI * radius;
-let bodyParams = {};
 
 window.addEventListener('scroll', () => {
     const scrollTop = window.scrollY;
@@ -24,12 +23,11 @@ window.addEventListener('scroll', () => {
 });
 
 gotop.addEventListener('click', () => {
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// PAGINATION
 document.addEventListener('DOMContentLoaded', async () => {
-    const itemsPerPage = 9;
+    const itemsPerPage = 9; 
     const paginationContainer = document.querySelector('.pagination');
     const resultsText = document.querySelector('.result .text');
     const gridBtn = document.getElementById("gridViewBtn");
@@ -51,20 +49,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     const minPriceInput = document.getElementById('minPriceInput');
     const maxPriceInput = document.getElementById('maxPriceInput');
 
-    let allPropertiesData = [];
+    // Elementlərin mövcudluğunu yoxla
     if (!propertyContainer || !premiumCardContainer || !premiumLoadingOverlay || !allPropertiesLoadingOverlay) {
-        console.error('One or more required elements (containers or loading overlays) not found!');
+        console.error('Lazımi elementlərdən biri tapılmadı (konteynerlər və ya yükləmə qatmanları)!');
         return;
     }
 
     let currentPage = 1;
-    let currentAddType = 'all';
+    let currentAddType = 'all'; // "all", "sale", "rent"
     let currentAddressQuery = '';
     let currentMinArea = '';
     let currentMaxArea = '';
     let currentMinPrice = '';
     let currentMaxPrice = '';
 
+    let allPropertiesData = [];
+
+    // Helper funksiyalar
     function getPropertyCards(containerElement) {
         return containerElement.querySelectorAll(':scope > div');
     }
@@ -91,14 +92,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
 
-        resultsText.textContent = `Showing ${startIndex + 1}-${endIndex} of ${totalItems} results.`;
+        resultsText.textContent = `Göstərilir ${startIndex + 1}-${endIndex} cəmi ${totalItems} elandan.`;
         updatePaginationUI(containerElement);
     }
 
     function updatePaginationUI(containerElement) {
         const totalPages = getTotalPages(containerElement);
         const pageItems = document.querySelectorAll('.pagination .page-item');
-
         pageItems.forEach(item => {
             item.classList.remove('active');
         });
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 showPage(currentPage - 1, propertyContainer);
             } else if (action === 'Next' && currentPage < totalPages) {
                 showPage(currentPage + 1, propertyContainer);
-            } else if (!action) {
+            } else if (!action) { 
                 const pageNumber = parseInt(target.textContent);
                 if (!isNaN(pageNumber)) {
                     showPage(pageNumber, propertyContainer);
@@ -209,97 +209,93 @@ document.addEventListener('DOMContentLoaded', async () => {
         container.innerHTML = skeletonsHtml;
     }
 
-    async function filterAndRenderProperties() {
-        premiumLoadingOverlay.style.display = 'flex';
-        allPropertiesLoadingOverlay.style.display = 'flex';
 
-        renderSkeletons(premiumCardContainer, 4);
-        renderSkeletons(propertyContainer, itemsPerPage);
+async function filterAndRenderProperties() {
+    premiumLoadingOverlay.style.display = 'flex';
+    allPropertiesLoadingOverlay.style.display = 'flex';
 
-        let propertiesToFilter = [];
-        try {
-            allPropertiesData = await getPropertiesList();
-            propertiesToFilter = [...allPropertiesData];
-        } catch (error) {
-            console.error("Error fetching properties:", error);
-            premiumCardContainer.innerHTML = '<p class="text-red-500 text-center col-span-full">Premium elanlar yüklənərkən xəta baş verdi.</p>';
-            propertyContainer.innerHTML = '<p class="text-red-500 text-center col-span-full">Elanlar yüklənərkən xəta baş verdi.</p>';
-            premiumLoadingOverlay.style.display = 'none';
-            allPropertiesLoadingOverlay.style.display = 'none';
-            return;
-        }
+    renderSkeletons(premiumCardContainer, 4); 
+    renderSkeletons(propertyContainer, itemsPerPage); 
 
-        // propertiesToFilter = propertiesToFilter.filter(property =>
-        //     property.add_type === currentAddType
-        // );
+    const searchParams = {
+        adType: currentAddType,
+        address: currentAddressQuery,
+        minArea: currentMinArea,
+        maxArea: currentMaxArea,
+        minPrice: currentMinPrice,
+        maxPrice: currentMaxPrice
+    };
 
-        if (currentAddType === 'sale') {
-            propertiesToFilter = await getPropertiesList({adType: 'sale'});
-        } else if (currentAddType === 'rent') {
-            propertiesToFilter = await getPropertiesList({adType: 'rent'});
-        } else {
-            propertiesToFilter = await getPropertiesList({adType: ''});
-        }
+    let fetchedApiResponse;
+    let processedProperties = [];
 
+    try {
+        // API-dən bütün əmlakları çəkin
+        // Qeyd: Əgər API pagination-ı dəstəkləyirsə, burada sadəcə lazımi səhifəni çəkmək daha effektiv olar.
+        // Lakin verilmiş koda əsasən, hamısı çəkilib frontenddə filtr olunur.
+        fetchedApiResponse = await getPropertiesList(searchParams);
 
-        if (currentAddressQuery) {
-            const lowerCaseAddressQuery = currentAddressQuery.toLowerCase();
-            propertiesToFilter = propertiesToFilter.filter(property =>
-                property.address && property.address.toLowerCase().includes(lowerCaseAddressQuery)
-            );
-        }
+        const rawPropertiesData = fetchedApiResponse.data;
 
-        const minArea = parseFloat(currentMinArea);
-        const maxArea = parseFloat(currentMaxArea);
-
-        if (!isNaN(minArea)) {
-            propertiesToFilter = propertiesToFilter.filter(property =>
-                property.area !== undefined && property.area >= minArea
-            );
-        }
-        if (!isNaN(maxArea)) {
-            propertiesToFilter = propertiesToFilter.filter(property =>
-                property.area !== undefined && property.area <= maxArea
-            );
-        }
-
-        const minPrice = parseFloat(currentMinPrice);
-        const maxPrice = parseFloat(currentMaxPrice);
-
-        if (!isNaN(minPrice)) {
-            propertiesToFilter = propertiesToFilter.filter(property =>
-                property.price !== undefined && property.price[0]?.price && parseFloat(property.price[0].price.replace(/,/g, '')) >= minPrice
-            );
-        }
-        if (!isNaN(maxPrice)) {
-            propertiesToFilter = propertiesToFilter.filter(property =>
-                property.price !== undefined && property.price[0]?.price && parseFloat(property.price[0].price.replace(/,/g, '')) <= maxPrice
-            );
-        }
-
-        let premiumCardsHtml = '';
-        let allCardsHtml = '';
-
-        propertiesToFilter.forEach(property => {
-            const cardHtml = propertyCard(property);
-            allCardsHtml += cardHtml;
-
-            if (property.is_premium) {
-                premiumCardsHtml += cardHtml;
+        if (typeof rawPropertiesData === 'object' && rawPropertiesData !== null && !Array.isArray(rawPropertiesData)) {
+            for (const category in rawPropertiesData) {
+                if (rawPropertiesData.hasOwnProperty(category) && Array.isArray(rawPropertiesData[category])) {
+                    processedProperties = processedProperties.concat(rawPropertiesData[category]);
+                }
             }
-        });
+        } else if (Array.isArray(rawPropertiesData)) {
+            processedProperties = rawPropertiesData;
+        } else {
+            console.warn("API-dən gözlənilməyən data formatı gəldi:", rawPropertiesData);
+        }
 
-        premiumCardContainer.innerHTML = premiumCardsHtml;
-        propertyContainer.innerHTML = allCardsHtml;
+        allPropertiesData = processedProperties; // Bütün əmlakları saxlayın
 
+    } catch (error) {
+        console.error("Əmlaklar çəkilərkən xəta:", error);
+        premiumCardContainer.innerHTML = '<p class="text-red-500 text-center col-span-full">Premium elanlar yüklənərkən xəta baş verdi.</p>';
+        propertyContainer.innerHTML = '<p class="text-red-500 text-center col-span-full">Elanlar yüklənərkən xəta baş verdi.</p>';
         premiumLoadingOverlay.style.display = 'none';
         allPropertiesLoadingOverlay.style.display = 'none';
-
-        initPagination(propertyContainer);
+        return;
     }
 
-    const filterButtons = document.querySelectorAll('button[data-add-type]');
+    let premiumCardsHtml = '';
+    let allCardsHtml = '';
 
+    const premiumProperties = allPropertiesData.filter(property => property.is_premium);
+    const nonPremiumProperties = allPropertiesData.filter(property => !property.is_premium);
+
+    // Premium elanlardan yalnız ilk 4-ü göstərin
+    const displayedPremiumProperties = premiumProperties.slice(0, 4);
+
+    if (displayedPremiumProperties.length > 0) {
+        displayedPremiumProperties.forEach(property => {
+            premiumCardsHtml += propertyCard(property);
+        });
+    } else {
+        premiumCardsHtml = '<p class="col-span-full text-center text-gray-500">Premium elan tapılmadı.</p>';
+    }
+    premiumCardContainer.innerHTML = premiumCardsHtml;
+
+    if (nonPremiumProperties.length > 0) {
+        nonPremiumProperties.forEach(property => {
+            allCardsHtml += propertyCard(property);
+        });
+    } else {
+        allCardsHtml = '<p class="col-span-full text-center text-gray-500">Elan tapılmadı.</p>';
+    }
+    propertyContainer.innerHTML = allCardsHtml;
+
+    premiumLoadingOverlay.style.display = 'none';
+    allPropertiesLoadingOverlay.style.display = 'none';
+
+    currentPage = 1;
+    initPagination(propertyContainer);
+}
+
+
+    const filterButtons = document.querySelectorAll('button[data-add-type]');
     filterButtons.forEach(button => {
         button.addEventListener('click', async () => {
             const selectedAddType = button.getAttribute('data-add-type');

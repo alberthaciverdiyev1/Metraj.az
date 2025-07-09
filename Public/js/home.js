@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const activeButtonClasses = ["bg-red-400", "text-white"];
 
     toggleButtons.forEach(btn => {
-
         if (!btn.classList.contains("bg-red-400")) {
             btn.classList.add(...inactiveButtonHoverClasses);
         }
@@ -64,7 +63,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     });
-});
+}); 
+
 
 const downPaymentInput = document.getElementById('downPayment');
 const downPaymentPercentInput = document.getElementById('downPaymentPercent');
@@ -151,14 +151,13 @@ function resetForm() {
     if (document.getElementById('paymentDisplay')) document.getElementById('paymentDisplay').textContent = '$0';
 }
 
-//AOS DISCOVER
+// AOS DISCOVER 
 if (typeof AOS !== 'undefined') { 
     AOS.init({
         duration: 800,
         once: true
     });
 }
-
 
 document.addEventListener('DOMContentLoaded', function () {
     const tabs = document.querySelectorAll('.tab-btn');
@@ -167,7 +166,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (tabs.length > 0 && contents.length > 0) { 
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
-
                 tabs.forEach(btn => btn.classList.remove('active'));
                 contents.forEach(content => content.classList.remove('active'));
 
@@ -185,7 +183,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
-
 
 document.addEventListener("DOMContentLoaded", async function () {
     function animateText(element) {
@@ -206,7 +203,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             element.appendChild(span);
         }
     }
-
 
     function handleScroll() {
         const sections = document.querySelectorAll('.title-section');
@@ -230,7 +226,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     window.addEventListener('scroll', handleScroll);
     handleScroll(); 
 
-
     const homePropertyContainer = document.getElementById('propertyContainer');
     const homePropertiesLoadingOverlay = document.getElementById('homePropertiesLoadingOverlay');
 
@@ -245,7 +240,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     async function properties() {
         if (!homePropertyContainer) {
-            console.error("Home property container not found.");
+            console.error("Ana səhifə əmlak konteyneri tapılmadı.");
             return;
         }
 
@@ -253,18 +248,42 @@ document.addEventListener("DOMContentLoaded", async function () {
             homePropertiesLoadingOverlay.style.display = 'flex';
         }
 
-        renderSkeletons(homePropertyContainer, 10); 
+        renderSkeletons(homePropertyContainer, 4); 
 
-        let propertiesData = [];
+        let fetchedApiResponse;
+        let processedProperties = [];
+
         try {
-            propertiesData = await getPropertiesList();
+            fetchedApiResponse = await getPropertiesList();
+
+            const rawPropertiesData = fetchedApiResponse.data;
+
+            if (typeof rawPropertiesData === 'object' && rawPropertiesData !== null && !Array.isArray(rawPropertiesData)) {
+                for (const category in rawPropertiesData) {
+                    if (rawPropertiesData.hasOwnProperty(category) && Array.isArray(rawPropertiesData[category])) {
+                        processedProperties = processedProperties.concat(rawPropertiesData[category]);
+                    }
+                }
+            } else if (Array.isArray(rawPropertiesData)) {
+                processedProperties = rawPropertiesData;
+            } else {
+                console.warn("API-dən gözlənilməyən data formatı gəldi:", rawPropertiesData);
+            }
+
             let html = '';
-            propertiesData.forEach(property => {
-                html += propertyCard(property);
-            });
-            homePropertyContainer.innerHTML = html; 
+            if (processedProperties.length > 0) {
+                const propertiesToShow = processedProperties.slice(0, 4); 
+                propertiesToShow.forEach(property => {
+                    html += propertyCard(property);
+                });
+            } else {
+                html = '<p class="col-span-full text-center text-gray-500">Heç bir elan tapılmadı.</p>';
+            }
+            
+            homePropertyContainer.innerHTML = html;
+
         } catch (error) {
-            console.error("Error fetching home properties:", error);
+            console.error("Ana səhifə əmlakları çəkilərkən xəta:", error);
             homePropertyContainer.innerHTML = '<p class="text-red-500 text-center col-span-full">Elanlar yüklənərkən xəta baş verdi.</p>';
         } finally {
             if (homePropertiesLoadingOverlay) {
