@@ -1,11 +1,12 @@
-import { getPropertiesList } from "./components/property.js";
-import { propertyCard } from "./cards/property.js";
-import { propertySkeletonCard } from "./cards/propertySkeleton.js"; 
+import {getPropertiesList} from "./components/property.js";
+import {propertyCard} from "./cards/property.js";
+import {propertySkeletonCard} from "./cards/propertySkeleton.js";
 
 const gotop = document.getElementById('scrollToTop');
 const progress = document.querySelector('.progress-circle .progress');
 const radius = 18;
 const circumference = 2 * Math.PI * radius;
+let bodyParams = {};
 
 window.addEventListener('scroll', () => {
     const scrollTop = window.scrollY;
@@ -23,7 +24,7 @@ window.addEventListener('scroll', () => {
 });
 
 gotop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({top: 0, behavior: 'smooth'});
 });
 
 // PAGINATION
@@ -42,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const addressInput = document.getElementById('addressInput');
     const addressSuggestionsDiv = document.getElementById('addressSuggestions');
     const suggestionsList = document.getElementById('suggestionsList');
-    const searchButton = document.querySelector('button.bg-black'); 
+    const searchButton = document.querySelector('button.bg-black');
 
     const minAreaInput = document.querySelector('input[placeholder="Min ölçü"]');
     const maxAreaInput = document.querySelector('input[placeholder="Max ölçü"]');
@@ -55,14 +56,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('One or more required elements (containers or loading overlays) not found!');
         return;
     }
-    
+
     let currentPage = 1;
     let currentAddType = 'all';
     let currentAddressQuery = '';
     let currentMinArea = '';
     let currentMaxArea = '';
-    let currentMinPrice = ''; 
-    let currentMaxPrice = ''; 
+    let currentMinPrice = '';
+    let currentMaxPrice = '';
 
     function getPropertyCards(containerElement) {
         return containerElement.querySelectorAll(':scope > div');
@@ -212,12 +213,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         premiumLoadingOverlay.style.display = 'flex';
         allPropertiesLoadingOverlay.style.display = 'flex';
 
-        renderSkeletons(premiumCardContainer, 4); 
+        renderSkeletons(premiumCardContainer, 4);
         renderSkeletons(propertyContainer, itemsPerPage);
 
         let propertiesToFilter = [];
         try {
-            allPropertiesData = await getPropertiesList(); 
+            allPropertiesData = await getPropertiesList();
             propertiesToFilter = [...allPropertiesData];
         } catch (error) {
             console.error("Error fetching properties:", error);
@@ -225,14 +226,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             propertyContainer.innerHTML = '<p class="text-red-500 text-center col-span-full">Elanlar yüklənərkən xəta baş verdi.</p>';
             premiumLoadingOverlay.style.display = 'none';
             allPropertiesLoadingOverlay.style.display = 'none';
-            return; 
+            return;
         }
 
-        if (currentAddType !== 'all') {
-            propertiesToFilter = propertiesToFilter.filter(property =>
-                property.add_type === currentAddType
-            );
+        // propertiesToFilter = propertiesToFilter.filter(property =>
+        //     property.add_type === currentAddType
+        // );
+
+        if (currentAddType === 'sale') {
+            propertiesToFilter = await getPropertiesList({adType: 'sale'});
+        } else if (currentAddType === 'rent') {
+            propertiesToFilter = await getPropertiesList({adType: 'rent'});
+        } else {
+            propertiesToFilter = await getPropertiesList({adType: ''});
         }
+
 
         if (currentAddressQuery) {
             const lowerCaseAddressQuery = currentAddressQuery.toLowerCase();
@@ -379,6 +387,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (allButton) {
         allButton.classList.add('bg-[color:var(--primary)]', 'text-white');
         allButton.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100');
-        filterAndRenderProperties(); 
+        filterAndRenderProperties();
     }
 });
