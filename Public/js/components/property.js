@@ -1,7 +1,7 @@
 
 export async function getPropertiesList(searchParams = {}) {
     try {
-        const url = new URL('http://127.0.0.1:8000/api/property');
+        const url = new URL('http://127.0.0.1:8001/api/property');
 
         if (searchParams && typeof searchParams === 'object') {
             Object.entries(searchParams).forEach(([key, value]) => {
@@ -33,6 +33,7 @@ export async function getPropertiesList(searchParams = {}) {
         }
 
         const data = await res.json();
+        console.log('API Response:', data);
         return data; 
     } catch (error) {
         console.error('Əmlak alınarkən xəta:', error);
