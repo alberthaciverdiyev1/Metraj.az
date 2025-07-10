@@ -133,14 +133,14 @@ async function filterAndRenderProperties() {
     renderSkeletons(premiumCardContainer, 4);
     renderSkeletons(propertyContainer, itemsPerPage); 
 
-    const searchParams = {
-        adType: currentAddType,
-        address: currentAddressQuery,
-        minArea: currentMinArea,
-        maxArea: currentMaxArea,
-        minPrice: currentMinPrice,
-        maxPrice: currentMaxPrice
-    };
+        const searchParams = {
+            adType: currentAddType,
+            address: currentAddressQuery,
+            minArea: currentMinArea,
+            maxArea: currentMaxArea,
+            minPrice: currentMinPrice,
+            maxPrice: currentMaxPrice
+        };
 
     try {
         const fetchedPropertiesArray = await getPropertiesList(searchParams);
