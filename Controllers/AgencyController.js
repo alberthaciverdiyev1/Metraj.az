@@ -36,9 +36,22 @@ async function Details(request, reply) {
     return reply.view('Pages/Agency/Details.hbs', view);
 
 }
+
+// RelatedProperties funksiyasını yeniləyirik
 async function RelatedProperties(req) {
-    const {id} = req.params;
-    return await getData(`/agency-property/${id}`, [], false, true, false);
+    const { id } = req.params;
+  
+    const adType = req.query.adType || '';
+
+    let url = `/agency-property/${id}`;
+
+    if (adType && adType !== 'all') { 
+        url += `?adType=${adType}`;
+    }
+
+    console.log(`Backend: Fetching properties from URL: ${url}`); 
+
+    return await getData(url, [], false, true, false);
 }
 
 export default {listView,Details,RelatedProperties}

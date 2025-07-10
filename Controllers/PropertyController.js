@@ -157,32 +157,43 @@ export async function add(req, res) {
 }
 
 
+
 export async function listApi(req, res) {
     const allowedParams = [
-        'propertyType',
-        'propertyCondition',
-        'buildingType',
-        'roomCount',
-        'cityId',
-        'adType',
-        'addNo',
-        'townId',
-        'subwayId',
-        'districtId',
-        'addType',
-        'numberOfFloors',
-        'floorLocated',
-        'area',
-        'fieldArea',
-        'inCredit',
+        'property-type', 'property-condition', 'building-type', 'room-count', 'city-id',
+        'type', 'add-no', 'town-id', 'subway-id', 'district-id', 'add-type',
+        'number-of-floors', 'floor-located', 'area', 'field-area', 'in-credit',
+        'min-area', 'max-area', 'min-price', 'max-price'
     ];
 
     const params = Object.fromEntries(
         Object.entries(req.query).filter(([key]) => allowedParams.includes(key))
     );
-    console.log(params)
-    const result = await getData('/property', params, false, false, false);
-    return res.send(result);
+
+    try {
+        const apiResult = await getData('/property', params, false, false, false);
+
+        let allProperties = [];
+
+        if (apiResult && apiResult.data && typeof apiResult.data === 'object' && !Array.isArray(apiResult.data)) {
+            for (const category in apiResult.data) {
+                if (Object.hasOwnProperty.call(apiResult.data, category) && Array.isArray(apiResult.data[category])) {
+                    allProperties = allProperties.concat(apiResult.data[category]);
+                }
+            }
+        } else if (Array.isArray(apiResult)) {
+            allProperties = apiResult;
+        } else {
+            console.warn("Fastify listApi: Orijinal API-dən gözlənilməyən data formatı gəldi:", apiResult);
+            return res.send([]);
+        }
+
+        return res.send(allProperties);
+
+    } catch (error) {
+        console.error("Fastify listApi: Əmlakları çəkilərkən xəta:", error);
+        return res.status(500).send({ error: "Əmlakları yükləmək mümkün olmadı." });
+    }
 }
 
 
