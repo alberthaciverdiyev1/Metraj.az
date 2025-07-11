@@ -1,5 +1,4 @@
-
-import { getPropertiesList } from "./components/property.js";
+import { getPropertiesList } from "./components/property.js"; // property.js dəyişdirilməlidir
 import { propertyCard } from "./cards/property.js";
 import { propertySkeletonCard } from "./cards/propertySkeleton.js";
 
@@ -38,7 +37,8 @@ let currentMaxPrice = '';
 let selectedCategory = 'All Categories';
 let selectedCity = 'All Cities';
 
-let allPropertiesData = [];
+
+let allPropertiesData = []; 
 let filteredPropertiesForMainDisplay = [];
 let filteredPremiumProperties = [];
 
@@ -136,26 +136,29 @@ async function filterAndRenderProperties() {
     renderSkeletons(premiumCardContainer, 4);
     renderSkeletons(propertyContainer, itemsPerPage);
 
+
     const searchParams = {
-        adType: currentAddType,
+        add_type: currentAddType === 'all' ? '' : currentAddType, 
         address: currentAddressQuery,
-        minArea: currentMinArea,
-        maxArea: currentMaxArea,
-        minPrice: currentMinPrice,
-        maxPrice: currentMaxPrice,
+        min_area: currentMinArea,
+        max_area: currentMaxArea,
+        min_price: currentMinPrice,
+        max_price: currentMaxPrice,
         category: selectedCategory === 'All Categories' ? '' : selectedCategory,
-        city: selectedCity === 'All Cities' ? '' : selectedCity
+        city: selectedCity === 'All Cities' ? '' : selectedCity,
+       
     };
 
     try {
-        const fetchedPropertiesArray = await getPropertiesList({});
-        console.log('API-dən gələn bütün data (listing.js):', fetchedPropertiesArray);
+       
+        const fetchedPropertiesArray = await getPropertiesList(searchParams); 
+        console.log('API-dən gələn filterlənmiş data (listing.js):', fetchedPropertiesArray);
 
         if (!Array.isArray(fetchedPropertiesArray)) {
             console.warn("API-dən gözlənilməyən data formatı gəldi (filterAndRenderProperties): massiv gözlənilir. Aldığımız:", fetchedPropertiesArray);
             allPropertiesData = []; 
         } else {
-            allPropertiesData = fetchedPropertiesArray;
+            allPropertiesData = fetchedPropertiesArray; 
         }
 
     } catch (error) {
@@ -168,36 +171,11 @@ async function filterAndRenderProperties() {
         return;
     }
 
-    let tempFilteredProperties = [...allPropertiesData];
 
-    if (currentAddType !== 'all') {
-        tempFilteredProperties = tempFilteredProperties.filter(property => property.add_type === currentAddType);
-    }
-    if (currentAddressQuery) {
-        tempFilteredProperties = tempFilteredProperties.filter(property =>
-            property.address && property.address.toLowerCase().includes(currentAddressQuery.toLowerCase())
-        );
-    }
-    if (searchParams.category) {
-        tempFilteredProperties = tempFilteredProperties.filter(property => property.category_name === searchParams.category);
-    }
-    if (searchParams.city) {
-        tempFilteredProperties = tempFilteredProperties.filter(property => property.city_name === searchParams.city);
-    }
-    if (currentMinArea) {
-        tempFilteredProperties = tempFilteredProperties.filter(property => property.area >= parseFloat(currentMinArea));
-    }
-    if (currentMaxArea) {
-        tempFilteredProperties = tempFilteredProperties.filter(property => property.area <= parseFloat(currentMaxArea));
-    }
-    if (currentMinPrice) {
-        tempFilteredProperties = tempFilteredProperties.filter(property => property.price >= parseFloat(currentMinPrice));
-    }
-    if (currentMaxPrice) {
-        tempFilteredProperties = tempFilteredProperties.filter(property => property.price <= parseFloat(currentMaxPrice));
-    }
+    filteredPropertiesForMainDisplay = [...allPropertiesData]; 
 
-    filteredPremiumProperties = tempFilteredProperties.filter(property => property.is_premium);
+   
+    filteredPremiumProperties = filteredPropertiesForMainDisplay.filter(property => property.is_premium);
 
     let premiumCardsHtml = '';
     const displayedPremiumProperties = filteredPremiumProperties.slice(0, 4);
@@ -215,10 +193,8 @@ async function filterAndRenderProperties() {
         console.error("Error: 'premiumCardContainer' elementi tapılmadı.");
     }
 
-    filteredPropertiesForMainDisplay = tempFilteredProperties;
-    
-    console.log('Əsas konteynerdə göstəriləcək elanların sayı (premiumlar daxil):', filteredPropertiesForMainDisplay.length);
-    console.log('Filterlənmiş premium elanların sayı:', filteredPremiumProperties.length);
+    console.log('Əsas konteynerdə göstəriləcək elanların sayı (backenddən gələn):', filteredPropertiesForMainDisplay.length);
+    console.log('Filterlənmiş premium elanların sayı (backenddən gələn datadan filterlənən):', filteredPremiumProperties.length);
 
     currentPage = 1;
     showPage(currentPage);
@@ -356,6 +332,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
+   
     function updateAddressSuggestions(query) {
         suggestionsList.innerHTML = '';
         if (query.length < 2) {
@@ -366,7 +343,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const uniqueAddresses = new Set();
         const lowerCaseQuery = query.toLowerCase();
 
-        allPropertiesData.forEach(property => {
+        
+        allPropertiesData.forEach(property => { 
             if (property.address && property.address.toLowerCase().includes(lowerCaseQuery)) {
                 uniqueAddresses.add(property.address);
             }
@@ -394,7 +372,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (addressInput) {
         addressInput.addEventListener('input', (event) => {
             currentAddressQuery = event.target.value;
-            updateAddressSuggestions(currentAddressQuery);
+           
+            updateAddressSuggestions(currentAddressQuery); 
         });
         document.addEventListener('click', (event) => {
             if (addressSuggestionsDiv && !addressInput.contains(event.target) && !addressSuggestionsDiv.contains(event.target)) {

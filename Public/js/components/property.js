@@ -33,7 +33,7 @@ export async function getPropertiesList(searchParams = {}) {
 
         const url = `/properties` + (queryString ? `?${queryString}` : '');
 
-        console.log('Frontend getPropertiesList Request URL:', url);
+        console.log(' Request URL:', url);
 
         const res = await fetch(url, {
             method: 'GET',
