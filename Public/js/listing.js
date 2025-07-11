@@ -138,7 +138,7 @@ async function filterAndRenderProperties() {
 
 
     const searchParams = {
-        add_type: currentAddType === 'all' ? '' : currentAddType, 
+        adType: currentAddType === 'all' ? '' : currentAddType,
         address: currentAddressQuery,
         min_area: currentMinArea,
         max_area: currentMaxArea,
@@ -430,12 +430,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    const allButton = document.querySelector('button[data-add-type="all"]');
-    if (allButton) {
-        allButton.classList.add('bg-[color:var(--primary)]', 'text-white');
-        allButton.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100');
-        await filterAndRenderProperties();
-    } else {
-        await filterAndRenderProperties();
-    }
+    // const allButton = document.querySelector('button[data-add-type="all"]');
+    // if (allButton) {
+    //     allButton.classList.add('bg-[color:var(--primary)]', 'text-white');
+    //     allButton.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100');
+    //     await filterAndRenderProperties();
+    // } else {
+             await filterAndRenderProperties();
+    // }
 });

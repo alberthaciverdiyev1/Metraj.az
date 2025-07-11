@@ -160,11 +160,29 @@ export async function add(req, res) {
 
 export async function listApi(req, res) {
     const allowedParams = [
-        'property-type', 'property-condition', 'building-type', 'room-count', 'city-id',
-        'type', 'add-no', 'town-id', 'subway-id', 'district-id', 'add-type',
-        'number-of-floors', 'floor-located', 'area', 'field-area', 'in-credit',
-        'min-area', 'max-area', 'min-price', 'max-price'
+        'propertyType',
+        'propertyCondition',
+        'buildingType',
+        'roomCount',
+        'cityId',
+        'type',
+        'adNo',
+        'townId',
+        'subwayId',
+        'districtId',
+        'adType',
+        'numberOfFloors',
+        'floorLocated',
+        'area',
+        'fieldArea',
+        'inCredit',
+        'minArea',
+        'maxArea',
+        'minPrice',
+        'maxPrice'
     ];
+
+    console.log(req.query)
 
     const params = Object.fromEntries(
         Object.entries(req.query).filter(([key]) => allowedParams.includes(key))
@@ -176,17 +194,24 @@ export async function listApi(req, res) {
         let allProperties = [];
 
         if (apiResult && apiResult.data && typeof apiResult.data === 'object' && !Array.isArray(apiResult.data)) {
+            console.log('1')
+                //Bura islemeyecek. Cunki helper ile datanin icini gonderirem. CallAPi helperine bax amma icini deyisme helperin
             for (const category in apiResult.data) {
                 if (Object.hasOwnProperty.call(apiResult.data, category) && Array.isArray(apiResult.data[category])) {
                     allProperties = allProperties.concat(apiResult.data[category]);
                 }
             }
         } else if (Array.isArray(apiResult)) {
+            console.log('2')
+
             allProperties = apiResult;
         } else {
             console.warn("Fastify listApi: Orijinal API-dən gözlənilməyən data formatı gəldi:", apiResult);
+            console.log('3')
             return res.send([]);
+
         }
+console.log({params})
 
         return res.send(allProperties);
 
