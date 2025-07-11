@@ -1,4 +1,4 @@
-import { getPropertiesList } from "./components/property.js"; // property.js dəyişdirilməlidir
+import { getPropertiesList } from "./components/property.js"; 
 import { propertyCard } from "./cards/property.js";
 import { propertySkeletonCard } from "./cards/propertySkeleton.js";
 

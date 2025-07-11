@@ -18,13 +18,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 b.classList.remove(...activeButtonClasses);
                 b.classList.add(...inactiveButtonBaseClasses);
                 b.classList.add(...inactiveButtonHoverClasses);
-                b.parentElement.querySelector(".triangle-indicator").classList.add("hidden");
+                const triangleIndicator = b.parentElement.querySelector(".triangle-indicator");
+                if (triangleIndicator) {
+                    triangleIndicator.classList.add("hidden");
+                }
             });
 
             btn.classList.remove(...inactiveButtonBaseClasses);
             btn.classList.remove(...inactiveButtonHoverClasses);
             btn.classList.add(...activeButtonClasses);
-            btn.parentElement.querySelector(".triangle-indicator").classList.remove("hidden");
+            const triangleIndicator = btn.parentElement.querySelector(".triangle-indicator");
+            if (triangleIndicator) {
+                triangleIndicator.classList.remove("hidden");
+            }
         });
     });
 
@@ -64,7 +70,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 }); 
-
 
 const downPaymentInput = document.getElementById('downPayment');
 const downPaymentPercentInput = document.getElementById('downPaymentPercent');
@@ -151,7 +156,6 @@ function resetForm() {
     if (document.getElementById('paymentDisplay')) document.getElementById('paymentDisplay').textContent = '$0';
 }
 
-// AOS DISCOVER 
 if (typeof AOS !== 'undefined') { 
     AOS.init({
         duration: 800,
@@ -250,24 +254,16 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         renderSkeletons(homePropertyContainer, 4); 
 
-        let fetchedApiResponse;
         let processedProperties = [];
 
         try {
-            fetchedApiResponse = await getPropertiesList();
+            const fetchedApiResponse = await getPropertiesList(); 
 
-            const rawPropertiesData = fetchedApiResponse.data;
-
-            if (typeof rawPropertiesData === 'object' && rawPropertiesData !== null && !Array.isArray(rawPropertiesData)) {
-                for (const category in rawPropertiesData) {
-                    if (rawPropertiesData.hasOwnProperty(category) && Array.isArray(rawPropertiesData[category])) {
-                        processedProperties = processedProperties.concat(rawPropertiesData[category]);
-                    }
-                }
-            } else if (Array.isArray(rawPropertiesData)) {
-                processedProperties = rawPropertiesData;
+            if (Array.isArray(fetchedApiResponse)) {
+                processedProperties = fetchedApiResponse;
             } else {
-                console.warn("API-dən gözlənilməyən data formatı gəldi:", rawPropertiesData);
+                console.warn("API-dən gözlənilməyən data formatı gəldi (home.js): massiv gözlənilir.", fetchedApiResponse);
+                processedProperties = []; 
             }
 
             let html = '';
