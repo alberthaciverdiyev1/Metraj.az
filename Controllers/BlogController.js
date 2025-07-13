@@ -1,4 +1,4 @@
-import {getData} from "../Helpers/CallApi.js";
+import {getData} from "../Helpers/callApi.js";
 import {css, js} from "../Helpers/assets.js";
 
 async function listView(request, reply) {

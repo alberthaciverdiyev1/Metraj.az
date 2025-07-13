@@ -1,4 +1,4 @@
-import {getData} from "../Helpers/CallApi.js";
+import {getData} from "../Helpers/callApi.js";
 import NodeCache from 'node-cache';
 
 export const cache = new NodeCache({stdTTL: 864000}); // 10 day

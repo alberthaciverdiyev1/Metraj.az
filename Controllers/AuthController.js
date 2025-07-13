@@ -1,4 +1,4 @@
-import {postData} from "../Helpers/CallApi.js";
+import {postData} from "../Helpers/callApi.js";
 import {css, js} from "../Helpers/assets.js";
 
 async function LoginView(request, reply) {

@@ -132,7 +132,7 @@ function renderSkeletons(container, count) {
 async function filterAndRenderProperties() {
     premiumLoadingOverlay.style.display = 'flex';
     allPropertiesLoadingOverlay.style.display = 'flex';
-
+        console.log("started");
     renderSkeletons(premiumCardContainer, 4);
     renderSkeletons(propertyContainer, itemsPerPage);
 
@@ -150,7 +150,6 @@ async function filterAndRenderProperties() {
     };
 
     try {
-       
         const fetchedPropertiesArray = await getPropertiesList(searchParams); 
         console.log('API-dən gələn filterlənmiş data (listing.js):', fetchedPropertiesArray);
 
@@ -178,7 +177,8 @@ async function filterAndRenderProperties() {
     filteredPremiumProperties = filteredPropertiesForMainDisplay.filter(property => property.is_premium);
 
     let premiumCardsHtml = '';
-    const displayedPremiumProperties = filteredPremiumProperties.slice(0, 4);
+    // const displayedPremiumProperties = filteredPremiumProperties.slice(0, 4);
+    const displayedPremiumProperties = filteredPremiumProperties;
 
     if (displayedPremiumProperties.length > 0) {
         displayedPremiumProperties.forEach(property => {
@@ -187,6 +187,7 @@ async function filterAndRenderProperties() {
     } else {
         premiumCardsHtml = '<p class="col-span-full text-center text-gray-500">Axtarışınıza uyğun premium elan tapılmadı.</p>';
     }
+
     if (premiumCardContainer) {
         premiumCardContainer.innerHTML = premiumCardsHtml;
     } else {
@@ -430,12 +431,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // const allButton = document.querySelector('button[data-add-type="all"]');
-    // if (allButton) {
-    //     allButton.classList.add('bg-[color:var(--primary)]', 'text-white');
-    //     allButton.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100');
-    //     await filterAndRenderProperties();
-    // } else {
-             await filterAndRenderProperties();
-    // }
+    const allButton = document.querySelector('button[data-add-type="all"]');
+    if (allButton) {
+        allButton.classList.add('bg-[color:var(--primary)]', 'text-white');
+        allButton.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100');
+        await filterAndRenderProperties();
+    } else {
+        await filterAndRenderProperties();
+    }
 });

@@ -268,7 +268,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             let html = '';
             if (processedProperties.length > 0) {
-                const propertiesToShow = processedProperties.slice(0, 4); 
+             //   const propertiesToShow = processedProperties.slice(0, 4);
+                const propertiesToShow = processedProperties;
                 propertiesToShow.forEach(property => {
                     html += propertyCard(property);
                 });

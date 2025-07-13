@@ -1,16 +1,14 @@
-import {getData, postData} from "../Helpers/CallApi.js";
-import fs from 'fs'
+import {getData, postData} from "../Helpers/callApi.js";
 import path from 'path'
 import {randomUUID} from 'crypto'
-import pump from 'pump'
 import {uploadToBunny} from "../Helpers/bunnyCDN.js";
-import axios from 'axios'
 import {css, js} from "../Helpers/assets.js";
+
+
 async function listView(request, reply) {
     const buildingTypes = await getData(`/property-types`, false, true, true, true);
-    const citiesResponse = await axios.get('https://api.porfolio.space/api/city');
-    const cities = citiesResponse?.data?.data || [];
-    
+    const cities = await getData(`/city`, false, false, true, true);
+
 
     const view = {
         title: 'Listing Page',
@@ -20,8 +18,8 @@ async function listView(request, reply) {
             {label: 'Home', url: '/'},
             {label: 'Property Listing', url: '/listing'}
         ],
-        cities 
-,
+        cities
+        ,
         data: {
             buildingTypes
         }
@@ -64,15 +62,15 @@ async function addView(request, reply) {
             'components/propertyTypes.js',
             'gotop.js',
             'app.js',
-          ]),
-          css: css([
+        ]),
+        css: css([
             'add-property.css',
             'components.css',
             'app.css',
             'listing.css'
-            
-          ])
-,          
+
+        ])
+        ,
         breadcrumbs: [
             {label: 'Home', url: '/'},
             {label: 'Property Listing', url: '/listing'}
@@ -157,7 +155,6 @@ export async function add(req, res) {
 }
 
 
-
 export async function listApi(req, res) {
     const allowedParams = [
         'propertyType',
@@ -195,7 +192,7 @@ export async function listApi(req, res) {
 
         if (apiResult && apiResult.data && typeof apiResult.data === 'object' && !Array.isArray(apiResult.data)) {
             console.log('1')
-                //Bura islemeyecek. Cunki helper ile datanin icini gonderirem. CallAPi helperine bax amma icini deyisme helperin
+            //Bura islemeyecek. Cunki helper ile datanin icini gonderirem. CallAPi helperine bax amma icini deyisme helperin
             for (const category in apiResult.data) {
                 if (Object.hasOwnProperty.call(apiResult.data, category) && Array.isArray(apiResult.data[category])) {
                     allProperties = allProperties.concat(apiResult.data[category]);
@@ -211,13 +208,13 @@ export async function listApi(req, res) {
             return res.send([]);
 
         }
-console.log({params})
+        console.log({params})
 
         return res.send(allProperties);
 
     } catch (error) {
         console.error("Fastify listApi: Əmlakları çəkilərkən xəta:", error);
-        return res.status(500).send({ error: "Əmlakları yükləmək mümkün olmadı." });
+        return res.status(500).send({error: "Əmlakları yükləmək mümkün olmadı."});
     }
 }
 

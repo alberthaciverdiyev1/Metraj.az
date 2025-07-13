@@ -16,7 +16,6 @@ export async function getPropertiesList(searchParams = {}) {
             window.history.replaceState({}, '', `${currentPath}${queryString ? `?${queryString}` : ''}`);
         }
 
-
         console.log('Request URL:', url);
 
         const res = await fetch(url, {

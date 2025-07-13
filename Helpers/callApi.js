@@ -5,26 +5,24 @@ import dotenv from 'dotenv';
 dotenv.config();
 const cache = new NodeCache({stdTTL: 864000}) // 10 day
 
-//   const API_URL = process.env.API_URL?.replace(/\/$/, '') || 'http://localhost:8001'
-const API_URL = 'http://api.metraj.loc:8000';
+const API_URL = process.env.API_URL?.replace(/\/$/, '') || 'http://localhost:8001'
+
+//const API_URL = 'http://api.metraj.loc:8000';
 
 
 export async function getData(url, params = {}, enumMode = false, allData = false, useCache = true) {
-    // params obyekti artıq istədiyimiz query parametrlərini ehtiva edir
-    // Əgər allData false-dursa, 'page: 1' əlavə edirik
     const finalQueryParams = allData ? params : {page: 1, ...params};
 
-    const fullUrl = `${API_URL}/api${url}`; // URL-i query parametrləri olmadan qururuq
+    const fullUrl = `${API_URL}/api${url}`;
 
-    const cacheKey = `api_${fullUrl}_${JSON.stringify(finalQueryParams)}`; // Cache key-ə parametrləri də əlavə edirik
+    const cacheKey = `api_${fullUrl}_${JSON.stringify(finalQueryParams)}`;
     if (useCache) {
         const cached = cache.get(cacheKey);
         if (cached) return cached;
     }
 
     try {
-        // Axios.get funksiyasına query parametrlərini params obyekti olaraq ötürürük
-        const response = await axios.get(fullUrl, {params: finalQueryParams}); // <- Əsas dəyişiklik burada!
+        const response = await axios.get(fullUrl, {params: finalQueryParams});
         const result = enumMode ? response.data : (response.data?.data || []);
         if (useCache) cache.set(cacheKey, result);
         return result;
