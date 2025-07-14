@@ -176,7 +176,10 @@ export async function listApi(req, res) {
         'minArea',
         'maxArea',
         'minPrice',
-        'maxPrice'
+        'maxPrice',
+        'page',
+        'limit',
+        'is_premium'
     ];
 
     console.log(req.query)

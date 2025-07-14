@@ -1,4 +1,4 @@
-import { getPropertiesList } from "./components/property.js"; 
+import { getPropertiesList } from "./components/property.js";
 import { propertyCard } from "./cards/property.js";
 import { propertySkeletonCard } from "./cards/propertySkeleton.js";
 
@@ -7,8 +7,6 @@ const progress = document.querySelector('.progress-circle .progress');
 const radius = 18;
 const circumference = 2 * Math.PI * radius;
 
-const paginationContainer = document.querySelector('.pagination');
-const resultsText = document.querySelector('.result .text');
 const gridBtn = document.getElementById("gridViewBtn");
 const listBtn = document.getElementById("listViewBtn");
 const propertyContainer = document.getElementById('propertyContainer');
@@ -19,22 +17,19 @@ const allPropertiesLoadingOverlay = document.getElementById('allPropertiesLoadin
 const addressInput = document.getElementById('addressInput');
 const addressSuggestionsDiv = document.getElementById('addressSuggestions');
 const suggestionsList = document.getElementById('suggestionsList');
-// const searchButton = document.querySelector('button.bg-black');
-
-// const minAreaInput = document.querySelector('input[placeholder="Min ölçü"]');
-// const maxAreaInput = document.querySelector('input[placeholder="Max ölçü"]');
-
 
 const searchButton = document.querySelector('[data-role="search-button"]');
 
-const minAreaInput = document.querySelector('[data-role="min-area-input"]'); 
-
-const maxAreaInput = document.querySelector('[data-role="max-area-input"]');
+const minAreaInput = document.querySelector('[data-role="min-area-input"]');
+const maxAreaInput = document.querySelector('[data-type="max-area-input"]');
 const minPriceInput = document.getElementById('minPriceInput');
 const maxPriceInput = document.getElementById('maxPriceInput');
 
-let itemsPerPage = 9;
 let currentPage = 1;
+const ITEMS_PER_PAGE = 8;
+let isLoading = false;
+let hasMoreAds = true;
+
 let currentAddType = 'all';
 let currentAddressQuery = '';
 let currentMinArea = '';
@@ -44,90 +39,6 @@ let currentMaxPrice = '';
 let selectedCategory = 'All Categories';
 let selectedCity = 'All Cities';
 
-
-let allPropertiesData = []; 
-let filteredPropertiesForMainDisplay = [];
-let filteredPremiumProperties = [];
-
-function getTotalPagesForMainDisplay() {
-    return Math.ceil(filteredPropertiesForMainDisplay.length / itemsPerPage);
-}
-
-function showPage(page) {
-    currentPage = page;
-    const totalItemsToDisplay = filteredPropertiesForMainDisplay.length;
-    const totalPages = getTotalPagesForMainDisplay();
-    const startIndex = (page - 1) * itemsPerPage;
-    const endIndex = Math.min(startIndex + itemsPerPage, totalItemsToDisplay);
-
-    let currentCardsHtml = '';
-
-    if (totalItemsToDisplay > 0) {
-        for (let i = startIndex; i < endIndex; i++) {
-            if (filteredPropertiesForMainDisplay[i]) {
-                currentCardsHtml += propertyCard(filteredPropertiesForMainDisplay[i]);
-            }
-        }
-    } else {
-        currentCardsHtml = '<p class="col-span-full text-center text-gray-500">Elan tapılmadı.</p>';
-    }
-
-    if (propertyContainer) {
-        propertyContainer.innerHTML = currentCardsHtml;
-    } else {
-        console.error("Error: 'propertyContainer' elementi tapılmadı.");
-    }
-    
-    resultsText.textContent = `Göstərilir ${Math.min(startIndex + 1, totalItemsToDisplay)}-${endIndex} cəmi ${totalItemsToDisplay} elandan.`;
-    if (totalItemsToDisplay === 0) {
-        resultsText.textContent = 'Heç bir elan tapılmadı.';
-    }
-
-    updatePaginationUI();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function updatePaginationUI() {
-    const totalPages = getTotalPagesForMainDisplay();
-    paginationContainer.innerHTML = '';
-
-    if (totalPages <= 1 && filteredPropertiesForMainDisplay.length > 0) {
-        paginationContainer.style.display = 'none';
-        return;
-    } else if (filteredPropertiesForMainDisplay.length === 0) {
-        paginationContainer.style.display = 'none';
-        return;
-    }
-    paginationContainer.style.display = 'flex';
-
-    const prevDisabled = currentPage === 1 ? 'disabled' : '';
-    paginationContainer.innerHTML += `
-        <li class="page-item ${prevDisabled}">
-            <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-    `;
-
-    for (let i = 1; i <= totalPages; i++) {
-        const activeClass = i === currentPage ? 'active' : '';
-        paginationContainer.innerHTML += `
-            <li class="page-item ${activeClass}">
-                <a class="page-link" href="#">${i}</a>
-            </li>
-        `;
-    }
-
-    const nextDisabled = currentPage === totalPages ? 'disabled' : '';
-    paginationContainer.innerHTML += `
-        <li class="page-item ${nextDisabled}">
-            <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    `;
-}
-
 function renderSkeletons(container, count) {
     let skeletonsHtml = '';
     for (let i = 0; i < count; i++) {
@@ -136,88 +47,116 @@ function renderSkeletons(container, count) {
     container.innerHTML = skeletonsHtml;
 }
 
-async function filterAndRenderProperties() {
+function appendSkeletons(container, count) {
+    let skeletonsHtml = '';
+    for (let i = 0; i < count; i++) {
+        skeletonsHtml += propertySkeletonCard();
+    }
+    container.insertAdjacentHTML('beforeend', skeletonsHtml);
+}
+
+async function fetchAndAppendProperties(isNewSearch = false) {
+    if (isLoading || (!hasMoreAds && !isNewSearch)) {
+        return;
+    }
+
+    isLoading = true;
+    if (isNewSearch) {
+        propertyContainer.innerHTML = '';
+        premiumCardContainer.innerHTML = '';
+        currentPage = 1;
+        hasMoreAds = true;
+        renderSkeletons(premiumCardContainer, 4);
+        renderSkeletons(propertyContainer, ITEMS_PER_PAGE);
+    } else {
+        appendSkeletons(propertyContainer, ITEMS_PER_PAGE);
+    }
+
     premiumLoadingOverlay.style.display = 'flex';
     allPropertiesLoadingOverlay.style.display = 'flex';
-        console.log("started");
-    renderSkeletons(premiumCardContainer, 4);
-    renderSkeletons(propertyContainer, itemsPerPage);
-
 
     const searchParams = {
-        adType: currentAddType === 'all' ? '' : currentAddType,
+        page: currentPage,
+        limit: ITEMS_PER_PAGE,
+        addType: currentAddType === 'all' ? '' : currentAddType,
         address: currentAddressQuery,
         min_area: currentMinArea,
         max_area: currentMaxArea,
         min_price: currentMinPrice,
         max_price: currentMaxPrice,
-        category: selectedCategory === 'All Categories' ? '' : selectedCategory,
-        city: selectedCity === 'All Cities' ? '' : selectedCity,
-       
+        propertyType: selectedCategory === 'All Categories' ? '' : selectedCategory,
+        cityId: selectedCity === 'All Cities' ? '' : selectedCity,
     };
 
     try {
-        const fetchedPropertiesArray = await getPropertiesList(searchParams); 
-        console.log('API-dən gələn filterlənmiş data (listing.js):', fetchedPropertiesArray);
+        const fetchedProperties = await getPropertiesList(searchParams);
 
-        if (!Array.isArray(fetchedPropertiesArray)) {
-            console.warn("API-dən gözlənilməyən data formatı gəldi (filterAndRenderProperties): massiv gözlənilir. Aldığımız:", fetchedPropertiesArray);
-            allPropertiesData = []; 
+        if (isNewSearch) {
+            const premiumProperties = fetchedProperties.filter(property => property.is_premium);
+            let premiumCardsHtml = '';
+            if (premiumProperties.length > 0) {
+                premiumProperties.forEach(property => {
+                    premiumCardsHtml += propertyCard(property);
+                });
+            } else {
+                premiumCardsHtml = '<p class="col-span-full text-center text-gray-500">Axtarışınıza uyğun premium elan tapılmadı.</p>';
+            }
+            premiumCardContainer.innerHTML = premiumCardsHtml;
+        }
+
+        removeSkeletons();
+
+        if (fetchedProperties && fetchedProperties.length > 0) {
+            let cardsHtml = '';
+            fetchedProperties.forEach(property => {
+                cardsHtml += propertyCard(property);
+            });
+            propertyContainer.insertAdjacentHTML('beforeend', cardsHtml);
+            currentPage++;
+            hasMoreAds = fetchedProperties.length === ITEMS_PER_PAGE;
         } else {
-            allPropertiesData = fetchedPropertiesArray; 
+            hasMoreAds = false;
+            if (isNewSearch) {
+                propertyContainer.innerHTML = '<p class="col-span-full text-center text-gray-500">Elan tapılmadı.</p>';
+            } else {
+                console.log('Bütün elanlar yükləndi.');
+            }
         }
 
     } catch (error) {
         console.error("Əmlaklar çəkilərkən xəta:", error);
-        allPropertiesData = [];
-        premiumCardContainer.innerHTML = '<p class="text-red-500 text-center col-span-full">Premium elanlar yüklənərkən xəta baş verdi.</p>';
-        propertyContainer.innerHTML = '<p class="text-red-500 text-center col-span-full">Elanlar yüklənərkən xəta baş verdi.</p>';
+        hasMoreAds = false;
+        removeSkeletons();
+        if (isNewSearch) {
+            propertyContainer.innerHTML = '<p class="text-red-500 text-center col-span-full">Elanlar yüklənərkən xəta baş verdi.</p>';
+            premiumCardContainer.innerHTML = '<p class="text-red-500 text-center col-span-full">Premium elanlar yüklənərkən xəta baş verdi.</p>';
+        } else {
+            console.error("Sonsuz sürüşmə: Daha çox əmlak çəkilərkən xəta.");
+        }
+    } finally {
+        isLoading = false;
         premiumLoadingOverlay.style.display = 'none';
         allPropertiesLoadingOverlay.style.display = 'none';
-        return;
     }
+}
 
+function removeSkeletons() {
+    const currentSkeletons = propertyContainer.querySelectorAll('.property-skeleton-card');
+    currentSkeletons.forEach(skeleton => skeleton.remove());
 
-    filteredPropertiesForMainDisplay = [...allPropertiesData]; 
-
-   
-    filteredPremiumProperties = filteredPropertiesForMainDisplay.filter(property => property.is_premium);
-
-    let premiumCardsHtml = '';
-    // const displayedPremiumProperties = filteredPremiumProperties.slice(0, 4);
-    const displayedPremiumProperties = filteredPremiumProperties;
-
-    if (displayedPremiumProperties.length > 0) {
-        displayedPremiumProperties.forEach(property => {
-            premiumCardsHtml += propertyCard(property);
-        });
-    } else {
-        premiumCardsHtml = '<p class="col-span-full text-center text-gray-500">Axtarışınıza uyğun premium elan tapılmadı.</p>';
-    }
-
-    if (premiumCardContainer) {
-        premiumCardContainer.innerHTML = premiumCardsHtml;
-    } else {
-        console.error("Error: 'premiumCardContainer' elementi tapılmadı.");
-    }
-
-    console.log('Əsas konteynerdə göstəriləcək elanların sayı (backenddən gələn):', filteredPropertiesForMainDisplay.length);
-    console.log('Filterlənmiş premium elanların sayı (backenddən gələn datadan filterlənən):', filteredPremiumProperties.length);
-
-    currentPage = 1;
-    showPage(currentPage);
-
-    premiumLoadingOverlay.style.display = 'none';
-    allPropertiesLoadingOverlay.style.display = 'none';
+    const premiumSkeletons = premiumCardContainer.querySelectorAll('.property-skeleton-card');
+    premiumSkeletons.forEach(skeleton => skeleton.remove());
 }
 
 window.addEventListener('scroll', () => {
     const scrollTop = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercent = scrollTop / docHeight;
+    const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
 
-    const offset = circumference - scrollPercent * circumference;
-    if (progress) progress.style.strokeDashoffset = offset;
+    if (progress) {
+        const offset = circumference - scrollPercent * circumference;
+        progress.style.strokeDashoffset = offset;
+    }
 
     if (gotop) {
         if (scrollTop > window.innerHeight / 2) {
@@ -225,6 +164,10 @@ window.addEventListener('scroll', () => {
         } else {
             gotop.style.display = 'none';
         }
+    }
+
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 300) {
+        fetchAndAppendProperties(false);
     }
 });
 
@@ -235,32 +178,12 @@ if (gotop) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    if (!propertyContainer || !premiumCardContainer || !premiumLoadingOverlay || !allPropertiesLoadingOverlay || !paginationContainer || !resultsText) {
-        console.error('Lazımi elementlərdən biri tapılmadı (konteynerlər, yükləmə qatmanları, səhifələmə elementləri)!');
+    if (!propertyContainer || !premiumCardContainer || !premiumLoadingOverlay || !allPropertiesLoadingOverlay) {
+        console.error('Lazımi elementlərdən biri tapılmadı (konteynerlər, yükləmə qatmanları)!');
         return;
     }
 
-    if (paginationContainer) {
-        paginationContainer.addEventListener('click', function (e) {
-            e.preventDefault();
-            if (e.target.closest('.page-link')) {
-                const target = e.target.closest('.page-link');
-                const action = target.getAttribute('aria-label');
-                const totalPages = getTotalPagesForMainDisplay();
-
-                if (action === 'Previous' && currentPage > 1) {
-                    showPage(currentPage - 1);
-                } else if (action === 'Next' && currentPage < totalPages) {
-                    showPage(currentPage + 1);
-                } else if (!action) { 
-                    const pageNumber = parseInt(target.textContent);
-                    if (!isNaN(pageNumber)) {
-                        showPage(pageNumber);
-                    }
-                }
-            }
-        });
-    }
+    await fetchAndAppendProperties(true);
 
     const toggleButtons = [gridBtn, listBtn];
     toggleButtons.forEach(btn => {
@@ -284,7 +207,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             premiumCardContainer.classList.add(
                 'grid', 'grid-cols-1', 'sm:grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-2', 'xl:grid-cols-4'
             );
-            showPage(currentPage);
         });
     }
 
@@ -298,7 +220,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             premiumCardContainer.classList.remove(
                 'grid', 'grid-cols-1', 'sm:grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-2', 'xl:grid-cols-4'
             );
-            showPage(currentPage);
         });
     }
 
@@ -322,8 +243,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (minPriceInput) minPriceInput.value = '';
                 currentMaxPrice = '';
                 if (maxPriceInput) maxPriceInput.value = '';
+
                 selectedCategory = 'All Categories';
-                document.querySelector('[x-text="selectedCategory"]').textContent = 'All Categories'; 
+                document.querySelector('[x-text="selectedCategory"]').textContent = 'All Categories';
                 selectedCity = 'All Cities';
                 document.querySelector('[x-text="selectedCity"]').textContent = 'All Cities';
             }
@@ -336,11 +258,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             button.classList.add('bg-[color:var(--primary)]', 'text-white');
             button.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100');
 
-            await filterAndRenderProperties();
+            await fetchAndAppendProperties(true);
         });
     });
 
-   
     function updateAddressSuggestions(query) {
         suggestionsList.innerHTML = '';
         if (query.length < 2) {
@@ -351,37 +272,44 @@ document.addEventListener('DOMContentLoaded', async () => {
         const uniqueAddresses = new Set();
         const lowerCaseQuery = query.toLowerCase();
 
-        
-        allPropertiesData.forEach(property => { 
-            if (property.address && property.address.toLowerCase().includes(lowerCaseQuery)) {
-                uniqueAddresses.add(property.address);
+        async function fetchAllAddressesForSuggestions() {
+            try {
+                const allPropsForSuggestions = await getPropertiesList({ page: 1, limit: 999999 });
+                allPropsForSuggestions.forEach(property => {
+                    if (property.address && property.address.toLowerCase().includes(lowerCaseQuery)) {
+                        uniqueAddresses.add(property.address);
+                    }
+                });
+            } catch (error) {
+                console.error("Ünvan təkliflərini çəkərkən xəta:", error);
+            }
+        }
+
+        fetchAllAddressesForSuggestions().then(() => {
+            if (uniqueAddresses.size > 0) {
+                addressSuggestionsDiv.classList.remove('hidden');
+                uniqueAddresses.forEach(address => {
+                    const li = document.createElement('li');
+                    li.classList.add('p-2', 'hover:bg-gray-100', 'cursor-pointer');
+                    li.textContent = address;
+                    li.addEventListener('click', () => {
+                        addressInput.value = address;
+                        currentAddressQuery = address;
+                        addressSuggestionsDiv.classList.add('hidden');
+                        fetchAndAppendProperties(true);
+                    });
+                    suggestionsList.appendChild(li);
+                });
+            } else {
+                addressSuggestionsDiv.classList.add('hidden');
             }
         });
-
-        if (uniqueAddresses.size > 0) {
-            addressSuggestionsDiv.classList.remove('hidden');
-            uniqueAddresses.forEach(address => {
-                const li = document.createElement('li');
-                li.classList.add('p-2', 'hover:bg-gray-100', 'cursor-pointer');
-                li.textContent = address;
-                li.addEventListener('click', () => {
-                    addressInput.value = address;
-                    currentAddressQuery = address;
-                    addressSuggestionsDiv.classList.add('hidden');
-                    filterAndRenderProperties();
-                });
-                suggestionsList.appendChild(li);
-            });
-        } else {
-            addressSuggestionsDiv.classList.add('hidden');
-        }
     }
 
     if (addressInput) {
         addressInput.addEventListener('input', (event) => {
             currentAddressQuery = event.target.value;
-           
-            updateAddressSuggestions(currentAddressQuery); 
+            updateAddressSuggestions(currentAddressQuery);
         });
         document.addEventListener('click', (event) => {
             if (addressSuggestionsDiv && !addressInput.contains(event.target) && !addressSuggestionsDiv.contains(event.target)) {
@@ -414,36 +342,32 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (searchButton) {
         searchButton.addEventListener('click', () => {
-            filterAndRenderProperties();
+            fetchAndAppendProperties(true);
         });
     }
 
     document.querySelectorAll('.relative.p-3.bg-gray-50.rounded-lg.border.border-gray-200.cursor-pointer').forEach(dropdown => {
-        if (dropdown.querySelector('[x-text="selectedCategory"]')) {
+        const categoryDisplaySpan = dropdown.querySelector('[x-text="selectedCategory"]');
+        const cityDisplaySpan = dropdown.querySelector('[x-text="selectedCity"]');
+
+        if (categoryDisplaySpan) {
             dropdown.querySelectorAll('ul li').forEach(item => {
                 item.addEventListener('click', (e) => {
                     const category = e.target.textContent.trim();
                     selectedCategory = category;
-                    filterAndRenderProperties();
+                    categoryDisplaySpan.textContent = category;
+                    fetchAndAppendProperties(true);
                 });
             });
-        } else if (dropdown.querySelector('[x-text="selectedCity"]')) {
+        } else if (cityDisplaySpan) {
             dropdown.querySelectorAll('ul li').forEach(item => {
                 item.addEventListener('click', (e) => {
                     const city = e.target.textContent.trim();
                     selectedCity = city;
-                    filterAndRenderProperties();
+                    cityDisplaySpan.textContent = city;
+                    fetchAndAppendProperties(true);
                 });
             });
         }
     });
-
-    const allButton = document.querySelector('button[data-add-type="all"]');
-    if (allButton) {
-        allButton.classList.add('bg-[color:var(--primary)]', 'text-white');
-        allButton.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100');
-        await filterAndRenderProperties();
-    } else {
-        await filterAndRenderProperties();
-    }
 });

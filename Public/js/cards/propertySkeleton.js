@@ -1,7 +1,6 @@
-
 export function propertySkeletonCard() {
     return `
-    <div class="cursor-pointer border border-[color:var(--border-color)] rounded-2xl overflow-hidden group relative transition-all duration-300 animate-pulse">
+    <div class="property-skeleton-card cursor-pointer border border-[color:var(--border-color)] rounded-2xl overflow-hidden group relative transition-all duration-300 animate-pulse">
         <div class="relative overflow-hidden bg-gray-200 h-64 w-full rounded-t-2xl"></div>
         <div class="p-5">
             <div class="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>

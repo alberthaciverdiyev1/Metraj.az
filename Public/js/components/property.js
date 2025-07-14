@@ -1,3 +1,4 @@
+
 export async function getPropertiesList(searchParams = {}) {
     try {
         const params = new URLSearchParams();
@@ -7,13 +8,14 @@ export async function getPropertiesList(searchParams = {}) {
                 params.set(key, value);
             }
         }
-
-        const queryString = params.toString();
-        const url = `/properties${queryString ? `?${queryString}` : ''}`;
+       
+        const baseUrl = "http://127.0.0.1:8000/api/property"; 
+        const url = `${baseUrl}${params.toString() ? `?${params.toString()}` : ''}`;
 
         if (typeof window !== 'undefined') {
             const currentPath = window.location.pathname;
-            window.history.replaceState({}, '', `${currentPath}${queryString ? `?${queryString}` : ''}`);
+           
+            window.history.replaceState({}, '', `${currentPath}${params.toString() ? `?${params.toString()}` : ''}`);
         }
 
         console.log('Request URL:', url);
@@ -29,11 +31,12 @@ export async function getPropertiesList(searchParams = {}) {
         }
 
         const apiResponse = await res.json();
-
-        if (Array.isArray(apiResponse)) {
-            return apiResponse;
+        
+     
+        if (apiResponse && Array.isArray(apiResponse.data)) {
+            return apiResponse.data;
         } else {
-            console.warn("Fastify-dən gözlənilməyən data formatı gəldi, massiv gözlənilir:", apiResponse);
+            console.warn("Backend-dən gözlənilməyən data formatı gəldi, 'data' massivi gözlənilir:", apiResponse);
             return [];
         }
 
