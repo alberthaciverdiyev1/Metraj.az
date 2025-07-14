@@ -19,12 +19,17 @@ const allPropertiesLoadingOverlay = document.getElementById('allPropertiesLoadin
 const addressInput = document.getElementById('addressInput');
 const addressSuggestionsDiv = document.getElementById('addressSuggestions');
 const suggestionsList = document.getElementById('suggestionsList');
-const searchButton = document.querySelector('button.bg-black');
 
-const minAreaInput = document.querySelector('input[placeholder="Min ölçü"]');
-const maxAreaInput = document.querySelector('input[placeholder="Max ölçü"]');
 const minPriceInput = document.getElementById('minPriceInput');
 const maxPriceInput = document.getElementById('maxPriceInput');
+
+
+
+const searchButton = document.querySelector('[data-role="search-button"]'); 
+
+const minAreaInput = document.querySelector('[data-role="min-area-input"]'); 
+
+const maxAreaInput = document.querySelector('[data-role="max-area-input"]'); 
 
 let itemsPerPage = 9;
 let currentPage = 1;
@@ -132,13 +137,13 @@ function renderSkeletons(container, count) {
 async function filterAndRenderProperties() {
     premiumLoadingOverlay.style.display = 'flex';
     allPropertiesLoadingOverlay.style.display = 'flex';
-        console.log("started");
+
     renderSkeletons(premiumCardContainer, 4);
     renderSkeletons(propertyContainer, itemsPerPage);
 
 
     const searchParams = {
-        adType: currentAddType === 'all' ? '' : currentAddType,
+        add_type: currentAddType === 'all' ? '' : currentAddType, 
         address: currentAddressQuery,
         min_area: currentMinArea,
         max_area: currentMaxArea,
@@ -150,6 +155,7 @@ async function filterAndRenderProperties() {
     };
 
     try {
+       
         const fetchedPropertiesArray = await getPropertiesList(searchParams); 
         console.log('API-dən gələn filterlənmiş data (listing.js):', fetchedPropertiesArray);
 
@@ -177,8 +183,7 @@ async function filterAndRenderProperties() {
     filteredPremiumProperties = filteredPropertiesForMainDisplay.filter(property => property.is_premium);
 
     let premiumCardsHtml = '';
-    // const displayedPremiumProperties = filteredPremiumProperties.slice(0, 4);
-    const displayedPremiumProperties = filteredPremiumProperties;
+    const displayedPremiumProperties = filteredPremiumProperties.slice(0, 4);
 
     if (displayedPremiumProperties.length > 0) {
         displayedPremiumProperties.forEach(property => {
@@ -187,7 +192,6 @@ async function filterAndRenderProperties() {
     } else {
         premiumCardsHtml = '<p class="col-span-full text-center text-gray-500">Axtarışınıza uyğun premium elan tapılmadı.</p>';
     }
-
     if (premiumCardContainer) {
         premiumCardContainer.innerHTML = premiumCardsHtml;
     } else {
