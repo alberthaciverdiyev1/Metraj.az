@@ -187,7 +187,6 @@ export async function listApi(req, res) {
     const params = Object.fromEntries(
         Object.entries(req.query).filter(([key]) => allowedParams.includes(key))
     );
-
     try {
         const apiResult = await getData('/property', params, false, false, false);
 
@@ -213,7 +212,7 @@ export async function listApi(req, res) {
         }
         console.log({params})
 
-        return res.send(allProperties);
+        return apiResult;
 
     } catch (error) {
         console.error("Fastify listApi: Əmlakları çəkilərkən xəta:", error);

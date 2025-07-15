@@ -8,8 +8,9 @@ export async function getPropertiesList(searchParams = {}) {
                 params.set(key, value);
             }
         }
-       
-        const baseUrl = "http://127.0.0.1:8000/api/property"; 
+
+       // const baseUrl = "http://127.0.0.1:8000/api/property";
+        const baseUrl = "/properties";
         const url = `${baseUrl}${params.toString() ? `?${params.toString()}` : ''}`;
 
         if (typeof window !== 'undefined') {
@@ -31,10 +32,10 @@ export async function getPropertiesList(searchParams = {}) {
         }
 
         const apiResponse = await res.json();
-        
-     
-        if (apiResponse && Array.isArray(apiResponse.data)) {
-            return apiResponse.data;
+
+
+        if (apiResponse && Array.isArray(apiResponse)) {
+            return apiResponse;
         } else {
             console.warn("Backend-dən gözlənilməyən data formatı gəldi, 'data' massivi gözlənilir:", apiResponse);
             return [];
