@@ -7,9 +7,9 @@
         <div class="gallery-grid">
 
             {{#each property.media.images}}
-                <figure onclick="openModal({{@index}})">
-                    <img src="{{this.path}}">
-                </figure>
+            <figure onclick="openModal({{@index}})">
+                <img src="{{this.path}}">
+            </figure>
             {{/each}}
 
         </div>
@@ -32,7 +32,7 @@
         </div>
         <div class="thumbnails" id="thumbnails">
             {{#each property.media.images}}
-                <img src="{{this.path}}" onclick="openModal({{@index}})">
+            <img src="{{this.path}}" onclick="openModal({{@index}})">
             {{/each}}
         </div>
     </div>
@@ -61,8 +61,8 @@
                 <div class="info-box">
                     <div class="info-box-title mb-4">
                         <h2>{{ property.title }}</h2>
-                        {{#each  property.prices}}
-                            <h2>₼{{ this.price }} <span>/month</span></h2>
+                        {{#each property.prices}}
+                        <h2>₼{{ this.price }} <span>/month</span></h2>
                         {{/each}}
                     </div>
 
@@ -196,18 +196,18 @@
 
                 </div>
                 {{#if property.media.video}}
-                    {{#each property.media.video}}
+                {{#each property.media.video}}
 
-                        <section id="video" class="video-section">
-                            <div class="video-container">
+                <section id="video" class="video-section">
+                    <div class="video-container">
 
-                                <iframe id="video-frame" src="{{this.path}}" allowfullscreen></iframe>
-                                <div class="play-button">
-                                    <i class="bi bi-play-fill"></i>
-                                </div>
-                            </div>
-                        </section>
-                    {{/each}}
+                        <iframe id="video-frame" src="{{this.path}}" allowfullscreen></iframe>
+                        <div class="play-button">
+                            <i class="bi bi-play-fill"></i>
+                        </div>
+                    </div>
+                </section>
+                {{/each}}
                 {{/if}}
 
                 {{>Component.Property.Specs item=property}}
@@ -216,25 +216,25 @@
                 {{>Component.Property.Map location=property.location zoom=15}}
 
                 {{#if property.media.document}}
-                    <div class="attachment-box">
-                        <h2>File Attachments</h2>
-                        <div class="file-list">
-                            {{#each property.media.document}}
-                                <div class="file-item">
-                                    <div class="file-icon">
-                                        <i class="fa-regular fa-file fa-2x"></i>
-                                        <span>PDF</span>
-                                    </div>
-                                    <div class="file-name">Document {{@index}}</div>
-                                    <div class="download-icon">
-                                        <a href="{{ this.path}}" download>
-                                            <i class="bi bi-download"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            {{/each}}
+                <div class="attachment-box">
+                    <h2>File Attachments</h2>
+                    <div class="file-list">
+                        {{#each property.media.document}}
+                        <div class="file-item">
+                            <div class="file-icon">
+                                <i class="fa-regular fa-file fa-2x"></i>
+                                <span>PDF</span>
+                            </div>
+                            <div class="file-name">Document {{@index}}</div>
+                            <div class="download-icon">
+                                <a href="{{ this.path}}" download>
+                                    <i class="bi bi-download"></i>
+                                </a>
+                            </div>
                         </div>
+                        {{/each}}
                     </div>
+                </div>
                 {{/if}}
 
 
@@ -249,34 +249,34 @@
                         <h3>Contact Sellers</h3>
                         <div class="flex avatar-info">
                             <img src="https://themesflat.co/html/proty/images/avatar/seller.jpg" alt="Shara Conner"
-                                 class="avatar">
+                                class="avatar">
                             <div class="avatar-info-text">
                                 <h4>Shara Conner</h4>
-                                {{#if setting.phone}}
-                                 <p><a href="tel:{{setting.phone}}" class="phone"><i class="bi bi-telephone"></i>
-                                {{setting.phone}}</a></p>
+                                <div id="phone-numbers-container">
+                                    
+                                </div>
+                                {{#if setting.email}}
+                                <p><a href="mailto:{{setting.email}}" class="email">
+                                        <i class="bi bi-envelope"></i> {{setting.email}}</a></p>
                                 {{/if}}
-                               
-                               {{#if setting.email}}
-                                 <p><a href="mailto:{{setting.email}}" class="email">
-                                    <i class="bi bi-envelope"></i> {{setting.email}}</a></p>
-                               {{/if}}
-                              
                             </div>
-
                         </div>
 
-
                         <form id="contact-form">
-                            <input type="text" id="name" name="name" placeholder="Full Name" required>
-                            <textarea id="message" name="message" placeholder="How can an agent help"
-                                      required></textarea>
-                            <button
-                                    class="send-message-btn all-btn button-hover"
-                                    type="submit">Send message
-                            </button>
+                            <button class="send-message-btn all-btn button-hover" type="button" id="call-button">Zəng
+                                et</button>
                         </form>
                     </div>
+
+                    <div id="phone-modal" class="modal">
+                        <div class="modal-content">
+                            <span class="close-button">&times;</span>
+                            <h2>Zəng etmək üçün nömrəni seçin</h2>
+                            <div id="phone-options-container">
+                            </div>
+                        </div>
+                    </div>
+
                     {{>Component.ConnectAgent}}
 
                 </div>
@@ -288,3 +288,7 @@
 
     </div>
 </section>
+
+
+
+{{js 'phone-modal.js'}}
