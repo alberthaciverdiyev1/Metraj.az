@@ -26,7 +26,7 @@ const minPriceInput = document.getElementById('minPriceInput');
 const maxPriceInput = document.getElementById('maxPriceInput');
 
 let currentPage = 1;
-const ITEMS_PER_PAGE = 8;
+const ITEMS_PER_PAGE = 20;
 let isLoading = false;
 let hasMoreAds = true;
 
