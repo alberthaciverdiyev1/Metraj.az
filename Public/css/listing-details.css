@@ -359,7 +359,7 @@
     width: calc(50% - 3rem);
 }
 ul .flex {
-    gap: 2rem;
+    gap: 1rem;
 }
 .box ul li {
     margin-bottom: 14px;
@@ -440,6 +440,14 @@ ul .flex p:nth-child(2) {
 }
 .boxes-feature ul li {
     margin-bottom: 14px;
+}
+
+.nearby-features ul li{
+    display:flex;
+    gap:0.7rem;
+    list-style: none!important;
+
+
 }
 .boxes-feature ul li {
     list-style: disc;
@@ -789,8 +797,6 @@ label {
 }
 .nearby-info {
     justify-content: space-between;
-    width: 60%;
-    padding: 20px 0px;
 }
 .nearby-info ul li {
     margin-bottom: 10px;

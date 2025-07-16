@@ -2,13 +2,15 @@
     <h3>Amenities And Features</h3>
     <div class="boxes-feature">
         {{#splitArray features column}}
-            <div class="box-feature">
-                <ul>
-                    {{#each this}}
-                        <li class="feature-item">{{ this.name }}</li>
-                    {{/each}}
-                </ul>
-            </div>
+        <div class="box-feature">
+            <ul>
+                {{#each this}}
+
+                <li class="feature-item">
+                    {{ this.name }}</li>
+                {{/each}}
+            </ul>
+        </div>
         {{/splitArray}}
 
     </div>
