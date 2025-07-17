@@ -1,18 +1,20 @@
 <section id="what-is-nearby">
-    <div class="what-is-nearby">
-        <h3>{{t "Nearby objects"}}</h3>
+  <div class="what-is-nearby">
+    <h3 class="text-xl font-semibold m-0 p-0">{{t "Nearby objects"}}</h3>
 
-        <div class="nearby-info flex flex-wrap gap-6">
-
-            {{#splitArray objects column}}
-                <div class="box-feature">
-                    {{#each this}}
-                    <ul class="nearby-info-list">
-                        <li class="feature-item">{{ this.name }}</li>
-                    {{/each}}
-                </ul>
-                </div>
-            {{/splitArray}}
+    <div class="nearby-info mt-0 pt-0 grid grid-cols-1 md:grid-cols-3 w-[100%] gap-7">
+      {{#splitArray objects column}}
+        <div class="boxes-feature nearby-features">
+          <ul class="nearby-info-list space-y-2 gap-0">
+            {{#each this}}
+              <li class="feature-item nearby-item  gap-0">
+                <i class="bi bi-geo-alt  text-[var(--primary)]"></i>
+                <span class="">{{ this.name }}</span>
+              </li>
+            {{/each}}
+          </ul>
         </div>
+      {{/splitArray}}
     </div>
+  </div>
 </section>
