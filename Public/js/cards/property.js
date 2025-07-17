@@ -11,7 +11,7 @@ export function propertyCard(property) {
     const price = formatPrice(priceValue);
 
 
-    const premiumBadge = property.is_premium ? `<span class="absolute top-3 right-4 bg-red-400 text-white font-semibold text-sm px-2 py-1 rounded-full"><i class="fa-solid fa-crown"></i></span>` : '';
+    const premiumBadge = property.is_premium ? `<span class="absolute top-3 right-4  text-white font-semibold text-xl bg-white px-2 py-1 rounded-full"><i class="fa-regular fa-heart text-red-600 text-bold text-xl"></i></span>` : '';
     const addTypeBadge = property.add_type === 'rent' ? `<span class="bg-[color:var(--primary)] text-white text-sm font-semibold px-2 py-1 rounded-full">Kirayə</span>` : property.add_type === 'sale' ? `<span class="bg-[#80807F] text-white font-semibold text-sm px-2 py-1 rounded-full">Satışda</span>` : '';
 
     return ` <div onclick="window.location.href='/property/${property.id}'" class="cursor-pointer border border-[color:var(--border-color)] rounded-2xl overflow-hidden group relative transition-all duration-300">
