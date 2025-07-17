@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
             phoneNumbers = [sellerSettings.phone];
         }
     }
+    phoneNumbersContainer.innerHTML = ''; 
+
 
     if (phoneNumbers.length > 0) {
         phoneNumbers.forEach(number => {
@@ -63,4 +65,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         phoneModal.style.display = 'block';
     }
+    
+    
 });
