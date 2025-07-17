@@ -201,10 +201,15 @@
                 <section id="video" class="video-section">
                     <div class="video-container">
 
-                        <iframe id="video-frame" src="{{this.path}}" allowfullscreen></iframe>
-                        <div class="play-button">
-                            <i class="bi bi-play-fill"></i>
+                        <video id="video-frame" controls>
+                            <source src="{{this.path}}" type="video/mp4">
+                        </video>
+                        <div class="play-button" id="toggle-btn">
+                            <i class="bi bi-play-fill" id="play-icon"></i>
+                            <i class="bi bi-pause-fill d-none" id="pause-icon"></i>
                         </div>
+
+
                     </div>
                 </section>
                 {{/each}}
@@ -253,7 +258,7 @@
                             <div class="avatar-info-text">
                                 <h4>Shara Conner</h4>
                                 <div id="phone-numbers-container">
-                                    
+
                                 </div>
                                 {{#if setting.email}}
                                 <p><a href="mailto:{{setting.email}}" class="email">
@@ -291,4 +296,6 @@
 
 
 
+
 {{js 'phone-modal.js'}}
+{{js 'videoplay.js'}}

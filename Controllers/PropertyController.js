@@ -188,31 +188,7 @@ export async function listApi(req, res) {
         Object.entries(req.query).filter(([key]) => allowedParams.includes(key))
     );
     try {
-        const apiResult = await getData('/property', params, false, false, false);
-
-        let allProperties = [];
-
-        if (apiResult && apiResult.data && typeof apiResult.data === 'object' && !Array.isArray(apiResult.data)) {
-            console.log('1')
-            //Bura islemeyecek. Cunki helper ile datanin icini gonderirem. CallAPi helperine bax amma icini deyisme helperin
-            for (const category in apiResult.data) {
-                if (Object.hasOwnProperty.call(apiResult.data, category) && Array.isArray(apiResult.data[category])) {
-                    allProperties = allProperties.concat(apiResult.data[category]);
-                }
-            }
-        } else if (Array.isArray(apiResult)) {
-            console.log('2')
-
-            allProperties = apiResult;
-        } else {
-            console.warn("Fastify listApi: Orijinal API-dən gözlənilməyən data formatı gəldi:", apiResult);
-            console.log('3')
-            return res.send([]);
-
-        }
-        console.log({params})
-
-        return apiResult;
+        return await getData('/property', params, false, false, false);
 
     } catch (error) {
         console.error("Fastify listApi: Əmlakları çəkilərkən xəta:", error);
