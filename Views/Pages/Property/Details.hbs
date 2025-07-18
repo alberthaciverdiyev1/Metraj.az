@@ -72,15 +72,7 @@
                                 <i class="bi bi-geo-alt me-2"></i>
                                 <span>{{ property.address }}</span>
                             </div>
-                            <div class="flex bed-info">
-                                <div class="me-3 bed-info-desc">{{ property.beds }} <span>Bed</span></div>
-                                <div class="me-3 bed-info-desc "> {{ property.baths }} <span>
-                                        Bath
-                                    </span></div>
-                                <div class="bed-info-desc">{{ property.area }}<span>
-                                        Sqft
-                                    </span></div>
-                            </div>
+
 
 
                         </div>
@@ -94,107 +86,9 @@
 
                     </div>
 
-
-                    <div class="flex flex-wrap gap-4 mb-4">
-                        <div class="buttons-desc ">
-                            <div class=" button-desc">
-
-                                <i class="bi bi-house-door"></i>
-                                <div class="">
-                                    <p>ID:</p>
-                                    <p>4343</p>
-                                </div>
-
-
-                            </div>
-                            <div class=" button-desc">
-
-                                <i class="bi bi-sliders"></i>
-                                <div class="">
-                                    <p>Type</p>
-                                    <p>Type</p>
-                                </div>
-
-
-                            </div>
-                            <div class=" button-desc">
-
-                                <i class="bi bi-house-door"></i>
-                                <div class="">
-                                    <p>ID:</p>
-                                    <p>4343</p>
-                                </div>
-
-
-                            </div>
-                            <div class=" button-desc">
-
-                                <i class="bi bi-house-door"></i>
-                                <div class="">
-                                    <p>ID:</p>
-                                    <p>4343</p>
-                                </div>
-
-
-                            </div>
-                            <div class=" button-desc">
-
-                                <i class="bi bi-house-door"></i>
-                                <div class="">
-                                    <p>ID:</p>
-                                    <p>4343</p>
-                                </div>
-
-
-                            </div>
-                            <div class=" button-desc">
-
-                                <i class="bi bi-house-door"></i>
-                                <div class="">
-                                    <p>ID:</p>
-                                    <p>123</p>
-                                </div>
-
-
-                            </div>
-                            <div class=" button-desc">
-
-                                <i class="bi bi-house-door"></i>
-                                <div class="">
-                                    <p>ID:</p>
-                                    <p>3333</p>
-                                </div>
-
-
-                            </div>
-                            <div class=" button-desc">
-
-                                <i class="bi bi-house-door"></i>
-                                <div class="">
-                                    <p>ID:</p>
-                                    <p>2222222</p>
-                                </div>
-
-
-                            </div>
-
-
-                        </div>
-
-
-                    </div>
-
-                    <!--back gelende iconlari elave etmek-->
-                    <!--
-                            <div><i class="bi bi-house"></i> <strong>Garages:</strong> 1</div>
-                            <div><strong>Bedrooms:</strong> 2 Rooms</div>
-                            <div><i class="bi bi-droplet"></i> <strong>Bathrooms:</strong> 2 Rooms</div>
-                            <div><i class="bi bi-fullscreen"></i> <strong>Land Size:</strong> 2,000 SqFt</div>
-                            <div><i class="bi bi-hammer"></i> <strong>Year Built:</strong> 2023</div>
-                            <div><i class="bi bi-rulers"></i> <strong>Size:</strong> 900 SqFt</div> -->
-                    <button class="question-btn all-btn button-hover">Ask a question</button>
-
                 </div>
+                {{>Component.Property.Specs item=property}}
+
                 {{#if property.media.video}}
                 {{#each property.media.video}}
 
@@ -215,7 +109,6 @@
                 {{/each}}
                 {{/if}}
 
-                {{>Component.Property.Specs item=property}}
                 {{>Component.Property.Features features=property.features column=3}}
                 {{>Component.Property.NearbyObjects objects = property.nearby column=3}}
                 {{>Component.Property.Map location=property.location zoom=15}}
