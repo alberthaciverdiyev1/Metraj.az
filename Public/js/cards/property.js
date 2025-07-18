@@ -1,4 +1,4 @@
-import {formatPrice} from '../helpers/price.js';
+import { formatPrice } from '../helpers/price.js';
 
 export function propertyCard(property) {
     const rawPrice = property.price && property.price[0]?.price;
@@ -10,8 +10,9 @@ export function propertyCard(property) {
 
     const price = formatPrice(priceValue);
 
-
-    const premiumBadge = property.is_premium ? `<span class="absolute top-3 right-4  text-white font-semibold text-xl bg-white px-2 py-1 rounded-full"><i class="fa-regular fa-heart text-red-600 text-bold text-xl"></i></span>` : '';
+    const premiumBadge = property.is_premium ? `<span class="absolute top-3 right-4  text-black font-semibold text-xl bg-white px-2 py-1 rounded-full">
+    <i class="fa-solid fa-crown"></i>
+  </span>` : '';
     const addTypeBadge = property.add_type === 'rent' ? `<span class="bg-[color:var(--primary)] text-white text-sm font-semibold px-2 py-1 rounded-full">Kirayə</span>` : property.add_type === 'sale' ? `<span class="bg-[#80807F] text-white font-semibold text-sm px-2 py-1 rounded-full">Satışda</span>` : '';
 
     return ` <div onclick="window.location.href='/property/${property.id}'" class="cursor-pointer border border-[color:var(--border-color)] rounded-2xl overflow-hidden group relative transition-all duration-300">
@@ -25,16 +26,22 @@ export function propertyCard(property) {
                     ${addTypeBadge}
                     </div>
                     ${premiumBadge}
+
+                    <span onclick="event.stopPropagation(); toggleFavorite(this);" class="absolute bottom-3 right-4 text-white font-semibold text-xl bg-white px-2 py-1 rounded-full cursor-pointer">
+                        <i class="fa-regular fa-heart text-red-500"></i>
+                    </span>
                 </div>
 
                 <div class="p-5">
                     <h3 class="font-bold text-lg sm:text-xl text-[color:var(--text-color)] transition hover:text-[color:var(--primary)] mb-2">
                         ${property.title}
                     </h3>
+                  
                     <p class="text-sm sm:text-base md:text-[16px] text-[color:var(--grey-text)] flex items-center mb-2">
                         <i class="fas fa-map-marker-alt mr-2"></i>
                         ${property.address}
                     </p>
+                    
                     <div class="flex items-center text-sm sm:text-base md:text-[16px] text-[#959699] gap-4 mb-4">
                         <span><span class="text-[#2C2E33]">${property.beds}</span> Yataq</span>
                         <span><span class="text-[#2C2E33]">${property.baths}</span> Hamam</span>
@@ -49,3 +56,14 @@ export function propertyCard(property) {
                 </div>
             </div>`;
 }
+
+window.toggleFavorite = function(element) {
+    const icon = element.querySelector('i');
+    if (icon.classList.contains('fa-regular')) {
+        icon.classList.remove('fa-regular');
+        icon.classList.add('fa-solid');
+    } else {
+        icon.classList.remove('fa-solid');
+        icon.classList.add('fa-regular');
+    }
+};
