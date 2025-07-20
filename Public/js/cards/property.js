@@ -10,12 +10,12 @@ export function propertyCard(property) {
 
     const price = formatPrice(priceValue);
 
-    const premiumBadge = property.is_premium ? `<span class="absolute top-3 right-4  text-black font-semibold text-xl bg-white px-2 py-1 rounded-full">
+    const premiumBadge = property.is_premium ? `<span class="absolute top-3 right-4  text-black font-semibold text-md bg-white px-2 py-1 rounded-full">
     <i class="fa-solid fa-crown"></i>
   </span>` : '';
     const addTypeBadge = property.add_type === 'rent' ? `<span class="bg-[color:var(--primary)] text-white text-sm font-semibold px-2 py-1 rounded-full">Kirayə</span>` : property.add_type === 'sale' ? `<span class="bg-[#80807F] text-white font-semibold text-sm px-2 py-1 rounded-full">Satışda</span>` : '';
 
-    return ` <div onclick="window.location.href='/property/${property.id}'" class="cursor-pointer border border-[color:var(--border-color)] rounded-2xl overflow-hidden group relative transition-all duration-300">
+    return ` <div onclick="window.location.href='/property/${property.id}'" class="cursor-pointer border border-[color:var(--border-color)] rounded-2md overflow-hidden group relative transition-all duration-300">
                 <div class="relative overflow-hidden">
                     <img src="${property.media.path}" alt="${property.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" />
                     <div class="absolute inset-0 flex items-center justify-center overflow-hidden">
@@ -27,13 +27,13 @@ export function propertyCard(property) {
                     </div>
                     ${premiumBadge}
 
-                    <span onclick="event.stopPropagation(); toggleFavorite(this);" class="absolute bottom-3 right-4 text-white font-semibold text-xl bg-white px-2 py-1 rounded-full cursor-pointer">
+                    <span onclick="event.stopPropagation(); toggleFavorite(this);" class="absolute bottom-3 right-4 text-white font-semibold text-md bg-white px-2 py-1 rounded-full cursor-pointer">
                         <i class="fa-regular fa-heart text-red-500"></i>
                     </span>
                 </div>
 
                 <div class="p-5">
-                    <h3 class="font-bold text-lg sm:text-xl text-[color:var(--text-color)] transition hover:text-[color:var(--primary)] mb-2">
+                    <h3 class="font-bold text-lg sm:text-md text-[color:var(--text-color)] transition hover:text-[color:var(--primary)] mb-2">
                         ${property.title}
                     </h3>
                   
