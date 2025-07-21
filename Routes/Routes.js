@@ -8,6 +8,7 @@ import Base from '../Controllers/BaseController.js'
 import i18next from "i18next";
 import fastifyCookie from '@fastify/cookie'
 
+import { CompareView } from '../Controllers/CompareController.js'; 
 
 export default async function route(fastify, options) {
     fastify.get('/', homePage)
@@ -18,6 +19,8 @@ export default async function route(fastify, options) {
 
 
     fastify.post('/add-property', Property.add)
+
+    fastify.get('/compare', CompareView); 
 
 
     fastify.get('/agencies', Agency.listView)
