@@ -37,7 +37,12 @@ async function detailsView(request, reply) {
         css: css(['app.css',
             'components.css',
             'listing-details.css']),
-        js: js(['listing-detail.js', 'app.js', 'gotop.js','phone-modal.js']),
+        js: js([
+            'listing-detail.js',
+            'app.js',
+            'gotop.js',
+            'phone-modal.js'
+        ]),
         property: Property,
         breadcrumbs: [
             {label: 'Home', url: '/'},

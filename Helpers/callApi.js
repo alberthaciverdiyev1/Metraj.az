@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 const cache = new NodeCache({stdTTL: 864000}) // 10 day
 
- const API_URL = process.env.API_URL?.replace(/\/$/, '') || 'http://localhost:8001'
+const API_URL = process.env.API_URL?.replace(/\/$/, '') || 'http://localhost:8001'
 
 //const API_URL = 'http://api.metraj.loc:8000';
 
