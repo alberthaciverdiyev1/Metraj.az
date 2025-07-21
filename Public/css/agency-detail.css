@@ -27,8 +27,9 @@
 
 .agencies-header img {
     width: 100%;
-    height: auto;
+    height: 540px;
     display: block;
+
     object-fit: cover;
 }
 

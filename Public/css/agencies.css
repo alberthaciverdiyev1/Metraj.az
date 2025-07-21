@@ -5,11 +5,12 @@
 }
 
 #agencies {
-    width: 65%;
+    width: 100%;
+    margin-top: 5rem;
 }
 
 .agencies-card {
-    width: calc(100% / 2 - 1rem);
+    width: calc(100% / 3 - 3rem);
     border: 1px solid var(--border-color);
     border-radius: 15px;
     overflow: hidden;
