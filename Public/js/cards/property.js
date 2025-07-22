@@ -15,7 +15,7 @@ export function propertyCard(property) {
   </span>` : '';
     const addTypeBadge = property.add_type === 'rent' ? `<span class="bg-[color:var(--primary)] text-white text-sm font-semibold px-2 py-1 rounded-full">Kirayə</span>` : property.add_type === 'sale' ? `<span class="bg-[#80807F] text-white font-semibold text-sm px-2 py-1 rounded-full">Satışda</span>` : '';
 
-    return ` <div onclick="window.location.href='/property/${property.id}'" class="cursor-pointer border border-[color:var(--border-color)] rounded-2md overflow-hidden rounded-2xl group relative transition-all duration-300">
+    return ` <div onclick="window.location.href='/property/${property.id}'" class="cursor-pointer border border-[color:var(--border-color)] rounded-2md overflow-hidden rounded-2xl group relative transition-all  duration-300">
                 <div class="relative overflow-hidden">
                     <img src="${property.media.path}" alt="${property.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" />
                     <div class="absolute inset-0 flex items-center justify-center overflow-hidden">
@@ -47,7 +47,10 @@ export function propertyCard(property) {
                         <span><span class="text-[#2C2E33]">${property.baths}</span> Hamam</span>
                         <span><span class="text-[#2C2E33]">${property.area}</span> Kvm</span>
                     </div>
-                    <div class="flex justify-between py-2 items-center border-t border-[color:var(--border-color)] pt-4">
+                            <span class="text-sm text-gray-500 ">AdNo: ${property.adNo}</span>
+                            
+
+                    <div class="flex justify-between py-2 mt-2 items-center border-t border-[color:var(--border-color)] pt-4">
                         <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">${price} AZN</span>
                         <button onclick="event.stopPropagation()" class="flex compare items-center gap-1 text-sm text-[#2C2E33] hover:text-[color:var(--primary)] transition-colors">
                             <i class="fas fa-random"></i> Müqayisə

@@ -1,23 +1,30 @@
-<div x-show="open" x-cloak x-transition.opacity
-     class="fixed inset-0 bg-black/10 backdrop-blur-sm z-0"></div>
+<div x-show="open" x-cloak x-transition.opacity class="fixed inset-0 bg-black/10 backdrop-blur-sm z-0"></div>
 
 <div x-show="open" x-cloak x-transition.opacity
-     class=" w-full absolute inset-0 top-[500px]   z-5 flex items-center justify-center ">
+    class=" w-full absolute inset-0 top-[500px]   z-5 flex items-center justify-center ">
 
-    <div class="bg-white rounded-xl w-full  relative"
-         @click.outside="open = false">
+    <div class="bg-white rounded-xl w-full  relative" @click.outside="open = false">
         <form @submit.prevent="submit" style=" margin: 0 auto;" class="filter-panel mx-auto "
-              :class="{ 'collapsed': collapsed }">
+            :class="{ 'collapsed': collapsed }">
             <fieldset class="fieldset repair">
                 <legend>Təmir vəziyyəti</legend>
                 <div class="toggle-group" data-name="repair">
                     <template x-for="opt in repairs" :key="opt.value">
-                        <button type="button"
-                                @click="form.repair = opt.value"
-                                class="toggle"
-                                :class="{ 'active': form.repair === opt.value }"
-                                x-text="opt.label"></button>
+                        <button type="button" @click="form.repair = opt.value" class="toggle"
+                            :class="{ 'active': form.repair === opt.value }" x-text="opt.label"></button>
                     </template>
+                </div>
+            </fieldset>
+            <fieldset class="p-2 bg-white fieldset range-field rounded-lg border border-gray-200 relative">
+                <div class="flex items-center gap-2">
+                    <i class="bi bi-geo-alt text-orange-500 text-xl"></i>
+                    <input type="text" placeholder="Enter address..." class="w-full rounded-lg focus:outline-none py-1"
+                        id="addressInput" />
+                </div>
+                <div id="addressSuggestions"
+                    class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-20 hidden">
+                    <ul id="suggestionsList" class="divide-y divide-gray-100 max-h-60 overflow-y-auto">
+                    </ul>
                 </div>
             </fieldset>
 
@@ -51,9 +58,7 @@
 
                             <ul x-show="openDd" x-transition x-cloak class="dropdown">
                                 <template x-for="item in dropdownData[id]" :key="item">
-                                    <li class="dd-item"
-                                        @click="addTag(id, item); openDd = false"
-                                        x-text="item"></li>
+                                    <li class="dd-item" @click="addTag(id, item); openDd = false" x-text="item"></li>
                                 </template>
                             </ul>
                         </div>
@@ -79,10 +84,10 @@
 
             <div id="selectedTags" class="tags flex flex-wrap gap-2">
                 <template x-for="(tag, i) in tags" :key="tag.scope + tag.value">
-                        <span class="tag" :data-scope="tag.scope" :data-value="tag.value">
-                            <span x-text="tag.value"></span>
-                            <button type="button" aria-label="Sil" @click="removeTag(i)">&times;</button>
-                        </span>
+                    <span class="tag" :data-scope="tag.scope" :data-value="tag.value">
+                        <span x-text="tag.value"></span>
+                        <button type="button" aria-label="Sil" @click="removeTag(i)">&times;</button>
+                    </span>
                 </template>
             </div>
 
@@ -108,9 +113,9 @@
             collapsed: false,
 
             repairs: [
-                {label: 'Hamısı', value: ''},
-                {label: 'Təmirli', value: 'renovated'},
-                {label: 'Təmirsiz', value: 'unrenovated'}
+                { label: 'Hamısı', value: '' },
+                { label: 'Təmirli', value: 'renovated' },
+                { label: 'Təmirsiz', value: 'unrenovated' }
             ],
             dropdownData: {
                 districts: ['Binəqədi', 'Nərimanov', 'Nəsimi', 'Xətai', 'Yasamal'],
@@ -139,7 +144,7 @@
 
             addTag(scope, value) {
                 if (this.tags.find(t => t.scope === scope && t.value === value)) return;
-                this.tags.push({scope, value});
+                this.tags.push({ scope, value });
             },
             removeTag(idx) {
                 this.tags.splice(idx, 1);
@@ -155,7 +160,7 @@
             },
 
             submit() {
-                const payload = {...this.form, selected: this.tags};
+                const payload = { ...this.form, selected: this.tags };
                 console.log('FILTER PAYLOAD:', payload);
                 alert('filter payloada yazildi');
                 this.open = false;
@@ -168,5 +173,4 @@
     [x-cloak] {
         display: none !important;
     }
-
 </style>

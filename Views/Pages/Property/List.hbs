@@ -16,7 +16,10 @@
 
 
             <section class="property-listing relative py-4" x-data="filterModal()">
+                
                 <div class="container mx-auto px-4">
+                    
+                    
                     <section class="bg-white py-6 max-w-full mx-auto relative z-10 " x-data="{
                         categoryOpen: false,
                         cityOpen: false,
@@ -44,6 +47,7 @@
                                     {{ t "Rent" }}
                                 </button>
                             </div>
+                            
 
                             <button class="px-4 py-1 border border-gray-300 rounded-lg hover:bg-gray-100">
                                 <i class="bi bi-arrow-clockwise text-lg text-gray-600"></i>
@@ -52,19 +56,9 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-                            <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 relative">
-                                <div class="flex items-center gap-2">
-                                    <i class="bi bi-geo-alt text-orange-500 text-xl"></i>
-                                    <input type="text" placeholder="Enter address..."
-                                        class="w-full rounded-lg focus:outline-none py-1" id="addressInput" />
-                                </div>
-                                <div id="addressSuggestions"
-                                    class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-20 hidden">
-                                    <ul id="suggestionsList" class="divide-y divide-gray-100 max-h-60 overflow-y-auto">
-                                    </ul>
-                                </div>
-                            </div>
-
+                         
+                   <input data-role="adno-search-input" type="text" placeholder="Search by addno"
+    class="w-full px-3 py-2 border bg-gray-50 border-gray-300 rounded-lg focus:outline-none">   
 
                             <div class="relative p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer"
                                 @click="categoryOpen = !categoryOpen; addressOpen = false; cityOpen = false">
@@ -141,6 +135,7 @@
                                         class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none" />
                                 </div>
                             </div>
+                            
 
                             <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
                                 <label class="block text-gray-700 font-semibold mb-2 flex items-center gap-2">

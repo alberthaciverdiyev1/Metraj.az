@@ -530,10 +530,10 @@
 .agencies-cards {
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 4rem;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
     .side {
         flex-direction: column;
     }
@@ -544,6 +544,9 @@
 
     #contact {
         width: 100%;
+    }
+    .agencies-card{
+      width:calc(100% / 2 - 3rem) ;  
     }
 
 }

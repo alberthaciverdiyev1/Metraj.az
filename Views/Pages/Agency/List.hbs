@@ -14,27 +14,34 @@
 
                     <div class="flex flex-wrap items-center gap-2">
                         <button id="gridViewBtn"
-                                class="view-toggle active px-3 py-2 hover:bg-[color:var(--primary)] hover:text-white transition rounded-md border border-[var(--border-color)]">
+                            class="view-toggle active px-3 py-2 hover:bg-[color:var(--primary)] hover:text-white transition rounded-md border border-[var(--border-color)]">
                             <i class="bi bi-grid-3x3-gap"></i>
                         </button>
 
                         <button id="listViewBtn"
-                                class="view-toggle px-3 py-2 rounded-md border hover:bg-[color:var(--primary)] hover:text-white transition border-[var(--border-color)]">
+                            class="view-toggle px-3 py-2 rounded-md border hover:bg-[color:var(--primary)] hover:text-white transition border-[var(--border-color)]">
                             <i class="fas fa-list text-[color:var(--icon-grey)]"></i>
                         </button>
 
 
                         <div class="relative">
-                            <button class="flex items-center border border-[var(--border-color)] px-4 py-2 rounded-md">
-                                Oldest <i class="fas fa-chevron-down ml-2"></i>
-                            </button>
+                            <div class="relative inline-block">
+                                <select
+                                    class="appearance-none flex items-center border border-[var(--border-color)] px-4 py-2 rounded-md bg-white pr-8">
+                                    <option>All</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-2 flex items-center">
+                                    <i class="fas fa-chevron-down text-gray-500"></i>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
             <div class="agencies-cards">
                 {{#each agencies}}
-                    {{>Component.Cards.Agency this}}
+                {{>Component.Cards.Agency this}}
                 {{/each}}
 
             </div>

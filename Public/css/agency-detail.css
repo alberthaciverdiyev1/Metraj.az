@@ -137,7 +137,13 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+
 }
+.listing-card {
+  width: (100%/3 - 2rem)!important;
+
+}
+
 
 .listing-tab-header {
   display: flex;
