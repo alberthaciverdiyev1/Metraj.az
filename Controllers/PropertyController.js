@@ -41,7 +41,8 @@ async function detailsView(request, reply) {
             'listing-detail.js',
             'app.js',
             'gotop.js',
-            'phone-modal.js'
+            'phone-modal.js',
+            'similar-cards.js'
         ]),
         property: Property,
         breadcrumbs: [
