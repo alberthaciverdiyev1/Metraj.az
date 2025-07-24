@@ -268,7 +268,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             <h2 class="text-2xl font-semibold text-gray-900 tracking-wide">
                               ${key}
                             </h2>
-                            <a href="#" class="text-orange-400 text-lg font-medium hover:underline hover:text-orange-500 transition-colors duration-200">
+                            <a href="/property" class="text-orange-400 text-lg font-medium hover:underline hover:text-orange-500 transition-colors duration-200">
                               Daha Çox →
                             </a>
                           </div>`;

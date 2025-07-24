@@ -7,6 +7,7 @@ import {css, js} from "../Helpers/assets.js";
 
 async function listView(request, reply) {
     const buildingTypes = await getData(`/property-types`, false, true, true, true);
+    const repairTypes = await getData(`/repair-types`, false, true, true, true);
     const cities = await getData(`/city`, false, false, true, true);
 
 
@@ -21,7 +22,8 @@ async function listView(request, reply) {
         cities
         ,
         data: {
-            buildingTypes
+            buildingTypes,
+            repairTypes
         }
     }
 

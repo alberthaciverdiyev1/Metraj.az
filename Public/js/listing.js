@@ -12,15 +12,12 @@ const listBtn = document.getElementById("listViewBtn");
 const propertyContainer = document.getElementById("propertyContainer");
 const premiumCardContainer = document.getElementById("premiumCard");
 const premiumLoadingOverlay = document.getElementById("premiumLoadingOverlay");
-const allPropertiesLoadingOverlay = document.getElementById(
-  "allPropertiesLoadingOverlay"
-);
+const allPropertiesLoadingOverlay = document.getElementById("allPropertiesLoadingOverlay");
 
 const addressInput = document.getElementById("addressInput");
 const addressSuggestionsDiv = document.getElementById("addressSuggestions");
 const suggestionsList = document.getElementById("suggestionsList");
 
-const searchButton = document.querySelector('[data-role="search-button"]');
 
 const minAreaInput = document.querySelector('[data-role="min-area-input"]');
 const maxAreaInput = document.querySelector('[data-type="max-area-input"]');
@@ -39,7 +36,7 @@ let currentMaxArea = "";
 let currentMinPrice = "";
 let currentMaxPrice = "";
 let currentAdNoQuery = "";
-let selectedCategory = "All Categories";
+let selectedBuildingType = "All Categories";
 let selectedCity = "All Cities";
 
 function renderSkeletons(container, count) {
@@ -87,11 +84,11 @@ async function fetchAndAppendProperties(isNewSearch = false) {
     max_area: currentMaxArea,
     min_price: currentMinPrice,
     max_price: currentMaxPrice,
-    propertyType: selectedCategory === "All Categories" ? "" : selectedCategory,
+    propertyType: selectedBuildingType === "All Categories" ? "" : selectedBuildingType,
     cityId: selectedCity === "All Cities" ? "" : selectedCity,
     adNo: currentAdNoQuery,
   };
-
+console.log(searchParams);
   try {
     const fetchedProperties = await getPropertiesList(searchParams);
 
@@ -285,8 +282,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         currentMaxPrice = "";
         if (maxPriceInput) maxPriceInput.value = "";
 
-        selectedCategory = "All Categories";
-        document.querySelector('[x-text="selectedCategory"]').textContent =
+        selectedBuildingType = "All Categories";
+        document.querySelector('[x-text="selectedBuildingType"]').textContent =
           "All Categories";
         selectedCity = "All Cities";
         document.querySelector('[x-text="selectedCity"]').textContent =
@@ -393,19 +390,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  if (searchButton) {
-    searchButton.addEventListener("click", () => {
+  document.querySelector('[data-role="search-button"]').addEventListener("click", () => {
       fetchAndAppendProperties(true);
     });
-  }
 
-  document
-    .querySelectorAll(
+
+  document.querySelectorAll(
       ".relative.p-3.bg-gray-50.rounded-lg.border.border-gray-200.cursor-pointer"
     )
     .forEach((dropdown) => {
       const categoryDisplaySpan = dropdown.querySelector(
-        '[x-text="selectedCategory"]'
+        '[x-text="selectedBuildingType"]'
       );
       const cityDisplaySpan = dropdown.querySelector('[x-text="selectedCity"]');
 
@@ -413,7 +408,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         dropdown.querySelectorAll("ul li").forEach((item) => {
           item.addEventListener("click", (e) => {
             const category = e.target.textContent.trim();
-            selectedCategory = category;
+            selectedBuildingType = category;
             categoryDisplaySpan.textContent = category;
             fetchAndAppendProperties(true);
           });

@@ -27,5 +27,21 @@
   "Choose": "Seçim edin",
   "Repair": "Təmir",
   "Size": "Ölçü",
-  "Building Type" : "Əmlakın növü"
+  "Building Type" : "Əmlakın növü",
+  "Office": "Ofis",
+  "New Building": "Yeni Tikili",
+  "Old Building": "Köhnə Tikili",
+  "Country or Yard House": "Həyət evi",
+  "Apartment": "Mənzil",
+  "Garage": "Qaraj",
+  "Land": "Torpaq",
+  "Object": "Obyekt",
+  "More": "Daha çox",
+  "Repaired": "Təmirli",
+  "Unrepaired": "Təmirsiz",
+  "All Building Types": "Bütün tikililər",
+  "All Repair Types": "Bütün təmir",
+  "All Cities": "Bütün şəhərlər",
+  "Search": "Axtar",
+  "": ""
 }
