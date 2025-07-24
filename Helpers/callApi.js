@@ -5,9 +5,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 const cache = new NodeCache({stdTTL: 864000}) // 10 day
 
-// const API_URL = process.env.API_URL?.replace(/\/$/, '') || 'http://localhost:8001'
+const API_URL = process.env.API_URL?.replace(/\/$/, '') || 'http://localhost:8001'
 
-const API_URL = 'http://api.metraj.loc:8000';
+//const API_URL = 'http://api.metraj.loc:8000';
 
 
 export async function getData(url, params = {}, enumMode = false, allData = false, useCache = true) {
@@ -22,9 +22,11 @@ export async function getData(url, params = {}, enumMode = false, allData = fals
     }
 
     try {
-        const response = await axios.get(fullUrl, {params: finalQueryParams});
+        const response = await axios.get(fullUrl, {params});
         const result = enumMode ? response.data : (response.data?.data || []);
         if (useCache) cache.set(cacheKey, result);
+
+        console.log('API response:', result);
         return result;
     } catch (error) {
         console.error('GET error:', error?.response?.data || error.message);

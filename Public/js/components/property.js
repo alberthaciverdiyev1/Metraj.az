@@ -31,15 +31,8 @@ export async function getPropertiesList(searchParams = {}) {
             throw new Error(`API Xətası! Status: ${res.status}, Mesaj: ${errorText}`);
         }
 
-        const apiResponse = await res.json();
+        return await res.json();
 
-
-        if (apiResponse && Array.isArray(apiResponse)) {
-            return apiResponse;
-        } else {
-            console.warn("Backend-dən gözlənilməyən data formatı gəldi, 'data' massivi gözlənilir:", apiResponse);
-            return [];
-        }
 
     } catch (error) {
         console.error('Əmlak alınarkən xəta (getPropertiesList):', error);
