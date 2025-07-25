@@ -1,7 +1,7 @@
 {{>Component.Breadcrumb items=breadcrumbs}}
 
 {{>Component.ScrollTop}}
-<section id="side" data-agency-id="{{ agency.id }}">
+<section id="side" class="pt-10" data-agency-id="{{ agency.id }}">
     <div class="container mx-auto px-4 ">
         <div class="side-agency">
             <section class="side-left">
@@ -27,18 +27,14 @@
                     <h2>About {{ agency.name }}</h2>
                     <p>{{ agency.short_description }}</p>
                      <h2 class="title">{{t "Location"}}</h2>
-                    <div class="map">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12120.809245605833!2d49.6735533!3d40.581289549999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x403097a58506ef15%3A0x698ff01b1e2a5565!2sSumgait%20beach!5e0!3m2!1sen!2saz!4v1747627310183!5m2!1sen!2saz"
-                            width="100%" height="450" style="border-radius:24px;" allowfullscreen loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
-                    </div>
+                    
 
                 </div>
-                <div class="listing-tab">
+                    {{> Component.FeaturedProperties}}
+
+                <div class="listing-tab mt-5">
                     <div class="listing-tab-header">
-                         <h2 class="title">{{t "Our properties"}} </h2>
+                         <h2 class="title text-gray-700">{{t "Our properties"}} </h2>
                         <div class="tab-buttons">
                             <button class="tab-btn active" data-filter="all">{{t "All"}}</button>
                             <button class="tab-btn" data-filter="rent">{{t "For rent"}}</button>
@@ -82,7 +78,13 @@
             <section class="side-right sticky">
                 <div class="">
                     {{> Component.ContactForm}}
-                    {{> Component.FeaturedProperties}}
+                    <div class="map rounded-3xl p-1  overflow-hidden" >
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12120.809245605833!2d49.6735533!3d40.581289549999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x403097a58506ef15%3A0x698ff01b1e2a5565!2sSumgait%20beach!5e0!3m2!1sen!2saz!4v1747627310183!5m2!1sen!2saz"
+                            width="100%" height="450" style="border-radius:40px;" allowfullscreen loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
                     {{> Component.ConnectAgent}}
                 </div>
 
