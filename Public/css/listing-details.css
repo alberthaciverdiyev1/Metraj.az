@@ -1,3 +1,4 @@
+/* Gallery Grid Styles */
 .gallery-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -51,70 +52,133 @@
     grid-area: fourth;
 }
 
+/* --- Modal Styles (Image Gallery) --- */
 .modal {
-    display: flex;
+    display: none; /* JavaScript tərəfindən 'flex' olaraq dəyişdiriləcək */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.9); /* Şəkil modalı üçün daha tünd fon */
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    z-index: 1000;
+    z-index: 1000; /* Digər elementlərin üstündə olsun */
+    overflow: hidden; /* Tam ekranda sürüşmə olmasın */
 }
 
 .modal--hidden {
-  display: none;
+    display: none !important; /* JavaScript vasitəsilə gizlətmək üçün */
 }
 
 .modal-header {
     position: absolute;
-    top: 10px;
-    left: 10px;
-    right: 10px;
+    top: 10px; /* Ekranın yuxarısından məsafə */
+    left: 50%; /* Mərkəzləmək üçün */
+    transform: translateX(-50%); /* Mərkəzləmə */
+    width: 90%; /* Modal kontentinin genişliyi */
+    max-width: 1200px; /* Maksimum genişlik */
     display: flex;
     justify-content: space-between;
+    align-items: center; /* Şaquli mərkəzləmə */
     color: white;
     font-size: 18px;
+    padding: 10px 20px; /* Daxili boşluq */
+    z-index: 1001; /* Modaldan üstün olsun */
 }
+
 .modal-actions button {
     background: none;
     border: none;
     color: white;
-    font-size: 18px;
+    font-size: 24px; /* İkon ölçüsünü böyütmək üçün */
     margin-left: 10px;
     cursor: pointer;
+    padding: 5px; /* Daha asan klikləmək üçün */
+    transition: color 0.3s ease; /* Hover effekti */
 }
+.modal-actions button:hover {
+    color: var(--primary); /* Hover rəngi */
+}
+
 .modal-navigation {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* Oxları kənarlara çək */
+    width: 100%;
+    height: 100%; /* Tam hündürlüyü tutsun */
+    position: absolute; /* Header və thumbnails üzərində yerləşsin */
+    top: 0;
+    left: 0;
+    z-index: 999; /* Şəklin altında, header/thumbnails üstündə */
+    gap: 4rem; /* Sizin təyin etdiyiniz kimi */
 }
+
 .modal-navigation button {
-    background: none;
+    background: rgba(0,0,0,0.5); /* Yarı-şəffaf fon */
     border: none;
-    font-size: 30px;
+    font-size: 40px; /* Ox ölçüsünü böyüt */
     color: white;
     cursor: pointer;
-    margin: 0 20px;
+    padding: 20px 10px; /* Daha böyük klik sahəsi */
+    height: 100%; /* Hündürlüyü tutsun */
+    display: flex; /* İkonu ortalamaq üçün */
+    align-items: center;
+    transition: background-color 0.2s;
 }
+.modal-navigation button:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
 #modal-image {
     max-width: 90vw;
     max-height: 80vh;
     border-radius: 10px;
+    object-fit: contain; /* Şəklin tam görünməsini təmin edir */
+    display: block; /* Yanaşı boşluqları aradan qaldırır */
+    margin: auto; /* Ortaya gətirir */
 }
+
 .thumbnails {
     margin-top: 20px;
-    display: none;
-    flex-wrap: wrap;
+    display: none; /* Default olaraq gizli olsun, JS ilə açılır */
+    flex-wrap: nowrap; /* Sürüşdürmə üçün */
+    overflow-x: auto; /* Horizontal sürüşdürmə */
     gap: 10px;
+    padding: 10px 0;
+    width: 90%;
+    max-width: 1200px;
+    position: absolute;
+    bottom: 0; /* Ekranın aşağısına yapışdır */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0,0,0,0.5); /* Thumbnail fonu */
+    z-index: 1001;
+    justify-content: center; /* Thumbnails mərkəzə gətir */
 }
+
 .thumbnails img {
     width: 70px;
+    height: 70px; /* Thumbnail hündürlüyü */
     border-radius: 5px;
     cursor: pointer;
+    object-fit: cover;
+    border: 2px solid transparent; /* Aktiv olmayan üçün şəffaf çərçivə */
+    transition: border-color 0.2s, transform 0.2s;
 }
+
+.thumbnails img:hover {
+    border-color: #ffffff;
+    transform: scale(1.05);
+}
+/* Aktiv thumbnail üçün CSS (JavaScript tərəfindən tətbiq olunur) */
+.thumbnails img[data-active="true"] {
+    border-color: orange !important; /* Narıncı rənglə vurğula */
+}
+
+
+/* --- General Layout & Info Box Styles --- */
 #side {
     padding: 4rem 0rem;
 }
@@ -124,7 +188,6 @@
 }
 .side-right {
     width: 35%;
-
     position: relative;
 }
 
@@ -137,6 +200,7 @@
 
 .side-left {
     width: 65%;
+    padding: 20px; /* Yuxarıda təkrar olunurdu */
 }
 
 .side-left .info-box {
@@ -158,10 +222,6 @@
     color: var(--grey-text);
 }
 
-.side-left {
-    padding: 20px;
-}
-
 .info-box {
     background-color: white;
     padding: 20px;
@@ -171,7 +231,6 @@
 .info-box-title {
     padding-bottom: 20px;
     margin-bottom: 20px;
-
     border-bottom: 1px solid var(--border-color);
 }
 .info-box-desc {
@@ -183,17 +242,15 @@
     padding: 10px 14px;
     border-radius: 10px;
     border: 1px solid var(--border-color);
-}
-.adress {
-    color: var(--grey-text);
-}
-.info-box-desc .right i {
     color: var(--grey-text);
 }
 .info-box-desc .right i:hover {
     background-color: var(--primary);
     color: var(--white);
     transition: 0.3s;
+}
+.adress {
+    color: var(--grey-text);
 }
 .connect {
     margin-top: 40px;
@@ -217,6 +274,7 @@
     margin: 5px 0;
 }
 
+/* --- Utility Classes --- */
 .flex {
     display: flex;
 }
@@ -254,6 +312,7 @@
     margin-bottom: 10px;
 }
 
+/* --- Buttons --- */
 .btn-warning {
     background-color: #ffc107;
     color: black;
@@ -307,6 +366,8 @@
     align-items: center;
     justify-content: center;
 }
+
+/* --- Video Section --- */
 .video-section {
     display: flex;
     justify-content: center;
@@ -342,6 +403,7 @@
     opacity: 1;
 }
 
+/* --- Property Detail Section --- */
 .property-detail .box {
     display: flex;
     justify-content: space-between;
@@ -349,14 +411,14 @@
     flex-wrap: wrap;
 }
 
-.box {
+.box { /* Təkrar təyin idi, birləşdirildi */
     display: flex;
     justify-content: space-between;
     gap: 20px;
     flex-wrap: wrap;
 }
 .box ul {
-    width: calc(50% - 3rem);
+    width: calc(50% - 3rem); /* Daha düzgün hesablama */
 }
 ul .flex {
     gap: 1rem;
@@ -435,28 +497,26 @@ ul .flex p:nth-child(2) {
     font-weight: 600;
     color: var(--text-color);
 }
-.boxes-feature {
+.boxes-feature { /* Təkrar təyin idi, birləşdirildi */
     padding: 24px;
 }
 .boxes-feature ul li {
     margin-bottom: 14px;
+    list-style: disc; /* Təkrar idi */
+    font-size: 14px; /* Təkrar idi */
+    color: var(--grey-text); /* Təkrar idi */
+}
+.boxes-feature ul li::marker {
+    color: var(--primary);
 }
 
 .nearby-features ul li{
     display:flex;
     gap:0.7rem;
     list-style: none!important;
+}
 
-
-}
-.boxes-feature ul li {
-    list-style: disc;
-    font-size: 14px;
-    color: var(--grey-text);
-}
-.boxes-feature ul li::marker {
-    color: var(--primary);
-}
+/* --- Map Detail --- */
 .map-detail {
     background-color: var(--white);
     padding: 24px;
@@ -469,7 +529,6 @@ ul .flex p:nth-child(2) {
     gap: 20px;
     width: 90%;
     padding-top: 35px;
-
     flex-wrap: wrap;
 }
 .map-info-list {
@@ -483,7 +542,6 @@ ul .flex p:nth-child(2) {
 .map-info-list li p:nth-child(1) {
     color: var(--icon-grey);
     font-weight: 500;
-
     font-size: 14px;
 }
 
@@ -492,6 +550,7 @@ ul .flex p:nth-child(2) {
     color: var(--grey-text);
 }
 
+/* --- Accordion --- */
 .accordion-container {
     background: white;
     border-radius: 15px;
@@ -570,6 +629,7 @@ ul .flex p:nth-child(2) {
     transition: transform 0.3s;
 }
 
+/* --- Attachment Box --- */
 .attachment-box {
     background: white;
     border-radius: 16px;
@@ -578,13 +638,9 @@ ul .flex p:nth-child(2) {
     max-width: 100%;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
-.attachment-box h2 {
+.attachment-box h2 { /* Təkrar təyin idi */
     font-size: 24px;
     font-weight: 600;
-}
-
-.attachment-box h2 {
-    font-size: 24px;
     margin-bottom: 30px;
     color: #333;
 }
@@ -608,7 +664,7 @@ ul .flex p:nth-child(2) {
 }
 
 .file-name {
-    font-size: 14px;
+    font-size: 14px; /* Təkrar idi */
     color: var(--icon-grey);
 }
 .file-name:hover {
@@ -638,7 +694,7 @@ ul .flex p:nth-child(2) {
     border-radius: 4px;
 }
 
-.file-name {
+.file-name { /* Təkrar idi */
     flex-grow: 1;
     color: #333;
 }
@@ -653,6 +709,7 @@ ul .flex p:nth-child(2) {
     color: #000;
 }
 
+/* --- Calculator --- */
 .calculator {
     background: white;
     padding: 30px;
@@ -671,27 +728,17 @@ ul .flex p:nth-child(2) {
     font-weight: 600;
     color: var(--text-color);
 }
-.col .form-group input {
+.col .form-group input,
+.form-group select { /* İkisini birləşdirdik */
     padding: 15px 20px;
     border-radius: 20px;
     width: 100%;
     border: 1px solid var(--border-color);
+    font-size: 14px; /* Təkrar idi */
+    color: var(--text-color); /* Təkrar idi */
 }
-.form-group select {
-    padding: 15px 20px;
-    border-radius: 20px;
-    width: 100%;
-    border: 1px solid var(--border-color);
-}
-.col .form-group input {
-    font-size: 14px;
-    color: var(--text-color);
-}
-.col .form-group select {
-    font-size: 14px;
-    color: var(--text-color);
-}
-.form-group select option {
+
+.form-group select option { /* Təkrar idi */
     padding: 15px 20px;
     border-radius: 20px;
     width: 100%;
@@ -709,7 +756,7 @@ label {
 }
 
 #contact-form input,
-#contact-form select {
+#contact-form select { /* Təkrar idi */
     width: 100%;
     padding: 15px;
     border: 1px solid var(--border-color);
@@ -750,33 +797,85 @@ label {
     font-size: 18px;
 }
 
+/* --- Phone Modal (If different from image gallery modal) --- */
+/*
+  Bu hissəni əgər əlavə bir "telefon modalı" varsa saxlayın.
+  Əgər yoxdursa, aşağıdakı `modal` və `modal-content` təyinləri
+  şəkil qalereyası modalı ilə konflikt yaradır.
+  Mən bu hissəni şərhə aldım, çünki əvvəldəki `.modal` artıq şəkil qalereyası
+  üçün təyin olunub.
+*/
+/*
 .modal {
     display: none;
     position: fixed;
-    top: 0;
+    z-index: 1;
     left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    /* max-width: 400px; */
-    width: 100%;
-    width: 90%;
-    text-align: center;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+*/
+
+.close-button { /* Bu ehtimal ki, telefon modalının bağlama düyməsidir */
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
 }
 
-.close {
-    float: right;
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
     cursor: pointer;
-    font-size: 20px;
 }
+
+.phone-option-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color:var(--primary);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.phone-option-btn:hover {
+    background-color:var(--primary-light);
+}
+
+.modal h2 { /* Bu da telefon modalına aid ola bilər, əgər varsa */
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 20px;
+    /* text-align: center; Təkrar olunurdu */
+}
+
+/* --- What is Nearby Section --- */
 .what-is-nearby {
     background-color: var(--white);
     padding: 24px;
@@ -810,6 +909,7 @@ label {
     width: 100%;
 }
 
+/* --- Contact Card --- */
 .contact-card {
     background: #fff;
     padding: 30px;
@@ -853,7 +953,6 @@ form {
 
 #contact-form textarea {
     margin-top: 20px;
-
     width: 100%;
     padding: 15px;
     border: 1px solid var(--border-color);
@@ -880,7 +979,6 @@ form {
 .avatar-info {
     gap: 30px;
     margin-top: 20px;
-    /* justify-content: center; */
 }
 
 .avatar-info-text {
@@ -894,11 +992,11 @@ form {
     font-weight: 600;
 }
 
+/* --- Connect Card (Agencies) --- */
 .connect {
     position: relative;
     border-radius: 15px;
     overflow: hidden;
-    /* max-width: 400px; */
     width: 100%;
     font-family: Arial, sans-serif;
 }
@@ -983,6 +1081,7 @@ form {
     gap: 2rem;
 }
 
+/* --- Virtual Tour --- */
 .virtual-tour {
     background-color: var(--white);
     padding: 24px;
@@ -1024,13 +1123,13 @@ form {
     }
 }
 
+/* --- Reviews Section --- */
 .reviews-container {
     width: 100%;
     margin: 0 auto;
     border-radius: 24px;
     padding: 30px;
     background: var(--white);
-
     box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
 }
 .reviews-container h2 {
@@ -1153,8 +1252,6 @@ form {
     border-top: 1px solid var(--border-color);
 }
 
-
-
 .review-form h2 {
     font-size: 1.5rem;
     color: var(--dark-grey);
@@ -1205,14 +1302,13 @@ textarea {
     resize: vertical;
 }
 
-.checkbox {
+.checkbox { /* Təkrar idi, birləşdirildi */
+    display: flex;
     flex-direction: row;
-    text-align: center;
-    
     align-items: center;
 }
 
-.checkbox input {
+.checkbox input { /* Təkrar idi */
     margin-right: 10px;
 }
 
@@ -1231,52 +1327,46 @@ textarea {
     transition: background 0.3s ease;
 }
 
-.submit-btn:hover {
+.submit-btn:hover { /* Bu adda düymə yoxdur, amma nümunə kimi qaldı */
     background-color: #e65d00;
 }
 
 
-.checkbox {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
 .checkbox input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 18px;
-  height: 18px;
-  border: 2px solid orange;
-  border-radius: 4px;
-  margin-right: 10px;
-  position: relative;
-  cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid orange;
+    border-radius: 4px;
+    margin-right: 10px;
+    position: relative;
+    cursor: pointer;
 }
 
 .checkbox input[type="checkbox"]:checked {
-  background-color: orange;
-  border-color: orange;
+    background-color: orange;
+    border-color: orange;
 }
 
 .checkbox input[type="checkbox"]::after {
-  content: '';
-  position: absolute;
-  top: 2px;
-  left: 5px;
-  width: 4px;
-  height: 9px;
-  border: solid white;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-  display: none;
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 4px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    display: none;
 }
 
 .checkbox input[type="checkbox"]:checked::after {
-  display: block;
+    display: block;
 }
 
-
+/* --- Settings Icon & Go to Top --- */
 #settings-icon {
     top: 25%;
     right: 5px;
@@ -1366,12 +1456,8 @@ circle.progress {
 .hover-effect-button:hover span:not(.hover-effect-button-fill) {
     color: white;
 }
-.modal-navigation{
-    gap: 4rem;
-}
 
-
-
+/* --- Responsive Styles --- */
 @media (max-width: 768px) {
     .gallery-grid {
         grid-template-columns: 1fr 1fr;
@@ -1392,14 +1478,13 @@ circle.progress {
     .gallery-grid figure:nth-child(4) {
         grid-area: fourth;
     }
-   
 }
 
 @media (max-width:992px) {
     .flex {
         flex-direction: column;
     }
-     .side {
+    .side {
         flex-direction: column;
         width: 100%;
     }
@@ -1431,70 +1516,160 @@ circle.progress {
     }
 }
 
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-    }
+.image-upload-section {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
 
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        max-width: 500px;
-        border-radius: 8px;
-        position: relative;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
+.image-upload-wrapper {
+    background: #fff;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
+}
 
-    .close-button {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        cursor: pointer;
-    }
+.image-upload-wrapper h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
 
-    .close-button:hover,
-    .close-button:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
+.upload-button {
+    background-color: var(--primary, #007bff);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 15px;
+    transition: background-color 0.3s ease;
+}
 
-    .phone-option-btn {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        background-color:var(--primary);
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        text-align: center;
-        text-decoration: none;
-    }
+.upload-button:hover {
+    background-color: var(--primary-dark, #0056b3);
+}
 
-    .phone-option-btn:hover {
-        background-color:var(--primary-light);
-    }
+.upload-info {
+    font-size: 14px;
+    color: var(--grey-text, #666);
+    margin-bottom: 20px;
+}
 
-    .modal h2 {
-        margin-top: 0;
-        margin-bottom: 20px;
-        font-size: 20px;
-        text-ali
+.loading-indicator {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    color: var(--grey-text, #666);
+}
+
+.loading-indicator .spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left: 4px solid var(--primary, #007bff);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.image-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.image-preview-item {
+    position: relative;
+    width: 100%;
+    padding-top: 75%;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.image-preview-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.delete-image-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(255, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.image-preview-item:hover .delete-image-button {
+    opacity: 1;
+}
+
+.save-button {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.save-button:hover {
+    background-color: #218838;
+}
+
+@media (max-width: 1200px) {
+    .image-preview-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     }
+}
+
+@media (max-width: 992px) {
+    .image-preview-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .image-preview-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+    .image-upload-wrapper {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .image-preview-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+}

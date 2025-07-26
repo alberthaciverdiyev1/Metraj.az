@@ -36,23 +36,7 @@
             {{/each}}
         </div>
     </div>
-    <div id="imgModal" class="modal fade" tabindex="-1">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content modal-content-custom">
-                <div class="modal-top-left" id="imageCount">1 / 4</div>
-                <div class="modal-top-right">
-                    <i class="bi bi-play-btn" title="Start Slideshow"></i>
-                    <i class="bi bi-fullscreen" title="Fullscreen"></i>
-                    <i class="bi bi-grid" title="Thumbnails"></i>
-                    <i class="bi bi-share" title="Share"></i>
-                    <i class="bi bi-x-lg" data-bs-dismiss="modal" title="Close"></i>
-                </div>
-                <span class="modal-control left" onclick="changeImage(-1)"><i class="bi bi-arrow-left"></i></span>
-                <img id="modalImage" class="modal-img">
-                <span class="modal-control right" onclick="changeImage(1)"><i class="bi bi-arrow-right"></i></span>
-            </div>
-        </div>
-    </div>
+  
 </section>
 <section id="side">
     <div class="container mx-auto px-4">
@@ -226,3 +210,8 @@
 
 {{js 'phone-modal.js'}}
 {{js 'videoplay.js'}}
+{{js 'image-gallery.js'}}
+
+
+
+

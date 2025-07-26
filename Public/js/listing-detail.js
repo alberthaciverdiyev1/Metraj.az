@@ -1,18 +1,17 @@
-const images = [
-    "/webui/images/property-detail-3.jpg",
-    "/webui/images/property-detail-4.jpg",
-    "/webui/images/property-detail-5.jpg",
-    "/webui/images/property-detail-6.jpg"
-];
+const images = Array.from(document.querySelectorAll('#thumbnails img')).map(img => img.src);
+
 let currentIndex = 0;
 let slideshow;
 
-
-
 function closeModal() {
-    document.getElementById("modal").classList.add("modal--hidden");
-    clearInterval(slideshow);
+    console.log("Close button clicked!"); // Konsolu yoxlayın, bu mesaj görünürsə funksiya çağrılır.
+    const modal = document.getElementById("modal");
+    modal.classList.add("modal--hidden"); // Bu klass modalı gizlətməlidir
+    modal.style.display = "none"; // Ehtiyat variantı, klass işləməsə belə gizlətsin
+    clearInterval(slideshow); // Slaydşounu dayandırır (əgər işləyirsə)
 }
+
+
 // function closeModal() {
 //     document.getElementById('resultModal').style.display = 'none';
 // }
@@ -64,7 +63,6 @@ function shareImage() {
         alert("Image URL copied to clipboard");
     });
 }
-
 //read-more
 document.addEventListener('DOMContentLoaded', function () {
     const readMore = document.querySelector('.read-more');
