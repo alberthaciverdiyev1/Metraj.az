@@ -257,25 +257,29 @@ document.addEventListener("DOMContentLoaded", async function () {
         let processedProperties = [];
 
         try {
-            const fetchedApiResponse = await getPropertiesList(); 
-
-            if (Array.isArray(fetchedApiResponse)) {
-                processedProperties = fetchedApiResponse;
-            } else {
-                console.warn("API-dən gözlənilməyən data formatı gəldi (home.js): massiv gözlənilir.", fetchedApiResponse);
-                processedProperties = []; 
-            }
-
+            const fetchedApiResponse = await getPropertiesList();
             let html = '';
-            if (processedProperties.length > 0) {
-             //   const propertiesToShow = processedProperties.slice(0, 4);
-                const propertiesToShow = processedProperties;
-                propertiesToShow.forEach(property => {
-                    html += propertyCard(property);
-                });
-            } else {
-                html = '<p class="col-span-full text-center text-gray-500">Heç bir elan tapılmadı.</p>';
-            }
+
+            Object.entries(fetchedApiResponse).forEach(
+                ([key, value]) => {
+                    if (value.length > 0) {
+                        html += `
+                          <div class="col-span-full flex justify-between items-center px-6">
+                            <h2 class="text-2xl font-semibold text-gray-900 tracking-wide">
+                              ${key}
+                            </h2>
+                            <a href="/property" class="text-orange-400 text-lg font-medium hover:underline hover:text-orange-500 transition-colors duration-200">
+                              Daha Çox →
+                            </a>
+                          </div>`;
+
+                        value.forEach(property => {
+                            html += propertyCard(property);
+                        });
+                    }
+                }
+            )
+
             
             homePropertyContainer.innerHTML = html;
 
