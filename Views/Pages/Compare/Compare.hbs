@@ -1,4 +1,4 @@
-<div class="container py-8 mx-auto max-w-7xl px-4">
+<div class="container py-[160px] mx-auto max-w-7xl px-4">
   <div class="flex items-center mb-8">
     <h3 class="text-3xl font-bold text-gray-800">
       <i class="fas fa-balance-scale text-[var(--primary)] mr-3"></i>Məhsulları Müqayisə Et
@@ -6,100 +6,6 @@
   </div>
 
   <div class="bg-white p-6 rounded-xl shadow-lg">
-    {{#if products.length}}
-    <div class="flex justify-end mb-6">
-      <button
-        class="flex items-center bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-5 rounded-lg transition-all duration-200"
-        type="button"
-      >
-        <i class="fas fa-broom mr-2"></i> Təmizlə
-      </button>
     </div>
-
-    <div class="overflow-x-auto w-full rounded-2xl">
-      <table class="min-w-full">
-        <tbody class="divide-y divide-gray-100">
-          <tr class="border border-r-neutral-700 ">
-            <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-500">
-              <div class="flex items-center">
-                <i class="fas fa-tag text-[var(--primary)] mr-2"></i>
-                <span>Ad</span>
-              </div>
-            </td>
-            {{#each products}}
-            <td class="px-4 py-3 text-center">
-              <p class="text-lg font-semibold text-gray-800">{{this.name}}</p>
-            </td>
-            {{/each}}
-          </tr>
-
-          <!-- Price Row -->
-          <tr>
-            <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-500">
-              <div class="flex items-center">
-                <i class="fas fa-tag text-[var(--primary)] mr-2"></i>
-                <span>Qiymət</span>
-              </div>
-            </td>
-            {{#each products}}
-            <td class="px-4 py-3 text-center">
-              <span class="text-xl font-bold text-[var(--primary)]">{{this.price}}</span>
-            </td>
-            {{/each}}
-          </tr>
-
-          <!-- Image Row -->
-          <tr>
-            <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-500">
-              <div class="flex items-center">
-                <i class="fas fa-image text-[var(--primary)] mr-2"></i>
-                <span>Şəkil</span>
-              </div>
-            </td>
-            {{#each products}}
-            <td class="px-8 py-6 text-center">
-              {{#if this.image}}
-              <div class="w-54 h-24 mx-auto rounded-lg overflow-hidden flex items-center justify-center">
-                <img src="{{this.image}}" alt="{{this.name}}" class="object-contain w-full h-full " />
-              </div>
-              {{else}}
-              <div class="w-24 h-24 mx-auto rounded-lg bg-gray-100 flex items-center justify-center text-gray-400">
-                <i class="fas fa-image text-2xl"></i>
-              </div>
-              {{/if}}
-            </td>
-            {{/each}}
-          </tr>
-
-          <!-- Features -->
-          {{#each featureKeys}}
-          <tr>
-            <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-500">
-              <div class="flex items-center">
-                <i class="fas fa-circle text-[var(--primary)] mr-2 text-xs"></i>
-                <span>{{this}}</span>
-              </div>
-            </td>
-            {{#each ../products}}
-            <td class="px-4 py-3 text-center text-sm text-gray-600">
-              {{lookup this.features ../this}}
-            </td>
-            {{/each}}
-          </tr>
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
-    {{else}}
-    <div class="text-center py-12">
-      <div class="mx-auto w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-4">
-        <i class="fas fa-exchange-alt text-[var(--primary)] text-2xl"></i>
-      </div>
-      <h4 class="text-lg font-medium text-gray-700 mb-2">Müqayisə üçün məhsul seçilməyib</h4>
-      <p class="text-gray-500">
-        Müqayisə etmək üçün məhsul əlavə edin.
-      </p>
-    </div>
-    {{/if}}
-  </div>
 </div>
+{{js 'compare.js'}}

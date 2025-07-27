@@ -1,8 +1,8 @@
 import { formatPrice } from '../helpers/price.js';
 
-function getFavoriteStatus(propertyId) {
-    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    return favorites.some(favProperty => favProperty.id === propertyId);
+function getCompareStatus(propertyId) {
+    const compareList = JSON.parse(localStorage.getItem('compareList')) || [];
+    return compareList.some(compProperty => compProperty.id === propertyId);
 }
 
 export function propertyCard(property, showRemoveButton = false) {
@@ -35,8 +35,12 @@ export function propertyCard(property, showRemoveButton = false) {
         </span>
     `;
 
+    const comparePropertyData = encodeURIComponent(JSON.stringify(property));
+    const isCompareActive = getCompareStatus(property.id);
+    const compareIconClass = isCompareActive ? 'text-[color:var(--primary)]' : '';
+
     return `
-        <div data-property-id="${property.id}" class="cursor-pointer border border-[color:var(--border-color)] rounded-2md overflow-hidden rounded-2xl group relative transition-all duration-300">
+        <div onclick="window.location.href='/property/${property.id}'" data-property-id="${property.id}" class="cursor-pointer border border-[color:var(--border-color)] rounded-2md overflow-hidden rounded-2xl group relative transition-all duration-300">
             <div class="relative overflow-hidden">
                 <img src="${property.media.path}" alt="${property.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" />
                 <div class="absolute inset-0 flex items-center justify-center overflow-hidden">
@@ -68,18 +72,23 @@ export function propertyCard(property, showRemoveButton = false) {
                     <span><span class="text-[#2C2E33]">${property.area}</span> Kvm</span>
                 </div>
                 <span class="text-sm text-gray-500 ">AdNo: ${property.adNo}</span>
-                        
+                            
                 <div class="flex justify-between py-2 mt-2 items-center border-t border-[color:var(--border-color)] pt-4">
                     <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">${price} AZN</span>
-                    <button onclick="event.stopPropagation()" class="flex compare items-center gap-1 text-sm text-[#2C2E33] hover:text-[color:var(--primary)] transition-colors">
-                        <i class="fas fa-random"></i> Müqayisə
+                    <button onclick="event.stopPropagation(); toggleCompare(this, decodeURIComponent('${comparePropertyData}'));" class="flex compare items-center gap-1 text-sm text-[#2C2E33] hover:text-[color:var(--primary)] transition-colors">
+                        <i class="fas fa-random ${compareIconClass}"></i> Müqayisə
                     </button>
                 </div>
             </div>
         </div>`;
 }
 
-window.toggleFavorite = function(element, propertyJsonString) {
+function getFavoriteStatus(propertyId) {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    return favorites.some(favProperty => favProperty.id === propertyId);
+}
+
+window.toggleFavorite = function(element, propertyJsonString) { 
     const icon = element.querySelector('i');
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     
@@ -127,4 +136,32 @@ window.removeFavorite = function(propertyId) {
             }
         }
     }
+};
+
+window.toggleCompare = function(element, propertyJsonString) {
+    let compareList = JSON.parse(localStorage.getItem('compareList')) || [];
+
+    const property = JSON.parse(propertyJsonString);
+
+    const maxCompareItems = 3; 
+
+    const isAlreadyInCompare = compareList.some(compProperty => compProperty.id === property.id);
+    const compareIcon = element.querySelector('i'); 
+
+    if (!isAlreadyInCompare) {
+        if (compareList.length < maxCompareItems) {
+            compareList.push(property);
+            compareIcon.classList.add('text-[color:var(--primary)]'); 
+            alert(`${property.title} müqayisə siyahısına əlavə edildi.`);
+        } else {
+            alert(`Siz ən çox ${maxCompareItems} mülkü müqayisə edə bilərsiniz. Zəhmət olmasa, əvvəlcə bir mülkü siyahıdan çıxarın.`);
+        }
+    } else {
+        compareList = compareList.filter(compProperty => compProperty.id !== property.id);
+        compareIcon.classList.remove('text-[color:var(--primary)]');
+        alert(`${property.title} müqayisə siyahısından çıxarıldı.`);
+    }
+
+    localStorage.setItem('compareList', JSON.stringify(compareList));
+    console.log('Compare List updated and saved to localStorage:', compareList); 
 };
