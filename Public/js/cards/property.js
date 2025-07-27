@@ -1,5 +1,10 @@
 import { formatPrice } from '../helpers/price.js';
 
+function getFavoriteStatus(propertyId) {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    return favorites.some(favProperty => favProperty.id === propertyId);
+}
+
 export function propertyCard(property) {
     const rawPrice = property.price && property.price[0]?.price;
     let priceValue = 0;
@@ -10,12 +15,17 @@ export function propertyCard(property) {
 
     const price = formatPrice(priceValue);
 
-    const premiumBadge = property.is_premium ? `<span class="absolute top-3 right-4  text-black font-semibold text-md bg-white px-2 py-1 rounded-full">
+    const premiumBadge = property.is_premium ? `<span class="absolute top-3 right-4 text-black font-semibold text-md bg-white px-2 py-1 rounded-full">
     <i class="fa-solid fa-crown"></i>
   </span>` : '';
     const addTypeBadge = property.add_type === 'rent' ? `<span class="bg-[color:var(--primary)] text-white text-sm font-semibold px-2 py-1 rounded-full">Kirayə</span>` : property.add_type === 'sale' ? `<span class="bg-[#80807F] text-white font-semibold text-sm px-2 py-1 rounded-full">Satışda</span>` : '';
 
-    return ` <div onclick="window.location.href='/property/${property.id}'" class="cursor-pointer border border-[color:var(--border-color)] rounded-2md overflow-hidden rounded-2xl group relative transition-all  duration-300">
+    const isFavorite = getFavoriteStatus(property.id);
+    const heartIconClass = isFavorite ? 'fa-solid' : 'fa-regular';
+
+    const propertyData = encodeURIComponent(JSON.stringify(property));
+
+    return ` <div onclick="window.location.href='/property/${property.id}'" class="cursor-pointer border border-[color:var(--border-color)] rounded-2md overflow-hidden rounded-2xl group relative transition-all duration-300">
                 <div class="relative overflow-hidden">
                     <img src="${property.media.path}" alt="${property.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" />
                     <div class="absolute inset-0 flex items-center justify-center overflow-hidden">
@@ -27,8 +37,8 @@ export function propertyCard(property) {
                     </div>
                     ${premiumBadge}
 
-                    <span onclick="event.stopPropagation(); toggleFavorite(this);" class="absolute bottom-3 right-4 text-white font-semibold text-md bg-white px-2 py-1 rounded-full cursor-pointer">
-                        <i class="fa-regular fa-heart text-red-500"></i>
+                    <span onclick="event.stopPropagation(); toggleFavorite(this, decodeURIComponent('${propertyData}'));" class="absolute bottom-3 right-4 text-white font-semibold text-md bg-white px-2 py-1 rounded-full cursor-pointer">
+                        <i class="${heartIconClass} fa-heart text-red-500"></i>
                     </span>
                 </div>
 
@@ -60,13 +70,23 @@ export function propertyCard(property) {
             </div>`;
 }
 
-window.toggleFavorite = function(element) {
+window.toggleFavorite = function(element, propertyJsonString) {
     const icon = element.querySelector('i');
-    if (icon.classList.contains('fa-regular')) {
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    
+    const property = JSON.parse(propertyJsonString);
+
+    const isAlreadyFavorite = favorites.some(favProperty => favProperty.id === property.id);
+
+    if (!isAlreadyFavorite) {
         icon.classList.remove('fa-regular');
         icon.classList.add('fa-solid');
+        favorites.push(property);
     } else {
         icon.classList.remove('fa-solid');
         icon.classList.add('fa-regular');
+        favorites = favorites.filter(favProperty => favProperty.id !== property.id);
     }
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    console.log('Favorites updated:', favorites); 
 };
