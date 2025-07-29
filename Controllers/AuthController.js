@@ -26,7 +26,7 @@ async function Login(request, reply) {
         return reply.code(201).send({
             status: 201,
             message: 'Login successfully!',
-            route: '/',
+            route: '/profile',
         })
     } else {
         return reply.code(response.status || 400).send(response)

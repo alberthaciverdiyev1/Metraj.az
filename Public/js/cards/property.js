@@ -1,8 +1,20 @@
 import { formatPrice } from '../helpers/price.js';
 
+
 function getCompareStatus(propertyId) {
     const compareList = JSON.parse(localStorage.getItem('compareList')) || [];
     return compareList.some(compProperty => compProperty.id === propertyId);
+}
+
+function getCookie(name) {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(';');
+    for(let i=0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
 }
 
 export function propertyCard(property, showRemoveButton = false) {
@@ -88,31 +100,89 @@ function getFavoriteStatus(propertyId) {
     return favorites.some(favProperty => favProperty.id === propertyId);
 }
 
-window.toggleFavorite = function(element, propertyJsonString) { 
+window.toggleFavorite = async function(element, propertyJsonString) {
     const icon = element.querySelector('i');
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    
     const property = JSON.parse(propertyJsonString);
+    const token = getCookie('session'); 
+
+    console.log('--- Toggle Favorite Attempt ---');
+    console.log('Token exists:', !!token);
 
     const isAlreadyFavorite = favorites.some(favProperty => favProperty.id === property.id);
 
-    if (!isAlreadyFavorite) {
-        icon.classList.remove('fa-regular');
-        icon.classList.add('fa-solid');
-        favorites.push(property);
-    } else {
-        icon.classList.remove('fa-solid');
-        icon.classList.add('fa-regular');
-        favorites = favorites.filter(favProperty => favProperty.id !== property.id);
-    }
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    console.log('Favorites updated:', favorites);
+    if (token) {
+        const url = '/api/favorite';
+        const method = isAlreadyFavorite ? 'DELETE' : 'POST'; 
+        const body = JSON.stringify({ property_id: property.id });
 
-    if (window.location.pathname === '/favorites' || window.location.pathname === '/favorites.html') {
-        if (typeof renderFavorites === 'function') {
-            renderFavorites();
+        try {
+            const response = await fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: body
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Backend response:', data);
+
+                if (method === 'POST') {
+                    icon.classList.remove('fa-regular');
+                    icon.classList.add('fa-solid');
+                    favorites.push(property);
+                    alert(`${property.title} seçilmişlərə əlavə edildi.`);
+                } else { 
+                    icon.classList.remove('fa-solid');
+                    icon.classList.add('fa-regular');
+                    favorites = favorites.filter(favProperty => favProperty.id !== property.id);
+                    alert(`${property.title} seçilmişlərdən çıxarıldı.`);
+                }
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                console.log('Favorites updated in localStorage:', favorites);
+
+                if (window.location.pathname === '/favorites' || window.location.pathname === '/favorites.html') {
+                    if (typeof renderFavorites === 'function') {
+                        renderFavorites();
+                    }
+                }
+
+            } else {
+                console.error('Failed to update favorite status on backend:', response.status, response.statusText);
+                const errorData = await response.json();
+                console.error('Backend error details:', errorData);
+                alert('Seçilmişləri yeniləmək zamanı xəta baş verdi. Zəhmət olmasa, yenidən cəhd edin.');
+            }
+        } catch (error) {
+            console.error('Error during API call:', error);
+            alert('Şəbəkə xətası baş verdi. Zəhmət olmasa, internet bağlantınızı yoxlayın.');
+        }
+    } else {
+        console.log('User not logged in. Updating favorites in localStorage only.');
+        if (!isAlreadyFavorite) {
+            icon.classList.remove('fa-regular');
+            icon.classList.add('fa-solid');
+            favorites.push(property);
+            alert(`${property.title} seçilmişlərə əlavə edildi (yalnız yerli).`);
+        } else {
+            icon.classList.remove('fa-solid');
+            icon.classList.add('fa-regular');
+            favorites = favorites.filter(favProperty => favProperty.id !== property.id);
+            alert(`${property.title} seçilmişlərdən çıxarıldı (yalnız yerli).`);
+        }
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        console.log('Favorites updated in localStorage:', favorites);
+
+        if (window.location.pathname === '/favorites' || window.location.pathname === '/favorites.html') {
+            if (typeof renderFavorites === 'function') {
+                renderFavorites();
+            }
         }
     }
+    console.log('--- Toggle Favorite End ---');
 };
 
 window.removeFavorite = function(propertyId) {

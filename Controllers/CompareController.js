@@ -5,7 +5,7 @@ export async function CompareView(request, reply) {
     const view = {
         title: 'Compare Products',
         css: css([]),
-        js: js([compare.js]),
+        // js: js([compare.js]),
       
     };
 

@@ -10,6 +10,7 @@ import fastifyCookie from '@fastify/cookie'
 
 import { CompareView } from '../Controllers/CompareController.js'; 
 import { FavoriteView } from '../Controllers/FavoritesController.js'
+import { ProfileView } from '../Controllers/ProfileController.js'
 
 export default async function route(fastify, options) {
     fastify.get('/', homePage)
@@ -21,7 +22,8 @@ export default async function route(fastify, options) {
 
     fastify.post('/add-property', Property.add)
 
-    fastify.get('/compare', CompareView); 
+    fastify.get('/compares', CompareView); 
+    fastify.get('/profile',ProfileView)
     fastify.get('favorites',FavoriteView)
 
 
