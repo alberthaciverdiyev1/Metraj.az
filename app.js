@@ -108,9 +108,14 @@ handlebars.registerHelper('ifNo', function (value, options) {
     }
 })
 
-handlebars.registerHelper('equal', function (a, b) {
-    return a === b
-})
+// handlebars.registerHelper('equal', function (a, b) {
+//     return a === b
+// })
+
+handlebars.registerHelper('ifEquals', function (a, b, options) {
+    return a === b ? options.fn(this) : options.inverse(this);
+});
+
 
 handlebars.registerHelper('css', function (file) {
     const prefix = process.env.NODE_ENV === 'production' ? '/assets/css/' : '/css/'
