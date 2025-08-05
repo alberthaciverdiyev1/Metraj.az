@@ -1,0 +1,87 @@
+<div class="container gap-6 flex mx-auto px-4 py-[100px]">
+{{> Profile.sidebar activePage="dashboard"}}
+
+
+    <div class="w-4/5">
+        <div class="grid grid-cols-4 gap-4 mb-6">
+            <div class="bg-white p-4 rounded-xl shadow-sm flex items-center justify-between">
+                <div>
+                    <div class="text-sm text-gray-500">Your listing</div>
+                    <div class="text-2xl font-bold">32 <span class="text-sm font-normal text-gray-500">/50 remaining</span></div>
+                </div>
+                <i class="bi bi-journal-text text-3xl text-orange-500"></i>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm flex items-center justify-between">
+                <div>
+                    <div class="text-sm text-gray-500">Pending</div>
+                    <div class="text-2xl font-bold">02</div>
+                </div>
+                <i class="bi bi-arrow-clockwise text-3xl text-orange-500"></i>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm flex items-center justify-between">
+                <div>
+                    <div class="text-sm text-gray-500">Favorites</div>
+                    <div class="text-2xl font-bold">06</div>
+                </div>
+                <i class="bi bi-heart text-3xl text-orange-500"></i>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm flex items-center justify-between">
+                <div>
+                    <div class="text-sm text-gray-500">Reviews</div>
+                    <div class="text-2xl font-bold">1.483</div>
+                </div>
+                <i class="bi bi-chat-dots text-3xl text-orange-500"></i>
+            </div>
+        </div>
+
+        <div class="flex gap-4 w-full">
+            <div class="w-3/4 bg-white rounded-xl shadow-sm p-6">
+                <h2 class="text-xl font-bold mb-4">My Favorites</h2>
+                <div class="grid grid-cols-3 text-sm font-semibold border-b border-gray-200 pb-2">
+                    <div>Listing</div>
+                    <div>Status</div>
+                    <div>Action</div>
+                </div>
+
+                <div class="grid grid-cols-3 items-center py-4 border-b border-gray-200">
+                    <div class="flex gap-4">
+                        <img src="https://themesflat.co/html/proty/images/home/house-db-1.jpg" alt="property" class="w-20 h-16 rounded-md object-cover">
+                        <div>
+                            <p class="font-semibold">Cozy Studio in Downtown</p>
+                            <p class="text-xs text-gray-500">Posting date: 01 Aug 2025</p>
+                            <p class="text-orange-500 text-sm font-semibold mt-1">$850 / month</p>
+                        </div>
+                    </div>
+                    <div class="text-sm text-gray-700">Active</div>
+                    <div class="flex gap-3 text-sm">
+                        <a href="#" class="text-blue-500 hover:underline"><i class="bi bi-pencil"></i> Edit</a>
+                        <a href="#" class="text-green-500 hover:underline"><i class="bi bi-check-circle"></i> Sold</a>
+                        <a href="#" class="text-red-500 hover:underline"><i class="bi bi-trash"></i> Delete</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-1/4 bg-white rounded-xl shadow-sm p-6 max-h-[500px] overflow-y-auto">
+                <h2 class="text-lg font-bold mb-4">Messages</h2>
+
+                <div class="flex gap-4 mb-4">
+                    <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="avatar" class="w-10 h-10 rounded-full object-cover">
+                    <div class="text-sm">
+                        <p class="font-semibold">Jane Smith</p>
+                        <p class="text-gray-500 text-xs">2 mins ago</p>
+                        <p class="text-gray-700 mt-1">Is the apartment still available?</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 mb-4">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="avatar" class="w-10 h-10 rounded-full object-cover">
+                    <div class="text-sm">
+                        <p class="font-semibold">Michael Johnson</p>
+                        <p class="text-gray-500 text-xs">1 hour ago</p>
+                        <p class="text-gray-700 mt-1">Can I schedule a visit?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
