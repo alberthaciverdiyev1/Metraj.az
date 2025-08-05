@@ -153,10 +153,8 @@ yarn.lock
 /*.zip
 
 # 0x
-profile-*
 
 # clinic
-profile*
 *clinic*
 *flamegraph*
 

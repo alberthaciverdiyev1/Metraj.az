@@ -1,7 +1,10 @@
-async function ProfileView(req, res) {
-    return true;
-}
+import { css, js } from "../Helpers/assets.js";
 
-export {
-    ProfileView
+export async function ProfileView(request, reply) {
+    const view = {
+        title: 'My profile',
+        css: css([]),
+        js: js(['profile.js']),
+    };
+    return reply.view('Pages/Profile/Profile.hbs', view);
 }
