@@ -14,7 +14,7 @@ async function listView(request, reply) {
     const view = {
         title: 'Listing Page',
         css: css(['listing.css', 'app.css']),
-        js: js(['listing.js']),
+        js: js(['pages/property/listing.js']),
         breadcrumbs: [
             {label: 'Home', url: '/'},
             {label: 'Property Listing', url: '/listing'}
