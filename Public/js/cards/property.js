@@ -1,4 +1,4 @@
-import { formatPrice } from '../helpers/price.js';
+import {formatPrice} from '../helpers/price.js';
 
 
 function getCompareStatus(propertyId) {
@@ -9,7 +9,7 @@ function getCompareStatus(propertyId) {
 function getCookie(name) {
     const nameEQ = name + "=";
     const ca = document.cookie.split(';');
-    for(let i=0; i < ca.length; i++) {
+    for (let i = 0; i < ca.length; i++) {
         let c = ca[i];
         while (c.charAt(0) === ' ') c = c.substring(1, c.length);
         if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
@@ -27,25 +27,17 @@ export function propertyCard(property, showRemoveButton = false) {
 
     const price = formatPrice(priceValue);
 
-    const premiumBadge = property.is_premium ? `<span class="absolute top-3 right-4 text-black font-semibold text-md bg-white px-2 py-1 rounded-full">
-    <i class="fa-solid fa-crown"></i>
-  </span>` : '';
-    const addTypeBadge = property.add_type === 'rent' ? `<span class="bg-[color:var(--primary)] text-white text-sm font-semibold px-2 py-1 rounded-full">Kirayə</span>` : property.add_type === 'sale' ? `<span class="bg-[#80807F] text-white font-semibold text-sm px-2 py-1 rounded-full">Satışda</span>` : '';
+    const premiumBadge = property.is_premium ? `<span class="absolute top-3 right-4 text-black font-semibold text-md bg-white px-2 py-1 rounded-full"><i class="fa-solid fa-crown"></i></span>` : '';
 
-    const isFavorite = getFavoriteStatus(property.id);
-    const heartIconClass = isFavorite ? 'fa-solid' : 'fa-regular';
+    const addTypeBadge = property.add_type === 'rent' ? `<span class="bg-[color:var(--primary)] text-white text-sm font-semibold px-2 py-1 rounded-full">Kirayə</span>`
+                                                             : property.add_type === 'sale' ? `<span class="bg-[#80807F] text-white font-semibold text-sm px-2 py-1 rounded-full">Satışda</span>` : '';
+
+    const heartIconClass = getFavoriteStatus(property.id) ? 'fa-solid' : 'fa-regular';
 
     const propertyData = encodeURIComponent(JSON.stringify(property));
 
-    const favoriteOrRemoveButton = showRemoveButton ? `
-        <span onclick="event.stopPropagation(); removeFavorite(${property.id});" class="absolute bottom-3 right-4 text-red-500 font-semibold text-md bg-white px-2 py-1 rounded-full cursor-pointer">
-            <i class="fas fa-times"></i>
-        </span>
-    ` : `
-        <span onclick="event.stopPropagation(); toggleFavorite(this, decodeURIComponent('${propertyData}'));" class="absolute bottom-3 right-4 text-white font-semibold text-md bg-white px-2 py-1 rounded-full cursor-pointer">
-            <i class="${heartIconClass} fa-heart text-red-500"></i>
-        </span>
-    `;
+    const favoriteOrRemoveButton = showRemoveButton ? `<span onclick="event.stopPropagation(); removeFavorite(${property.id});" class="absolute bottom-3 right-4 text-red-500 font-semibold text-md bg-white px-2 py-1 rounded-full cursor-pointer"><i class="fas fa-times"></i></span>`
+                                                           : `<span onclick="event.stopPropagation(); toggleFavorite(this, decodeURIComponent('${propertyData}'));" class="absolute bottom-3 right-4 text-white font-semibold text-md bg-white px-2 py-1 rounded-full cursor-pointer"><i class="${heartIconClass} fa-heart text-red-500"></i></span> `;
 
     const comparePropertyData = encodeURIComponent(JSON.stringify(property));
     const isCompareActive = getCompareStatus(property.id);
@@ -83,7 +75,7 @@ export function propertyCard(property, showRemoveButton = false) {
                     <span><span class="text-[#2C2E33]">${property.baths}</span> Hamam</span>
                     <span><span class="text-[#2C2E33]">${property.area}</span> Kvm</span>
                 </div>
-                <span class="text-sm text-gray-500 ">AdNo: ${property.adNo}</span>
+                <span class="text-sm text-gray-500 ">${property.buildingType}</span>
                             
                 <div class="flex justify-between py-2 mt-2 items-center border-t border-[color:var(--border-color)] pt-4">
                     <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">${price} AZN</span>
@@ -100,11 +92,11 @@ function getFavoriteStatus(propertyId) {
     return favorites.some(favProperty => favProperty.id === propertyId);
 }
 
-window.toggleFavorite = async function(element, propertyJsonString) {
+window.toggleFavorite = async function (element, propertyJsonString) {
     const icon = element.querySelector('i');
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     const property = JSON.parse(propertyJsonString);
-    const token = getCookie('session'); 
+    const token = getCookie('session');
 
     console.log('--- Toggle Favorite Attempt ---');
     console.log('Token exists:', !!token);
@@ -113,8 +105,8 @@ window.toggleFavorite = async function(element, propertyJsonString) {
 
     if (token) {
         const url = '/api/favorite';
-        const method = isAlreadyFavorite ? 'DELETE' : 'POST'; 
-        const body = JSON.stringify({ property_id: property.id });
+        const method = isAlreadyFavorite ? 'DELETE' : 'POST';
+        const body = JSON.stringify({property_id: property.id});
 
         try {
             const response = await fetch(url, {
@@ -135,7 +127,7 @@ window.toggleFavorite = async function(element, propertyJsonString) {
                     icon.classList.add('fa-solid');
                     favorites.push(property);
                     alert(`${property.title} seçilmişlərə əlavə edildi.`);
-                } else { 
+                } else {
                     icon.classList.remove('fa-solid');
                     icon.classList.add('fa-regular');
                     favorites = favorites.filter(favProperty => favProperty.id !== property.id);
@@ -185,12 +177,12 @@ window.toggleFavorite = async function(element, propertyJsonString) {
     console.log('--- Toggle Favorite End ---');
 };
 
-window.removeFavorite = function(propertyId) {
+window.removeFavorite = function (propertyId) {
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     favorites = favorites.filter(favProperty => favProperty.id !== propertyId);
     localStorage.setItem('favorites', JSON.stringify(favorites));
     console.log('Removed favorite:', propertyId, 'New list:', favorites);
-    
+
     const cardToRemove = document.querySelector(`[data-property-id="${propertyId}"]`);
     if (cardToRemove) {
         cardToRemove.remove();
@@ -208,20 +200,20 @@ window.removeFavorite = function(propertyId) {
     }
 };
 
-window.toggleCompare = function(element, propertyJsonString) {
+window.toggleCompare = function (element, propertyJsonString) {
     let compareList = JSON.parse(localStorage.getItem('compareList')) || [];
 
     const property = JSON.parse(propertyJsonString);
 
-    const maxCompareItems = 3; 
+    const maxCompareItems = 3;
 
     const isAlreadyInCompare = compareList.some(compProperty => compProperty.id === property.id);
-    const compareIcon = element.querySelector('i'); 
+    const compareIcon = element.querySelector('i');
 
     if (!isAlreadyInCompare) {
         if (compareList.length < maxCompareItems) {
             compareList.push(property);
-            compareIcon.classList.add('text-[color:var(--primary)]'); 
+            compareIcon.classList.add('text-[color:var(--primary)]');
             alert(`${property.title} müqayisə siyahısına əlavə edildi.`);
         } else {
             alert(`Siz ən çox ${maxCompareItems} mülkü müqayisə edə bilərsiniz. Zəhmət olmasa, əvvəlcə bir mülkü siyahıdan çıxarın.`);
@@ -233,5 +225,5 @@ window.toggleCompare = function(element, propertyJsonString) {
     }
 
     localStorage.setItem('compareList', JSON.stringify(compareList));
-    console.log('Compare List updated and saved to localStorage:', compareList); 
+    console.log('Compare List updated and saved to localStorage:', compareList);
 };
