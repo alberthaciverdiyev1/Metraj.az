@@ -2,28 +2,19 @@
     <div class="flex mx-auto max-w-screen-3xl px-4 lg:px-6 xl:px-8 gap-9">
 
         {{#if setting.ads}}
-            <aside class="hidden xl:block w-[160px] mt-8">
-                <div class="sticky top-24">
-                    <img src="https://placehold.co/200x1300" alt="Sol Reklam" class="rounded-lg shadow w-full"/>
-                </div>
-            </aside>
+        <aside class="hidden xl:block w-[160px] mt-8">
+            <div class="sticky top-24">
+                <img src="https://placehold.co/200x1300" alt="Sol Reklam" class="rounded-lg shadow w-full" />
+            </div>
+        </aside>
         {{/if}}
 
         <main class="w-full ">
             {{>Component.Breadcrumb items=breadcrumbs}}
-
             {{>Component.ScrollTop}}
-
-
             <section class="property-listing relative py-4" x-data="filterModal()">
-
-
                 <div class="container mx-auto px-4">
-
-
-
-
-                    <section class="bg-white py-6 max-w-full mx-auto relative z-10 " x-data="{
+                    <section class="py-6 max-w-full mx-auto relative z-10 " x-data="{
                         buildingTypeOpen: false,
                         repairTypeOpen: false,
                         cityOpen: false,
@@ -37,20 +28,20 @@
                         <div class=" flex justify-between items-center mb-3">
                             <div class="flex gap-2 border border-gray-200 rounded-lg">
                                 <button @click="form.addType = 'all'"
-                                        :class="form.addType === 'all' ? 'bg-[color:var(--primary)] text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
-                                        class="px-4 py-2 rounded-lg font-semibold transition" data-add-type="all">
+                                    :class="form.addType === 'all' ? 'bg-[color:var(--primary)] text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
+                                    class="px-4 py-2 rounded-lg font-semibold transition" data-add-type="all">
                                     {{ t "All" }}
                                 </button>
 
                                 <button @click="form.addType = 'sale'"
-                                        :class="form.addType === 'sale' ? 'bg-[color:var(--primary)] text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
-                                        class="px-4 py-2 rounded-lg font-semibold transition" data-add-type="sale">
+                                    :class="form.addType === 'sale' ? 'bg-[color:var(--primary)] text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
+                                    class="px-4 py-2 rounded-lg font-semibold transition" data-add-type="sale">
                                     {{ t "Sale" }}
                                 </button>
 
                                 <button @click="form.addType = 'rent'"
-                                        :class="form.addType === 'rent' ? 'bg-[color:var(--primary)] text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
-                                        class="px-4 py-2 rounded-lg font-semibold transition" data-add-type="rent">
+                                    :class="form.addType === 'rent' ? 'bg-[color:var(--primary)] text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
+                                    class="px-4 py-2 rounded-lg font-semibold transition" data-add-type="rent">
                                     {{ t "Rent" }}
                                 </button>
                             </div>
@@ -69,7 +60,7 @@
                                 class="w-full px-3 py-2 border bg-gray-50 border-gray-300 rounded-lg focus:outline-none">
 
                             <div class="relative p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer"
-                                 @click="buildingTypeOpen = !buildingTypeOpen; addressOpen = false; cityOpen = false">
+                                @click="buildingTypeOpen = !buildingTypeOpen; addressOpen = false; cityOpen = false">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-2">
                                         <i class="bi bi-layers text-orange-500 text-xl"></i>
@@ -81,13 +72,13 @@
                                 </div>
                                 <template x-if="buildingTypeOpen">
                                     <div
-                                            class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-10">
+                                        class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-10">
                                         <ul class="divide-y divide-gray-100">
                                             {{#each data.buildingTypes}}
-                                                <li class="p-2 hover:bg-gray-100 cursor-pointer"
-                                                    @click.stop="selectedBuildingType = '{{this.label}}'; buildingTypeOpen = false">
-                                                    {{ t this.label}}
-                                                </li>
+                                            <li class="p-2 hover:bg-gray-100 cursor-pointer"
+                                                @click.stop="selectedBuildingType = '{{this.label}}'; buildingTypeOpen = false">
+                                                {{ t this.label}}
+                                            </li>
                                             {{/each}}
                                         </ul>
                                     </div>
@@ -96,18 +87,18 @@
 
 
                             {{!-- <div class="relative p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer"
-                                 @click="repairTypeOpen = !repairTypeOpen; addressOpen = false; cityOpen = false">
+                                @click="repairTypeOpen = !repairTypeOpen; addressOpen = false; cityOpen = false">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-2">
                                         <i class="bi bi-layers text-orange-500 text-xl"></i>
-                                        <span class="text-gray-700" x-text="{{t "repairType"}}"></span>
+                                        <span class="text-gray-700" x-text="{{t " repairType"}}"></span>
 
                                     </div>
                                     <i class="bi bi-chevron-down text-orange-500"></i>
                                 </div>
                                 <template x-if="repairTypeOpen">
                                     <div
-                                            class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-10">
+                                        class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-10">
                                         <ul class="divide-y divide-gray-100">
                                             {{#each data.repairTypes}}
                                             <li class="p-2 hover:bg-gray-100 cursor-pointer"
@@ -121,7 +112,7 @@
                             </div> --}}
 
                             <div class="relative p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer"
-                                 @click="cityOpen = !cityOpen; addressOpen = false; buildingTypeOpen = false,repairTypeOpen = false">
+                                @click="cityOpen = !cityOpen; addressOpen = false; buildingTypeOpen = false,repairTypeOpen = false">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-2">
                                         <i class="bi bi-buildings text-orange-500 text-xl"></i>
@@ -131,13 +122,13 @@
                                 </div>
                                 <template x-if="cityOpen">
                                     <div
-                                            class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-10">
+                                        class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-10">
                                         <ul class="divide-y divide-gray-100">
                                             {{#each cities}}
-                                                <li class="p-2 hover:bg-gray-100 cursor-pointer"
-                                                    @click.stop="selectedCity = '{{this.name}}'; cityOpen = false">
-                                                    {{this.name}}
-                                                </li>
+                                            <li class="p-2 hover:bg-gray-100 cursor-pointer"
+                                                @click.stop="selectedCity = '{{this.name}}'; cityOpen = false">
+                                                {{this.name}}
+                                            </li>
 
                                             {{/each}}
 
@@ -158,9 +149,9 @@
                                 </label>
                                 <div class="flex gap-2">
                                     <input type="number" placeholder="Min qiymət" id="minPriceInput"
-                                           class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none"/>
+                                        class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none" />
                                     <input type="number" placeholder="Max qiymət" id="maxPriceInput"
-                                           class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none"/>
+                                        class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none" />
                                 </div>
                             </div>
 
@@ -182,7 +173,7 @@
                             <div class="flex flex-col gap-2 md:flex-row md:items-end p-4 w-full">
                                 <div x-data="filterModal()" @keyup.escape.window="open = false">
                                     <button @click="open = true"
-                                            class=" w-full flex items-center gap-1px-4 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 md:w-auto hover:text-[color:var(--primary)] transition">
+                                        class=" w-full flex items-center gap-1px-4 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 md:w-auto hover:text-[color:var(--primary)] transition">
                                         + {{t "More"}}
                                     </button>
                                     {{>Component.FilterModal}}
@@ -206,13 +197,12 @@
                         <div class="flex flex-wrap items-center gap-2">
 
                             <button id="gridViewBtn" class="px-4 grid-btn py-3 rounded-md active-filter"
-                                    data-view="grid">
+                                data-view="grid">
                                 <i class="bi bi-grid-3x3-gap"></i>
                             </button>
 
                             <button id="listViewBtn"
-                                    class=" px-4 py-3 list border border-[var(--border-color)] rounded-md"
-                                    data-view="list">
+                                class=" px-4 py-3 list border border-[var(--border-color)] rounded-md" data-view="list">
                                 <i class="fas fa-list text-[color:var(--icon-grey)] "></i>
                             </button>
 
@@ -249,7 +239,7 @@
                         class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-7 relative min-h-[300px]">
                     </div>
                     <div class="absolute inset-30 top-10 flex justify-center items-center z-20"
-                         id="allPropertiesLoadingOverlay">
+                        id="allPropertiesLoadingOverlay">
                         <div class="flex flex-col items-center gap-3">
                             <div class="loader"></div>
                         </div>
@@ -260,11 +250,11 @@
             </section>
         </main>
         {{#if setting.ads}}
-            <aside class="hidden xl:block w-[160px] mt-8">
-                <div class="sticky top-24">
-                    <img src="https://placehold.co/200x1300" alt="Sağ Reklam" class="rounded-lg shadow w-full"/>
-                </div>
-            </aside>
+        <aside class="hidden xl:block w-[160px] mt-8">
+            <div class="sticky top-24">
+                <img src="https://placehold.co/200x1300" alt="Sağ Reklam" class="rounded-lg shadow w-full" />
+            </div>
+        </aside>
         {{/if}}
     </div>
 </div>
