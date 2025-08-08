@@ -1,12 +1,16 @@
 <div x-show="open" x-cloak x-transition.opacity class="fixed inset-0 bg-black/10 backdrop-blur-sm z-0"></div>
 
 <div x-show="open" x-cloak x-transition.opacity
-    class=" w-full absolute inset-0 top-[500px]   z-5 flex items-center justify-center ">
+    class=" w-full absolute inset-0 top-[200px]   z-5 flex items-center justify-center ">
+
+
 
     <div class="bg-white rounded-xl w-full  relative" @click.outside="open = false">
         <form @submit.prevent="submit" style=" margin: 0 auto;" class="filter-panel mx-auto "
             :class="{ 'collapsed': collapsed }">
-            <fieldset class="fieldset repair">
+
+
+            {{!-- <fieldset class="fieldset repair">
                 <legend>Təmir vəziyyəti</legend>
                 <div class="toggle-group" data-name="repair">
                     <template x-for="opt in repairs" :key="opt.value">
@@ -14,7 +18,27 @@
                             :class="{ 'active': form.repair === opt.value }" x-text="opt.label"></button>
                     </template>
                 </div>
-            </fieldset>
+            </fieldset> --}}
+
+            <div class="dropdown-select  mt-2 filter-container flex-1" data-filter="roomCount">
+                <div
+                    class="flex items-center justify-between cursor-pointer border px-4 py-2 rounded-xl h-10 w-full bg-white text-orange-500 hover:text-gray-700">
+                    <span data-role="display-value" data-filter="roomCount">Otaq sayı</span>
+                    <i class="bi bi-chevron-down text-sm transition-transform duration-300"></i>
+                </div>
+                <div class="absolute w-[40%] mt-1 bg-white border border-orange-200 rounded-lg shadow-lg z-10 hidden">
+                    <ul class="py-1">
+                        <li class="px-4 py-2 cursor-pointer hover:bg-gray-100" data-value="">Otaq sayı</li>
+                        <li class="px-4 py-2 cursor-pointer hover:bg-gray-100" data-value="1">1 otaqlı</li>
+                        <li class="px-4 py-2 cursor-pointer hover:bg-gray-100" data-value="2">2 otaqlı</li>
+                        <li class="px-4 py-2 cursor-pointer hover:bg-gray-100" data-value="3">3 otaqlı</li>
+                        <li class="px-4 py-2 cursor-pointer hover:bg-gray-100" data-value="4">4 otaqlı</li>
+                        <li class="px-4 py-2 cursor-pointer hover:bg-gray-100" data-value="5">5+ otaqlı</li>
+                    </ul>
+                </div>
+            </div>
+
+
             {{!-- <fieldset class="p-2 bg-white fieldset range-field rounded-lg border border-gray-200 relative">
                 <div class="flex items-center gap-2">
                     <i class="bi bi-geo-alt text-orange-500 text-xl"></i>
@@ -28,15 +52,15 @@
                 </div>
             </fieldset> --}}
 
-            <fieldset class="fieldset range-field">
+            {{!-- <fieldset class="fieldset range-field">
                 <legend>Sahə, m²</legend>
                 <div class="range">
                     <input type="number" placeholder="min." x-model.number="form.areaMin" min="0">
                     <span>—</span>
                     <input type="number" placeholder="maks." x-model.number="form.areaMax" min="0">
                 </div>
-            </fieldset>
-
+            </fieldset> --}}
+{{!-- 
             <fieldset class="fieldset range-field">
                 <legend>Mərtəbə</legend>
                 <div class="range">
@@ -44,8 +68,8 @@
                     <span>—</span>
                     <input type="number" placeholder="maks." x-model.number="form.floorMax" min="0">
                 </div>
-            </fieldset>
-
+            </fieldset> --}}
+{{!-- 
             <fieldset class="fieldset location">
                 <legend>Yerləşmə</legend>
                 <div class="pill-group">
@@ -64,8 +88,8 @@
                         </div>
                     </template>
                 </div>
-            </fieldset>
-
+            </fieldset> --}}
+{{!-- 
             <fieldset class="fieldset range-field">
                 <legend>Qiymət, AZN</legend>
                 <div class="range">
@@ -73,7 +97,7 @@
                     <span>—</span>
                     <input type="number" placeholder="maks." x-model.number="form.priceMax" min="0">
                 </div>
-            </fieldset>
+            </fieldset> --}}
 
             {{!-- <fieldset class="fieldset extra">
                 <legend>Elan nömrəsi</legend>
@@ -82,14 +106,14 @@
                 <label><input type="checkbox" x-model="form.mortgage"> İpoteka var</label>
             </fieldset> --}}
 
-            <div id="selectedTags" class="tags flex flex-wrap gap-2">
+            {{!-- <div id="selectedTags" class="tags flex flex-wrap gap-2">
                 <template x-for="(tag, i) in tags" :key="tag.scope + tag.value">
                     <span class="tag" :data-scope="tag.scope" :data-value="tag.value">
                         <span x-text="tag.value"></span>
                         <button type="button" aria-label="Sil" @click="removeTag(i)">&times;</button>
                     </span>
                 </template>
-            </div>
+            </div> --}}
 
             <div class="buttons mt-4 flex gap-2">
                 <button type="button" class="btn ghost" @click="reset">Sıfırla</button>
@@ -161,8 +185,6 @@
 
             submit() {
                 const payload = { ...this.form, selected: this.tags };
-                console.log('FILTER PAYLOAD:', payload);
-                alert('filter payloada yazildi');
                 this.open = false;
             }
         }
