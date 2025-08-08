@@ -13,13 +13,13 @@ export async function getPropertiesList(searchParams = {}) {
         const baseUrl = "/properties";
         const url = `${baseUrl}${params.toString() ? `?${params.toString()}` : ''}`;
 
-        // if (typeof window !== 'undefined') {
-        //     const currentPath = window.location.pathname;
+        if (typeof window !== 'undefined') {
+            const currentPath = window.location.pathname;
            
-        //     window.history.replaceState({}, '', `${currentPath}${params.toString() ? `?${params.toString()}` : ''}`);
-        // }
+            window.history.replaceState({}, '', `${currentPath}${params.toString() ? `?${params.toString()}` : ''}`);
+        }
 
-        // console.log('Request URL:', url);
+        console.log('Request URL:', url);
 
         const res = await fetch(url, {
             method: 'GET',

@@ -187,23 +187,22 @@ export async function listApi(req, res) {
         'maxPrice',
         'page',
         'limit',
-        'is_premium'
+        'is_premium',
+        'address' // Bu sətir əlavə olunmalıdır
     ];
 
-    console.log(req.query)
+    console.log(req.query);
 
     const params = Object.fromEntries(
         Object.entries(req.query).filter(([key]) => allowedParams.includes(key))
     );
-    console.log({params})
+    console.log({ params });
     try {
         return await getData('/property', params, false, false, false);
-
     } catch (error) {
         console.error("Fastify listApi: Əmlakları çəkilərkən xəta:", error);
-        return res.status(500).send({error: "Əmlakları yükləmək mümkün olmadı."});
+        return res.status(500).send({ error: "Əmlakları yükləmək mümkün olmadı." });
     }
 }
-
 
 export default {listApi, detailsView, listView, addView, add}
