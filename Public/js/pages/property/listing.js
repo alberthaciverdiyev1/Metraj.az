@@ -414,8 +414,10 @@ function setupMoreFiltersModal() {
 }
 
 function setupResetButton() {
-    if (dom.resetButton) {
-        dom.resetButton.addEventListener("click", () => {
+    const resetButton = document.querySelector('[class*="bi-arrow-clockwise"]');
+
+    if (resetButton) {
+        resetButton.addEventListener("click", () => {
             Object.assign(state.filters, {
                 addType: "all",
                 address: "",
@@ -431,11 +433,15 @@ function setupResetButton() {
                 numberOfFloors: "",
             });
 
-            dom.filterButtons.forEach((btn) =>
-                btn.classList.remove("active", "bg-[color:var(--primary)]", "text-white")
-            );
+            dom.filterButtons.forEach((btn) => {
+                btn.classList.remove("bg-[color:var(--primary)]", "text-white");
+                btn.classList.add("bg-white", "text-gray-700");
+            });
             const allButton = document.querySelector("button[data-add-type='all']");
-            if (allButton) allButton.classList.add("active", "bg-[color:var(--primary)]", "text-white");
+            if (allButton) {
+                allButton.classList.remove("bg-white", "text-gray-700");
+                allButton.classList.add("bg-[color:var(--primary)]", "text-white");
+            }
 
             if (dom.minPriceInput) dom.minPriceInput.value = "";
             if (dom.maxPriceInput) dom.maxPriceInput.value = "";
@@ -445,27 +451,35 @@ function setupResetButton() {
             if (dom.addressInput) dom.addressInput.value = "";
 
             const dropdownsToReset = [
-                { type: "buildingType", text: "All Categories" },
-                { type: "city", text: "All Cities" },
-                { type: "roomCount", text: "Otaq sayı" },
+                { type: "buildingType", text: "Bütün Kateqoriyalar" },
+                { type: "city", text: "Bütün Şəhərlər" },
+                { type: "roomCount", text: "Otaq sayı" }, 
                 { type: "floorLocated", text: "Yerləşən mərtəbə" },
-                { type: "numberOfFloors", text: "Binanın mərtəbə sayı" },
+                { type: "numberOfFloors", text: "Binanın mərtəbə sayı" }, 
             ];
 
             dropdownsToReset.forEach((item) => {
-                const display = document.querySelector(
-                    `[data-role="display-value"][data-filter="${item.type}"]`
-                );
+                const display = document.querySelector(`[data-role="display-value"][data-filter="${item.type}"]`);
                 if (display) display.textContent = item.text;
+
+                const listItems = document.querySelectorAll(`[data-filter="${item.type}"] li`);
+                listItems.forEach(li => {
+                    if (li.textContent.trim() === item.text) {
+                        li.classList.add('selected');
+                    } else {
+                        li.classList.remove('selected');
+                    }
+                });
             });
 
             if (dom.moreFiltersModal) dom.moreFiltersModal.classList.add("hidden");
             if (dom.filterPanel) dom.filterPanel.classList.remove("blur-effect");
-
+            
             loadProperties(true);
         });
     }
 }
+
 
 document.addEventListener("DOMContentLoaded", () => {
     loadProperties(true);

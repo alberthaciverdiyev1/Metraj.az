@@ -188,7 +188,7 @@ export async function listApi(req, res) {
         'page',
         'limit',
         'is_premium',
-        'address' // Bu sətir əlavə olunmalıdır
+        'address' 
     ];
 
     console.log(req.query);
