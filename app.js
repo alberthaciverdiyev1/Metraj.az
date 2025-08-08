@@ -112,6 +112,41 @@ handlebars.registerHelper('ifNo', function (value, options) {
 //     return a === b
 // })
 
+
+//gt 
+
+handlebars.registerHelper("gt", function (a, b) {
+  return a > b;
+});
+handlebars.registerHelper("lt", function (a, b) {
+  return a < b;
+});
+handlebars.registerHelper("math", function (lvalue, operator, rvalue) {
+  lvalue = parseFloat(lvalue);
+  rvalue = parseFloat(rvalue);
+
+  switch (operator) {
+    case "+":
+      return lvalue + rvalue;
+    case "-":
+      return lvalue - rvalue;
+    case "*":
+      return lvalue * rvalue;
+    case "/":
+      return lvalue / rvalue;
+    case "%":
+      return lvalue % rvalue;
+    default:
+      throw new Error("Unknown operator: " + operator);
+  }
+});
+
+handlebars.registerHelper("if_lt", function (a, b, options) {
+  if (a < b) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
 handlebars.registerHelper('ifEquals', function (a, b, options) {
     return a === b ? options.fn(this) : options.inverse(this);
 });

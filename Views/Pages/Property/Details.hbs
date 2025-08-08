@@ -2,19 +2,38 @@
 
 {{>Component.ScrollTop}}
 
-<section id="listing-detail-gallery">
+<div class="container mx-auto px-4 mt-12">
+ <section id="listing-detail-gallery">
     <div class="container mx-auto px-4">
         <div class="gallery-grid">
+            {{#if (lookup property.media.images 0)}}
+            {{#with (lookup property.media.images 0)}}
+            <div class="gallery-main" onclick="openModal(0)">
+                <img src="{{this.path}}" alt="Əsas şəkil">
+            </div>
+            {{/with}}
+            {{/if}}
 
-            {{#each property.media.images}}
-            <figure onclick="openModal({{@index}})">
-                <img src="{{this.path}}">
-            </figure>
-            {{/each}}
+            <div class="gallery-thumbnails">
+                {{#each property.media.images}}
+                {{#if (gt @index 0)}}
+                {{#if (lt @index 4)}}
+                <figure onclick="openModal({{@index}})">
+                    <img src="{{this.path}}" alt="Kiçik şəkil">
+                </figure>
+                {{/if}}
+                {{/if}}
+                {{/each}}
 
+                {{#if (gt property.media.images.length 5)}}
+                <div class="more-images-overlay" onclick="openModal(5)">
+                    <span class="overlay-text">+{{math property.media.images.length "-" 5}} şəkil</span>
+                </div>
+                {{/if}}
+            </div>
         </div>
     </div>
-    <div id="modal" class="modal">
+     <div id="modal" class="modal">
         <div class="modal-header">
             <span id="counter">1/4</span>
             <div class="modal-actions">
@@ -36,8 +55,8 @@
             {{/each}}
         </div>
     </div>
-  
 </section>
+
 <section id="side">
     <div class="container mx-auto px-4">
         <div class="lg:flex-row md:flex-row flex-col side">
@@ -204,14 +223,18 @@
 
     </div>
 </section>
+</div>
 
 
 
+<script>
+    const imagesData = [
+        {{#each property.media.images}}
+        "{{this.path}}",
+        {{/each}}
+    ];
+</script>
 
 {{js 'phone-modal.js'}}
 {{js 'videoplay.js'}}
 {{js 'image-gallery.js'}}
-
-
-
-

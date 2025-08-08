@@ -1,5 +1,5 @@
 let currentImageIndex = 0;
-let images = [];
+let images = typeof imagesData !== 'undefined' ? imagesData : [];
 let slideshowInterval;
 
 const modal = document.getElementById('modal');
@@ -7,17 +7,28 @@ const modalImage = document.getElementById('modal-image');
 const counter = document.getElementById('counter');
 const thumbnailsContainer = document.getElementById('thumbnails');
 
-document.addEventListener('DOMContentLoaded', () => {
-    const galleryImages = document.querySelectorAll('#listing-detail-gallery .gallery-grid figure img');
-    galleryImages.forEach(img => {
-        images.push(img.src);
+if (images.length > 0) {
+    const galleryMain = document.querySelector('.gallery-main');
+    if (galleryMain) {
+        galleryMain.onclick = () => openModal(0);
+    }
+    
+    const galleryThumbnails = document.querySelectorAll('.gallery-thumbnails figure');
+    galleryThumbnails.forEach((figure, index) => {
+        figure.onclick = () => openModal(index + 1);
     });
+
+    const moreImagesOverlay = document.querySelector('.more-images-overlay');
+    if (moreImagesOverlay) {
+        moreImagesOverlay.onclick = () => openModal(4);
+    }
 
     const modalThumbnails = document.querySelectorAll('#thumbnails img');
     modalThumbnails.forEach((thumb, index) => {
         thumb.onclick = () => openModal(index);
     });
-});
+}
+
 
 function openModal(index) {
     currentImageIndex = index;
@@ -48,9 +59,9 @@ function updateModalContent() {
     }
     modalImage.src = images[currentImageIndex];
     counter.textContent = `${currentImageIndex + 1}/${images.length}`;
-    modalImage.style.width = '800px';
-    modalImage.style.height = '800px';
-
+    
+    modalImage.style.width = 'auto'; 
+    modalImage.style.height = '80vh'; 
 
     const allThumbnails = thumbnailsContainer.querySelectorAll('img');
     allThumbnails.forEach((thumb, index) => {
@@ -66,6 +77,7 @@ function updateModalContent() {
 function startSlideshow() {
     if (slideshowInterval) {
         stopSlideshow();
+        return;
     }
     slideshowInterval = setInterval(() => {
         nextImage();
@@ -91,7 +103,7 @@ document.querySelector('.modal-actions button[onclick="startSlideshow()"]').addE
 
 function toggleFullscreen() {
     if (!document.fullscreenElement) {
-        modalImage.requestFullscreen().catch(err => {
+        modal.requestFullscreen().catch(err => {
             alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
         });
     } else {
@@ -110,14 +122,13 @@ function shareImage() {
             url: images[currentImageIndex]
         }).catch(console.error);
     } else {
-        alert('Web Share API is not supported in your browser.');
+        alert('Web Share API is not supported in your browser. Image URL copied to clipboard!');
         const el = document.createElement('textarea');
         el.value = images[currentImageIndex];
         document.body.appendChild(el);
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-        alert('Image URL copied to clipboard!');
     }
 }
 
