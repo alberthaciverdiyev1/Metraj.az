@@ -1,59 +1,98 @@
-<section id="property-detail">
-    <h3>Property Details</h3>
-    <p class="units">
+<section id="property-detail" class="bg-white rounded-2xl shadow p-6 space-y-6">
+    <h3 class="text-2xl font-bold text-black">Property Details</h3>
+
+    <p id="description" class="text-gray-600 leading-relaxed line-clamp-3 transition-all duration-300">
         {{ item.description }}.
     </p>
-    <div class="read-more">Read more
+    {{!-- <button id="read-more-btn" class="flex items-center gap-2 text-[#F1913D] hover:underline text-sm font-medium mt-2">
+        Read more
         <i class="bi bi-arrow-down-circle"></i>
-    </div>
-    <div class="box">
-        <ul>
-            <li class="flex">
-                <p class="fw-6">ID</p>
-                <p>{{ item.add_no }}</p>
-            </li>
-            {{#if item.area }}
-                <li class="flex">
-                    <p class="fw-6">Area</p>
-                    <p>{{ item.area }}</p>
-                </li>
-            {{/if}}
-            {{#if item.field_area }}
-                <li class="flex">
-                    <p class="fw-6">Field Area</p>
-                    <p>{{ item.field_area }}</p>
-                </li>
-            {{/if}}
-            <li class="flex">
-                <p class="fw-6">Rooms</p>
-                <p>{{ item.number_of_rooms }}</p>
-            </li>
-            <li class="flex">
-                <p class="fw-6">Baths</p>
-                <p>{{ item.number_of_rooms}}</p>
-            </li>
-        </ul>
-        <ul>
-            <li class="flex">
-                <p class="fw-6">Beds</p>
-                <p>{{ item.number_of_rooms }}</p>
-            </li>
-            <li class="flex">
-                <p class="fw-6">Year built</p>
-                <p>{{ item.number_of_rooms }}</p>
-            </li>
-            <li class="flex">
-                <p class="fw-6">Type</p>
-                <p>{{ item.type }}</p>
-            </li>
-            <li class="flex">
-                <p class="fw-6">Status</p>
-                <p>{{ item.building_type }}</p>
-            </li>
-            <li class="flex">
-                <p class="fw-6">Garage</p>
-                <p>{{ item.number_of_rooms }}</p>
-            </li>
-        </ul>
+    </button> --}}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+        <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
+            <i class="bi bi-hash text-[#F1913D] text-xl"></i>
+            <div>
+                <p class="text-gray-500 text-sm">ID</p>
+                <p class="font-semibold">{{ item.add_no }}</p>
+            </div>
+        </div>
+
+        {{#if item.area }}
+        <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
+            <i class="bi bi-arrows-fullscreen text-[#F1913D] text-xl"></i>
+            <div>
+                <p class="text-gray-500 text-sm">Area</p>
+                <p class="font-semibold">{{ item.area }}</p>
+            </div>
+        </div>
+        {{/if}}
+
+        {{#if item.field_area }}
+        <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
+            <i class="bi bi-rulers text-[#F1913D] text-xl"></i>
+            <div>
+                <p class="text-gray-500 text-sm">Field Area</p>
+                <p class="font-semibold">{{ item.field_area }}</p>
+            </div>
+        </div>
+        {{/if}}
+
+        <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
+            <i class="bi bi-door-open text-[#F1913D] text-xl"></i>
+            <div>
+                <p class="text-gray-500 text-sm">Rooms</p>
+                <p class="font-semibold">{{ item.number_of_rooms }}</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
+            <i class="bi bi-droplet text-[#F1913D] text-xl"></i>
+            <div>
+                <p class="text-gray-500 text-sm">Baths</p>
+                <p class="font-semibold">{{ item.number_of_rooms }}</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
+            <i class="fa fa-bed text-[#F1913D] text-xl"></i>
+            <div>
+                <p class="text-gray-500 text-sm">Beds</p>
+                <p class="font-semibold">{{ item.number_of_rooms }}</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
+            <i class="bi bi-calendar text-[#F1913D] text-xl"></i>
+            <div>
+                <p class="text-gray-500 text-sm">Year built</p>
+                <p class="font-semibold">{{ item.number_of_rooms }}</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
+            <i class="bi bi-house-door text-[#F1913D] text-xl"></i>
+            <div>
+                <p class="text-gray-500 text-sm">Type</p>
+                <p class="font-semibold">{{ item.type }}</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
+            <i class="bi bi-building text-[#F1913D] text-xl"></i>
+            <div>
+                <p class="text-gray-500 text-sm">Status</p>
+                <p class="font-semibold">{{ item.building_type }}</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
+            <i class="bi bi-car-front text-[#F1913D] text-xl"></i>
+            <div>
+                <p class="text-gray-500 text-sm">Garage</p>
+                <p class="font-semibold">{{ item.number_of_rooms }}</p>
+            </div>
+        </div>
+
     </div>
 </section>
+
