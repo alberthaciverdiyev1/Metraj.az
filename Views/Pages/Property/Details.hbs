@@ -184,7 +184,8 @@
                     <div
                         class="announcement-options flex flex-col sm:flex-row justify-center items-stretch sm:items-center gap-2 mt-4 w-full bg-gray-50 border border-gray-100 rounded-2xl p-4">
                         <div
-                            class="flex justify-between items-center border border-gray-300 bg-gray-50 px-4 py-3 rounded-xl w-full sm:w-64 hover:bg-gray-100 transition">
+                        id="btn-advance"
+                            class="flex justify-between items-center border border-gray-300 bg-gray-50 px-4 py-3 rounded-xl w-full sm:w-64 hover:bg-gray-100 transition cursor-pointer">
                             <div>
                                 <h5 class="font-semibold text-gray-800 text-base">{{ t "İrəli çək" }}</h5>
                                 <p class="text-sm text-gray-600">3 AZN-dən</p>
@@ -192,17 +193,9 @@
                             <i class="fa-solid fa-arrow-up text-green-600 text-xl hover:text-green-400"></i>
                         </div>
 
-                        {{!-- <div
-                            class="flex justify-between items-center border border-gray-300 bg-gray-50 px-4 py-3 rounded-xl w-full sm:w-64 hover:bg-gray-100 transition">
-                            <div>
-                                <h5 class="font-semibold text-gray-800 text-base">{{ t "Vip et" }}</h5>
-                                <p class="text-sm text-gray-600">5 AZN-dən</p>
-                            </div>
-                            <i class="fa-solid fa-gem text-red-600 text-xl hover:text-red-400"></i>
-                        </div> --}}
-
                         <div
-                            class="flex justify-between items-center border border-gray-300 bg-gray-50 px-4 py-3 rounded-xl w-full sm:w-64 hover:bg-gray-100 transition">
+                        id="btn-premium"
+                            class="flex justify-between items-center border border-gray-300 bg-gray-50 px-4 py-3 rounded-xl w-full sm:w-64 hover:bg-gray-100 transition cursor-pointer">
                             <div>
                                 <h5 class="font-semibold text-gray-800 text-base">{{ t "Premium et" }}</h5>
                                 <p class="text-sm text-gray-600">7 AZN-dən</p>
@@ -210,6 +203,24 @@
                             <i class="fa-solid fa-crown text-yellow-500 text-xl hover:text-yellow-400"></i>
                         </div>
                     </div>
+
+                     <!-- announcement-options div-dən sonra, amma hələ də section id="side" içində -->
+<div id="modal-advance" class="modal hidden">
+  <div class="modal-content">
+    <span class="close-btn" data-close="modal-advance">&times;</span>
+    <h2>İrəli Çək</h2>
+    <p>Burada irəli çəkmə üçün əlavə məlumat və ya form ola bilər.</p>
+  </div>
+</div>
+
+<div id="modal-premium" class="modal hidden">
+  <div class="modal-content">
+    <span class="close-btn" data-close="modal-premium">&times;</span>
+    <h2>Premium Et</h2>
+    <p>Burada premium etmə üçün əlavə məlumat və ya form ola bilər.</p>
+  </div>
+</div>
+
 
 
                     {{>Component.ConnectAgent}}
@@ -238,3 +249,4 @@
 {{js 'phone-modal.js'}}
 {{js 'videoplay.js'}}
 {{js 'image-gallery.js'}}
+{{js 'modal.js'}}
