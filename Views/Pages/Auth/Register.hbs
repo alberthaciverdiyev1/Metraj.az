@@ -132,6 +132,7 @@
           <a href="/login" class="text-orange-500 hover:underline">Sign In</a>
         </p>
 
+          {{#ifNo isProduction}}
         <div class="flex items-center justify-center mt-6">
           <hr class="w-1/5 border-gray-300" />
           <span class="mx-2 text-gray-500 text-sm">or sign up with</span>
@@ -146,6 +147,7 @@
             <img src="/images/googlelogo.png" class="w-[24px] h-6 mr-2" /> Google
           </a>
         </div>
+          {{/ifNo}}
       </form>
     </div>
   </div>

@@ -15,7 +15,8 @@ import { MySaveSearchesView } from '../Controllers/MySaveSearchesController.js'
 import { DashboardView } from '../Controllers/DashboardsController.js'
 
 export default async function route(fastify, options) {
-    fastify.get('/', homePage)
+    //fastify.get('/', homePage)
+    fastify.get('/', Property.listView)
     fastify.get('/property', Property.listView)
     fastify.get('/property/:id', Property.detailsView)
     fastify.get('/properties', Property.listApi)

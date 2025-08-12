@@ -47,7 +47,9 @@
                 </button>
 
             </form>
-            <div class="divider flex items-center justify-center my-6">
+    {{#ifNo isProduction}}
+
+        <div class="divider flex items-center justify-center my-6">
                 <hr class="w-1/5 border-gray-300">
                 <span class="mx-2 text-gray-500 text-sm">Or with Google</span>
                 <hr class="w-1/5 border-gray-300">
@@ -59,6 +61,7 @@
                     <span>Sign in with Google</span>
                 </a>
             </div>
+    {{/ifNo}}
         </div>
     </div>
 </div>
