@@ -6,7 +6,8 @@
     "build": "vite build",
     "start": "node app.js",
     "tailwind:init": "tailwindcss init -p",
-    "build:css": "tailwindcss -i ./Public/css/input.css -o ./Public/css/style.css --watch"
+    "build:css": "tailwindcss -i ./Public/css/input.css -o ./Public/css/style.css --watch",
+    "dev": "nodemon app.js"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
+    "nodemon": "^3.1.10",
     "postcss": "^8.5.4",
     "tailwindcss": "^3.3.5",
     "vite": "^7.1.2"
