@@ -23,7 +23,6 @@
     "axios": "^1.10.0",
     "connect-redis": "^9.0.0",
     "dotenv": "^16.6.0",
-    "ejs": "^3.1.10",
     "fastify": "^5.3.3",
     "fastify-minify": "^1.2.0",
     "fastify-plugin": "^5.0.1",
