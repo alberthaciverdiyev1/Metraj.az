@@ -1,130 +1,91 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const advanceModal = document.getElementById('modal-advance');
-  const premiumModal = document.getElementById('modal-premium');
-  const advanceBtn = document.getElementById('btn-advance');
-  const premiumBtn = document.getElementById('btn-premium');
-
-  // Modal başlanğıcda gizli olmalıdır
-  [advanceModal, premiumModal].forEach(modal => {
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const btnAdvance = document.getElementById('btn-advance');
+    const btnPremium = document.getElementById('btn-premium');
+    const modalAdvance = document.getElementById('modal-advance');
+    const modalPremium = document.getElementById('modal-premium');
+    
+function openModal(modal) {
     if (modal) {
-      modal.classList.add('hidden');
-      // Əlavə olaraq display none da təyin edək
-      modal.style.display = 'none';
+        modal.style.display = 'flex'; 
+        setTimeout(() => {
+            modal.classList.remove('invisible');
+        }, 10);
     }
-  });
+}
 
-  function lockBodyScroll() {
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    
-    if (scrollbarWidth > 0) {
-      document.body.style.paddingRight = `${scrollbarWidth}px`;
-      
-      document.querySelectorAll('.fixed, .sticky').forEach(el => {
-        el.style.paddingRight = `${scrollbarWidth}px`;
-      });
-    }
-    
-    document.body.style.overflow = 'hidden';
-  }
-  
-
-  function unlockBodyScroll() {
-    document.body.style.overflow = '';
-    document.body.style.paddingRight = '';
-    
-    document.querySelectorAll('.fixed, .sticky').forEach(el => {
-      el.style.paddingRight = '';
-    });
-  }
-
-  function showModal(modal) {
-    if (!modal) return;
-    
-    // Modalı göstər
-    modal.style.display = 'flex';
-    modal.classList.remove('hidden');
-    
-    // Kiçik timeout ilə transition üçün
-    setTimeout(() => {
-      modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-    }, 10);
-    
-    lockBodyScroll();
-  }
-
-  function hideModal(modal) {
-    if (!modal) return;
-    
-    // Modalı gizlət
-    modal.style.backgroundColor = 'transparent';
-    modal.classList.add('hidden');
-    modal.style.display = 'none';
-    
-    // Başqa modal açıqdırsa scroll-u açma
-    const anyModalOpen = [advanceModal, premiumModal].some(
-      m => m && !m.classList.contains('hidden')
-    );
-    
-    if (!anyModalOpen) {
-      unlockBodyScroll();
-    }
-  }
-
-  // Button eventləri
-  if (advanceBtn && advanceModal) {
-    advanceBtn.addEventListener('click', e => {
-      e.preventDefault();
-      showModal(advanceModal);
-    });
-  }
-
-  if (premiumBtn && premiumModal) {
-    premiumBtn.addEventListener('click', e => {
-      e.preventDefault();
-      showModal(premiumModal);
-    });
-  }
-
-  document.addEventListener('click', e => {
-    if (e.target.hasAttribute('data-close')) {
-      e.preventDefault();
-      e.stopPropagation();
-      const modalId = e.target.getAttribute('data-close');
-      const modal = document.getElementById(modalId);
-      if (modal) hideModal(modal);
-      return;
-    }
-
-    // Overlay click - modal background-una click edildikdə
-    if (e.target === advanceModal) {
-      hideModal(advanceModal);
-    }
-    if (e.target === premiumModal) {
-      hideModal(premiumModal);
-    }
-  });
-
-  // Modal içərisindəki content-ə click edildikdə modalın bağlanmaması üçün
-  [advanceModal, premiumModal].forEach(modal => {
+function closeModal(modal) {
     if (modal) {
-      const modalContent = modal.querySelector('.bg-white');
-      if (modalContent) {
-        modalContent.addEventListener('click', e => {
-          e.stopPropagation();
+        modal.classList.add('invisible');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 200); 
+    }
+}
+
+    
+    if (btnAdvance) {
+        btnAdvance.addEventListener('click', function() {
+            openModal(modalAdvance);
         });
-      }
     }
-  });
-
-  // ESC ilə bağlama
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      if (advanceModal && !advanceModal.classList.contains('hidden')) {
-        hideModal(advanceModal);
-      }
-      if (premiumModal && !premiumModal.classList.contains('hidden')) {
-        hideModal(premiumModal);
-      }
+    
+    if (btnPremium) {
+        btnPremium.addEventListener('click', function() {
+            openModal(modalPremium);
+        });
     }
-  });
+    
+    const closeButtons = document.querySelectorAll('[data-close]');
+    closeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const modalId = this.getAttribute('data-close');
+            const modal = document.getElementById(modalId);
+            closeModal(modal);
+        });
+    });
+    
+    window.addEventListener('click', function(event) {
+        if (event.target === modalAdvance) {
+            closeModal(modalAdvance);
+        }
+        if (event.target === modalPremium) {
+            closeModal(modalPremium);
+        }
+    });
+    
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeModal(modalAdvance);
+            closeModal(modalPremium);
+        }
+    });
+    
+    const radioButtons = document.querySelectorAll('input[type="radio"]');
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', function() {
+            const labels = this.closest('.flex').parentElement.querySelectorAll('label');
+            labels.forEach(label => label.classList.remove('bg-blue-50', 'border-blue-300'));
+            
+            if (this.checked) {
+                this.closest('label').classList.add('bg-blue-50', 'border-blue-300');
+            }
+        });
+    });
 });
+
+const style = document.createElement('style');
+style.textContent = `
+    #modal-advance,
+    #modal-premium {
+        display: none;
+        background-color: rgba(0, 0, 0, 0.5) !important;
+    }
+    
+    /* Radio button seçimi zamanı stil */
+    .flex label.bg-blue-50 {
+        background-color: #eff6ff;
+        border-color: #93c5fd;
+    }
+`;
+document.head.appendChild(style);
