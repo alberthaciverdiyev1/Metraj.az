@@ -226,9 +226,9 @@ function updateAddressSuggestions(query) {
                 li.classList.add("p-2", "hover:bg-gray-100", "cursor-pointer");
                 li.textContent = address;
                 li.addEventListener("click", () => {
-                    if(addressInput) addressInput.value = address;
+                    if (addressInput) addressInput.value = address;
                     currentAddressQuery = address;
-                    if(addressSuggestionsDiv) addressSuggestionsDiv.classList.add("hidden");
+                    if (addressSuggestionsDiv) addressSuggestionsDiv.classList.add("hidden");
                     fetchAndAppendProperties(true);
                 });
                 suggestionsList.appendChild(li);
@@ -333,8 +333,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                             selectedNumberOfFloors = value;
                             break;
                     }
-                    if(displayElement) displayElement.textContent = textContent;
-                    if(list) list.classList.add('hidden');
+                    if (displayElement) displayElement.textContent = textContent;
+                    if (list) list.classList.add('hidden');
                     const icon = header.querySelector('.bi-chevron-down');
                     if (icon) icon.classList.remove('rotate-180');
                     fetchAndAppendProperties(true);
@@ -398,8 +398,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             const numberOfFloorsDisplay = document.querySelector('[data-role="display-value"][data-filter="numberOfFloors"]');
             if (numberOfFloorsDisplay) numberOfFloorsDisplay.textContent = "Binanın mərtəbə sayı";
 
-            if(moreFiltersModal) moreFiltersModal.classList.add('hidden');
-            if(filterPanel) filterPanel.classList.remove('blur-effect');
+            if (moreFiltersModal) moreFiltersModal.classList.add('hidden');
+            if (filterPanel) filterPanel.classList.remove('blur-effect');
 
             fetchAndAppendProperties(true);
         });
@@ -413,3 +413,4 @@ document.addEventListener("DOMContentLoaded", async () => {
             premiumCardContainer.classList.add("grid", "grid-cols-1", "sm:grid-cols-1", "md:grid-cols-2", "lg:grid-cols-2", "xl:grid-cols-4");
         });
     }
+})

@@ -1,19 +1,22 @@
 <!doctype html>
 <html lang="en">
 {{> Layout.Head}}
+
 <body class="bg-[#F7F7F7]">
-{{#if useLayout}}
+    {{#if useLayout}}
 
     {{> Layout.Navbar}}
 
     {{{ body}}}
 
+
     {{> Layout.Footer}}
 
-{{else}}
+    {{else}}
     {{{body}}}
-{{/if}}
+    {{/if}}
 
-{{> Layout.Js}}
+    {{> Layout.Js}}
 </body>
+
 </html>
