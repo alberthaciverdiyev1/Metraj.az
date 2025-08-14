@@ -20,7 +20,9 @@ if (images.length > 0) {
 
     const moreImagesOverlay = document.querySelector('.more-images-overlay');
     if (moreImagesOverlay) {
-        moreImagesOverlay.onclick = () => openModal(4);
+        const remainingImages = images.length - 10;
+        moreImagesOverlay.textContent = `+${remainingImages} şəkil`;
+        moreImagesOverlay.onclick = () => openModal(10); 
     }
 
     const modalThumbnails = document.querySelectorAll('#thumbnails img');
@@ -28,7 +30,6 @@ if (images.length > 0) {
         thumb.onclick = () => openModal(index);
     });
 }
-
 
 function openModal(index) {
     currentImageIndex = index;
@@ -73,7 +74,6 @@ function updateModalContent() {
         }
     });
 }
-
 function startSlideshow() {
     if (slideshowInterval) {
         stopSlideshow();
@@ -149,3 +149,4 @@ document.addEventListener('keydown', (e) => {
         }
     }
 });
+
