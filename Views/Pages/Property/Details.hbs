@@ -17,7 +17,7 @@
 <div class="gallery-thumbnails grid gap-2 overflow-hidden" style="grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); max-width:100%;">
   {{#each property.media.images}}
     {{#if (gt @index 0)}}
-      {{#if (lt @index 10)}}
+      {{#if (lt @index  10)}}
         <figure class="m-0 overflow-hidden cursor-pointer rounded" onclick="openModal({{@index}})">
           <img src="{{this.path}}" alt="Kiçik şəkil" class="w-full h-24 object-cover">
         </figure>
