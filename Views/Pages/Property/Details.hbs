@@ -4,65 +4,66 @@
 
 
 <div class="container mx-auto px-4 mt-12">
-  <section id="listing-detail-gallery">
-    <div class="container mx-auto px-4">
-      <div class="gallery-grid">
-        {{#if (lookup property.media.images 0)}}
-          {{#with (lookup property.media.images 0)}}
-            <div class="gallery-main cursor-pointer" onclick="openModal(0)">
-              <img src="{{this.path}}" alt="Əsas şəkil" class="w-full h-auto object-cover rounded">
-            </div>
-          {{/with}}
-        {{/if}}
-<div class="gallery-thumbnails grid gap-2 overflow-hidden" style="grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); max-width:100%;">
-  {{#each property.media.images}}
-    {{#if (gt @index 0)}}
-      {{#if (lt @index 10)}}
-        <figure class="m-0 overflow-hidden cursor-pointer rounded" onclick="openModal({{@index}})">
-          <img src="{{this.path}}" alt="Kiçik şəkil" class="w-full h-24 object-cover">
-        </figure>
-      {{/if}}
-    {{/if}}
-  {{/each}}
+    <section id="listing-detail-gallery">
+        <div class="container mx-auto px-4">
+            <div class="gallery-grid">
+                {{#if (lookup property.media.images 0)}}
+                    {{#with (lookup property.media.images 0)}}
+                        <div class="gallery-main cursor-pointer" onclick="openModal(0)">
+                            <img src="{{this.path}}" alt="Əsas şəkil" class="w-full h-auto object-cover rounded">
+                        </div>
+                    {{/with}}
+                {{/if}}
+                <div class="gallery-thumbnails grid gap-2 overflow-hidden"
+                     style="grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); max-width:100%;">
+                    {{#each property.media.images}}
+                        {{#if (gt @index 0)}}
+                            {{#if (lt @index 10)}}
+                                <figure class="m-0 overflow-hidden cursor-pointer rounded"
+                                        onclick="openModal({{@index}})">
+                                    <img src="{{this.path}}" alt="Kiçik şəkil" class="w-full h-24 object-cover">
+                                </figure>
+                            {{/if}}
+                        {{/if}}
+                    {{/each}}
 
-  {{#if (gt property.media.images.length 10)}}
-    <div class="more-images-overlay flex items-center justify-center bg-black bg-opacity-50 text-white text-sm font-semibold cursor-pointer rounded h-24"
-         onclick="openModal(10)">
-      +{{math property.media.images.length "-" 10}} şəkil
-    </div>
-  {{/if}}
-</div>
-      </div>
-    </div>
-  </section>
-</div>
-
-
-
-        </div>
-    </div>
-     <div id="modal" class="modal">
-        <div class="modal-header">
-            <span id="counter">1/4</span>
-            <div class="modal-actions">
-                <button onclick="startSlideshow()"><i class="bi bi-play-fill"></i></button>
-                <button onclick="toggleFullscreen()"><i class="bi bi-fullscreen"></i></button>
-                <button onclick="toggleThumbnails()"><i class="bi bi-images"></i></button>
-                <button onclick="shareImage()"><i class="bi bi-share"></i></button>
-                <button onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
+                    {{#if (gt property.media.images.length 10)}}
+                        <div class="more-images-overlay flex items-center justify-center bg-black bg-opacity-50 text-white text-sm font-semibold cursor-pointer rounded h-24"
+                             onclick="openModal(10)">
+                            +{{math property.media.images.length "-" 10}} şəkil
+                        </div>
+                    {{/if}}
+                </div>
             </div>
         </div>
-        <div class="modal-navigation">
-            <button onclick="prevImage()"><i class="bi bi-arrow-left"></i></button>
-            <img id="modal-image" src="" alt="Modal Image">
-            <button onclick="nextImage()"><i class="bi bi-arrow-right"></i></button>
+    </section>
+</div>
+
+
+</div>
+</div>
+<div id="modal" class="modal">
+    <div class="modal-header">
+        <span id="counter">1/4</span>
+        <div class="modal-actions">
+            <button onclick="startSlideshow()"><i class="bi bi-play-fill"></i></button>
+            <button onclick="toggleFullscreen()"><i class="bi bi-fullscreen"></i></button>
+            <button onclick="toggleThumbnails()"><i class="bi bi-images"></i></button>
+            <button onclick="shareImage()"><i class="bi bi-share"></i></button>
+            <button onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
         </div>
-        <div class="thumbnails" id="thumbnails">
-            {{#each property.media.images}}
+    </div>
+    <div class="modal-navigation">
+        <button onclick="prevImage()"><i class="bi bi-arrow-left"></i></button>
+        <img id="modal-image" src="" alt="Modal Image">
+        <button onclick="nextImage()"><i class="bi bi-arrow-right"></i></button>
+    </div>
+    <div class="thumbnails" id="thumbnails">
+        {{#each property.media.images}}
             <img src="{{this.path}}" onclick="openModal({{@index}})">
-            {{/each}}
-        </div>
+        {{/each}}
     </div>
+</div>
 </section>
 
 <section id="side">
@@ -73,7 +74,7 @@
                     <div class="info-box-title mb-4">
                         <h2>{{ property.title }}</h2>
                         {{#each property.prices}}
-                        <h2>₼{{ this.price }} <span>/month</span></h2>
+                            <h2>₼{{ this.price }} <span>/month</span></h2>
                         {{/each}}
                     </div>
 
@@ -83,7 +84,6 @@
                                 <i class="bi bi-geo-alt me-2"></i>
                                 <span>{{ property.address }}</span>
                             </div>
-
 
 
                         </div>
@@ -101,23 +101,23 @@
                 {{>Component.Property.Specs item=property}}
 
                 {{#if property.media.video}}
-                {{#each property.media.video}}
+                    {{#each property.media.video}}
 
-                <section id="video" class="video-section">
-                    <div class="video-container">
+                        <section id="video" class="video-section">
+                            <div class="video-container">
 
-                        <video id="video-frame" controls>
-                            <source src="{{this.path}}" type="video/mp4">
-                        </video>
-                        <div class="play-button" id="toggle-btn">
-                            <i class="bi bi-play-fill" id="play-icon"></i>
-                            <i class="bi bi-pause-fill d-none" id="pause-icon"></i>
-                        </div>
+                                <video id="video-frame" controls>
+                                    <source src="{{this.path}}" type="video/mp4">
+                                </video>
+                                <div class="play-button" id="toggle-btn">
+                                    <i class="bi bi-play-fill" id="play-icon"></i>
+                                    <i class="bi bi-pause-fill d-none" id="pause-icon"></i>
+                                </div>
 
 
-                    </div>
-                </section>
-                {{/each}}
+                            </div>
+                        </section>
+                    {{/each}}
                 {{/if}}
 
                 {{>Component.Property.Features features=property.features column=3}}
@@ -125,25 +125,25 @@
                 {{>Component.Property.Map location=property.location zoom=15}}
 
                 {{#if property.media.document}}
-                <div class="attachment-box">
-                    <h2>File Attachments</h2>
-                    <div class="file-list">
-                        {{#each property.media.document}}
-                        <div class="file-item">
-                            <div class="file-icon">
-                                <i class="fa-regular fa-file fa-2x"></i>
-                                <span>PDF</span>
-                            </div>
-                            <div class="file-name">Document {{@index}}</div>
-                            <div class="download-icon">
-                                <a href="{{ this.path}}" download>
-                                    <i class="bi bi-download"></i>
-                                </a>
-                            </div>
+                    <div class="attachment-box">
+                        <h2>File Attachments</h2>
+                        <div class="file-list">
+                            {{#each property.media.document}}
+                                <div class="file-item">
+                                    <div class="file-icon">
+                                        <i class="fa-regular fa-file fa-2x"></i>
+                                        <span>PDF</span>
+                                    </div>
+                                    <div class="file-name">Document {{@index}}</div>
+                                    <div class="download-icon">
+                                        <a href="{{ this.path}}" download>
+                                            <i class="bi bi-download"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            {{/each}}
                         </div>
-                        {{/each}}
                     </div>
-                </div>
                 {{/if}}
 
 
@@ -160,14 +160,14 @@
                         <h3>Contact Sellers</h3>
                         <div class="flex avatar-info">
                             <img src="https://themesflat.co/html/proty/images/avatar/seller.jpg" alt="Shara Conner"
-                                class="avatar">
+                                 class="avatar">
                             <div class="avatar-info-text">
                                 <h4>Shara Conner</h4>
                                 <div id="phone-numbers-container">
 
                                 </div>
                                 {{#if setting.email}}
-                                <p><a href="mailto:{{setting.email}}" class="email">
+                                    <p><a href="mailto:{{setting.email}}" class="email">
                                         <i class="bi bi-envelope"></i> {{setting.email}}</a></p>
                                 {{/if}}
                             </div>
@@ -175,181 +175,37 @@
 
                         <form id="contact-form">
                             <button class="send-message-btn all-btn button-hover" type="button" id="call-button">Zəng
-                                et</button>
+                                et
+                            </button>
                         </form>
                     </div>
 
-                   <div id="phone-modal" class="modal mt-10 p-4 mx-auto space-y-2">
-                     <div class="modal-content justify-center text-center items-center py-4 w-full max-w-[400px]">
-                       <span class="close-button">&times;</span>
-                       <h2>Zəng etmək üçün nömrəni seçin</h2>
-                       <div id="phone-options-container" class="w-full p-4 mx-auto space-y-2">
-                       </div>
-                     </div>
-                   </div>
-                   
-                    
 
 
-                    <div
-                        class="announcement-options flex flex-col sm:flex-row justify-center items-stretch sm:items-center gap-2 mt-4 w-full bg-gray-50 border border-gray-100 rounded-2xl p-4">
-                        <div
-                        id="btn-advance"
-                            class="flex justify-between items-center border border-gray-300 bg-gray-50 px-4 py-3 rounded-xl w-full sm:w-64 hover:bg-gray-100 transition cursor-pointer">
-                            <div>
-                                <h5 class="font-semibold text-gray-800 text-base">{{ t "İrəli çək" }}</h5>
-                                <p class="text-sm text-gray-600">3 AZN-dən</p>
-                            </div>
-                            <i class="fa-solid fa-arrow-up text-green-600 text-xl hover:text-green-400"></i>
-                        </div>
+                    {{> Component.Property.MultiplePhoneModal}}
 
-                        <div
-                        id="btn-premium"
-                            class="flex justify-between items-center border border-gray-300 bg-gray-50 px-4 py-3 rounded-xl w-full sm:w-64 hover:bg-gray-100 transition cursor-pointer">
-                            <div>
-                                <h5 class="font-semibold text-gray-800 text-base">{{ t "Premium et" }}</h5>
-                                <p class="text-sm text-gray-600">7 AZN-dən</p>
-                            </div>
-                            <i class="fa-solid fa-crown text-yellow-500 text-xl hover:text-yellow-400"></i>
-                        </div>
-                    </div>
-
-<div id="modal-advance" class="hidden invisible fixed inset-0 flex items-center justify-center z-[1000] bg-black bg-opacity-50">
-  <div class="bg-white rounded-lg shadow-lg max-w-sm w-full mx-4 min-h-[50vh] max-h-[80vh] relative p-4 flex flex-col space-y-4">
-    
-    <!-- Header -->
-    <div class="flex items-center justify-between">
-      <h3 class="flex items-center gap-2 text-lg font-semibold m-0">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 500 500" fill="#28a745" aria-hidden="true">
-          <path clip-rule="evenodd" fill-rule="evenodd"
-            d="M433.704,237.465c4.456,6.086,7.092,13.539,7.092,21.622
-            c0,20.079-16.266,36.341-36.344,36.341h-36.341c-9.991,0-18.173,8.18-18.173,18.172v109.025c0,20.079-16.262,36.341-36.341,36.341
-            H186.4c-20.079,0-36.34-16.262-36.34-36.341V313.6c0-9.992-8.181-18.172-18.172-18.172H95.547
-            c-20.079,0-36.342-16.262-36.342-36.341c0-8.083,2.635-15.536,7.08-21.622L217.747,54.388c17.807-17.808,46.695-17.808,64.505,0
-            L433.704,237.465z"/>
-        </svg>
-        Elanı irəli çək
-      </h3>
-      <button class="text-gray-500 hover:text-gray-800 text-4xl font-semibold flex items-center" data-close="modal-advance">&times;</button>
-    </div>
-
-    <!-- Description -->
-    <p class="text-sm">Elan bütün və Köhnə tikili almaq elanlarının axtarış nəticələrinin içində birinci yerə çıxacaq.</p>
-
-    <!-- Service duration -->
-    <h4 class="font-medium mt-4">XİDMƏTİN MÜDDƏTİNİ SEÇİN</h4>
-    <div class="flex flex-col space-y-2.5">
-      <label class="flex items-center justify-between p-3 border rounded hover:bg-gray-50 cursor-pointer text-sm">
-        <span>1 dəfə / 3,00 AZN</span>
-        <input type="radio" name="advanceOption" class="h-4 w-4 text-blue-600">
-      </label>
-      <label class="flex items-center justify-between p-3 border rounded hover:bg-gray-50 cursor-pointer text-sm">
-        <span>3 dəfə (hər 24 saat) / 6,00 AZN</span>
-        <input type="radio" name="advanceOption" class="h-4 w-4 text-blue-600">
-      </label>
-      <label class="flex items-center justify-between p-3 border rounded hover:bg-gray-50 cursor-pointer text-sm">
-        <span>5 dəfə (hər 24 saat) / 9,00 AZN</span>
-        <input type="radio" name="advanceOption" class="h-4 w-4 text-blue-600">
-      </label>
-      <label class="flex items-center justify-between p-3 border rounded hover:bg-gray-50 cursor-pointer text-sm">
-        <span>10 dəfə (hər 24 saat) / 15,00 AZN</span>
-        <input type="radio" name="advanceOption" class="h-4 w-4 text-blue-600">
-      </label>
-    </div>
-
-    <!-- Footer -->
-    <div class="border-t pt-3 flex flex-col space-y-2.5">
-      <p class="text-xs text-gray-600">«Ödə» düyməsini sıxmaqla siz bina.az-ın İstifadəçi razılaşmasını və Ofertanı qəbul etdiyinizi təsdiq etmiş olursunuz.</p>
-      <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-3 rounded">
-        Ödə
-      </button>
-    </div>
-  </div>
-</div>
-
-<div id="modal-premium" class="hidden invisible fixed inset-0 flex items-center justify-center z-[1000] bg-black bg-opacity-50">
-  <div class="bg-white rounded-lg shadow-lg max-w-sm w-full mx-4 min-h-[50vh] max-h-[80vh] relative p-4 flex flex-col space-y-4">
-    
-    <!-- Header -->
-    <div class="flex items-center justify-between">
-      <h3 class="flex items-center gap-2 text-lg font-semibold m-0">
-        <i class="fa-solid fa-crown text-yellow-500 text-3xl hover:text-yellow-400"></i>
-        Elanı irəli çək
-      </h3>
-      <button class="text-gray-500 hover:text-gray-800 text-4xl font-semibold flex items-center" data-close="modal-premium">&times;</button>
-    </div>
-
-    <!-- Description -->
-    <p class="text-sm">Elan bütün və Köhnə tikili almaq elanlarının axtarış nəticələrinin içində birinci yerə çıxacaq.</p>
-
-    <!-- Service duration -->
-    <h4 class="font-medium mt-4">XİDMƏTİN MÜDDƏTİNİ SEÇİN</h4>
-    <div class="flex flex-col space-y-2.5">
-      <label class="flex items-center justify-between p-3 border rounded hover:bg-gray-50 cursor-pointer text-sm">
-        <span>1 dəfə / 7,00 AZN</span>
-        <input type="radio" name="premiumOption" class="h-4 w-4 text-blue-600">
-      </label>
-      <label class="flex items-center justify-between p-3 border rounded hover:bg-gray-50 cursor-pointer text-sm">
-        <span>3 dəfə (hər 24 saat) / 14,00 AZN</span>
-        <input type="radio" name="premiumOption" class="h-4 w-4 text-blue-600">
-      </label>
-      <label class="flex items-center justify-between p-3 border rounded hover:bg-gray-50 cursor-pointer text-sm">
-        <span>5 dəfə (hər 24 saat) / 21,00 AZN</span>
-        <input type="radio" name="premiumOption" class="h-4 w-4 text-blue-600">
-      </label>
-      <label class="flex items-center justify-between p-3 border rounded hover:bg-gray-50 cursor-pointer text-sm">
-        <span>10 dəfə (hər 24 saat) / 28,00 AZN</span>
-        <input type="radio" name="premiumOption" class="h-4 w-4 text-blue-600">
-      </label>
-    </div>
-
-    <!-- Footer -->
-    <div class="border-t pt-3 flex flex-col space-y-2.5">
-      <p class="text-xs text-gray-600">«Ödə» düyməsini sıxmaqla siz bina.az-ın İstifadəçi razılaşmasını və Ofertanı qəbul etdiyinizi təsdiq etmiş olursunuz.</p>
-      <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-3 rounded">
-        Ödə
-      </button>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-      <div class="border-t pt-4">
-        <p class="text-sm text-gray-600 mb-4">«Ödə» düyməsini sıxmaqla siz bina.az-ın İstifadəçi razılaşmasını və Ofertanı qəbul etdiyinizi təsdiq etmiş olursunuz.</p>
-        
-        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg">
-          Ödə
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-                    {{>Component.ConnectAgent}}
+                    {{> Component.Property.PremiumButtons}}
+                    {{> Component.Property.PremiumModal}}
+                    {{> Component.Property.MoveForwardModal}}
 
                 </div>
-
-
             </div>
         </div>
 
 
-    </div>
-</section>
-</div>
 
+        {{>Component.ConnectAgent}}
+
+    </div>
+
+
+</section>
 
 
 <script>
     const imagesData = [
         {{#each property.media.images}}
-        "{{this.path}}",
+            "{{this.path}}",
         {{/each}}
     ];
 </script>
