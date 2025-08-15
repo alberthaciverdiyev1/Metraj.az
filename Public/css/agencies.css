@@ -10,12 +10,13 @@
 }
 
 .agencies-card {
-    width: calc(100% / 3 - 3rem);
+    /* width: calc(100% / 3 - 3rem); */
     border: 1px solid var(--border-color);
     border-radius: 15px;
     overflow: hidden;
-    background: #fff;
+    /* background: #fff; */
     font-family: 'Segoe UI', sans-serif;
+    width: 100%;
 }
 
 .agencies-card figure {
@@ -545,8 +546,9 @@
     #contact {
         width: 100%;
     }
-    .agencies-card{
-      width:calc(100% / 2 - 3rem) ;  
+
+    .agencies-card {
+        width: calc(100% / 2 - 3rem);
     }
 
 }
@@ -564,4 +566,3 @@
         flex-direction: column;
     }
 }
-
