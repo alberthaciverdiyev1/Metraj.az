@@ -2,6 +2,32 @@
 
 {{>Component.ScrollTop}}
 
+<style>
+.thumbnails::-webkit-scrollbar {
+    display: none;
+}
+.thumbnails {
+    -ms-overflow-style: none;  
+    scrollbar-width: none;     
+}
+.thumbnails img {
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+.thumbnails img.active {
+    opacity: 1;  
+    ring: 2px solid #3b82f6; 
+}
+
+
+.gallery-thumbnails {
+    display: grid !important;
+    gap: 0.5rem;
+    overflow: hidden;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    max-width: 100%;
+}
+</style>
 
 <div class="container mx-auto px-4 mt-12">
     <section id="listing-detail-gallery">
@@ -14,8 +40,8 @@
                         </div>
                     {{/with}}
                 {{/if}}
-                <div class="gallery-thumbnails grid gap-2 overflow-hidden"
-                     style="grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); max-width:100%;">
+                
+                <div class="gallery-thumbnails">
                     {{#each property.media.images}}
                         {{#if (gt @index 0)}}
                             {{#if (lt @index 10)}}
@@ -23,34 +49,13 @@
                                         onclick="openModal({{@index}})">
                                     <img src="{{this.path}}" alt="Kiçik şəkil" class="w-full h-24 object-cover">
                                 </figure>
-                            {{/if}}
+                            {{/if}} 
                         {{/if}}
                     {{/each}}
-  <section id="listing-detail-gallery">
-    <div class="container mx-auto px-4">
-      <div class="gallery-grid">
-        {{#if (lookup property.media.images 0)}}
-          {{#with (lookup property.media.images 0)}}
-            <div class="gallery-main cursor-pointer" onclick="openModal(0)">
-              <img src="{{this.path}}" alt="Əsas şəkil" class="w-full h-auto object-cover rounded">
-            </div>
-          {{/with}}
-        {{/if}}
-<div class="gallery-thumbnails grid gap-2 overflow-hidden" style="grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); max-width:100%;">
-  {{#each property.media.images}}
-    {{#if (gt @index 0)}}
-      {{#if (lt @index  10)}}
-        <figure class="m-0 overflow-hidden cursor-pointer rounded" onclick="openModal({{@index}})">
-          <img src="{{this.path}}" alt="Kiçik şəkil" class="w-full h-24 object-cover">
-        </figure>
-      {{/if}}
-    {{/if}}
-  {{/each}}
-
+                    
                     {{#if (gt property.media.images.length 10)}}
-                        <div class="more-images-overlay flex items-center justify-center bg-black bg-opacity-50 text-white text-sm font-semibold cursor-pointer rounded h-24"
-                             onclick="openModal(10)">
-                            +{{math property.media.images.length "-" 10}} şəkil
+                        <div class="more-images-overlay w-32 h-32 flex items-center justify-center bg-black bg-opacity-50 text-white text-xl font-bold rounded-lg cursor-pointer">
+                           <span>+{{math property.media.images.length "-" 10}} şəkil</span>
                         </div>
                     {{/if}}
                 </div>
@@ -59,12 +64,9 @@
     </section>
 </div>
 
-
-</div>
-</div>
 <div id="modal" class="modal">
     <div class="modal-header">
-        <span id="counter">1/4</span>
+        <span id="counter">1/{{property.media.images.length}}</span>
         <div class="modal-actions">
             <button onclick="startSlideshow()"><i class="bi bi-play-fill"></i></button>
             <button onclick="toggleFullscreen()"><i class="bi bi-fullscreen"></i></button>
@@ -73,18 +75,19 @@
             <button onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
         </div>
     </div>
+
     <div class="modal-navigation">
         <button onclick="prevImage()"><i class="bi bi-arrow-left"></i></button>
         <img id="modal-image" src="" alt="Modal Image">
         <button onclick="nextImage()"><i class="bi bi-arrow-right"></i></button>
     </div>
-    <div class="thumbnails" id="thumbnails">
+
+    <div class="thumbnails mt-4 flex space-x-2 overflow-x-auto" id="thumbnails">
         {{#each property.media.images}}
-            <img src="{{this.path}}" onclick="openModal({{@index}})">
+            <img src="{{this.path}}" onclick="openModal({{@index}})" class="w-20 h-20 object-cover rounded cursor-pointer hover:ring-2 hover:ring-blue-500">
         {{/each}}
     </div>
 </div>
-</section>
 
 <section id="side">
     <div class="container mx-auto px-4">
@@ -104,28 +107,22 @@
                                 <i class="bi bi-geo-alt me-2"></i>
                                 <span>{{ property.address }}</span>
                             </div>
-
-
                         </div>
                         <div class="right">
                             <i class="bi bi-heart"></i>
                             <i class="bi bi-arrow-left-right"></i>
                             <i class="bi bi-printer" id="printBtn" style="cursor: pointer;"></i>
                             <i class="bi bi-share"></i>
-
                         </div>
-
                     </div>
-
                 </div>
+
                 {{>Component.Property.Specs item=property}}
 
                 {{#if property.media.video}}
                     {{#each property.media.video}}
-
                         <section id="video" class="video-section">
                             <div class="video-container">
-
                                 <video id="video-frame" controls>
                                     <source src="{{this.path}}" type="video/mp4">
                                 </video>
@@ -133,8 +130,6 @@
                                     <i class="bi bi-play-fill" id="play-icon"></i>
                                     <i class="bi bi-pause-fill d-none" id="pause-icon"></i>
                                 </div>
-
-
                             </div>
                         </section>
                     {{/each}}
@@ -166,26 +161,22 @@
                     </div>
                 {{/if}}
 
-
                 {{>Component.Property.VirtualTour tour=property.virtual_tour}}
                 <div class="loan-calculator-container" style="width: 100%;">
                     {{>Component.LoanCalculator}}
                 </div>
                 {{>Component.SimilarCards currentProperty=property}}
-
             </div>
+            
             <div class="side-right">
                 <div class="sticky">
                     <div class="contact-card">
                         <h3>Contact Sellers</h3>
                         <div class="flex avatar-info">
-                            <img src="https://themesflat.co/html/proty/images/avatar/seller.jpg" alt="Shara Conner"
-                                 class="avatar">
+                            <img src="https://themesflat.co/html/proty/images/avatar/seller.jpg" alt="Shara Conner" class="avatar">
                             <div class="avatar-info-text">
                                 <h4>Shara Conner</h4>
-                                <div id="phone-numbers-container">
-
-                                </div>
+                                <div id="phone-numbers-container"></div>
                                 {{#if setting.email}}
                                     <p><a href="mailto:{{setting.email}}" class="email">
                                         <i class="bi bi-envelope"></i> {{setting.email}}</a></p>
@@ -194,33 +185,21 @@
                         </div>
 
                         <form id="contact-form">
-                            <button class="send-message-btn all-btn button-hover" type="button" id="call-button">Zəng
-                                et
-                            </button>
+                            <button class="send-message-btn all-btn button-hover" type="button" id="call-button">Zəng et</button>
                         </form>
                     </div>
 
-
-
                     {{> Component.Property.MultiplePhoneModal}}
-
                     {{> Component.Property.PremiumButtons}}
                     {{> Component.Property.PremiumModal}}
                     {{> Component.Property.MoveForwardModal}}
-
                 </div>
             </div>
         </div>
 
-
-
         {{>Component.ConnectAgent}}
-
     </div>
-
-
 </section>
-
 
 <script>
     const imagesData = [
