@@ -60,88 +60,92 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!agencySection) return;
 
     const agencyId = agencySection.dataset.agencyId;
-    const makePremiumBtn = document.getElementById("makePremiumBtn");
     const tabButtons = document.querySelectorAll(".tab-btn");
     const relatedPropertiesContainer = document.getElementById("related-properties");
 
-    function applyPremiumView() {
-        if (makePremiumBtn) makePremiumBtn.style.display = "none";
+    let allProperties = [];
+    let visibleCount = 0;
+    const step = 2;
 
-        const h2 = agencySection.querySelector("h2");
-        if (h2 && !h2.querySelector(".premium-label")) {
-            const span = document.createElement("span");
-            span.className = "premium-label flex items-center bg-yellow-400 text-white text-xs font-bold px-2 py-1 rounded-full ml-2";
-            span.innerHTML = '<i class="bi bi-star-fill mr-1"></i> Premium';
-            h2.appendChild(span);
-        }
-
-        const infoDiv = agencySection.querySelector(".agencies-info");
-        if (infoDiv) {
-            infoDiv.classList.remove("bg-white");
-            infoDiv.classList.add("bg-yellow-50", "border-2", "border-yellow-400", "p-4", "rounded-md");
-        }
-    }
-
-    // localStorage yoxla (premium statusu yadda saxla)
-    if (localStorage.getItem(`agency_${agencyId}_isPremium`) === "true") {
-        applyPremiumView();
-    }
-
-    if (makePremiumBtn) {
-        makePremiumBtn.addEventListener("click", async (e) => {
-            e.preventDefault();
-            try {
-                const res = await fetch(`/agency/make-premium/${agencyId}`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({})
-                });
-                if (!res.ok) throw new Error("Xəta baş verdi");
-                await res.json();
-
-                // Görünüşü yenilə
-                applyPremiumView();
-
-                // localStorage-a qeyd et
-                localStorage.setItem(`agency_${agencyId}_isPremium`, "true");
-
-            } catch (err) {
-                console.error(err);
-                alert("Premium etmək mümkün olmadı!");
-            }
-        });
-    }
+    const loader = document.createElement("div");
+    loader.id = "infinity-loader";
+    loader.className = "py-6 text-center text-gray-500";
+    loader.innerText = "Yüklənir...";
+    relatedPropertiesContainer.after(loader);
 
     function getRelatedProperties(filter = "all") {
         axios.get(`/related-properties/${agencyId}?status=${filter}`)
             .then(res => {
-                let htmlContent = "";
                 if (Array.isArray(res.data)) {
-                    res.data.forEach(property => {
-                        htmlContent += propertyCard(property);
-                    });
+                    allProperties = res.data;
                 } else {
-                    Object.entries(res.data).forEach(([_, value]) => {
-                        if (value.length === 0) return;
-                        value.forEach(property => {
-                            htmlContent += propertyCard(property);
-                        });
+                    allProperties = [];
+                    Object.values(res.data).forEach(arr => {
+                        allProperties.push(...arr);
                     });
                 }
-                relatedPropertiesContainer.innerHTML = htmlContent;
+
+                visibleCount = 0;
+                relatedPropertiesContainer.innerHTML = "";
+
+                if (allProperties.length === 0) {
+                    loader.innerText = "Heç bir məhsul tapılmadı ❌";
+                    return;
+                }
+
+                renderMore();
             })
             .catch(error => {
                 console.error("Error fetching related properties:", error);
-                relatedPropertiesContainer.innerHTML = "<p>Əmlakları yükləmək mümkün olmadı. Zəhmət olmasa, daha sonra yenidən cəhd edin.</p>";
+                relatedPropertiesContainer.innerHTML = "<p>Əmlakları yükləmək mümkün olmadı.</p>";
             });
     }
+
+    function renderMore() {
+        if (allProperties.length === 0) {
+            loader.innerText = "Heç bir məhsul tapılmadı ❌";
+            observer.disconnect();
+            return;
+        }
+
+        const nextItems = allProperties.slice(visibleCount, visibleCount + step);
+
+        if (nextItems.length === 0) {
+            loader.innerText = "Bütün məhsullar göstərildi 🗸";
+            observer.disconnect();
+            return;
+        }
+
+        // Loader mesajı göstər
+        loader.innerText = "Yüklənir...";
+
+        setTimeout(() => {
+            nextItems.forEach(property => {
+                relatedPropertiesContainer.insertAdjacentHTML("beforeend", propertyCard(property));
+            });
+
+            visibleCount += step;
+
+            if (visibleCount >= allProperties.length) {
+                loader.innerText = "Bütün məhsullar göstərildi 🗸";
+                observer.disconnect();
+            }
+        }, 2000); 
+    }
+
+
+
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            renderMore();
+        }
+    });
+    observer.observe(loader);
 
     tabButtons.forEach(button => {
         button.addEventListener("click", () => {
             tabButtons.forEach(btn => btn.classList.remove("active"));
             button.classList.add("active");
-
-            const filter = button.getAttribute("data-filter");
 
             relatedPropertiesContainer.innerHTML = `
                 <div class="absolute inset-0 z-50 flex justify-center items-center bg-white/50">
@@ -149,10 +153,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
             `;
 
-            getRelatedProperties(filter);
+            getRelatedProperties(button.getAttribute("data-filter"));
         });
     });
 
-    // İlk yükləmə zamanı bütün əmlakları gətir
     getRelatedProperties();
 });
+
