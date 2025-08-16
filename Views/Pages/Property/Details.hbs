@@ -2,197 +2,224 @@
 
 {{>Component.ScrollTop}}
 
+
 <div class="container mx-auto px-4 mt-12">
     <section id="listing-detail-gallery">
         <div class="container mx-auto px-4">
             <div class="gallery-grid">
                 {{#if (lookup property.media.images 0)}}
                     {{#with (lookup property.media.images 0)}}
-                        <div class="gallery-main" onclick="openModal(0)">
-                            <img src="{{this.path}}" alt="{{ property.title }}">
+                        <div class="gallery-main cursor-pointer" onclick="openModal(0)">
+                            <img src="{{this.path}}" alt="Əsas şəkil" class="w-full h-auto object-cover rounded">
                         </div>
                     {{/with}}
                 {{/if}}
-
-                <div class="gallery-thumbnails">
+                <div class="gallery-thumbnails grid gap-2 overflow-hidden"
+                     style="grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); max-width:100%;">
                     {{#each property.media.images}}
                         {{#if (gt @index 0)}}
-                            {{#if (lt @index 4)}}
-                                <figure onclick="openModal({{@index}})">
-                                    <img src="{{this.path}}" alt="{{ property.title }}">
+                            {{#if (lt @index 10)}}
+                                <figure class="m-0 overflow-hidden cursor-pointer rounded"
+                                        onclick="openModal({{@index}})">
+                                    <img src="{{this.path}}" alt="Kiçik şəkil" class="w-full h-24 object-cover">
                                 </figure>
                             {{/if}}
                         {{/if}}
                     {{/each}}
+  <section id="listing-detail-gallery">
+    <div class="container mx-auto px-4">
+      <div class="gallery-grid">
+        {{#if (lookup property.media.images 0)}}
+          {{#with (lookup property.media.images 0)}}
+            <div class="gallery-main cursor-pointer" onclick="openModal(0)">
+              <img src="{{this.path}}" alt="Əsas şəkil" class="w-full h-auto object-cover rounded">
+            </div>
+          {{/with}}
+        {{/if}}
+<div class="gallery-thumbnails grid gap-2 overflow-hidden" style="grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); max-width:100%;">
+  {{#each property.media.images}}
+    {{#if (gt @index 0)}}
+      {{#if (lt @index  10)}}
+        <figure class="m-0 overflow-hidden cursor-pointer rounded" onclick="openModal({{@index}})">
+          <img src="{{this.path}}" alt="Kiçik şəkil" class="w-full h-24 object-cover">
+        </figure>
+      {{/if}}
+    {{/if}}
+  {{/each}}
 
-                    {{#if (gt property.media.images.length 5)}}
-                        <div class="more-images-overlay" onclick="openModal(5)">
-                            <span class="overlay-text">+{{math property.media.images.length "-" 5}} şəkil</span>
+                    {{#if (gt property.media.images.length 10)}}
+                        <div class="more-images-overlay flex items-center justify-center bg-black bg-opacity-50 text-white text-sm font-semibold cursor-pointer rounded h-24"
+                             onclick="openModal(10)">
+                            +{{math property.media.images.length "-" 10}} şəkil
                         </div>
                     {{/if}}
                 </div>
             </div>
         </div>
-        <div id="modal" class="modal">
-            <div class="modal-header">
-                <span id="counter">1/4</span>
-                <div class="modal-actions">
-                    <button onclick="startSlideshow()"><i class="bi bi-play-fill"></i></button>
-                    <button onclick="toggleFullscreen()"><i class="bi bi-fullscreen"></i></button>
-                    <button onclick="toggleThumbnails()"><i class="bi bi-images"></i></button>
-                    <button onclick="shareImage()"><i class="bi bi-share"></i></button>
-                    <button onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
-                </div>
-            </div>
-            <div class="modal-navigation">
-                <button onclick="prevImage()"><i class="bi bi-arrow-left"></i></button>
-                <img id="modal-image" src="" alt="Modal Image">
-                <button onclick="nextImage()"><i class="bi bi-arrow-right"></i></button>
-            </div>
-            <div class="thumbnails" id="thumbnails">
-                {{#each property.media.images}}
-                    <img src="{{this.path}}" onclick="openModal({{@index}})">
-                {{/each}}
-            </div>
-        </div>
-    </section>
-
-    <section id="side">
-        <div class="container mx-auto px-4">
-            <div class="lg:flex-row md:flex-row flex-col side">
-                <div class="side-left">
-                    <div class="info-box">
-                        <div class="info-box-title mb-4">
-                            <h2>{{ property.title }}</h2>
-                            {{#each property.prices}}
-                                <h2>₼{{ this.price }} <span>/month</span></h2>
-                            {{/each}}
-                        </div>
-
-                        <div class="info-box-desc">
-                            <div class="left">
-                                <div class="adress">
-                                    <i class="bi bi-geo-alt me-2"></i>
-                                    <span>{{ property.address }}</span>
-                                </div>
-
-                            </div>
-                            <div class="right">
-                                <i class="bi bi-heart"></i>
-                                <i class="bi bi-arrow-left-right"></i>
-                                <i class="bi bi-printer" id="printBtn" style="cursor: pointer;"></i>
-                                <i class="bi bi-share"></i>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                    {{>Component.Property.Specs item=property}}
-
-                    {{#if property.media.video}}
-                        {{#each property.media.video}}
-
-                            <section id="video" class="video-section">
-                                <div class="video-container">
-
-                                    <video id="video-frame" controls>
-                                        <source src="{{this.path}}" type="video/mp4">
-                                    </video>
-                                    <div class="play-button" id="toggle-btn">
-                                        <i class="bi bi-play-fill" id="play-icon"></i>
-                                        <i class="bi bi-pause-fill d-none" id="pause-icon"></i>
-                                    </div>
-
-
-                                </div>
-                            </section>
-                        {{/each}}
-                    {{/if}}
-
-                    {{>Component.Property.Features features=property.features column=3}}
-                    {{>Component.Property.NearbyObjects objects = property.nearby column=3}}
-                    {{>Component.Property.Map location=property.location zoom=15}}
-
-                    {{#if property.media.document}}
-                        <div class="attachment-box">
-                            <h2>File Attachments</h2>
-                            <div class="file-list">
-                                {{#each property.media.document}}
-                                    <div class="file-item">
-                                        <div class="file-icon">
-                                            <i class="fa-regular fa-file fa-2x"></i>
-                                            <span>PDF</span>
-                                        </div>
-                                        <div class="file-name">Document {{@index}}</div>
-                                        <div class="download-icon">
-                                            <a href="{{ this.path}}" download>
-                                                <i class="bi bi-download"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                {{/each}}
-                            </div>
-                        </div>
-                    {{/if}}
-
-
-                    {{>Component.Property.VirtualTour tour=property.virtual_tour}}
-                    <div class="loan-calculator-container" style="width: 100%;">
-                        {{>Component.LoanCalculator}}
-                    </div>
-                    {{>Component.SimilarCards currentProperty=property}}
-
-                </div>
-                <div class="side-right">
-                    <div class="sticky">
-                        <div class="contact-card">
-                            <h3>Contact Sellers</h3>
-                            <div class="flex avatar-info">
-                                <img src="https://themesflat.co/html/proty/images/avatar/seller.jpg" alt="Shara Conner"
-                                     class="avatar">
-                                <div class="avatar-info-text">
-                                    <h4>Shara Conner</h4>
-                                    <div id="phone-numbers-container">
-
-                                    </div>
-                                    {{#if setting.email}}
-                                        <p><a href="mailto:{{setting.email}}" class="email">
-                                            <i class="bi bi-envelope"></i> {{setting.email}}</a></p>
-                                    {{/if}}
-                                </div>
-                            </div>
-
-                            <form id="contact-form">
-                                <button class="send-message-btn all-btn button-hover" type="button" id="call-button">
-                                    Zəng
-                                    et
-                                </button>
-                            </form>
-                        </div>
-
-                        {{> Component.Property.MultiplePhoneModal}}
-
-
-                        {{>Component.Property.PremiumButtons}}
-
-                        {{>Component.Property.MoveForwardModal}}
-                        {{>Component.Property.PremiumModal}}
-
-                    </div>
-                </div>
-            </div>
-
-
-            {{>Component.ConnectAgent}}
-
-                    {{>Component.ConnectAgent}}
-
-        </div>
-
-
     </section>
 </div>
+
+
+</div>
+</div>
+<div id="modal" class="modal">
+    <div class="modal-header">
+        <span id="counter">1/4</span>
+        <div class="modal-actions">
+            <button onclick="startSlideshow()"><i class="bi bi-play-fill"></i></button>
+            <button onclick="toggleFullscreen()"><i class="bi bi-fullscreen"></i></button>
+            <button onclick="toggleThumbnails()"><i class="bi bi-images"></i></button>
+            <button onclick="shareImage()"><i class="bi bi-share"></i></button>
+            <button onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
+        </div>
+    </div>
+    <div class="modal-navigation">
+        <button onclick="prevImage()"><i class="bi bi-arrow-left"></i></button>
+        <img id="modal-image" src="" alt="Modal Image">
+        <button onclick="nextImage()"><i class="bi bi-arrow-right"></i></button>
+    </div>
+    <div class="thumbnails" id="thumbnails">
+        {{#each property.media.images}}
+            <img src="{{this.path}}" onclick="openModal({{@index}})">
+        {{/each}}
+    </div>
+</div>
+</section>
+
+<section id="side">
+    <div class="container mx-auto px-4">
+        <div class="lg:flex-row md:flex-row flex-col side">
+            <div class="side-left">
+                <div class="info-box">
+                    <div class="info-box-title mb-4">
+                        <h2>{{ property.title }}</h2>
+                        {{#each property.prices}}
+                            <h2>₼{{ this.price }} <span>/month</span></h2>
+                        {{/each}}
+                    </div>
+
+                    <div class="info-box-desc">
+                        <div class="left">
+                            <div class="adress">
+                                <i class="bi bi-geo-alt me-2"></i>
+                                <span>{{ property.address }}</span>
+                            </div>
+
+
+                        </div>
+                        <div class="right">
+                            <i class="bi bi-heart"></i>
+                            <i class="bi bi-arrow-left-right"></i>
+                            <i class="bi bi-printer" id="printBtn" style="cursor: pointer;"></i>
+                            <i class="bi bi-share"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                {{>Component.Property.Specs item=property}}
+
+                {{#if property.media.video}}
+                    {{#each property.media.video}}
+
+                        <section id="video" class="video-section">
+                            <div class="video-container">
+
+                                <video id="video-frame" controls>
+                                    <source src="{{this.path}}" type="video/mp4">
+                                </video>
+                                <div class="play-button" id="toggle-btn">
+                                    <i class="bi bi-play-fill" id="play-icon"></i>
+                                    <i class="bi bi-pause-fill d-none" id="pause-icon"></i>
+                                </div>
+
+
+                            </div>
+                        </section>
+                    {{/each}}
+                {{/if}}
+
+                {{>Component.Property.Features features=property.features column=3}}
+                {{>Component.Property.NearbyObjects objects = property.nearby column=3}}
+                {{>Component.Property.Map location=property.location zoom=15}}
+
+                {{#if property.media.document}}
+                    <div class="attachment-box">
+                        <h2>File Attachments</h2>
+                        <div class="file-list">
+                            {{#each property.media.document}}
+                                <div class="file-item">
+                                    <div class="file-icon">
+                                        <i class="fa-regular fa-file fa-2x"></i>
+                                        <span>PDF</span>
+                                    </div>
+                                    <div class="file-name">Document {{@index}}</div>
+                                    <div class="download-icon">
+                                        <a href="{{ this.path}}" download>
+                                            <i class="bi bi-download"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                {{/if}}
+
+
+                {{>Component.Property.VirtualTour tour=property.virtual_tour}}
+                <div class="loan-calculator-container" style="width: 100%;">
+                    {{>Component.LoanCalculator}}
+                </div>
+                {{>Component.SimilarCards currentProperty=property}}
+
+            </div>
+            <div class="side-right">
+                <div class="sticky">
+                    <div class="contact-card">
+                        <h3>Contact Sellers</h3>
+                        <div class="flex avatar-info">
+                            <img src="https://themesflat.co/html/proty/images/avatar/seller.jpg" alt="Shara Conner"
+                                 class="avatar">
+                            <div class="avatar-info-text">
+                                <h4>Shara Conner</h4>
+                                <div id="phone-numbers-container">
+
+                                </div>
+                                {{#if setting.email}}
+                                    <p><a href="mailto:{{setting.email}}" class="email">
+                                        <i class="bi bi-envelope"></i> {{setting.email}}</a></p>
+                                {{/if}}
+                            </div>
+                        </div>
+
+                        <form id="contact-form">
+                            <button class="send-message-btn all-btn button-hover" type="button" id="call-button">Zəng
+                                et
+                            </button>
+                        </form>
+                    </div>
+
+
+
+                    {{> Component.Property.MultiplePhoneModal}}
+
+                    {{> Component.Property.PremiumButtons}}
+                    {{> Component.Property.PremiumModal}}
+                    {{> Component.Property.MoveForwardModal}}
+
+                </div>
+            </div>
+        </div>
+
+
+
+        {{>Component.ConnectAgent}}
+
+    </div>
+
+
+</section>
 
 
 <script>
