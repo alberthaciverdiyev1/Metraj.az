@@ -1,5 +1,4 @@
 {{>Component.Breadcrumb items=breadcrumbs}}
-
 {{>Component.ScrollTop}}
 
 <style>
@@ -19,7 +18,6 @@
     ring: 2px solid #3b82f6; 
 }
 
-
 .gallery-thumbnails {
     display: grid !important;
     gap: 0.5rem;
@@ -27,6 +25,8 @@
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     max-width: 100%;
 }
+
+
 </style>
 
 <div class="container mx-auto px-4 mt-12">
@@ -141,6 +141,8 @@
                 {{>Component.Property.NearbyObjects objects = property.nearby column=3}}
                 {{>Component.Property.Map location=property.location zoom=15}}
 
+                
+
                 {{#if property.media.document}}
                     <div class="attachment-box">
                         <h2>File Attachments</h2>
@@ -202,6 +204,49 @@
         {{>Component.ConnectAgent}}
     </div>
 </section>
+<section id="location">
+  <div class="container mx-auto px-4">
+    <div class="bg-white rounded-xl p-4 shadow-md w-full max-w-[900px] relative z-0">
+        <h1 class="text-3xl font-semibold mb-4">Get Direction</h1>
+        <div id="map" class="w-full h-[500px] rounded-lg mb-6"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 p-4  max-w-[800px]">
+            <ul class="space-y-2">
+                <li class="flex justify-between gap-2">
+                    <span class="font-semibold">Address</span>
+                    <div class="text-gray-700">150 sqft</div>
+                </li>
+                <li class="flex justify-between gap-2">
+                    <span class="font-semibold">City</span>
+                    <div class="text-gray-700">#1234</div>
+                </li>
+                <li class="flex justify-between gap-2">
+                    <span class="font-semibold">State/County</span>
+                    <div class="text-gray-700">$7,500</div>
+                </li>
+            </ul>
+            <ul class="space-y-2">
+                <li class="flex justify-between gap-2">
+                    <span class="font-semibold">Postal Code</span>
+                    <div class="text-gray-700">7.328</div>
+                </li>
+                <li class="flex justify-between gap-2">
+                    <span class="font-semibold">Area</span>
+                    <div class="text-gray-700">7.328</div>
+                </li>
+                <li class="flex justify-between gap-2">
+                    <span class="font-semibold">Country</span>
+                    <div class="text-gray-700">2024</div>
+                </li>
+            </ul>
+        </div>
+        <!-- /Info Map -->
+
+    </div>
+  </div>
+</section>
+
+
 
 <script>
     const imagesData = [
@@ -215,3 +260,4 @@
 {{js 'videoplay.js'}}
 {{js 'image-gallery.js'}}
 {{js 'modal.js'}}
+{{js 'map-find-adress.js'}}
