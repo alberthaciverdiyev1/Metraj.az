@@ -113,7 +113,7 @@ handlebars.registerHelper('ifNo', function (value, options) {
 // })
 
 
-//gt 
+//gt z
 
 handlebars.registerHelper("gt", function (a, b) {
   return a > b;
@@ -204,7 +204,7 @@ fastify.addHook('preHandler', async (request, reply) => {
 
         data.session = { user, jwtToken };
         data.user = user;
-        data.setting = await getData('/setting', [], false, true, true);
+        data.setting = await getData('/settzzing', [], false, true, true);
       //  data.seo = await getData(`/seo/${currentRoute}`, [], false, true, true);
         console.log(data.seo);
         data.lang = request.cookies.lang || 'en';

@@ -1,70 +1,76 @@
 const gridBtn = document.getElementById("gridViewBtn");
 const listBtn = document.getElementById("listViewBtn");
-const cards = document.querySelectorAll(".agencies-card"); 
+const cards = document.querySelectorAll(".agencies-card");
 
 gridBtn.addEventListener("click", () => {
-  cards.forEach(card => {
-    card.classList.remove("list-view");
-  });
-  gridBtn.classList.add("active");
-  listBtn.classList.remove("active");
+    cards.forEach(card => {
+        card.classList.remove("list-view");
+    });
+    gridBtn.classList.add("active");
+    listBtn.classList.remove("active");
 });
 
 listBtn.addEventListener("click", () => {
-  cards.forEach(card => {
-    card.classList.add("list-view");
-  });
-  listBtn.classList.add("active");
-  gridBtn.classList.remove("active");
+    cards.forEach(card => {
+        card.classList.add("list-view");
+    });
+    listBtn.classList.add("active");
+    gridBtn.classList.remove("active");
 });
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const cardsPerPage = 8;
-        const allCards = document.querySelectorAll(".agencies-card");
-        const pagination = document.querySelector(".pagination");
-        const pageItems = pagination.querySelectorAll(".page-item:not(.disabled)");
+document.addEventListener("DOMContentLoaded", () => {
+    const gridBtn = document.getElementById("gridViewBtn");
+    const listBtn = document.getElementById("listViewBtn");
+    const cardsContainer = document.getElementById("agencyCards");
+    const cards = document.querySelectorAll(".agencies-card");
 
-        function showPage(pageNumber) {
-            const start = (pageNumber - 1) * cardsPerPage;
-            const end = start + cardsPerPage;
+    gridBtn.addEventListener("click", () => {
+        cardsContainer.classList.remove("list-view");
+        gridBtn.classList.add("active");
+        listBtn.classList.remove("active");
+    });
 
-            allCards.forEach((card, index) => {
-                if (index >= start && index < end) {
-                    card.style.display = "block";
-                } else {
-                    card.style.display = "none";
-                }
-            });
+    listBtn.addEventListener("click", () => {
+        cardsContainer.classList.add("list-view");
+        listBtn.classList.add("active");
+        gridBtn.classList.remove("active");
+    });
 
-            pageItems.forEach(item => item.classList.remove("active"));
-            pageItems.forEach(item => {
-                const link = item.querySelector(".page-link");
-                if (link && link.textContent.trim() == pageNumber) {
-                    item.classList.add("active");
-                }
-            });
+    function updatePremiumCard(card) {
+        card.classList.remove("bg-white");
+        card.classList.add("bg-yellow-50", "border-2", "border-yellow-400");
+
+        if (!card.querySelector(".premium-icon")) {
+            const span = document.createElement("div");
+            span.className = "premium-icon absolute top-2 right-2 bg-white text-white text-xs font-bold px-2 py-1 rounded-full z-10 flex items-center";
+            span.innerHTML = '<i class="fa-solid fa-crown text-yellow-500 text-xl hover:text-yellow-400"></i> ';
+            card.appendChild(span);
         }
 
-        pageItems.forEach(item => {
-            const link = item.querySelector(".page-link");
-            if (link && link.textContent.trim() !== "...") {
-                link.addEventListener("click", function (e) {
-                    e.preventDefault();
+        const btn = card.querySelector(".premium-btn");
+        if (btn) btn.style.display = "none";
+    }
 
-                    const text = this.textContent.trim();
-                    const currentPage = parseInt(document.querySelector(".pagination .active .page-link").textContent);
-                    
-                    if (this.getAttribute("aria-label") === "Previous") {
-                        if (currentPage > 1) showPage(currentPage - 1);
-                    } else if (this.getAttribute("aria-label") === "Next") {
-                        const lastPage = pageItems[pageItems.length - 2].querySelector(".page-link").textContent;
-                        if (currentPage < lastPage) showPage(currentPage + 1);
-                    } else {
-                        showPage(parseInt(text));
-                    }
-                });
-            }
-        });
+    // İlk yükləmə zamanı backend və localStorage yoxla
+    cards.forEach(card => {
+        const isPremiumBackend = card.dataset.isPremium === "true";
+        const isPremiumLocal = localStorage.getItem(`agency_${card.dataset.id}_isPremium`) === "true";
 
-        showPage(1);
+        if (isPremiumBackend || isPremiumLocal) {
+            updatePremiumCard(card);
+        }
     });
+
+    // Storage event: başqa tablarda dəyişəndə dərhal update et
+    window.addEventListener("storage", (e) => {
+        if (e.key && e.key.startsWith("agency_") && e.key.endsWith("_isPremium") && e.newValue === "true") {
+            const id = e.key.split("_")[1];
+            const card = document.querySelector(`.agencies-card[data-id="${id}"]`);
+            if (card) updatePremiumCard(card);
+        }
+    });
+});
+
+
+
+

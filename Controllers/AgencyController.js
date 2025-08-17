@@ -1,5 +1,5 @@
-import {getData, postData} from "../Helpers/callApi.js";
-import {js, css} from "../Helpers/assets.js";
+import { getData, postData } from "../Helpers/callApi.js";
+import { js, css } from "../Helpers/assets.js";
 
 async function listView(request, reply) {
     let agencies = await getData('/agency', [], false, false, false);
@@ -18,9 +18,10 @@ async function listView(request, reply) {
 }
 
 
+
 // Details funksiyasında
 async function Details(request, reply) {
-    const {id} = request.params;
+    const { id } = request.params;
     const Agency = await getData(`/agency/${id}`);
 
     const view = {
@@ -30,20 +31,20 @@ async function Details(request, reply) {
         js: js(['pages/agency-details.js', 'app.js', 'gotop.js']), // agencies.js-i çıxardım
         agency: Agency,
         breadcrumbs: [
-            {label: 'Home', url: '/'},
-            {label: 'Agencies', url: '/agency'},
+            { label: 'Home', url: '/' },
+            { label: 'Agencies', url: '/agency' },
         ]
     }
     return reply.view('Pages/Agency/Details.hbs', view);
 }
 
 async function MakePremium(request, reply) {
-    const {id} = request.params;
+    const { id } = request.params;
     return await postData(`/make-premium/${id}`);
 }
 
 async function RelatedProperties(req) {
-    const {id} = req.params;
+    const { id } = req.params;
     const adType = req.query.adType || ''; // Burada `adType` kimi qəbul edirsən
 
     let url = `/agency-property/${id}`;
@@ -56,4 +57,4 @@ async function RelatedProperties(req) {
     return await getData(url, [], false, true, false);
 }
 
-export default {listView, Details, RelatedProperties, MakePremium}
+export default { listView, Details, RelatedProperties, MakePremium }
