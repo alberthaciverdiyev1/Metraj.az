@@ -20,8 +20,6 @@ if (images.length > 0) {
 
     const moreImagesOverlay = document.querySelector('.more-images-overlay');
     if (moreImagesOverlay) {
-        const remainingImages = images.length - 10;
-        moreImagesOverlay.textContent = `+${remainingImages} şəkil`;
         moreImagesOverlay.onclick = () => openModal(10); 
     }
 
@@ -35,10 +33,12 @@ function openModal(index) {
     currentImageIndex = index;
     updateModalContent();
     modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
     modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
     stopSlideshow();
 }
 
@@ -63,17 +63,19 @@ function updateModalContent() {
     
     modalImage.style.width = 'auto'; 
     modalImage.style.height = '80vh'; 
+    modalImage.style.maxWidth = '90vw';
 
     const allThumbnails = thumbnailsContainer.querySelectorAll('img');
     allThumbnails.forEach((thumb, index) => {
         if (index === currentImageIndex) {
             thumb.classList.add('active');
-            thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         } else {
             thumb.classList.remove('active');
         }
     });
 }
+
 function startSlideshow() {
     if (slideshowInterval) {
         stopSlideshow();
@@ -82,29 +84,31 @@ function startSlideshow() {
     slideshowInterval = setInterval(() => {
         nextImage();
     }, 3000);
-    document.querySelector('.modal-actions .bi-play-fill').classList.add('d-none');
-    document.querySelector('.modal-actions .bi-pause-fill').classList.remove('d-none');
+    
+    const playButton = document.querySelector('.modal-actions .bi-play-fill');
+    const pauseButton = document.querySelector('.modal-actions .bi-pause-fill');
+    if (playButton && pauseButton) {
+        playButton.classList.add('d-none');
+        pauseButton.classList.remove('d-none');
+    }
 }
 
 function stopSlideshow() {
     clearInterval(slideshowInterval);
     slideshowInterval = null;
-    document.querySelector('.modal-actions .bi-play-fill').classList.remove('d-none');
-    document.querySelector('.modal-actions .bi-pause-fill').classList.add('d-none');
-}
-
-document.querySelector('.modal-actions button[onclick="startSlideshow()"]').addEventListener('click', () => {
-    if (slideshowInterval) {
-        stopSlideshow();
-    } else {
-        startSlideshow();
+    
+    const playButton = document.querySelector('.modal-actions .bi-play-fill');
+    const pauseButton = document.querySelector('.modal-actions .bi-pause-fill');
+    if (playButton && pauseButton) {
+        playButton.classList.remove('d-none');
+        pauseButton.classList.add('d-none');
     }
-});
+}
 
 function toggleFullscreen() {
     if (!document.fullscreenElement) {
         modal.requestFullscreen().catch(err => {
-            alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+            console.error(`Error attempting to enable full-screen mode: ${err.message}`);
         });
     } else {
         document.exitFullscreen();
@@ -112,23 +116,23 @@ function toggleFullscreen() {
 }
 
 function toggleThumbnails() {
-    thumbnailsContainer.classList.toggle('show-thumbnails');
+    thumbnailsContainer.classList.toggle('d-none');
 }
 
 function shareImage() {
-    if (navigator.share) {
+    if (navigator.share && images[currentImageIndex]) {
         navigator.share({
             title: document.title,
             url: images[currentImageIndex]
         }).catch(console.error);
     } else {
-        alert('Web Share API is not supported in your browser. Image URL copied to clipboard!');
-        const el = document.createElement('textarea');
-        el.value = images[currentImageIndex];
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
+        if (images[currentImageIndex]) {
+            navigator.clipboard.writeText(images[currentImageIndex]).then(() => {
+                alert('Image URL copied to clipboard!');
+            }).catch(() => {
+                console.error('Failed to copy to clipboard');
+            });
+        }
     }
 }
 
@@ -140,13 +144,44 @@ modal.addEventListener('click', (e) => {
 
 document.addEventListener('keydown', (e) => {
     if (modal.style.display === 'block') {
-        if (e.key === 'Escape') {
-            closeModal();
-        } else if (e.key === 'ArrowLeft') {
-            prevImage();
-        } else if (e.key === 'ArrowRight') {
-            nextImage();
+        switch(e.key) {
+            case 'Escape':
+                closeModal();
+                break;
+            case 'ArrowLeft':
+                prevImage();
+                break;
+            case 'ArrowRight':
+                nextImage();
+                break;
+            case ' ': 
+                e.preventDefault();
+                if (slideshowInterval) {
+                    stopSlideshow();
+                } else {
+                    startSlideshow();
+                }
+                break;
         }
     }
 });
 
+let startX = 0;
+let endX = 0;
+
+modal.addEventListener('touchstart', e => {
+    startX = e.changedTouches[0].screenX;
+});
+
+modal.addEventListener('touchend', e => {
+    endX = e.changedTouches[0].screenX;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    if (startX - endX > 50) {
+        nextImage(); 
+    } else if (endX - startX > 50) {
+        prevImage(); 
+    }
+}

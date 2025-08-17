@@ -61,44 +61,46 @@ document.addEventListener("DOMContentLoaded", async () => {
       const reader = new FileReader();
       reader.onload = () => {
         renderGallery();
-        // Şəkilləri localStorage-a saxla
         saveImagesToLocalStorage();
       };
       reader.readAsDataURL(file);
     });
   }
 
-  function renderGallery() {
-    gallery.innerHTML = "";
-    images.forEach((file, index) => {
+function renderGallery() {
+  gallery.innerHTML = "";
+  images.forEach((file, index) => {
+    const div = document.createElement("div");
+    div.className = "relative group";
+
+    const img = document.createElement("img");
+    img.className = "rounded-lg w-full h-auto object-cover";
+
+    if (typeof file === "string") {
+      img.src = file;
+    } else {
       const reader = new FileReader();
-      reader.onload = () => {
-        const div = document.createElement("div");
-        div.className = "relative group";
-
-        const img = document.createElement("img");
-        img.src = reader.result;
-        img.className = "rounded-lg w-full h-auto object-cover";
-
-        const delBtn = document.createElement("button");
-        delBtn.className =
-          "absolute top-1 right-1 bg-black/50 hover:bg-black/70 text-white p-1 rounded-full transition";
-        delBtn.innerHTML = '<i class="bi bi-trash"></i>';
-        delBtn.onclick = () => {
-          images.splice(index, 1);
-          renderGallery();
-          saveImagesToLocalStorage();
-        };
-
-        div.appendChild(img);
-        div.appendChild(delBtn);
-        gallery.appendChild(div);
-      };
+      reader.onload = () => img.src = reader.result;
       reader.readAsDataURL(file);
-    });
-  }
+    }
 
-  // Şəkilləri base64 formatında localStorage-a saxla
+    const delBtn = document.createElement("button");
+    delBtn.className =
+      "absolute top-1 right-1 bg-black/50 hover:bg-black/70 text-white p-1 rounded-full transition";
+    delBtn.innerHTML = '<i class="bi bi-trash"></i>';
+    delBtn.onclick = () => {
+      images.splice(index, 1);
+      renderGallery();
+      saveImagesToLocalStorage();
+    };
+
+    div.appendChild(img);
+    div.appendChild(delBtn);
+    gallery.appendChild(div);
+  });
+}
+
+
   function saveImagesToLocalStorage() {
     const imagePromises = images.map(file => {
       return new Promise((resolve) => {
@@ -121,24 +123,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // localStorage-dan şəkilləri yüklə
-  function loadImagesFromLocalStorage() {
-    const data = JSON.parse(localStorage.getItem('unsavedPropertyData')) || {};
-    if (data.images && data.images.length > 0) {
-      images = []; // Mövcud şəkilləri təmizlə
-      
-      data.images.forEach(imageData => {
-        // Base64 data-dan File obyekti yarat
-        fetch(imageData.data)
-          .then(res => res.blob())
-          .then(blob => {
-            const file = new File([blob], imageData.name, { type: imageData.type });
-            images.push(file);
-            renderGallery();
-          });
-      });
-    }
-  }
+async function loadImagesFromLocalStorage() {
+  const data = JSON.parse(localStorage.getItem('unsavedPropertyData')) || {};
+  if (!data.images) return;
+
+  const loaded = await Promise.all(
+    data.images.map(img =>
+      fetch(img.data)
+        .then(res => res.blob())
+        .then(blob => new File([blob], img.name, { type: img.type }))
+    )
+  );
+
+  images = loaded;
+  renderGallery();
+}
+
 
   async function propertyTypes() {
     const selectElement = document.getElementById("building-type");
@@ -421,7 +421,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         },
       });
       console.log(" Uğurla göndərildi:", response.data);
-      // Form uğurla göndərildikdən sonra localStorage-ı təmizlə
       localStorage.removeItem('unsavedPropertyData');
     } catch (error) {
       console.error("Error:", error.response?.data || error.message);
@@ -484,7 +483,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const inputField = document.getElementById(config.inputId);
     const icon = document.getElementById(config.iconId);
 
-    // Toggle options list visibility
     button.addEventListener("click", function () {
       const isHidden = optionsList.classList.contains("hidden");
       if (isHidden) {
@@ -498,7 +496,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
 
-    // Handle option selection
     optionsList.addEventListener("click", function (event) {
       const selectedOption = event.target.closest("li");
       if (selectedOption) {
@@ -582,7 +579,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (savedData) {
           await waitForDynamicElements();
           
-          // Əvvəlcə şəkilləri yüklə
           if (savedData.images) {
             loadImagesFromLocalStorage();
           }
@@ -609,7 +605,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             input.dispatchEvent(new Event('change', { bubbles: true }));
           });
 
-          // Area inputları üçün xüsusi işləm
           if (savedData.areaValue) {
             const areaInput = document.querySelector("#area input");
             if (areaInput) {
@@ -661,7 +656,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           }
 
           setTimeout(() => {
-            // Features - dəyər əsasında seçim
+            document.querySelectorAll('input[name="features[]"]').forEach(checkbox => {
+              checkbox.checked = false; 
+            });
+            
             if (savedData.selectedFeatures && Array.isArray(savedData.selectedFeatures)) {
               savedData.selectedFeatures.forEach(value => {
                 const checkbox = document.querySelector(`input[name="features[]"][value="${value}"]`);
@@ -672,7 +670,10 @@ document.addEventListener("DOMContentLoaded", async () => {
               });
             }
             
-            // Nearby objects - dəyər əsasında seçim
+            document.querySelectorAll('input[name="nearby-objects[]"]').forEach(checkbox => {
+              checkbox.checked = false; 
+            });
+            
             if (savedData.selectedNearbyObjects && Array.isArray(savedData.selectedNearbyObjects)) {
               savedData.selectedNearbyObjects.forEach(value => {
                 const checkbox = document.querySelector(`input[name="nearby-objects[]"][value="${value}"]`);
@@ -708,6 +709,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     attachInputListeners();
   }, 2000);
 
+  function saveFeaturesToLocalStorage() {
+    let data = JSON.parse(localStorage.getItem('unsavedPropertyData')) || {};
+    const selectedFeatures = [];
+    
+    document.querySelectorAll('input[name="features[]"]:checked').forEach(cb => {
+      selectedFeatures.push(cb.value);
+    });
+    
+    data.selectedFeatures = selectedFeatures;
+    localStorage.setItem('unsavedPropertyData', JSON.stringify(data));
+    console.log('Saved features:', selectedFeatures);
+  }
+
+  function saveNearbyObjectsToLocalStorage() {
+    let data = JSON.parse(localStorage.getItem('unsavedPropertyData')) || {};
+    const selectedNearbyObjects = [];
+    
+    document.querySelectorAll('input[name="nearby-objects[]"]:checked').forEach(cb => {
+      selectedNearbyObjects.push(cb.value);
+    });
+    
+    data.selectedNearbyObjects = selectedNearbyObjects;
+    localStorage.setItem('unsavedPropertyData', JSON.stringify(data));
+    console.log('Saved nearby objects:', selectedNearbyObjects);
+  }
+
   function attachInputListeners() {
     const allInputs = document.querySelectorAll('#propertyForm input, #propertyForm select, #propertyForm textarea');
     console.log('Attaching listeners to', allInputs.length, 'inputs');
@@ -720,7 +747,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     });
 
-    // Area inputları üçün xüsusi listener
     setTimeout(() => {
       const areaInput = document.querySelector("#area input");
       const fieldAreaInput = document.querySelector("#field-area input");
@@ -751,12 +777,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       
       featuresCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
+          console.log('Feature checkbox changed:', checkbox.value, checkbox.checked);
           saveFeaturesToLocalStorage();
         });
       });
 
       nearbyCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
+          console.log('Nearby object checkbox changed:', checkbox.value, checkbox.checked);
           saveNearbyObjectsToLocalStorage();
         });
       });
@@ -781,34 +809,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     localStorage.setItem('unsavedPropertyData', JSON.stringify(data));
     console.log(`Saved ${key}:`, data[key]);
-  }
-
-  // Features saxlama - yalnız seçilmiş dəyərləri array olaraq saxla
-  function saveFeaturesToLocalStorage() {
-    let data = JSON.parse(localStorage.getItem('unsavedPropertyData')) || {};
-    const selectedFeatures = [];
-    
-    document.querySelectorAll('input[name="features[]"]:checked').forEach(cb => {
-      selectedFeatures.push(cb.value);
-    });
-    
-    data.selectedFeatures = selectedFeatures;
-    localStorage.setItem('unsavedPropertyData', JSON.stringify(data));
-    console.log('Saved features:', selectedFeatures);
-  }
-
-  // Nearby objects saxlama - yalnız seçilmiş dəyərləri array olaraq saxla
-  function saveNearbyObjectsToLocalStorage() {
-    let data = JSON.parse(localStorage.getItem('unsavedPropertyData')) || {};
-    const selectedNearbyObjects = [];
-    
-    document.querySelectorAll('input[name="nearby-objects[]"]:checked').forEach(cb => {
-      selectedNearbyObjects.push(cb.value);
-    });
-    
-    data.selectedNearbyObjects = selectedNearbyObjects;
-    localStorage.setItem('unsavedPropertyData', JSON.stringify(data));
-    console.log('Saved nearby objects:', selectedNearbyObjects);
   }
 
   function waitForDynamicElements() {
@@ -879,5 +879,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       unsavedModal.classList.add('hidden');
       unsavedModal.style.display = 'none';
     }
+  }
+
+  function clearFeatureSelections() {
+    let data = JSON.parse(localStorage.getItem('unsavedPropertyData')) || {};
+    data.selectedFeatures = [];
+    data.selectedNearbyObjects = [];
+    localStorage.setItem('unsavedPropertyData', JSON.stringify(data));
+    console.log('Cleared feature selections');
   }
 });
