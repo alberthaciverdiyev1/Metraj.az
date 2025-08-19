@@ -200,11 +200,42 @@ window.removeFavorite = function (propertyId) {
     }
 };
 
+function showCompareToast(message) {
+    let toastContainer = document.getElementById('toastContainer');
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.id = 'toastContainer';
+        toastContainer.style.position = 'fixed';
+        toastContainer.style.bottom = '20px';
+        toastContainer.style.right = '20px';
+        toastContainer.style.zIndex = '9999';
+        document.body.appendChild(toastContainer);
+    }
+
+    const toast = document.createElement('div');
+    toast.style.background = '#2C2E33';
+    toast.style.color = '#fff';
+    toast.style.padding = '12px 16px';
+    toast.style.marginTop = '8px';
+    toast.style.borderRadius = '8px';
+    toast.style.fontSize = '14px';
+    toast.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
+    toast.innerHTML = `
+        ${message} 
+        <a href="/compare" style="color: #4f9ef7; margin-left: 10px; text-decoration: underline;">
+            Müqayisə səhifəsinə bax
+        </a>
+    `;
+
+    toastContainer.appendChild(toast);
+
+    setTimeout(() => toast.remove(), 4000);
+}
+
+
 window.toggleCompare = function (element, propertyJsonString) {
     let compareList = JSON.parse(localStorage.getItem('compareList')) || [];
-
     const property = JSON.parse(propertyJsonString);
-
     const maxCompareItems = 3;
 
     const isAlreadyInCompare = compareList.some(compProperty => compProperty.id === property.id);
@@ -214,16 +245,17 @@ window.toggleCompare = function (element, propertyJsonString) {
         if (compareList.length < maxCompareItems) {
             compareList.push(property);
             compareIcon.classList.add('text-[color:var(--primary)]');
-            alert(`${property.title} müqayisə siyahısına əlavə edildi.`);
+            showCompareToast(`${property.title} müqayisə siyahısına əlavə edildi.`);
         } else {
-            alert(`Siz ən çox ${maxCompareItems} mülkü müqayisə edə bilərsiniz. Zəhmət olmasa, əvvəlcə bir mülkü siyahıdan çıxarın.`);
+            showCompareToast(`Siz ən çox ${maxCompareItems} mülkü müqayisə edə bilərsiniz. Əvvəlcə birini çıxarın.`);
         }
     } else {
         compareList = compareList.filter(compProperty => compProperty.id !== property.id);
         compareIcon.classList.remove('text-[color:var(--primary)]');
-        alert(`${property.title} müqayisə siyahısından çıxarıldı.`);
+        showCompareToast(`${property.title} müqayisə siyahısından çıxarıldı.`);
     }
 
     localStorage.setItem('compareList', JSON.stringify(compareList));
     console.log('Compare List updated and saved to localStorage:', compareList);
 };
+    
