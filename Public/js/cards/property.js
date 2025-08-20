@@ -96,7 +96,6 @@ export function propertyCard(property, showRemoveButton = false) {
         </div>
     `;
 }
-
 function getFavoriteStatus(propertyId) {
     const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     return favorites.some(favProperty => favProperty.id === propertyId);
