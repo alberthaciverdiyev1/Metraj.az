@@ -60,8 +60,8 @@ export function propertyCard(property, showRemoveButton = false) {
             <!-- Image -->
             <div class="relative overflow-hidden">
                 <img src="${property.media.path}" alt="${property.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" />
-                ${badges}
                 ${premiumBadge}
+                ${badges}
                 ${favoriteOrRemoveButton}
             </div>
 
