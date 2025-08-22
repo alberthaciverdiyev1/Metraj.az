@@ -142,7 +142,7 @@ function getFilterParams() {
     const cleanParams = {};
 
     if (f.addType && f.addType !== "all") {
-        cleanParams.adType = f.addType;  
+        cleanParams.adType = f.addType;
     }
     if (f.address) cleanParams.address = f.address;
     if (f.minArea) cleanParams.minArea = f.minArea;
@@ -255,8 +255,8 @@ function setupAddressSuggestions() {
                 const addresses = [
                     ...new Set(
                         allProps
-                        .map((p) => p.address)
-                        .filter((a) => a ?.toLowerCase().includes(query))
+                            .map((p) => p.address)
+                            .filter((a) => a?.toLowerCase().includes(query))
                     ),
                 ];
 
@@ -374,7 +374,7 @@ function setupDropdownFilters() {
                             state.filters.buildingType = value;
                             break;
                         case "city":
-                            state.filters.cityId = value; 
+                            state.filters.cityId = value;
                             break;
                         case "roomCount":
                             state.filters.roomCount = value;
@@ -453,9 +453,9 @@ function setupResetButton() {
             const dropdownsToReset = [
                 { type: "buildingType", text: "Bütün Kateqoriyalar" },
                 { type: "city", text: "Bütün Şəhərlər" },
-                { type: "roomCount", text: "Otaq sayı" }, 
+                { type: "roomCount", text: "Otaq sayı" },
                 { type: "floorLocated", text: "Yerləşən mərtəbə" },
-                { type: "numberOfFloors", text: "Binanın mərtəbə sayı" }, 
+                { type: "numberOfFloors", text: "Binanın mərtəbə sayı" },
             ];
 
             dropdownsToReset.forEach((item) => {
@@ -474,11 +474,48 @@ function setupResetButton() {
 
             if (dom.moreFiltersModal) dom.moreFiltersModal.classList.add("hidden");
             if (dom.filterPanel) dom.filterPanel.classList.remove("blur-effect");
-            
+
             loadProperties(true);
         });
     }
 }
+function initDropdowns() {
+    const dropdowns = document.querySelectorAll(".dropdown-select");
+
+    dropdowns.forEach(dropdown => {
+        const display = dropdown.querySelector('[data-role="display-value"]');
+        const menu = dropdown.querySelector("div.absolute");
+
+        // Dropdown açıb bağlama
+        dropdown.addEventListener("click", (e) => {
+            e.stopPropagation(); // event bubble-lanmasını dayandırır
+            // Digər dropdown-ları bağla
+            dropdowns.forEach(d => {
+                if (d !== dropdown) d.querySelector("div.absolute").classList.add("hidden");
+            });
+            menu.classList.toggle("hidden");
+        });
+
+        // Seçim edəndə dəyəri göstər və bağla
+        menu.querySelectorAll("li").forEach(item => {
+            item.addEventListener("click", () => {
+                display.textContent = item.textContent;
+                menu.classList.add("hidden");
+            });
+        });
+    });
+
+    // Ekranın istənilən yerinə klikləyəndə dropdown bağla
+    document.addEventListener("click", () => {
+        dropdowns.forEach(dropdown => {
+            dropdown.querySelector("div.absolute").classList.add("hidden");
+        });
+    });
+}
+
+// İstədiyin yerdə çağırırsan
+initDropdowns();
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -491,4 +528,5 @@ document.addEventListener("DOMContentLoaded", () => {
     setupDropdownFilters();
     setupMoreFiltersModal();
     setupResetButton();
+    initDropdowns();
 });
