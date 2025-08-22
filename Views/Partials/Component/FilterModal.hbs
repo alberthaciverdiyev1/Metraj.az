@@ -20,7 +20,7 @@
                 </div>
             </fieldset> --}}
 
-            <div class="dropdown-select  mt-2 filter-container flex-1" data-filter="roomCount">
+            {{!-- <div class="dropdown-select  mt-2 filter-container flex-1" data-filter="roomCount">
                 <div
                     class="flex items-center justify-between cursor-pointer border px-4 py-2 rounded-xl h-10 w-full bg-white text-orange-500 hover:text-gray-700">
                     <span data-role="display-value" data-filter="roomCount">Otaq sayı</span>
@@ -36,7 +36,7 @@
                         <li class="px-4 py-2 cursor-pointer hover:bg-gray-100" data-value="5">5+ otaqlı</li>
                     </ul>
                 </div>
-            </div>
+            </div> --}}
 
 
             {{!-- <fieldset class="p-2 bg-white fieldset range-field rounded-lg border border-gray-200 relative">
@@ -99,12 +99,12 @@
                 </div>
             </fieldset> --}}
 
-            {{!-- <fieldset class="fieldset extra">
-                <legend>Elan nömrəsi</legend>
+            <fieldset class="fieldset extra">
+                <legend>Add №</legend>
                 <input type="text" x-model="form.postId" placeholder="№">
                 <label><input type="checkbox" x-model="form.extraction"> Çıxarış var</label>
                 <label><input type="checkbox" x-model="form.mortgage"> İpoteka var</label>
-            </fieldset> --}}
+            </fieldset>
 
             {{!-- <div id="selectedTags" class="tags flex flex-wrap gap-2">
                 <template x-for="(tag, i) in tags" :key="tag.scope + tag.value">
@@ -116,7 +116,7 @@
             </div> --}}
 
             <div class="buttons mt-4 flex gap-2">
-                <button type="button" class="btn ghost" @click="reset">Sıfırla</button>
+                {{!-- <button type="button" class="btn ghost" @click="reset">Sıfırla</button> --}}
 
                 {{!-- <button type="button" class="btn ghost" @click="collapsed = !collapsed">
                     <span x-text="collapsed ? 'Genişləndir' : 'Gizlət'"></span>
