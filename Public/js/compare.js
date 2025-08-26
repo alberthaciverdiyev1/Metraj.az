@@ -6,23 +6,20 @@ function saveCompareList(compareList) {
     localStorage.setItem('compareList', JSON.stringify(compareList));
 }
 
+
 function formatPrice(priceValue) {
-    if (typeof priceValue !== 'number') {
-        priceValue = parseFloat(priceValue);
-    }
+    priceValue = Number(priceValue) || 0;
     return priceValue.toLocaleString('az-AZ', {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
     });
 }
 
+// Compare table render
 function renderCompareTable() {
     const compareList = getCompareList();
-    const compareContainer = document.querySelector('.bg-white.p-6.rounded-xl.shadow-lg');
-    
-    if (!compareContainer) {
-        return;
-    }
+    const compareContainer = document.getElementById('compareContainer');
+    if (!compareContainer) return;
 
     if (compareList.length === 0) {
         compareContainer.innerHTML = `
@@ -30,7 +27,7 @@ function renderCompareTable() {
                 <div class="mx-auto w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-4">
                     <i class="fas fa-exchange-alt text-[var(--primary)] text-2xl"></i>
                 </div>
-                <h4 class="text-xl font-medium text-gray-700 mb-2">Müqayisə üçün məhsul seçilməyib</h4>
+                <h4 class="text-xl font-medium text-gray-700 mb-2">Müqayisə üçün siyahı əlavə edilməyib.</h4>
                 <p class="text-base text-gray-500">
                     Müqayisə etmək üçün məhsul əlavə edin.
                 </p>
@@ -39,198 +36,78 @@ function renderCompareTable() {
         return;
     }
 
-    const allFeatureKeys = new Set();
-    compareList.forEach(product => {
-        if (product.features) {
-            Object.keys(product.features).forEach(key => {
-                allFeatureKeys.add(key);
-            });
-        }
-    });
-
-    const featureKeysArray = Array.from(allFeatureKeys);
-
-    let tableHtml = `
-        <div class="flex justify-end mb-6">
-            <button id="clearAllCompareBtn"
-                class="flex items-center bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-5 rounded-lg transition-all duration-200"
-                type="button"
-            >
-                <i class="fas fa-broom mr-2"></i> Təmizlə
-            </button>
-        </div>
-
-        <div class="overflow-x-auto w-full rounded-2xl border border-gray-200">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th scope="col" class="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Ad</th>
-                        ${compareList.map(product => `
-                            <th scope="col" class="px-4 py-3 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">
-                                <p class="text-base font-semibold text-gray-800">${product.title}</p>
-                                <button onclick="removeCompareItem(${product.id})" class="text-red-500 hover:text-red-700 text-xs mt-1">Sil</button>
-                            </th>
-                        `).join('')}
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <tr>
-                        <td class="px-4 py-3 whitespace-nowrap text-base font-medium text-gray-700">
-                            <div class="flex items-center">
-                                <i class="fas fa-money-bill-wave text-[var(--primary)] mr-2"></i>
-                                <span>Qiymət</span>
-                            </div>
-                        </td>
-                        ${compareList.map(product => {
-                            const rawPrice = product.price && product.price[0]?.price;
-                            let priceValue = 0;
-                            if (rawPrice) {
-                                priceValue = parseFloat(rawPrice.toString().replace(/,/g, ''));
-                            }
-                            const price = formatPrice(priceValue);
-                            return `
-                                <td class="px-4 py-3 text-center text-xl font-bold text-[var(--primary)]">
-                                    ${price} AZN
-                                </td>
-                            `;
-                        }).join('')}
-                    </tr>
-
-                    <tr>
-                        <td class="px-4 py-3 whitespace-nowrap text-base font-medium text-gray-700">
-                            <div class="flex items-center">
-                                <i class="fas fa-image text-[var(--primary)] mr-2"></i>
-                                <span>Şəkil</span>
-                            </div>
-                        </td>
-                        ${compareList.map(product => `
-                            <td class="px-4 py-3 text-center">
-                                ${product.media && product.media.path ? `
-                                <div class="w-48 h-32 mx-auto rounded-lg overflow-hidden flex items-center justify-center border border-gray-200">
-                                    <img src="${product.media.path}" alt="${product.title}" class="object-contain w-full h-full" />
-                                </div>
-                                ` : `
-                                <div class="w-32 h-32 mx-auto rounded-lg bg-gray-100 flex items-center justify-center text-gray-400 border border-gray-200">
-                                    <i class="fas fa-image text-2xl"></i>
-                                </div>
-                                `}
-                            </td>
-                        `).join('')}
-                    </tr>
-
-                    <tr>
-                        <td class="px-4 py-3 whitespace-nowrap text-base font-medium text-gray-700">
-                            <div class="flex items-center">
-                                <i class="fas fa-map-marker-alt text-[var(--primary)] mr-2"></i>
-                                <span>Ünvan</span>
-                            </div>
-                        </td>
-                        ${compareList.map(product => `
-                            <td class="px-4 py-3 text-center text-base text-gray-600">
-                                ${product.address || 'N/A'}
-                            </td>
-                        `).join('')}
-                    </tr>
-
-                    <tr>
-                        <td class="px-4 py-3 whitespace-nowrap text-base font-medium text-gray-700">
-                            <div class="flex items-center">
-                                <i class="fas fa-hashtag text-[var(--primary)] mr-2"></i>
-                                <span>Elan Nömrəsi</span>
-                            </div>
-                        </td>
-                        ${compareList.map(product => `
-                            <td class="px-4 py-3 text-center text-base text-gray-600">
-                                ${product.adNo || 'N/A'}
-                            </td>
-                        `).join('')}
-                    </tr>
-
-                    <tr>
-                        <td class="px-4 py-3 whitespace-nowrap text-base font-medium text-gray-700">
-                            <div class="flex items-center">
-                                <i class="fas fa-bed text-[var(--primary)] mr-2"></i>
-                                <span>Yataq Otağı</span>
-                            </div>
-                        </td>
-                        ${compareList.map(product => `
-                            <td class="px-4 py-3 text-center text-base text-gray-600">
-                                ${product.beds || 'N/A'}
-                            </td>
-                        `).join('')}
-                    </tr>
-
-                    <tr>
-                        <td class="px-4 py-3 whitespace-nowrap text-base font-medium text-gray-700">
-                            <div class="flex items-center">
-                                <i class="fas fa-bath text-[var(--primary)] mr-2"></i>
-                                <span>Hamam</span>
-                            </div>
-                        </td>
-                        ${compareList.map(product => `
-                            <td class="px-4 py-3 text-center text-base text-gray-600">
-                                ${product.baths || 'N/A'}
-                            </td>
-                        `).join('')}
-                    </tr>
-
-                    <tr>
-                        <td class="px-4 py-3 whitespace-nowrap text-base font-medium text-gray-700">
-                            <div class="flex items-center">
-                                <i class="fas fa-ruler-combined text-[var(--primary)] mr-2"></i>
-                                <span>Sahə (Kvm)</span>
-                            </div>
-                        </td>
-                        ${compareList.map(product => `
-                            <td class="px-4 py-3 text-center text-base text-gray-600">
-                                ${product.area || 'N/A'}
-                            </td>
-                        `).join('')}
-                    </tr>
-
-                    ${featureKeysArray.map(featureKey => `
-                        <tr>
-                            <td class="px-4 py-3 whitespace-nowrap text-base font-medium text-gray-700">
-                                <div class="flex items-center">
-                                    <i class="fas fa-circle text-[var(--primary)] mr-2 text-xs"></i>
-                                    <span>${featureKey}</span>
-                                </div>
-                            </td>
-                            ${compareList.map(product => `
-                                <td class="px-4 py-3 text-center text-base text-gray-600">
-                                    ${product.features && product.features[featureKey] !== undefined ? product.features[featureKey] : '—'}
-                                </td>
-                            `).join('')}
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
+    let cardsHtml = `
+        <div class="flex flex-col gap-6">
+            <div class="flex justify-end">
+                <button id="clearAllCompareBtn" class="flex items-center bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-5 rounded-lg transition-all duration-200">
+                    <i class="fas fa-broom mr-2"></i> Bütününü Təmizlə
+                </button>
+            </div>
+            ${compareList.map(product => `
+                <div class="bg-white p-4 rounded-xl shadow-lg flex flex-col md:flex-row items-center gap-4 border border-gray-200">
+                    <div class="w-full md:w-48 h-32 flex items-center justify-center border border-gray-200 rounded-lg overflow-hidden">
+                        ${product.media && product.media.path ? `<img src="${product.media.path}" alt="${product.title}" class="object-contain w-full h-full"/>` : `<i class="fas fa-image text-gray-400 text-2xl"></i>`}
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2">${product.title}</h4>
+                        <p class="text-base text-gray-600">Qiymət: <span class="font-bold text-[var(--primary)]">${formatPrice(product.price?.[0]?.price)} AZN</span></p>
+                        <p class="text-base text-gray-600">Ünvan: ${product.address || 'N/A'}</p>
+                        <p class="text-base text-gray-600">Elan Nömrəsi: ${product.adNo || 'N/A'}</p>
+                        <p class="text-base text-gray-600">Yataq Otağı: ${product.beds || 'N/A'}</p>
+                        <p class="text-base text-gray-600">Hamam: ${product.baths || 'N/A'}</p>
+                        <p class="text-base text-gray-600">Sahə: ${product.area || 'N/A'} Kvm</p>
+                        <button onclick="removeCompareItem(${product.id})" class="mt-3 text-red-500 hover:text-red-700">Sil</button>
+                    </div>
+                </div>
+            `).join('')}
         </div>
     `;
 
-    compareContainer.innerHTML = tableHtml;
+    compareContainer.innerHTML = cardsHtml;
 
     const clearButton = document.getElementById('clearAllCompareBtn');
-    if (clearButton) {
-        clearButton.addEventListener('click', clearAllCompareItems);
-    }
+    if (clearButton) clearButton.addEventListener('click', clearAllCompareItems);
 }
 
-window.removeCompareItem = function(propertyId) {
+
+// Sil funksiyası
+window.removeCompareItem = function(id) {
     let compareList = getCompareList();
-    compareList = compareList.filter(property => property.id !== propertyId);
+    compareList = compareList.filter(p => p.id != id);
     saveCompareList(compareList);
     renderCompareTable();
-    updateCompareIconsOnOtherPages();
+}
+
+// Bütün məhsulları təmizlə
+function clearAllCompareItems() {
+    localStorage.removeItem('compareList');
+    renderCompareTable();
+}
+// QLOBAL EDİRİK
+window.addToCompare = function(product) {
+    let compareList = JSON.parse(localStorage.getItem('compareList')) || [];
+
+    // id tiplərini eyniləşdirək ki, string/number fərqi problem yaratmasın
+    if (!compareList.some(p => String(p.id) === String(product.id))) {
+        compareList.push(product);
+        localStorage.setItem('compareList', JSON.stringify(compareList));
+        console.log('Compare List updated and saved to localStorage:', compareList);
+    } else {
+        console.log('Məhsul artıq müqayisə siyahısındadır:', product.id);
+    }
+
+    // varsa, ikonları və cədvəli yenilə
+    if (typeof updateCompareIconsOnOtherPages === 'function') updateCompareIconsOnOtherPages();
+    if (typeof renderCompareTable === 'function') renderCompareTable();
 };
 
-function clearAllCompareItems() {
-    if (confirm('Bütün müqayisə edilən məhsulları silmək istədiyinizə əminsiniz?')) {
-        localStorage.removeItem('compareList');
-        renderCompareTable();
-        updateCompareIconsOnOtherPages();
-    }
-}
+
+
+
+// DOM yüklənəndə render et
+document.addEventListener('DOMContentLoaded', () => {
+    renderCompareTable();
+});
 
 function updateCompareIconsOnOtherPages() {
     const compareList = getCompareList();

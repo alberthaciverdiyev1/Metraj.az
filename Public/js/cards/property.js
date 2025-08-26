@@ -231,7 +231,7 @@ function showCompareToast(message) {
     toast.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
     toast.innerHTML = `
         ${message} 
-        <a href="/compare" style="color: #4f9ef7; margin-left: 10px; text-decoration: underline;">
+        <a href="/compares" style="color: #4f9ef7; margin-left: 10px; text-decoration: underline;">
             Müqayisə səhifəsinə bax
         </a>
     `;
