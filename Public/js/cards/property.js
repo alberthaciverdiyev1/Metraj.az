@@ -78,8 +78,14 @@ export function propertyCard(property, showRemoveButton = false) {
                 <img src="${property.media.path}" alt="${property.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" />
                 ${premiumBadge}
                 ${favoriteOrRemoveButton}
-            </div>
+                   <button onclick="event.stopPropagation()" 
+            class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#494949] bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <img src="/images/icon.svg" />
+    </button>
 
+            </div>
+             
+ 
             <!-- Card content -->
             <div class="p-4 flex flex-col flex-1">
                 <div class="flex flex-col gap-2" style="min-height:120px;">
