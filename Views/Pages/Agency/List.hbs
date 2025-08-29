@@ -37,7 +37,7 @@
             <div id="agencyCards" class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {{#each agencies}}
                 <div onclick="window.location.href='/agency/{{id}}'"
-                    class="agencies-card relative cursor-pointer hover:shadow-lg transition duration-300 flex flex-col h-full  {{#if is_premium}} bg-yellow-50 border-2 border-yellow-400 {{else}} bg-white {{/if}}"
+                    class="agencies-card relative hover:cursor-pointer hover:shadow-lg transition duration-300 flex flex-col h-full  {{#if is_premium}} bg-yellow-50 border-2 border-yellow-400 {{else}} bg-white {{/if}}"
                     data-id="{{id}}" data-is-premium="{{is_premium}}">
 
 

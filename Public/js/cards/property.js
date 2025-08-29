@@ -23,29 +23,32 @@ export function propertyCard(property, showRemoveButton = false) {
 <div class="flex flex-wrap  gap-2">
     ${
       property.add_type === "rent"
-        ? `<span class="bg-[color:var(--primary)] text-white text-xs font-semibold px-2 text-center py-1 rounded-full">Kirayə</span>`
-        : property.add_type === "sale"
-        ? `<span class="bg-[#80807F] text-white text-xs font-semibold px-2 py-1 rounded-full">Satışda</span>`
-        : ""
-    }
+          ? `<span class="bg-[color:var(--primary)] text-white text-xs font-semibold px-2 text-center py-1 rounded-full">Kirayə</span>`
+          : property.add_type === "sale"
+              ? `<span class="bg-[#80807F] text-white text-xs font-semibold px-2 py-1 rounded-full">Satışda</span>`
+              : ""
+  }
 
     ${
-      property.property_condition === "REPAIRED"
-        ? `<span class="bg-green-600 text-white text-xs font-semibold px-2 text-center  py-1 rounded-full">Təmirli</span>`
-        : `<span class="bg-gray-400 text-white text-xs font-semibold px-2 py-1 text-center rounded-full">Təmirsiz</span>`
-    }
+      property.property_condition === "Repaired"
+          ? `<span class="bg-green-600 text-white text-xs font-semibold px-2 text-center  py-1 rounded-full">Təmirli</span>`
+          : ``
+  // : `<span class="bg-gray-400 text-white text-xs font-semibold px-2 py-1 text-center rounded-full">Təmirsiz</span>`
+  }
 
     ${
       property.in_credit
-        ? `<span class="bg-blue-600 text-white text-xs font-semibold px-2 py-1 text-center  rounded-full">İpoteka var</span>`
-        : `<span class="bg-gray-400 text-white text-xs font-semibold px-2 py-1 text-center rounded-full">İpotekasız</span>`
-    }
+          ? `<span class="bg-blue-600 text-white text-xs font-semibold px-2 py-1 text-center  rounded-full">İpoteka</span>` : ``
+      // : `<span class="bg-gray-400 text-white text-xs font-semibold px-2 py-1 text-center rounded-full">İpotekasız</span>`
+  }
+    
 
     ${
       property.document === "kupça var"
-        ? `<span class="bg-green-500 text-white text-xs font-semibold px-2 py-1 text-center  rounded-full">Çıxarışlı</span>`
-        : `<span class="bg-red-500 text-white text-xs font-semibold px-2 py-1 text-center rounded-full">Çıxarışsız</span>`
-    }
+          ? `<span class="bg-green-500 text-white text-xs font-semibold px-2 py-1 text-center  rounded-full">Çıxarışlı</span>`
+          : ``
+  // : `<span class="bg-red-500 text-white text-xs font-semibold px-2 py-1 text-center rounded-full">Çıxarışsız</span>`
+  }
 </div>
 `;
 
@@ -86,7 +89,7 @@ export function propertyCard(property, showRemoveButton = false) {
                     <h3 class="font-bold text-[color:var(--text-color)] h-[50px] transition hover:text-[color:var(--primary)]">
                         ${property.title}
                     </h3>
-  ${badges}
+                    ${badges}
                     <p class="text-sm sm:text-base md:text-[16px] text-[color:var(--grey-text)] flex items-center mt-4 h-[40px]">
                         <i class="fas fa-map-marker-alt mr-2"></i> ${property.address}
                     </p>
