@@ -888,4 +888,26 @@ async function loadImagesFromLocalStorage() {
     localStorage.setItem('unsavedPropertyData', JSON.stringify(data));
     console.log('Cleared feature selections');
   }
+
+  // Features search
+    document.getElementById("featureSearch").addEventListener("keyup", function () {
+        let searchValue = this.value.toLowerCase().trim();
+        let items = document.querySelectorAll("#features label");
+
+        items.forEach(function (item) {
+            let text = item.textContent.toLowerCase().trim();
+            item.style.display = text.startsWith(searchValue) ? "" : "none";
+        });
+    });
+
+    // Nearby objects search
+    document.getElementById("nearbySearch").addEventListener("keyup", function () {
+        let searchValue = this.value.toLowerCase().trim();
+        let items = document.querySelectorAll("#nearby-objects label");
+
+        items.forEach(function (item) {
+            let text = item.textContent.toLowerCase().trim();
+            item.style.display = text.startsWith(searchValue) ? "" : "none";
+        });
+    });
 });
