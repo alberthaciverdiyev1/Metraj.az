@@ -27,7 +27,7 @@
 .gallery-thumbnails {
     flex: 1 1 50%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr) !important;
     gap: 0.75rem;
     height: 100%; 
 }
