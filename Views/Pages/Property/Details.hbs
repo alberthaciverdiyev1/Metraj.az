@@ -33,29 +33,33 @@
     <section id="listing-detail-gallery">
         <div class="container mx-auto px-4">
             <div class="gallery-grid">
-                {{#if (lookup property.media.images 0)}}
-                    {{#with (lookup property.media.images 0)}}
-                        <div class="gallery-main cursor-pointer" onclick="openModal(0)">
-                            <img src="{{this.path}}" alt="Əsas şəkil" class="w-full h-auto object-cover rounded">
+                {{!-- {{#if (lookup property.media.images 0)}} --}}
+                    {{!-- {{#with (lookup property.media.images 0)}} --}}
+                        <div class="gallery-main">
+                            {{!-- <img src="{{this.path}}" alt="Əsas şəkil" class="w-full h-auto object-cover rounded"> --}}
+                            <div id="map" class="w-full h-[500px] rounded-lg mb-6 z-0"></div>
+                            <a href="https://www.google.com/maps/place/Baku/@40.394737,49.6901458,11z/data=!3m1!4b1!4m6!3m5!1s0x40307d6bd6211cf9:0x343f6b5e7ae56c6b!8m2!3d40.4092617!4d49.8670924!16zL20vMDFnZjU?entry=ttu&g_ep=EgoyMDI1MDgzMC4wIKXMDSoASAFQAw%3D%3D" 
+                            target="_blank"
+                            class="absolute w-full bottom-0  text-center px-6 py-3 border border-[#F1913D] text-[#F1913D] font-semibold rounded-full shadow-md bg-white z-10">Show on maps</a>
                         </div>
-                    {{/with}}
-                {{/if}}
+                    {{!-- {{/with}} --}}
+                {{!-- {{/if}} --}}
                 
                 <div class="gallery-thumbnails">
                     {{#each property.media.images}}
-                        {{#if (gt @index 0)}}
-                            {{#if (lt @index 10)}}
+                        {{!-- {{#if (gt @index 0)}} --}}
+                            {{#if (lt @index 3)}}
                                 <figure class="m-0 overflow-hidden cursor-pointer rounded"
                                         onclick="openModal({{@index}})">
                                     <img src="{{this.path}}" alt="Kiçik şəkil" class="w-full h-24 object-cover">
                                 </figure>
                             {{/if}} 
-                        {{/if}}
+                        {{!-- {{/if}} --}}
                     {{/each}}
                     
-                    {{#if (gt property.media.images.length 10)}}
+                    {{#if (gt property.media.images.length 3)}}
                         <div class="more-images-overlay w-32 h-32 flex items-center justify-center bg-black bg-opacity-50 text-white text-xl font-bold rounded-lg cursor-pointer">
-                           <span>+{{math property.media.images.length "-" 10}} şəkil</span>
+                           <span>+{{math property.media.images.length "-" 5}} şəkil</span>
                         </div>
                     {{/if}}
                 </div>
@@ -170,6 +174,7 @@
                     {{>Component.LoanCalculator}}
                 </div>
                 {{>Component.SimilarCards currentProperty=property}}
+                <a href="/?page=1&limit=20" class="w-full mt-10 text-center px-6 py-3 border border-[#F1913D] text-[#F1913D] font-semibold rounded-full shadow-md bg-white">Daha çox oxşar elanlar</a>
             </div>
             
             <div class="side-right">
@@ -201,14 +206,14 @@
             </div>
         </div>
 
-        {{>Component.ConnectAgent}}
+        {{!-- {{>Component.ConnectAgent}} --}}
     </div>
 </section>
-<section id="location">
+ <!--  <section id="location">
   <div class="container mx-auto px-4">
     <div class="bg-white rounded-xl p-4 shadow-md w-full max-w-[900px] relative z-0">
         <h1 class="text-3xl font-semibold mb-4">Get Direction</h1>
-        <div id="map" class="w-full h-[500px] rounded-lg mb-6"></div>
+        {{!-- <div id="map" class="w-full h-[500px] rounded-lg mb-6"></div> --}}
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 p-4  max-w-[800px]">
             <ul class="space-y-2">
@@ -240,11 +245,9 @@
                 </li>
             </ul>
         </div>
-        <!-- /Info Map -->
-
     </div>
   </div>
-</section>
+</section> -->
 
 
 
