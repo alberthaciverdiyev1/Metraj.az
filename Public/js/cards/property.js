@@ -57,12 +57,10 @@ export function propertyCard(property, showRemoveButton = false) {
   if (rawPrice) priceValue = parseFloat(rawPrice.toString().replace(/,/g, ""));
   const price = formatPrice(priceValue);
   const premiumBadge = property.is_premium
-    ? `<span class="absolute top-3 right-4 text-black font-semibold text-md bg-white px-2 py-1 rounded-full"><i class="fa-solid fa-crown"></i></span>`
-    : "";
-  const heartIconClass = getFavoriteStatus(property.id)
-    ? "fa-solid"
-    : "fa-regular";
+    ? `<span class="absolute top-3 right-4 text-[color:var(--primary)] font-semibold text-md bg-white px-2 py-1 rounded-full"><i class="fa-solid fa-crown"></i></span>`    : "";
+  const heartIconClass = getFavoriteStatus(property.id) ? "fa-solid" : "fa-regular";
   const propertyData = encodeURIComponent(JSON.stringify(property));
+
   const favoriteOrRemoveButton = showRemoveButton
     ? `<span onclick="event.stopPropagation(); removeFavorite(${property.id});" class="absolute bottom-3 right-4 text-red-500 font-semibold text-md bg-white px-2 py-1 rounded-full cursor-pointer"><i class="fas fa-times"></i></span>`
     : `<span onclick="event.stopPropagation(); toggleFavorite(this, decodeURIComponent('${propertyData}'));" class="absolute bottom-3 right-4 text-white font-semibold text-md bg-white px-2 py-1 rounded-full cursor-pointer"><i class="${heartIconClass} fa-heart text-red-500"></i></span>`;
@@ -70,7 +68,6 @@ export function propertyCard(property, showRemoveButton = false) {
   const comparePropertyData = encodeURIComponent(JSON.stringify(property));
   const isCompareActive = getCompareStatus(property.id);
   const compareIconClass = isCompareActive ? "text-[color:var(--primary)]" : "";
-
   return `
         <div onclick="window.location.href='/property/${property.id}'" 
             data-property-id="${property.id}"  
@@ -92,25 +89,23 @@ export function propertyCard(property, showRemoveButton = false) {
             <!-- Card content -->
             <div class="p-4 flex flex-col flex-1">
                 <div class="flex flex-col gap-2" style="min-height:120px;">
-                    <h3 class="font-bold text-[color:var(--text-color)] h-[50px] transition hover:text-[color:var(--primary)]">
+                    <h3 class="font-bold text-[color:var(--text-color)] h-[25px] transition hover:text-[color:var(--primary)]">
                         ${property.title}
                     </h3>
                     ${badges}
-                    <p class="text-sm sm:text-base md:text-[16px] text-[color:var(--grey-text)] flex items-center mt-4 h-[40px]">
+                    <p class="text-sm sm:text-base md:text-[16px] text-[color:var(--grey-text)] flex items-center   h-[30px]">
                         <img class="mr-2" src="/images/map-pin.svg" /> ${property.address}              
                         </p>
              
-                    <div class="flex items-center text-sm sm:text-base md:text-[16px] text-[#959699] gap-4">
-                        <span><span class="text-[#2C2E33]">${property.beds}</span> Yataq</span>
-                        <span><span class="text-[#2C2E33]">${property.baths}</span> Hamam</span>
-                        <span><span class="text-[#2C2E33]">${property.area}</span> Kvm</span>
-                    </div>
+                <div class="flex justify-between items-center text-sm sm:text-base md:text-[16px] text-[color:var(--grey-text)] mb-2">
+                    <span>${property.buildingType}</span>
+                    <span>${property.date}</span>
+                </div>
 
-                    <span class="text-sm text-gray-500">${property.buildingType}</span>
                 </div>
 
                 <!-- Price və Compare button -->
-                <div class="flex justify-between py-2 mt-auto items-center border-t border-[color:var(--border-color)] pt-6">
+                <div class="flex justify-between py-2 mt-auto items-center border-t border-[color:var(--border-color)] pt-4">
                     <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">${price} AZN</span>
                     <button onclick="event.stopPropagation(); toggleCompare(this, decodeURIComponent('${comparePropertyData}'));" class="flex compare items-center gap-1 text-sm text-[#2C2E33] hover:text-[color:var(--primary)] transition-colors">
                         <img src="/images/compare.svg" ${compareIconClass}" />Müqayisə
