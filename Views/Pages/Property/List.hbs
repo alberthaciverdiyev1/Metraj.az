@@ -99,8 +99,8 @@
               </div>
 
               <!-- Mövcud Şəhərlər dropdown -->
-              <div class="relative p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer dropdown-select"
-                data-filter="city">
+              <!-- Filtr Açan Buton (Dropdown-style) -->
+              <div class="relative p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer w-64" id="openModal">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-2">
                     <img src="/images/city.svg" alt="layers">
@@ -109,18 +109,113 @@
                   </div>
                   <i class="bi bi-chevron-down text-orange-500 transition-transform"></i>
                 </div>
-                <div
-                  class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-10 hidden">
-                  <ul class="divide-y divide-gray-100">
-                    <li class="p-2 hover:bg-gray-100 cursor-pointer" data-value="">Bütün Şəhərlər</li>
-                    {{#each cities}}
-                    <li class="p-2 hover:bg-gray-100 cursor-pointer" data-value="{{this.id}}">
-                      {{this.name}}
-                    </li>
-                    {{/each}}
-                  </ul>
+              </div>
+
+              <!-- Modal -->
+              <div id="filterModal"
+                class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-50 flex mt-15 items-center justify-center">
+                <div class="bg-white w-[95%] max-w-4xl h-[90%] rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+
+                  <!-- Header -->
+                  <div class="flex items-center justify-between px-6 py-4 ">
+                    <div class="flex items-center gap-3">
+                      <span class="font-semibold text-lg text-gray-700">Rayon, metro, nişangah</span>
+                      <div class="border rounded-lg px-3 py-2 bg-gray-50">
+                        <select id="citySelect" class="outline-none bg-transparent text-gray-600">
+                          <option value="baki">Şəhər: Bakı</option>
+                        </select>
+                      </div>
+                    </div>
+                    <button id="closeModal"
+                      class="text-2xl text-gray-500 hover:text-gray-800 transition">&times;</button>
+                  </div>
+
+                  <!-- Tabs -->
+                  <div class="flex gap-3 px-6 py-3 bg-gray-50">
+                    <button
+                      class="tabBtn px-5 py-2 rounded-full border border-orange-600 text-orange-600 font-medium bg-orange-50"
+                      data-tab="rayonTab">Rayon</button>
+                    <button class="tabBtn px-5 py-2 rounded-full text-gray-600 hover:bg-gray-100 transition"
+                      data-tab="metroTab">Metro</button>
+                    <button class="tabBtn px-5 py-2 rounded-full text-gray-600 hover:bg-gray-100 transition"
+                      data-tab="nishangahTab">Nişangah</button>
+                  </div>
+
+                  <!-- Content -->
+                  <div class="flex-1 overflow-y-auto px-6 py-4 space-y-8">
+
+                    <!-- Rayon -->
+                    <section id="rayonTab" class="tabContent space-y-4">
+                      <input id="rayonSearch" type="text" placeholder="Rayon axtar..."
+                        class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 shadow-sm">
+                      <div id="rayonList" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                        <label
+                          class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-50">
+                          <input type="checkbox" class="accent-orange-600"> Abşeron r.
+                        </label>
+                        <label
+                          class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-50">
+                          <input type="checkbox" class="accent-orange-600"> Xətai r.
+                        </label>
+                        <label
+                          class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-50">
+                          <input type="checkbox" class="accent-orange-600"> Səbail r.
+                        </label>
+                        <label
+                          class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-50">
+                          <input type="checkbox" class="accent-orange-600"> Nərimanov r.
+                        </label>
+                      </div>
+                      <p id="rayonEmpty" class="text-sm text-gray-400 hidden">Heç nə tapılmadı.</p>
+                    </section>
+
+                    <!-- Metro -->
+                    <section id="metroTab" class="tabContent hidden space-y-4">
+                      <input id="metroSearch" type="text" placeholder="Metro axtar..."
+                        class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 shadow-sm">
+                      <div id="metroList" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                        <label
+                          class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-50">
+                          <input type="checkbox" class="accent-orange-600"> 28 May
+                        </label>
+                        <label
+                          class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-50">
+                          <input type="checkbox" class="accent-orange-600"> Gənclik
+                        </label>
+                      </div>
+                      <p id="metroEmpty" class="text-sm text-gray-400 hidden">Heç nə tapılmadı.</p>
+                    </section>
+
+                    <!-- Nişangah -->
+                    <section id="nishangahTab" class="tabContent hidden space-y-4">
+                      <input id="nishangahSearch" type="text" placeholder="Nişangah axtar..."
+                        class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 shadow-sm">
+                      <div id="nishangahList" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                        <label
+                          class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-50">
+                          <input type="checkbox" class="accent-orange-600"> Ganjlik Mall
+                        </label>
+                        <label
+                          class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-50">
+                          <input type="checkbox" class="accent-orange-600"> Park Bulvar
+                        </label>
+                      </div>
+                      <p id="nishangahEmpty" class="text-sm text-gray-400 hidden">Heç nə tapılmadı.</p>
+                    </section>
+                  </div>
+
+                  <!-- Footer -->
+                  <div class="flex items-center justify-between px-6 py-4 border-t bg-gray-50">
+                    <button id="resetBtn"
+                      class="px-5 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">Sıfırla</button>
+                    <button id="applyBtn"
+                    class="px-6 py-3 bg-[#e98922] text-white rounded-lg hover:bg-orange-400 transition shadow-md">
+                      <span id="applyCount">0</span> elan göstər
+                    </button>
+                  </div>
                 </div>
               </div>
+
             </div>
 
 
@@ -186,7 +281,7 @@
 
           <h2 class="text-xl text-gray-700 hidden sm:block">
             <span class="text-red-500">Premium</span> elanlar ilə tanış ol!
-          </h2> 
+          </h2>
           <div id="premiumCard"
             class="pt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-7 relative min-h-[300px]">
 
