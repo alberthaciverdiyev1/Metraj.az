@@ -17,7 +17,7 @@
         >sənin əmlakın</div>
       </div>
     </a>
-    <div class="relative">
+    {{!-- <div class="relative">
       {{! <span
                     class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-[var(--primary)] transition duration-300 group-hover:text-orange-500">
                     <i class="bi bi-translate"></i>
@@ -38,10 +38,10 @@
           class="bi bi-chevron-down transition-transform duration-300 group-focus-within:rotate-180"
         ></i>
       </div>
-    </div>
+    </div> --}}
 
     <nav class="hidden md:flex space-x-7 items-center">
-      <a href="/" class="">{{t "Listing"}}</a>
+      <a href="/" class="">{{t "Home"}}</a>
       <a href="/agencies" class="text-gray-700">{{t "Agencies"}}</a>
       <a href="/blog" class="text-gray-700">{{t "Blog"}}</a>
       <a href="/about-us" class="text-gray-700">{{t "About Us"}}</a>
@@ -49,47 +49,47 @@
     </nav>
 
     <div class="flex items-center space-x-4">
-      <div class="flex gap-4 mr-15">
+      {{!-- <div class="flex gap-4 mr-15">
         <a href="/compares"> <img src="/images/compare(2).svg" alt="compare" class="m-0" /></a>
         <a href="/add-property"> <img src="/images/plus.svg" alt="add" class="m-0" /></a>
-      </div>
-      {{! <a href="/favorites" class="relative inline-block mr-3">
-        <i class="fa-regular fa-heart text-md text-[var(--primary)]"></i> }}
-      {{!-- <sup
+      </div> --}}
+  <a href="/favorites" class="relative inline-block mr-3">
+        <i class="fa-regular fa-heart text-md text-[var(--primary)]"></i> 
+      <sup
                     class="absolute -top-2 -right-2 bg-[var(--primary)] text-white text-[10px] w-3 h-3 flex items-center justify-center rounded-full leading-none">
                     0
                 </sup>
             </a>
                     {{count}}
-                </sup> --}}
-      {{! </a> }}
+                </sup> 
+       </a> 
 
-            {{!-- <a href="/compares" class="relative inline-block"> --}}
-                {{!-- <i class="bi bi-arrow-left-right text-[var(--primary)]"></i> --}}
-                {{!-- <sup id="compares-count" --}}
-      {{! <a href="/compares" class="relative inline-block">
-        <i class="bi bi-arrow-left-right text-[var(--primary)]"></i> }}
-      {{! <sup
+       <a href="/compares" class="relative inline-block"> 
+                 <i class="bi bi-arrow-left-right text-[var(--primary)]"></i> 
+                 <sup id="compares-count" 
+       <a href="/compares" class="relative inline-block">
+        <i class="bi bi-arrow-left-right text-[var(--primary)]"></i> 
+       <sup
                     class="absolute -top-2 -right-2 bg-[var(--primary)] text-white text-[10px] w-3 h-3 flex items-center justify-center rounded-full leading-none">
                     0
                 </sup>
             </a>
-                </sup> }}
-      {{! </a> }}
+                </sup> 
+       </a> 
 
-            {{!-- <a href="/add-property" --}}
-                {{!-- class="add-property-link flex items-center px-4 py-2 bg-[var(--primary)] text-white rounded-md hover:bg-orange-300 transition"> --}}
-                {{!-- <i class="bi bi-plus-circle mr-2"></i> Yeni Elan --}}
-            {{!-- </a> --}}
-      {{! <a
+             {{!-- <a href="/add-property" 
+               class="add-property-link flex items-center px-4 py-2 bg-[var(--primary)] text-white rounded-md hover:bg-orange-300 transition">
+                <i class="bi bi-plus-circle mr-2"></i> Yeni Elan 
+             </a>  --}}
+     <a
         href="/add-property"
         class="add-property-link flex items-center px-4 py-2 bg-[var(--primary)] text-white rounded-md hover:bg-orange-300 transition"
       >
         <i class="bi bi-plus-circle mr-2"></i>
         Add property
-      </a> }}
+      </a> 
 
-      {{! <div class="relative">
+      <div class="relative">
                 <span
                     class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-[var(--primary)] transition duration-300 group-hover:text-orange-500">
                     <i class="bi bi-translate"></i>
@@ -105,7 +105,7 @@
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
                     <i class="bi bi-chevron-down transition-transform duration-300 group-focus-within:rotate-180"></i>
                 </div>
-            </div> }}
+            </div> 
 
       <div class="relative inline-block text-left">
         {{#if user}}
@@ -189,16 +189,18 @@
             </ul>
           </div>
         {{else}}
-          <div class="flex gap-3">
-            <a
+          {{!-- <div class="flex gap-3"> --}}
+            {{!-- <a
               href="/login"
               class="flex items-center px-4 py-2 bg-white rounded-md hover:bg-orange-400 hover:text-white transition border border-[#F1913D] text-[#F1913D]"
-            >{{t "Login"}}</a>
+            >{{t "Login"}}</a> --}}
             <a
               href="/login"
-              class="flex items-center px-4 py-2 bg-[#F1913D] text-white rounded-md hover:bg-orange-400 hover:text-white transition"
-            >{{t "Register"}}</a>
-          </div>
+              class="flex items-center px-4 py-2 bg-white rounded-md hover:bg-orange-400 hover:text-white transition"
+            >
+            <i class="bi bi-person mr-3"></i>
+            {{t "Login / Register"}}</a>
+          {{!-- </div> --}}
         {{/if}}
       </div>
     </div>
