@@ -66,49 +66,62 @@ export function propertyCard(property, showRemoveButton = false) {
   const compareIconClass = isCompareActive ? "text-[color:var(--primary)]" : "";
   return `
         <div onclick="window.location.href='/property/${property.id}'" 
-            data-property-id="${property.id}"  
-            class="cursor-pointer border border-[color:var(--border-color)] rounded-2xl overflow-hidden flex flex-col h-full group transition-all duration-300 relative " >
+     data-property-id="${property.id}"  
+     class="cursor-pointer border border-[color:var(--border-color)] rounded-2xl overflow-hidden flex flex-col h-full group transition-all duration-300 relative">
 
-            <!-- Image -->
-            <div class="relative overflow-hidden">
-                <img src="${property.media.path}" alt="${property.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" />
-                ${premiumBadge}
-                ${favoriteOrRemoveButton}
-                   <button onclick="event.stopPropagation()" 
-            class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#494949] bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <img src="/images/icon.svg" />
-    </button>
+    <!-- Image -->
+    <div class="relative overflow-hidden">
+        <img src="${property.media.path}" 
+             alt="${property.title}" 
+             class="w-full h-56 sm:h-64 md:h-72 object-cover transition-transform duration-500 group-hover:scale-105" />
+        
+        ${premiumBadge}
+        ${favoriteOrRemoveButton}
 
-            </div>
-             
- 
-            <!-- Card content -->
-            <div class="p-4 flex flex-col flex-1">
-                <div class="flex flex-col gap-2" style="min-height:120px;">
-                    <h3 class="font-bold text-[color:var(--text-color)] h-[25px] transition hover:text-[color:var(--primary)]">
-                        ${property.title}
-                    </h3>
-                    ${badges}
-                    <p class="text-sm sm:text-base md:text-[16px] text-[color:var(--grey-text)] flex items-center   h-[30px]">
-                        <img class="mr-2" src="/images/map-pin.svg" /> ${property.address}              
-                        </p>
-             
-                <div class="flex justify-between items-center text-sm sm:text-base md:text-[16px] text-[color:var(--grey-text)] mb-2">
-                    <span>${property.buildingType}</span>
-                    <span>${property.date}</span>
-                </div>
+        <button onclick="event.stopPropagation()" 
+                class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#494949] bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <img src="/images/icon.svg" />
+        </button>
+    </div>
+     
+    <!-- Card content -->
+    <div class="p-3 sm:p-4 flex flex-col flex-1">
+        <div class="flex flex-col gap-2 min-h-[120px]">
+            <!-- Başlıq -->
+            <h3 class="font-bold text-[color:var(--text-color)] min-h-[40px] text-xs sm:text-sm md:text-base lg:text-lg leading-snug hover:text-[color:var(--primary)]">
+                ${property.title}
+            </h3>
 
-                </div>
+            <!-- Badge-lər -->
+            ${badges}
 
-                <!-- Price və Compare button -->
-                <div class="flex justify-between py-2 mt-auto items-center border-t border-[color:var(--border-color)] pt-4">
-                    <span class="text-[color:var(--primary)] font-bold text-base sm:text-lg">${price} AZN</span>
-                    <button onclick="event.stopPropagation(); toggleCompare(this, decodeURIComponent('${comparePropertyData}'));" class="flex compare items-center gap-1 text-sm text-[#2C2E33] hover:text-[color:var(--primary)] transition-colors">
-                        <img src="/images/compare.svg" ${compareIconClass}" />Müqayisə
-                    </button>              
-                </div>
+            <!-- Ünvan -->
+            <p class="flex items-start text-[11px] sm:text-sm md:text-base text-[color:var(--grey-text)]">
+                <img class="mr-2 mt-0.5 w-3.5 h-3.5 sm:w-4 sm:h-4" src="/images/map-pin.svg" />
+                <span>${property.address}</span>
+            </p>
+
+            <!-- Tikili tipi və tarix -->
+            <div class="flex flex-col justify-between  text-[11px] sm:text-sm md:text-base text-[color:var(--grey-text)] mb-2">
+                <span>${property.buildingType}</span>
+                <span>${property.date}</span>
             </div>
         </div>
+
+        <!-- Qiymət və Compare button -->
+        <div class="flex justify-between items-center py-2 mt-auto border-t border-[color:var(--border-color)] pt-4">
+            <span class="text-[color:var(--primary)] font-bold text-sm sm:text-base md:text-lg">
+                ${price} AZN
+            </span>
+            <button onclick="event.stopPropagation(); toggleCompare(this, decodeURIComponent('${comparePropertyData}'));" 
+                    class="flex compare items-center gap-1 text-[11px] sm:text-xs md:text-sm text-[#2C2E33] hover:text-[color:var(--primary)] transition-colors">
+                <img class="w-4 h-4" src="/images/compare.svg" ${compareIconClass} />
+                <span class="hidden xs:inline">Müqayisə</span>
+            </button>
+        </div>
+    </div>
+</div>
+
     `;
 }
 function getFavoriteStatus(propertyId) {
