@@ -1,67 +1,92 @@
-<div class="flex items-center justify-center">
-    <div class="flex h-screen justify-center  w-full  overflow-hidden ">
-        <div class="w-1/2 bg-cover left bg-center sm:none lg:block md:block"
-            style="background-image: url('https://themesflat.co/html/proty/images/section/banner-login.jpg')">
-        </div>
+{{!-- <div class="flex items-center justify-center"> --}}
+<div class="relative flex items-center justify-center bg-cover bg-center" style="background-image: url('/images/login-bg.svg');">
+  <div class="absolute inset-0 bg-[#F1913D] opacity-80"></div>
 
-        <div class="w-full md:w-1/2 p-8 justify-center flex flex-col">
+    <div class="flex h-screen justify-center  w-[95%]  overflow-hidden items-center xl:gap-[20px] lg:gap-[10px] ">
+        {{!-- <div class="w-1/2 bg-cover left bg-center sm:none lg:block md:block" --}}
+            {{!-- style="background-image: url('https://themesflat.co/html/proty/images/section/banner-login.jpg')">--}}
+        {{!-- </div> --}}
+    <div class="z-100 flex flex-col items-center">
+        <h1 class="text-white font-bold xl:text-[40px] xl:w-[340px] text-center mb-4 lg:text-[30px] md:text-[25px] lg:w-[250px]">Find your ideal house</h1>
+        <img src="/images/illustation.svg" class="xl:w-[250px] lg:w-[200px] md:w-[150px]">
+    </div>
 
-
+        <div class="w-full md:w-1/2 p-8 justify-center flex flex-col bg-white z-100 rounded-[15px] h-[550px]">
 
             {{#if setting.name}}
             <h2 class="text-2xl font-semibold text-gray-800 mb-6">Sign in to {{setting.name}}</h2>
 
             {{/if}}
 
-
-
-
-
-            <form id="login-form" class="space-y-4 ">
-                <div class="input-with-icon mt-[50px]">
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                    <input type="email" name="email" id="email" required placeholder="Enter Your Email Address"
+            <form id="login-form" class="space-y-0">
+                <div class="input-with-icon mt-[10px]">
+                    {{!-- <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label> --}}
+                    <input type="email" name="email" id="email" required placeholder="Mail address or username"
                         class="w-full border rounded-xl px-4 py-3 pl-12">
-                    <i class="bi bi-envelope input-icon-inside"></i>
+                    {{!-- <i class="bi bi-envelope input-icon-inside"></i> --}}
                 </div>
 
-                <div class="input-with-icon mt-[50px]">
-                    <div class="flex justify-between items-center mb-1">
+                <div class="input-with-icon mt-[10px]">
+                    {{!-- <div class="flex justify-between items-center mb-1">
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                         <a href="/forgot-password" class="text-sm text-orange-500 hover:underline">Forgot Password?</a>
-                    </div>
-                    <input type="password" name="password" id="password" required placeholder="Enter Password"
+                    </div> --}}
+                    <input type="password" name="password" id="password" required placeholder="Password"
                         class="w-full border rounded-xl px-4 py-3 pl-12">
-                    <i class="bi bi-lock input-icon-inside"></i>
+                    {{!-- <i class="bi bi-lock input-icon-inside"></i> --}}
                 </div>
 
                 <div id="error-message" class="text-red-500 text-sm py-2"></div>
-                <div class="text-center mb-4">
+                {{!-- <div class="text-center mb-4">
                     <p class="text-gray-600">Not a member?
                         <a href="/register" class="text-orange-500 hover:underline">Sign Up</a>
                     </p>
-                </div>
+                </div> --}}
                 <button type="submit" id="login-btn"
                     class="w-full bg-[var(--primary)] hover:bg-orange-600 text-white font-semibold py-4 rounded-xl transition duration-300">
-                    Sign In
+                   Log In
                 </button>
 
             </form>
     {{#ifNo isProduction}}
 
         <div class="divider flex items-center justify-center my-6">
+          <hr class="w-1/5 border-gray-300" />
+          <span class="mx-2 text-gray-500 text-sm text-center">If you have not account</span>
+          <hr class="w-1/5 border-gray-300" />
+        </div>
+
+         <a href="/register" class="w-full bg-[var(--primary)] text-center hover:bg-[#F1913D] hover:text-white text-[#F1913D] bg-white border border-gray font-semibold py-4 rounded-xl transition duration-300">
+                   Register
+        </a>
+
+        <div class="divider flex items-center justify-center my-6">
                 <hr class="w-1/5 border-gray-300">
-                <span class="mx-2 text-gray-500 text-sm">Or with Google</span>
+                <span class="mx-2 text-gray-500 text-sm text-center">Also you can log in with</span>
                 <hr class="w-1/5 border-gray-300">
             </div>
-            <div class="social-buttons mb-6">
-                <a href="#"
+            <div class="social-buttons mb-6 flex justify-between w-[70%] m-auto">
+                {{!-- <a href="#"
                     class="flex items-center justify-center px-4 py-3 w-full border border-gray-200 rounded-lg hover:bg-gray-100">
                     <img src="/images/googlelogo.png" class="w-6 h-6 mr-2" alt="Google logo">
                     <span>Sign in with Google</span>
+                </a> --}}
+                <a href="#">
+                    <img src="/images/devicon_google.svg">
+                </a>
+                <a href="#">
+                    <img src="/images/logos_facebook.svg" >
+                </a><a href="#">
+                    <img src="/images/logos_apple.svg" >
+                </a><a href="#">
+                    <img src="/images/logos_telegram.svg" >
                 </a>
             </div>
     {{/ifNo}}
         </div>
+        <div class="z-100 flex flex-col items-center">
+    <h1 class="text-white text-center font-bold xl:text-[40px] xl:w-[400px] mb-4 lg:text-[30px] md:text-[25px] lg:w-[300px]">Easiest way to find your safezone</h1>
+    <img src="/images/ok-finger.svg" alt="ok-icon" class="xl:w-[250px] lg:w-[200px] md:w-[150px]">
+</div>
     </div>
 </div>
