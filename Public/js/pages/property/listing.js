@@ -520,18 +520,6 @@ const resetBtn = document.getElementById("resetBtn");
 
 
 
-// Tabs işlətmək
-const tabBtns = document.querySelectorAll(".tabBtn");
-const tabContents = document.querySelectorAll(".tabContent");
-
-tabBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-        tabBtns.forEach(b => b.classList.remove("border-blue-600", "text-blue-600"));
-        btn.classList.add("border-blue-600", "text-blue-600");
-        tabContents.forEach(tc => tc.classList.add("hidden"));
-        document.getElementById(btn.dataset.tab).classList.remove("hidden");
-    });
-});
 
 // Sıfırla
 resetBtn.addEventListener("click", () => {
@@ -562,6 +550,7 @@ async function apiGet(path) {
 }
 
 // === Elementlər ===
+// const modal = document.getElementById("filterModal");
 const openModal = document.getElementById("openModal");
 const closeModal = document.getElementById("closeModal");
 const applyBtn = document.getElementById("applyBtn");
@@ -571,6 +560,7 @@ const citySelect = document.getElementById("citySelect");
 
 const metroTab = document.getElementById("metroTab");
 const nishangahTab = document.getElementById("nishangahTab");
+const rayonTab = document.getElementById("rayonTab");
 
 const metroList = document.getElementById("metroList");
 const metroEmpty = document.getElementById("metroEmpty");
@@ -580,119 +570,150 @@ const nishangahList = document.getElementById("nishangahList");
 const nishangahEmpty = document.getElementById("nishangahEmpty");
 const nishangahSearch = document.getElementById("nishangahSearch");
 
+const rayonList = document.getElementById("rayonList");
+const rayonEmpty = document.getElementById("rayonEmpty");
+const rayonSearch = document.getElementById("rayonSearch");
+
+[metroTab, nishangahTab, rayonTab].forEach(el => el.classList.add("hidden"));
+
 // === Modal aç/bağla ===
 openModal.addEventListener("click", () => {
     modal.classList.remove("hidden");
-    // İlk dəfə açıldıqda şəhərlər yüklə
     if (!citySelect.dataset.loaded) initLoad();
 });
 closeModal.addEventListener("click", () => modal.classList.add("hidden"));
 modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.add("hidden"); });
 
-// === Tablar ===
+// === Tab-lar ===
+const tabBtns = document.querySelectorAll(".tabBtn");
+const tabContents = document.querySelectorAll(".tabContent");
+
+function showTab(tabEl, btnEl) {
+    tabContents.forEach(tc => tc.classList.add("hidden"));
+    tabBtns.forEach(b => b.classList.remove("border-blue-600", "text-blue-600"));
+    tabEl.classList.remove("hidden");
+    btnEl.classList.add("border-blue-600", "text-blue-600");
+}
+
 tabBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-        tabBtns.forEach(b => b.classList.remove("border-blue-600", "text-blue-600"));
-        btn.classList.add("border-blue-600", "text-blue-600");
-        [metroTab, nishangahTab].forEach(el => el.classList.add("hidden"));
-        document.getElementById(btn.dataset.tab).classList.remove("hidden");
+    btn.addEventListener("click", async () => {
+        const tabEl = document.getElementById(btn.dataset.tab);
+        showTab(tabEl, btn);
+        if (btn.dataset.tab === "rayonTab") await reloadLists();
     });
 });
 
-// === İlk yükləmə: şəhərlər, sonra metro/nişangah ===
+// === İlk yükləmə: şəhərlər, sonra rayon/metro/nişangah ===
 async function initLoad() {
     try {
         const cities = await apiGet(endpoints.cities);
-        // Gözlənən format: [{id, name}, ...]
         fillSelect(citySelect, cities, "id", "name");
         citySelect.dataset.loaded = "1";
-
-        // Default ilk şəhər seçilsin (istəmirsənsə sil)
-        if (cities?.length) {
-            citySelect.value = cities[0].id;
-        }
-
         await reloadLists();
     } catch (e) {
         console.error("Init load error:", e);
     }
 }
 
-// === Şəhər dəyişəndə siyahıları yenilə ===
-citySelect.addEventListener("change", reloadLists);
+// === Şəhər dəyişəndə siyahıları yenilə və Rayon tabını aktiv et ===
+citySelect.addEventListener("change", async () => {
+    const cityId = citySelect.value;
 
+    // Siyahıları yenilə
+    await reloadLists();
+
+    // Rayon tabını avtomatik aç
+    showTab(rayonTab, document.querySelector('[data-tab="rayonTab"]'));
+
+    // Metro tabı yalnız Bakı üçün görünür (id: "baki")
+    const metroTabBtn = document.querySelector('[data-tab="metroTab"]');
+    if(cityId === "baki") {
+        metroTabBtn.classList.remove("hidden");
+    } else {
+        metroTabBtn.classList.add("hidden");
+        metroTab.classList.add("hidden"); // eyni zamanda content-i də gizlət
+    }
+});
+
+
+// === Siyahıları yeniləyən funksiyalar ===
 async function reloadLists() {
     const cityId = citySelect.value || "";
 
-    // Metro: əvvəl URL-də city_id paramını sına, alınmazsa lokalda filter et
+    // Metro
     const subways = await getByCity(endpoints.subways, cityId);
     renderCheckboxList(metroList, subways, "id", "name", "metro");
     toggleEmpty(metroList, metroEmpty);
 
+    // Nişangah
     const nearby = await getByCity(endpoints.nearby, cityId);
     renderCheckboxList(nishangahList, nearby, "id", "name", "nearby");
     toggleEmpty(nishangahList, nishangahEmpty);
 
+    // Rayon
+    let districts = [];
+    if (cityId) {
+        const cities = await apiGet(endpoints.cities);
+        const selected = cities.find(c => c.id == cityId);
+        districts = selected?.districts || [];
+    }
+    renderCheckboxList(rayonList, districts, "id", "name", "district");
+    toggleEmpty(rayonList, rayonEmpty);
+
+
     updateApplyCount();
 }
 
-// API city_id dəstəkləyirsə ?city_id= ilə çək, yoxdursa obyektlərdəki cityId/city_id sahəsinə görə filter et
+// === Axtarış funksiyaları ===
+function wireSearch(inputEl, listContainer, emptyEl) {
+    inputEl.addEventListener("input", () => {
+        const q = inputEl.value.trim().toLowerCase();
+        let visible = 0;
+        listContainer.querySelectorAll("label[data-text]").forEach(l => {
+            const show = l.dataset.text.includes(q);
+            l.classList.toggle("hidden", !show);
+            if (show) visible++;
+        });
+        emptyEl.classList.toggle("hidden", visible !== 0);
+    });
+}
+
+wireSearch(rayonSearch, rayonList, rayonEmpty);
+wireSearch(metroSearch, metroList, metroEmpty);
+wireSearch(nishangahSearch, nishangahList, nishangahEmpty);
+
+// === API helper ===
 async function getByCity(basePath, cityId) {
-    if (!cityId) {
-        // heç nə seçilməyibsə bütününü gətir
-        return await apiGet(basePath);
-    }
+    if (!cityId) return await apiGet(basePath);
     try {
-        // 1) serverdə filtr varsa:
         const withParam = await apiGet(`${basePath}?city_id=${encodeURIComponent(cityId)}`);
         if (Array.isArray(withParam)) return withParam;
-    } catch (_) { /* davam et */ }
-
-    // 2) fallback: hamısını gətir, lokalda filter et
+    } catch (_) {}
     const all = await apiGet(basePath);
     return (all || []).filter(x =>
         String(x.city_id ?? x.cityId ?? x.city)?.toLowerCase() === String(cityId).toLowerCase()
     );
 }
 
-// === Search (client-side) ===
-function wireSearch(inputEl, listContainer) {
-    inputEl.addEventListener("input", () => {
-        const q = inputEl.value.trim().toLowerCase();
-        const items = listContainer.querySelectorAll("label[data-text]");
-        let visible = 0;
-        items.forEach(l => {
-            const show = l.dataset.text.includes(q);
-            l.classList.toggle("hidden", !show);
-            if (show) visible++;
-        });
-        const emptyEl = listContainer.id === "metroList" ? metroEmpty : nishangahEmpty;
-        emptyEl.classList.toggle("hidden", visible !== 0);
-    });
-}
-wireSearch(metroSearch, metroList);
-wireSearch(nishangahSearch, nishangahList);
-
 // === Sıfırla ===
 resetBtn.addEventListener("click", () => {
     modal.querySelectorAll("input[type=checkbox]").forEach(ch => ch.checked = false);
     metroSearch.value = "";
     nishangahSearch.value = "";
-    // bütün elementləri görünən et
+    rayonSearch.value = "";
     metroList.querySelectorAll("label").forEach(l => l.classList.remove("hidden"));
     nishangahList.querySelectorAll("label").forEach(l => l.classList.remove("hidden"));
+    rayonList.querySelectorAll("label").forEach(l => l.classList.remove("hidden"));
     toggleEmpty(metroList, metroEmpty);
     toggleEmpty(nishangahList, nishangahEmpty);
+    toggleEmpty(rayonList, rayonEmpty);
     updateApplyCount();
 });
 
-// === Apply (seçilənləri topla — lazım olan yerə göndər) ===
+// === Apply ===
 applyBtn.addEventListener("click", () => {
     const selected = getSelected();
     console.log("Seçilən filtrlər:", selected);
-    // Burada istəsən querystring qurub yönləndirə bilərsən:
-    // const qs = new URLSearchParams(selected).toString();
-    // window.location = `/elanlar?${qs}`;
     modal.classList.add("hidden");
 });
 
@@ -701,20 +722,20 @@ function getSelected() {
     return {
         city_id: citySelect.value || "",
         subways: pick("metro"),
-        nearby: pick("nearby")
+        nearby: pick("nearby"),
+        districts: pick("district")
     };
 }
 
 function updateApplyCount() {
     const s = getSelected();
-    // Burada backend-dən real say istəmirsənsə sadəcə seçilmiş item sayını göstəririk
-    const totalSelected = (s.subways?.length || 0) + (s.nearby?.length || 0);
+    const totalSelected = (s.subways?.length || 0) + (s.nearby?.length || 0) + (s.districts?.length || 0);
     applyCount.textContent = totalSelected;
 }
 
-// === Köməkçi render funksiyaları ===
+// === Köməkçi funksiyalar ===
 function fillSelect(selectEl, items, valueKey, labelKey) {
-    selectEl.innerHTML = '<option value="">Şəhər seç...</option>';
+    selectEl.innerHTML = '<option value="">Şəhər seçimi</option>';
     (items || []).forEach(i => {
         const opt = document.createElement("option");
         opt.value = i[valueKey];
@@ -744,23 +765,11 @@ function renderCheckboxList(container, items, valueKey, labelKey, name) {
 }
 
 function toggleEmpty(listEl, emptyEl) {
-    const hasItems = listEl.querySelector("label:not(.hidden)");
+    const hasItems = listEl.querySelector("label");
     emptyEl.classList.toggle("hidden", !!hasItems);
 }
 
-// const openModalBtn = document.getElementById("openModalBtn");
-// openModalBtn.addEventListener("click", () => {
-//     modal.classList.remove("hidden");
-// });
-
-closeModal.addEventListener("click", () => {
-    modal.classList.add("hidden");
-});
-
-modal.addEventListener("click", (e) => {
-    if (e.target === modal) modal.classList.add("hidden");
-});
-
+// === DOMContentLoaded ===
 document.addEventListener("DOMContentLoaded", () => {
     loadProperties(true);
     setupScrollEvents();
