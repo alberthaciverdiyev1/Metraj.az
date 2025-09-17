@@ -216,12 +216,6 @@ fastify.addHook('preHandler', async (request, reply) => {
 
 fastify.register(routes, { prefix: '/' })
 
-// Example route
-fastify.get('/test', async (request, reply) => {
-    return {
-        message: request.t('hello'),
-    }
-})
 
 fastify.listen({ port: 3300, host: '0.0.0.0' }, err => {
     if (err) {

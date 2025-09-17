@@ -1,20 +1,24 @@
-
-
-<div class=" flex items-center justify-center ">
+<div class=" flex items-center justify-center h-auto  bg-cover bg-center py-4" style="background-image: url('/images/login-bg.svg');">
     
-  <div class="flex min-h-screen justify-center w-full  overflow-hidden shadow-md">
-    <div
+  <div class="fixed inset-0 bg-[#F1913D] opacity-80 "></div>
+  <div class="flex min-h-screen flex-col md:flex-row md:w-[95%] w-[90%] items-center gap-[20px] xl:gap-[20px] lg:gap-[10px] justify-center items-center overflow-hidden shadow-md" >
+
+    {{!-- <div
       class="w-1/2 bg-cover bg-center left  lg:block md:block"
       style="background-image: url('https://themesflat.co/html/proty/images/section/banner-register.jpg')"
-    ></div>
+    ></div> --}}
 
-   
-    <div class="w-full md:w-1/2 p-8 justify-center flex flex-col">
+    <div class="z-100 flex md:flex-col flex-row items-center gap-[30px] md:gap-[0]">
+        <h1 class="text-white text-[30px] font-bold xl:text-[40px] xl:w-[340px] text-center mb-4 lg:text-[30px] md:text-[20px] md:w-[200px] lg:w-[250px]">Find your ideal house</h1>
+        <img src="/images/illustation.svg" class="w-[200px] xl:w-[250px] lg:w-[200px]">
+    </div>
+
+    <div class="w-full md:w-1/2 p-8 justify-center flex flex-col z-100 bg-white rounded-[15px] h-auto">
     {{#if setting.name}}
       <h2 class="text-2xl font-semibold text-gray-800 mb-6">Register to {{setting.name}}</h2>
 
     {{/if}}
-
+{{!-- 
       <div class="mb-4">
         <label
           for="role"
@@ -31,76 +35,88 @@
           <option value="agent">Vasitəçi</option>
           <option value="user">İstifadəçi</option>
         </select>
-      </div>
+      </div> --}}
 
-      <form method="POST" action="/register">
+      <form method="POST" action="/register" class="h-auto">
 
         <div class="input-with-icon ">
-          <label for="full-name">Tam ad</label>
+          {{!-- <label for="full-name">Tam ad</label> --}}
           <input
             type="text"
             name="full-name"
             id="full-name"
             required
-            placeholder="Adınızı daxil edin"
+            placeholder="Username"
             class="w-full border rounded-md px-4 py-2"
           />
-          <i class="bi bi-person input-icon-inside"></i>
+          {{!-- <i class="bi bi-person input-icon-inside"></i> --}}
         </div>
 
-        <div class="input-with-icon mb-4 hidden" id="agencyNameField">
-          <label for="agency_name">Agentlik adı</label>
-          <input
+        {{!-- <div class="input-with-icon mb-4 hidden" id="agencyNameField"> --}}
+          {{!-- <label for="agency_name">Agentlik adı</label> --}}
+          {{!-- <input
             type="text"
             name="agency_name"
             id="agency_name"
             placeholder="Agentlik adınızı daxil edin"
             class="w-full border rounded-md px-4 py-2"
-          />
-          <i class="bi bi-building input-icon-inside"></i>
-        </div>
+          /> --}}
+          {{!-- <i class="bi bi-building input-icon-inside"></i> --}}
+        {{!-- </div> --}}
 
         <div class="input-with-icon mb-4">
-          <label for="email">Email address</label>
+          {{!-- <label for="email">Email address</label> --}}
           <input
             type="email"
             name="email"
             id="email"
             required
-            placeholder="Emailinizi daxil edin"
+            placeholder="Mail address"
             class="w-full border rounded-md px-4 py-2"
           />
-          <i class="bi bi-envelope input-icon-inside"></i>
+          {{!-- <i class="bi bi-envelope input-icon-inside"></i> --}}
+        </div>
+
+          <div class="input-with-icon mb-4">
+          {{!-- <label for="password">Password</label> --}}
+          <input
+            type="number"
+            name="phone"
+            id="phone"
+            required
+            placeholder="Phone number"
+            class="w-full border rounded-md px-4 py-2"
+          />
         </div>
 
         <div class="input-with-icon mb-4">
-          <label for="password">Password</label>
+          {{!-- <label for="password">Password</label> --}}
           <input
             type="password"
             name="password"
             id="password"
             required
-            placeholder="Şifrənizi daxil edin"
+            placeholder="Password"
             class="w-full border rounded-md px-4 py-2"
           />
-          <i class="bi bi-lock input-icon-inside"></i>
+          {{!-- <i class="bi bi-lock input-icon-inside"></i> --}}
         </div>
 
         <div class="input-with-icon mb-4">
-          <label for="password_confirmation">Confirm Password</label>
+          {{!-- <label for="password_confirmation">Confirm Password</label> --}}
           <input
             type="password"
             name="password_confirmation"
             id="password_confirmation"
             required
-            placeholder="Şifrənizi təsdiqləyin"
+            placeholder="Password again"
             class="w-full border rounded-md px-4 py-2"
           />
-          <i class="bi bi-lock input-icon-inside"></i>
+          {{!-- <i class="bi bi-lock input-icon-inside"></i> --}}
         </div>
 
         <div class="input-with-icon mb-4 hidden" id="phoneField">
-          <label for="phone">Əlaqə nömrəsi</label>
+          {{!-- <label for="phone">Əlaqə nömrəsi</label> --}}
           <input
             type="tel"
             name="phone"
@@ -108,48 +124,82 @@
             placeholder="Telefon nömrənizi daxil edin"
             class="w-full border rounded-md px-4 py-2"
           />
-          <i class="bi bi-telephone input-icon-inside"></i>
+          {{!-- <i class="bi bi-telephone input-icon-inside"></i> --}}
         </div>
 
         <div class="flex items-center mb-4">
           <input type="checkbox" id="terms" required class="mr-2" />
           <label for="terms" class="text-sm text-gray-600">
-            I agree to the
-            <a href="#" class="text-blue-500">Terms</a> and
-            <a href="#" class="text-blue-500">Privacy Policy</a>.
+            I have to accept
+            {{!-- <a href="#" class="text-blue-500">Terms</a> and --}}
+            <a href="#" class="text-blue-500">Privacy and policy</a>.
           </label>
         </div>
 
+  <div class="flex items-center mb-4">
+          <input type="checkbox" id="terms" required class="mr-2" />
+          <label for="terms" class="text-sm text-gray-600">
+          Log in automatically            
+          </label>
+        </div>
+
+
         <button
           type="submit"
-          class="w-full bg-[var(--primary)] hover:bg-orange-600 text-white font-semibold py-4 rounded-xl transition duration-300"
+          class="w-full bg-white text-[#F1913D] border bg-[var(--primary)] hover:bg-[#F1913D] hover:text-white font-semibold py-3 rounded-xl transition duration-300"
         >
-          Sign Up
+          {{!-- Sign Up --}}
+          Register
         </button>
-
-        <p class="text-sm text-center text-gray-600 mt-4">
+ <div class="divider flex items-center justify-center my-6">
+                <hr class="w-1/5 border-gray-300">
+                <span class="mx-2 text-gray-500 text-sm text-center">If you have account already</span>
+                <hr class="w-1/5 border-gray-300">
+            </div>
+<div class="flex ">
+     <a href="/login"
+           class="w-full text-center bg-[var(--primary)] hover:bg-orange-600 text-white font-semibold py-3 rounded-xl transition duration-300">
+          Log in
+        </a>
+</div>
+       
+        {{!-- <p class="text-sm text-center text-gray-600 mt-4">
           Already have an account?
           <a href="/login" class="text-orange-500 hover:underline">Sign In</a>
-        </p>
+        </p> --}}
 
           {{#ifNo isProduction}}
         <div class="flex items-center justify-center mt-6">
           <hr class="w-1/5 border-gray-300" />
-          <span class="mx-2 text-gray-500 text-sm">or sign up with</span>
+          <span class="mx-2 text-gray-500 text-sm text-center">Also you can sign in with</span>
           <hr class="w-1/5 border-gray-300" />
         </div>
 
-        <div class="flex w-full justify-center items-center gap-4 mt-4">
-          <a
+        <div class="flex w-full justify-evenly items-center mt-4">
+          {{!-- <a
             href="#"
             class="flex items-center px-4 py-4 w-full justify-center border border-gray-200 rounded-lg hover:bg-gray-100"
           >
             <img src="/images/googlelogo.png" class="w-[24px] h-6 mr-2" /> Google
-          </a>
+          </a> --}}
+             <a href="#">
+                    <img src="/images/devicon_google.svg">
+                </a>
+                <a href="#">
+                    <img src="/images/logos_facebook.svg" >
+                </a><a href="#">
+                    <img src="/images/logos_apple.svg" >
+                </a><a href="#">
+                    <img src="/images/logos_telegram.svg" >
+                </a>
         </div>
           {{/ifNo}}
       </form>
     </div>
+      <div class="z-100 flex md:flex-col flex-row items-center">
+    <h1 class="text-white text-center text-[30px] font-bold xl:text-[40px] xl:w-[400px] mb-4 lg:text-[30px] md:text-[20px] md:w-[200px] lg:w-[300px]">Easiest way to find your safezone</h1>
+    <img src="/images/ok-finger.svg" alt="ok-icon" class="w-[200px] xl:w-[250px] lg:w-[200px]">
+</div>
   </div>
 </div>
 

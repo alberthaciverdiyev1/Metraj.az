@@ -65,62 +65,66 @@ export function propertyCard(property, showRemoveButton = false) {
   const isCompareActive = getCompareStatus(property.id);
   const compareIconClass = isCompareActive ? "text-[color:var(--primary)]" : "";
   return `
-        <div onclick="window.location.href='/property/${property.id}'" 
+<!-- Property Card -->
+<div onclick="window.location.href='/property/${property.id}'" 
      data-property-id="${property.id}"  
      class="cursor-pointer border border-[color:var(--border-color)] rounded-2xl overflow-hidden flex flex-col h-full group transition-all duration-300 relative">
 
-    <!-- Image -->
-    <div class="relative overflow-hidden">
-        <img src="${property.media.path}" 
-             alt="${property.title}" 
-             class="w-full h-56 sm:h-64 md:h-72 object-cover transition-transform duration-500 group-hover:scale-105" />
-        
-        ${premiumBadge}
-        ${favoriteOrRemoveButton}
+  <!-- Image -->
+  <div class="relative overflow-hidden aspect-[4/3] sm:aspect-[5/3] md:aspect-[3/2] lg:aspect-[16/10]">
+    <img src="${property.media.path}" 
+         alt="${property.title}" 
+         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+    
+    ${premiumBadge}
+    ${favoriteOrRemoveButton}
 
-        <button onclick="event.stopPropagation()" 
-                class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#494949] bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <img src="/images/icon.svg" />
-        </button>
+    <!-- Overlay button -->
+    <button onclick="event.stopPropagation()" 
+            class="absolute right-2 top-2 bg-[#494949] bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <img src="/images/icon.svg" class="w-4 h-4 sm:w-5 sm:h-5" />
+    </button>
+  </div>
+
+  <!-- Card Content -->
+  <div class="p-3 sm:p-4 flex flex-col flex-1">
+    <div class="flex flex-col gap-2 min-h-[100px] sm:min-h-[120px]">
+      
+      <!-- Başlıq -->
+      <h3 class="font-bold text-[color:var(--text-color)] text-sm sm:text-base md:text-lg leading-snug hover:text-[color:var(--primary)] line-clamp-2">
+        ${property.title}
+      </h3>
+
+      <!-- Badge-lər -->
+      ${badges}
+
+      <!-- Ünvan -->
+      <p class="flex items-start text-xs sm:text-sm text-[color:var(--grey-text)]">
+        <img class="mr-2 mt-0.5 w-3.5 h-3.5 sm:w-4 sm:h-4" src="/images/map-pin.svg" />
+        <span class="line-clamp-1">${property.address}</span>
+      </p>
+
+      <!-- Tikili tipi və tarix -->
+      <div class="flex justify-between text-xs sm:text-sm text-[color:var(--grey-text)] mb-2">
+        <span class="truncate">${property.buildingType}</span>
+        <span>${property.date}</span>
+      </div>
     </div>
-     
-    <!-- Card content -->
-    <div class="p-3 sm:p-4 flex flex-col flex-1">
-        <div class="flex flex-col gap-2 min-h-[120px]">
-            <!-- Başlıq -->
-            <h3 class="font-bold text-[color:var(--text-color)] min-h-[40px] text-xs sm:text-sm md:text-base lg:text-lg leading-snug hover:text-[color:var(--primary)]">
-                ${property.title}
-            </h3>
 
-            <!-- Badge-lər -->
-            ${badges}
-
-            <!-- Ünvan -->
-            <p class="flex items-start text-[11px] sm:text-sm md:text-base text-[color:var(--grey-text)]">
-                <img class="mr-2 mt-0.5 w-3.5 h-3.5 sm:w-4 sm:h-4" src="/images/map-pin.svg" />
-                <span>${property.address}</span>
-            </p>
-
-            <!-- Tikili tipi və tarix -->
-            <div class="flex flex-col justify-between  text-[11px] sm:text-sm md:text-base text-[color:var(--grey-text)] mb-2">
-                <span>${property.buildingType}</span>
-                <span>${property.date}</span>
-            </div>
-        </div>
-
-        <!-- Qiymət və Compare button -->
-        <div class="flex justify-between items-center py-2 mt-auto border-t border-[color:var(--border-color)] pt-4">
-            <span class="text-[color:var(--primary)] font-bold text-sm sm:text-base md:text-lg">
-                ${price} AZN
-            </span>
-            <button onclick="event.stopPropagation(); toggleCompare(this, decodeURIComponent('${comparePropertyData}'));" 
-                    class="flex compare items-center gap-1 text-[11px] sm:text-xs md:text-sm text-[#2C2E33] hover:text-[color:var(--primary)] transition-colors">
-                <img class="w-4 h-4" src="/images/compare.svg" ${compareIconClass} />
-                <span class="hidden xs:inline">Müqayisə</span>
-            </button>
-        </div>
+    <!-- Qiymət və Compare button -->
+    <div class="flex justify-between items-center mt-auto border-t border-[color:var(--border-color)] pt-3">
+      <span class="text-[color:var(--primary)] font-bold text-sm sm:text-base md:text-lg">
+        ${price} AZN
+      </span>
+      <button onclick="event.stopPropagation(); toggleCompare(this, decodeURIComponent('${comparePropertyData}'));" 
+              class="flex items-center gap-1 text-xs sm:text-sm text-[#2C2E33] hover:text-[color:var(--primary)] transition-colors">
+        <img class="w-4 h-4 sm:w-5 sm:h-5" src="/images/compare.svg" ${compareIconClass} />
+        <span class="hidden xs:inline">Müqayisə</span>
+      </button>
     </div>
+  </div>
 </div>
+
 
     `;
 }
