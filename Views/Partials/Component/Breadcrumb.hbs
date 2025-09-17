@@ -1,18 +1,19 @@
 <section id="navigation" class="py-3">
-    <div class="container mx-auto px-4 flex items-center gap-2 pt-16 mt-10 sm:mt-20 xl:mt-10">
+    <div
+        class=" mx-auto px-4 text-[12px] lg:text-[20px] flex !flex-row !flex-nowrap items-center  gap-2 lg:pt-16 pt-25 sm:mt-20 xl:mt-10">
         {{#each items}}
-            {{#unless @first}}
-                <span class="text-gray-400">›</span>
-            {{/unless}}
+        {{#unless @first}}
+        <span class="text-gray-400">›</span>
+        {{/unless}}
 
-            {{#if url}}
-                <a href="{{url}}"
-                   class="{{#if @last}}text-[color:var(--primary)]{{else}} text-gray-600 font-bold flex items-center hover:text-black{{/if}}">
-                    {{label}}
-                </a>
-            {{else}}
-                <span class="text-[color:var(--primary)]">{{label}}</span>
-            {{/if}}
+        {{#if url}}
+        <a href="{{url}}"
+            class="{{#if @last}}text-[color:var(--primary)]{{else}} text-gray-600 font-bold flex items-center hover:text-black{{/if}}">
+            {{label}}
+        </a>
+        {{else}}
+        <span class="text-[color:var(--primary)]">{{label}}</span>
+        {{/if}}
         {{/each}}
     </div>
 </section>

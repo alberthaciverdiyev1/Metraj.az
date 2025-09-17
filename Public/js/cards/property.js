@@ -22,26 +22,26 @@ export function propertyCard(property, showRemoveButton = false) {
   const badges = `
 <div class="flex flex-wrap  gap-2">
     ${property.add_type === "rent"
-      ? `<span class="bg-[color:var(--primary)] text-white text-xs font-semibold px-2 text-center py-1 rounded-full">Kirayə</span>`
+      ? `<span class="bg-[color:var(--primary)] text-white w-[80px] text-xs font-semibold px-2 text-center py-1 rounded-full">Kirayə</span>`
       : property.add_type === "sale"
-        ? `<span class="bg-[#80807F] text-white text-xs font-semibold px-2 py-1 rounded-full">Satışda</span>`
+        ? `<span class="bg-[#80807F] text-white w-[80px] text-center text-xs font-semibold px-2 py-1 rounded-full">Satışda</span>`
         : ""
     }
 
     ${property.property_condition === "Repaired"
-      ? `<span class="bg-green-600 text-white text-xs font-semibold px-2 text-center  py-1 rounded-full">Təmirli</span>`
+      ? `<span class="bg-green-600 text-white text-xs  w-[80px] font-semibold px-2 text-center  py-1 rounded-full">Təmirli</span>`
       : ``
     // : `<span class="bg-gray-400 text-white text-xs font-semibold px-2 py-1 text-center rounded-full">Təmirsiz</span>`
     }
 
     ${property.in_credit
-      ? `<span class="bg-blue-600 text-white text-xs font-semibold px-2 py-1 text-center  rounded-full">İpoteka</span>` : ``
+      ? `<span class="bg-blue-600 text-white text-xs w-[80px] font-semibold px-2 py-1 text-center  rounded-full">İpoteka</span>` : ``
     // : `<span class="bg-gray-400 text-white text-xs font-semibold px-2 py-1 text-center rounded-full">İpotekasız</span>`
     }
     
 
     ${property.document === "kupça var"
-      ? `<span class="bg-green-500 text-white text-xs font-semibold px-2 py-1 text-center  rounded-full">Çıxarışlı</span>`
+      ? `<span class="bg-green-500 text-white text-xs w-[80px] font-semibold px-2 py-1 text-center  rounded-full">Çıxarışlı</span>`
       : ``
     // : `<span class="bg-red-500 text-white text-xs font-semibold px-2 py-1 text-center rounded-full">Çıxarışsız</span>`
     }

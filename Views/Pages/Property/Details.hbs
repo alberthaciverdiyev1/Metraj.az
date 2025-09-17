@@ -1,4 +1,7 @@
+<div class="container text-[13px] mx-auto pt-10 pl-5">
 {{>Component.Breadcrumb items=breadcrumbs}}
+</div>
+
 {{>Component.ScrollTop}}
 
 <style>
@@ -94,15 +97,24 @@
 
 <section id="side">
     <div class="container mx-auto px-4">
-        <div class="lg:flex-row md:flex-row flex-col side">
-            <div class="side-left">
-                <div class="info-box">
-                    <div class="info-box-title mb-4">
-                        <h2>{{ property.title }}</h2>
-                        {{#each property.prices}}
-                            <h2>₼{{ this.price }} <span>/month</span></h2>
-                        {{/each}}
-                    </div>
+        <div class="side-left">
+    <div class="info-box">
+        <!-- Başlıq və qiymətlər -->
+        <div class="info-box-title mb-4 flex flex-col sm:flex-row sm:items-center sm:gap-4">
+            <!-- Əsas başlıq -->
+            <h2 class="text-xl sm:text-2xl font-semibold break-words">
+                {{ property.title }}
+            </h2>
+
+            <!-- Qiymətlər -->
+            <div class="flex flex-wrap gap-2 mt-2 sm:mt-0">
+                {{#each property.prices}}
+                    <h2 class="text-lg sm:text-xl font-semibold whitespace-nowrap">
+                        ₼{{ this.price }} <span class="text-sm font-normal">/month</span>
+                    </h2>
+                {{/each}}
+            </div>
+        </div>
 
                     <div class="info-box-desc">
                         <div class="left">
@@ -111,11 +123,11 @@
                                 <span>{{ property.address }}</span>
                             </div>
                         </div>
-                        <div class="right">
-                            <i class="bi bi-heart"></i>
-                            <i class="bi bi-arrow-left-right"></i>
-                            <i class="bi bi-printer" id="printBtn" style="cursor: pointer;"></i>
-                            <i class="bi bi-share"></i>
+                         <div class="right flex items-center !flex-row flex-wrap gap-3 md:gap-4 text-lg md:text-xl">
+                            <i class="bi bi-heart cursor-pointer"></i>
+                            <i class="bi bi-arrow-left-right cursor-pointer"></i>
+                            <i class="bi bi-printer cursor-pointer" id="printBtn"></i>
+                            <i class="bi bi-share cursor-pointer"></i>
                         </div>
                     </div>
                 </div>
@@ -171,7 +183,7 @@
                     {{>Component.LoanCalculator}}
                 </div>
                 {{>Component.SimilarCards currentProperty=property}}
-                <a href="/?page=1&limit=20" class="w-full mt-10 text-center px-6 py-3 border border-[#F1913D] text-[#F1913D] font-semibold rounded-full shadow-md bg-white">Daha çox oxşar elanlar</a>
+                <a href="/?page=1&limit=20" class="lg:w-[300px] w-full mt-10 text-center px-6 py-3 border flex flex-nowrap border-[#F1913D] text-[#F1913D] font-semibold rounded-full shadow-md bg-white">Daha çox oxşar elanlar</a>
             </div>
             
             <div class="side-right">
