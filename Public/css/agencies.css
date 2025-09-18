@@ -547,9 +547,9 @@
         width: 100%;
     }
 
-    .agencies-card {
-        width: calc(100% / 2 - 3rem);
-    }
+    /* .agencies-card { */
+        /* width: calc(100% / 2 - 3rem); */
+    /* } */
 
 }
 
