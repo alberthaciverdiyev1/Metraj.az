@@ -15,54 +15,32 @@
 </div>
 {{/ifNo}}
 
-
 <div class="bg-[#2C2E33] px-6 py-6 mt-8 text-white border-b border-[#3a3a3d]">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row lg:justify-between lg:items-center gap-6">
 
         <div class="flex items-center gap-3">
-            <!-- <div class="bg-[#F7923A] p-2 rounded-lg">
-              <i class="bi bi-geo-alt-fill text-white text-xl"></i>
-            </div>
-            <div>
-              <h2 class="font-bold text-white text-xl">PROTY</h2>
-              <p class="text-sm text-gray-400 tracking-wider">REAL ESTATE</p>
-            </div> -->
-
-            {{!-- <div class="logo">
-                {{#if setting.logo}}
-                <img src="{{setting.logo}}" class="w-[170px] h-[50px]" alt="">
-                {{/if}}
-
-
-            </div> --}}
-            <a href="/" class="cursor-pointer     flex items-center space-x-3">
-                <img class="h-10 w-auto object-contain" src="/images/metrajlogo1-remove.png" alt="sekil" />
-
+            <a href="/" class="cursor-pointer flex lg:items-center space-x-3">
+                <img class="h-9 w-auto object-contain" src="/images/metrajlogo1-remove.png" alt="sekil" />
                 <div class="leading-tight">
-                    <div class="text-xl font-extrabold text-[#a7a5a5] tracking-tight">Metraj.az</div>
+                    <div class="text-md font-extrabold text-[#a7a5a5] tracking-tight">Metraj.az</div>
                     <div class="text-[8px] text-gray-400 underline underline-offset-4 uppercase tracking-[0.2em]">sənin
                         əmlakın</div>
                 </div>
-
             </a>
-
         </div>
 
-        <div class="flex items-center gap-6 md:justify-end flex-wrap">
-
+        <div class="flex items-center gap-6">
             <div class="flex items-center gap-3 border-r border-[#3B3D41] pr-6">
                 <i class="bi bi-telephone text-[#F7923A] text-xl"></i>
                 <div>
                     <p class="text-sm text-gray-400">Call us</p>
-
                     {{#if setting.phone}}
                     <p class="font-semibold text-white text-[15px]">{{setting.phone}}</p>
-
                     {{/if}}
                 </div>
             </div>
 
-            <div class="flex items-center gap-3 pr-0 last:border-none">
+            <div class="flex items-center gap-3">
                 <i class="bi bi-envelope text-[#F7923A] text-xl"></i>
                 <div>
                     <p class="text-sm text-gray-400">Need live help</p>
@@ -71,70 +49,43 @@
                     {{/if}}
                 </div>
             </div>
-
         </div>
 
     </div>
 </div>
 
 
+
 <footer class="bg-[#2C2E33] text-[#d1d5db] px-6 py-12 font-sans">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
+    <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5">
 
         <div>
             <h4 class="font-semibold text-white text-[18px] mb-5">Pages</h4>
             <ul class="space-y-2 text-sm">
                 <li><a href="/contact" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>
-                        Contact <span class="link-underline"></span></a></li>
-                {{!-- <li><a href="#" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Why choose us? <span
-                            class="link-underline"></span></a></li>
-                <li><a href="#" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Customer reviews <span
-                            class="link-underline"></span></a></li>
-                <li><a href="#" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Our team <span
-                            class="link-underline"></span></a></li>
-                <li><a href="#" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Careers with realty <span
-                            class="link-underline"></span></a></li>
-                <li><a href="#" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Work with us <span
-                            class="link-underline"></span></a></li> --}}
-
+                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Contact
+                    </a></li>
                 <li><a href="/property" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Listing <span
-                            class="link-underline"></span></a></li>
-
+                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Listing
+                    </a></li>
                 <li><a href="/agencies" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Agencies <span
-                            class="link-underline"></span></a></li>
-
-
-
+                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Agencies
+                    </a></li>
                 <li><a href="/blog" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Blog <span
-                            class="link-underline"></span></a></li>
+                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Blog
+                    </a></li>
             </ul>
         </div>
 
         <div>
-            <h4 class="font-semibold text-white text-[18px] mb-5">Popular house</h4>
+            <h4 class="font-semibold text-white text-[18px] mb-5 w-[200px]">Popular house</h4>
             <ul class="space-y-2 text-sm">
-                <li><a href="/faqs" class="group inline-block relative">{{t "FAQS"}} <span
-                            class="link-underline"></span></a>
-                </li>
-                <li><a href="/comingSoon" class="group inline-block relative">{{t "Coming soon"}} <span
-                            class="link-underline"></span></a></li>
-                <li><a href="#" class="group inline-block relative">#Smart home <span class="link-underline"></span></a>
-                </li>
-                <li><a href="#" class="group inline-block relative">#Apartments <span class="link-underline"></span></a>
-                </li>
-                <li><a href="#" class="group inline-block relative">#Office <span class="link-underline"></span></a>
-                </li>
-                <li><a href="#" class="group inline-block relative">#Bungalow <span class="link-underline"></span></a>
-                </li>
+                <li><a href="/faqs" class="group inline-block relative">FAQS</a></li>
+                <li><a href="/comingSoon" class="group inline-block relative">Coming soon</a></li>
+                <li><a href="#" class="group inline-block relative">#Smart home</a></li>
+                <li><a href="#" class="group inline-block relative">#Apartments</a></li>
+                <li><a href="#" class="group inline-block relative">#Office</a></li>
+                <li><a href="#" class="group inline-block relative">#Bungalow</a></li>
             </ul>
         </div>
 
@@ -142,27 +93,22 @@
             <h4 class="font-semibold text-white text-[18px] mb-5">Quick links</h4>
             <ul class="space-y-2 text-sm">
                 <li><a href="/property" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Listing <span
-                            class="link-underline"></span></a></li>
+                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Listing
+                    </a></li>
                 <li><a href="/add-property" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Add-Property <span
-                            class="link-underline"></span></a></li>
-
-
+                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Add-Property
+                    </a></li>
                 <li><a href="/agencies" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Agencies <span
-                            class="link-underline"></span></a></li>
-
-
-
+                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Agencies
+                    </a></li>
                 <li><a href="/blog" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Blog <span
-                            class="link-underline"></span></a></li>
+                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Blog
+                    </a></li>
             </ul>
         </div>
 
-        <div>
-            <h4 class="font-semibold text-white text-[18px] mb-5">Newsletter</h4>
+        <div class="col-span-2 md:col-span-4 lg:col-span-2 max-w-[400px]">
+            <h4 class="font-semibold mt-10 lg:mt-0 text-white text-[18px] mb-5">Newsletter</h4>
             <p class="text-sm mb-3 text-[#5C5E61]">Sign up to receive the latest articles</p>
             <input type="email" placeholder="Your email address"
                 class="w-full placeholder-[#5C5E61] px-6 py-4 rounded-lg bg-transparent text-white border-[#3B3D41] border mb-4 text-sm" />
@@ -171,54 +117,27 @@
                 Subscribe
             </button>
             <div class="flex items-start mt-4">
-                <label class="flex items-center cursor-pointer gap-2">
-                    <input type="checkbox" class="custom-checkbox" />
-                </label>
-
-                <label class="text-xs text-[#5C5E61] leading-tight ml-3">I have read and agree to the terms &amp;
+                <input type="checkbox" class="custom-checkbox" />
+                <label class="text-xs text-[#5C5E61] leading-tight ml-3">I have read and agree to the terms &
                     conditions</label>
             </div>
         </div>
     </div>
-
     <div
-        class="mt-12 border-t border-[#3a3a3d] pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+        class="mt-12 lg:pb-0 pb-10 border-t border-[#3a3a3d] pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
         <p>Copyright © 2024 <span class="text-white font-semibold">PROTY - REAL ESTATE</span>. Designed &amp; Developed
             by Themesflat</p>
-        <div class="flex gap-4 mt-4 md:mt-0 text-xl">
-
-            {{#if setting.facebook_url}}
-            <a href="{{setting.facebook_url}}"
+        <div class="flex gap-4 mt-4 md:mt-0 text-xl"> {{#if setting.facebook_url}} <a href="{{setting.facebook_url}}"
                 class="w-10 h-10 flex items-center justify-center rounded-full border border-[#323439] text-gray-400 hover:bg-[#F7923A] hover:text-white transition">
-                <i class="bi bi-facebook"></i>
-            </a>
-            {{/if}}
-
-            {{#if setting.whatsapp_number}}
-            <a href="tel:{{setting.whatsapp_number}}"
+                <i class="bi bi-facebook"></i> </a> {{/if}} {{#if setting.whatsapp_number}} <a
+                href="tel:{{setting.whatsapp_number}}"
                 class="w-10 h-10 flex items-center justify-center rounded-full border border-[#323439] text-gray-400 hover:bg-[#F7923A] hover:text-white transition">
-                <i class="bi bi-whatsapp"></i>
-            </a>
-            {{/if}}
-
-            {{#if setting.linkedin_url}}
-            <a href="{{setting.linkedin_url}}"
+                <i class="bi bi-whatsapp"></i> </a> {{/if}} {{#if setting.linkedin_url}} <a
+                href="{{setting.linkedin_url}}"
                 class="w-10 h-10 flex items-center justify-center rounded-full border border-[#323439] text-gray-400 hover:bg-[#F7923A] hover:text-white transition">
-                <i class="bi bi-linkedin"></i>
-            </a>
-
-            {{/if}}
-
-            {{#if setting.instagram_url}}
-            <a href="{{setting.instagram_url}}"
+                <i class="bi bi-linkedin"></i> </a> {{/if}} {{#if setting.instagram_url}} <a
+                href="{{setting.instagram_url}}"
                 class="w-10 h-10 flex items-center justify-center rounded-full border border-[#323439] text-gray-400 hover:bg-[#F7923A] hover:text-white transition">
-                <i class="bi bi-instagram"></i>
-            </a>
-            {{/if}}
-
-
-
-        </div>
-
+                <i class="bi bi-instagram"></i> </a> {{/if}} </div>
     </div>
 </footer>
