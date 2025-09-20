@@ -94,20 +94,18 @@
         <div class="w-full mx-auto px-4">
             <main>
 
-                <div class="bg-white mt-2 p-5 mx-auto rounded-lg shadow-md">
-                    <h2 class="text-2xl font-bold mb-6">{{t "Additional Information"}}</h2>
+                <div class=" mt-2 p-5 mx-auto  ">
+                    <h2 class="text-2xl font-bold mb-6">{{t "Add Property"}}</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
                         <!-- Property Type -->
                         <div>
-                            <label class="block font-medium mb-1">{{t "Building Type"}}:<span
-                                    class="text-red-500">*</span></label>
+                            {{!-- <label class="block font-medium mb-1">{{t "Building Type"}}:<span
+                                    class="text-red-500">*</span></label> --}}
                             <select id="building-type"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-300">
-                                <option disabled selected>{{t "Choose"}}</option>
-                                <option disabled selected>{{t "Choose"}}</option>
-
-
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-300" >
+                                {{!-- <option disabled selected>{{t "Choose"}}</option> --}}
+                                {{!-- <option disabled selected>{{t "Choose"}}</option> --}}
                             </select>
                         </div>
                         <!-- Add Type -->
@@ -123,19 +121,19 @@
                         </div> --}}
                         <select id="add-type" name="type" class="sr-only" {{!-- ekranda görünmür, ancaq forma dəyər
                             ötürür --}}>
-                            <option disabled selected>{{t "Choose"}}</option>
+                            {{!-- <option disabled selected>{{t "Choose"}}</option> --}}
                             <option value="sale">For Sale</option>
                             <option value="rent">For Rent</option>
                         </select>
 
                         <div id="customTypeContainer" class="relative w-full">
-                            <label class="block font-medium mb-1">
+                            {{!-- <label class="block font-medium mb-1">
                                 {{t "Add type"}}:<span class="text-red-500">*</span>
-                            </label>
+                            </label> --}}
 
                             <button id="customTypeButton" type="button"
                                 class="w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                                <span id="customTypeText">{{t "Choose"}}</span>
+                                <span id="customTypeText">{{t "Add Type"}}</span>
                                 <svg id="typeIcon" class="w-4 h-4 ml-2 transition-transform transform"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
@@ -157,21 +155,21 @@
 
 
                         <div>
-                            <label class="block font-medium mb-1">{{t "Repair"}}:<span
-                                    class="text-red-500">*</span></label>
+                            {{!-- <label class="block font-medium mb-1">{{t "Repair"}}:<span
+                                    class="text-red-500">*</span></label> --}}
                             <select id="repair-type"
                                 class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
-                                <option selected disabled>{{t "Choose"}}</option>
+                                <option selected disabled class="text-gray-500" >{{t "Repair"}}</option>
                                 <option value="repaired">{{t "Repaired"}}</option>
                                 <option value="unrepaired">{{t "Unrepaired"}}</option>
                             </select>
                         </div>
 
                         <div id="area">
-                            <label class="block font-medium mb-1">{{t "Size"}} (m²):<span
-                                    class="text-red-500">*</span></label>
+                            {{!-- <label class="block font-medium mb-1">{{t "Size"}} (m²):<span
+                                    class="text-red-500">*</span></label> --}}
                             <input type="number"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="{{t "Size (m²)"}}" />
                         </div>
                         <div id="field-area" class="d-none">
                             <label class="block font-medium mb-1">{{t "Field area"}} (m²):<span
@@ -181,9 +179,9 @@
                         </div>
 
                         <div>
-                            <label class="block font-medium mb-1">{{t "Price"}}:<span
-                                    class="text-red-500">*</span></label>
-                            <input id="price" type="number" value="0"
+                            {{!-- <label class="block font-medium mb-1">{{t "Price"}}:<span
+                                    class="text-red-500">*</span></label> --}}
+                            <input id="price" type="number" placeholder="Price"
                                 class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
 
                             <div class="d-none">
@@ -196,11 +194,12 @@
                         </div>
 
                         <div>
-                            <label class="block font-medium mb-1">{{t "Room Count"}}:<span
-                                    class="text-red-500">*</span></label>
+                            {{!-- <label class="block font-medium mb-1">{{t "Room Count"}}:<span
+                                    class="text-red-500">*</span></label> --}}
                             <select id="room-count"
                                 class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
-                                <option disabled selected>{{t "Choose"}}</option>
+                                <option disabled selected>{{t "Room Count"}}</option>
+                                {{!-- <option disabled selected>{{t "Choose"}}</option> --}}
                                 {{#forLoop 20}}
                                 <option value="{{this}}">{{this}} {{t "room"}}</option>
                                 {{/forLoop}}
@@ -210,11 +209,11 @@
                         </div>
 
                         <div>
-                            <label class="block font-medium mb-1">{{t "Floor"}}:<span
-                                    class="text-red-500">*</span></label>
+                            {{!-- <label class="block font-medium mb-1">{{t "Floor"}}:<span
+                                    class="text-red-500">*</span></label> --}}
                             <select id="located-floor"
                                 class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
-                                <option disabled selected>{{t "Choose"}}</option>
+                                <option disabled selected>{{t "Floor"}}</option>
                                 {{#forLoop 100}}
                                 <option value="{{this}}">{{this}}-ci mərtəbə</option>
                                 {{/forLoop}}
@@ -223,7 +222,7 @@
                             </select>
                         </div>
 
-                        <div>
+                        {{!-- <div>
                             <label class="block font-medium mb-1">Mərtəbə sayı:<span
                                     class="text-red-500">*</span></label>
                             <select id="floor-count"
@@ -235,65 +234,157 @@
 
                                 {{/forLoop}}
                             </select>
-                        </div>
+                        </div> --}}
 
-                        <div>
-                            <label class="block font-medium mb-1">{{t "Credit"}}:<span
-                                    class="text-red-500">*</span></label>
-                            <input id="is-credit" type="checkbox"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-white" />
-                        </div>
+                   
 
                     </div>
                     <div class="bg-white rounded-xl w-full mx-auto mt-6">
                         <div class="mb-4">
-                            <label for="description" class="block font-semibold mb-1">{{t "Description"}}:</label>
+                            {{!-- <label for="description" class="block font-semibold mb-1">{{t "Description"}}:</label> --}}
                             <textarea name="description" id="description" placeholder="Your Description" rows="4"
                                 class="w-full border border-gray-300 rounded-md px-4 py-2"></textarea>
                         </div>
                     </div>
                     <div class="bg-white rounded-xl w-full mx-auto mt-6">
                         <div class="mb-4">
-                            <label for="note-to-admin" class="block font-semibold mb-1">{{t "Note to admin"}}:</label>
+                            {{!-- <label for="note-to-admin" class="block font-semibold mb-1">{{t "Note to admin"}}:</label> --}}
                             <textarea name="note-to-admin" id="note-to-admin" placeholder="{{t " Note to admin"}}"
                                 rows="4" class="w-full border border-gray-300 rounded-md px-4 py-2"></textarea>
                         </div>
                     </div>
+                         <div class="flex gap-2">
+                            <input id="is-credit" type="checkbox"
+                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-white" />
+                                 <label class="block font-medium mb-1">{{t "Credit"}}:<span
+                                    class="text-red-500">*</span></label>
+                        </div>
                 </div>
 
+<hr class="border border-gray-300 w-[80%] mx-auto mb-5" >
+      <section id="property-information">
+                    <div class="p-6 rounded-xl w-full mx-auto mt-6">
+                        {{!-- <h2 class="text-2xl font-bold mb-4">{{t "Information"}}</h2> --}}
+
+                        <form method="POST" action="">
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                                <div>
+                                    {{!-- <label for="city" class="block font-semibold mb-1">{{t "City"}}:*</label> --}}
+                                    <select id="city" class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                    </select>
+                                </div>
+                                <div class="d-none">
+                                    {{!-- <label for="district" class="block font-semibold mb-1">{{t "Ditrict"}}:*</label> --}}
+                                    <select id="district" class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                    </select>
+                                </div>
+                                <div class="d-none">
+                                    {{!-- <label for="town" class="block font-semibold mb-1">{{t "Town"}}:*</label> --}}
+                                    <select id="town" class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                    </select>
+                                </div>
+                                <div>
+                                    {{!-- <label for="subway" class="block font-semibold mb-1">{{t "Metro"}}:*</label> --}}
+                                    <select id="subway" class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-4 gap-2 flex flex-col lg:flex-row justify-center items-center">
+                                <div class="flex flex-col gap-4 w-full lg:w-[80%]">
+                                    {{!-- <label for="address" class="block font-semibold mb-1">{{t "Full Address"}}:*</label> --}}
+                                    <input type="text" name="address" id="address" placeholder="{{t "Full address"}}" class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                </div>
+
+                                {{!-- <button type="button" id="searchAddress"
+                                    class="w-full lg:w-[20%] mt-4 lg:mt-[44px] rounded-lg text-sm bg-[var(--primary)] text-white px-3 py-3 hover:bg-orange-600">
+                                    {{t "Search on Map"}}
+                                </button> --}}
+                            </div>
+
+
+                            <div class="mb-4">
+                                {{!-- <label class="block font-semibold mb-1">{{t "Location on Map"}}:</label> --}}
+                                <div id="map" style="height: 400px; width: 100%;  border-radius: 0.375rem;"></div>
+                                <input type="hidden" name="latitude" id="latitude">
+                                <input type="hidden" name="longitude" id="longitude">
+                            </div>
+<hr class="border border-gray-300 w-[80%] mx-auto mb-5" >
+                            {{!-- <div class="mb-4">
+                                <label for="google_map_location" class="block font-semibold mb-1">{{t "Google Maps
+                                    Link"}}
+                                    ({{t "optional"}}):</label>
+                                <input type="text" name="google_map_location" id="google_map_location"
+                                    placeholder="https://maps.google.com/..."
+                                    class="w-full border border-gray-300 rounded-md px-4 py-2">
+                            </div> --}}
+                        </form>
+
+                    </div>
+                </section>
+
                 <section id="upload-image">
-                    <div class="px-6  mt-2 py-10 bg-white rounded-xl shadow-md  w-full    mx-auto">
-                        <h2 class="text-3xl font-bold mb-4">{{t "Upload Media"}}</h2>
+                    <div class="px-6  mt-2 py-10 rounded-xl w-full mx-auto border-4 border-dashed border-gray-300 ">
+                        {{!-- <h2 class="text-3xl font-bold mb-4">{{t "Upload Media"}}</h2> --}}
 
                         <div id="dropzone"
-                            class="border-2 border-dashed border-gray-300 rounded-lg py-14 flex flex-col items-center justify-center text-center min-h-[340px] transition">
+                            class="rounded-lg py-3 text-center flex flex-col items-center text-center min-h-[100px] transition">
                             <label
-                                class="bg-[var(--primary)] text-white px-6 py-4 rounded-xl font-semibold hover:bg-orange-500 transition-all cursor-pointer mb-2">
-                                <i class="bi bi-paperclip"></i> {{t "Select photos"}}
+                                class="w-[50%] bg-[var(--primary)] text-white px-6 py-4 rounded-xl font-semibold hover:bg-orange-500 transition-all cursor-pointer mb-2">
+                                <i class="bi bi-paperclip"></i> {{t "Photos"}}
                                 <input id="fileInput" type="file" multiple accept="image/*" class="hidden">
                             </label>
-                            <p class="text-sm text-gray-500">{{t "or drag photos here"}}<br>({{t "Up to 10 photos"}})
-                            </p>
+                            {{!-- <p class="text-sm text-gray-500">{{t "or drag photos here"}}<br>({{t "Up to 10 photos"}}) --}}
+                            {{!-- </p> --}}
+                            <p class="text-sm text-gray-500">{{t "Max limit - 10"}} </p>
+
                         </div>
 
+                         <div id="dropzone"
+                            class="rounded-lg py-3 text-center flex flex-col items-center text-center min-h-[100px] transition">
+                            <label
+                                class="w-[50%] bg-[var(--primary)] text-white px-6 py-4 rounded-xl font-semibold hover:bg-orange-500 transition-all cursor-pointer mb-2">
+                                <i class="bi bi-paperclip"></i> {{t "Videos"}}
+                                <input id="video" type="file" multiple accept="video/*" class="hidden">
+                            </label>
+                            {{!-- <p class="text-sm text-gray-500">{{t "or drag photos here"}}<br>({{t "Up to 10 photos"}}) --}}
+                            {{!-- </p> --}}
+                            <p class="text-sm text-gray-500">{{t "Max limit - 5"}} </p>
 
-                        <div id="gallery"
-                            class="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
-                        <div class="my-4">
-                            <label for="video" class="block font-semibold mb-1">{{t "Video"}}:</label>
-                            <input id="video" type="file" placeholder="{{t " Video"}}"
-                                class="w-full border border-gray-300 rounded-md px-4 py-2">
                         </div>
 
-                        <div class="my-4">
-                            <label for="document" class="block font-semibold mb-1">{{t "Document"}}:</label>
-                            <input id="document" type="file" placeholder="{{t " Document"}}"
-                                class="w-full border border-gray-300 rounded-md px-4 py-2">
-                        </div>
+                    <div id="dropzone"
+                            class="rounded-lg py-3 text-center flex flex-col items-center text-center min-h-[100px] transition">
+                            <label
+                                class="w-[50%] bg-[var(--primary)] text-white px-6 py-4 rounded-xl font-semibold hover:bg-orange-500 transition-all cursor-pointer mb-2">
+                                <i class="bi bi-paperclip"></i> {{t "Documents"}}
+                                <input id="document" type="file" multiple accept="document/*" class="hidden">
+                            </label>
+                            {{!-- <p class="text-sm text-gray-500">{{t "or drag photos here"}}<br>({{t "Up to 10 photos"}}) --}}
+                            {{!-- </p> --}}
+                            <p class="text-sm text-gray-500">{{t "Max limit - 5"}} </p>
+
                     </div>
 
 
+                        {{!-- <div id="gallery" --}}
+                            {{!-- class="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div> --}}
+                        {{!-- <div class="my-4">
+                            <label for="video" class="block font-semibold mb-1">{{t "Video"}}:</label>
+                            <input id="video" type="file" placeholder="{{t " Video"}}"
+                                class="w-full border border-gray-300 rounded-md px-4 py-2">
+                        </div> --}}
+
+                        {{!-- <div class="my-4">
+                            <label for="document" class="block font-semibold mb-1">{{t "Document"}}:</label>
+                            <input id="document" type="file" placeholder="{{t " Document"}}"
+                                class="w-full border border-gray-300 rounded-md px-4 py-2">
+                        </div> --}}
+                    {{!-- </div> --}}
+
+
                 </section>
+
+<hr class="border border-t-2 border-gray-300 w-[80%] mx-auto mb-5 mt-5" >
 
 
                 <div class="p-8 w-full mx-auto rounded-lg shadow-md mt-3 font-sans bg-white text-gray-800">
@@ -345,66 +436,6 @@
                     </div>
                 </div>
 
-                <section id="property-information">
-                    <div class="p-6 bg-white rounded-xl shadow-md w-full mx-auto mt-6">
-                        <h2 class="text-2xl font-bold mb-4">{{t "Information"}}</h2>
-
-                        <form method="POST" action="">
-                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-                                <div>
-                                    <label for="city" class="block font-semibold mb-1">{{t "City"}}:*</label>
-                                    <select id="city" class="w-full border border-gray-300 rounded-md px-4 py-2">
-                                    </select>
-                                </div>
-                                <div class="d-none">
-                                    <label for="district" class="block font-semibold mb-1">{{t "Ditrict"}}:*</label>
-                                    <select id="district" class="w-full border border-gray-300 rounded-md px-4 py-2">
-                                    </select>
-                                </div>
-                                <div class="d-none">
-                                    <label for="town" class="block font-semibold mb-1">{{t "Towm"}}:*</label>
-                                    <select id="town" class="w-full border border-gray-300 rounded-md px-4 py-2">
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="subway" class="block font-semibold mb-1">{{t "Metro"}}:*</label>
-                                    <select id="subway" class="w-full border border-gray-300 rounded-md px-4 py-2">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="mb-4 gap-2 flex flex-col lg:flex-row justify-center items-center">
-                                <div class="flex flex-col gap-4 w-full lg:w-[80%]">
-                                    <label for="address" class="block font-semibold mb-1">{{t "Full Address"}}:*</label>
-                                    <input type="text" name="address" id="address" placeholder="{{t " Enter property
-                                        full address"}}" class="w-full border border-gray-300 rounded-md px-4 py-2">
-                                </div>
-
-                                <button type="button" id="searchAddress"
-                                    class="w-full lg:w-[20%] mt-4 lg:mt-[44px] rounded-lg text-sm bg-[var(--primary)] text-white px-3 py-3 hover:bg-orange-600">
-                                    {{t "Search on Map"}}
-                                </button>
-                            </div>
-
-
-                            <div class="mb-4">
-                                <label class="block font-semibold mb-1">{{t "Location on Map"}}:</label>
-                                <div id="map" style="height: 400px; width: 100%;  border-radius: 0.375rem;"></div>
-                                <input type="hidden" name="latitude" id="latitude">
-                                <input type="hidden" name="longitude" id="longitude">
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="google_map_location" class="block font-semibold mb-1">{{t "Google Maps
-                                    Link"}}
-                                    ({{t "optional"}}):</label>
-                                <input type="text" name="google_map_location" id="google_map_location"
-                                    placeholder="https://maps.google.com/..."
-                                    class="w-full border border-gray-300 rounded-md px-4 py-2">
-                            </div>
-                        </form>
-
-                    </div>
-                </section>
 
                 {{>Component.AgentInfo}}
                 <div class="flex  mt-6 items-center">
