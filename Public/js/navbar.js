@@ -83,62 +83,88 @@
         linkAddProperty.classList.add("text-orange-400");
     }
 
-    // 4️⃣ Favorites & Compares sayıları
-    function updateCounts() {
-        const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-        const compareList = JSON.parse(localStorage.getItem("compareList")) || [];
+   // 4️⃣ Favorites & Compares sayıları
+function updateCounts() {
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const compareList = JSON.parse(localStorage.getItem("compareList")) || [];
 
-        const favoritesCount = document.getElementById("favorites-count");
-        const compareCount = document.getElementById("compares-count");
+    const favoritesCount = document.getElementById("favorites-count");
+    const compareCount = document.getElementById("compares-count");
 
-        if (favoritesCount) favoritesCount.textContent = favorites.length;
-        if (compareCount) compareCount.textContent = compareList.length;
-    }
+    if (favoritesCount) favoritesCount.textContent = favorites.length;
+    if (compareCount) compareCount.textContent = compareList.length;
+}
 
-    window.toggleFavorite = function(element, propertyJsonString) {
-        const icon = element.querySelector("i");
-        let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-        const property = JSON.parse(propertyJsonString);
-
-        const isAlreadyFavorite = favorites.some(fav => fav.id === property.id);
-
-        if (!isAlreadyFavorite) {
-            icon.classList.remove("fa-regular");
-            icon.classList.add("fa-solid");
-            favorites.push(property);
-        } else {
-            icon.classList.remove("fa-solid");
-            icon.classList.add("fa-regular");
-            favorites = favorites.filter(fav => fav.id !== property.id);
+// ✅ Toastify funksiyası
+function showToast(message) {
+    Toastify({
+        text: message,
+        duration: 3000,
+        gravity: "bottom",
+        position: "right",
+        close: true,
+        style: {
+            background: "linear-gradient(to right, #FFA500, #FF4500)",
+            borderRadius: "8px",
+            padding: "12px 24px",
+            minWidth: "250px",      
+            maxWidth: "40%",   
         }
+    }).showToast();
+}
 
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-        updateCounts();
+
+// ✅ Favorite toggle
+window.toggleFavorite = function(element, propertyJsonString) {
+    const icon = element.querySelector("i");
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const property = JSON.parse(propertyJsonString);
+
+    const isAlreadyFavorite = favorites.some(fav => fav.id === property.id);
+
+    if (!isAlreadyFavorite) {
+        icon.classList.remove("fa-regular");
+        icon.classList.add("fa-solid");
+        favorites.push(property);
+        showToast(`${property.title} seçilmişlərə əlavə edildi.`);
+    } else {
+        icon.classList.remove("fa-solid");
+        icon.classList.add("fa-regular");
+        favorites = favorites.filter(fav => fav.id !== property.id);
+        showToast(`${property.title} seçilmişlərdən çıxarıldı.`);
     }
 
-    window.toggleCompare = function(element, propertyJsonString) {
-        let compareList = JSON.parse(localStorage.getItem("compareList")) || [];
-        const property = JSON.parse(propertyJsonString);
-        const compareIcon = element.querySelector("i");
-        const maxCompareItems = 3;
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    updateCounts();
+}
 
-        const isAlreadyInCompare = compareList.some(c => c.id === property.id);
+// ✅ Compare toggle
+window.toggleCompare = function(element, propertyJsonString) {
+    let compareList = JSON.parse(localStorage.getItem("compareList")) || [];
+    const property = JSON.parse(propertyJsonString);
+    const compareIcon = element.querySelector("i");
+    const maxCompareItems = 3;
 
-        if (!isAlreadyInCompare) {
-            if (compareList.length < maxCompareItems) {
-                compareList.push(property);
-                compareIcon?.classList.add("text-[color:var(--primary)]");
-            } else {
-                alert(`Ən çox ${maxCompareItems} mülk müqayisə edə bilərsiniz.`);
-            }
+    const isAlreadyInCompare = compareList.some(c => c.id === property.id);
+
+    if (!isAlreadyInCompare) {
+        if (compareList.length < maxCompareItems) {
+            compareList.push(property);
+            compareIcon?.classList.add("text-[color:var(--primary)]");
+            showToast(`${property.title} müqayisə siyahısına əlavə edildi.`);
         } else {
-            compareList = compareList.filter(c => c.id !== property.id);
-            compareIcon?.classList.remove("text-[color:var(--primary)]");
+            showToast(`Ən çox ${maxCompareItems} mülk müqayisə edə bilərsiniz.`);
         }
-
-        localStorage.setItem("compareList", JSON.stringify(compareList));
-        updateCounts();
+    } else {
+        compareList = compareList.filter(c => c.id !== property.id);
+        compareIcon?.classList.remove("text-[color:var(--primary)]");
+        showToast(`${property.title} müqayisə siyahısından çıxarıldı.`);
     }
+
+    localStorage.setItem("compareList", JSON.stringify(compareList));
+    updateCounts();
+}
+
 
     // İlk yüklenmə zamanı sayları göstər
     updateCounts();

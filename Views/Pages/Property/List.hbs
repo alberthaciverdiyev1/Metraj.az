@@ -2,11 +2,11 @@
     <div class="flex mx-auto max-w-screen-3xl px-4 lg:px-6 xl:px-8 gap-9">
 
         {{#if true}}
-            <aside class="hidden xl:block w-[400px] mt-8">
-                <div class="sticky top-24">
-                    <img src="https://placehold.co/400x1300" alt="Sol Reklam" class="rounded-lg shadow w-full" />
-                </div>
-            </aside>
+        <aside class="hidden xl:block w-[400px] mt-8">
+            <div class="sticky top-24">
+                <img src="https://placehold.co/400x1300" alt="Sol Reklam" class="rounded-lg shadow w-full" />
+            </div>
+        </aside>
         {{/if}}
 
         <main class="w-full">
@@ -16,8 +16,7 @@
             <section class="property-listing relative py-4" x-data="filterModal()">
                 <div class="container mx-auto px-4">
 
-                    <section class="py-6 max-w-full mx-auto relative z-10"
-                             x-data="{
+                    <section class="py-6 max-w-full mx-auto relative z-10" x-data="{
                                       buildingTypeOpen: false,
                                       repairTypeOpen: false,
                                       cityOpen: false,
@@ -31,18 +30,18 @@
                         <div class="flex justify-between items-center mb-3">
                             <div class="flex gap-2 border border-gray-200 rounded-lg">
                                 <button @click="form.addType = 'all'"
-                                        :class="form.addType === 'all' ? 'bg-[color:var(--primary)] text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
-                                        class="px-4 py-2 rounded-lg font-semibold transition" data-add-type="all">
+                                    :class="form.addType === 'all' ? 'bg-[color:var(--primary)] text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
+                                    class="px-4 py-2 rounded-lg font-semibold transition" data-add-type="all">
                                     {{ t "All" }}
                                 </button>
                                 <button @click="form.addType = 'sale'"
-                                        :class="form.addType === 'sale' ? 'bg-[color:var(--primary)] text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
-                                        class="px-4 py-2 rounded-lg font-semibold transition" data-add-type="sale">
+                                    :class="form.addType === 'sale' ? 'bg-[color:var(--primary)] text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
+                                    class="px-4 py-2 rounded-lg font-semibold transition" data-add-type="sale">
                                     {{ t "Sale" }}
                                 </button>
                                 <button @click="form.addType = 'rent'"
-                                        :class="form.addType === 'rent' ? 'bg-[color:var(--primary)] text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
-                                        class="px-4 py-2 rounded-lg font-semibold transition" data-add-type="rent">
+                                    :class="form.addType === 'rent' ? 'bg-[color:var(--primary)] text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
+                                    class="px-4 py-2 rounded-lg font-semibold transition" data-add-type="rent">
                                     {{ t "Rent" }}
                                 </button>
                             </div>
@@ -55,16 +54,17 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4" data-role="dropdown">
                             <!-- Otaq sayı -->
                             <div class="relative p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer dropdown-select"
-                                 data-filter="roomCount">
+                                data-filter="roomCount">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-2">
                                         <img src="/images/door.svg" alt="door">
-                                        <span class="text-gray-700" data-role="display-value" data-filter="roomCount">Otaq sayı</span>
+                                        <span class="text-gray-700" data-role="display-value"
+                                            data-filter="roomCount">Otaq sayı</span>
                                     </div>
                                     <i class="bi bi-chevron-down text-orange-500 transition-transform"></i>
                                 </div>
                                 <div
-                                        class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-10 hidden">
+                                    class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-10 hidden">
                                     <ul class="divide-y divide-gray-100">
                                         <li class="p-2 hover:bg-gray-100 cursor-pointer" data-value="">Hamısı</li>
                                         <li class="p-2 hover:bg-gray-100 cursor-pointer" data-value="1">1 otaqlı</li>
@@ -79,35 +79,39 @@
 
                             <!-- Mövcud Kateqoriya -->
                             <div class="relative p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer dropdown-select"
-                                 data-filter="buildingType">
+                                data-filter="buildingType">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-2">
                                         <img src="/images/layers.svg" alt="layers">
-                                        <span class="text-gray-700" data-role="display-value" data-filter="buildingType">
-                      Bütün Kateqoriyalar
-                    </span>
+                                        <span class="text-gray-700" data-role="display-value"
+                                            data-filter="buildingType">
+                                            Bütün Kateqoriyalar
+                                        </span>
                                     </div>
                                     <i class="bi bi-chevron-down text-orange-500 transition-transform"></i>
                                 </div>
                                 <div
-                                        class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-10 hidden">
+                                    class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-10 hidden">
                                     <ul class="divide-y divide-gray-100">
-                                        <li class="p-2 hover:bg-gray-100 cursor-pointer" data-value="">Bütün Kateqoriyalar</li>
+                                        <li class="p-2 hover:bg-gray-100 cursor-pointer" data-value="">Bütün
+                                            Kateqoriyalar</li>
                                         {{#each data.buildingTypes}}
-                                            <li class="p-2 hover:bg-gray-100 cursor-pointer" data-value="{{this.id}}">
-                                                {{t this.label}}
-                                            </li>
+                                        <li class="p-2 hover:bg-gray-100 cursor-pointer" data-value="{{this.id}}">
+                                            {{t this.label}}
+                                        </li>
                                         {{/each}}
                                     </ul>
                                 </div>
                             </div>
 
                             <!-- Şəhərlər dropdown (modal trigger) -->
-                            <div class="relative p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer w-64" id="openModal">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-2">
-                                        <img src="/images/city.svg" alt="">
-                                        <span class="text-gray-700" data-role="display-value" data-filter="city">Bütün Şəhərlər</span>
+                            <div class="relative p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer w-full"
+                                id="openModal">
+                                <div class="flex items-center justify-between ">
+                                    <div class="flex items-center gap-2 ">
+                                        <img src="/images/city.svg" alt="city">
+                                        <span class="text-gray-700" data-role="display-value" data-filter="city">Bütün
+                                            Şəhərlər</span>
                                     </div>
                                     <i class="bi bi-chevron-down text-orange-500 transition-transform"></i>
                                 </div>
@@ -115,78 +119,94 @@
 
                             <!-- Modal -->
                             <div id="filterModal"
-                                 class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-50 flex mt-15 items-center justify-center">
-                                <div class="bg-white w-[95%] max-w-4xl h-[90%] rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+                                class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-50 flex mt-15 items-center justify-center">
+                                <div
+                                    class="bg-white w-[95%] max-w-4xl h-[90%] rounded-2xl shadow-2xl overflow-hidden flex flex-col">
                                     <!-- Header -->
                                     <div class="flex items-center justify-between px-6 py-4">
                                         <div class="flex items-center gap-3">
-                                            <span class="font-semibold text-lg text-gray-700">Rayon, metro, nişangah</span>
+                                            <span class="font-semibold text-lg text-gray-700">Rayon, metro,
+                                                nişangah</span>
                                             <div class="border rounded-lg px-3 py-2 bg-gray-50">
-                                                <select id="citySelect" class="outline-none bg-transparent text-gray-600">
+                                                <select id="citySelect"
+                                                    class="outline-none bg-transparent text-gray-600">
                                                     <option value="baki">Şəhər: Bakı</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <button id="closeModal"
-                                                class="text-2xl text-gray-500 hover:text-gray-800 transition">&times;</button>
+                                            class="text-2xl text-gray-500 hover:text-gray-800 transition">&times;</button>
                                     </div>
 
                                     <!-- Tabs -->
                                     <div class="flex gap-3 px-6 py-3 bg-gray-50">
-                                        <button class="tabBtn px-5 py-2 rounded-full border border-orange-600 text-orange-600 font-medium bg-orange-50"
-                                                data-tab="rayonTab">Rayon</button>
-                                        <button class="tabBtn px-5 py-2 rounded-full text-gray-600 hover:bg-gray-100 transition"
-                                                data-tab="metroTab">Metro</button>
-                                        <button class="tabBtn px-5 py-2 rounded-full text-gray-600 hover:bg-gray-100 transition"
-                                                data-tab="nishangahTab">Nişangah</button>
+                                        <button
+                                            class="tabBtn px-5 py-2 rounded-full border border-orange-600 text-orange-600 font-medium bg-orange-50"
+                                            data-tab="rayonTab">Rayon</button>
+                                        <button
+                                            class="tabBtn px-5 py-2 rounded-full text-gray-600 hover:bg-gray-100 transition"
+                                            data-tab="metroTab">Metro</button>
+                                        <button
+                                            class="tabBtn px-5 py-2 rounded-full text-gray-600 hover:bg-gray-100 transition"
+                                            data-tab="nishangahTab">Nişangah</button>
                                     </div>
 
                                     <!-- Content -->
                                     <div class="flex-1 overflow-y-auto px-6 py-4 space-y-8">
                                         <!-- Rayon -->
                                         <section id="rayonTab" class="tabContent hidden space-y-4">
-                                            <input type="text" id="rayonSearch" placeholder="Rayon axtar..." class="border p-1 w-full mb-2">
-                                            <div id="rayonList" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"></div>
+                                            <input type="text" id="rayonSearch" placeholder="Rayon axtar..."
+                                                class="border p-1 w-full mb-2">
+                                            <div id="rayonList"
+                                                class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"></div>
                                             <div id="rayonEmpty" class="text-gray-500 hidden">Rayon tapılmadı</div>
                                         </section>
 
                                         <!-- Metro -->
                                         <section id="metroTab" class="tabContent hidden space-y-4">
                                             <input id="metroSearch" type="text" placeholder="Metro axtar..."
-                                                   class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 shadow-sm">
-                                            <div id="metroList" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                                                <label class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-50">
+                                                class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 shadow-sm">
+                                            <div id="metroList"
+                                                class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                                                <label
+                                                    class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-50">
                                                     <input type="checkbox" class="accent-orange-600"> 28 May
                                                 </label>
-                                                <label class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-50">
+                                                <label
+                                                    class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-50">
                                                     <input type="checkbox" class="accent-orange-600"> Gənclik
                                                 </label>
                                             </div>
-                                            <p id="metroEmpty" class="text-sm text-gray-400 hidden">Heç nə tapılmadı.</p>
+                                            <p id="metroEmpty" class="text-sm text-gray-400 hidden">Heç nə tapılmadı.
+                                            </p>
                                         </section>
 
                                         <!-- Nişangah -->
                                         <section id="nishangahTab" class="tabContent hidden space-y-4">
                                             <input id="nishangahSearch" type="text" placeholder="Nişangah axtar..."
-                                                   class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 shadow-sm">
-                                            <div id="nishangahList" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                                                <label class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-50">
+                                                class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 shadow-sm">
+                                            <div id="nishangahList"
+                                                class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                                                <label
+                                                    class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-50">
                                                     <input type="checkbox" class="accent-orange-600"> Ganjlik Mall
                                                 </label>
-                                                <label class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-50">
+                                                <label
+                                                    class="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-50">
                                                     <input type="checkbox" class="accent-orange-600"> Park Bulvar
                                                 </label>
                                             </div>
-                                            <p id="nishangahEmpty" class="text-sm text-gray-400 hidden">Heç nə tapılmadı.</p>
+                                            <p id="nishangahEmpty" class="text-sm text-gray-400 hidden">Heç nə
+                                                tapılmadı.</p>
                                         </section>
                                     </div>
 
                                     <!-- Footer -->
                                     <div class="flex items-center justify-between px-6 py-4 border-t bg-gray-50">
                                         <button id="resetBtn"
-                                                class="px-5 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">Sıfırla</button>
+                                            class="px-5 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">Sıfırla</button>
                                         <button id="applyBtn"
-                                                class="px-6 py-3 bg-[#e98922] text-white rounded-lg hover:bg-orange-400 transition shadow-md">
+                                            class="px-6 py-3 bg-[#e98922] text-white rounded-lg hover:bg-orange-400 transition shadow-md">
                                             <span id="applyCount">0</span> elan göstər
                                         </button>
                                     </div>
@@ -199,42 +219,40 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                         <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
                             <label class="block text-gray-700 font-semibold mb-2 flex items-center gap-2">
-                                {{!-- <i class="bi bi-currency-dollar text-orange-500 text-xl"></i> --}}
-                                <img src="/images/dollar.svg" alt="">
+                                <i class="bi bi-currency-dollar text-orange-500 text-xl"></i>
                                 Price (AZN)
                             </label>
                             <div class="flex gap-2">
                                 <input type="text" data-type="number" placeholder="Min qiymət" id="minPriceInput"
-                                       class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none" />
+                                    class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none" />
                                 <input type="text" data-type="number" placeholder="Max qiymət" id="maxPriceInput"
-                                       class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none" />
+                                    class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none" />
                             </div>
                         </div>
 
                         <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
                             <label class="block text-gray-700 font-semibold mb-2 flex items-center gap-2">
-                                {{!-- <i class="bi bi-fullscreen text-orange-500 text-xl"></i> --}}
-                                <img src="/images/move.svg" alt="">
+                                <i class="bi bi-fullscreen text-orange-500 text-xl"></i>
                                 Area (m²)
                             </label>
                             <div class="flex gap-2">
                                 <input type="text" data-type="number" data-role="min-area-input" placeholder="Min ölçü"
-                                       class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none" />
+                                    class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none" />
                                 <input type="text" data-type="number" data-role="max-area-input" placeholder="Max ölçü"
-                                       class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none" />
+                                    class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none" />
                             </div>
                         </div>
 
                         <div class="flex flex-col gap-2 md:flex-row md:items-end w-[100%]">
                             <div x-data="filterModal()" @keyup.escape.window="open = false">
                                 <button @click="open = true"
-                                        class="w-full flex items-center gap-1px-4 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 md:w-auto hover:text-[color:var(--primary)] transition">
+                                    class="w-full flex items-center gap-1px-4 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 md:w-auto hover:text-[color:var(--primary)] transition">
                                     + {{t "More"}}
                                 </button>
                                 {{>Component.FilterModal}}
                             </div>
                             <button data-role="search-button"
-                                    class="px-10 py-2 bg-black text-white rounded-lg hover:bg-gray-800 w-full md:w-auto">
+                                class="px-10 py-2 mt-2 bg-black text-white rounded-lg hover:bg-gray-800 w-full md:w-auto">
                                 Search
                             </button>
                         </div>
@@ -243,7 +261,7 @@
 
                 <!-- Property listing -->
                 <div class="flex flex-col lg:flex-row justify-between gap-4 mb-5">
-                    <h2 class="text-2xl lg:text-4xl font-bold text-[color:var(--text-color)]">
+                    <h2 class="text-2xl lg:text-4xl font-bold text-[color:var(--text-color)] mt-5">
                         {{t "Property listing"}}
                     </h2>
                     <div class="flex flex-wrap items-center gap-2">
@@ -251,7 +269,7 @@
                             <i class="bi bi-grid-3x3-gap"></i>
                         </button>
                         <button id="listViewBtn" class="px-4 py-3 list border border-[var(--border-color)] rounded-md"
-                                data-view="list">
+                            data-view="list">
                             <i class="fas fa-list text-[color:var(--icon-grey)]"></i>
                         </button>
                     </div>
@@ -261,7 +279,7 @@
                     <span class="text-red-500">Premium</span> elanlar ilə tanış ol!
                 </h2>
                 <div id="premiumCard"
-                     class="pt-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-7 relative min-h-[300px]">
+                    class="pt-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-7 relative min-h-[300px]">
                 </div>
 
                 <div class="absolute inset-30 top-10 flex justify-center items-center z-20" id="premiumLoadingOverlay">
@@ -274,13 +292,15 @@
                 <h2 class="text-xl text-gray-700 mt-6">
                     Bütün elanlar
                 </h2>
-<!--                <div id="propertyContainer"-->
-<!--                     class="pt-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-7 relative min-h-[300px]">-->
-<!--                </div>-->
-                <div id="propertyContainer" class="pt-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                <!--                <div id="propertyContainer"-->
+                <!--                     class="pt-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-7 relative min-h-[300px]">-->
+                <!--                </div>-->
+                <div id="propertyContainer"
+                    class="pt-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                 </div>
 
-                <div class="absolute inset-30 top-10 flex justify-center items-center z-20" id="allPropertiesLoadingOverlay">
+                <div class="absolute inset-30 top-10 flex justify-center items-center z-20"
+                    id="allPropertiesLoadingOverlay">
                     <div class="flex flex-col items-center gap-3">
                         <div class="loader"></div>
                     </div>
@@ -289,11 +309,11 @@
         </main>
 
         {{#if true}}
-            <aside class="hidden xl:block w-[400px] mt-8">
-                <div class="sticky top-24">
-                    <img src="https://placehold.co/400x1300" alt="Sağ Reklam" class="rounded-lg shadow w-full" />
-                </div>
-            </aside>
+        <aside class="hidden xl:block w-[400px] mt-8">
+            <div class="sticky top-24">
+                <img src="https://placehold.co/400x1300" alt="Sağ Reklam" class="rounded-lg shadow w-full" />
+            </div>
+        </aside>
         {{/if}}
 
     </div>
