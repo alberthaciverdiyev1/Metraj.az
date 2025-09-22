@@ -99,14 +99,23 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
                         <!-- Property Type -->
-                        <div>
+                        <div class="flex relative w-full">
                             {{!-- <label class="block font-medium mb-1">{{t "Building Type"}}:<span
                                     class="text-red-500">*</span></label> --}}
                             <select id="building-type"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-300" >
+                                class="w-full appearance-none border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-300 text-[#B3B3B3]" >
                                 {{!-- <option disabled selected>{{t "Choose"}}</option> --}}
                                 {{!-- <option disabled selected>{{t "Choose"}}</option> --}}
                             </select>
+                               <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
+                                <svg class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+
                         </div>
                         <!-- Add Type -->
                         {{!-- <div>
@@ -132,9 +141,9 @@
                             </label> --}}
 
                             <button id="customTypeButton" type="button"
-                                class="w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                                <span id="customTypeText">{{t "Add Type"}}</span>
-                                <svg id="typeIcon" class="w-4 h-4 ml-2 transition-transform transform"
+                                class="w-full border border-gray-300 rounded-xl p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
+                                <span id="customTypeText" class="text-[#B3B3B3]">{{t "Add Type"}}</span>
+                                <svg id="typeIcon" class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -144,8 +153,8 @@
 
                             <ul id="customTypeOptions"
                                 class="absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
-                                <li data-value="sale" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">For Sale</li>
-                                <li data-value="rent" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">For Rent</li>
+                                <li data-value="sale" class="px-4 py-2 hover:bg-orange-100 cursor-pointer text-[#B3B3B3]">For Sale</li>
+                                <li data-value="rent" class="px-4 py-2 hover:bg-orange-100 cursor-pointer text-[#B3B3B3]">For Rent</li>
                             </ul>
 
                             <input type="hidden" id="selectedTypeInput" name="type">
@@ -154,65 +163,79 @@
 
 
 
-                        <div>
+                        <div class="flex relative w-full">
                             {{!-- <label class="block font-medium mb-1">{{t "Repair"}}:<span
                                     class="text-red-500">*</span></label> --}}
                             <select id="repair-type"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                 <option selected disabled class="text-gray-500" >{{t "Repair"}}</option>
                                 <option value="repaired">{{t "Repaired"}}</option>
                                 <option value="unrepaired">{{t "Unrepaired"}}</option>
                             </select>
+                             <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
+                                <svg class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
                         </div>
 
                         <div id="area">
                             {{!-- <label class="block font-medium mb-1">{{t "Size"}} (m²):<span
                                     class="text-red-500">*</span></label> --}}
                             <input type="number"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="{{t "Size (m²)"}}" />
+                                class="w-full placeholder-[#B3B3B3] border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="{{t "Size (m²)"}}" />
                         </div>
                         <div id="field-area" class="d-none">
                             <label class="block font-medium mb-1">{{t "Field area"}} (m²):<span
                                     class="text-red-500">*</span></label>
                             <input type="number"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+                                class="w-full border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
                         </div>
 
                         <div>
                             {{!-- <label class="block font-medium mb-1">{{t "Price"}}:<span
                                     class="text-red-500">*</span></label> --}}
                             <input id="price" type="number" placeholder="Price"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+                                class="w-full placeholder-[#B3B3B3]  border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
 
                             <div class="d-none">
                                 <select id="property-period"
-                                    class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                    class="w-full text-[#B3B3B3] border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                     <option value="daily"> {{t "Daily"}}</option>
                                     <option value="monthly">{{t "Monthly"}}</option>
                                 </select>
                             </div>
                         </div>
 
-                        <div>
+                        <div class="flex relative w-full">
                             {{!-- <label class="block font-medium mb-1">{{t "Room Count"}}:<span
                                     class="text-red-500">*</span></label> --}}
                             <select id="room-count"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                 <option disabled selected>{{t "Room Count"}}</option>
                                 {{!-- <option disabled selected>{{t "Choose"}}</option> --}}
                                 {{#forLoop 20}}
                                 <option value="{{this}}">{{this}} {{t "room"}}</option>
                                 {{/forLoop}}
-
-
                             </select>
+                             <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
+                                <svg class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
                         </div>
 
-                        <div>
+                        <div class="flex relative w-full">
                             {{!-- <label class="block font-medium mb-1">{{t "Floor"}}:<span
                                     class="text-red-500">*</span></label> --}}
                             <select id="located-floor"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                 <option disabled selected>{{t "Floor"}}</option>
                                 {{#forLoop 100}}
                                 <option value="{{this}}">{{this}}-ci mərtəbə</option>
@@ -220,6 +243,14 @@
 
 
                             </select>
+                             <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
+                                <svg class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
                         </div>
 
                         {{!-- <div>
@@ -243,14 +274,14 @@
                         <div class="mb-4">
                             {{!-- <label for="description" class="block font-semibold mb-1">{{t "Description"}}:</label> --}}
                             <textarea name="description" id="description" placeholder="Your Description" rows="4"
-                                class="w-full border border-gray-300 rounded-md px-4 py-2"></textarea>
+                                class="w-full border border-gray-300 rounded-xl px-4 py-2"></textarea>
                         </div>
                     </div>
                     <div class="bg-white rounded-xl w-full mx-auto mt-6">
                         <div class="mb-4">
                             {{!-- <label for="note-to-admin" class="block font-semibold mb-1">{{t "Note to admin"}}:</label> --}}
                             <textarea name="note-to-admin" id="note-to-admin" placeholder="{{t " Note to admin"}}"
-                                rows="4" class="w-full border border-gray-300 rounded-md px-4 py-2"></textarea>
+                                rows="4" class="w-full border border-gray-300 rounded-xl px-4 py-2"></textarea>
                         </div>
                     </div>
                          <div class="flex gap-2">
@@ -268,31 +299,47 @@
 
                         <form method="POST" action="">
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-                                <div>
+                                <div class="flex relative w-full">
                                     {{!-- <label for="city" class="block font-semibold mb-1">{{t "City"}}:*</label> --}}
-                                    <select id="city" class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                    <select id="city" class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl px-4 py-2">
                                     </select>
+                                       <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
+                                <svg class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
                                 </div>
                                 <div class="d-none">
                                     {{!-- <label for="district" class="block font-semibold mb-1">{{t "Ditrict"}}:*</label> --}}
-                                    <select id="district" class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                    <select id="district" class="w-full border border-gray-300 rounded-md px-4 py-2 text-[#B3B3B3]">
                                     </select>
                                 </div>
                                 <div class="d-none">
                                     {{!-- <label for="town" class="block font-semibold mb-1">{{t "Town"}}:*</label> --}}
-                                    <select id="town" class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                    <select id="town" class="w-full border border-gray-300 rounded-md px-4 py-2 text-[#B3B3B3]">
                                     </select>
                                 </div>
-                                <div>
+                                <div class="flex w-full relative"> 
                                     {{!-- <label for="subway" class="block font-semibold mb-1">{{t "Metro"}}:*</label> --}}
-                                    <select id="subway" class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                    <select id="subway" class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl px-4 py-2">
                                     </select>
+                                       <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
+                                <svg class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
                                 </div>
                             </div>
-                            <div class="mb-4 gap-2 flex flex-col lg:flex-row justify-center items-center">
+                            <div class="mb-4 gap-2 flex flex-col lg:flex-row items-center">
                                 <div class="flex flex-col gap-4 w-full lg:w-[80%]">
                                     {{!-- <label for="address" class="block font-semibold mb-1">{{t "Full Address"}}:*</label> --}}
-                                    <input type="text" name="address" id="address" placeholder="{{t "Full address"}}" class="w-full border border-gray-300 rounded-md px-4 py-2">
+                                    <input type="text" name="address" id="address" placeholder="{{t "Full address"}}" class="w-full placeholder-[#B3B3B3] border border-gray-300 rounded-xl px-4 py-2">
                                 </div>
 
                                 {{!-- <button type="button" id="searchAddress"
@@ -387,7 +434,7 @@
 <hr class="border border-t-2 border-gray-300 w-[80%] mx-auto mb-5 mt-5" >
 
 
-                <div class="p-8 w-full mx-auto rounded-lg shadow-md mt-3 font-sans bg-white text-gray-800">
+                <div class="p-8 w-full mx-auto rounded-lg shadow-md mt-3 font-sans bg-white text-gray-800 hidden sm:flex flex-col">
                     <h2 class="text-xl font-semibold mb-4">{{t "Features"}} <span style="color: red">*</span></h2>
 
                     <!-- 🔍 Search input for Features -->
@@ -411,8 +458,36 @@
                     </div>
                 </div>
 
+<div class="sm:hidden flex flex-col">
+        <div class="flex relative border border-gray-300 rounded-xl p-2 w-full">
+        <i class="fa-solid fa-plus absolute  top-1/2 -translate-y-1/2 text-[#757575] text-[20px]"></i>
+            <select name="" id="" class="ml-8 w-full text-[#B3B3B3] appearance-none p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            <option value="" disabled selected>Features</option>
+            </select>
+        </div>
+<hr class="border border-t-2 border-gray-300 w-[80%] mx-auto mb-5 mt-5" >
 
-                <div class="p-8 w-full mx-auto rounded-lg shadow-md mt-3 font-sans bg-white text-gray-800">
+        <div class="flex relative border border-gray-300 rounded-xl p-2 w-full">
+            <i class="fa-solid fa-plus absolute  top-1/2 -translate-y-1/2 text-[#757575] text-[20px]"></i>
+            <select name="" id="" class="ml-8 w-full text-[#B3B3B3] appearance-none p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            <option value="" disabled selected>Nearby objects</option>
+            </select>
+        </div>
+
+<hr class="border border-t-2 border-gray-300 w-[80%] mx-auto mb-5 mt-5" >
+        <div class="flex relative border border-gray-300 rounded-xl p-2 w-full mb-5">
+            <i class="fa-solid fa-plus absolute  top-1/2 -translate-y-1/2 text-[#757575] text-[20px]"></i>
+            <input type="text" placeholder="Phone" class="ml-8 w-full text-[#B3B3B3] appearance-none p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            </select>
+        </div>
+        <div class="flex relative border border-gray-300 rounded-xl p-2 w-full">
+            <i class="fa-solid fa-plus absolute  top-1/2 -translate-y-1/2 text-[#757575] text-[20px]"></i>
+            <input type="text" placeholder="Email" class="ml-8 w-full text-[#B3B3B3] appearance-none p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            </select>
+        </div>
+</div>
+
+                <div class="p-8 w-full mx-auto rounded-lg shadow-md mt-3 font-sans bg-white text-gray-800 hidden sm:flex flex-col">
                     <h2 class="text-xl font-semibold mb-4">{{t "Nearby objects"}} <span style="color: red">*</span></h2>
 
                     <!-- 🔍 Search input for Nearby objects -->
@@ -442,10 +517,11 @@
                     <input id="terms" type="checkbox"
                         class="mt-1 mr-2 w-4 h-4 text-[var(--primary)] border-gray-300 rounded focus:ring-0">
                     <label for="terms" class="select-none">
+                         I have to accept
                         <a href="/istifadeci-razilasi" target="_blank"
                             class="text-[var(--primary)] underline hover:text-orange-500 transition">
-                            İstifadəçi razılaşmasını
-                        </a> oxudum və qəbul edirəm
+                            Privacy and policy. 
+                        </a> 
                         <span class="text-red-500">*</span>
                     </label>
                 </div>
