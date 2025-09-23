@@ -1,5 +1,4 @@
 {{>Component.Breadcrumb items=breadcrumbs}}
-
 {{>Component.ScrollTop}}
 
 <section id="add-property">
@@ -94,7 +93,7 @@
         <div class="w-full mx-auto px-4">
             <main>
 
-                <div class=" mt-2 p-5 mx-auto  ">
+                <div class=" mt-2 p-5 mx-auto bg-white rounded-lg shadow-md ">
                     <h2 class="text-2xl font-bold mb-6">{{t "Add Property"}}</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
@@ -294,7 +293,7 @@
 
 {{!-- <hr class="border border-gray-300 w-[80%] mx-auto mb-5" > --}}
       <section id="property-information">
-                    <div class="p-6 rounded-xl w-full mx-auto ">
+                    <div class="p-6 rounded-xl w-full mx-auto bg-white shadow-md my-3 ">
                         {{!-- <h2 class="text-2xl font-bold mb-4">{{t "Information"}}</h2> --}}
 
                         <form method="POST" action="">
@@ -336,16 +335,16 @@
                             </button>
                                 </div>
                             </div>
-                            <div class="mb-4 gap-2 flex flex-col lg:flex-row items-center">
+                            <div class="mb-4 gap-2 flex flex-col lg:flex-row items-center justify-center">
                                 <div class="flex flex-col gap-4 w-full lg:w-[80%]">
                                     {{!-- <label for="address" class="block font-semibold mb-1">{{t "Full Address"}}:*</label> --}}
                                     <input type="text" name="address" id="address" placeholder="{{t "Full address"}}" class="w-full placeholder-[#B3B3B3] border border-gray-300 rounded-xl px-4 py-2">
                                 </div>
 
-                                {{!-- <button type="button" id="searchAddress"
-                                    class="w-full lg:w-[20%] mt-4 lg:mt-[44px] rounded-lg text-sm bg-[var(--primary)] text-white px-3 py-3 hover:bg-orange-600">
+                                <button type="button" id="searchAddress"
+                                    class="w-full lg:w-[20%] rounded-lg text-sm bg-[var(--primary)] text-white px-3 py-3 hover:bg-orange-600">
                                     {{t "Search on Map"}}
-                                </button> --}}
+                                </button>
                             </div>
 
 
@@ -356,14 +355,14 @@
                                 <input type="hidden" name="longitude" id="longitude">
                             </div>
 {{!-- <hr class="border border-gray-300 w-[80%] mx-auto mb-5" > --}}
-                            {{!-- <div class="mb-4">
+                            <div class="mb-4">
                                 <label for="google_map_location" class="block font-semibold mb-1">{{t "Google Maps
                                     Link"}}
                                     ({{t "optional"}}):</label>
                                 <input type="text" name="google_map_location" id="google_map_location"
                                     placeholder="https://maps.google.com/..."
                                     class="w-full border border-gray-300 rounded-md px-4 py-2">
-                            </div> --}}
+                            </div>
                         </form>
 
                     </div>
@@ -399,34 +398,34 @@
 
                         </div>
 
-                    <div id="dropzone"
+                    {{!-- <div id="dropzone"
                             class="rounded-lg py-3 text-center flex flex-col items-center text-center min-h-[100px] transition">
                             <label
                                 class="w-[50%] bg-[var(--primary)] text-white px-6 py-4 rounded-xl font-semibold hover:bg-orange-500 transition-all cursor-pointer mb-2">
                                 <i class="bi bi-paperclip"></i> {{t "Documents"}}
                                 <input id="document" type="file" multiple accept="document/*" class="hidden">
-                            </label>
+                            </label> --}}
                             {{!-- <p class="text-sm text-gray-500">{{t "or drag photos here"}}<br>({{t "Up to 10 photos"}}) --}}
                             {{!-- </p> --}}
-                            <p class="text-sm text-gray-500">{{t "Max limit - 5"}} </p>
+                            {{!-- <p class="text-sm text-gray-500">{{t "Max limit - 5"}} </p>
 
-                    </div>
+                    </div> --}}
 
 
-                        {{!-- <div id="gallery" --}}
-                            {{!-- class="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div> --}}
+                        <div id="gallery"
+                            class="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
                         {{!-- <div class="my-4">
                             <label for="video" class="block font-semibold mb-1">{{t "Video"}}:</label>
                             <input id="video" type="file" placeholder="{{t " Video"}}"
                                 class="w-full border border-gray-300 rounded-md px-4 py-2">
                         </div> --}}
 
-                        {{!-- <div class="my-4">
+                         {{!-- <div class="my-4">
                             <label for="document" class="block font-semibold mb-1">{{t "Document"}}:</label>
                             <input id="document" type="file" placeholder="{{t " Document"}}"
                                 class="w-full border border-gray-300 rounded-md px-4 py-2">
-                        </div> --}}
-                    {{!-- </div> --}}
+                        </div>  --}}
+                    </div>
 
 
                 </section>
