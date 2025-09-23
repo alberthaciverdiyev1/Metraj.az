@@ -195,7 +195,7 @@ async function loadImagesFromLocalStorage() {
       h += `<option value="${city.id}">${city.name}</option>`;
     });
 
-    element.innerHTML = `<option disabled selected value="">City</option>` + h;
+    element.innerHTML = `<option disabled selected>City</option>` + h;
   }
 
   async function subwayList() {
@@ -210,7 +210,7 @@ async function loadImagesFromLocalStorage() {
       h += `<option value="${subway.id}">${subway.name}</option>`;
     });
 
-    element.innerHTML = `<option disabled selected value="">Subway</option>` + h;
+    element.innerHTML = `<option disabled selected>Subway</option>` + h;
   }
 
   document.getElementById("add-type").addEventListener("change", async (e) => {
@@ -261,7 +261,7 @@ async function loadImagesFromLocalStorage() {
           h += `<option value="${district.id}">${district.name}</option>`;
         });
         document.getElementById("district").innerHTML =
-          `<option disabled selected value="">District</option>` + h;
+          `<option disabled selected>District</option>` + h;
       } else {
         document.getElementById("town").closest("div").classList.add("d-none");
         document
@@ -294,7 +294,7 @@ async function loadImagesFromLocalStorage() {
           h += `<option value="${town.id}">${town.name}</option>`;
         });
         document.getElementById("town").innerHTML =
-          `<option value="">Select Town</option>` + h;
+          `<option>Select Town</option>` + h;
       } else {
         document.getElementById("town").closest("div").classList.add("d-none");
       }

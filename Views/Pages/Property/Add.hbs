@@ -1,4 +1,4 @@
-{{>Component.Breadcrumb items=breadcrumbs}}
+{{>Component.Breadcrumb items=""}}
 {{>Component.ScrollTop}}
 
 <section id="add-property">
@@ -165,7 +165,7 @@
                         <div class="flex relative w-full">
                             {{!-- <label class="block font-medium mb-1">{{t "Repair"}}:<span
                                     class="text-red-500">*</span></label> --}}
-                            <select id="repair-type"
+                            <select id="repair-type" 
                                 class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                 <option selected disabled class="text-gray-500" >{{t "Repair"}}</option>
                                 <option value="repaired">{{t "Repaired"}}</option>
@@ -194,18 +194,26 @@
                                 class="w-full border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
                         </div>
 
-                        <div>
+                        <div class="flex gap-3">
                             {{!-- <label class="block font-medium mb-1">{{t "Price"}}:<span
                                     class="text-red-500">*</span></label> --}}
                             <input id="price" type="number" placeholder="Price"
-                                class="w-full placeholder-[#B3B3B3]  border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+                                class="w-full placeholder-[#B3B3B3]  border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
 
-                            <div class="d-none">
+                            <div class="d-none relative">
                                 <select id="property-period"
-                                    class="w-full text-[#B3B3B3] border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                    class="w-[100px] appearance-none text-[#B3B3B3] border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                     <option value="daily"> {{t "Daily"}}</option>
                                     <option value="monthly">{{t "Monthly"}}</option>
                                 </select>
+                                 <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
+                                <svg class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
                             </div>
                         </div>
 
@@ -273,20 +281,20 @@
                         <div class="mb-4">
                             {{!-- <label for="description" class="block font-semibold mb-1">{{t "Description"}}:</label> --}}
                             <textarea name="description" id="description" placeholder="Your Description" rows="4"
-                                class="w-full border border-gray-300 rounded-xl focus:outline-none px-4 py-2"></textarea>
+                                class="w-full border border-gray-300 rounded-xl focus:outline-[#F1913D] px-4 py-2"></textarea>
                         </div>
                     </div>
                     <div class="bg-white rounded-xl w-full mx-auto mt-6">
                         <div class="mb-4">
                             {{!-- <label for="note-to-admin" class="block font-semibold mb-1">{{t "Note to admin"}}:</label> --}}
                             <textarea name="note-to-admin" id="note-to-admin" placeholder="{{t " Note to admin"}}"
-                                rows="4" class="w-full border border-gray-300  focus:outline-none rounded-xl px-4 py-2"></textarea>
+                                rows="4" class="w-full border border-gray-300  focus:outline-[#F1913D] rounded-xl px-4 py-2"></textarea>
                         </div>
                     </div>
                          <div class="flex gap-2">
                             <input id="is-credit" type="checkbox"
                                 class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-white" />
-                                 <label class="block font-medium mb-1">{{t "Credit"}}:<span
+                                 <label class="block font-medium mb-1">{{t "Credit"}}<span
                                     class="text-red-500">*</span></label>
                         </div>
                 </div>
