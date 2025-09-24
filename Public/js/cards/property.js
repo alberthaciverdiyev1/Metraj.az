@@ -100,15 +100,19 @@ export function propertyCard(property, showRemoveButton = false) {
 
       <!-- Ünvan -->
       <p class="flex items-start text-xs sm:text-sm text-[color:var(--grey-text)]">
-        <img class="mr-2 mt-0.5 w-3.5 h-3.5 sm:w-4 sm:h-4" src="/images/map-pin.svg" />
-        <span class="line-clamp-1">${property.address}</span>
+<!--        <img class="mr-2 mt-0.5 w-3.5 h-3.5 sm:w-4 sm:h-4" src="/images/map-pin.svg" />-->
+<!--        <span class="line-clamp-1">${property.address}</span>-->
       </p>
 
-      <!-- Tikili tipi və tarix -->
-      <div class="flex justify-between text-xs sm:text-sm text-[color:var(--grey-text)] mb-2">
-        <span class="truncate">${property.buildingType}</span>
-        <span>${property.date}</span>
-      </div>
+<div class="flex justify-between items-center text-xs sm:text-sm text-[color:var(--grey-text)]">
+    <div class="flex items-center space-x-1 sm:space-x-2">
+        <img class="w-3.5 h-3.5 sm:w-4 sm:h-4" src="/images/map-pin.svg" alt="" />
+        <span class="line-clamp-1">${property.address}</span>
+    </div>
+
+    <span>${property.date}</span>
+</div>
+
     </div>
 
     <!-- Qiymət və Compare button -->
