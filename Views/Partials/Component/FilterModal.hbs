@@ -1,14 +1,10 @@
-<div x-show="open" x-cloak x-transition.opacity class="fixed inset-0 bg-black/10 backdrop-blur-sm z-0"></div>
+<div x-show="open" x-cloak x-transition.opacity class="fixed inset-0 bg-black/10 backdrop-blur-sm z-40"></div>
 
-<div x-show="open" x-cloak x-transition.opacity
-    class=" w-full absolute inset-0 top-[200px]   z-5 flex items-center justify-center ">
+<div x-show="open" x-cloak x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center px-4">
 
-
-
-    <div class="bg-white rounded-xl w-full  relative" @click.outside="open = false">
-        <form @submit.prevent="submit" style=" margin: 0 auto;" class="filter-panel mx-auto "
+    <div class="bg-white rounded-xl w-full max-w-md relative" @click.outside="open = false">
+        <form @submit.prevent="submit" style="margin: 0 auto;" class="filter-panel mx-auto"
             :class="{ 'collapsed': collapsed }">
-
 
             {{!-- <fieldset class="fieldset repair">
                 <legend>Təmir vəziyyəti</legend>
@@ -20,7 +16,7 @@
                 </div>
             </fieldset> --}}
 
-            {{!-- <div class="dropdown-select  mt-2 filter-container flex-1" data-filter="roomCount">
+            {{!-- <div class="dropdown-select mt-2 filter-container flex-1" data-filter="roomCount">
                 <div
                     class="flex items-center justify-between cursor-pointer border px-4 py-2 rounded-xl h-10 w-full bg-white text-orange-500 hover:text-gray-700">
                     <span data-role="display-value" data-filter="roomCount">Otaq sayı</span>
@@ -37,7 +33,6 @@
                     </ul>
                 </div>
             </div> --}}
-
 
             {{!-- <fieldset class="p-2 bg-white fieldset range-field rounded-lg border border-gray-200 relative">
                 <div class="flex items-center gap-2">
@@ -60,7 +55,8 @@
                     <input type="number" placeholder="maks." x-model.number="form.areaMax" min="0">
                 </div>
             </fieldset> --}}
-{{!-- 
+
+            {{!--
             <fieldset class="fieldset range-field">
                 <legend>Mərtəbə</legend>
                 <div class="range">
@@ -69,7 +65,8 @@
                     <input type="number" placeholder="maks." x-model.number="form.floorMax" min="0">
                 </div>
             </fieldset> --}}
-{{!-- 
+
+            {{!--
             <fieldset class="fieldset location">
                 <legend>Yerləşmə</legend>
                 <div class="pill-group">
@@ -89,7 +86,8 @@
                     </template>
                 </div>
             </fieldset> --}}
-{{!-- 
+
+            {{!--
             <fieldset class="fieldset range-field">
                 <legend>Qiymət, AZN</legend>
                 <div class="range">
@@ -99,11 +97,19 @@
                 </div>
             </fieldset> --}}
 
-            <fieldset class="fieldset extra">
+            <fieldset class="fieldset extra w-full">
                 <legend>Add №</legend>
-                <input type="text" x-model="form.postId" placeholder="№">
-                <label><input type="checkbox" x-model="form.extraction"> Çıxarış var</label>
-                <label><input type="checkbox" x-model="form.mortgage"> İpoteka var</label>
+                <input type="text" x-model="form.postId" placeholder="№" class="w-full">
+                <label class="flex items-center gap-2">
+                    <input type="checkbox" x-model="form.extraction"> Çıxarış var
+                </label>
+                <label class="flex items-center gap-2">
+                    <input type="checkbox" x-model="form.mortgage"> İpoteka var
+                </label>
+                <div class="buttons mt-4 flex gap-2 justify-start">
+                    <button type="submit" class="btn primary px-4 py-2">Axtar</button>
+                    <button type="button" class="btn ghost" @click="open = false">Ləğv et</button>
+                </div>
             </fieldset>
 
             {{!-- <div id="selectedTags" class="tags flex flex-wrap gap-2">
@@ -115,20 +121,11 @@
                 </template>
             </div> --}}
 
-            <div class="buttons mt-4 flex gap-2">
-                {{!-- <button type="button" class="btn ghost" @click="reset">Sıfırla</button> --}}
 
-                {{!-- <button type="button" class="btn ghost" @click="collapsed = !collapsed">
-                    <span x-text="collapsed ? 'Genişləndir' : 'Gizlət'"></span>
-                    <i class="bi" :class="collapsed ? 'bi-chevron-down' : 'bi-chevron-up'"></i>
-                </button> --}}
 
-                <button type="submit" class="btn primary">Axtar</button>
-            </div>
         </form>
     </div>
 </div>
-
 
 <script>
     function filterModal() {
@@ -185,6 +182,7 @@
 
             submit() {
                 const payload = { ...this.form, selected: this.tags };
+                console.log(payload);
                 this.open = false;
             }
         }
