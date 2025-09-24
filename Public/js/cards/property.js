@@ -34,17 +34,6 @@ export function propertyCard(property, showRemoveButton = false) {
     // : `<span class="bg-gray-400 text-white text-xs font-semibold px-2 py-1 text-center rounded-full">Təmirsiz</span>`
     }
 
-    ${property.in_credit
-      ? `<span class="bg-blue-600 text-white text-xs w-[80px] font-semibold px-2 py-1 text-center  rounded-full">İpoteka</span>` : ``
-    // : `<span class="bg-gray-400 text-white text-xs font-semibold px-2 py-1 text-center rounded-full">İpotekasız</span>`
-    }
-    
-
-    ${property.document === "kupça var"
-      ? `<span class="bg-green-500 text-white text-xs w-[80px] font-semibold px-2 py-1 text-center  rounded-full">Çıxarışlı</span>`
-      : ``
-    // : `<span class="bg-red-500 text-white text-xs font-semibold px-2 py-1 text-center rounded-full">Çıxarışsız</span>`
-    }
 </div>
 `;
 

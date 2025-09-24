@@ -259,22 +259,28 @@
                                 </svg>
                             </button>
                         </div>
-
-                        {{!-- <div>
-                            <label class="block font-medium mb-1">Mərtəbə sayı:<span
-                                    class="text-red-500">*</span></label>
+                        <div class="flex relative w-full">
+                            {{!-- <label class="block font-medium mb-1">{{t "Floor"}}:<span
+                                    class="text-red-500">*</span></label> --}}
                             <select id="floor-count"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
-                                <option disabled selected>Choose</option>
-
+                                    class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                <option disabled selected>{{t "Floor"}}</option>
                                 {{#forLoop 100}}
-                                <option value="{{this}}">{{this}} mərtəbəli</option>
-
+                                    <option value="{{this}}">{{this}} mərtəbəli</option>
                                 {{/forLoop}}
-                            </select>
-                        </div> --}}
 
-                   
+
+                            </select>
+                            <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
+                                <svg class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
+                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                        </div>
+
 
                     </div>
                     <div class="bg-white rounded-xl w-full mx-auto mt-6">
@@ -299,7 +305,6 @@
                         </div>
                 </div>
 
-{{!-- <hr class="border border-gray-300 w-[80%] mx-auto mb-5" > --}}
       <section id="property-information">
                     <div class="p-6 rounded-xl w-full mx-auto bg-white shadow-md my-3 ">
                         {{!-- <h2 class="text-2xl font-bold mb-4">{{t "Information"}}</h2> --}}
