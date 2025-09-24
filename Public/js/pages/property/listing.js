@@ -484,11 +484,11 @@ function initDropdowns() {
 
     dropdowns.forEach(dropdown => {
         const display = dropdown.querySelector('[data-role="display-value"]');
-        const menu = dropdown.querySelector(".dropdown-menu"); // menu-ya ayrıca class ver
+        const menu = dropdown.querySelector(".dropdown-menu");
 
-        if (!menu) return; // əgər menu yoxdursa, davam etmə
+        if (!menu) return;
 
-        // Aç/bağla
+        // Aç/bağla kliklə
         dropdown.addEventListener("click", (e) => {
             e.stopPropagation();
             dropdowns.forEach(d => {
@@ -497,7 +497,7 @@ function initDropdowns() {
             menu.classList.toggle("hidden");
         });
 
-        // Seçim
+        // Seçim kliklə
         menu.querySelectorAll("li").forEach(item => {
             item.addEventListener("click", () => {
                 display.textContent = item.textContent;
@@ -506,13 +506,14 @@ function initDropdowns() {
         });
     });
 
-    // Çöldə klik edəndə bağlansın
+    // Xarici klikdə bağla
     document.addEventListener("click", () => {
         document.querySelectorAll(".dropdown-menu").forEach(menu => menu.classList.add("hidden"));
     });
 }
-// İstədiyin yerdə çağırırsan
+
 initDropdowns();
+
 
 //seher selecti ucun js 
 const modal = document.getElementById("filterModal");
