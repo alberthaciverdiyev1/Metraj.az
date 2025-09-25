@@ -1,135 +1,158 @@
-{{>Component.Breadcrumb items=breadcrumbs}}
-{{>Component.ScrollTop}}
+<div class="w-full">
+    <div class="flex mx-auto max-w-screen-3xl px-4 lg:px-6 xl:px-8 gap-9">
 
-<main>
-    <div class="max-w-6xl mx-auto px-4">
-        <section id="agencies">
-            <div class="flex flex-col justify-between gap-4 mb-5">
-                <h2 class="text-2xl lg:text-4xl font-bold text-[color:var(--text-color)]">
-                    {{t "Agencies"}}
-                </h2>
-                <div class="flex gap-5 mb-6">
-                    <input type="text" placeholder="Search for agencies"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                    <button class="text-white px-5 py-2 rounded-lg bg-[#F1913D]">Search</button>
+        {{#if true}}
+            <aside class="hidden xl:block w-[400px] mt-8">
+                <div class="sticky top-24">
+                    <img src="https://placehold.co/400x1300" alt="Sol Reklam" class="rounded-lg shadow w-full" />
                 </div>
-            </div>
+            </aside>
+        {{/if}}
 
-            <div class="flex flex-wrap items-center gap-2 justify-end mb-6">
-                <button id="gridViewBtn"
-                    class="view-toggle active px-3 py-3 hover:bg-orange-300 hover:text-white transition rounded-xl border border-gray-300">
-                    {{!-- <i class="bi bi-grid-3x3-gap"></i> --}}
-                    <img src="/images/icon1.svg" alt="icon">
-                </button>
+        {{!-- Ana məzmun --}}
+        <main class="w-full">
+            {{>Component.Breadcrumb items=breadcrumbs}}
+            {{>Component.ScrollTop}}
 
-                <button id="listViewBtn"
-                    class="view-toggle px-3 py-2 rounded-2xl border hover:bg-orange-300 hover:text-white transition border-[#F1913D] border-2">
-                    <i class="fas fa-list text-[#F1913D]"></i>
-                </button>
+            <section id="agencies" class="relative py-4">
+                <div class="container mx-auto px-4">
 
-                <div class="relative">
-                    <div class="relative inline-block">
-                        <select
-                            class="appearance-none flex items-center border border-[var(--border-color)] px-4 py-2 rounded-md bg-white pr-8">
-                            <option>All</option>
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-2 flex items-center">
-                            <i class="fas fa-chevron-down text-[#F1913D]"></i>
+                    <div class="flex flex-col justify-between gap-4 mb-5">
+                        <h2 class="text-2xl lg:text-4xl font-bold text-[color:var(--text-color)]">
+                            {{t "Agencies"}}
+                        </h2>
+                        <div class="flex gap-5 mb-6">
+                            <input type="text" placeholder="Search for agencies"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                            <button class="text-white px-5 py-2 rounded-lg bg-[#F1913D]">Search</button>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div id="agencyCards" class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {{#each agencies}}
-                <div onclick="window.location.href='/agency/{{id}}'"
-                    class="agencies-card relative hover:cursor-pointer hover:shadow-xl transition duration-300 flex flex-col h-full shadow-md  
-    {{#if is_premium}} bg-[#FEFCE8]  border-yellow-600 {{else}} bg-white {{/if}}" data-id="{{id}}"
-                    data-is-premium="{{is_premium}}">
+                    <div class="flex flex-wrap items-center gap-2 justify-end mb-6">
+                        <button id="gridViewBtn"
+                                class="view-toggle active px-3 py-3 hover:bg-orange-300 hover:text-white transition rounded-xl border border-gray-300">
+                            <img src="/images/icon1.svg" alt="icon">
+                        </button>
 
+                        <button id="listViewBtn"
+                                class="view-toggle px-3 py-2 rounded-2xl border hover:bg-orange-300 hover:text-white transition border-[#F1913D] border-2">
+                            <i class="fas fa-list text-[#F1913D]"></i>
+                        </button>
 
-
-                    {{#if is_premium}}
-                    <div
-                        class="absolute top-2 right-2 bg-white text-white text-xs font-bold px-2 py-2 rounded-full z-10">
-                        <i class="fa-solid fa-crown text-yellow-500 text-xl hover:text-yellow-400"></i>
-                    </div>
-                    {{/if}}
-                    <figure class="h-32 overflow-hidden">
-                        <img class="w-full h-full object-cover" src="{{background_image}}" alt="Agency Background">
-                    </figure>
-
-                    <div class="flex ml-5 -mt-8 relative">
-                        <img class="w-16 h-16 rounded-full border-2 border-white object-cover" src="{{profile_image}}"
-                            alt="{{name}}">
-                    </div>
-
-                    <div class="p-4 flex flex-col justify-between flex-1">
-                        <div class="flex flex-col flex-1">
-                            <h3 class="text-lg font-semibold text-[color:var(--text-color)] truncate">{{name}}</h3>
-                            <p class="text-gray-500 text-sm"><span class="font-semibold text-[#494949]">Address:</span>
-                                {{address}}</p>
-                            {{!-- <p class="text-gray-600 text-xs mt-2 line-clamp-3">{{short_description}}</p> --}}
-
-                            <div class="text-sm mt-2 space-y-1">
-                                <p><span class="font-semibold text-[#494949]">{{t "Offer count"}}:</span> 300</p>
-                                <p><span class="font-semibold text-[#494949]">Work Hours:</span> 12:00 - 15:00</p>
+                        <div class="relative">
+                            <div class="relative inline-block">
+                                <select
+                                        class="appearance-none flex items-center border border-[var(--border-color)] px-4 py-2 rounded-md bg-white pr-8">
+                                    <option>All</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-2 flex items-center">
+                                    <i class="fas fa-chevron-down text-[#F1913D]"></i>
+                                </div>
                             </div>
                         </div>
-                        <hr class="mt-3 mb-3 border-[#B3B3B3]">
-                        <div class="mt-4 flex justify-between items-center">
-                            <div class="flex gap-2">
-                                <a href="/agency/{{id}}" onclick="event.stopPropagation()"
-                                    class="px-3 py-1 rounded-md border border-[color:var(--primary)] text-[color:var(--primary)] text-xs hover:bg-[color:var(--primary)] hover:text-white transition">
-                                    Details
-                                </a>
+                    </div>
 
-                                {{!-- {{#unless is_premium}}
-                                <button
-                                    class="premium-btn px-3 py-1 rounded-md bg-orange-400 text-white text-xs hover:bg-[#F1913D] transition">
-                                    Premium et
-                                </button>
-                                {{/unless}} --}}
+                    <div id="agencyCards"
+                         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        {{#each agencies}}
+                            <div onclick="window.location.href='/agency/{{id}}'"
+                                 class="cursor-pointer border rounded-2xl overflow-hidden flex flex-col h-full group transition-all duration-300 relative
+         {{#if is_premium}} bg-gradient-to-br from-yellow-100 via-yellow-50 to-white border-yellow-400 shadow-md hover:shadow-2xl {{else}} bg-white border-[color:var(--border-color)] {{/if}}">
+
+                                <!-- Banner -->
+                                <div class="relative overflow-hidden aspect-[4/3] sm:aspect-[5/3] md:aspect-[3/2] lg:aspect-[16/10]">
+                                    <img src="{{background_image}}" alt="{{name}}"
+                                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                                    {{#if is_premium}}
+                                        <span class="absolute top-3 right-3 text-[color:var(--primary)] font-semibold text-md bg-white px-2 py-1 rounded-full shadow">
+            <i class="fa-solid fa-crown"></i>
+          </span>
+                                    {{/if}}
+                                </div>
+
+                                <!-- Profile -->
+                                <div class="flex ml-5 -mt-8 relative z-10">
+                                    <img class="w-16 h-16 rounded-full border-4 border-white shadow-md object-cover"
+                                         src="{{profile_image}}" alt="{{name}}">
+                                </div>
+
+                                <!-- Card Content -->
+                                <div class="p-3 sm:p-4 flex flex-col flex-1">
+                                    <div class="flex flex-col gap-2 min-h-[100px] sm:min-h-[120px]">
+
+                                        <!-- Başlık -->
+                                        <h3 class="font-bold text-[color:var(--text-color)] text-sm sm:text-base md:text-lg leading-snug hover:text-[color:var(--primary)] line-clamp-2">
+                                            {{name}}
+                                        </h3>
+
+                                        <!-- Ünvan ve Saat / Offer count -->
+                                        <div class="flex justify-between items-center text-xs sm:text-sm text-[color:var(--grey-text)] mt-2">
+                                            <div class="flex flex-col gap-1">
+                                                <div class="flex items-center space-x-1 sm:space-x-2">
+                                                    <img class="w-3.5 h-3.5 sm:w-4 sm:h-4" src="/images/map-pin.svg" alt="" />
+                                                    <span class="line-clamp-1">{{address}}</span>
+                                                </div>
+                                                <p class="text-[color:var(--grey-text)] text-xs sm:text-sm">
+                                                    <span class="font-semibold">Offer count:</span> 300
+                                                </p>
+                                                <p class="text-[color:var(--grey-text)] text-xs sm:text-sm">
+                                                    <span class="font-semibold">Work Hours:</span> 12:00 - 15:00
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Details Button sağda -->
+                                    <div class="flex justify-end mt-auto pt-3 border-t border-[color:var(--border-color)]">
+                                        <a href="/agency/{{id}}" onclick="event.stopPropagation()"
+                                           class="px-4 py-2 rounded-lg border border-[color:var(--primary)] text-[color:var(--primary)] text-sm font-medium hover:bg-[color:var(--primary)] hover:text-white transition">
+                                            Details
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
+                        {{/each}}
+                    </div>
 
-                        </div>
 
+                    <!-- Pagination -->
+                    <div class="flex justify-center mt-8">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination mb-0 flex gap-2">
+                                <li class="page-item">
+                                    <a class="page-link px-3 py-1 border rounded-md hover:bg-[color:var(--primary)] hover:text-white transition"
+                                       href="#" aria-label="Previous">
+                                        <i class="bi bi-chevron-left"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link px-3 py-1 border rounded-md" href="#">1</a></li>
+                                <li class="page-item active"><a
+                                        class="page-link px-3 py-1 border rounded-md bg-[color:var(--primary)] text-white"
+                                        href="#">2</a></li>
+                                <li class="page-item disabled"><a
+                                        class="page-link px-3 py-1 border rounded-md text-gray-400 cursor-not-allowed"
+                                        href="#">...</a></li>
+                                <li class="page-item"><a class="page-link px-3 py-1 border rounded-md" href="#">20</a></li>
+                                <li class="page-item">
+                                    <a class="page-link px-3 py-1 border rounded-md hover:bg-[color:var(--primary)] hover:text-white transition"
+                                       href="#" aria-label="Next">
+                                        <i class="bi bi-chevron-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
-                {{/each}}
+            </section>
+        </main>
 
-
-            </div>
-
-            <!-- Pagination -->
-            <div class="flex justify-center mt-8">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination mb-0 flex gap-2">
-                        <li class="page-item">
-                            <a class="page-link px-3 py-1 border rounded-md hover:bg-[color:var(--primary)] hover:text-white transition"
-                                href="#" aria-label="Previous">
-                                <i class="bi bi-chevron-left"></i>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link px-3 py-1 border rounded-md" href="#">1</a></li>
-                        <li class="page-item active"><a
-                                class="page-link px-3 py-1 border rounded-md bg-[color:var(--primary)] text-white"
-                                href="#">2</a></li>
-                        <li class="page-item disabled"><a
-                                class="page-link px-3 py-1 border rounded-md text-gray-400 cursor-not-allowed"
-                                href="#">...</a></li>
-                        <li class="page-item"><a class="page-link px-3 py-1 border rounded-md" href="#">20</a></li>
-                        <li class="page-item">
-                            <a class="page-link px-3 py-1 border rounded-md hover:bg-[color:var(--primary)] hover:text-white transition"
-                                href="#" aria-label="Next">
-                                <i class="bi bi-chevron-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </section>
+        {{#if true}}
+            <aside class="hidden xl:block w-[400px] mt-8">
+                <div class="sticky top-24">
+                    <img src="https://placehold.co/400x1300" alt="Sağ Reklam" class="rounded-lg shadow w-full" />
+                </div>
+            </aside>
+        {{/if}}
     </div>
-</main>
-
-<script src="/js/agencies.js"></script>
+</div>
