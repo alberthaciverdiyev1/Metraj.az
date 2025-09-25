@@ -1,143 +1,107 @@
 {{#ifNo isProduction}}
-<div id="loadTimer" style="
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        background: rgba(0,0,0,0.7);
-        color: white;
-        padding: 5px 10px;
-        border-radius: 6px;
-        font-family: sans-serif;
-        font-size: 13px;
-        z-index: 9999;
-  ">
-    Loading
-</div>
+    <div id="loadTimer"
+         class="fixed bottom-4 right-4 bg-black bg-opacity-70 text-white px-3 py-1.5 rounded-md text-xs z-50 font-sans">
+        Loading
+    </div>
 {{/ifNo}}
 
-<div class="bg-[#2C2E33] px-6 py-6 mt-8 text-white border-b border-[#3a3a3d]">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row lg:justify-between lg:items-center gap-6">
+<!-- Header -->
+<header class="bg-[#2C2E33] px-4 py-3 md:py-4 border-b border-[#3a3a3d] text-white">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between md:items-center gap-3">
 
-        <div class="flex items-center gap-3">
-            <a href="/" class="cursor-pointer flex lg:items-center space-x-3">
-                <img class="h-9 w-auto object-contain" src="/images/metrajlogo1-remove.png" alt="sekil" />
-                <div class="leading-tight">
-                    <div class="text-md font-extrabold text-[#a7a5a5] tracking-tight">Metraj.az</div>
-                    <div class="text-[8px] text-gray-400 underline underline-offset-4 uppercase tracking-[0.2em]">sənin
-                        əmlakın</div>
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-2 md:gap-3">
+            <img src="/images/metrajlogo1-remove.png" alt="Logo" class="h-7 md:h-8 object-contain"/>
+            <div class="leading-tight">
+                <div class="text-sm md:text-md font-extrabold text-[#a7a5a5] tracking-tight">Metraj.az</div>
+                <div class="text-[8px] md:text-[9px] text-gray-400 uppercase tracking-[0.2em] underline underline-offset-3">
+                    sənin əmlakın
                 </div>
+            </div>
+        </a>
+
+        <!-- Contact Info -->
+        <div class="flex items-center gap-3 md:gap-5">
+            <div class="flex items-center gap-2 md:gap-3 border-r border-[#3B3D41] pr-3 md:pr-5">
+                <i class="bi bi-telephone text-[#F7923A] text-lg md:text-xl"></i>
+                <div class="text-xs md:text-sm">
+                    <p class="text-gray-400">Call us</p>
+                    {{#if setting.phone}}
+                        <p class="font-semibold text-white">{{setting.phone}}</p>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="flex items-center gap-2 md:gap-3">
+                <i class="bi bi-envelope text-[#F7923A] text-lg md:text-xl"></i>
+                <div class="text-xs md:text-sm">
+                    <p class="text-gray-400">Need live help</p>
+                    {{#if setting.email}}
+                        <p class="font-semibold text-white">{{setting.email}}</p>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<footer class="bg-[#2C2E33] text-[#d1d5db] px-6 py-6 md:py-8 font-sans">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-6">
+
+        <!-- Pages -->
+        <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+            <ul class="flex flex-wrap gap-4 text-sm">
+                <li><a href="/contact" class="hover:text-[var(--primary)] transition-colors duration-300">Contact</a>
+                </li>
+                <li><a href="/property" class="hover:text-[var(--primary)] transition-colors duration-300">Listing</a>
+                </li>
+                <li><a href="/agencies" class="hover:text-[var(--primary)] transition-colors duration-300">Agencies</a>
+                </li>
+                <li><a href="/blog" class="hover:text-[var(--primary)] transition-colors duration-300">Blog</a></li>
+            </ul>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+            <ul class="flex flex-wrap gap-4 text-sm">
+                <li><a href="/property" class="hover:text-[var(--primary)] transition-colors duration-300">Listing</a>
+                </li>
+                <li><a href="/add-property" class="hover:text-[var(--primary)] transition-colors duration-300">Add
+                    Property</a></li>
+                <li><a href="/agencies" class="hover:text-[var(--primary)] transition-colors duration-300">Agencies</a>
+                </li>
+                <li><a href="/blog" class="hover:text-[var(--primary)] transition-colors duration-300">Blog</a></li>
+            </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="flex flex-col gap-2">
+            <div class="flex gap-3 mt-2 text-lg">
+                {{#if setting.facebook_url}}<a href="{{setting.facebook_url}}"
+                                               class="w-9 h-9 flex items-center justify-center rounded-full border border-gray-600 text-gray-300 hover:bg-[var(--primary)] hover:text-white transition"><i
+                        class="bi bi-facebook"></i></a>{{/if}}
+                {{#if setting.whatsapp_number}}<a href="tel:{{setting.whatsapp_number}}"
+                                                  class="w-9 h-9 flex items-center justify-center rounded-full border border-gray-600 text-gray-300 hover:bg-[var(--primary)] hover:text-white transition"><i
+                        class="bi bi-whatsapp"></i></a>{{/if}}
+                {{#if setting.linkedin_url}}<a href="{{setting.linkedin_url}}"
+                                               class="w-9 h-9 flex items-center justify-center rounded-full border border-gray-600 text-gray-300 hover:bg-[var(--primary)] hover:text-white transition"><i
+                        class="bi bi-linkedin"></i></a>{{/if}}
+                {{#if setting.instagram_url}}<a href="{{setting.instagram_url}}"
+                                                class="w-9 h-9 flex items-center justify-center rounded-full border border-gray-600 text-gray-300 hover:bg-[var(--primary)] hover:text-white transition"><i
+                        class="bi bi-instagram"></i></a>{{/if}}
+            </div>
+        </div>
+    </div>
+
+    <div class=" border-t border-gray-700 text-center text-sm text-gray-400">
+        <div class="text-sm text-gray-400 text-center mt-6">
+            © 2025
+            <span class="font-semibold text-white transition duration-300 hover:text-[var(--primary)] hover:scale-105 inline-block">
+                <a href="/" class="hover:text-[var(--primary)]">Metraj.az - Sənin əmlakın</a>
+            </span>.
+            Designed & Developed by
+            <a href="https://foxsoft.agency" target="_blank" class="text-gray-400 hover:text-[var(--primary)] transition duration-300 hover:scale-105 inline-block">
+                FoxSoft
             </a>
         </div>
-
-        <div class="flex items-center gap-6">
-            <div class="flex items-center gap-3 border-r border-[#3B3D41] pr-6">
-                <i class="bi bi-telephone text-[#F7923A] text-xl"></i>
-                <div>
-                    <p class="text-sm text-gray-400">Call us</p>
-                    {{#if setting.phone}}
-                    <p class="font-semibold text-white text-[15px]">{{setting.phone}}</p>
-                    {{/if}}
-                </div>
-            </div>
-
-            <div class="flex items-center gap-3">
-                <i class="bi bi-envelope text-[#F7923A] text-xl"></i>
-                <div>
-                    <p class="text-sm text-gray-400">Need live help</p>
-                    {{#if setting.email}}
-                    <p class="font-semibold text-white text-[15px]">{{setting.email}}</p>
-                    {{/if}}
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-
-<footer class="bg-[#2C2E33] text-[#d1d5db] px-6 py-12 font-sans">
-    <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5">
-
-        <div>
-            <h4 class="font-semibold text-white text-[18px] mb-5">Pages</h4>
-            <ul class="space-y-2 text-sm">
-                <li><a href="/contact" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Contact
-                    </a></li>
-                <li><a href="/property" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Listing
-                    </a></li>
-                <li><a href="/agencies" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Agencies
-                    </a></li>
-                <li><a href="/blog" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Blog
-                    </a></li>
-            </ul>
-        </div>
-
-        <div>
-            <h4 class="font-semibold text-white text-[18px] mb-5 w-[200px]">Popular house</h4>
-            <ul class="space-y-2 text-sm">
-                <li><a href="/faqs" class="group inline-block relative">FAQS</a></li>
-                <li><a href="/comingSoon" class="group inline-block relative">Coming soon</a></li>
-                <li><a href="#" class="group inline-block relative">#Smart home</a></li>
-                <li><a href="#" class="group inline-block relative">#Apartments</a></li>
-                <li><a href="#" class="group inline-block relative">#Office</a></li>
-                <li><a href="#" class="group inline-block relative">#Bungalow</a></li>
-            </ul>
-        </div>
-
-        <div>
-            <h4 class="font-semibold text-white text-[18px] mb-5">Quick links</h4>
-            <ul class="space-y-2 text-sm">
-                <li><a href="/property" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Listing
-                    </a></li>
-                <li><a href="/add-property" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Add-Property
-                    </a></li>
-                <li><a href="/agencies" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Agencies
-                    </a></li>
-                <li><a href="/blog" class="group inline-block relative">
-                        <i class="bi bi-chevron-right text-[var(--primary)]"></i>Blog
-                    </a></li>
-            </ul>
-        </div>
-
-        <div class="col-span-2 md:col-span-4 lg:col-span-2 max-w-[400px]">
-            <h4 class="font-semibold mt-10 lg:mt-0 text-white text-[18px] mb-5">Newsletter</h4>
-            <p class="text-sm mb-3 text-[#5C5E61]">Sign up to receive the latest articles</p>
-            <input type="email" placeholder="Your email address"
-                class="w-full placeholder-[#5C5E61] px-6 py-4 rounded-lg bg-transparent text-white border-[#3B3D41] border mb-4 text-sm" />
-            <button
-                class="w-full all-btn button-hover border border-[#F7923A] bg-[#F7923A] hover:bg-[#e98329] transition text-white font-semibold py-4 px-6 rounded-lg text-sm">
-                Subscribe
-            </button>
-            <div class="flex items-start mt-4">
-                <input type="checkbox" class="custom-checkbox" />
-                <label class="text-xs text-[#5C5E61] leading-tight ml-3">I have read and agree to the terms &
-                    conditions</label>
-            </div>
-        </div>
-    </div>
-    <div
-        class="mt-12 lg:pb-0 pb-10 border-t border-[#3a3a3d] pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-        <p>Copyright © 2024 <span class="text-white font-semibold">PROTY - REAL ESTATE</span>. Designed &amp; Developed
-            by Themesflat</p>
-        <div class="flex gap-4 mt-4 md:mt-0 text-xl"> {{#if setting.facebook_url}} <a href="{{setting.facebook_url}}"
-                class="w-10 h-10 flex items-center justify-center rounded-full border border-[#323439] text-gray-400 hover:bg-[#F7923A] hover:text-white transition">
-                <i class="bi bi-facebook"></i> </a> {{/if}} {{#if setting.whatsapp_number}} <a
-                href="tel:{{setting.whatsapp_number}}"
-                class="w-10 h-10 flex items-center justify-center rounded-full border border-[#323439] text-gray-400 hover:bg-[#F7923A] hover:text-white transition">
-                <i class="bi bi-whatsapp"></i> </a> {{/if}} {{#if setting.linkedin_url}} <a
-                href="{{setting.linkedin_url}}"
-                class="w-10 h-10 flex items-center justify-center rounded-full border border-[#323439] text-gray-400 hover:bg-[#F7923A] hover:text-white transition">
-                <i class="bi bi-linkedin"></i> </a> {{/if}} {{#if setting.instagram_url}} <a
-                href="{{setting.instagram_url}}"
-                class="w-10 h-10 flex items-center justify-center rounded-full border border-[#323439] text-gray-400 hover:bg-[#F7923A] hover:text-white transition">
-                <i class="bi bi-instagram"></i> </a> {{/if}} </div>
     </div>
 </footer>

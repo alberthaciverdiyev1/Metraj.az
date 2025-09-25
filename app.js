@@ -204,9 +204,9 @@ fastify.addHook('preHandler', async (request, reply) => {
 
         data.session = { user, jwtToken };
         data.user = user;
-        data.setting = await getData('/settzzing', [], false, true, true);
+        data.setting = await getData('/setting', [], false, true, true);
       //  data.seo = await getData(`/seo/${currentRoute}`, [], false, true, true);
-        console.log(data.seo);
+        console.log(data.setting);
         data.lang = request.cookies.lang || 'en';
 
         return originalView(template, data, opts);
