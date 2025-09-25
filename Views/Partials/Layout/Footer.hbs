@@ -45,63 +45,58 @@
 </header>
 
 <footer class="bg-[#2C2E33] text-[#d1d5db] px-6 py-6 md:py-8 font-sans">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
 
         <!-- Pages -->
-        <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-            <ul class="flex flex-wrap gap-4 text-sm">
-                <li><a href="/contact" class="hover:text-[var(--primary)] transition-colors duration-300">Contact</a>
-                </li>
-                <li><a href="/property" class="hover:text-[var(--primary)] transition-colors duration-300">Listing</a>
-                </li>
-                <li><a href="/agencies" class="hover:text-[var(--primary)] transition-colors duration-300">Agencies</a>
-                </li>
-                <li><a href="/blog" class="hover:text-[var(--primary)] transition-colors duration-300">Blog</a></li>
-            </ul>
+        <div class="flex flex-wrap gap-6 text-sm md:gap-8 items-center">
+            <a href="/contact" class="hover:text-[var(--primary)] transition-colors duration-300">Contact</a>
+            <a href="/property" class="hover:text-[var(--primary)] transition-colors duration-300">Listing</a>
+            <a href="/agencies" class="hover:text-[var(--primary)] transition-colors duration-300">Agencies</a>
+            <a href="/blog" class="hover:text-[var(--primary)] transition-colors duration-300">Blog</a>
         </div>
 
         <!-- Quick Links -->
-        <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-            <ul class="flex flex-wrap gap-4 text-sm">
-                <li><a href="/property" class="hover:text-[var(--primary)] transition-colors duration-300">Listing</a>
-                </li>
-                <li><a href="/add-property" class="hover:text-[var(--primary)] transition-colors duration-300">Add
-                    Property</a></li>
-                <li><a href="/agencies" class="hover:text-[var(--primary)] transition-colors duration-300">Agencies</a>
-                </li>
-                <li><a href="/blog" class="hover:text-[var(--primary)] transition-colors duration-300">Blog</a></li>
-            </ul>
+        <div class="flex flex-wrap gap-6 text-sm md:gap-8 items-center">
+            <a href="/property" class="hover:text-[var(--primary)] transition-colors duration-300">Listing</a>
+            <a href="/add-property" class="hover:text-[var(--primary)] transition-colors duration-300">Add Property</a>
+            <a href="/agencies" class="hover:text-[var(--primary)] transition-colors duration-300">Agencies</a>
+            <a href="/blog" class="hover:text-[var(--primary)] transition-colors duration-300">Blog</a>
         </div>
 
-        <!-- Contact -->
-        <div class="flex flex-col gap-2">
-            <div class="flex gap-3 mt-2 text-lg">
-                {{#if setting.facebook_url}}<a href="{{setting.facebook_url}}"
-                                               class="w-9 h-9 flex items-center justify-center rounded-full border border-gray-600 text-gray-300 hover:bg-[var(--primary)] hover:text-white transition"><i
-                        class="bi bi-facebook"></i></a>{{/if}}
-                {{#if setting.whatsapp_number}}<a href="tel:{{setting.whatsapp_number}}"
-                                                  class="w-9 h-9 flex items-center justify-center rounded-full border border-gray-600 text-gray-300 hover:bg-[var(--primary)] hover:text-white transition"><i
-                        class="bi bi-whatsapp"></i></a>{{/if}}
-                {{#if setting.linkedin_url}}<a href="{{setting.linkedin_url}}"
-                                               class="w-9 h-9 flex items-center justify-center rounded-full border border-gray-600 text-gray-300 hover:bg-[var(--primary)] hover:text-white transition"><i
-                        class="bi bi-linkedin"></i></a>{{/if}}
-                {{#if setting.instagram_url}}<a href="{{setting.instagram_url}}"
-                                                class="w-9 h-9 flex items-center justify-center rounded-full border border-gray-600 text-gray-300 hover:bg-[var(--primary)] hover:text-white transition"><i
-                        class="bi bi-instagram"></i></a>{{/if}}
-            </div>
+        <!-- Social Icons -->
+        <div class="flex gap-3 items-center text-lg">
+            {{#if setting.facebook_url}}
+                <a href="{{setting.facebook_url}}" class="w-9 h-9 flex items-center justify-center rounded-full border border-gray-600 text-gray-300 hover:bg-[var(--primary)] hover:text-white transition">
+                    <i class="bi bi-facebook"></i>
+                </a>
+            {{/if}}
+            {{#if setting.whatsapp_number}}
+                <a href="tel:{{setting.whatsapp_number}}" class="w-9 h-9 flex items-center justify-center rounded-full border border-gray-600 text-gray-300 hover:bg-[var(--primary)] hover:text-white transition">
+                    <i class="bi bi-whatsapp"></i>
+                </a>
+            {{/if}}
+            {{#if setting.linkedin_url}}
+                <a href="{{setting.linkedin_url}}" class="w-9 h-9 flex items-center justify-center rounded-full border border-gray-600 text-gray-300 hover:bg-[var(--primary)] hover:text-white transition">
+                    <i class="bi bi-linkedin"></i>
+                </a>
+            {{/if}}
+            {{#if setting.instagram_url}}
+                <a href="{{setting.instagram_url}}" class="w-9 h-9 flex items-center justify-center rounded-full border border-gray-600 text-gray-300 hover:bg-[var(--primary)] hover:text-white transition">
+                    <i class="bi bi-instagram"></i>
+                </a>
+            {{/if}}
         </div>
     </div>
 
-    <div class=" border-t border-gray-700 text-center text-sm text-gray-400">
-        <div class="text-sm text-gray-400 text-center mt-6">
-            © 2025
-            <span class="font-semibold text-white transition duration-300 hover:text-[var(--primary)] hover:scale-105 inline-block">
-                <a href="/" class="hover:text-[var(--primary)]">Metraj.az - Sənin əmlakın</a>
-            </span>.
-            Designed & Developed by
-            <a href="https://foxsoft.agency" target="_blank" class="text-gray-400 hover:text-[var(--primary)] transition duration-300 hover:scale-105 inline-block">
-                FoxSoft
-            </a>
-        </div>
+    <!-- Copyright -->
+    <div class="border-t border-gray-700 text-center text-sm text-gray-400 mt-6 pt-4">
+        © 2025
+        <span class="font-semibold text-white transition duration-300 hover:text-[var(--primary)] hover:scale-105 inline-block">
+            <a href="/" class="hover:text-[var(--primary)]">Metraj.az - Sənin əmlakın</a>
+        </span>.
+        Designed & Developed by
+        <a href="https://foxsoft.agency" target="_blank" class="text-gray-400 hover:text-[var(--primary)] transition duration-300 hover:scale-105 inline-block">
+            FoxSoft
+        </a>
     </div>
 </footer>
