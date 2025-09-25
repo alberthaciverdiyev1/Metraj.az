@@ -29,7 +29,6 @@
     max-width: 100%;
 }
 
-
 </style>
 
 <div class="container mx-auto px-4 mt-12">
@@ -136,15 +135,15 @@
             {{#if property.media.video}}
             {{#each property.media.video}}
                 <section id="video" class="video-section">
-                <div class="video-container">
-                    <video id="video-frame" controls>
-                    <source src="{{this.path}}" type="video/mp4">
-                    </video>
-                    <div class="play-button" id="toggle-btn">
-                    <i class="bi bi-play-fill" id="play-icon"></i>
-                    <i class="bi bi-pause-fill d-none" id="pause-icon"></i>
+                    <div class="video-container">
+                        <video id="video-frame" controls>
+                            <source src="{{this.path}}" type="video/mp4">
+                        </video>
+                        <div class="play-button" id="toggle-btn">
+                            <i class="bi bi-play-fill" id="play-icon"></i>
+                            <i class="bi bi-pause-fill d-none" id="pause-icon"></i>
+                        </div>
                     </div>
-                </div>
                 </section>
             {{/each}}
             {{/if}}

@@ -1,103 +1,126 @@
-<div class="flex items-center justify-center h-auto bg-cover bg-center py-4" style="background-image: url('/images/login-bg.svg');">
-    
-  <div class="fixed inset-0 bg-[#F1913D] opacity-80"></div>
+<div class="relative flex items-center justify-center min-h-screen bg-cover bg-center py-4"
+     style="background-image: url('/images/login-bg.svg');">
 
-  <div class="flex min-h-screen flex-col md:flex-row md:w-[90%] w-[90%] items-center gap-[20px] justify-center overflow-hidden shadow-md">
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-[#F1913D] opacity-80"></div>
 
-    <div class="z-100 flex md:flex-col flex-row items-center gap-[30px] md:gap-[0]">
-      <h1 class="text-white text-[30px] font-bold xl:text-[40px] xl:w-[340px] text-center mb-4 lg:text-[30px] md:text-[20px] md:w-[200px] lg:w-[250px]">
-        Find your ideal house
-      </h1>
-      <img src="/images/illustation.svg" class="w-[200px] xl:w-[250px] lg:w-[200px]">
+    <!-- Content -->
+    <div class="relative z-10 flex flex-col md:flex-row items-center justify-center gap-[20px] w-[90%] overflow-hidden shadow-md">
+
+        <!-- Left Side -->
+        <div class="flex flex-col items-center md:items-start text-center md:text-left gap-6">
+            <h1 class="text-white text-[30px] font-bold xl:text-[40px] lg:text-[30px] md:text-[24px] max-w-[340px]">
+                Find your ideal house
+            </h1>
+            <img src="/images/illustation.svg" class="w-[200px] xl:w-[250px] lg:w-[200px]" alt="illustration">
+        </div>
+
+        <!-- Form Card -->
+        <div class="w-full max-w-md p-6 flex flex-col bg-white rounded-[15px] shadow-lg">
+           <a href="/">  <img src="/images/metrajlogo.png" class="w-40 mx-auto mb-3" alt="logo"></a>
+
+            {{#if setting.name}}
+                <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">
+                    Register to {{setting.name}}
+                </h2>
+            {{/if}}
+
+            <form method="POST" action="/register" class="h-auto">
+
+                <!-- Role Selection -->
+                <div class="mb-4">
+                    <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Choose Role:</label>
+                    <select id="role" name="role"
+                            class="w-full border rounded-md px-4 py-2 bg-white border-gray-300"
+                            onchange="toggleFields()">
+                        <option value="">Select role</option>
+                        <option value="agent">Vasitəçi</option>
+                        <option value="user">İstifadəçi</option>
+                    </select>
+                </div>
+
+                <div class="input-with-icon mb-4">
+                    <input type="text" name="full-name" id="full-name" required placeholder="Username"
+                           class="w-full border rounded-md px-4 py-2 bg-gray-50 border-gray-300" />
+                </div>
+
+                <div class="input-with-icon mb-4">
+                    <input type="email" name="email" id="email" required placeholder="Mail address"
+                           class="w-full border rounded-md px-4 py-2 bg-gray-50 border-gray-300" />
+                </div>
+
+                <div class="input-with-icon mb-4">
+                    <input type="number" name="phone" id="phone" required placeholder="Phone number"
+                           class="w-full border rounded-md px-4 py-2 bg-gray-50 border-gray-300" />
+                </div>
+
+                <div class="input-with-icon mb-4">
+                    <input type="password" name="password" id="password" required placeholder="Password"
+                           class="w-full border rounded-md px-4 py-2 bg-gray-50 border-gray-300" />
+                </div>
+
+                <div class="input-with-icon mb-4">
+                    <input type="password" name="password_confirmation" id="password_confirmation" required
+                           placeholder="Password again"
+                           class="w-full border rounded-md px-4 py-2 bg-gray-50 border-gray-300" />
+                </div>
+
+                <!-- Agent fields (hidden by default) -->
+                <div class="input-with-icon mb-4 hidden" id="agencyNameField">
+                    <input type="text" name="agency_name" id="agency_name" placeholder="Agentlik adı"
+                           class="w-full border rounded-md px-4 py-2 bg-gray-50 border-gray-300" />
+                </div>
+
+                <div class="input-with-icon mb-4 hidden" id="agencyPhoneField">
+                    <input type="tel" name="agency_phone" id="agency_phone" placeholder="Agentlik telefon nömrəsi"
+                           class="w-full border rounded-md px-4 py-2 bg-gray-50 border-gray-300" />
+                </div>
+
+                <div class="flex items-center mb-4">
+                    <input type="checkbox" id="terms" required class="mr-2" />
+                    <label for="terms" class="text-sm text-gray-600">
+                        I accept <a href="#" class="text-blue-500">Privacy and policy</a>.
+                    </label>
+                </div>
+
+                <button type="submit"
+                        class="w-full bg-[var(--primary)] hover:bg-[#f29747] text-white font-semibold py-3 rounded-xl transition duration-300">
+                    Register
+                </button>
+
+                <div class="divider flex items-center justify-center my-6">
+                    <hr class="w-1/5 border-gray-300">
+                    <span class="mx-2 text-gray-500 text-sm">If you have account already</span>
+                    <hr class="w-1/5 border-gray-300">
+                </div>
+
+                <a href="/login"
+                   class="block text-center w-full bg-[var(--primary)] hover:bg-orange-400 text-white font-semibold py-3 rounded-xl transition duration-300">
+                    Log in
+                </a>
+
+                <!-- Home Button -->
+                <div class="mt-4 text-center">
+                    <a href="/" class="text-sm text-orange-400 hover:underline">Ana səhifəyə qayıt</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Right Side -->
+        <div class="flex flex-col items-center md:items-end text-center md:text-right gap-6">
+            <h1 class="text-white text-[30px] font-bold xl:text-[40px] lg:text-[30px] md:text-[24px] max-w-[400px]">
+                Easiest way to find your safezone
+            </h1>
+            <img src="/images/ok-finger.svg" alt="ok-icon" class="w-[200px] xl:w-[250px] lg:w-[200px]">
+        </div>
+
     </div>
-
-    <div class="w-full md:w-1/2 p-6 justify-center flex flex-col z-100 bg-white rounded-[15px] h-auto">
-      {{#if setting.name}}
-        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Register to {{setting.name}}</h2>
-      {{/if}}
-
-      <form method="POST" action="/register" class="h-auto">
-
-        <!-- Role Selection -->
-        <div class="mb-4">
-          <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Choose Role:</label>
-          <select id="role" name="role" class="w-full border rounded-md px-4 py-2 bg-white border-gray-300" onchange="toggleFields()">
-            <option value="">Select role</option>
-            <option value="agent">Vasitəçi</option>
-            <option value="user">İstifadəçi</option>
-          </select>
-        </div>
-
-        <div class="input-with-icon mb-4">
-          <input type="text" name="full-name" id="full-name" required placeholder="Username" class="w-[90%] border rounded-md px-4 py-2 bg-gray-50 border-gray-300" />
-        </div>
-
-        <div class="input-with-icon mb-4">
-          <input type="email" name="email" id="email" required placeholder="Mail address" class="w-[90%] border rounded-md px-4 py-2 bg-gray-50 border-gray-300" />
-        </div>
-
-        <div class="input-with-icon mb-4">
-          <input type="number" name="phone" id="phone" required placeholder="Phone number" class="w-[90%] border rounded-md px-4 py-2 bg-gray-50 border-gray-300" />
-        </div>
-
-        <div class="input-with-icon mb-4">
-          <input type="password" name="password" id="password" required placeholder="Password" class="w-[90%] border rounded-md px-4 py-2 bg-gray-50 border-gray-300" />
-        </div>
-
-        <div class="input-with-icon mb-4">
-          <input type="password" name="password_confirmation" id="password_confirmation" required placeholder="Password again" class="w-[90%] border rounded-md px-4 py-2 bg-gray-50 border-gray-300" />
-        </div>
-
-        <!-- Agent fields (hidden by default) -->
-        <div class="input-with-icon mb-4 hidden" id="agencyNameField">
-          <input type="text" name="agency_name" id="agency_name" placeholder="Agentlik adı" class="w-[90%] border rounded-md px-4 py-2 bg-gray-50 border-gray-300" />
-        </div>
-
-        <div class="input-with-icon mb-4 hidden" id="agencyPhoneField">
-          <input type="tel" name="agency_phone" id="agency_phone" placeholder="Agentlik telefon nömrəsi" class="w-[90%] border rounded-md px-4 py-2 bg-gray-50 border-gray-300" />
-        </div>
-
-        <div class="flex items-center mb-4">
-          <input type="checkbox" id="terms" required class="mr-2" />
-          <label for="terms" class="text-sm text-gray-600">I accept <a href="#" class="text-blue-500">Privacy and policy</a>.</label>
-        </div>
-
-        <button type="submit" class="w-full bg-[var(--primary)] hover:bg-[#f29747] text-white font-semibold py-3 rounded-xl transition duration-300">
-          Register
-        </button>
-
-        <div class="divider flex items-center justify-center my-6">
-          <hr class="w-1/5 border-gray-300">
-          <span class="mx-2 text-gray-500 text-sm text-center">If you have account already</span>
-          <hr class="w-1/5 border-gray-300">
-        </div>
-
-        <div class="flex">
-          <a href="/login" class="w-full text-center bg-[var(--primary)] hover:bg-orange-400 text-white font-semibold py-3 rounded-xl transition duration-300">Log in</a>
-        </div>
-
-        <!-- Home Button -->
-        <div class="mt-4 text-center">
-          <a href="/" class="text-sm text-orange-400 hover:underline">Ana səhifəyə qayıt</a>
-        </div>
-
-      </form>
-    </div>
-
-    <div class="z-100 flex md:flex-col flex-row items-center">
-      <h1 class="text-white text-center text-[30px] font-bold xl:text-[40px] xl:w-[400px] mb-4 lg:text-[30px] md:text-[20px] md:w-[200px] lg:w-[300px]">
-        Easiest way to find your safezone
-      </h1>
-      <img src="/images/ok-finger.svg" alt="ok-icon" class="w-[200px] xl:w-[250px] lg:w-[200px]">
-    </div>
-
-  </div>
 </div>
 
 <script>
-function toggleFields() {
-  const role = document.getElementById('role').value;
-  document.getElementById('agencyNameField').classList.toggle('hidden', role !== 'agent');
-  document.getElementById('agencyPhoneField').classList.toggle('hidden', role !== 'agent');
-}
+    function toggleFields() {
+        const role = document.getElementById('role').value;
+        document.getElementById('agencyNameField').classList.toggle('hidden', role !== 'agent');
+        document.getElementById('agencyPhoneField').classList.toggle('hidden', role !== 'agent');
+    }
 </script>
