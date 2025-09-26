@@ -1,100 +1,115 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("Register page loaded");
+    const roleSelect = document.getElementById("role");
+    const agencyNameField = document.getElementById("agencyNameField");
+    const agencyPhoneField = document.getElementById("agencyPhoneField");
+    const phoneField = document.getElementById("phoneField");
+    const form = document.getElementById("registerForm");
 
     function toggleFields() {
-        const role = document.getElementById("role").value;
-        const agencyName = document.getElementById("agencyNameField");
-        const phoneField = document.getElementById("phoneField");
-        const phoneInput = document.getElementById("phone");
-
-        if (role === "agent") {
-            agencyName.classList.remove("hidden");
-            phoneField.classList.remove("hidden");
-            phoneInput.setAttribute("required", "required");
-        } else {
-            agencyName.classList.add("hidden");
-            phoneField.classList.add("hidden");
-            phoneInput.removeAttribute("required");
-        }
+        const role = roleSelect.value;
+        const isAgent = role === "agent";
+        agencyNameField.classList.toggle("hidden", !isAgent);
+        agencyPhoneField.classList.toggle("hidden", !isAgent);
+        phoneField.classList.toggle("hidden", !isAgent);
     }
 
     toggleFields();
+    roleSelect.addEventListener("change", toggleFields);
 
-    const form = document.querySelector("form");
-    if (form) {
-        form.addEventListener("submit", async function (e) {
-            e.preventDefault();
+    function showError(input, message) {
+        let errorElem = input.nextElementSibling;
+        if (!errorElem || !errorElem.classList.contains("error-message")) {
+            errorElem = document.createElement("div");
+            errorElem.classList.add("error-message");
+            input.parentNode.appendChild(errorElem);
+        }
+        errorElem.textContent = message;
+    }
 
-            const formData = new FormData(form);
-            const data = {
-                role: formData.get("role"),
-                name: formData.get("full-name"),
-                agency_name: formData.get("agency_name"),
-                email: formData.get("email"),
-                password: formData.get("password"),
-                password_confirmation: formData.get("password_confirmation"),
-                phone: formData.get("phone"),
-                _token: formData.get("_token")
-            };
+    function clearErrors() {
+        document.querySelectorAll(".error-message").forEach(e => e.remove());
+    }
 
-            const termsAccepted = document.getElementById("terms").checked;
-            const errorMsgEl = document.createElement('div');
-            errorMsgEl.className = 'text-red-500 text-sm mt-2';
-            
-            document.querySelectorAll('.error-message').forEach(el => el.remove());
+    function showToast(message, type = "success") {
+        const toast = document.createElement("div");
+        toast.className = "toast fixed top-4 right-4 px-4 py-2 rounded shadow-lg text-white font-medium";
+        toast.style.backgroundColor = type === "success" ? "#28a745" : "#dc3545"; // yaşıl/qırmızı
+        toast.textContent = message;
+        document.body.appendChild(toast);
 
-            if (!termsAccepted) {
-                errorMsgEl.textContent = 'You must agree to the terms and privacy policy.';
-                document.getElementById("terms").parentNode.appendChild(errorMsgEl);
-                return;
-            }
+        setTimeout(() => {
+            toast.style.opacity = "0";
+            setTimeout(() => toast.remove(), 500);
+        }, 3000);
+    }
 
-            try {
-                const response = await fetch('/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': data._token
-                    },
-                    body: JSON.stringify(data)
-                });
 
-                const result = await response.json();
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        clearErrors();
 
-                if (response.ok) {
-                    alert(result.message || 'Account created successfully!');
-                    window.location.href = '/login';
-                } else {
-                    if (result.errors) {
-                        for (const [field, messages] of Object.entries(result.errors)) {
-                            const input = document.querySelector(`[name="${field}"]`);
-                            if (input) {
-                                const errorEl = document.createElement('div');
-                                errorEl.className = 'error-message text-red-500 text-sm mt-1';
-                                errorEl.textContent = messages.join(', ');
-                                input.parentNode.appendChild(errorEl);
-                            }
-                        }
-                    } else if (result.message) {
-                        const generalError = document.createElement('div');
-                        generalError.className = 'error-message text-red-500 text-sm mt-4';
-                        generalError.textContent = result.message;
-                        form.insertBefore(generalError, form.firstChild);
-                    }
+        const formData = new FormData(form);
+        const role = formData.get("role");
+        const name = formData.get("full-name");
+        const email = formData.get("email");
+        const password = formData.get("password");
+        const password_confirmation = formData.get("password_confirmation");
+        const agency_name = formData.get("agency_name");
+        const agency_phone = formData.get("agency_phone");
+        const phone = formData.get("phone");
+
+        let hasError = false;
+
+        if (!role) { showError(roleSelect, "Role seçmək vacibdir."); hasError = true; }
+        if (!name) { showError(document.getElementById("full-name"), "Ad vacibdir."); hasError = true; }
+        if (!email) { showError(document.getElementById("email"), "Email vacibdir."); hasError = true; }
+        if (!password) { showError(document.getElementById("password"), "Parol vacibdir."); hasError = true; }
+        if (!password_confirmation) { showError(document.getElementById("password_confirmation"), "Parolu təsdiqləyin."); hasError = true; }
+        if (password && password_confirmation && password !== password_confirmation) {
+            showError(document.getElementById("password_confirmation"), "Parollar eyni deyil.");
+            hasError = true;
+        }
+        if (role === "agent") {
+            if (!agency_name) { showError(document.getElementById("agency_name"), "Agentlik adı vacibdir."); hasError = true; }
+            if (!agency_phone) { showError(document.getElementById("agency_phone"), "Agentlik telefon nömrəsi vacibdir."); hasError = true; }
+            if (!phone) { showError(document.getElementById("phone"), "Telefon nömrəsi vacibdir."); hasError = true; }
+        }
+
+        if (!document.getElementById("terms").checked) {
+            showToast("Şərtləri qəbul etməlisiniz!", "error");
+            hasError = true;
+        }
+
+        if (hasError) return;
+
+        const data = { role, name, agency_name, email, password, password_confirmation, phone };
+
+        try {
+            const response = await fetch("/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                showToast("Qeydiyyat uğurla tamamlandı!", "success");
+                setTimeout(() => {
+                    window.location.href = "/profile"; // avtomatik yönləndirmə
+                }, 1500); // 1.5 saniyə sonra yönləndirir
+            } else {
+                if (result.errors) {
+                    Object.keys(result.errors).forEach(key => {
+                        const input = document.getElementById(key) || roleSelect;
+                        showError(input, result.errors[key][0]);
+                    });
                 }
-            } catch (error) {
-                console.error('Error:', error);
-                const networkError = document.createElement('div');
-                networkError.className = 'error-message text-red-500 text-sm mt-4';
-                networkError.textContent = 'A network error occurred. Please try again.';
-                form.insertBefore(networkError, form.firstChild);
+                showToast("Qeydiyyat zamanı xəta baş verdi.", "error");
             }
-        });
-    }
+        } catch (error) {
+            showToast("Serverlə əlaqə mümkün olmadı.", "error");
+        }
+    });
 
-    const roleSelect = document.getElementById("role");
-    if (roleSelect) {
-        roleSelect.addEventListener("change", toggleFields);
-    }
 });

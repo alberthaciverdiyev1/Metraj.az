@@ -515,6 +515,8 @@ function initDropdowns() {
 initDropdowns();
 
 
+
+
 //seher selecti ucun js 
 const modal = document.getElementById("filterModal");
 const resetBtn = document.getElementById("resetBtn");
