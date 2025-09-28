@@ -13,14 +13,34 @@
             </label>
         {{else}}
         <div class="flex justify-between w-full gap-4">
-            <div class="w-full">
-                <label for="advertiser" class="block font-semibold mb-1">Advertiser:*</label>
-                <select id="advertiser" class="w-full border border-gray-300 rounded-md px-4 py-2">
+            <div class="relative custom-select-container w-full" id="advertiser-container">
+                <span class="block font-semibold mb-1">Advertiser:*</span>
+                {{!-- <select id="advertiser" class="w-full border border-gray-300 rounded-md px-4 py-2">
                     <option value="">Choose One</option>
                     <option value="user">User</option>
                     <option value="realtor">Realtor</option>
-                </select>
+                </select> --}}
+                <button type="button"
+                                class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
+                                <span class="custom-select-text">Choose one</span>
+                                <svg class="w-4 h-4 ml-2 transition-transform transform"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                                <ul
+                                class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
+                                <li data-value="user" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">User
+                                </li>
+                                <li data-value="realtor" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">
+                                    Realtor</li>
+                            </ul>
+                            <input type="hidden" name="advertiser" id="advertiser-input">
             </div>
+
+
             <div class="mb-4 w-full">
                 <label for="advertiser-name" class="block font-semibold mb-1">Advertiser Name:*</label>
                 <input type="text" id="advertiser-name" placeholder="Name"

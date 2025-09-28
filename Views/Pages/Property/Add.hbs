@@ -98,24 +98,45 @@
                     <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
 
                         <!-- Property Type -->
-                        <div class="flex relative w-full">
+                        {{!-- <div class="flex relative w-full"> --}}
                             {{!-- <label class="block font-medium mb-1">{{t "Building Type"}}:<span
                                     class="text-red-500">*</span></label> --}}
-                            <select id="building-type"
-                                class="w-full appearance-none border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-300 text-[#B3B3B3]" >
+                            {{!-- <select id="building-type"> --}}
                                 {{!-- <option disabled selected>{{t "Choose"}}</option> --}}
                                 {{!-- <option disabled selected>{{t "Choose"}}</option> --}}
-                            </select>
-                               <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
+                            {{!-- </select> --}}
+                               {{!-- <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
                                 <svg class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 9l-7 7-7-7" />
                                 </svg>
+                            </button> --}}
+                        {{!-- </div> --}}
+
+
+
+                              <div class="custom-select-container relative" id="building-type-container">
+                                {{!-- <label class="block font-medium mb-1">{{t "Building Type"}}:<span
+                                    class="text-red-500">*</span></label> --}}
+                              <button type="button"
+                                class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
+                                <span class="custom-select-text">{{t "Building type"}}</span>
+                                <svg class="w-4 h-4 ml-2 transition-transform transform"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
                             </button>
+                               <ul id="building-type"
+                                class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
+                            </ul>
+                            <input type="hidden" name="building-type" id="building-type-input">
 
                         </div>
+
                         <!-- Add Type -->
                         {{!-- <div>
                             <label class="block font-medium mb-1">{{t "Add type"}}:<span
@@ -127,22 +148,24 @@
                                 <option value="rent">For Rent</option>
                             </select>
                         </div> --}}
-                        <select id="add-type" name="type" class="sr-only" {{!-- ekranda görünmür, ancaq forma dəyər
-                            ötürür --}}>
+                        {{!-- <select id="add-type" name="type" class="sr-only"  --}}
+                        {{!-- ekranda görünmür, ancaq forma dəyər
+                            ötürür --}} 
+                            {{!-- > --}}
                             {{!-- <option disabled selected>{{t "Choose"}}</option> --}}
-                            <option value="sale">For Sale</option>
+                            {{!-- <option value="sale">For Sale</option>
                             <option value="rent">For Rent</option>
-                        </select>
+                        </select> --}}
 
-                        <div id="customTypeContainer" class="relative w-full">
+                        <div id="customTypeContainer" class="relative custom-select-container">
                             {{!-- <label class="block font-medium mb-1">
                                 {{t "Add type"}}:<span class="text-red-500">*</span>
                             </label> --}}
 
-                            <button id="customTypeButton" type="button"
-                                class="w-full border border-gray-300 rounded-xl p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                                <span id="customTypeText" class="text-[#B3B3B3]">{{t "Add Type"}}</span>
-                                <svg id="typeIcon" class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
+                            <button type="button" id="add-type"
+                                class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
+                                <span class="custom-select-text">{{t "Add Type"}}</span>
+                                <svg class="w-4 h-4 ml-2 transition-transform transform"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -150,10 +173,10 @@
                                 </svg>
                             </button>
 
-                            <ul id="customTypeOptions"
-                                class="absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
-                                <li data-value="sale" class="px-4 py-2 hover:bg-orange-100 cursor-pointer text-[#B3B3B3]">For Sale</li>
-                                <li data-value="rent" class="px-4 py-2 hover:bg-orange-100 cursor-pointer text-[#B3B3B3]">For Rent</li>
+                            <ul 
+                                class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
+                                <li data-value="sale" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">For Sale</li>
+                                <li data-value="rent" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">For Rent</li>
                             </ul>
 
                             <input type="hidden" id="selectedTypeInput" name="type">
@@ -162,10 +185,10 @@
 
 
 
-                        <div class="flex relative w-full">
+                        {{!-- <div class="flex relative w-full"> --}}
                             {{!-- <label class="block font-medium mb-1">{{t "Repair"}}:<span
                                     class="text-red-500">*</span></label> --}}
-                            <select id="repair-type" 
+                            {{!-- <select id="repair-type" 
                                 class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                 <option selected disabled class="text-gray-500" >{{t "Repair"}}</option>
                                 <option value="repaired">{{t "Repaired"}}</option>
@@ -179,13 +202,34 @@
                                         d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
+                        </div> --}}
+
+                         <div class="custom-select-container relative" id="repair-type-container">
+                            <button type="button"
+                                class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
+                                <span class="custom-select-text">Təmir</span>
+                                <svg class="w-4 h-4 ml-2 transition-transform transform"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            <ul
+                                class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
+                                <li data-value="repaired" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Təmirli
+                                </li>
+                                <li data-value="unrepaired" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">
+                                    Təmirsiz</li>
+                            </ul>
+                            <input type="hidden" name="propertyCondition" id="repair-type-input">
                         </div>
 
                         <div id="area">
                             {{!-- <label class="block font-medium mb-1">{{t "Size"}} (m²):<span
                                     class="text-red-500">*</span></label> --}}
                             <input type="number"
-                                class="w-full placeholder-[#B3B3B3] border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="{{t "Size (m²)"}}" />
+                                class="w-full border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="{{t "Size (m²)"}}" />
                         </div>
                         <div id="field-area" class="d-none">
                             <label class="block font-medium mb-1">{{t "Field area"}} (m²):<span
@@ -197,34 +241,45 @@
                         <div class="flex gap-3">
                             {{!-- <label class="block font-medium mb-1">{{t "Price"}}:<span
                                     class="text-red-500">*</span></label> --}}
-                            <input id="price" type="number" placeholder="Price"
-                                class="w-full placeholder-[#B3B3B3]  border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+                            <input id="price" type="number" placeholder={{t "Price"}}
+                                class="w-full border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
 
-                            <div class="d-none relative">
-                                <select id="property-period"
+                            <div class=" d-none relative custom-select-container" id="property-period-container">
+                                {{!-- <select id="property-period"
                                     class="w-[100px] appearance-none text-[#B3B3B3] border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                     <option value="daily"> {{t "Daily"}}</option>
                                     <option value="monthly">{{t "Monthly"}}</option>
-                                </select>
-                                 <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
-                                <svg class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
+                                </select> --}}
+                                <button type="button"
+                                class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
+                                <span class="custom-select-text">{{t 'Period'}}</span>
+                                <svg class="w-4 h-4 ml-2 transition-transform transform"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 9l-7 7-7-7" />
                                 </svg>
-                            </button>
+                                <ul 
+                                class="custom-select-options absolute left-0 top-full text-left z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
+                                <li data-value="daily" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Daily
+                                </li>
+                                <li data-value="monthly" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">
+                                    Monthly</li>
+                            </ul>
+                            <input type="hidden" name="propertyCondition" id="property-period-input">
                             </div>
                         </div>
 
-                        <div class="flex relative w-full">
+
+
+                        {{!-- <div class="flex relative w-full"> --}}
                             {{!-- <label class="block font-medium mb-1">{{t "Room Count"}}:<span
                                     class="text-red-500">*</span></label> --}}
-                            <select id="room-count"
+                            {{!-- <select id="room-count"
                                 class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
-                                <option disabled selected>{{t "Room Count"}}</option>
+                                <option disabled selected>{{t "Room Count"}}</option> --}}
                                 {{!-- <option disabled selected>{{t "Choose"}}</option> --}}
-                                {{#forLoop 20}}
+                                {{!-- {{#forLoop 20}}
                                 <option value="{{this}}">{{this}} {{t "room"}}</option>
                                 {{/forLoop}}
                             </select>
@@ -236,12 +291,30 @@
                                         d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
+                        </div> --}}
+
+
+                            <div class="custom-select-container relative" id="room-count-container">
+                            <button type="button"
+                                class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
+                                <span class="custom-select-text">Otaq sayı</span>
+                                <svg class="w-4 h-4 ml-2 transition-transform transform"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            <ul
+                                class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
+                            </ul>
+                            <input type="hidden" name="roomCount" id="room-count-input">
                         </div>
 
-                        <div class="flex relative w-full">
+                        {{!-- <div class="flex relative w-full"> --}}
                             {{!-- <label class="block font-medium mb-1">{{t "Floor"}}:<span
                                     class="text-red-500">*</span></label> --}}
-                            <select id="located-floor"
+                            {{!-- <select id="located-floor"
                                 class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                 <option disabled selected>{{t "Floor"}}</option>
                                 {{#forLoop 100}}
@@ -258,28 +331,28 @@
                                         d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
-                        </div>
-                        <div class="flex relative w-full">
-                            {{!-- <label class="block font-medium mb-1">{{t "Floor"}}:<span
-                                    class="text-red-500">*</span></label> --}}
-                            <select id="floor-count"
-                                    class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
-                                <option disabled selected>{{t "Floor"}}</option>
-                                {{#forLoop 100}}
-                                    <option value="{{this}}">{{this}} mərtəbəli</option>
-                                {{/forLoop}}
-
-
-                            </select>
-                            <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
-                                <svg class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
-                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                     stroke="currentColor">
+                        </div> --}}
+                     
+                       <div class="relative custom-select-container" id="floor-container">
+                              <button type="button"
+                                class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
+                                <span class="custom-select-text">{{t 'Floor'}}</span>
+                                <svg class="w-4 h-4 ml-2 transition-transform transform"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M19 9l-7 7-7-7" />
+                                        d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
+                              <ul
+                                class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
+                                {{#forLoop 100}}
+                                <li data-value="{{this}}" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">{{this}}-ci mərtəbə</li>
+                                {{/forLoop}}
+                            </ul>
+                            <input type="hidden" name="floor" id="floor-input">
                         </div>
+
 
 
                     </div>
@@ -311,41 +384,86 @@
 
                         <form method="POST" action="">
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                                <div class="flex relative w-full">
+                                <div class="flex relative w-full custom-select-container" id="city-container">
                                     {{!-- <label for="city" class="block font-semibold mb-1">{{t "City"}}:*</label> --}}
-                                    <select id="city" class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl px-4 py-2">
-                                    </select>
-                                       <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
-                                <svg class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
+                                    {{!-- <select id="city" class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl px-4 py-2">
+                                    </select> --}}
+                                     <button type="button"
+                                class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
+                                <span class="custom-select-text">{{t 'City'}}</span>
+                                <svg class="w-4 h-4 ml-2 transition-transform transform"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
+                                <ul id="city"
+                                class="custom-select-options absolute top-11 z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
+                            </ul>
+                            <input type="hidden" name="city" id="city-input">
+                                       
                                 </div>
-                                <div class="d-none">
+                                
+                                <div class="d-none relative custom-select-container" id="district-container">
                                     {{!-- <label for="district" class="block font-semibold mb-1">{{t "Ditrict"}}:*</label> --}}
-                                    <select id="district" class="w-full border border-gray-300 rounded-md px-4 py-2 text-[#B3B3B3]">
-                                    </select>
-                                </div>
-                                <div class="d-none">
-                                    {{!-- <label for="town" class="block font-semibold mb-1">{{t "Town"}}:*</label> --}}
-                                    <select id="town" class="w-full border border-gray-300 rounded-md px-4 py-2 text-[#B3B3B3]">
-                                    </select>
-                                </div>
-                                <div class="flex w-full relative"> 
-                                    {{!-- <label for="subway" class="block font-semibold mb-1">{{t "Metro"}}:*</label> --}}
-                                    <select id="subway" class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl px-4 py-2">
-                                    </select>
-                                       <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
-                                <svg class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
+                                    {{!-- <select id="district" class="w-full border border-gray-300 rounded-md px-4 py-2 text-[#B3B3B3]">
+                                    </select> --}}
+                                      <button type="button"
+                                class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
+                                <span class="custom-select-text">{{t 'District'}}</span>
+                                <svg class="w-4 h-4 ml-2 transition-transform transform"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
+                             <ul id="district"
+                                class="custom-select-options absolute top-11 z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
+                            </ul>
+                            <input type="hidden" name="district" id="district-input">
+                                </div>
+                                
+                                <div class="d-none relative custom-select-container" id="town-container">
+                                    {{!-- <label for="town" class="block font-semibold mb-1">{{t "Town"}}:*</label> --}}
+                                    {{!-- <select id="town" class="w-full border border-gray-300 rounded-md px-4 py-2 text-[#B3B3B3]">
+                                    </select> --}}
+                                     <button type="button"
+                                class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
+                                <span class="custom-select-text">{{t 'Town'}}</span>
+                                <svg class="w-4 h-4 ml-2 transition-transform transform"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                             <ul id="town"
+                                class="custom-select-options absolute top-11 z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
+                            </ul>
+                            <input type="hidden" name="town" id="town-input">
+                                </div>
+
+
+                                <div class="relative custom-select-container" id="subway-container"> 
+                                    {{!-- <label for="subway" class="block font-semibold mb-1">{{t "Metro"}}:*</label> --}}
+                                    {{!-- <select id="subway" class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl px-4 py-2">
+                                    </select> --}}
+                                        <button type="button"
+                                class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
+                                <span class="custom-select-text">{{t 'Subway'}}</span>
+                                <svg class="w-4 h-4 ml-2 transition-transform transform"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                                    <ul id="subway"
+                                class="custom-select-options absolute top-11 z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
+                            </ul>
+                            <input type="hidden" name="subway" id="subway-input">
                                 </div>
                             </div>
                             <div class="mb-4 gap-2 flex flex-col lg:flex-row items-center justify-center">
