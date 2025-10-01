@@ -28,6 +28,11 @@
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     max-width: 100%;
 }
+@media (max-width:768px) {
+    .gallery-thumbnails{
+        display: none !important;
+    }
+}
 
 </style>
 
@@ -35,13 +40,23 @@
     <section id="listing-detail-gallery">
         <div class="container mx-auto px-4">
             <div class="gallery-grid">
-                <div class="gallery-main">
+                <div class="gallery-main md:grid hidden">
                     <a href="https://www.google.com/maps/place/Baku/@40.394737,49.6901458,11z/data=!3m1!4b1!4m6!3m5!1s0x40307d6bd6211cf9:0x343f6b5e7ae56c6b!8m2!3d40.4092617!4d49.8670924"
                         target="_blank"
-                        class="block w-full h-[500px] rounded-lg mb-6 relative z-10">
-                        <div id="map" class="w-full h-[500px] rounded-lg"></div>
-
+                        class="block w-full rounded-lg mb-6 relative z-10">
+                        <div id="map" class="w-full h-full rounded-lg"></div>
                     </a>
+                </div>
+                <div class="gallery-main md:hidden grid relative">
+                 {{#each property.media.images}}
+                        {{#if (lt @index 1)}}
+                            <figure class="m-0 overflow-hidden cursor-pointer rounded"
+                                    onclick="openModal({{@index}})">
+                                <img src="{{this.path}}" alt="Kiçik şəkil" class="w-full h-24 object-cover">
+                            </figure>
+                            <button onclick="openModal({{@index}})" class="absolute bottom-2 right-2 bg-gray-200 p-1 text-sm rounded">{{t "Bütün şəkillər"}}</button>
+                        {{/if}}
+                    {{/each}}
                 </div>
                         {{!-- <div class="absolute -bottom-10 left-[350px] cursor-pointer -translate-x-1/2 px-6 py-2 border border-[#F1913D] text-[#F1913D] font-semibold rounded-full shadow-md bg-white z-50">
                             Show on Maps

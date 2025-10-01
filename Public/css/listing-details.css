@@ -4,6 +4,11 @@
     flex-wrap: wrap;
     height: 70vh; 
 }
+@media (max-width:768px) {
+    .gallery-grid{
+        height: auto;
+    }
+}
 
 .gallery-main {
     flex: 1 1 45%;
@@ -175,7 +180,7 @@
     .gallery-thumbnails figure,
     .more-images-overlay {
         height: 80px; /* Thumbnail hündürlüyü mobil üçün kiçik */
-    } */
+    } 
 
     #modal-image {
         max-width: 100vw; /* Mobil ekranın 95%-i */
@@ -1537,7 +1542,7 @@ circle.progress {
 }
 
 @media (max-width:992px) {
-    .flex {
+    .map-flex {
         flex-direction: column;
     }
     .side {
