@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function showToast(message, type = "success") {
         const toast = document.createElement("div");
         toast.className = "toast fixed top-4 right-4 px-4 py-2 rounded shadow-lg text-white font-medium";
-        toast.style.backgroundColor = type === "success" ? "#28a745" : "#dc3545"; // yaşıl/qırmızı
+        toast.style.backgroundColor = type === "success" ? "#28a745" : "#dc3545";
         toast.textContent = message;
         document.body.appendChild(toast);
 
@@ -43,6 +43,26 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 3000);
     }
 
+    // 🔹 Parol yoxlama funksiyası
+    function validatePassword(password) {
+        const hasUppercase = /[A-Z]/.test(password);
+        const hasLowercase = /[a-z]/.test(password);
+        const hasNumber = /[0-9]/.test(password);
+        const isLongEnough = password.length >= 8;
+        const weakPasswords = ["12345678", "password", "qwerty", "abc123"];
+        const isWeak = weakPasswords.includes(password.toLowerCase());
+
+        return {
+            valid: hasUppercase && hasLowercase && hasNumber && isLongEnough && !isWeak,
+            reasons: {
+                uppercase: hasUppercase,
+                lowercase: hasLowercase,
+                number: hasNumber,
+                length: isLongEnough,
+                weak: !isWeak
+            }
+        };
+    }
 
     form.addEventListener("submit", async function (e) {
         e.preventDefault();
@@ -69,6 +89,22 @@ document.addEventListener("DOMContentLoaded", function () {
             showError(document.getElementById("password_confirmation"), "Parollar eyni deyil.");
             hasError = true;
         }
+
+        // 🔹 Parol yoxlamasını çağır
+        if (password) {
+            const passwordCheck = validatePassword(password);
+            if (!passwordCheck.valid) {
+                let message = "Parol ən az 8 simvol olmalı, 1 böyük hərf, 1 kiçik hərf və 1 rəqəm içerməlidir.";
+                if (!passwordCheck.reasons.length) message += " (Uzunluq yetərli deyil)";
+                if (!passwordCheck.reasons.uppercase) message += " (Böyük hərf yoxdur)";
+                if (!passwordCheck.reasons.lowercase) message += " (Kiçik hərf yoxdur)";
+                if (!passwordCheck.reasons.number) message += " (Rəqəm yoxdur)";
+                if (!passwordCheck.reasons.weak) message += " (Zəif parol)";
+                showError(document.getElementById("password"), message);
+                hasError = true;
+            }
+        }
+
         if (role === "agent") {
             if (!agency_name) { showError(document.getElementById("agency_name"), "Agentlik adı vacibdir."); hasError = true; }
             if (!agency_phone) { showError(document.getElementById("agency_phone"), "Agentlik telefon nömrəsi vacibdir."); hasError = true; }
@@ -96,8 +132,8 @@ document.addEventListener("DOMContentLoaded", function () {
             if (response.ok) {
                 showToast("Qeydiyyat uğurla tamamlandı!", "success");
                 setTimeout(() => {
-                    window.location.href = "/profile"; // avtomatik yönləndirmə
-                }, 1500); // 1.5 saniyə sonra yönləndirir
+                    window.location.href = "/profile";
+                }, 1500);
             } else {
                 if (result.errors) {
                     Object.keys(result.errors).forEach(key => {
@@ -111,5 +147,4 @@ document.addEventListener("DOMContentLoaded", function () {
             showToast("Serverlə əlaqə mümkün olmadı.", "error");
         }
     });
-
 });
