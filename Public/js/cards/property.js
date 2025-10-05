@@ -42,7 +42,7 @@ export function propertyCard(property, showRemoveButton = false) {
   if (rawPrice) priceValue = parseFloat(rawPrice.toString().replace(/,/g, ""));
   const price = formatPrice(priceValue);
   const premiumBadge = property.is_premium
-    ? `<span class="absolute top-3 right-4 text-[color:var(--primary)] font-semibold text-md bg-white px-2 py-1 rounded-full"><i class="fa-solid fa-crown"></i></span>`    : "";
+    ? `<span class="absolute top-3 right-4 text-[color:var(--primary)] font-semibold text-md bg-white px-2 py-1 rounded-full"><i class="fa-solid fa-crown"></i></span>` : "";
   const heartIconClass = getFavoriteStatus(property.id) ? "fa-solid" : "fa-regular";
   const propertyData = encodeURIComponent(JSON.stringify(property));
 
@@ -77,30 +77,27 @@ export function propertyCard(property, showRemoveButton = false) {
 
   <!-- Card Content -->
   <div class="p-3 sm:p-4 flex flex-col flex-1">
-    <div class="flex flex-col gap-2 min-h-[100px] sm:min-h-[120px]">
+   <div class="flex flex-col gap-2 min-h-[120px] sm:min-h-[140px]">
       
       <!-- Başlıq -->
-      <h3 class="font-bold text-[color:var(--text-color)] text-sm sm:text-base md:text-lg leading-snug hover:text-[color:var(--primary)] line-clamp-2">
-        ${property.title}
-      </h3>
+   <h3 class="font-bold text-[color:var(--text-color)] text-sm sm:text-base md:text-lg  hover:text-[color:var(--primary)] line-clamp-2 min-h-[40px] sm:min-h-[48px]">
+    ${property.title}
+  </h3>
 
       <!-- Badge-lər -->
-      ${badges}
+       <div class="min-h-[24px] sm:min-h-[28px] flex flex-wrap items-center gap-1">
+    ${badges}
+  </div>
 
-      <!-- Ünvan -->
-      <p class="flex items-start text-xs sm:text-sm text-[color:var(--grey-text)]">
-<!--        <img class="mr-2 mt-0.5 w-3.5 h-3.5 sm:w-4 sm:h-4" src="/images/map-pin.svg" />-->
-<!--        <span class="line-clamp-1">${property.address}</span>-->
-      </p>
-
-<div class="flex justify-between items-center text-xs sm:text-sm text-[color:var(--grey-text)]">
-    <div class="flex items-center space-x-1 sm:space-x-2">
-        <img class="w-3.5 h-3.5 sm:w-4 sm:h-4" src="/images/map-pin.svg" alt="" />
-        <span class="line-clamp-1">${property.address}</span>
-    </div>
-
-    <span>${property.date}</span>
+<!-- Ünvan və Tarix -->
+<div class="flex justify-between items-center text-xs sm:text-sm text-[color:var(--grey-text)] mt-auto mb-3">
+  <div class="flex items-center max-w-[70%] truncate">
+    <img class="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1" src="/images/map-pin.svg" alt="map" />
+    <span class="truncate">${property.address}</span>
+  </div>
+  <span class="whitespace-nowrap ml-2">${property.date}</span>
 </div>
+
 
     </div>
 
