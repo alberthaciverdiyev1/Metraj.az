@@ -104,7 +104,7 @@ function showToast(message) {
         position: "right",
         close: true,
         style: {
-            background: "linear-gradient(to right, #FFA500, #FF4500)",
+            background: "#F39C54",
             borderRadius: "8px",
             padding: "12px 24px",
             minWidth: "250px",      

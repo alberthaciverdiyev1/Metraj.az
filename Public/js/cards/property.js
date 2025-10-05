@@ -17,42 +17,52 @@ function getCookie(name) {
 }
 
 export function propertyCard(property, showRemoveButton = false) {
-  // console.log(property);
-
   const badges = `
-<div class="flex flex-wrap  gap-2">
-    ${property.add_type === "rent"
-      ? `<span class="bg-[color:var(--primary)] text-white w-[80px] text-xs font-semibold px-2 text-center py-1 rounded-full">Kirayə</span>`
+<div class="flex gap-2">
+  <!-- Kirayə -->
+  ${property.add_type === "rent"
+      ? `<span class="bg-[color:var(--primary)] text-white flex items-center justify-center rounded-full
+                  w-7 h-7 sm:w-auto sm:h-auto px-2 py-1 sm:flex-row sm:rounded-full">
+         <i class="fa-solid fa-house-circle-xmark text-[12px]"></i>
+         <span class="hidden sm:block text-xs font-semibold ml-1">Kirayə</span>
+       </span>`
       : property.add_type === "sale"
-        ? `<span class="bg-[#80807F] text-white w-[80px] text-center text-xs font-semibold px-2 py-1 rounded-full">Satışda</span>`
-        : ""
-    }
+          ? `<span class="bg-[#80807F] text-white flex items-center justify-center rounded-full
+                    w-7 h-7 sm:w-auto sm:h-auto px-2 py-1 sm:flex-row sm:rounded-full">
+           <i class="fa-solid fa-house-circle-check text-[12px]"></i>
+           <span class="hidden sm:block text-xs font-semibold ml-1">Satışda</span>
+        </span>`
+          : ""
+  }
 
-    ${property.property_condition === "Repaired"
-      ? `<span class="bg-green-600 text-white text-xs  w-[80px] font-semibold px-2 text-center  py-1 rounded-full">Təmirli</span>`
-      : ``
-    // : `<span class="bg-gray-400 text-white text-xs font-semibold px-2 py-1 text-center rounded-full">Təmirsiz</span>`
-    }
-
-</div>
-`;
+  <!-- Təmirli -->
+  ${property.property_condition === "Repaired"
+      ? `<span class="bg-green-600 text-white flex items-center justify-center rounded-full
+                  w-7 h-7 sm:w-auto sm:h-auto px-2 py-1 sm:flex-row sm:rounded-full">
+         <i class="fa-solid fa-hammer text-[12px]"></i>
+         <span class="hidden sm:block text-xs font-semibold ml-1">Təmirli</span>
+       </span>`
+      : ""
+  }
+</div> `;
 
   const rawPrice = property.price && property.price[0]?.price;
   let priceValue = 0;
   if (rawPrice) priceValue = parseFloat(rawPrice.toString().replace(/,/g, ""));
   const price = formatPrice(priceValue);
   const premiumBadge = property.is_premium
-    ? `<span class="absolute top-3 right-4 text-[color:var(--primary)] font-semibold text-md bg-white px-2 py-1 rounded-full"><i class="fa-solid fa-crown"></i></span>`    : "";
+      ? `<span class="absolute top-1 sm:top-3 right-2 sm:right-4 text-[color:var(--primary)] font-semibold text-sm sm:text-md bg-white px-2 py-1 rounded-full"><i class="fa-solid fa-crown"></i></span>` : "";
   const heartIconClass = getFavoriteStatus(property.id) ? "fa-solid" : "fa-regular";
   const propertyData = encodeURIComponent(JSON.stringify(property));
 
   const favoriteOrRemoveButton = showRemoveButton
-    ? `<span onclick="event.stopPropagation(); removeFavorite(${property.id});" class="absolute bottom-3 right-4 text-red-500 font-semibold text-md bg-white px-2 py-1 rounded-full cursor-pointer"><i class="fas fa-times"></i></span>`
-    : `<span onclick="event.stopPropagation(); toggleFavorite(this, decodeURIComponent('${propertyData}'));" class="absolute bottom-3 right-4 text-white font-semibold text-md bg-white px-2 py-1 rounded-full cursor-pointer"><i class="${heartIconClass} fa-heart text-red-500"></i></span>`;
+      ? `<span onclick="event.stopPropagation(); removeFavorite(${property.id});" class="absolute bottom-1 sm:bottom-3 right-2 sm:right-4 text-red-500 font-semibold text-md bg-white px-2 py-1 rounded-full cursor-pointer"><i class="fas fa-times"></i></span>`
+      : `<span onclick="event.stopPropagation(); toggleFavorite(this, decodeURIComponent('${propertyData}'));" class="absolute bottom-1 sm:bottom-3 right-2 sm:right-4 text-white font-semibold text-md bg-white px-2 py-1 rounded-full cursor-pointer"><i class="${heartIconClass} fa-heart text-red-500"></i></span>`;
 
   const comparePropertyData = encodeURIComponent(JSON.stringify(property));
   const isCompareActive = getCompareStatus(property.id);
   const compareIconClass = isCompareActive ? "text-[color:var(--primary)]" : "";
+
   return `
 <!-- Property Card -->
 <div onclick="window.location.href='/property/${property.id}'" 
@@ -80,27 +90,47 @@ export function propertyCard(property, showRemoveButton = false) {
     <div class="flex flex-col gap-2 min-h-[100px] sm:min-h-[120px]">
       
       <!-- Başlıq -->
-      <h3 class="font-semibold text-[color:var(--text-color)] text-sm sm:text-base md:text-lg leading-snug hover:text-[color:var(--primary)] line-clamp-2">
-        ${property.title}
+      <h3 class="font-semibold sm:font-semibold text-[color:var(--text-color)] text-sm sm:text-base md:text-md
+          hover:text-[color:var(--primary)]
+          line-clamp-1 group-hover:line-clamp-none
+          min-h-[20px] sm:min-h-[28px] overflow-hidden text-ellipsis">
+
+          <span class="block sm:hidden">
+            ${property.sm_title}
+          </span>
+
+          <span class="hidden sm:block">
+            ${property.title}
+          </span>
       </h3>
 
       <!-- Badge-lər -->
-      ${badges}
+      <div class="min-h-[24px] sm:min-h-[28px] flex flex-wrap items-center gap-1">
+        ${badges}
+      </div>
 
       <!-- Ünvan -->
-      <p class="flex items-start text-xs sm:text-sm text-[color:var(--grey-text)]">
-<!--        <img class="mr-2 mt-0.5 w-3.5 h-3.5 sm:w-4 sm:h-4" src="/images/map-pin.svg" />-->
-<!--        <span class="line-clamp-1">${property.address}</span>-->
-      </p>
+      <div class="flex items-center max-w-full text-xs sm:text-sm text-[color:var(--grey-text)] mt-auto">
+        <img class="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1" src="/images/map-pin.svg" alt="map" />
+        <span class="truncate group-hover:overflow-visible group-hover:whitespace-normal">
+          ${property.address}
+        </span>
+      </div>
 
-<div class="flex justify-between items-center text-xs sm:text-sm text-[color:var(--grey-text)]">
-    <div class="flex items-center space-x-1 sm:space-x-2">
-        <img class="w-3.5 h-3.5 sm:w-4 sm:h-4" src="/images/map-pin.svg" alt="" />
-        <span class="line-clamp-1">${property.address}</span>
-    </div>
+      <!-- Ünvan və Tarix -->
+      <div class="flex justify-between items-center text-xs sm:text-sm text-[color:var(--grey-text)] mt-auto mb-3">
+        <div class="flex items-center max-w-[70%] text-xs sm:text-sm text-[color:var(--grey-text)]">
+          <i class="fa-solid fa-city"></i>
+          <span class="truncate ml-1 group-hover:overflow-visible group-hover:whitespace-normal">
+            ${property.buildingType}
+          </span>
+        </div>
+      
+        <span class="ml-1 flex-shrink-0">
+          ${property.date}
+        </span>
+      </div>
 
-    <span>${property.date}</span>
-</div>
 
     </div>
 
@@ -117,10 +147,9 @@ export function propertyCard(property, showRemoveButton = false) {
     </div>
   </div>
 </div>
-
-
-    `;
+`;
 }
+
 function getFavoriteStatus(propertyId) {
   const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
   return favorites.some((favProperty) => favProperty.id === propertyId);
