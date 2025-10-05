@@ -80,7 +80,7 @@ export function propertyCard(property, showRemoveButton = false) {
     <div class="flex flex-col gap-2 min-h-[100px] sm:min-h-[120px]">
       
       <!-- Başlıq -->
-      <h3 class="font-bold text-[color:var(--text-color)] text-sm sm:text-base md:text-lg leading-snug hover:text-[color:var(--primary)] line-clamp-2">
+      <h3 class="font-semibold text-[color:var(--text-color)] text-sm sm:text-base md:text-lg leading-snug hover:text-[color:var(--primary)] line-clamp-2">
         ${property.title}
       </h3>
 
