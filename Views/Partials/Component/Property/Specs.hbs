@@ -1,3 +1,10 @@
+<style>
+@media (max-width:640px) {
+    .fa-bed{
+        display: none;
+    }
+}
+</style>
 <section id="property-detail" class="bg-white rounded-2xl shadow p-6 space-y-6">
     <h3 class="text-2xl font-bold text-black">Property Details</h3>
 
@@ -11,7 +18,7 @@
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
 
         <div class="flex items-center gap-5 md:gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
-            <i class="bi bi-hash text-[#F1913D] text-xl"></i>
+            <i class="bi bi-hash text-[#F1913D] text-xl hidden sm:flex"></i>
             <div>
                 <p class="text-gray-500 text-sm">ID</p>
                 <p class="font-semibold">{{ item.add_no }}</p>
@@ -20,7 +27,7 @@
 
         {{#if item.area }}
         <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
-            <i class="bi bi-arrows-fullscreen text-[#F1913D] text-xl"></i>
+            <i class="bi bi-arrows-fullscreen text-[#F1913D] text-xl hidden sm:flex"></i>
             <div>
                 <p class="text-gray-500 text-sm">Area</p>
                 <p class="font-semibold">{{ item.area }}</p>
@@ -30,7 +37,7 @@
 
         {{#if item.field_area }}
         <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
-            <i class="bi bi-rulers text-[#F1913D] text-xl"></i>
+            <i class="bi bi-rulers text-[#F1913D] text-xl hidden sm:flex"></i>
             <div>
                 <p class="text-gray-500 text-sm">Field Area</p>
                 <p class="font-semibold">{{ item.field_area }}</p>
@@ -39,14 +46,14 @@
         {{/if}}
 
         <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
-            <i class="bi bi-door-open text-[#F1913D] text-xl"></i>
+            <i class="bi bi-door-open text-[#F1913D] text-xl hidden sm:flex"></i>
             <div>
                 <p class="text-gray-500 text-sm">Rooms</p>
                 <p class="font-semibold">{{ item.number_of_rooms }}</p>
             </div>
         </div>
         <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
-            <i class="bi bi-droplet text-[#F1913D] text-xl"></i>
+            <i class="bi bi-droplet text-[#F1913D] text-xl hidden sm:flex"></i>
             <div>
                 <p class="text-gray-500 text-sm">Baths</p>
                 <p class="font-semibold">{{ item.number_of_rooms }}</p>
@@ -62,7 +69,7 @@
         </div>
 
         <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
-            <i class="bi bi-calendar text-[#F1913D] text-xl"></i>
+            <i class="bi bi-calendar text-[#F1913D] text-xl hidden sm:flex"></i>
             <div>
                 <p class="text-gray-500 text-sm">Year built</p>
                 <p class="font-semibold">{{ item.number_of_rooms }}</p>
@@ -70,7 +77,7 @@
         </div>
 
         <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
-            <i class="bi bi-house-door text-[#F1913D] text-xl"></i>
+            <i class="bi bi-house-door text-[#F1913D] text-xl hidden sm:flex"></i>
             <div>
                 <p class="text-gray-500 text-sm">Type</p>
                 <p class="font-semibold">{{ item.type }}</p>
@@ -78,7 +85,7 @@
         </div>
 
         <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
-            <i class="bi bi-building text-[#F1913D] text-xl"></i>
+            <i class="bi bi-building text-[#F1913D] text-xl hidden sm:flex"></i>
             <div>
                 <p class="text-gray-500 text-sm">Status</p>
                 <p class="font-semibold">{{ item.building_type }}</p>
@@ -86,7 +93,7 @@
         </div>
 
         <div class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-[#F1913D] transition">
-            <i class="bi bi-car-front text-[#F1913D] text-xl"></i>
+            <i class="bi bi-car-front text-[#F1913D] text-xl hidden sm:flex"></i>
             <div>
                 <p class="text-gray-500 text-sm">Garage</p>
                 <p class="font-semibold">{{ item.number_of_rooms }}</p>
