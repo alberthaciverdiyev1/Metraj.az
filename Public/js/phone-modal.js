@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const callButton = document.getElementById('call-button');
+    const callButton = document.getElementsByClassName('call-button');
     const phoneNumbersContainer = document.getElementById('phone-numbers-container');
     const phoneModal = document.getElementById('phone-modal');
     const closeButton = document.querySelector('.close-button');

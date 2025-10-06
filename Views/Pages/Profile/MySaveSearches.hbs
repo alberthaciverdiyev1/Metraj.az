@@ -1,26 +1,79 @@
 <div class="container gap-6 flex mx-auto px-4 py-[100px]">
-{{> Profile.sidebar activePage="mysavesearches"}}
+    {{> Profile.sidebar activePage="mysavesearches"}}
 
-    <div class="bg-white rounded-xl shadow-md  w-4/5 px-7 py-8">
-        <h2 class="text-gray-900 font-bold text-2xl ">My Favorites</h2>
-        <table class="w-full mt-3">
-            <thead class="rounded-lg text-white bg-gray-950 px-2 ">
-                <tr class="rounded-lg">
-                    <td class="px-2 py-3">Title</td>
-                    <td>Parametres</td>
-                    <td>Email</td>
-                    <td>Date Published</td>
-                    <td>Actions</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="px-2 py-3">Title</td>
-                    <td>Parametres</td>
-                    <td>Email</td>
-                    <td>Date Published</td>
-                    <td>Delete <i class="bi bi-trash"></i></td>
-                </tr>
-        </table>
+    <div class="container gap-6 flex mx-auto px-4 py-[50px]">
+
+        <!-- Desktop Content -->
+        <div class="hidden md:block bg-white rounded-xl shadow-md w-4/5 px-7 py-8">
+            <h2 class="text-gray-900 font-bold text-2xl">My Favorites</h2>
+            <table class="w-full mt-3">
+                <thead class="rounded-lg text-white bg-gray-950 px-2">
+                    <tr class="rounded-lg">
+                        <td class="px-2 py-3">Title</td>
+                        <td>Parametres</td>
+                        <td>Email</td>
+                        <td>Date Published</td>
+                        <td>Actions</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="px-2 py-3">Title</td>
+                        <td>Parametres</td>
+                        <td>Email</td>
+                        <td>Date Published</td>
+                        <td><i class="bi bi-trash text-red-600"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mobile Version -->
+        <div class="md:hidden w-full space-y-4 -mt-10">
+            <!-- Dropdown Sidebar -->
+            <div>
+                <button
+                    class="w-full flex justify-between items-center border rounded-lg px-4 py-3 bg-white text-[#f1913d] font-medium">
+                    <span class="flex items-center gap-2">
+                        <i class="bi bi-folder2-open"></i>
+                        My save searches
+                    </span>
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+
+            <!-- Cards -->
+            <div class="space-y-3 ">
+                <div class="bg-white border rounded-xl p-4 shadow-lg hover:shadow-lg transition">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p><span class="font-semibold">Title:</span> </p>
+                            <p><span class="font-semibold">Parameters:</span> </p>
+                            <p><span class="font-semibold">Email:</span> </p>
+                            <p><span class="font-semibold">Date published:</span> </p>
+                        </div>
+                    </div>
+                    <button class="text-red-600 flex justify-end w-full ">
+                        <i class="bi bi-trash text-xl"></i>
+                    </button>
+                </div>
+
+                <div class="bg-white border rounded-xl p-4 shadow-lg hover:shadow-lg transition">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p><span class="font-semibold">Title:</span> </p>
+                            <p><span class="font-semibold">Parameters:</span> </p>
+                            <p><span class="font-semibold">Email:</span></p>
+                            <p><span class="font-semibold">Date published:</span> </p>
+                        </div>
+                    </div>
+                    <button class="text-red-600 flex justify-end w-full">
+                        <i class="bi bi-trash text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </div>
+
 </div>

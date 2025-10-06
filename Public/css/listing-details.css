@@ -134,7 +134,7 @@
     top: 0;
     left: 0;
     z-index: 999; /* Şəklin altında, header/thumbnails üstündə */
-    gap: 4rem; /* Sizin təyin etdiyiniz kimi */
+    /* gap:20px; Sizin təyin etdiyiniz kimi */
 }
 
 .modal-navigation button {
@@ -154,12 +154,18 @@
 }
 
 #modal-image {
-    max-width: 90vw;
+    max-width: 80% !important;
     max-height: 80vh;
     border-radius: 10px;
     object-fit: contain; /* Şəklin tam görünməsini təmin edir */
     display: block; /* Yanaşı boşluqları aradan qaldırır */
     margin: auto; /* Ortaya gətirir */
+}
+
+@media (max-width:1024px) {
+    .thumbnails{
+        margin: 70px 0;
+    }
 }
 /* Mobil üçün */
 @media screen and (max-width: 768px) {
@@ -240,8 +246,13 @@
 
 
 /* --- General Layout & Info Box Styles --- */
+@media (min-width: 640px) {
+    #side {
+        padding: 4rem 0;
+    }
+}
 #side {
-    padding: 4rem 0rem;
+    padding: 0 0;
 }
 .side {
     display: flex;
@@ -259,9 +270,11 @@
     max-height: 1600px;
 }
 
-.side-left {
-    width: 65%;
-    padding: 20px; /* Yuxarıda təkrar olunurdu */
+@media (min-width: 640px) {
+    .side-left {
+        width: 65%;
+        padding: 20px; /* Yuxarıda təkrar olunurdu */
+    }
 }
 
 .side-left .info-box {
@@ -283,6 +296,13 @@
     color: var(--grey-text);
 }
 
+@media (min-width: 640px) {
+    .info-box-desc {
+        display: flex;
+        padding: 10px 0px 20px 0px;
+        justify-content: space-between;
+    }
+}
 .info-box {
     background-color: white;
     padding: 20px;
@@ -294,11 +314,7 @@
     margin-bottom: 20px;
     border-bottom: 1px solid var(--border-color);
 }
-.info-box-desc {
-    display: flex;
-    padding: 10px 0px 20px 0px;
-    justify-content: space-between;
-}
+
 .info-box-desc .right i {
     padding: 10px 14px;
     border-radius: 10px;
@@ -495,6 +511,8 @@ ul .flex p:nth-child(2) {
     width: 40%;
     color: var(--grey-text);
 }
+@media (min-width: 640px) {
+
 #property-detail {
     background-color: white;
     border-radius: 16px;
@@ -502,9 +520,22 @@ ul .flex p:nth-child(2) {
     padding: 20px 20px;
     margin: 30px 0px;
 }
+    #property-detail h3 {
+        font-size: 24px;
+        padding: 20px 0px;
+        font-weight: 600;
+    }
+}
+#property-detail {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
+    padding: 20px 20px;
+    margin: 0px 0px;
+}
 #property-detail h3 {
     font-size: 24px;
-    padding: 20px 0px;
+    padding: 10px 0px;
     font-weight: 600;
 }
 #property-detail .units {
