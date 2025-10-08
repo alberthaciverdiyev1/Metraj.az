@@ -1,65 +1,79 @@
-<div id="modal-advance"
-     class="fixed inset-0 flex items-center justify-center z-[1000] bg-black bg-opacity-50">
-    <div class="bg-white rounded-lg shadow-lg max-w-sm w-full mx-4 min-h-[50vh] max-h-[80vh] relative p-4 flex flex-col space-y-4">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-        <div class="flex items-center  justify-between">
-            <h3 class="text-lg font-semibold gap-2 m-0 flex items-center">
-                <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="40"
-                        height="40"
-                        viewBox="0 0 500 500"
-                        fill="#28a745"
-                        class="ml-1"
-                        aria-hidden="true"
-                >
-                    <path clip-rule="evenodd" fill-rule="evenodd"
-                          d="M433.704,237.465c4.456,6.086,7.092,13.539,7.092,21.622
-                                                    c0,20.079-16.266,36.341-36.344,36.341h-36.341c-9.991,0-18.173,8.18-18.173,18.172v109.025c0,20.079-16.262,36.341-36.341,36.341
-                                                    H186.4c-20.079,0-36.34-16.262-36.34-36.341V313.6c0-9.992-8.181-18.172-18.172-18.172H95.547
-                                                    c-20.079,0-36.342-16.262-36.342-36.341c0-8.083,2.635-15.536,7.08-21.622L217.747,54.388c17.807-17.808,46.695-17.808,64.505,0
-                                                    L433.704,237.465z"
-                    />
-                </svg>
-                Elanı irəli çək
+<div id="modal-advance" class="fixed inset-0 flex items-center justify-center z-[1000] bg-black/40 backdrop-blur-sm">
+        <div
+            class="bg-white text-gray-700 rounded-xl shadow-2xl max-w-sm w-full mx-4 min-h-[50vh] max-h-[100vh] relative p-6 flex flex-col space-y-5 border border-gray-200 animate-fadeIn">
 
-            </h3>
-            <button class="text-gray-500 hover:text-gray-800 text-xl font-semibold"
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold gap-2 m-0 flex items-center text-gray-800">
+                    <i class="fa-solid fa-arrow-up-right-dots text-[#f97316] text-2xl"></i>
+                    <span class="ml-2">Elanı irəli çək</span>
+                </h3>
+                <button class="text-gray-400 hover:text-gray-700 text-2xl font-bold transition"
                     data-close="modal-advance">&times;
-            </button>
-        </div>
+                </button>
+            </div>
 
-        <p class="text-sm">Elan bütün və Köhnə tikili almaq elanlarının axtarış nəticələrinin
-            içində birinci yerə çıxacaq.</p>
+            <p class="text-sm text-gray-600 leading-snug">
+                Elan bütün və Köhnə tikili almaq elanlarının axtarış nəticələrinin içində birinci yerə çıxacaq.
+            </p>
 
-        <h4 class="font-medium mt-4">XİDMƏTİN MÜDDƏTİNİ SEÇİN</h4>
+            <h4 class="font-medium mt-4 text-gray-800">XİDMƏTİN MÜDDƏTİNİ SEÇİN</h4>
 
-        <div class="flex flex-col space-y-2.5">
-            <label class="flex items-center justify-between p-2 border rounded hover:bg-gray-50 cursor-pointer text-sm">
-                <span>1 dəfə / 3,00 AZN</span>
-                <input type="radio" name="advanceOption" class="h-4 w-4 text-blue-600">
-            </label>
-            <label class="flex items-center justify-between p-3 border rounded hover:bg-gray-50 cursor-pointer text-sm">
-                <span>3 dəfə (hər 24 saat) / 6,00 AZN</span>
-                <input type="radio" name="advanceOption" class="h-4 w-4 text-blue-600">
-            </label>
-            <label class="flex items-center justify-between p-3 border rounded hover:bg-gray-50 cursor-pointer text-sm">
-                <span>5 dəfə (hər 24 saat) / 9,00 AZN</span>
-                <input type="radio" name="advanceOption" class="h-4 w-4 text-blue-600">
-            </label>
-            <label class="flex items-center justify-between p-3 border rounded hover:bg-gray-50 cursor-pointer text-sm">
-                <span>10 dəfə (hər 24 saat) / 15,00 AZN</span>
-                <input type="radio" name="advanceOption" class="h-4 w-4 text-blue-600">
-            </label>
-        </div>
+            <div class="flex flex-col space-y-3">
+                <label
+                    class="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-[#fff2e6] cursor-pointer transition">
+                    <span>1 dəfə / <span class="text-[#f97316] font-semibold">3,00 AZN</span></span>
+                    <input type="radio" name="advanceOption" class="h-4 w-4 text-[#f97316] focus:ring-[#f97316]">
+                </label>
 
-        <div class="border-t pt-3 flex flex-col space-y-2.5">
-            <p class="text-xs text-gray-600">«Ödə» düyməsini sıxmaqla siz bina.az-ın İstifadəçi
-                razılaşmasını və Ofertanı qəbul etdiyinizi təsdiq etmiş olursunuz.</p>
-            <button class="w-full  bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-3 rounded">
-                Ödə
-            </button>
+                <label
+                    class="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-[#fff2e6] cursor-pointer transition">
+                    <span>3 dəfə (hər 24 saat) / <span class="text-[#f97316] font-semibold">6,00 AZN</span></span>
+                    <input type="radio" name="advanceOption" class="h-4 w-4 text-[#f97316] focus:ring-[#f97316]">
+                </label>
+
+                <label
+                    class="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-[#fff2e6] cursor-pointer transition">
+                    <span>5 dəfə (hər 24 saat) / <span class="text-[#f97316] font-semibold">9,00 AZN</span></span>
+                    <input type="radio" name="advanceOption" class="h-4 w-4 text-[#f97316] focus:ring-[#f97316]">
+                </label>
+
+                <label
+                    class="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-[#fff2e6] cursor-pointer transition">
+                    <span>10 dəfə (hər 24 saat) / <span class="text-[#f97316] font-semibold">15,00 AZN</span></span>
+                    <input type="radio" name="advanceOption" class="h-4 w-4 text-[#f97316] focus:ring-[#f97316]">
+                </label>
+            <div class="border-t border-gray-200 pt-3 flex flex-col space-y-3">
+                <p class="text-xs text-gray-500 leading-snug">
+                    «Ödə» düyməsini sıxmaqla siz bina.az-ın İstifadəçi razılaşmasını və Ofertanı qəbul etdiyinizi təsdiq
+                    etmiş olursunuz.
+                </p>
+
+                <!-- Ödə düyməsi -->
+                <button
+                    class="w-full bg-[#f97316] hover:bg-[#ea580c] text-white font-semibold py-2.5 px-3 rounded-lg text-center transition-all shadow-sm cursor-pointer">
+                    <i class="fa-solid fa-credit-card mr-2"></i> Ödə
+                </button>
+            </div>
         </div>
     </div>
-</div>
+</div> 
 
+<style>
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .animate-fadeIn {
+        animation: fadeIn 0.25s ease-out;
+    }
+</style>

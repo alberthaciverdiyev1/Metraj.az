@@ -2,47 +2,79 @@
             flex !flex-row !flex-nowrap justify-between items-center px-2 py-2 z-[9999]">
 
     <a href="/favorites" class="flex flex-col items-center text-gray-600 hover:text-orange-500 flex-1 min-w-[40px]">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mb-0.5" fill="currentColor" viewBox="0 0 24 24" stroke="none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mb-0.5" fill="currentColor" viewBox="0 0 24 24"
+            stroke="none">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
                      2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
                      C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 
-                     22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                     22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
         </svg>
         <span class="text-[10px] sm:text-xs truncate">Seçilmişlər</span>
     </a>
 
-    <a href="/compares" class="flex flex-col items-center -mt-1 text-gray-600 hover:text-orange-500 flex-1 min-w-[40px]">
+    <a href="/compares"
+        class="flex flex-col items-center -mt-1 text-gray-600 hover:text-orange-500 flex-1 min-w-[40px]">
         <p class="text-[18px] sm:text-[18px]">⇆</p>
         <span class="text-[10px] sm:text-xs truncate">Müqayisə</span>
     </a>
 
     <a href="/yeni-elan" class="flex flex-col items-center text-white -mt-4 flex-1 min-w-[50px]">
         <div class="w-12 h-12 bg-[#F1913D] rounded-full flex items-center justify-center shadow-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                      d="M12 4v16m8-8H4"/>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
         </div>
         <span class="text-[10px] sm:text-xs mt-1 truncate">Yeni elan</span>
     </a>
 
     <a href="/profile" class="flex flex-col items-center text-gray-600 hover:text-orange-500 flex-1 min-w-[40px]">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mb-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 
-                     1.79-4 4 1.79 4 4 4z"/>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                  d="M6 20v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mb-0.5" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 
+                     1.79-4 4 1.79 4 4 4z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M6 20v-2a4 4 0 014-4h4a4 4 0 014 4v2" />
         </svg>
         <span class="text-[10px] sm:text-xs truncate">Kabinet</span>
     </a>
 
-    <a href="/mysavesearches" class="flex flex-col items-center text-gray-600 hover:text-orange-500 flex-1 min-w-[40px]">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mb-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                  d="M4 6h16M4 12h16M4 18h16"/>
+    <!-- Daha çox düyməsi -->
+    <a id="menu-btn" href="#"
+        class="flex flex-col items-center text-gray-600 hover:text-orange-500 flex-1 min-w-[40px]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mb-0.5" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
         <span class="text-[10px] sm:text-xs truncate">Daha çox</span>
     </a>
 
+    <!-- Sidebar -->
+    <div id="sidebar"
+        class="fixed top-0 right-0 h-full w-2/3 bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+        <div class="flex justify-between items-center p-4 border-b">
+            <h2 class="text-lg font-semibold text-gray-700">Menyu</h2>
+            <button id="close-btn" class="text-2xl text-gray-500 hover:text-gray-700">✕</button>
+        </div>
+        <ul class="flex flex-col p-4 space-y-4 text-gray-700">
+            <li><a href="/about-us" class="hover:text-orange-500">Haqqımızda</a></li>
+            <li><a href="/contact" class="hover:text-orange-500">Əlaqə</a></li>
+        </ul>
+    </div>
+
+
 </div>
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const sidebar = document.getElementById('sidebar');
+    const closeBtn = document.getElementById('close-btn');
+
+    menuBtn.addEventListener('click', (e) => {
+        e.preventDefault(); // keçidi dayandırır
+        sidebar.classList.remove('translate-x-full');
+    });
+
+    closeBtn.addEventListener('click', () => {
+        sidebar.classList.add('translate-x-full');
+    });
+</script>

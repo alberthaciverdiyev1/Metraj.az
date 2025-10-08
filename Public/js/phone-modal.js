@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
             phoneNumbers = [sellerSettings.phone];
         }
     }
-    phoneNumbersContainer.innerHTML = ''; 
+    phoneNumbersContainer.innerHTML = '';
 
 
     if (phoneNumbers.length > 0) {
@@ -27,8 +27,9 @@ document.addEventListener('DOMContentLoaded', function () {
             const p = document.createElement('p');
             const a = document.createElement('a');
             a.href = `tel:${number}`;
-            a.className = 'phone';
-            a.innerHTML = `<i class="bi bi-telephone"></i> ${number}`;
+            a.className = 'phone flex items-center gap-2 text-[#E4893A] hover:text-orange-500';
+            a.innerHTML = `<svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-phone-call text-[#E4893A]"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /><path d="M15 7a2 2 0 0 1 2 2" /><path d="M15 3a6 6 0 0 1 6 6" /></svg>
+            ${number}`;
             p.appendChild(a);
             phoneNumbersContainer.appendChild(p);
         });
@@ -55,16 +56,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function openPhoneModal(numbers) {
-        phoneOptionsContainer.innerHTML = ''; 
+        phoneOptionsContainer.innerHTML = '';
         numbers.forEach(number => {
             const button = document.createElement('a');
-            button.href = `tel:${number}`; 
+            button.href = `tel:${number}`;
             button.className = 'phone-option-btn';
             button.textContent = number;
             phoneOptionsContainer.appendChild(button);
         });
         phoneModal.style.display = 'block';
     }
-    
-    
+
+
 });

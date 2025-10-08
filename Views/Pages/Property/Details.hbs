@@ -214,14 +214,17 @@
                         <h3>Contact Sellers</h3>
                         <div class="flex avatar-info">
                             <img src="https://themesflat.co/html/proty/images/avatar/seller.jpg" alt="Shara Conner"
-                                 class="avatar">
+                                    class="avatar">
                             <div class="avatar-info-text">
                                 <h4>Shara Conner</h4>
                                 <div id="phone-numbers-container"></div>
                                 {{#if setting.email}}
                                     <p>
-                                        <a href="mailto:{{setting.email}}" class="email">
-                                            <i class="bi bi-envelope"></i> {{setting.email}}
+                                        <a href="mailto:{{setting.email}}" class="email flex items-center gap-2 ">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-mail-opened text-[#E4893A]"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 9l9 6l9 -6l-9 -6l-9 6" /><path d="M21 9v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10" /><path d="M3 19l6 -6" /><path d="M15 13l6 6" /></svg> 
+                                            <span class="text-[#E4893A]">
+                                                {{setting.email}}
+                                            </span> 
                                         </a>
                                     </p>
                                 {{/if}}
