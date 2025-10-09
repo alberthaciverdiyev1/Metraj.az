@@ -31,11 +31,11 @@
                     <div class="flex flex-wrap items-center gap-2 justify-end mb-6">
                         <button id="gridViewBtn"
                                 class="view-toggle active px-3 py-3 hover:bg-orange-300 hover:text-white transition rounded-xl border border-gray-300">
-                            <img src="/images/icon1.svg" alt="icon" class="w-[15px]">
+                            <img src="/images/icon1.svg" alt="icon">
                         </button>
 
                         <button id="listViewBtn"
-                                class="listview-btn view-toggle px-3 py-2 rounded-xl hover:bg-orange-300 hover:text-white transition">
+                                class="view-toggle px-3 py-2 rounded-xl border hover:bg-orange-300 hover:text-white transition border-[#F1913D] border-2">
                             <i class="fas fa-list text-[#F1913D]"></i>
                         </button>
 
@@ -60,7 +60,7 @@
          {{#if is_premium}} bg-gradient-to-br from-yellow-100 via-yellow-50 to-white border-yellow-400 shadow-md hover:shadow-2xl {{else}} bg-white border-[color:var(--border-color)] {{/if}}">
 
                                 <!-- Banner -->
-                                <div class="img-div relative overflow-hidden aspect-[4/3] sm:aspect-[5/3] md:aspect-[3/2] lg:aspect-[16/10]">
+                                <div class="relative overflow-hidden aspect-[4/3] sm:aspect-[5/3] md:aspect-[3/2] lg:aspect-[16/10]">
                                     <img src="{{background_image}}" alt="{{name}}"
                                          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                                     {{#if is_premium}}

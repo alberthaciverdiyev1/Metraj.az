@@ -169,6 +169,26 @@
     background-color: #ff914d52;
 }
 
+/* LIST görünüşü yalnız konteynerə tətbiq olunur */
+#agencyCards.list-view {
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.list-view .group{
+    flex-direction: column !important;
+    width: 300px;
+}
+@media (max-width:993px) {
+    .list-view .group{
+        width: 100%;
+    }
+}
+.list-view .group>.relative{
+    width: 100% !important;
+}
 .agencies-card.list-view figure img {
     width: 140px;
     height: 140px;
