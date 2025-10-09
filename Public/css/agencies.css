@@ -160,7 +160,13 @@
 
 .view-toggle.active {
     background-color: var(--primary);
+    color: white !important;
+}
+.view-toggle.active i{
     color: white;
+}
+.view-toggle {
+    background-color: #ff914d52;
 }
 
 .agencies-card.list-view figure img {
