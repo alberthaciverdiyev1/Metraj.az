@@ -66,15 +66,23 @@ export function propertyCard(property, showRemoveButton = false) {
   return `
 <!-- Property Card -->
 <div onclick="window.location.href='/property/${property.id}'" 
-     data-property-id="${property.id}"  
-     class="cursor-pointer border border-[color:var(--border-color)] rounded-2xl overflow-hidden flex flex-col h-full group transition-all duration-300 relative">
+      data-property-id="${property.id}"  
+      class="cursor-pointer border border-[color:var(--border-color)] rounded-2xl overflow-hidden flex flex-col h-full group transition-all duration-300 relative">
 
   <!-- Image -->
   <div class="relative overflow-hidden aspect-[4/3] sm:aspect-[5/3] md:aspect-[3/2] lg:aspect-[16/10]">
-    <img src="${property.media.path}" 
-         alt="${property.title}" 
-         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-    
+    <div class="relative w-full h-64 overflow-hidden group">
+  <img src="${property.media.path}" 
+        alt="${property.title}" 
+        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+
+  <!-- Watermark -->
+  <span class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+              transition-opacity duration-300 group-hover:opacity-50 select-none text-white text-sm  opacity-50 pointer-events-none bg-black/10 px-1 rounded">
+    Metraj.az
+  </span>
+</div>
+
     ${premiumBadge}
     ${favoriteOrRemoveButton}
 

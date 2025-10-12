@@ -51,39 +51,54 @@
                         <div id="map" class="w-full h-full rounded-lg"></div>
                     </a>
                 </div>
-                <div class="gallery-main md:hidden grid relative">
-                    {{#each property.media.images}}
-                        {{#if (lt @index 1)}}
-                            <figure class="m-0 overflow-hidden cursor-pointer rounded"
-                                    onclick="openModal({{@index}})">
-                                <img src="{{this.path}}" alt="Kiçik şəkil" class="w-full h-24 object-cover">
-                            </figure>
-                            <button onclick="openModal({{@index}})"
-                                    class="absolute bottom-2 right-2 bg-gray-200 p-1 text-sm rounded">{{t
-                                    "Bütün şəkillər"}}</button>
-                        {{/if}}
-                    {{/each}}
-                </div>
+                        <div class="gallery-main md:hidden grid relative">
+            {{#each property.media.images}}
+                {{#if (lt @index 1)}}
+                <figure class="relative m-0 overflow-hidden cursor-pointer rounded group" onclick="openModal({{@index}})">
+                    <img src="{{this.path}}" alt="Kiçik şəkil"
+                        class="w-full h-24 object-cover transition-transform duration-500 group-hover:scale-105">
+
+                    <!-- Watermark -->
+                    <span class="absolute inset-0 flex items-center justify-center
+                                text-white text-xs font-bold opacity-20 pointer-events-none select-none">
+                    Metraj.az
+                    </span>
+                </figure>
+
+                <button onclick="openModal({{@index}})"
+                        class="absolute bottom-2 right-2 bg-gray-200 p-1 text-sm rounded z-10">
+                    {{t "Bütün şəkillər"}}
+                </button>
+                {{/if}}
+            {{/each}}
+            </div>
+
                 {{!-- <div class="absolute -bottom-10 left-[350px] cursor-pointer -translate-x-1/2 px-6 py-2 border border-[#F1913D] text-[#F1913D] font-semibold rounded-full shadow-md bg-white z-50">
                     Show on Maps
                 </div> --}}
 
-                <div class="gallery-thumbnails">
-                    {{#each property.media.images}}
-                        {{#if (lt @index 3)}}
-                            <figure class="m-0 overflow-hidden cursor-pointer rounded"
-                                    onclick="openModal({{@index}})">
-                                <img src="{{this.path}}" alt="Kiçik şəkil" class="w-full h-24 object-cover">
-                            </figure>
-                        {{/if}}
-                    {{/each}}
+                                <div class="gallery-thumbnails flex space-x-2">
+                {{#each property.media.images}}
+                    {{#if (lt @index 3)}}
+                    <figure class="relative m-0 overflow-hidden cursor-pointer rounded group" onclick="openModal({{@index}})">
+                        <img src="{{this.path}}" alt="Kiçik şəkil" class="w-full h-24 object-cover transition-transform duration-500 group-hover:scale-105">
 
-                    {{#if (gt property.media.images.length 3)}}
-                        <div class="more-images-overlay w-32 h-32 flex items-center justify-center bg-black bg-opacity-50 text-white text-xl font-bold rounded-lg cursor-pointer">
-                            <span>+{{math property.media.images.length "-" 5}} şəkil</span>
-                        </div>
+                        <!-- Watermark -->
+                        <span class="absolute inset-0 flex items-center justify-center
+                                    text-white text-md font-bold opacity-50 pointer-events-none select-none">
+                        Metraj.az
+                        </span>
+                    </figure>
                     {{/if}}
+                {{/each}}
+
+                {{#if (gt property.media.images.length 3)}}
+                    <div class="more-images-overlay w-32 h-32 flex items-center justify-center bg-black bg-opacity-50 text-white text-xl font-bold rounded-lg cursor-pointer">
+                    <span>+{{math property.media.images.length "-" 5}} şəkil</span>
+                    </div>
+                {{/if}}
                 </div>
+
             </div>
         </div>
     </section>
@@ -101,16 +116,34 @@
 
     <div class="modal-navigation">
         <button onclick="prevImage()"><i class="bi bi-arrow-left"></i></button>
-        <img id="modal-image" src="" alt="Modal Image">
+        <div class="relative w-full h-full">
+            <img id="modal-image" src="" alt="Modal Image" class="w-full h-full object-contain">
+
+            <!-- Watermark -->
+            <span class="absolute inset-0 flex items-center justify-center
+                        text-white text-4xl font-bold opacity-20 pointer-events-none select-none">
+                Metraj.az
+            </span>
+</div>
+
         <button onclick="nextImage()"><i class="bi bi-arrow-right"></i></button>
     </div>
 
     <div class="thumbnails mt-4 flex space-x-2 overflow-x-auto" id="thumbnails">
-        {{#each property.media.images}}
-            <img src="{{this.path}}" onclick="openModal({{@index}})" alt=""
-                 class="w-20 h-20 object-cover rounded cursor-pointer hover:ring-2 hover:ring-blue-500">
-        {{/each}}
-    </div>
+            {{#each property.media.images}}
+                <div class="relative w-20 h-20 rounded overflow-hidden cursor-pointer group" onclick="openModal({{@index}})">
+                <img src="{{this.path}}" alt=""
+                    class="w-full h-full object-cover rounded transition-transform duration-500 group-hover:scale-105">
+
+                <!-- Watermark -->
+                <span class="absolute inset-0 flex items-center justify-center
+                            text-white text-xs font-bold opacity-20 pointer-events-none select-none">
+                    Metraj.az
+                </span>
+                </div>
+            {{/each}}
+</div>
+
 </div>
 
 <section id="side">
