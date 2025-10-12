@@ -479,42 +479,108 @@ function setupResetButton() {
         });
     }
 }
-function initDropdowns() {
-    const dropdowns = document.querySelectorAll(".dropdown-select");
+function initDropdownFilters() {
+    const dropdowns = document.querySelectorAll('.dropdown-select');
 
     dropdowns.forEach(dropdown => {
+        const menu = dropdown.querySelector('.dropdown-menu');
         const display = dropdown.querySelector('[data-role="display-value"]');
-        const menu = dropdown.querySelector(".dropdown-menu");
+        const chevron = dropdown.querySelector('.bi-chevron-down');
 
-        if (!menu) return;
-
-        // Aç/bağla kliklə
-        dropdown.addEventListener("click", (e) => {
+        dropdown.addEventListener('click', e => {
             e.stopPropagation();
-            dropdowns.forEach(d => {
-                if (d !== dropdown) d.querySelector(".dropdown-menu")?.classList.add("hidden");
+
+            // Digər açıq menyuları bağla
+            document.querySelectorAll('.dropdown-menu').forEach(m => {
+                if (m !== menu) m.classList.add('hidden');
             });
-            menu.classList.toggle("hidden");
+
+            // Hazırkı menyunu aç/bağla
+            menu.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
         });
 
-        // Seçim kliklə
-        menu.querySelectorAll("li").forEach(item => {
-            item.addEventListener("click", () => {
-                display.textContent = item.textContent;
-                menu.classList.add("hidden");
+        // Hər bir seçim üçün
+        menu.querySelectorAll('li').forEach(item => {
+            item.addEventListener('click', e => {
+                e.stopPropagation();
+                const value = item.dataset.value;
+                display.textContent = item.textContent.trim();
+                menu.classList.add('hidden');
+                chevron.classList.remove('rotate-180');
+                dropdown.setAttribute('data-selected', value);
             });
         });
     });
 
-    // Xarici klikdə bağla
-    document.addEventListener("click", () => {
-        document.querySelectorAll(".dropdown-menu").forEach(menu => menu.classList.add("hidden"));
+    // Səhifədə boş yerə klik ediləndə bağla
+    document.addEventListener('click', e => {
+        document.querySelectorAll('.dropdown-select').forEach(dropdown => {
+            const menu = dropdown.querySelector('.dropdown-menu');
+            const chevron = dropdown.querySelector('.bi-chevron-down');
+            if (!dropdown.contains(e.target)) {
+                menu.classList.add('hidden');
+                chevron.classList.remove('rotate-180');
+            }
+        });
     });
 }
 
-initDropdowns();
 
 
+initDropdownFilters();
+
+function initFilterModal() {
+    const openBtn = document.getElementById('openModal');
+    const closeBtn = document.getElementById('closeModal');
+    const modal = document.getElementById('filterModal');
+
+    openBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+    });
+
+    closeBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+
+    modal.addEventListener('click', e => {
+        if (e.target === modal) modal.classList.add('hidden');
+    });
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') modal.classList.add('hidden');
+    });
+}
+
+function initModalTabs() {
+    const tabButtons = document.querySelectorAll('.tabBtn');
+    const tabContents = document.querySelectorAll('.tabContent');
+
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tab = btn.dataset.tab;
+
+            tabButtons.forEach(b => b.classList.remove('border-orange-600', 'text-orange-600', 'bg-orange-50'));
+            btn.classList.add('border-orange-600', 'text-orange-600', 'bg-orange-50');
+
+            tabContents.forEach(content => {
+                content.classList.toggle('hidden', content.id !== tab);
+            });
+        });
+    });
+
+    // İlk tab açıq olsun
+    document.querySelector('.tabBtn[data-tab="rayonTab"]').click();
+}
+function initNumericInputs() {
+    const numberInputs = document.querySelectorAll('input[data-type="number"]');
+
+    numberInputs.forEach(input => {
+        input.addEventListener('input', () => {
+            input.value = input.value.replace(/[^0-9]/g, '');
+        });
+    });
+}
 
 
 //seher selecti ucun js 
@@ -630,7 +696,7 @@ citySelect.addEventListener("change", async () => {
 
     // Metro tabı yalnız Bakı üçün görünür (id: "baki")
     const metroTabBtn = document.querySelector('[data-tab="metroTab"]');
-    if(cityId === "baki") {
+    if (cityId === "baki") {
         metroTabBtn.classList.remove("hidden");
     } else {
         metroTabBtn.classList.add("hidden");
@@ -691,7 +757,7 @@ async function getByCity(basePath, cityId) {
     try {
         const withParam = await apiGet(`${basePath}?city_id=${encodeURIComponent(cityId)}`);
         if (Array.isArray(withParam)) return withParam;
-    } catch (_) {}
+    } catch (_) { }
     const all = await apiGet(basePath);
     return (all || []).filter(x =>
         String(x.city_id ?? x.cityId ?? x.city)?.toLowerCase() === String(cityId).toLowerCase()
@@ -783,5 +849,9 @@ document.addEventListener("DOMContentLoaded", () => {
     setupDropdownFilters();
     setupMoreFiltersModal();
     setupResetButton();
-    initDropdowns();
+    // initDropdowns();
+    initDropdownFilters();
+    initFilterModal();
+    initModalTabs();
+    initNumericInputs();
 });
