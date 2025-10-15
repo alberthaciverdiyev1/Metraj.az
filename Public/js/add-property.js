@@ -140,17 +140,48 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function propertyTypes() {
-    const selectElement = document.getElementById("building-type");
+    // const selectElement = document.getElementById("building-type");
+    const ul = document.getElementById("building-type-options"); // menyu UL
+    const hiddenInput = document.getElementById("building-type-input"); // hidden input 
+    const textElement = document.querySelector("#building-type-container .custom-select-text"); 
     const propertyTypes = await getPropertyTypes();
 
-    let h = "";
+    // let h = "";
+    ul.innerHTML = "";
+
+  //   propertyTypes.forEach((property) => {
+  //     h += `<li data-value="${property.key}" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">${property.label}</li>`;
+  //   });
+  //   selectElement.innerHTML =
+  //     `<option disabled selected class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Building Type</option>` +
+  //     h;
+  // }
     propertyTypes.forEach((property) => {
-      h += `<li data-value="${property.key}" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">${property.label}</li>`;
+    const li = document.createElement("li");
+    li.dataset.value = property.key;
+    li.textContent = property.label;
+    li.className = "px-4 py-2 hover:bg-orange-100 cursor-pointer";
+
+    // klik zamanı dəyəri input-a yazırıq və text-i dəyişirik
+    li.addEventListener("click", () => {
+      hiddenInput.value = property.key; // form üçün dəyər
+      textElement.textContent = property.label; // görünən mətn
+      ul.classList.add("hidden"); // menyunu bağla
+
+      // Əgər LAND seçilibsə, area bölməsini dəyiş:
+      if (property.key === "LAND") {
+        document.getElementById("area").classList.add("d-none");
+        document.getElementById("field-area").classList.remove("d-none");
+      } else {
+        document.getElementById("area").classList.remove("d-none");
+        document.getElementById("field-area").classList.add("d-none");
+      }
     });
-    selectElement.innerHTML =
-      `<option disabled selected class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Building Type</option>` +
-      h;
-  }
+
+    ul.appendChild(li);
+  });
+}
+
 
   async function featureList() {
     const element = document.getElementById("features");
@@ -234,17 +265,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
   
-  document
-    .getElementById("building-type")
-    .addEventListener("change", async function (e) {
-      if (this.value === "LAND") {
-        document.getElementById("area").classList.add("d-none");
-        document.getElementById("field-area").classList.remove("d-none");
-      } else {
-        document.getElementById("area").classList.remove("d-none");
-        document.getElementById("field-area").classList.add("d-none");
-      }
-    });
+  // document
+  //   .getElementById("building-type")
+  //   .addEventListener("change", async function (e) {
+  //     if (this.value === "LAND") {
+  //       document.getElementById("area").classList.add("d-none");
+  //       document.getElementById("field-area").classList.remove("d-none");
+  //     } else {
+  //       document.getElementById("area").classList.remove("d-none");
+  //       document.getElementById("field-area").classList.add("d-none");
+  //     }
+  //   });
 
   // document
   //   .getElementById("city")
@@ -379,8 +410,66 @@ const selectedDistrict = selectedCity?.districts.find(d => d.id === district_id)
     addBtn.classList.toggle("opacity-50", !accepted);
     addBtn.classList.toggle("cursor-not-allowed", !accepted);
   });
+  
 
   addBtn.addEventListener("click", async function (e) {
+    // --- Validation hissəsi (form submitdən əvvəl) ---
+const requiredFields = [
+  { id: "building-type-input", name: "Building Type" },
+  { id: "add-type-input", name: "Add Type" },
+  { id: "price", name: "Price" },
+  { id: "city-input", name: "City" },
+  { id: "address", name: "Address" },
+  { id: "phone_1", name: "Phone" },
+];
+
+let isValid = true;
+let missingFields = [];
+
+requiredFields.forEach((field) => {
+  const input = document.getElementById(field.id);
+  if (!input) return;
+
+  // input boşdursa — error
+  if (!input.value.trim()) {
+    isValid = false;
+    missingFields.push(field.name);
+    input.classList.add("border", "border-red-500"); // qırmızı border
+  } else {
+    input.classList.remove("border", "border-red-500");
+  }
+});
+
+// Əlavə — əgər LAND seçilibsə, area və ya field-area yoxla
+const buildingType = document.getElementById("building-type-input")?.value;
+if (buildingType === "LAND") {
+  const fieldAreaInput = document.querySelector("#field-area input");
+  if (fieldAreaInput && !fieldAreaInput.value.trim()) {
+    isValid = false;
+    missingFields.push("Field Area");
+    fieldAreaInput.classList.add("border", "border-red-500");
+  } else {
+    fieldAreaInput?.classList.remove("border", "border-red-500");
+  }
+} else {
+  const areaInput = document.querySelector("#area input");
+  if (areaInput && !areaInput.value.trim()) {
+    isValid = false;
+    missingFields.push("Area");
+    areaInput.classList.add("border", "border-red-500");
+  } else {
+    areaInput?.classList.remove("border", "border-red-500");
+  }
+}
+
+// Əgər form düzgün doldurulmayıbsa, dayandır
+if (!isValid) {
+  alert(
+    "Zəhmət olmasa aşağıdakı xanalari doldurun:\n- " + missingFields.join("\n- ")
+  );
+  return;
+}
+
     e.preventDefault();
     if (!termsCheckbox.checked) {
       alert(
@@ -394,13 +483,17 @@ const selectedDistrict = selectedCity?.districts.find(d => d.id === district_id)
     const documentInput = document.getElementById("document");
 
     const formData = new FormData();
-    console.log(document.getElementById("building-type").value);
+    // console.log(document.getElementById("building-type-input").value);
 
+    // formData.append(
+    //   "buildingType",
+    //   document.getElementById("building-type").value
+    // );
     formData.append(
-      "buildingType",
-      document.getElementById("building-type").value
+    "buildingType",
+    document.getElementById("building-type-input").value
     );
-    formData.append("addType", document.getElementById("add-type").value);
+    formData.append("addType", document.getElementById("add-type-input").value);
     formData.append(
       "propertyCondition",
       document.getElementById("repair-type").value
@@ -408,14 +501,14 @@ const selectedDistrict = selectedCity?.districts.find(d => d.id === district_id)
     formData.append("price", document.getElementById("price").value);
     formData.append(
       "propertyPeriod",
-      document.getElementById("property-period").value
+      document.getElementById("property-period-input").value
     );
-    formData.append("roomCount", document.getElementById("room-count").value);
-    formData.append("floorCount", document.getElementById("floor-count").value);
-    formData.append(
-      "locatedFloor",
-      document.getElementById("located-floor").value
-    );
+    formData.append("roomCount", document.getElementById("room-count-input").value);
+    formData.append("floorCount", document.getElementById("floor-input").value);
+    // formData.append(
+    //   "locatedFloor",
+    //   document.getElementById("located-floor").value
+    // );
     formData.append(
       "isCredit",
       document.getElementById("is-credit").checked ? 1 : 0
@@ -428,7 +521,7 @@ const selectedDistrict = selectedCity?.districts.find(d => d.id === district_id)
       "noteToAdmin",
       document.getElementById("note-to-admin").value
     );
-    formData.append("cityId", document.getElementById("city").value);
+    formData.append("cityId", document.getElementById("city-input").value);
     formData.append(
       "area",
       document.querySelector("#area input")?.value || null
@@ -437,14 +530,14 @@ const selectedDistrict = selectedCity?.districts.find(d => d.id === district_id)
       "fieldArea",
       document.querySelector("#field-area input")?.value || null
     );
-    formData.append("districtId", document.getElementById("district").value);
-    formData.append("townId", document.getElementById("town").value);
-    formData.append("subwayId", document.getElementById("subway").value);
+    formData.append("districtId", document.getElementById("district-input").value);
+    formData.append("townId", document.getElementById("town-input").value);
+    formData.append("subwayId", document.getElementById("subway-input").value);
     formData.append("address", document.getElementById("address").value);
     formData.append("map", document.getElementById("map").value);
     formData.append(
       "advertiser",
-      document.getElementById("advertiser")?.value || ""
+      document.getElementById("advertiser-input")?.value || ""
     );
     formData.append(
       "advertiserName",
