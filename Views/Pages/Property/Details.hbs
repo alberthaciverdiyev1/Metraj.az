@@ -55,14 +55,11 @@
             {{#each property.media.images}}
                 {{#if (lt @index 1)}}
                 <figure class="relative m-0 overflow-hidden cursor-pointer rounded group" onclick="openModal({{@index}})">
-                    <img src="{{this.path}}" alt="Kiçik şəkil"
-                        class="w-full h-24 object-cover transition-transform duration-500 group-hover:scale-105">
-
-                    <!-- Watermark -->
-                    <span class="absolute inset-0 flex items-center justify-center
-                                text-white text-xs font-bold opacity-20 pointer-events-none select-none">
+                    <img src="{{this.path}}" alt="Şəkil" class="w-full h-auto rounded">
+                <span class="absolute inset-0 flex items-center justify-center
+                            text-white text-lg font-bold opacity-100 drop-shadow-lg pointer-events-none select-none">
                     Metraj.az
-                    </span>
+                </span>
                 </figure>
 
                 <button onclick="openModal({{@index}})"
@@ -85,7 +82,7 @@
 
                         <!-- Watermark -->
                         <span class="absolute inset-0 flex items-center justify-center
-                                    text-white text-md font-bold opacity-50 pointer-events-none select-none">
+                                    text-white text-md font-bold opacity-40 pointer-events-none select-none">
                         Metraj.az
                         </span>
                     </figure>
@@ -121,7 +118,7 @@
 
             <!-- Watermark -->
             <span class="absolute inset-0 flex items-center justify-center
-                        text-white text-4xl font-bold opacity-20 pointer-events-none select-none">
+                        text-white text-4xl font-bold opacity-50 pointer-events-none select-none">
                 Metraj.az
             </span>
 </div>
