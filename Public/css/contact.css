@@ -48,7 +48,7 @@
     left: 5%;
     position: absolute;
     display: flex;
-    z-index: 1000;
+    /* z-index: 1000; */
     justify-content: center;
 }
 
