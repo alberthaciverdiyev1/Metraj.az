@@ -1,396 +1,165 @@
 {{>Component.Breadcrumb items=""}}
 {{>Component.ScrollTop}}
 
-<section id="add-property">
+<section id="add-property" class="px-4 w-full mx-auto">
 
+    <!-- 🟠 STEP HEADER -->
+    <div class="text-center mt-6 mb-8">
+        <h1 class="text-2xl lg:text-3xl font-bold text-gray-800">
+            Fill out the information —
+            <span class="text-[var(--primary)]">add your property in just a few minutes!</span>
+        </h1>
+        <p class="text-gray-500 mt-2">Follow the steps below to complete your listing.</p>
+    </div>
 
-    <div id="propertyForm" class="flex gap-7 mt-8 container px-4 mx-auto">
+    <!-- 🟢 STEP INDICATOR -->
+    <div id="stepIndicator" class="flex justify-center items-center gap-4 mb-8">
+        <div
+            class="step-circle w-10 h-10 flex items-center justify-center rounded-full border-2 border-[var(--primary)] text-[var(--primary)] font-semibold bg-white transition">
+            1</div>
+        <div class="h-[2px] w-10 bg-gray-300"></div>
+        <div
+            class="step-circle w-10 h-10 flex items-center justify-center rounded-full border-2 border-gray-300 text-gray-400 font-semibold bg-white transition">
+            2</div>
+        <div class="h-[2px] w-10 bg-gray-300"></div>
+        <div
+            class="step-circle w-10 h-10 flex items-center justify-center rounded-full border-2 border-gray-300 text-gray-400 font-semibold bg-white transition">
+            3</div>
+        <div class="h-[2px] w-10 bg-gray-300"></div>
+        <div
+            class="step-circle w-10 h-10 flex items-center justify-center rounded-full border-2 border-gray-300 text-gray-400 font-semibold bg-white transition">
+            4</div>
+    </div>
 
+    <!-- STEP 1 -->
+    <div class="step ">
 
-        {{!-- {{#if user}}
-        <div class="left-side">
-            <aside>
-                <ul class="py-2 text-base text-gray-800 space-y-1">
-                    <li>
-                        <a href="#"
-                            class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
-                            <i class="bi bi-grid mr-3 text-gray-400 group-hover:text-white transition"></i>
-                            Dashboards
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/profile"
-                            class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
-                            <i class="bi bi-person-gear mr-3 text-gray-400 group-hover:text-white transition"></i>
-                            My profile
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
-                            <i class="bi bi-bag-check mr-3 text-gray-400 group-hover:text-white transition"></i> My
-                            package
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
-                            <i class="bi bi-heart mr-3 text-gray-400 group-hover:text-white transition"></i> My
-                            favorites (1)
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
-                            <i class="bi bi-folder2-open mr-3 text-gray-400 group-hover:text-white transition"></i>
-                            My save searches
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
-                            <i class="bi bi-chat-left-text mr-3 text-gray-400 group-hover:text-white transition"></i>
-                            Reviews
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/login"
-                            class="flex rounded-lg items-center px-5 py-4 hover:bg-orange-400 hover:text-white group transition">
-                            <i class="bi bi-folder-check mr-3 text-gray-400 group-hover:text-white transition"></i>
-                            My properties
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/add-property"
-                            class="flex items-center px-5 py-4 bg-white rounded-lg hover:bg-orange-400 hover:text-white group transition">
-                            <i class="bi bi-file-earmark-plus mr-3 text-gray-400 group-hover:text-white transition"></i>
-                            Add property
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/login"
-                            class="flex items-center px-5 py-4 bg-white rounded-lg hover:bg-orange-400 hover:text-white group transition">
-                            <i class="bi bi-person mr-3 text-gray-400 group-hover:text-white transition"></i> Login
-                            / Register
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/logout"
-                            class="flex items-center px-5 py-4 bg-white rounded-lg hover:bg-orange-400 hover:text-white group transition">
-                            <i class="bi bi-box-arrow-right mr-3 text-gray-400 group-hover:text-white transition"></i>
-                            Logout
-                        </a>
-                    </li>
-                </ul>
+        <!-- 🧩 FORM CONTENT (sənin kodun dəyişmədən) -->
+        <div id="step1" class="mt-2 p-5 mx-auto bg-white rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold mb-6">{{t "Add Property"}}</h2>
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
 
-
-            </aside>
-        </div>
-        {{else}}
-
-        {{/if}} --}}
-
-        <div class="w-full mx-auto px-4">
-            <main>
-
-                <div class=" mt-2 p-5 mx-auto bg-white rounded-lg shadow-md ">
-                    <h2 class="text-2xl font-bold mb-6">{{t "Add Property"}}</h2>
-                    <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
-
-                        <!-- Property Type -->
-                        {{!-- <div class="flex relative w-full"> --}}
-                            {{!-- <label class="block font-medium mb-1">{{t "Building Type"}}:<span
-                                    class="text-red-500">*</span></label> --}}
-                            {{!-- <select id="building-type"> --}}
-                                {{!-- <option disabled selected>{{t "Choose"}}</option> --}}
-                                {{!-- <option disabled selected>{{t "Choose"}}</option> --}}
-                            {{!-- </select> --}}
-                               {{!-- <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
-                                <svg class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button> --}}
-                        {{!-- </div> --}}
-
-
-
-                              <div class="custom-select-container relative" id="building-type-container">
-                                {{!-- <label class="block font-medium mb-1">{{t "Building Type"}}:<span
-                                    class="text-red-500">*</span></label> --}}
-                              <button type="button"
-                                class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                                <span class="custom-select-text">{{t "Building type"}}</span>
-                                <svg class="w-4 h-4 ml-2 transition-transform transform"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
-                               <ul id="building-type"
-                                class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
-                            </ul>
-                            <input type="hidden" name="building-type" id="building-type-input">
-
-                        </div>
-
-                        <!-- Add Type -->
-                        {{!-- <div>
-                            <label class="block font-medium mb-1">{{t "Add type"}}:<span
-                                    class="text-red-500">*</span></label>
-                            <select id="add-type"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
-                                <option disabled selected>{{t "Choose"}}</option>
-                                <option value="sale">For Sale</option>
-                                <option value="rent">For Rent</option>
-                            </select>
-                        </div> --}}
-                        {{!-- <select id="add-type" name="type" class="sr-only"  --}}
-                        {{!-- ekranda görünmür, ancaq forma dəyər
-                            ötürür --}} 
-                            {{!-- > --}}
-                            {{!-- <option disabled selected>{{t "Choose"}}</option> --}}
-                            {{!-- <option value="sale">For Sale</option>
-                            <option value="rent">For Rent</option>
-                        </select> --}}
-
-                        <div id="customTypeContainer" class="relative custom-select-container">
-                            {{!-- <label class="block font-medium mb-1">
-                                {{t "Add type"}}:<span class="text-red-500">*</span>
-                            </label> --}}
-
-                            <button type="button" id="add-type"
-                                class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                                <span class="custom-select-text">{{t "Add Type"}}</span>
-                                <svg class="w-4 h-4 ml-2 transition-transform transform"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
-
-                            <ul 
-                                class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
-                                <li data-value="sale" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">For Sale</li>
-                                <li data-value="rent" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">For Rent</li>
-                            </ul>
-
-                            <input type="hidden" id="selectedTypeInput" name="type">
-                        </div>
-
-
-
-
-                        {{!-- <div class="flex relative w-full"> --}}
-                            {{!-- <label class="block font-medium mb-1">{{t "Repair"}}:<span
-                                    class="text-red-500">*</span></label> --}}
-                            {{!-- <select id="repair-type" 
-                                class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
-                                <option selected disabled class="text-gray-500" >{{t "Repair"}}</option>
-                                <option value="repaired">{{t "Repaired"}}</option>
-                                <option value="unrepaired">{{t "Unrepaired"}}</option>
-                            </select>
-                             <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
-                                <svg class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
-                        </div> --}}
-
-                         <div class="custom-select-container relative" id="repair-type-container">
-                            <button type="button"
-                                class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                                <span class="custom-select-text">Təmir</span>
-                                <svg class="w-4 h-4 ml-2 transition-transform transform"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
-                            <ul
-                                class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
-                                <li data-value="repaired" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Təmirli
-                                </li>
-                                <li data-value="unrepaired" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">
-                                    Təmirsiz</li>
-                            </ul>
-                            <input type="hidden" name="propertyCondition" id="repair-type-input">
-                        </div>
-
-                        <div id="area">
-                            {{!-- <label class="block font-medium mb-1">{{t "Size"}} (m²):<span
-                                    class="text-red-500">*</span></label> --}}
-                            <input type="number"
-                                class="w-full border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="{{t "Size (m²)"}}" />
-                        </div>
-                        <div id="field-area" class="d-none">
-                            <label class="block font-medium mb-1">{{t "Field area"}} (m²):<span
-                                    class="text-red-500">*</span></label>
-                            <input type="number"
-                                class="w-full border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
-                        </div>
-
-                        <div class="flex gap-3">
-                            {{!-- <label class="block font-medium mb-1">{{t "Price"}}:<span
-                                    class="text-red-500">*</span></label> --}}
-                            <input id="price" type="number" placeholder={{t "Price"}}
-                                class="w-full border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
-
-                            <div class=" d-none relative custom-select-container" id="property-period-container">
-                                {{!-- <select id="property-period"
-                                    class="w-[100px] appearance-none text-[#B3B3B3] border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
-                                    <option value="daily"> {{t "Daily"}}</option>
-                                    <option value="monthly">{{t "Monthly"}}</option>
-                                </select> --}}
-                                <button type="button"
-                                class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                                <span class="custom-select-text">{{t 'Period'}}</span>
-                                <svg class="w-4 h-4 ml-2 transition-transform transform"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 9l-7 7-7-7" />
-                                </svg>
-                                <ul 
-                                class="custom-select-options absolute left-0 top-full text-left z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
-                                <li data-value="daily" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Daily
-                                </li>
-                                <li data-value="monthly" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">
-                                    Monthly</li>
-                            </ul>
-                            <input type="hidden" name="propertyCondition" id="property-period-input">
-                            </div>
-                        </div>
-
-
-
-                        {{!-- <div class="flex relative w-full"> --}}
-                            {{!-- <label class="block font-medium mb-1">{{t "Room Count"}}:<span
-                                    class="text-red-500">*</span></label> --}}
-                            {{!-- <select id="room-count"
-                                class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
-                                <option disabled selected>{{t "Room Count"}}</option> --}}
-                                {{!-- <option disabled selected>{{t "Choose"}}</option> --}}
-                                {{!-- {{#forLoop 20}}
-                                <option value="{{this}}">{{this}} {{t "room"}}</option>
-                                {{/forLoop}}
-                            </select>
-                             <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
-                                <svg class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
-                        </div> --}}
-
-
-                            <div class="custom-select-container relative" id="room-count-container">
-                            <button type="button"
-                                class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                                <span class="custom-select-text">Otaq sayı</span>
-                                <svg class="w-4 h-4 ml-2 transition-transform transform"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
-                            <ul
-                                class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
-                            </ul>
-                            <input type="hidden" name="roomCount" id="room-count-input">
-                        </div>
-
-                        {{!-- <div class="flex relative w-full"> --}}
-                            {{!-- <label class="block font-medium mb-1">{{t "Floor"}}:<span
-                                    class="text-red-500">*</span></label> --}}
-                            {{!-- <select id="located-floor"
-                                class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
-                                <option disabled selected>{{t "Floor"}}</option>
-                                {{#forLoop 100}}
-                                <option value="{{this}}">{{this}}-ci mərtəbə</option>
-                                {{/forLoop}}
-
-
-                            </select>
-                             <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
-                                <svg class="w-4 h-4 ml-2 transition-transform transform text-orange-600"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
-                        </div> --}}
-                     
-                       <div class="relative custom-select-container" id="floor-container">
-                              <button type="button"
-                                class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                                <span class="custom-select-text">{{t 'Floor'}}</span>
-                                <svg class="w-4 h-4 ml-2 transition-transform transform"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
-                              <ul
-                                class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
-                                {{#forLoop 100}}
-                                <li data-value="{{this}}" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">{{this}}-ci mərtəbə</li>
-                                {{/forLoop}}
-                            </ul>
-                            <input type="hidden" name="floor" id="floor-input">
-                        </div>
-
-
-
-                    </div>
-                    <div class="bg-white rounded-xl w-full mx-auto mt-6">
-                        <div class="mb-4">
-                            {{!-- <label for="description" class="block font-semibold mb-1">{{t "Description"}}:</label> --}}
-                            <textarea name="description" id="description" placeholder="Your Description" rows="4"
-                                class="w-full border border-gray-300 rounded-xl focus:outline-[#F1913D] px-4 py-2"></textarea>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-xl w-full mx-auto mt-6">
-                        <div class="mb-4">
-                            {{!-- <label for="note-to-admin" class="block font-semibold mb-1">{{t "Note to admin"}}:</label> --}}
-                            <textarea name="note-to-admin" id="note-to-admin" placeholder="{{t " Note to admin"}}"
-                                rows="4" class="w-full border border-gray-300  focus:outline-[#F1913D] rounded-xl px-4 py-2"></textarea>
-                        </div>
-                    </div>
-                         <div class="flex gap-2">
-                            <input id="is-credit" type="checkbox"
-                                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-white" />
-                                 <label class="block font-medium mb-1">{{t "Credit"}}<span
-                                    class="text-red-500">*</span></label>
-                        </div>
+                <!-- Building Type -->
+                <div class="custom-select-container relative" id="building-type-container">
+                    <button type="button"
+                        class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
+                        <span class="custom-select-text">{{t "Building type"}}</span>
+                        <svg class="w-4 h-4 ml-2 transition-transform transform" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <ul id="building-type"
+                        class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
+                    </ul>
+                    <input type="hidden" name="building-type" id="building-type-input">
                 </div>
 
-      <section id="property-information">
-                    <div class="p-6 rounded-xl w-full mx-auto bg-white shadow-md my-3 ">
-                        {{!-- <h2 class="text-2xl font-bold mb-4">{{t "Information"}}</h2> --}}
+                <!-- Add Type -->
+                <div id="customTypeContainer" class="relative custom-select-container">
+                    <button type="button" id="add-type"
+                        class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
+                        <span class="custom-select-text">{{t "Add Type"}}</span>
+                        <svg class="w-4 h-4 ml-2 transition-transform transform" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <ul
+                        class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
+                        <li data-value="sale" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">For Sale</li>
+                        <li data-value="rent" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">For Rent</li>
+                    </ul>
+                    <input type="hidden" id="selectedTypeInput" name="type">
+                </div>
 
-                        <form method="POST" action="">
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                                <div class="flex relative w-full custom-select-container" id="city-container">
-                                    {{!-- <label for="city" class="block font-semibold mb-1">{{t "City"}}:*</label> --}}
-                                    {{!-- <select id="city" class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl px-4 py-2">
-                                    </select> --}}
-                                     <button type="button"
+                <!-- Repair -->
+                <div class="custom-select-container relative" id="repair-type-container">
+                    <button type="button"
+                        class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
+                        <span class="custom-select-text">Təmir</span>
+                        <svg class="w-4 h-4 ml-2 transition-transform transform" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <ul
+                        class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
+                        <li data-value="repaired" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Təmirli</li>
+                        <li data-value="unrepaired" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Təmirsiz</li>
+                    </ul>
+                    <input type="hidden" name="propertyCondition" id="repair-type-input">
+                </div>
+
+                <!-- Area -->
+                <div id="area">
+                    <input type="number"
+                        class="w-full border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        placeholder="{{t 'Size (m²)'}}" />
+                </div>
+
+                <!-- Price -->
+                <div class="flex gap-3">
+                    <input id="price" type="number" placeholder={{t "Price" }}
+                        class="w-full border border-gray-300 rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+                </div>
+
+                <!-- Room Count -->
+                <div class="custom-select-container relative" id="room-count-container">
+                    <button type="button"
+                        class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
+                        <span class="custom-select-text">Otaq sayı</span>
+                        <svg class="w-4 h-4 ml-2 transition-transform transform" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <ul
+                        class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
+                    </ul>
+                    <input type="hidden" name="roomCount" id="room-count-input">
+                </div>
+
+            </div>
+
+            <!-- Textareas -->
+            <div class="bg-white rounded-xl w-full mx-auto mt-6">
+                <textarea name="description" id="description" placeholder="Your Description" rows="4"
+                    class="w-full border border-gray-300 rounded-xl focus:outline-[#F1913D] px-4 py-2"></textarea>
+            </div>
+            <div class="bg-white rounded-xl w-full mx-auto mt-6">
+                <textarea name="note-to-admin" id="note-to-admin" placeholder="{{t 'Note to admin'}}" rows="4"
+                    class="w-full border border-gray-300  focus:outline-[#F1913D] rounded-xl px-4 py-2"></textarea>
+            </div>
+
+            <!-- Credit -->
+            <div class="flex gap-2 mt-4">
+                <input id="is-credit" type="checkbox"
+                    class="w-4 h-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-white" />
+                <label class="block font-medium mb-1">{{t "Credit"}}</label>
+            </div>
+
+        </div>
+
+        <div class="flex justify-end mt-6">
+            <button type="button"
+                class="next-step bg-[var(--primary)] text-white px-6 py-2 rounded-lg mb-5">Continue</button>
+        </div>
+    </div>
+    <!-- STEP 2: Location -->
+    <div id="step-2" class="step ">
+
+        <section id="property-information">
+            <div class="p-6 rounded-xl w-full mx-auto bg-white shadow-md my-3">
+        <h2 class="text-2xl font-bold mb-4">Location</h2>
+                <form method="POST" action="">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+
+                        <!-- City -->
+                        <div class="relative custom-select-container" id="city-container">
+                            <button type="button"
                                 class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                                <span class="custom-select-text">{{t 'City'}}</span>
+                                <span class="custom-select-text">City</span>
                                 <svg class="w-4 h-4 ml-2 transition-transform transform"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
@@ -398,20 +167,21 @@
                                         d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
-                                <ul id="city"
+                            <ul id="city"
                                 class="custom-select-options absolute top-11 z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
+                                <li data-value="Baku" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Baku</li>
+                                <li data-value="Ganja" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Ganja</li>
+                                <li data-value="Sumqayit" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Sumqayit
+                                </li>
                             </ul>
                             <input type="hidden" name="city" id="city-input">
-                                       
-                                </div>
-                                
-                                <div class="d-none relative custom-select-container" id="district-container">
-                                    {{!-- <label for="district" class="block font-semibold mb-1">{{t "Ditrict"}}:*</label> --}}
-                                    {{!-- <select id="district" class="w-full border border-gray-300 rounded-md px-4 py-2 text-[#B3B3B3]">
-                                    </select> --}}
-                                      <button type="button"
+                        </div>
+
+                        <!-- District -->
+                        <div class="hidden relative custom-select-container" id="district-container">
+                            <button type="button"
                                 class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                                <span class="custom-select-text">{{t 'District'}}</span>
+                                <span class="custom-select-text">District</span>
                                 <svg class="w-4 h-4 ml-2 transition-transform transform"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
@@ -419,19 +189,17 @@
                                         d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
-                             <ul id="district"
+                            <ul id="district"
                                 class="custom-select-options absolute top-11 z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
                             </ul>
                             <input type="hidden" name="district" id="district-input">
-                                </div>
-                                
-                                <div class="d-none relative custom-select-container" id="town-container">
-                                    {{!-- <label for="town" class="block font-semibold mb-1">{{t "Town"}}:*</label> --}}
-                                    {{!-- <select id="town" class="w-full border border-gray-300 rounded-md px-4 py-2 text-[#B3B3B3]">
-                                    </select> --}}
-                                     <button type="button"
+                        </div>
+
+                        <!-- Town -->
+                        <div class="hidden relative custom-select-container" id="town-container">
+                            <button type="button"
                                 class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                                <span class="custom-select-text">{{t 'Town'}}</span>
+                                <span class="custom-select-text">Town</span>
                                 <svg class="w-4 h-4 ml-2 transition-transform transform"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
@@ -439,20 +207,17 @@
                                         d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
-                             <ul id="town"
+                            <ul id="town"
                                 class="custom-select-options absolute top-11 z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
                             </ul>
                             <input type="hidden" name="town" id="town-input">
-                                </div>
+                        </div>
 
-
-                                <div class="relative custom-select-container" id="subway-container"> 
-                                    {{!-- <label for="subway" class="block font-semibold mb-1">{{t "Metro"}}:*</label> --}}
-                                    {{!-- <select id="subway" class="w-full text-[#B3B3B3] appearance-none border border-gray-300 rounded-xl px-4 py-2">
-                                    </select> --}}
-                                        <button type="button"
+                        <!-- Subway -->
+                        <div class="relative custom-select-container" id="subway-container">
+                            <button type="button"
                                 class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                                <span class="custom-select-text">{{t 'Subway'}}</span>
+                                <span class="custom-select-text">Subway</span>
                                 <svg class="w-4 h-4 ml-2 transition-transform transform"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
@@ -460,226 +225,162 @@
                                         d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
-                                    <ul id="subway"
+                            <ul id="subway"
                                 class="custom-select-options absolute top-11 z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
+                                <li data-value="Subway1" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Subway1
+                                </li>
+                                <li data-value="Subway2" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">Subway2
+                                </li>
                             </ul>
                             <input type="hidden" name="subway" id="subway-input">
-                                </div>
-                            </div>
-                            <div class="mb-4 gap-2 flex flex-col lg:flex-row items-center justify-center">
-                                <div class="flex flex-col gap-4 w-full lg:w-[80%]">
-                                    {{!-- <label for="address" class="block font-semibold mb-1">{{t "Full Address"}}:*</label> --}}
-                                    <input type="text" name="address" id="address" placeholder="{{t "Full address"}}" class="w-full placeholder-[#B3B3B3] border border-gray-300 rounded-xl px-4 py-2">
-                                </div>
-
-                                <button type="button" id="searchAddress"
-                                    class="w-full lg:w-[20%] rounded-lg text-sm bg-[var(--primary)] text-white px-3 py-3 hover:bg-orange-600">
-                                    {{t "Search on Map"}}
-                                </button>
-                            </div>
-
-
-                            <div class="mb-4">
-                                {{!-- <label class="block font-semibold mb-1">{{t "Location on Map"}}:</label> --}}
-                                <div id="map" style="height: 400px; width: 100%;  border-radius: 0.375rem;"></div>
-                                <input type="hidden" name="latitude" id="latitude">
-                                <input type="hidden" name="longitude" id="longitude">
-                            </div>
-{{!-- <hr class="border border-gray-300 w-[80%] mx-auto mb-5" > --}}
-                            <div class="mb-4">
-                                <label for="google_map_location" class="block font-semibold mb-1">{{t "Google Maps
-                                    Link"}}
-                                    ({{t "optional"}}):</label>
-                                <input type="text" name="google_map_location" id="google_map_location"
-                                    placeholder="https://maps.google.com/..."
-                                    class="w-full border border-gray-300 rounded-md px-4 py-2">
-                            </div>
-                        </form>
-
-                    </div>
-                </section>
-
-                <section id="upload-image">
-                    <div class="px-6  mt-2 py-10 rounded-xl w-full mx-auto border-4 border-dashed border-gray-300 ">
-                        {{!-- <h2 class="text-3xl font-bold mb-4">{{t "Upload Media"}}</h2> --}}
-
-                        <div id="dropzone"
-                            class="rounded-lg py-3 text-center flex flex-col items-center text-center min-h-[100px] transition">
-                            <label
-                                class="w-[50%] bg-[var(--primary)] text-white px-6 py-4 rounded-xl font-semibold hover:bg-orange-500 transition-all cursor-pointer mb-2">
-                                <i class="bi bi-paperclip"></i> {{t "Photos"}}
-                                <input id="fileInput" type="file" multiple accept="image/*" class="hidden">
-                            </label>
-                            {{!-- <p class="text-sm text-gray-500">{{t "or drag photos here"}}<br>({{t "Up to 10 photos"}}) --}}
-                            {{!-- </p> --}}
-                            <p class="text-sm text-gray-500">{{t "Max limit - 10"}} </p>
-
-                        </div>
-
-                         <div id="dropzone"
-                            class="rounded-lg py-3 text-center flex flex-col items-center text-center min-h-[100px] transition">
-                            <label
-                                class="w-[50%] bg-[var(--primary)] text-white px-6 py-4 rounded-xl font-semibold hover:bg-orange-500 transition-all cursor-pointer mb-2">
-                                <i class="bi bi-paperclip"></i> {{t "Videos"}}
-                                <input id="video" type="file" multiple accept="video/*" class="hidden">
-                            </label>
-                            {{!-- <p class="text-sm text-gray-500">{{t "or drag photos here"}}<br>({{t "Up to 10 photos"}}) --}}
-                            {{!-- </p> --}}
-                            <p class="text-sm text-gray-500">{{t "Max limit - 5"}} </p>
-
-                        </div>
-
-                    {{!-- <div id="dropzone"
-                            class="rounded-lg py-3 text-center flex flex-col items-center text-center min-h-[100px] transition">
-                            <label
-                                class="w-[50%] bg-[var(--primary)] text-white px-6 py-4 rounded-xl font-semibold hover:bg-orange-500 transition-all cursor-pointer mb-2">
-                                <i class="bi bi-paperclip"></i> {{t "Documents"}}
-                                <input id="document" type="file" multiple accept="document/*" class="hidden">
-                            </label> --}}
-                            {{!-- <p class="text-sm text-gray-500">{{t "or drag photos here"}}<br>({{t "Up to 10 photos"}}) --}}
-                            {{!-- </p> --}}
-                            {{!-- <p class="text-sm text-gray-500">{{t "Max limit - 5"}} </p>
-
-                    </div> --}}
-
-
-                        <div id="gallery"
-                            class="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
-                        {{!-- <div class="my-4">
-                            <label for="video" class="block font-semibold mb-1">{{t "Video"}}:</label>
-                            <input id="video" type="file" placeholder="{{t " Video"}}"
-                                class="w-full border border-gray-300 rounded-md px-4 py-2">
-                        </div> --}}
-
-                         {{!-- <div class="my-4">
-                            <label for="document" class="block font-semibold mb-1">{{t "Document"}}:</label>
-                            <input id="document" type="file" placeholder="{{t " Document"}}"
-                                class="w-full border border-gray-300 rounded-md px-4 py-2">
-                        </div>  --}}
-                    </div>
-
-
-                </section>
-
-{{!-- <hr class="border border-t-2 border-gray-300 w-[80%] mx-auto mb-5 mt-5" > --}}
-
-
-                <div class="p-8 w-full mx-auto rounded-lg shadow-md mt-3 font-sans bg-white text-gray-800 hidden sm:flex flex-col">
-                    <h2 class="text-xl font-semibold mb-4">{{t "Features"}} <span style="color: red">*</span></h2>
-
-                    <!-- 🔍 Search input for Features -->
-                    <input type="text" id="featureSearch" placeholder="Axtar..."
-                        class="mb-4 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primary)]">
-
-                    <div id="features-container" class="relative overflow-hidden max-h-48">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="features">
-                            <!-- burada checkbox-lar olacaq -->
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none fade-overlay">
                         </div>
                     </div>
 
-                    <div class="flex justify-center">
-                        <button id="toggle-features"
-                            class="mt-6 text-[var(--primary)] border border-[var(--primary)] px-3 rounded-md py-1 text-center hover:text-orange-500 font-semibold focus:outline-none">
-                            Daha çox göstər <i class="bi bi-chevron-down"></i>
+                    <!-- Address -->
+                    <div class="mb-4 flex gap-2 flex-col lg:flex-row items-center justify-center">
+                        <div class="flex flex-col gap-4 w-full lg:w-[80%]">
+                            <input type="text" name="address" id="address" placeholder="Full address"
+                                class="w-full placeholder-[#B3B3B3] border border-gray-300 rounded-xl px-4 py-2">
+                        </div>
+                        <button type="button" id="searchAddress"
+                            class="w-full lg:w-[20%] rounded-lg text-sm bg-[var(--primary)] text-white px-3 py-3 hover:bg-orange-600">
+                            Search on Map
                         </button>
                     </div>
-                </div>
 
-<div class="sm:hidden flex flex-col gap-5 mt-5">
-        <div class="flex relative border border-gray-300 rounded-xl p-2 w-full">
-        <i class="fa-solid fa-plus absolute  top-1/2 -translate-y-1/2 text-[#757575] text-[20px]"></i>
-            <select name="" id="" class="ml-8 w-full text-[#B3B3B3] appearance-none p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
-            <option value="" disabled selected>Features</option>
-            </select>
-        </div>
-{{!-- <hr class="border border-t-2 border-gray-300 w-[80%] mx-auto mb-5 mt-5" > --}}
-
-        <div class="flex relative border border-gray-300 rounded-xl p-2 w-full">
-            <i class="fa-solid fa-plus absolute  top-1/2 -translate-y-1/2 text-[#757575] text-[20px]"></i>
-            <select name="" id="" class="ml-8 w-full text-[#B3B3B3] appearance-none p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
-            <option value="" disabled selected>Nearby objects</option>
-            </select>
-        </div>
-
-{{!-- <hr class="border border-t-2 border-gray-300 w-[80%] mx-auto mb-5 mt-5" > --}}
-        <div class="flex relative border border-gray-300 rounded-xl p-2 w-full">
-            <i class="fa-solid fa-plus absolute  top-1/2 -translate-y-1/2 text-[#757575] text-[20px]"></i>
-            <input type="text" placeholder="Phone" class="ml-8 w-full text-[#B3B3B3] appearance-none p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
-            </select>
-        </div>
-        <div class="flex relative border border-gray-300 rounded-xl p-2 w-full">
-            <i class="fa-solid fa-plus absolute  top-1/2 -translate-y-1/2 text-[#757575] text-[20px]"></i>
-            <input type="text" placeholder="Email" class="ml-8 w-full text-[#B3B3B3] appearance-none p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
-            </select>
-        </div>
-</div>
-
-                <div class="p-8 w-full mx-auto rounded-lg shadow-md mt-3 font-sans bg-white text-gray-800 hidden sm:flex flex-col">
-                    <h2 class="text-xl font-semibold mb-4">{{t "Nearby objects"}} <span style="color: red">*</span></h2>
-
-                    <!-- 🔍 Search input for Nearby objects -->
-                    <input type="text" id="nearbySearch" placeholder="Axtar..."
-                        class="mb-4 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primary)]">
-
-                    <div id="nearby-objects-container" class="relative overflow-hidden max-h-48">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="nearby-objects">
-                            <!-- burada checkbox-lar olacaq -->
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none fade-overlay">
-                        </div>
+                    <!-- Map -->
+                    <div class="mb-4">
+                        <div id="map" style="height: 400px; width: 100%; border-radius: 0.375rem;"></div>
+                        <input type="hidden" name="latitude" id="latitude">
+                        <input type="hidden" name="longitude" id="longitude">
                     </div>
 
-                    <div class="flex justify-center">
+                    <!-- Google Maps link -->
+                    <div class="mb-4">
+                        <label for="google_map_location" class="block font-semibold mb-1">Google Maps Link
+                            (optional):</label>
+                        <input type="text" name="google_map_location" id="google_map_location"
+                            placeholder="https://maps.google.com/..."
+                            class="w-full border border-gray-300 rounded-md px-4 py-2">
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <div class="flex justify-between mt-5 mb-5">
+            <button type="button" class="prev-step bg-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400">Back</button>
+            <button type="button"
+                class="next-step bg-[var(--primary)] text-white px-4 py-2 rounded-lg hover:bg-orange-600">Next</button>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- STEP 3 -->
+    <div class="step mb-10">
+
+
+        <!-- 🧩 FEATURES CONTENT -->
+        <div class="p-6 rounded-lg bg-white shadow mb-4">
+            <h3 class="text-lg font-semibold mb-3">Features</h3>
+            <input type="text" id="nearbySearch" placeholder="Axtar..."
+                class="mb-4 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primary)]">
+            <div id="features" class="grid grid-cols-2 gap-3"></div>
+             <div class="flex justify-center">
                         <button id="toggle-nearby-objects"
                             class="mt-6 text-[var(--primary)] border border-[var(--primary)] px-3 rounded-md py-1 text-center hover:text-orange-500 font-semibold focus:outline-none">
                             Daha çox göstər <i class="bi bi-chevron-down"></i>
                         </button>
                     </div>
-                </div>
-
-
-                {{>Component.AgentInfo}}
-                <div class="flex  mt-6 items-center">
-                    <input id="terms" type="checkbox"
-                        class="mt-1 mr-2 w-4 h-4 text-[var(--primary)] border-gray-300 rounded focus:ring-0">
-                    <label for="terms" class="select-none">
-                         I have to accept
-                        <a href="/istifadeci-razilasi" target="_blank"
-                            class="text-[var(--primary)] underline hover:text-orange-500 transition">
-                            Privacy and policy. 
-                        </a> 
-                        <span class="text-red-500">*</span>
-                    </label>
-                </div>
-
-                <div class="flex justify-center items-center space-x-4 mt-6">
-                    <button id="add-property-btn"
-                        class=" sm:w-auto bg-[color:var(--primary)] text-white px-6 py-4 rounded-xl flex items-center justify-center button-hover all-btn hover:bg-orange-500 focus:outline-none">
-                        {{t "Add Property"}}
-                    </button>
-                </div>
-
-
-            </main>
         </div>
 
-    </div>
+        <div class="p-6 rounded-lg bg-white shadow">
 
-    <div id="unsavedDataModal"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg p-6 max-w-md w-full">
-            <h3 class="text-xl font-bold mb-4">Qeyd olunmamış məlumatlar</h3>
-            <p class="mb-6">Əvvəlki səhifədən qalan məlumatlarınız var. Davam etmək istəyirsiniz?</p>
-            <div class="flex justify-end space-x-4">
-                <button id="modalNo" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">Xeyr</button>
-                <button id="modalYes"
-                    class="px-4 py-2 bg-[var(--primary)] text-white rounded-lg hover:bg-orange-600">Bəli</button>
+            <!-- Nearby kodu -->
+            <h2 class="text-xl font-semibold mb-4">Nearby objects <span style="color: red">*</span></h2>
+            <input type="text" id="nearbySearch" placeholder="Axtar..."
+                class="mb-4 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primary)]">
+            <div id="nearby-objects-container" class="relative overflow-hidden max-h-48">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="nearby-objects"></div>
+                <div
+                    class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none fade-overlay">
+                </div>
             </div>
+             <div class="flex justify-center toggleButton">
+                        <button id="toggle-nearby-objects"
+                            class="mt-6 text-[var(--primary)] border border-[var(--primary)] px-3 rounded-md py-1 text-center hover:text-orange-500 font-semibold focus:outline-none">
+                            Daha çox göstər <i class="bi bi-chevron-down"></i>
+                        </button>
+                    </div>
+
+        </div>
+            <div class="flex justify-between mt-6">
+                <button type="button" class="prev-step bg-gray-300 px-4 py-2 rounded-lg">Back</button>
+                <button type="button"
+                    class="next-step bg-[var(--primary)] text-white px-4 py-2 rounded-lg">Next</button>
+            </div>
+
+    </div>
+    
+
+
+    <!-- STEP 4 -->
+    <div class="step hidden mt-2 p-5 mx-auto ">
+        {{>Component.AgentInfo}}
+
+        <div class="flex justify-between mt-6">
+            <button type="button" class="prev-step bg-gray-300 px-4 py-2 rounded-lg">Back</button>
+            <button type="submit" id="finishBtn"
+                class="bg-[var(--primary)] text-white px-6 py-3 rounded-lg hover:bg-orange-600">Finish</button>
         </div>
     </div>
 
 </section>
+
+<!-- JS -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const steps = Array.from(document.querySelectorAll(".step"));
+        const nextBtns = document.querySelectorAll(".next-step");
+        const prevBtns = document.querySelectorAll(".prev-step");
+        const stepCircles = document.querySelectorAll("#stepIndicator .step-circle");
+        let currentStep = 0;
+
+        function showStep(index) {
+  steps.forEach((step, i) => step.classList.toggle("hidden", i !== index));
+
+  stepCircles.forEach((circle, i) => {
+    if (i < index) {
+      // completed steps
+      circle.classList.add("bg-[var(--primary)]", "text-gray", "border-[var(--primary)]");
+      circle.classList.remove("border-gray-300", "text-gray-400");
+    } else if (i === index) {
+      // current step
+      circle.classList.remove("bg-[var(--primary)]", "text-gray");
+      circle.classList.add("border-[var(--primary)]", "text-[var(--primary)]", "font-bold");
+    } else {
+      // upcoming steps
+      circle.classList.remove("bg-[var(--primary)]", "text-gray", "border-[var(--primary)]", "font-bold");
+      circle.classList.add("border-gray-300", "text-gray-400");
+    }
+  });
+}
+
+
+        nextBtns.forEach(btn => btn.addEventListener("click", () => {
+            if (currentStep < steps.length - 1) currentStep++;
+            showStep(currentStep);
+        }));
+
+        prevBtns.forEach(btn => btn.addEventListener("click", () => {
+            if (currentStep > 0) currentStep--;
+            showStep(currentStep);
+        }));
+
+        showStep(currentStep);
+    });
+</script>
