@@ -20,7 +20,7 @@
                                 {{#if agency.is_premium}}
                                 <span
                                     class="premium-label flex items-center bg-yellow-400 text-white text-xs font-bold px-2 py-1 rounded-full">
-                                    <i class="bi bi-star-fill mr-1"></i> Premium
+                                    <i class="bi bi-star-fill mr-1"></i> {{t "Premium"}}
                                 </span>
                                 {{/if}}
                             </h2>
@@ -28,7 +28,7 @@
                                 {{#unless agency.is_premium}}
                                 <button id="makePremiumBtn" data-agency-id="{{agency.id}}"
                                     class="bg-orange-400 text-white px-3 py-1 rounded text-sm hover:bg-[#F1913D] transition">
-                                    Premium et
+                                    {{t "Premium et"}}
                                 </button>
                                 {{/unless}}
                             </div>
@@ -44,7 +44,7 @@
 
                 </div>
                 <div class="agencies-info">
-                    <h2>About {{ agency.name }}</h2>
+                    <h2>{{t "About"}}{{ agency.name }}</h2>
                     <p>{{ agency.short_description }}</p>
                     <h2 class="title">{{t "Location"}}</h2>
                 </div>

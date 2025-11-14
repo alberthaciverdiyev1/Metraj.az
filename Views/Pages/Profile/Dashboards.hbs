@@ -6,7 +6,7 @@
             class="w-full lg:hidden  mb-10 flex justify-between items-center border rounded-lg px-4 py-3 bg-white text-[#f1913d] font-medium">
             <span class="flex items-center gap-2">
                 <i class="bi bi-grid mr-3 text-orange-400 group-hover:text-white transition"></i>
-                Dashboard
+                {{t "Dashboard"}}
             </span>
             <i class="bi bi-chevron-down"></i>
         </button>
@@ -14,29 +14,29 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <div class="bg-white p-4 rounded-xl shadow-sm flex items-center justify-between">
                 <div>
-                    <div class="text-sm text-gray-500">Your listing</div>
-                    <div class="text-2xl font-bold">32 <span class="text-sm font-normal text-gray-500">/50
-                            remaining</span></div>
+                    <div class="text-sm text-gray-500">{{t "Your listing"}}</div>
+                    <div class="text-2xl font-bold">32 <span class="text-sm font-normal text-gray-500">{{t "/50
+                            remaining"}}</span></div>
                 </div>
                 <i class="bi bi-journal-text text-3xl text-orange-500"></i>
             </div>
             <div class="bg-white p-4 rounded-xl shadow-sm flex items-center justify-between">
                 <div>
-                    <div class="text-sm text-gray-500">Pending</div>
+                    <div class="text-sm text-gray-500">{{t "Pending"}}</div>
                     <div class="text-2xl font-bold">02</div>
                 </div>
                 <i class="bi bi-arrow-clockwise text-3xl text-orange-500"></i>
             </div>
             <div class="bg-white p-4 rounded-xl shadow-sm flex items-center justify-between">
                 <div>
-                    <div class="text-sm text-gray-500">Favorites</div>
+                    <div class="text-sm text-gray-500">{{t "Favorites"}}</div>
                     <div class="text-2xl font-bold">06</div>
                 </div>
                 <i class="bi bi-heart text-3xl text-orange-500"></i>
             </div>
             <div class="bg-white p-4 rounded-xl shadow-sm flex items-center justify-between">
                 <div>
-                    <div class="text-sm text-gray-500">Reviews</div>
+                    <div class="text-sm text-gray-500">{{t "Reviews"}}</div>
                     <div class="text-2xl font-bold">1.483</div>
                 </div>
                 <i class="bi bi-chat-dots text-3xl text-orange-500"></i>
@@ -47,13 +47,13 @@
         <div class="flex flex-col md:flex-row gap-4 w-full">
             <!-- My Favorites -->
             <div class="w-full md:w-3/4 bg-white rounded-xl shadow-sm p-4 sm:p-6">
-                <h2 class="text-lg sm:text-xl font-bold mb-4">My Favorites</h2>
+                <h2 class="text-lg sm:text-xl font-bold mb-4">{{t "My Favorites"}}</h2>
 
                 <!-- Header -->
                 <div class="hidden sm:grid grid-cols-3 text-sm font-semibold border-b border-gray-200 pb-2">
-                    <div>Listing</div>
-                    <div>Status</div>
-                    <div>Action</div>
+                    <div>{{t "Listing"}}</div>
+                    <div>{{t "Status"}}</div>
+                    <div>{{t "Action"}}</div>
                 </div>
 
                 <!-- Item -->
@@ -63,25 +63,25 @@
                         <img src="https://themesflat.co/html/proty/images/home/house-db-1.jpg" alt="property"
                             class="w-24 h-20 sm:w-20 sm:h-16 rounded-md object-cover">
                         <div>
-                            <p class="font-semibold text-base">Cozy Studio in Downtown</p>
-                            <p class="text-xs text-gray-500">Posting date: 01 Aug 2025</p>
-                            <p class="text-orange-500 text-sm font-semibold mt-1">$850 / month</p>
+                            <p class="font-semibold text-base">{{t "Cozy Studio in Downtown"}}</p>
+                            <p class="text-xs text-gray-500">{{t "Posting date: 01 Aug 2025"}}</p>
+                            <p class="text-orange-500 text-sm font-semibold mt-1">{{t "$850 / month"}}</p>
                         </div>
                     </div>
 
                     <!-- Status -->
-                    <div class="text-sm text-gray-700 sm:text-center">Active</div>
+                    <div class="text-sm text-gray-700 sm:text-center">{{t "Active"}}</div>
 
                     <!-- Actions -->
                     <div class="flex sm:justify-center flex-wrap gap-3 text-sm">
                         <a href="#" class="text-blue-500 hover:underline flex items-center gap-1">
-                            <i class="bi bi-pencil"></i> Edit
+                            <i class="bi bi-pencil"></i> {{t "Edit"}}
                         </a>
                         <a href="#" class="text-green-500 hover:underline flex items-center gap-1">
-                            <i class="bi bi-check-circle"></i> Sold
+                            <i class="bi bi-check-circle"></i> {{t "Sold"}}
                         </a>
                         <a href="#" class="text-red-500 hover:underline flex items-center gap-1">
-                            <i class="bi bi-trash"></i> Delete
+                            <i class="bi bi-trash"></i> {{t "Delete"}}
                         </a>
                     </div>
                 </div>
@@ -90,15 +90,15 @@
 
             <!-- Messages -->
             <div class="w-full md:w-1/4 bg-white rounded-xl shadow-sm p-6 max-h-[500px] overflow-y-auto">
-                <h2 class="text-lg font-bold mb-4">Messages</h2>
+                <h2 class="text-lg font-bold mb-4">{{t "Messages"}}</h2>
 
                 <div class="flex gap-4 mb-4">
                     <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="avatar"
                         class="w-10 h-10 rounded-full object-cover">
                     <div class="text-sm">
-                        <p class="font-semibold">Jane Smith</p>
-                        <p class="text-gray-500 text-xs">2 mins ago</p>
-                        <p class="text-gray-700 mt-1">Is the apartment still available?</p>
+                        <p class="font-semibold">{{t "Jane Smith"}}</p>
+                        <p class="text-gray-500 text-xs">{{t "2 mins ago"}}</p>
+                        <p class="text-gray-700 mt-1">{{t "Is the apartment still available?"}}</p>
                     </div>
                 </div>
 
@@ -106,9 +106,9 @@
                     <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="avatar"
                         class="w-10 h-10 rounded-full object-cover">
                     <div class="text-sm">
-                        <p class="font-semibold">Michael Johnson</p>
-                        <p class="text-gray-500 text-xs">1 hour ago</p>
-                        <p class="text-gray-700 mt-1">Can I schedule a visit?</p>
+                        <p class="font-semibold">{{t "Michael Johnson"}}</p>
+                        <p class="text-gray-500 text-xs">{{t "1 hour ago"}}</p>
+                        <p class="text-gray-700 mt-1">{{t "Can I schedule a visit?"}}</p>
                     </div>
                 </div>
             </div>

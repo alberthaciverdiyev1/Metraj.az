@@ -49,7 +49,7 @@
             <!-- Left Side -->
             <div class="flex flex-col items-center md:items-start text-center md:text-left gap-6">
                 <h1 class="text-white text-[30px] font-bold xl:text-[40px] lg:text-[30px] md:text-[24px] max-w-[340px]">
-                    Find your ideal house
+                    {{t "Find your ideal house"}}
                 </h1>
                 <img src="/images/illustation.svg" class="w-[200px] xl:w-[250px] lg:w-[200px]" alt="illustration">
             </div>
@@ -59,18 +59,18 @@
                 <a href="/"><img src="/images/metrajlogo.png" class="w-40 mx-auto mb-3" alt="logo"></a>
 
                 <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">
-                    Register
+                    {{t "Register"}}
                 </h2>
 
                 <form id="registerForm" class="h-auto">
 
                     <div class="mb-4">
-                        <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Choose Role:</label>
+                        <label for="role" class="block text-sm font-medium text-gray-700 mb-1">{{t "Choose Role:"}}</label>
                         <select id="role" name="role"
                             class="w-full border rounded-md px-4 py-2 bg-white border-gray-300">
-                            <option value="">Select role</option>
-                            <option value="agent">Vasitəçi</option>
-                            <option value="user">İstifadəçi</option>
+                            <option value="">{{t "Select role"}}</option>
+                            <option value="agent">{{t "Vasitəçi"}}</option>
+                            <option value="user">{{t "İstifadəçi"}}</option>
                         </select>
                     </div>
 
@@ -113,24 +113,24 @@
                     <div class="flex items-center mb-4">
                         <input type="checkbox" id="terms" />
                         <label for="terms" class="text-sm text-gray-600 mx-2">
-                            I accept <a href="#" class="text-orange-500">Privacy and policy</a>.
+                           {{t "I accept"}} <a href="#" class="text-orange-500">{{t "Privacy and policy"}}</a>.
                         </label>
                     </div>
 
                     <button type="submit"
                         class="w-full bg-[var(--primary)] hover:bg-[#f29747] text-white font-semibold py-3 rounded-xl transition duration-300">
-                        Register
+                        {{t "Register"}}
                     </button>
                     <!-- Home Button -->
                     <div class="mt-4 text-center">
-                        <a href="/" class="text-sm text-orange-400 hover:underline">Ana səhifəyə qayıt</a>
+                        <a href="/" class="text-sm text-orange-400 hover:underline">{{t "Ana səhifəyə qayıt"}}</a>
                     </div>
                 </form>
             </div>
                 <div class="z-100 flex md:flex-col flex-row items-center">
                     <h1
                         class="text-white text-center text-[30px] font-bold xl:text-[40px] xl:w-[400px] mb-4 lg:text-[30px] md:text-[20px] md:w-[200px] lg:w-[300px]">
-                        Easiest way to find your safezone
+                        {{t "Easiest way to find your safezone"}}
                     </h1>
                     <img src="/images/ok-finger.svg" alt="ok-icon" class="w-[200px] xl:w-[250px] lg:w-[200px]">
                 </div>
