@@ -6,7 +6,7 @@ use App\Modules\Property\DTOs\CreatePropertyDTO;
 use App\Modules\Property\DTOs\PropertyFilterDTO;
 use App\Modules\Location\Enums\FilterKey;
 use App\Modules\Property\Enums\PropertyStatus;
-use App\Modules\Property\Repositories\PropertyRepositoryInterface;
+use App\Modules\Property\Contracts\PropertyRepositoryInterface;
 use App\Modules\Property\Models\Property;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;

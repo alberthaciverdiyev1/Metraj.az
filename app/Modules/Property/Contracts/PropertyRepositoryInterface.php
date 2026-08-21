@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Property\Repositories;
+namespace App\Modules\Property\Contracts;
 
 use App\Modules\Property\DTOs\CreatePropertyDTO;
 use App\Modules\Property\DTOs\PropertyFilterDTO;

@@ -2,7 +2,7 @@
 
 namespace App\Modules\Inquiry\Repositories;
 
-use App\Modules\Inquiry\Repositories\InquiryRepositoryInterface;
+use App\Modules\Inquiry\Contracts\InquiryRepositoryInterface;
 use App\Modules\Inquiry\Models\Inquiry;
 
 class InquiryRepository implements InquiryRepositoryInterface

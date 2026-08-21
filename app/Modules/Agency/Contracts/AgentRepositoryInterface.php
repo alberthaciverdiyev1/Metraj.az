@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Agency\Repositories;
+namespace App\Modules\Agency\Contracts;
 
 use App\Modules\Agency\Models\Agent;
 

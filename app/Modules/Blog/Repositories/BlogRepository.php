@@ -2,7 +2,7 @@
 
 namespace App\Modules\Blog\Repositories;
 
-use App\Modules\Blog\Repositories\BlogRepositoryInterface;
+use App\Modules\Blog\Contracts\BlogRepositoryInterface;
 use App\Modules\Blog\Models\Blog;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;

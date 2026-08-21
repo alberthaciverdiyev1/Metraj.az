@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Blog\Repositories;
+namespace App\Modules\Blog\Contracts;
 
 use App\Modules\Blog\Models\Blog;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;

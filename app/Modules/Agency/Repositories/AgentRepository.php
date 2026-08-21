@@ -2,7 +2,7 @@
 
 namespace App\Modules\Agency\Repositories;
 
-use App\Modules\Agency\Repositories\AgentRepositoryInterface;
+use App\Modules\Agency\Contracts\AgentRepositoryInterface;
 use App\Modules\Agency\Models\Agent;
 
 class AgentRepository implements AgentRepositoryInterface

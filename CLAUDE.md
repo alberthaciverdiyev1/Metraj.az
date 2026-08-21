@@ -52,8 +52,10 @@ Controllers → Services → Repositories → Eloquent Models → Database
 - Köməkçi servislər: `PropertyTitleBuilder`, `PropertyPricePresenter`.
 - Service-lər repository-ləri çağırır; sadə oxuma sorğularında model-ləri birbaşa da işlədə bilər.
 
-**3. Repositories** — `app/Modules/{Modul}/Repositories/`
-- Concrete implementasiya (`PropertyRepository`, `AgencyRepository`, `AgentRepository`, `BlogRepository`, `InquiryRepository`) + kontrakt sənədi kimi Interface (`PropertyRepositoryInterface` və s.).
+**3. Repositories & Contracts** — ayrı qovluqlar
+- **Concrete implementasiyalar:** `app/Modules/{Modul}/Repositories/` — `PropertyRepository`, `AgencyRepository`, `AgentRepository`, `BlogRepository`, `InquiryRepository`.
+- **Interfaces (kontraktlar):** `app/Modules/{Modul}/Contracts/` — `PropertyRepositoryInterface`, `AgencyRepositoryInterface`, `AgentRepositoryInterface`, `BlogRepositoryInterface`, `InquiryRepositoryInterface`.
+- Concrete sınıflar interface-ləri `implements` edir; interface yalnız kontrakt sənədidir.
 - Service-lər constructor-də **concrete** repository-ni qəbul edir (interface yox) — Laravel DI avtomatik çözür, bind-provider yoxdur.
 - Bütün verilənlər bazası sorğuları repository-lərdə cəmlənir.
 - Controller-lər repository-ləri **birbaşa çağırmır** — həmişə Service vasitəsilə.
@@ -86,7 +88,8 @@ app/
 │   ├── Property/
 │   │   ├── Controllers/ (HomeController, PropertyDetailController, AddPropertyController)
 │   │   ├── Services/ (PropertyService, PropertyTitleBuilder, PropertyPricePresenter)
-│   │   ├── Repositories/ (PropertyRepositoryInterface, PropertyRepository)
+│   │   ├── Contracts/ (PropertyRepositoryInterface)
+│   │   ├── Repositories/ (PropertyRepository)
 │   │   ├── Models/ (Property, PropertyImage)
 │   │   ├── DTOs/ (CreatePropertyDTO, PropertyFilterDTO)
 │   │   ├── Requests/ (StorePropertyRequest)
@@ -95,20 +98,23 @@ app/
 │   ├── Agency/
 │   │   ├── Controllers/ (AgencyDetailController, AgencyListController, AgentDetailController)
 │   │   ├── Services/ (AgencyService, AgentService)
-│   │   ├── Repositories/ (AgencyRepositoryInterface, AgentRepositoryInterface, AgencyRepository, AgentRepository)
+│   │   ├── Contracts/ (AgencyRepositoryInterface, AgentRepositoryInterface)
+│   │   ├── Repositories/ (AgencyRepository, AgentRepository)
 │   │   ├── Models/ (Agency, Agent)
 │   │   ├── Enums/ (AgencyStatus)
 │   │   └── Routes/web.php
 │   ├── Blog/
 │   │   ├── Controllers/ (BlogController)
 │   │   ├── Services/ (BlogService)
-│   │   ├── Repositories/ (BlogRepositoryInterface, BlogRepository)
+│   │   ├── Contracts/ (BlogRepositoryInterface)
+│   │   ├── Repositories/ (BlogRepository)
 │   │   ├── Models/ (Blog)
 │   │   └── Routes/web.php
 │   ├── Inquiry/
 │   │   ├── Controllers/ (InquiryController)
 │   │   ├── Services/ (InquiryService)
-│   │   ├── Repositories/ (InquiryRepositoryInterface, InquiryRepository)
+│   │   ├── Contracts/ (InquiryRepositoryInterface)
+│   │   ├── Repositories/ (InquiryRepository)
 │   │   ├── Models/ (Inquiry)
 │   │   ├── Requests/ (StoreInquiryRequest)
 │   │   └── Routes/web.php

@@ -3,7 +3,7 @@
 namespace App\Modules\Agency\Repositories;
 
 use App\Modules\Agency\Enums\AgencyStatus;
-use App\Modules\Agency\Repositories\AgencyRepositoryInterface;
+use App\Modules\Agency\Contracts\AgencyRepositoryInterface;
 use App\Modules\Agency\Models\Agency;
 use Illuminate\Database\Eloquent\Collection;
 

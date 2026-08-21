@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Inquiry\Repositories;
+namespace App\Modules\Inquiry\Contracts;
 
 use App\Modules\Inquiry\Models\Inquiry;
 
