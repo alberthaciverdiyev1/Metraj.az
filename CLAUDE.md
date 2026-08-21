@@ -53,7 +53,8 @@ Controllers → Services → Repositories → Eloquent Models → Database
 - Service-lər repository-ləri çağırır; sadə oxuma sorğularında model-ləri birbaşa da işlədə bilər.
 
 **3. Repositories** — `app/Modules/{Modul}/Repositories/`
-- Interface (məs: `PropertyRepositoryInterface`) + Eloquent implementasiya (`EloquentPropertyRepository`) eyni qovluqdadır.
+- Concrete implementasiya (`PropertyRepository`, `AgencyRepository`, `AgentRepository`, `BlogRepository`, `InquiryRepository`) + kontrakt sənədi kimi Interface (`PropertyRepositoryInterface` və s.).
+- Service-lər constructor-də **concrete** repository-ni qəbul edir (interface yox) — Laravel DI avtomatik çözür, bind-provider yoxdur.
 - Bütün verilənlər bazası sorğuları repository-lərdə cəmlənir.
 - Controller-lər repository-ləri **birbaşa çağırmır** — həmişə Service vasitəsilə.
 
@@ -85,7 +86,7 @@ app/
 │   ├── Property/
 │   │   ├── Controllers/ (HomeController, PropertyDetailController, AddPropertyController)
 │   │   ├── Services/ (PropertyService, PropertyTitleBuilder, PropertyPricePresenter)
-│   │   ├── Repositories/ (PropertyRepositoryInterface, EloquentPropertyRepository)
+│   │   ├── Repositories/ (PropertyRepositoryInterface, PropertyRepository)
 │   │   ├── Models/ (Property, PropertyImage)
 │   │   ├── DTOs/ (CreatePropertyDTO, PropertyFilterDTO)
 │   │   ├── Requests/ (StorePropertyRequest)
@@ -94,20 +95,20 @@ app/
 │   ├── Agency/
 │   │   ├── Controllers/ (AgencyDetailController, AgencyListController, AgentDetailController)
 │   │   ├── Services/ (AgencyService, AgentService)
-│   │   ├── Repositories/ (AgencyRepositoryInterface, AgentRepositoryInterface, Eloquent*)
+│   │   ├── Repositories/ (AgencyRepositoryInterface, AgentRepositoryInterface, AgencyRepository, AgentRepository)
 │   │   ├── Models/ (Agency, Agent)
 │   │   ├── Enums/ (AgencyStatus)
 │   │   └── Routes/web.php
 │   ├── Blog/
 │   │   ├── Controllers/ (BlogController)
 │   │   ├── Services/ (BlogService)
-│   │   ├── Repositories/ (BlogRepositoryInterface, EloquentBlogRepository)
+│   │   ├── Repositories/ (BlogRepositoryInterface, BlogRepository)
 │   │   ├── Models/ (Blog)
 │   │   └── Routes/web.php
 │   ├── Inquiry/
 │   │   ├── Controllers/ (InquiryController)
 │   │   ├── Services/ (InquiryService)
-│   │   ├── Repositories/ (InquiryRepositoryInterface, EloquentInquiryRepository)
+│   │   ├── Repositories/ (InquiryRepositoryInterface, InquiryRepository)
 │   │   ├── Models/ (Inquiry)
 │   │   ├── Requests/ (StoreInquiryRequest)
 │   │   └── Routes/web.php
@@ -128,7 +129,6 @@ app/
 │   └── Agency/Resources/          (PropertyResource, AgentResource, ...)
 └── Providers/
     ├── AppServiceProvider.php
-    ├── RepositoryServiceProvider.php   (interface → Eloquent repo bind-ləri)
     ├── ModuleServiceProvider.php       (modul routes qeydiyyatı)
     └── Filament/ (AdminPanelProvider, AgencyPanelProvider)
 
@@ -172,7 +172,7 @@ resources/views/                       (bütün Blade view-lar — merkezi)
 2. **Thin Controllers:** Controller-lərdə birbaşa Eloquent sorğuları və ağır biznes məntiqi yazılmır. Controller yalnız: request, validasiya, service çağırışı və view.
 3. **Biznes məntiqi Service-lərdə:** Hər əməliyyat müvafiq Service metodunda cəmlənir (məs: `PropertyService::create()`, `PropertyService::similar()`).
 4. **DB sorğuları Repository-lərdə:** Mürəkkəb sorğular (filtrləmə, axtarış, oxşar elanlar) repository metodlarında saxlanır.
-5. **Dependency Inversion (Repository-lər üçün):** Service-lər interface-lərdən asılıdır; Eloquent implementasiyalar `RepositoryServiceProvider`-də bind edilir.
+5. **Repository-lər concrete istifadə olunur:** Service-lər constructor-də interface yox, birbaşa concrete repository-ni qəbul edir (məs: `PropertyRepository`). Interface faylları yalnız kontrakt sənədi kimi qalır (`implements` üçün) — əlavə bind-provider tələb olunmur.
 6. **Form Request-lər:** Hər POST/PUT üçün ayrıca `FormRequest` sinfi yazılır (`app/Modules/{Modul}/Requests/`). Controller daxilində inline `$request->validate([...])` yazılmır.
 7. **API Resources:** JSON cavablar `app/Modules/{Modul}/Resources/` sinifləri ilə formalaşdırılır (məs: `CityResource`); controller-da əl ilə array map yazılmır.
 8. **Route faylları:** Hər modulun route-ları `app/Modules/{Modul}/Routes/web.php` faylındadır — əsas `routes/web.php`-yə əlavə edilmir.

@@ -2,7 +2,7 @@
 
 namespace App\Modules\Agency\Services;
 
-use App\Modules\Agency\Repositories\AgencyRepositoryInterface;
+use App\Modules\Agency\Repositories\AgencyRepository;
 use App\Modules\Property\Enums\PropertyStatus;
 use App\Modules\Agency\Models\Agency;
 use App\Modules\Agency\Models\Agent;
@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
 class AgencyService
 {
     public function __construct(
-        protected AgencyRepositoryInterface $agencyRepository,
+        protected AgencyRepository $agencyRepository,
     ) {}
 
     /**

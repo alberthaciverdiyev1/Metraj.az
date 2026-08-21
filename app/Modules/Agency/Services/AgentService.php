@@ -2,7 +2,7 @@
 
 namespace App\Modules\Agency\Services;
 
-use App\Modules\Agency\Repositories\AgentRepositoryInterface;
+use App\Modules\Agency\Repositories\AgentRepository;
 use App\Modules\Agency\Models\Agent;
 
 /**
@@ -11,7 +11,7 @@ use App\Modules\Agency\Models\Agent;
 class AgentService
 {
     public function __construct(
-        protected AgentRepositoryInterface $agentRepository,
+        protected AgentRepository $agentRepository,
     ) {}
 
     public function show(int $id): ?Agent

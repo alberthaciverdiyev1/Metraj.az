@@ -4,7 +4,7 @@ namespace App\Modules\Property\Services;
 
 use App\Modules\Property\DTOs\CreatePropertyDTO;
 use App\Modules\Property\DTOs\PropertyFilterDTO;
-use App\Modules\Property\Repositories\PropertyRepositoryInterface;
+use App\Modules\Property\Repositories\PropertyRepository;
 use App\Modules\Property\Models\Property;
 use App\Modules\Property\Models\PropertyImage;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -18,7 +18,7 @@ use Illuminate\Http\UploadedFile;
 class PropertyService
 {
     public function __construct(
-        protected PropertyRepositoryInterface $propertyRepository,
+        protected PropertyRepository $propertyRepository,
     ) {}
 
     public function paginate(PropertyFilterDTO $filter, int $perPage = 15): LengthAwarePaginator

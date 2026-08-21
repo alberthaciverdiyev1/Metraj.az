@@ -2,7 +2,7 @@
 
 namespace App\Modules\Inquiry\Services;
 
-use App\Modules\Inquiry\Repositories\InquiryRepositoryInterface;
+use App\Modules\Inquiry\Repositories\InquiryRepository;
 use App\Modules\Inquiry\Models\Inquiry;
 
 /**
@@ -11,7 +11,7 @@ use App\Modules\Inquiry\Models\Inquiry;
 class InquiryService
 {
     public function __construct(
-        protected InquiryRepositoryInterface $inquiryRepository,
+        protected InquiryRepository $inquiryRepository,
     ) {}
 
     public function create(array $data): Inquiry

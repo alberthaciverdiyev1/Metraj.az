@@ -2,7 +2,7 @@
 
 namespace App\Modules\Blog\Services;
 
-use App\Modules\Blog\Repositories\BlogRepositoryInterface;
+use App\Modules\Blog\Repositories\BlogRepository;
 use App\Modules\Blog\Models\Blog;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Collection;
 class BlogService
 {
     public function __construct(
-        protected BlogRepositoryInterface $blogRepository,
+        protected BlogRepository $blogRepository,
     ) {}
 
     public function index(int $perPage = 12): LengthAwarePaginator
