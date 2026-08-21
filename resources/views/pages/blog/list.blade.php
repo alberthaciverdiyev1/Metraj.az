@@ -6,7 +6,7 @@
 @include('components.scroll-top')
 
 <header>
-    <div class="container pt-20 mx-auto px-4">
+    <div class="w-full pt-4">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-start gap-4 md:gap-6">
             <h2 class="text-2xl lg:text-4xl font-bold py-4 text-[color:var(--text-color)]">
                 {{ __('Blog grid') }}

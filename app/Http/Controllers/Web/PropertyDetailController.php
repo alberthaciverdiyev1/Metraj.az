@@ -16,6 +16,9 @@ class PropertyDetailController extends Controller
     public function __invoke(string $slug): View
     {
         $property = Property::with([
+            'images',
+            'city',
+            'district',
             'agency',
             'agent.user',
             'amenities',
@@ -29,13 +32,49 @@ class PropertyDetailController extends Controller
         // Baxış sayını artırırıq
         $this->propertyRepository->incrementViews($property->id);
 
-        // Oxşar elanlar
-        $similarProperties = Property::with(['agency', 'agent', 'filterOptions.filter'])
-            ->where('id', '!=', $property->id)
+        // Oxşar elanlar: eyni əmlak növü və ya eyni şəhər/rayonda olan digər dərc edilmiş elanlar
+        $propertyTypeOpt = $property->filterOptions->firstWhere('filter_id', 3);
+        $similarQuery = Property::with([
+            'images',
+            'city',
+            'district',
+            'agency',
+            'agent.user',
+            'filterOptions.filter'
+        ])
+        ->where('id', '!=', $property->id)
+        ->where('status', 'published');
+
+        if ($propertyTypeOpt) {
+            $similarQuery->whereHas('filterOptions', function ($q) use ($propertyTypeOpt) {
+                $q->where('filter_options.id', $propertyTypeOpt->id);
+            });
+        } elseif ($property->city_id) {
+            $similarQuery->where('city_id', $property->city_id);
+        }
+
+        $similarProperties = $similarQuery->latest('id')->limit(3)->get();
+
+        // Əgər 3-dən azdırsa, digər sonuncu dərc edilmiş elanlarla tamamlayırıq
+        if ($similarProperties->count() < 3) {
+            $excludeIds = $similarProperties->pluck('id')->push($property->id)->toArray();
+            $fillCount = 3 - $similarProperties->count();
+            $moreProperties = Property::with([
+                'images',
+                'city',
+                'district',
+                'agency',
+                'agent.user',
+                'filterOptions.filter'
+            ])
+            ->whereNotIn('id', $excludeIds)
             ->where('status', 'published')
             ->latest('id')
-            ->limit(3)
+            ->limit($fillCount)
             ->get();
+
+            $similarProperties = $similarProperties->concat($moreProperties);
+        }
 
         $breadcrumbs = [
             ['label' => __('Home'), 'url' => '/'],

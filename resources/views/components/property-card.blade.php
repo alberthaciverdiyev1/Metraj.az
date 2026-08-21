@@ -126,8 +126,11 @@
     </div>
 
     <div class="flex justify-between items-center mt-auto border-t border-[color:var(--border-color)] pt-3">
+      @php
+          $displayPrice = $property->getDisplayPrice();
+      @endphp
       <span class="text-[color:var(--primary)] font-bold text-sm sm:text-base md:text-lg">
-        {{ $formattedPrice }} AZN
+        {{ $displayPrice['symbol'] }} {{ $displayPrice['formatted'] }}
       </span>
       <button onclick="event.stopPropagation(); toggleCompare(this, {{ $property->id }})"
               class="flex items-center gap-1 text-xs sm:text-sm text-[#2C2E33] hover:text-[color:var(--primary)] transition-colors">

@@ -13,6 +13,8 @@ Route::get('/listing', HomeController::class)->name('listing');
 
 // Əmlak Detal Səhifəsi
 Route::get('/elan/{slug}', PropertyDetailController::class)->name('properties.show');
+Route::get('/property/{slug}', PropertyDetailController::class);
+Route::get('/properties/{slug}', PropertyDetailController::class);
 
 // Müştəri Müraciəti (Lead göndərişi)
 Route::post('/inquiry', [InquiryController::class, 'store'])->name('inquiries.store');
@@ -163,25 +165,10 @@ Route::get('/my-properties', function () {
 // ============================================
 // Elan Əlavə Et
 // ============================================
-Route::get('/add-property', function () {
-    $locationFilter = \App\Core\Infrastructure\Persistence\Eloquent\Models\Filter::where('key', 'location')->first();
-    $cities = $locationFilter
-        ? \App\Core\Infrastructure\Persistence\Eloquent\Models\FilterOption::where('filter_id', $locationFilter->id)->whereNull('parent_id')->get()
-        : collect();
-
-    return view('pages.property.add', [
-        'cities' => $cities,
-        'features' => \App\Core\Infrastructure\Persistence\Eloquent\Models\Amenity::all(),
-        'nearbyObjects' => collect(),
-        'subways' => collect(),
-        'propertyTypes' => \App\Core\Infrastructure\Persistence\Eloquent\Models\FilterOption::where('filter_id', 3)->get(),
-        'repairTypes' => \App\Core\Infrastructure\Persistence\Eloquent\Models\FilterOption::where('filter_id', 5)->get(),
-        'currencies' => ['AZN', 'USD', 'EUR', 'GBP', 'TRY'],
-        'roomCounts' => [1, 2, 3, 4, 5, 6],
-    ]);
-})->name('add-property');
+Route::get('/add-property', [\App\Http\Controllers\Web\AddPropertyController::class, 'create'])->name('add-property');
+Route::post('/add-property', [\App\Http\Controllers\Web\AddPropertyController::class, 'store'])->name('add-property.store');
 // ============================================
-// Dil Dəyişimi
+// Dil & Valyuta Dəyişimi
 // ============================================
 Route::get('/lang/{locale}', function ($locale) {
     if (in_array($locale, ['az', 'en', 'ru'])) {
@@ -190,3 +177,12 @@ Route::get('/lang/{locale}', function ($locale) {
     }
     return redirect()->back();
 })->name('lang.switch');
+
+Route::get('/currency/{code}', function ($code) {
+    $valid = ['AZN', 'USD', 'EUR', 'GBP', 'TRY', 'RUB', 'AED'];
+    $code = strtoupper($code);
+    if (in_array($code, $valid)) {
+        session(['currency' => $code]);
+    }
+    return redirect()->back();
+})->name('currency.switch');

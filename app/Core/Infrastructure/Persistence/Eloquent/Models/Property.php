@@ -200,4 +200,39 @@ class Property extends Model
             return $filterKeyValue === $key;
         });
     }
+
+    /**
+     * Aktiv valyutaya uyğun formatlaşdırılmış qiyməti qaytarır
+     */
+    public function getDisplayPrice(?string $targetCurrency = null): array
+    {
+        $currency = strtoupper($targetCurrency ?: session('currency', 'AZN'));
+        $prices = $this->prices ?? [];
+        $symbol = match ($currency) {
+            'GBP' => '£',
+            'USD' => '$',
+            'EUR' => '€',
+            'AZN' => '₼',
+            'TRY' => '₺',
+            'RUB' => '₽',
+            'AED' => 'AED',
+            default => $currency,
+        };
+
+        if (!empty($prices[$currency])) {
+            $amount = (float) $prices[$currency];
+        } else {
+            $baseGbp = (float) $this->price;
+            $rates = \App\Core\Application\Currency\CurrencyService::getRatesFromGbp();
+            $rate = $rates[$currency] ?? 1.0;
+            $amount = $baseGbp * $rate;
+        }
+
+        return [
+            'amount' => $amount,
+            'formatted' => number_format($amount, 0, '.', ' '),
+            'currency' => $currency,
+            'symbol' => $symbol,
+        ];
+    }
 }

@@ -5,12 +5,19 @@
     $dealTypeOpt = $property->filterOptions->firstWhere('filter_id', 2);
     $isRent = $dealTypeOpt ? (str_contains($dealTypeOpt->value, 'rent')) : false;
 
-    $agentName = $property->agent->user->name ?? ($property->user->name ?? 'Metraj Təmsilçisi');
-    $agentPhone = $property->agent->phone ?? ($property->user->phone ?? '');
-    $agentAvatar = $property->agent->avatar_url ?? ($property->agent->user->avatar ?? 'https://themesflat.co/html/proty/images/avatar/seller.jpg');
+    $isAgentOrAgency = !empty($property->agent_id) 
+        || !empty($property->agency_id) 
+        || in_array($property->seller_type, ['agent', 'agency']) 
+        || !empty($property->agent) 
+        || !empty($property->agency);
+
+    $agentName = $property->agent->user->name ?? ($property->agency->name ?? ($property->user->name ?? 'Mülkiyyətçi'));
+    $agentPhone = $property->agent->phone ?? ($property->agency->phone ?? ($property->user->phone ?? ($property->phone ?? '+994 50 123 45 67')));
+    $agentAvatar = $property->agent->avatar_url ?? ($property->agency->logo_url ?? ($property->agent->user->avatar ?? 'https://themesflat.co/html/proty/images/avatar/seller.jpg'));
+    $agentRole = $property->agency ? 'Rəsmi Agentlik' : ($property->agent ? 'Rieltor / Satış Mütəxəssisi' : 'Mülkiyyətçi');
 @endphp
 
-<div class="max-w-[1400px] mx-auto pt-6 px-4 sm:px-6 lg:px-8">
+<div class="w-full pt-4">
     @include('components.breadcrumb', ['items' => $breadcrumbs ?? []])
 </div>
 
@@ -35,7 +42,7 @@
 </style>
 
 <!-- Gallery Section -->
-<div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+<div class="w-full mt-6">
 @php
     $galleryImages = $property->images->sortBy('sort_order')->values();
     $totalImages = count($galleryImages);
@@ -90,23 +97,35 @@
 </div>
 
 <!-- Main Details Layout -->
-<div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 mt-8 pb-16">
+<div class="w-full mt-8 pb-16">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
+
         <!-- Left Side: Property Content -->
         <div class="lg:col-span-2 space-y-6">
             <!-- Title & Price Card -->
             <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-gray-100 space-y-5">
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                @php
+                    $displayPrice = $property->getDisplayPrice();
+                    $activeCur = $displayPrice['currency'];
+                    $prices = $property->prices ?? [];
+                    if (empty($prices) && $property->price > 0) {
+                        $prices = \App\Core\Application\Currency\CurrencyService::convertFromGbp((float) $property->price);
+                    }
+                @endphp
+
+                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                     <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 leading-snug">{{ $property->title }}</h1>
-                    <div class="text-2xl sm:text-3xl font-black text-orange-500 whitespace-nowrap">
-                        {{ number_format($property->price, 0, '', ' ') }} AZN
-                        @if($isRent)
-                            <span class="text-sm font-medium text-gray-500">/ay</span>
-                        @endif
+                    <div class="text-right shrink-0">
+                        <div class="text-2xl sm:text-3xl font-black text-orange-500 whitespace-nowrap">
+                            {{ $displayPrice['symbol'] }} {{ $displayPrice['formatted'] }}
+                            @if($isRent)
+                                <span class="text-sm font-medium text-gray-500">/ay</span>
+                            @endif
+                        </div>
+
                     </div>
                 </div>
-                
+
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between border-t border-gray-100 pt-4 gap-4">
                     <div class="flex items-center text-gray-500 text-sm">
                         <i class="bi bi-geo-alt-fill text-orange-500 mr-2 text-lg"></i>
@@ -124,60 +143,126 @@
             <!-- Property Specs Component -->
             @include('components.property.specs', ['item' => $property])
 
+            @include('components.property.map', ['location' => $property, 'zoom' => 15])
             <!-- Features (Təchizatlar) Component -->
             @include('components.property.features', ['features' => $property->amenities ?? [], 'column' => 3])
-            
-            <!-- Nearby Objects (Yaxınlıqdakı Obyektlər) Component -->
-            @include('components.property.nearby-objects', ['objects' => collect(), 'column' => 3])
-            
-            <!-- Map Component -->
-            @include('components.property.map', ['location' => $property, 'zoom' => 15])
-
-            <!-- Virtual Tour Component -->
-            @include('components.property.virtual-tour', ['tour' => null])
-
-            <!-- Loan Calculator Container -->
-            <div class="loan-calculator-container w-full">
-                @include('components.loan-calculator')
-            </div>
 
             <!-- Similar Cards Section -->
-            @include('components.similar-cards', ['currentProperty' => $property])
-
-            <a href="/listing"
-               class="w-full sm:w-[300px] mt-10 text-center px-6 py-3 border border-orange-500 text-orange-500 font-bold rounded-2xl shadow-sm bg-white hover:bg-orange-50 transition justify-center inline-flex items-center gap-2">
-                <span>{{ __('Daha çox oxşar elan') }}</span>
-                <i class="bi bi-arrow-right"></i>
-            </a>
+            @include('components.similar-cards', ['similarProperties' => $similarProperties, 'currentProperty' => $property])
         </div>
 
         <!-- Right Side: Sidebar (Sticky) -->
         <div class="lg:col-span-1">
-            <div class="sticky top-24 space-y-6">
-                <!-- Realtor Contact Card -->
+            <div class="sticky top-24 z-10 space-y-6">
+                <!-- Contact Card -->
                 <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-gray-100 space-y-6">
-                    <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest">{{ __('Rieltor / Əlaqədar şəxs') }}</h3>
-                    
-                    <div class="flex items-center gap-4">
-                        <img src="{{ $agentAvatar }}" alt="{{ $agentName }}" class="w-16 h-16 rounded-2xl object-cover border border-gray-100 shadow-sm">
-                        <div class="space-y-0.5">
-                            <h4 class="text-base font-extrabold text-gray-900 leading-tight">{{ $agentName }}</h4>
-                            <p class="text-xs text-gray-500">{{ __('Satış Mütəxəssisi') }}</p>
+                    @if($isAgentOrAgency)
+                        <!-- Realtor / Agency Layout -->
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest">{{ $agentRole }}</h3>
+                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-orange-50 text-orange-600 border border-orange-200">
+                                <i class="bi bi-patch-check-fill text-orange-500"></i>
+                                {{ __('Təsdiqlənmiş') }}
+                            </span>
                         </div>
-                    </div>
 
-                    <div class="pt-4 border-t border-gray-100 space-y-3">
-                        <div class="flex items-center justify-between text-sm">
-                            <span class="text-gray-500">{{ __('Telefon') }}:</span>
-                            <a href="tel:{{ $agentPhone }}" class="font-bold text-gray-900 hover:text-orange-500 transition duration-200">{{ $agentPhone }}</a>
+                        <div class="flex items-center gap-4">
+                            <img src="{{ $agentAvatar }}" alt="{{ $agentName }}" class="w-16 h-16 rounded-2xl object-cover border border-gray-100 shadow-sm">
+                            <div class="space-y-0.5">
+                                <h4 class="text-base font-extrabold text-gray-900 leading-tight">{{ $agentName }}</h4>
+                                <p class="text-xs text-gray-500">{{ $agentRole }}</p>
+                            </div>
                         </div>
-                    </div>
 
-                    <a href="tel:{{ $agentPhone }}"
-                       class="w-full flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-2xl shadow-md transition duration-200 transform active:scale-98">
-                        <i class="bi bi-telephone-fill text-sm"></i>
-                        <span>{{ __('Zəng et') }}</span>
-                    </a>
+                        @if(!empty($agentPhone))
+                        <div class="pt-4 border-t border-gray-100 space-y-3">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-500">{{ __('Telefon') }}:</span>
+                                <a href="tel:{{ $agentPhone }}" class="font-bold text-gray-900 hover:text-orange-500 transition duration-200">{{ $agentPhone }}</a>
+                            </div>
+                        </div>
+
+                        <a href="tel:{{ $agentPhone }}"
+                           class="w-full flex items-center justify-center gap-2 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-md transition duration-200 transform active:scale-98">
+                            <i class="bi bi-telephone-fill text-sm"></i>
+                            <span>{{ __('Zəng et') }}</span>
+                        </a>
+                        @endif
+
+                        <!-- Müraciət Et Formu (Rieltor və ya Agentlik elanlarında) -->
+                        <div class="pt-6 border-t border-gray-100 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                    <i class="bi bi-chat-left-dots-fill text-orange-500"></i>
+                                    <span>{{ __('Müraciət Göndər') }}</span>
+                                </h4>
+                                <span class="text-[11px] text-gray-400 font-medium">{{ __('Onlayn sorğu') }}</span>
+                            </div>
+
+                            <form method="POST" action="{{ route('inquiries.store') }}" class="space-y-3">
+                                @csrf
+                                <input type="hidden" name="property_id" value="{{ $property->id }}">
+
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-600 mb-1">{{ __('Adınız və Soyadınız') }} <span class="text-rose-500">*</span></label>
+                                    <input type="text" name="name" required value="{{ auth()->user()?->name }}" placeholder="Məs: Əli Əliyev"
+                                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-600 mb-1">{{ __('Əlaqə Nömrəniz') }} <span class="text-rose-500">*</span></label>
+                                    <input type="text" name="phone" required value="{{ auth()->user()?->phone }}" placeholder="Məs: +994 50 123 45 67"
+                                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-600 mb-1">{{ __('Mesajınız / Qeyd') }}</label>
+                                    <textarea name="message" rows="3" placeholder="Salam, bu əmlakla bağlı ətraflı məlumat almaq istərdim..."
+                                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition"></textarea>
+                                </div>
+
+                                <button type="submit"
+                                    class="w-full py-3 bg-gray-900 hover:bg-black text-white font-bold text-xs rounded-xl shadow transition duration-200 flex items-center justify-center gap-2 transform active:scale-98">
+                                    <i class="bi bi-send-fill text-xs text-orange-400"></i>
+                                    <span>{{ __('Müraciəti Göndər') }}</span>
+                                </button>
+                            </form>
+                        </div>
+                    @else
+                        <!-- Guest / Owner Layout (Sadəcə Telefon və Zəng et) -->
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest">{{ __('Əlaqədar Şəxs') }}</h3>
+                                <span class="text-xs font-semibold text-gray-500">{{ __('Mülkiyyətçi') }}</span>
+                            </div>
+
+                            @if(!empty($agentName) && $agentName !== 'Metraj Təmsilçisi')
+                            <div class="text-base font-extrabold text-gray-900">
+                                {{ $agentName }}
+                            </div>
+                            @endif
+
+                            @if(!empty($agentPhone))
+                            <div class="p-4 bg-orange-50/60 border border-orange-100 rounded-2xl flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center text-lg shadow-sm">
+                                        <i class="bi bi-telephone-fill"></i>
+                                    </div>
+                                    <div>
+                                        <span class="block text-[11px] text-gray-500 font-medium">{{ __('Əlaqə nömrəsi') }}</span>
+                                        <a href="tel:{{ $agentPhone }}" class="text-base font-black text-gray-900 hover:text-orange-600 transition">{{ $agentPhone }}</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a href="tel:{{ $agentPhone }}"
+                               class="w-full flex items-center justify-center gap-2 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-md transition duration-200 transform active:scale-98">
+                                <i class="bi bi-telephone-fill text-sm"></i>
+                                <span>{{ __('Zəng et') }}</span>
+                            </a>
+                            @endif
+                        </div>
+                    @endif
                 </div>
 
                 @include('components.property.multiple-phone-modal')

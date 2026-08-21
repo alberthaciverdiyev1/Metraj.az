@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-[160px]">
+<div class="w-full py-8">
     <h1 class="text-3xl font-bold mb-6 text-gray-800">My favorites</h1>
 
     <div class="flex justify-end mb-6">

@@ -1,21 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="w-full">
-        <div class="flex mx-auto max-w-screen-3xl px-4 lg:px-6 xl:px-8 gap-9">
+    <div class="w-full pt-4">
+        @include('components.scroll-top')
 
-            @if(true)
-                <aside class="hidden xl:block w-[400px] mt-8">
-                    <div class="sticky top-24">
-                        <img src="https://placehold.co/400x1300" alt="Sol Reklam" class="rounded-lg shadow w-full"/>
-                    </div>
-                </aside>
-            @endif
-
-            <main class="w-full sm:mt-18">
-                @include('components.scroll-top')
-
-                <section class="property-listing relative py-4">
+        <section class="property-listing relative py-4">
                     <div class="container mx-auto px-4 text-sm">
 
                         <form method="GET" action="/listing" id="filterForm" class="space-y-4">
@@ -232,17 +221,6 @@
                         </div>
                     </div>
                 </section>
-            </main>
-
-            @if(true)
-                <aside class="hidden xl:block w-[400px] mt-8">
-                    <div class="sticky top-24">
-                        <img src="https://placehold.co/400x1300" alt="Sag Reklam" class="rounded-lg shadow w-full"/>
-                    </div>
-                </aside>
-            @endif
-
-        </div>
     </div>
 @endsection
 

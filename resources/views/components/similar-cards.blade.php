@@ -1,16 +1,17 @@
-@php
-    $dealTypeOpt = $currentProperty->filterOptions->firstWhere('filter_id', 2);
-    $addType = $dealTypeOpt ? ($dealTypeOpt->value === 'sale' ? 'sale' : 'rent') : 'sale';
-@endphp
+@if(isset($similarProperties) && $similarProperties->count() > 0)
+<div class="pt-8 relative">
+    <div class="flex items-center justify-between mb-6">
+        <h3 class="text-xl sm:text-2xl font-bold text-gray-900">{{ __('Oxşar Elanlar') }}</h3>
+        <a href="/listing" class="text-sm font-bold text-orange-500 hover:text-orange-600 inline-flex items-center gap-1 transition">
+            <span>{{ __('Hamısına bax') }}</span>
+            <i class="bi bi-arrow-right text-xs"></i>
+        </a>
+    </div>
 
-<div class="pt-8 relative min-h-[480px]">
-    <h3 class="mb-4 text-2xl py-7 text-[var(--primary)] font-semibold">{{ __('Oxşar elanlara bax') }}</h3>
-    <div class="similar-properties-grid grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3 mb-4"
-         id="similar-properties-container"
-         data-add-type="{{ $addType }}"
-         data-current-property-id="{{ $currentProperty->id ?? '' }}">
-        <div class="absolute inset-0 z-50 flex justify-center items-center bg-white/50" id="similar-cards-loader">
-            <div class="w-6 h-6 border-2 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
-        </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+        @foreach($similarProperties as $simProperty)
+            @include('components.property-card', ['property' => $simProperty])
+        @endforeach
     </div>
 </div>
+@endif

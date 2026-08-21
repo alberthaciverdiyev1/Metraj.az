@@ -3,7 +3,7 @@
 @section('title', ($blog->title ?? '') . ' - Bloq - Metraj.az')
 
 @section('content')
-<div class="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16">
+<div class="w-full pt-4 pb-16">
     @include('components.breadcrumb', ['items' => $breadcrumbs ?? []])
 
     {{-- ==================== BLOG HEADER ==================== --}}

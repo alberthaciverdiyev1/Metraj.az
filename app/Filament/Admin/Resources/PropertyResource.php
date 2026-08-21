@@ -231,7 +231,8 @@ class PropertyResource extends Resource
                     ->label('Dollar ($ USD)')
                     ->numeric()
                     ->prefix('$')
-                    ->required()
+                    ->disabled(fn (Forms\Get $get) => (bool) $get('auto_convert_currency'))
+                    ->dehydrated()
                     ->placeholder('Məs: 195000')
                     ->afterStateHydrated(function ($component, $record) {
                         if (! $record) return;
@@ -244,7 +245,8 @@ class PropertyResource extends Resource
                     ->label('Avro (€ EUR)')
                     ->numeric()
                     ->prefix('€')
-                    ->required()
+                    ->disabled(fn (Forms\Get $get) => (bool) $get('auto_convert_currency'))
+                    ->dehydrated()
                     ->placeholder('Məs: 177000')
                     ->afterStateHydrated(function ($component, $record) {
                         if (! $record) return;
@@ -257,7 +259,8 @@ class PropertyResource extends Resource
                     ->label('Manat (₼ AZN)')
                     ->numeric()
                     ->prefix('₼')
-                    ->required()
+                    ->disabled(fn (Forms\Get $get) => (bool) $get('auto_convert_currency'))
+                    ->dehydrated()
                     ->placeholder('Məs: 331500')
                     ->afterStateHydrated(function ($component, $record) {
                         if (! $record) return;
@@ -270,7 +273,8 @@ class PropertyResource extends Resource
                     ->label('Türk Lirəsi (₺ TL/TRY)')
                     ->numeric()
                     ->prefix('₺')
-                    ->required()
+                    ->disabled(fn (Forms\Get $get) => (bool) $get('auto_convert_currency'))
+                    ->dehydrated()
                     ->placeholder('Məs: 6675000')
                     ->afterStateHydrated(function ($component, $record) {
                         if (! $record) return;
@@ -283,7 +287,8 @@ class PropertyResource extends Resource
                     ->label('Rusiya Rublu (₽ RUB)')
                     ->numeric()
                     ->prefix('₽')
-                    ->required()
+                    ->disabled(fn (Forms\Get $get) => (bool) $get('auto_convert_currency'))
+                    ->dehydrated()
                     ->placeholder('Məs: 18000000')
                     ->afterStateHydrated(function ($component, $record) {
                         if (! $record) return;
@@ -296,7 +301,8 @@ class PropertyResource extends Resource
                     ->label('BƏƏ Dirhəmi (AED د.إ)')
                     ->numeric()
                     ->prefix('د.إ')
-                    ->required()
+                    ->disabled(fn (Forms\Get $get) => (bool) $get('auto_convert_currency'))
+                    ->dehydrated()
                     ->placeholder('Məs: 715500')
                     ->afterStateHydrated(function ($component, $record) {
                         if (! $record) return;

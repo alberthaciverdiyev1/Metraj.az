@@ -1,346 +1,988 @@
 @extends('layouts.app')
 
-@php
-    $pageData = [
-        'cities' => $cities,
-        'features' => $features,
-        'nearbyObjects' => $nearbyObjects,
-        'subways' => $subways,
-        'propertyTypes' => $propertyTypes,
-        'repairTypes' => $repairTypes,
-        'currencies' => $currencies,
-        'roomCounts' => $roomCounts,
-    ];
-@endphp
-
 @section('content')
-@include('components.breadcrumb', ['items' => [
-    ['label' => __('Home'), 'url' => '/'],
-    ['label' => __('Add Property')],
-]])
+<div class="w-full pt-4">
+    @include('components.breadcrumb', ['items' => [
+        ['label' => __('Ana Səhifə'), 'url' => '/'],
+        ['label' => __('Yeni Elan Yerləşdir')],
+    ]])
+</div>
+
 @include('components.scroll-top')
 
-<section id="add-property" class="container px-4 mx-auto py-8">
-    {{-- Validation errors --}}
+<section id="add-property" class="w-full py-4 mb-16">
     @if($errors->any())
-    <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
-        <ul class="list-disc list-inside">
-            @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+        <div class="bg-rose-50 border border-rose-200 text-rose-800 px-6 py-4 rounded-2xl mb-8 shadow-sm">
+            <div class="flex items-center gap-2 font-bold text-sm mb-2">
+                <i class="bi bi-exclamation-triangle-fill text-rose-600"></i>
+                <span>{{ __('Zəhmət olmasa formdakı xətaları düzəldin:') }}</span>
+            </div>
+            <ul class="list-disc list-inside text-xs space-y-1">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
 
-    <form method="POST" action="{{ url('/add-property') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('add-property.store') }}" enctype="multipart/form-data" id="propertyForm" class="space-y-8">
         @csrf
 
-        {{-- Property Type --}}
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 class="text-xl font-bold mb-4">{{ __('Property Type') }}</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {{-- Building type --}}
-                <div class="custom-select-container relative" id="building-type-container">
-                    <button type="button" class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                        <span class="custom-select-text">{{ __('Building Type') }}</span>
-                        <svg class="w-4 h-4 ml-2 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                    </button>
-                    <ul class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden max-h-60 overflow-y-auto"></ul>
-                    <input type="hidden" name="building_type" id="building-type-input">
+        <!-- BÖLMƏ 1: Əsas Göstəricilər və Qiymət -->
+        <div class="bg-white rounded-2xl border border-gray-200/80 p-6 sm:p-8 shadow-sm space-y-7">
+            <div class="border-b border-gray-100 pb-4">
+                <h2 class="text-lg font-bold text-gray-900">{{ __('1. Əsas Məlumatlar və Qiymət') }}</h2>
+                <p class="text-xs text-gray-500 mt-0.5">{{ __('Əmlak növü, əməliyyat, qiymət və əsas parametrlər') }}</p>
+            </div>
+
+            <!-- Əmlak Növü & Alqı-satqı -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-bold text-gray-800 mb-2">{{ __('Əmlakın Növü') }} <span class="text-rose-500">*</span></label>
+                    @if($propertyTypes->count() <= 2)
+                        <div class="grid grid-cols-{{ $propertyTypes->count() }} gap-2">
+                            @foreach($propertyTypes as $type)
+                                <label class="relative flex items-center justify-center p-3 text-center rounded-xl border cursor-pointer select-none transition-all
+                                    has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50/70 has-[:checked]:text-orange-950 has-[:checked]:font-bold
+                                    border-gray-200 bg-gray-50/60 text-gray-700 font-medium hover:border-gray-300 text-xs sm:text-sm">
+                                    <input type="radio" name="property_type_id" value="{{ $type->id }}" {{ old('property_type_id') == $type->id ? 'checked' : '' }} required class="sr-only">
+                                    <span>{{ $type->name['az'] ?? $type->value }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                    @else
+                        <select name="property_type_id" id="property_type_id" required
+                            class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition">
+                            <option value="">{{ __('Seçin...') }}</option>
+                            @foreach($propertyTypes as $type)
+                                <option value="{{ $type->id }}" {{ old('property_type_id') == $type->id ? 'selected' : '' }}>
+                                    {{ $type->name['az'] ?? $type->value }}
+                                </option>
+                            @endforeach
+                        </select>
+                    @endif
                 </div>
 
-                {{-- Add type --}}
-                <div class="custom-select-container relative" id="add-type-container">
-                    <button type="button" class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                        <span class="custom-select-text">{{ __('Add Type') }}</span>
-                        <svg class="w-4 h-4 ml-2 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                    </button>
-                    <ul class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
-                        <li data-value="sale" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">{{ __('For Sale') }}</li>
-                        <li data-value="rent" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">{{ __('For Rent') }}</li>
-                    </ul>
-                    <input type="hidden" name="add_type" id="add-type-input">
-                </div>
-
-                {{-- Rent period (shown when add_type = rent) --}}
-                <div class="custom-select-container relative hidden" id="rent-type-container">
-                    <button type="button" class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                        <span class="custom-select-text">{{ __('Rent Period') }}</span>
-                        <svg class="w-4 h-4 ml-2 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                    </button>
-                    <ul class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
-                        <li data-value="daily" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">{{ __('Daily') }}</li>
-                        <li data-value="monthly" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">{{ __('Monthly') }}</li>
-                    </ul>
-                    <input type="hidden" name="rent_type" id="rent-type-input">
-                </div>
-
-                {{-- Property condition --}}
-                <div class="custom-select-container relative" id="repair-type-container">
-                    <button type="button" class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                        <span class="custom-select-text">{{ __('Condition') }}</span>
-                        <svg class="w-4 h-4 ml-2 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                    </button>
-                    <ul class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden"></ul>
-                    <input type="hidden" name="property_condition" id="repair-type-input">
+                <div>
+                    <label class="block text-sm font-bold text-gray-800 mb-2">{{ __('Alqı-satqı Növü') }} <span class="text-rose-500">*</span></label>
+                    @if($dealTypes->count() <= 2)
+                        <div class="grid grid-cols-{{ $dealTypes->count() }} gap-2">
+                            @foreach($dealTypes as $deal)
+                                <label class="relative flex items-center justify-center p-3 text-center rounded-xl border cursor-pointer select-none transition-all
+                                    has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50/70 has-[:checked]:text-orange-950 has-[:checked]:font-bold
+                                    border-gray-200 bg-gray-50/60 text-gray-700 font-medium hover:border-gray-300 text-xs sm:text-sm">
+                                    <input type="radio" name="deal_type_id" value="{{ $deal->id }}" {{ old('deal_type_id', $loop->first ? $deal->id : null) == $deal->id ? 'checked' : '' }} required class="sr-only">
+                                    <span>{{ $deal->name['az'] ?? $deal->value }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                    @else
+                        <select name="deal_type_id" id="deal_type_id" required
+                            class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition">
+                            <option value="">{{ __('Seçin...') }}</option>
+                            @foreach($dealTypes as $deal)
+                                <option value="{{ $deal->id }}" {{ old('deal_type_id') == $deal->id ? 'selected' : '' }}>
+                                    {{ $deal->name['az'] ?? $deal->value }}
+                                </option>
+                            @endforeach
+                        </select>
+                    @endif
                 </div>
             </div>
-        </div>
 
-        {{-- Property Details --}}
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 class="text-xl font-bold mb-4">{{ __('Property Details') }}</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {{-- Room count --}}
-                <div class="custom-select-container relative" id="room-count-container">
-                    <button type="button" class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                        <span class="custom-select-text">{{ __('Room Count') }}</span>
-                        <svg class="w-4 h-4 ml-2 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                    </button>
-                    <ul class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden max-h-60 overflow-y-auto"></ul>
-                    <input type="hidden" name="number_of_rooms" id="room-count-input">
+            <!-- Qiymət Bölməsi (Primary GBP + Auto Convert) -->
+            <div class="p-5 bg-gray-50/80 rounded-2xl border border-gray-200/80 space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                        <span class="text-sm font-bold text-gray-900">{{ __('Qiymət') }}</span>
+                        <p class="text-xs text-gray-500">{{ __('Baza qiymət Pound (£ GBP) olaraq daxil edilir və digər valyutalar avtomatik hesablanır') }}</p>
+                    </div>
+
+                    <!-- Auto-convert toggle -->
+                    <label class="inline-flex items-center gap-2.5 cursor-pointer select-none">
+                        <input type="checkbox" id="auto_convert_toggle" checked class="sr-only peer">
+                        <div class="w-9 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-orange-500 relative"></div>
+                        <span class="text-xs font-semibold text-gray-700">{{ __('Avtomatik Məzənnə') }}</span>
+                    </label>
                 </div>
 
-                {{-- Number of floors (building total floors) --}}
-                <div class="custom-select-container relative" id="floor-container">
-                    <button type="button" class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                        <span class="custom-select-text">{{ __('Total Floors') }}</span>
-                        <svg class="w-4 h-4 ml-2 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                    </button>
-                    <ul class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden max-h-60 overflow-y-auto">
-                        @for($i = 1; $i <= 50; $i++)
-                        <li data-value="{{ $i }}" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">{{ $i }}</li>
+                <!-- Primary GBP Input -->
+                <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-orange-600 font-extrabold text-base">£</span>
+                    <input type="number" step="any" name="price_gbp" id="price_gbp" value="{{ old('price_gbp') }}" required min="1" placeholder="Məs: 150000"
+                        class="w-full bg-white border border-gray-300 rounded-xl pl-9 pr-4 py-3 text-base font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 transition shadow-inner">
+                </div>
+
+                <!-- Other Currencies Grid (Disabled/Readonly when auto-convert is ON) -->
+                <div id="other_currencies_grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 pt-2 border-t border-gray-200">
+                    <div>
+                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">USD ($)</label>
+                        <input type="number" step="any" name="prices[USD]" id="price_usd" value="{{ old('prices.USD') }}" min="1"
+                            class="currency-converted-input w-full bg-gray-100/90 text-gray-500 cursor-not-allowed border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:ring-2 focus:ring-orange-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">EUR (€)</label>
+                        <input type="number" step="any" name="prices[EUR]" id="price_eur" value="{{ old('prices.EUR') }}" min="1"
+                            class="currency-converted-input w-full bg-gray-100/90 text-gray-500 cursor-not-allowed border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:ring-2 focus:ring-orange-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">AZN (₼)</label>
+                        <input type="number" step="any" name="prices[AZN]" id="price_azn" value="{{ old('prices.AZN') }}" min="1"
+                            class="currency-converted-input w-full bg-gray-100/90 text-gray-500 cursor-not-allowed border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:ring-2 focus:ring-orange-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">TRY (₺)</label>
+                        <input type="number" step="any" name="prices[TRY]" id="price_try" value="{{ old('prices.TRY') }}" min="1"
+                            class="currency-converted-input w-full bg-gray-100/90 text-gray-500 cursor-not-allowed border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:ring-2 focus:ring-orange-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">RUB (₽)</label>
+                        <input type="number" step="any" name="prices[RUB]" id="price_rub" value="{{ old('prices.RUB') }}" min="1"
+                            class="currency-converted-input w-full bg-gray-100/90 text-gray-500 cursor-not-allowed border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:ring-2 focus:ring-orange-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">AED</label>
+                        <input type="number" step="any" name="prices[AED]" id="price_aed" value="{{ old('prices.AED') }}" min="1"
+                            class="currency-converted-input w-full bg-gray-100/90 text-gray-500 cursor-not-allowed border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:ring-2 focus:ring-orange-500 transition">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ölçülər və Mərtəbə (Torpaq üçün dinamik gizlənir) -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div id="wrapper_area">
+                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Sahə (m²)') }}</label>
+                    <input type="number" step="any" name="area" id="area" value="{{ old('area') }}" placeholder="120"
+                        class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+
+                <div id="wrapper_land_area" class="hidden">
+                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Torpaq Sahəsi (sot)') }} <span class="text-rose-500">*</span></label>
+                    <input type="number" step="any" name="land_area" id="land_area" value="{{ old('land_area') }}" placeholder="6"
+                        class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+
+                <div id="wrapper_rooms">
+                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Otaq Sayı') }}</label>
+                    <select name="rooms" id="rooms"
+                        class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        <option value="">{{ __('Seçin...') }}</option>
+                        @for($i = 1; $i <= 10; $i++)
+                            <option value="{{ $i }}" {{ old('rooms') == $i ? 'selected' : '' }}>{{ $i }} otaqlı</option>
                         @endfor
-                    </ul>
-                    <input type="hidden" name="number_of_floors" id="floor-input">
+                    </select>
                 </div>
 
-                {{-- Floor located --}}
+                <div id="wrapper_floor">
+                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Mərtəbə') }}</label>
+                    <input type="number" name="floor" id="floor" value="{{ old('floor') }}" placeholder="5" min="1" max="100"
+                        class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+
+                <div id="wrapper_total_floors">
+                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Binanın Mərtəbəsi') }}</label>
+                    <input type="number" name="total_floors" id="total_floors" value="{{ old('total_floors') }}" placeholder="16" min="1" max="100"
+                        class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+            </div>
+
+            <!-- Əlavə Xüsusiyyətlər (Tikili, Təmir, İstilik, Mənzərə) -->
+            <div id="section_features" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2 border-t border-gray-100">
+                <!-- Tikili Növü -->
                 <div>
-                    <input type="number" name="floor_located" id="floor-located" placeholder="{{ __('Floor Located') }}" min="1" max="100"
-                        class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-300">
+                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Tikili Növü') }}</label>
+                    @if($buildingTypes->count() <= 2)
+                        <div class="grid grid-cols-{{ $buildingTypes->count() }} gap-2">
+                            @foreach($buildingTypes as $bt)
+                                <label class="relative flex items-center justify-center p-2.5 text-center rounded-xl border cursor-pointer select-none transition-all
+                                    has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50/70 has-[:checked]:text-orange-950 has-[:checked]:font-bold
+                                    border-gray-200 bg-gray-50 text-gray-700 font-medium hover:border-gray-300 text-xs">
+                                    <input type="radio" name="building_type_id" value="{{ $bt->id }}" {{ old('building_type_id') == $bt->id ? 'checked' : '' }} class="sr-only">
+                                    <span>{{ $bt->name['az'] ?? $bt->value }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                    @else
+                        <select name="building_type_id" id="building_type_id"
+                            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-medium text-gray-900 focus:ring-2 focus:ring-orange-500">
+                            <option value="">{{ __('Seçin...') }}</option>
+                            @foreach($buildingTypes as $bt)
+                                <option value="{{ $bt->id }}" {{ old('building_type_id') == $bt->id ? 'selected' : '' }}>{{ $bt->name['az'] ?? $bt->value }}</option>
+                            @endforeach
+                        </select>
+                    @endif
                 </div>
 
-                {{-- Area (m²) --}}
-                <div id="area-wrapper">
-                    <input type="number" name="area" id="area" placeholder="{{ __('Area') }} (m²)" min="1"
-                        class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-300">
-                </div>
-
-                {{-- Field area (m²) - shown for LAND type --}}
-                <div id="field-area-wrapper" class="hidden">
-                    <input type="number" name="field_area" id="field-area" placeholder="{{ __('Field Area') }} (m²)" min="1"
-                        class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-300">
-                </div>
-            </div>
-
-            {{-- Price row --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+                <!-- Təmir Vəziyyəti -->
                 <div>
-                    <input type="number" name="price" id="price" placeholder="{{ __('Price') }}" min="0"
-                        class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-300">
-                </div>
-                <div class="custom-select-container relative" id="currency-container">
-                    <button type="button" class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                        <span class="custom-select-text">AZN</span>
-                        <svg class="w-4 h-4 ml-2 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                    </button>
-                    <ul class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden"></ul>
-                    <input type="hidden" name="currency" id="currency-input" value="AZN">
-                </div>
-            </div>
-
-            {{-- Checkboxes --}}
-            <div class="flex flex-wrap gap-6 mt-4">
-                <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" name="in_credit" id="in-credit" value="1" class="w-4 h-4 text-orange-500 border-gray-300 rounded focus:ring-orange-500">
-                    <span>{{ __('Credit Available') }}</span>
-                </label>
-                <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" name="has_deed" id="has-deed" value="1" class="w-4 h-4 text-orange-500 border-gray-300 rounded focus:ring-orange-500">
-                    <span>{{ __('Has Deed') }}</span>
-                </label>
-            </div>
-        </div>
-
-        {{-- Location --}}
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 class="text-xl font-bold mb-4">{{ __('Location') }}</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-                <div class="custom-select-container relative" id="city-container">
-                    <button type="button" class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                        <span class="custom-select-text">{{ __('City') }}</span>
-                        <svg class="w-4 h-4 ml-2 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                    </button>
-                    <ul class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden max-h-60 overflow-y-auto"></ul>
-                    <input type="hidden" name="city_id" id="city-input">
+                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Təmir Vəziyyəti') }}</label>
+                    @if($repairTypes->count() <= 2)
+                        <div class="grid grid-cols-{{ $repairTypes->count() }} gap-2">
+                            @foreach($repairTypes as $rt)
+                                <label class="relative flex items-center justify-center p-2.5 text-center rounded-xl border cursor-pointer select-none transition-all
+                                    has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50/70 has-[:checked]:text-orange-950 has-[:checked]:font-bold
+                                    border-gray-200 bg-gray-50 text-gray-700 font-medium hover:border-gray-300 text-xs">
+                                    <input type="radio" name="repair_type_id" value="{{ $rt->id }}" {{ old('repair_type_id') == $rt->id ? 'checked' : '' }} class="sr-only">
+                                    <span>{{ $rt->name['az'] ?? $rt->value }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                    @else
+                        <select name="repair_type_id" id="repair_type_id"
+                            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-medium text-gray-900 focus:ring-2 focus:ring-orange-500">
+                            <option value="">{{ __('Seçin...') }}</option>
+                            @foreach($repairTypes as $rt)
+                                <option value="{{ $rt->id }}" {{ old('repair_type_id') == $rt->id ? 'selected' : '' }}>{{ $rt->name['az'] ?? $rt->value }}</option>
+                            @endforeach
+                        </select>
+                    @endif
                 </div>
 
-                <div class="custom-select-container relative hidden" id="district-container">
-                    <button type="button" class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                        <span class="custom-select-text">{{ __('District') }}</span>
-                        <svg class="w-4 h-4 ml-2 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                    </button>
-                    <ul class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden max-h-60 overflow-y-auto"></ul>
-                    <input type="hidden" name="district_id" id="district-input">
-                </div>
-
-                <div class="custom-select-container relative hidden" id="town-container">
-                    <button type="button" class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                        <span class="custom-select-text">{{ __('Town') }}</span>
-                        <svg class="w-4 h-4 ml-2 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                    </button>
-                    <ul class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden max-h-60 overflow-y-auto"></ul>
-                    <input type="hidden" name="town_id" id="town-input">
-                </div>
-            </div>
-
-            {{-- Address + Map --}}
-            <div class="flex flex-col sm:flex-row gap-2 mb-4">
-                <input type="text" name="address" id="address" placeholder="{{ __('Full address') }}"
-                    class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-300">
-                <button type="button" id="searchAddress" class="bg-[var(--primary)] text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition whitespace-nowrap">
-                    {{ __('Search on Map') }}
-                </button>
-            </div>
-
-            <div id="map" style="height: 400px; width: 100%; border-radius: 0.5rem; z-index: 1;"></div>
-            <input type="hidden" name="latitude" id="latitude">
-            <input type="hidden" name="longitude" id="longitude">
-
-            <div class="mt-4">
-                <label for="google_map_location" class="block font-semibold mb-1">{{ __('Google Maps Link') }} ({{ __('optional') }}):</label>
-                <input type="text" name="google_map_location" id="google_map_location" placeholder="https://maps.google.com/..."
-                    class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-300">
-            </div>
-        </div>
-
-        {{-- Description --}}
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 class="text-xl font-bold mb-4">{{ __('Description') }}</h2>
-            <textarea name="description" id="description" rows="5" placeholder="{{ __('Property description') }}"
-                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-300 mb-4"></textarea>
-            <textarea name="note_to_admin" id="note-to-admin" rows="3" placeholder="{{ __('Note to admin') }}"
-                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-300"></textarea>
-        </div>
-
-        {{-- Photos --}}
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 class="text-xl font-bold mb-4">{{ __('Photos') }}</h2>
-            <div id="dropzone" class="border-4 border-dashed border-gray-300 rounded-lg py-10 text-center cursor-pointer hover:border-orange-300 transition">
-                <label class="bg-[var(--primary)] text-white px-6 py-3 rounded-lg cursor-pointer hover:bg-orange-600 transition inline-block">
-                    <i class="bi bi-paperclip"></i> {{ __('Choose Files') }}
-                    <input type="file" id="fileInput" name="media[]" multiple accept="image/*" class="hidden">
-                </label>
-                <p class="text-sm text-gray-500 mt-2">{{ __('Max 10 photos') }}</p>
-            </div>
-            <div id="gallery" class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
-        </div>
-
-        {{-- Features --}}
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 class="text-xl font-bold mb-4">{{ __('Features') }}</h2>
-            <input type="text" id="featureSearch" placeholder="{{ __('Search') }}..."
-                class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-orange-300">
-            <div id="features-container" class="relative overflow-hidden max-h-48">
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2" id="features"></div>
-                <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none fade-overlay"></div>
-            </div>
-            <button type="button" id="toggle-features" class="mt-2 text-[var(--primary)] border border-[var(--primary)] px-3 rounded-md py-1 hover:bg-orange-50 transition">
-                {{ __('Show more') }} <i class="bi bi-chevron-down"></i>
-            </button>
-        </div>
-
-        {{-- Nearby Objects --}}
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 class="text-xl font-bold mb-4">{{ __('Nearby Objects') }}</h2>
-            <input type="text" id="nearbySearch" placeholder="{{ __('Search') }}..."
-                class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-orange-300">
-            <div id="nearby-objects-container" class="relative overflow-hidden max-h-48">
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2" id="nearby-objects"></div>
-                <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none fade-overlay"></div>
-            </div>
-            <button type="button" id="toggle-nearby-objects" class="mt-2 text-[var(--primary)] border border-[var(--primary)] px-3 rounded-md py-1 hover:bg-orange-50 transition">
-                {{ __('Show more') }} <i class="bi bi-chevron-down"></i>
-            </button>
-        </div>
-
-        {{-- Contact Information --}}
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 class="text-xl font-bold mb-4">{{ __('Contact Information') }}</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                <div class="custom-select-container relative" id="advertiser-container">
-                    <span class="block font-semibold mb-1">{{ __('Advertiser') }}:*</span>
-                    <button type="button" class="custom-select-button w-full border border-gray-300 rounded-lg p-2 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-300">
-                        <span class="custom-select-text">{{ __('Choose one') }}</span>
-                        <svg class="w-4 h-4 ml-2 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                    </button>
-                    <ul class="custom-select-options absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full hidden">
-                        <li data-value="owner" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">{{ __('Owner') }}</li>
-                        <li data-value="agent" class="px-4 py-2 hover:bg-orange-100 cursor-pointer">{{ __('Agent') }}</li>
-                    </ul>
-                    <input type="hidden" name="advertiser" id="advertiser-input">
-                </div>
+                <!-- İstilik Sistemi -->
                 <div>
-                    <label for="advertiser-name" class="block font-semibold mb-1">{{ __('Advertiser Name') }}:*</label>
-                    <input type="text" name="advertiser_name" id="advertiser-name" placeholder="{{ __('Name') }}"
-                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-300">
+                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('İstilik Sistemi') }}</label>
+                    @if($heatingSystems->count() <= 2)
+                        <div class="grid grid-cols-{{ $heatingSystems->count() }} gap-2">
+                            @foreach($heatingSystems as $hs)
+                                <label class="relative flex items-center justify-center p-2.5 text-center rounded-xl border cursor-pointer select-none transition-all
+                                    has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50/70 has-[:checked]:text-orange-950 has-[:checked]:font-bold
+                                    border-gray-200 bg-gray-50 text-gray-700 font-medium hover:border-gray-300 text-xs">
+                                    <input type="radio" name="heating_system_id" value="{{ $hs->id }}" {{ old('heating_system_id') == $hs->id ? 'checked' : '' }} class="sr-only">
+                                    <span>{{ $hs->name['az'] ?? $hs->value }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                    @else
+                        <select name="heating_system_id" id="heating_system_id"
+                            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-medium text-gray-900 focus:ring-2 focus:ring-orange-500">
+                            <option value="">{{ __('Seçin...') }}</option>
+                            @foreach($heatingSystems as $hs)
+                                <option value="{{ $hs->id }}" {{ old('heating_system_id') == $hs->id ? 'selected' : '' }}>{{ $hs->name['az'] ?? $hs->value }}</option>
+                            @endforeach
+                        </select>
+                    @endif
                 </div>
-            </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                @for($i = 1; $i <= 4; $i++)
+                <!-- Pəncərə Baxışı -->
                 <div>
-                    <label for="phone_{{ $i }}" class="block font-semibold mb-1">{{ __('Phone') }} {{ $i }}@if($i === 1)<span class="text-red-500">*</span>@endif</label>
-                    <input type="text" name="phone_{{ $i }}" id="phone_{{ $i }}" placeholder="{{ __('Enter phone number') }}"
-                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-300">
+                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Pəncərə Baxışı') }}</label>
+                    @if($windowViews->count() <= 2)
+                        <div class="grid grid-cols-{{ $windowViews->count() }} gap-2">
+                            @foreach($windowViews as $wv)
+                                <label class="relative flex items-center justify-center p-2.5 text-center rounded-xl border cursor-pointer select-none transition-all
+                                    has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50/70 has-[:checked]:text-orange-950 has-[:checked]:font-bold
+                                    border-gray-200 bg-gray-50 text-gray-700 font-medium hover:border-gray-300 text-xs">
+                                    <input type="radio" name="window_view_id" value="{{ $wv->id }}" {{ old('window_view_id') == $wv->id ? 'checked' : '' }} class="sr-only">
+                                    <span>{{ $wv->name['az'] ?? $wv->value }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                    @else
+                        <select name="window_view_id" id="window_view_id"
+                            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-medium text-gray-900 focus:ring-2 focus:ring-orange-500">
+                            <option value="">{{ __('Seçin...') }}</option>
+                            @foreach($windowViews as $wv)
+                                <option value="{{ $wv->id }}" {{ old('window_view_id') == $wv->id ? 'selected' : '' }}>{{ $wv->name['az'] ?? $wv->value }}</option>
+                            @endforeach
+                        </select>
+                    @endif
                 </div>
-                @endfor
             </div>
 
-            <div class="mb-4">
-                <label for="email" class="block font-semibold mb-1">{{ __('Email') }}:<span class="text-red-500">*</span></label>
-                <input type="email" name="email" id="email" placeholder="{{ __('Email') }}"
-                    class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-300">
+            <!-- Sənədlər və Kredit Şərtləri -->
+            <div id="section_documents_credit" class="pt-4 border-t border-gray-100">
+                <span class="block text-xs font-bold text-gray-700 mb-3">{{ __('Sənəd və Kredit Şərtləri') }}</span>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <label class="flex items-center gap-3 p-3 bg-gray-50/70 border border-gray-200 rounded-xl cursor-pointer hover:border-orange-300 transition">
+                        <input type="checkbox" name="has_document" value="1" {{ old('has_document') ? 'checked' : '' }} class="w-4 h-4 text-orange-500 rounded border-gray-300 focus:ring-orange-500">
+                        <span class="text-xs font-bold text-gray-800">{{ __('Çıxarış var (Kupça)') }}</span>
+                    </label>
+
+                    <label class="flex items-center gap-3 p-3 bg-gray-50/70 border border-gray-200 rounded-xl cursor-pointer hover:border-orange-300 transition">
+                        <input type="checkbox" name="has_mortgage" value="1" {{ old('has_mortgage') ? 'checked' : '' }} class="w-4 h-4 text-orange-500 rounded border-gray-300 focus:ring-orange-500">
+                        <span class="text-xs font-bold text-gray-800">{{ __('İpotekaya yararlı') }}</span>
+                    </label>
+
+                    <label class="flex items-center gap-3 p-3 bg-gray-50/70 border border-gray-200 rounded-xl cursor-pointer hover:border-orange-300 transition">
+                        <input type="checkbox" name="has_internal_credit" value="1" {{ old('has_internal_credit') ? 'checked' : '' }} class="w-4 h-4 text-orange-500 rounded border-gray-300 focus:ring-orange-500">
+                        <span class="text-xs font-bold text-gray-800">{{ __('Daxili kredit var') }}</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Təsvir (Rich Text Editor) -->
+            <div class="pt-4 border-t border-gray-100">
+                <label class="block text-xs font-bold text-gray-700 mb-2">{{ __('Ətraflı Təsvir') }}</label>
+                <div id="editor_wrapper" class="bg-white rounded-xl border border-gray-200 overflow-hidden focus-within:border-orange-500 focus-within:ring-2 focus-within:ring-orange-500/20 transition cursor-text shadow-sm">
+                    <div id="editor_container" class="min-h-[160px] text-sm text-gray-900 cursor-text">
+                        {!! old('description') !!}
+                    </div>
+                </div>
+                <input type="hidden" name="description" id="description_input">
             </div>
         </div>
 
-        {{-- Terms + Submit --}}
-        <div class="flex items-center gap-2 mb-6">
-            <input type="checkbox" id="terms" class="w-4 h-4 text-orange-500 border-gray-300 rounded focus:ring-orange-500">
-            <label for="terms" class="select-none text-sm">
-                {{ __('I have to accept') }}
-                <a href="/istifadeci-razilasi" target="_blank" class="text-[var(--primary)] underline hover:text-orange-500 transition">
-                    {{ __('Privacy and policy') }}.
-                </a>
-                <span class="text-red-500">*</span>
-            </label>
+        <!-- BÖLMƏ 2: Məkan və Xəritə -->
+        <div class="bg-white rounded-2xl border border-gray-200/80 p-6 sm:p-8 shadow-sm space-y-6">
+            <div class="border-b border-gray-100 pb-4">
+                <h2 class="text-lg font-bold text-gray-900">{{ __('2. Məkan və Xəritə') }}</h2>
+                <p class="text-xs text-gray-500 mt-0.5">{{ __('Şəhər, rayon və xəritədə dəqiq yeri qeyd edin') }}</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Şəhər') }} <span class="text-rose-500">*</span></label>
+                    <select name="city_id" id="city_id" required
+                        class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        <option value="">{{ __('Şəhər seçin...') }}</option>
+                        @foreach($cities as $city)
+                            <option value="{{ $city->id }}" data-districts='@json($city->activeDistricts)' {{ old('city_id') == $city->id ? 'selected' : '' }}>
+                                {{ $city->name['az'] ?? $city->slug }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Rayon / Qəsəbə') }}</label>
+                    <select name="district_id" id="district_id"
+                        class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        <option value="">{{ __('Rayon seçin...') }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Dəqiq Ünvan (2-way sync) -->
+            <div>
+                <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Dəqiq Ünvan / Nişangah') }} <span class="text-rose-500">*</span></label>
+                <div class="relative">
+                    <i class="bi bi-geo-alt text-orange-500 absolute left-3.5 top-1/2 -translate-y-1/2 text-base"></i>
+                    <input type="text" name="address" id="address" value="{{ old('address') }}" required
+                        placeholder="Məs: Nizami küç. 45, Fəvvarələr meydanı yaxınlığı"
+                        class="w-full bg-gray-50/70 border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 shadow-sm">
+                </div>
+                <p class="text-[11px] text-gray-400 mt-1">Ünvanı yazdıqda xəritə axtarış edir və ya xəritədə kliklədikdə ünvan bura yazılır.</p>
+            </div>
+
+            <!-- Leaflet Map Container -->
+            <div class="relative w-full h-[380px] rounded-xl overflow-hidden border border-gray-200 shadow-inner">
+                <div id="add_property_map" class="w-full h-full z-0"></div>
+
+                <!-- Layer Switcher Floating Button -->
+                <div class="absolute top-3 right-3 z-10 bg-white/95 backdrop-blur-md rounded-xl p-1 shadow-md border border-gray-200 flex gap-1 text-xs font-semibold">
+                    <button type="button" onclick="switchMapLayer('carto')" id="btn_map_carto"
+                        class="px-2.5 py-1 rounded-lg bg-orange-500 text-white shadow-sm transition">Xəritə</button>
+                    <button type="button" onclick="switchMapLayer('satellite')" id="btn_map_sat"
+                        class="px-2.5 py-1 rounded-lg bg-transparent text-gray-700 hover:bg-gray-100 transition">Peyk</button>
+                </div>
+
+                <!-- Boundary Restriction Alert Banner -->
+                <div id="map_boundary_notice" class="hidden absolute bottom-3 left-3 right-14 z-10 bg-rose-600/95 text-white text-xs font-semibold px-3 py-2 rounded-xl shadow-lg flex items-center gap-2 backdrop-blur-sm transition-all duration-300">
+                    <i class="bi bi-exclamation-octagon-fill text-sm shrink-0"></i>
+                    <span id="map_boundary_msg">Yalnız seçilmiş ərazi hüdudları daxilində nöqtə seçə bilərsiniz.</span>
+                </div>
+            </div>
+
+            <input type="hidden" name="latitude" id="latitude" value="{{ old('latitude', '35.3382') }}">
+            <input type="hidden" name="longitude" id="longitude" value="{{ old('longitude', '33.3186') }}">
         </div>
 
-        <div class="flex justify-center">
-            <button type="submit" id="add-property-btn" disabled
-                class="bg-[var(--primary)] text-white px-8 py-4 rounded-xl font-semibold hover:bg-orange-600 transition opacity-50 cursor-not-allowed">
-                {{ __('Add Property') }}
+        <!-- BÖLMƏ 3: Şəkillər, Təchizatlar və Əlaqə -->
+        <div class="bg-white rounded-2xl border border-gray-200/80 p-6 sm:p-8 shadow-sm space-y-7">
+            <div class="border-b border-gray-100 pb-4">
+                <h2 class="text-lg font-bold text-gray-900">{{ __('3. Şəkillər, Təchizatlar və Əlaqə') }}</h2>
+                <p class="text-xs text-gray-500 mt-0.5">{{ __('Fotoşəkillər, mövcud şərait və əlaqə vasitələri') }}</p>
+            </div>
+
+            <!-- Şəkillər -->
+            <div>
+                <label class="block text-xs font-bold text-gray-700 mb-2">{{ __('Fotoşəkillər') }}</label>
+                <div id="dropzone_box" class="border-2 border-dashed border-gray-300 hover:border-orange-500 rounded-2xl p-6 text-center cursor-pointer bg-gray-50/50 hover:bg-orange-50/20 transition-all">
+                    <input type="file" name="photos[]" id="photos_input" multiple accept="image/*" class="hidden">
+                    <div class="flex flex-col items-center justify-center gap-2 pointer-events-none">
+                        <i class="bi bi-cloud-arrow-up text-orange-500 text-3xl"></i>
+                        <p class="text-sm font-bold text-gray-800">{{ __('Şəkilləri bura atın və ya klikləyib seçin') }}</p>
+                        <p class="text-[11px] text-gray-400">JPG, PNG, WebP (İlk şəkil əsas örtük şəkli olur)</p>
+                    </div>
+                </div>
+                <!-- Preview Gallery Grid -->
+                <div id="photos_preview_grid" class="grid grid-cols-3 sm:grid-cols-6 gap-2.5 pt-3"></div>
+            </div>
+
+            <!-- Təchizatlar (Amenities) -->
+            <div id="section_amenities" class="pt-4 border-t border-gray-100">
+                <label class="block text-xs font-bold text-gray-700 mb-3">{{ __('Təchizatlar və İmkanlar') }}</label>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                    @foreach($amenities as $amenity)
+                        <label class="flex items-center gap-2 p-2.5 bg-gray-50/70 border border-gray-100 rounded-xl cursor-pointer hover:border-orange-200 transition">
+                            <input type="checkbox" name="amenities[]" value="{{ $amenity->id }}" {{ in_array($amenity->id, old('amenities', [])) ? 'checked' : '' }}
+                                class="w-4 h-4 text-orange-500 rounded border-gray-300 focus:ring-orange-500">
+                            <span class="text-xs font-medium text-gray-800">{{ $amenity->name['az'] ?? $amenity->name }}</span>
+                        </label>
+                    @endforeach
+                </div>
+            </div>
+
+            <!-- Əlaqə Məlumatları -->
+            <div class="pt-4 border-t border-gray-100">
+                <label class="block text-xs font-bold text-gray-700 mb-3">{{ __('Əlaqə Məlumatları') }}</label>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">{{ __('Satıcı növü') }} <span class="text-rose-500">*</span></label>
+                        <div class="grid grid-cols-2 gap-1.5">
+                            <label class="relative flex items-center justify-center p-2 text-center rounded-xl border cursor-pointer select-none transition-all
+                                has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50/70 has-[:checked]:text-orange-950 has-[:checked]:font-bold
+                                border-gray-200 bg-gray-50 text-gray-700 text-xs">
+                                <input type="radio" name="advertiser" value="owner" {{ old('advertiser', 'owner') == 'owner' ? 'checked' : '' }} required class="sr-only">
+                                <span>{{ __('Mülkiyyətçi') }}</span>
+                            </label>
+                            <label class="relative flex items-center justify-center p-2 text-center rounded-xl border cursor-pointer select-none transition-all
+                                has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50/70 has-[:checked]:text-orange-950 has-[:checked]:font-bold
+                                border-gray-200 bg-gray-50 text-gray-700 text-xs">
+                                <input type="radio" name="advertiser" value="agent" {{ old('advertiser') == 'agent' ? 'checked' : '' }} required class="sr-only">
+                                <span>{{ __('Rieltor / Agent') }}</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">{{ __('Adınız / Şirkət') }} <span class="text-rose-500">*</span></label>
+                        <input type="text" name="advertiser_name" id="advertiser_name" value="{{ old('advertiser_name', auth()->user()?->name) }}" required placeholder="Məs: Əli Əliyev"
+                            class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-3 py-2 text-xs sm:text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">{{ __('Telefon') }} <span class="text-rose-500">*</span></label>
+                        <input type="text" name="phone" id="phone" value="{{ old('phone', auth()->user()?->phone) }}" required placeholder="Məs: +994 50 123 45 67"
+                            class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-3 py-2 text-xs sm:text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">{{ __('Email') }} <span class="text-rose-500">*</span></label>
+                        <input type="email" name="email" id="email" value="{{ old('email', auth()->user()?->email) }}" required placeholder="elan@metraj.az"
+                            class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-3 py-2 text-xs sm:text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Action Bar -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-5 bg-gray-50 border border-gray-200/90 rounded-2xl">
+            <p class="text-xs text-gray-500">
+                <i class="bi bi-shield-check text-orange-500 mr-1 text-sm"></i>
+                <span>Elanınız göndərildikdən sonra moderator təsdiqindən keçərək saytda dərc olunacaq.</span>
+            </p>
+            <button type="submit" id="submit_property_btn"
+                class="w-full sm:w-auto px-8 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm rounded-xl shadow transition duration-200 transform active:scale-98 flex items-center justify-center gap-2 shrink-0">
+                <i class="bi bi-check2-circle text-base"></i>
+                <span>{{ __('Elanı Yerləşdir') }}</span>
             </button>
         </div>
     </form>
-
-    {{-- Unsaved data modal --}}
-    <div id="unsavedDataModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 class="text-xl font-bold mb-4">{{ __('Unsaved Data') }}</h3>
-            <p class="mb-6">{{ __('You have unsaved data from a previous session. Would you like to restore it?') }}</p>
-            <div class="flex justify-end gap-4">
-                <button type="button" id="modalNo" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">{{ __('No') }}</button>
-                <button type="button" id="modalYes" class="px-4 py-2 bg-[var(--primary)] text-white rounded-lg hover:bg-orange-600">{{ __('Yes') }}</button>
-            </div>
-        </div>
-    </div>
 </section>
-@endsection
 
-@push('scripts')
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>window.addPropertyData = @json($pageData);</script>
-<script src="/js/pages/property/add.js"></script>
-@endpush
+
+<!-- Quill Rich Text Editor CDN -->
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 0) Initialize Quill Rich Text Editor
+    const quill = new Quill('#editor_container', {
+        theme: 'snow',
+        placeholder: 'Məs: Mənzil yüksək zövqlə təmir olunub, bütün mebel və avadanlıqlar qalır...',
+        modules: {
+            toolbar: [
+                [{ 'header': [2, 3, false] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                ['link', 'clean']
+            ]
+        }
+    });
+
+    const editorWrapper = document.getElementById('editor_wrapper');
+    if (editorWrapper) {
+        editorWrapper.addEventListener('click', function(e) {
+            if (!e.target.closest('.ql-toolbar')) {
+                quill.focus();
+            }
+        });
+    }
+
+    const propertyForm = document.getElementById('propertyForm');
+    const descriptionHiddenInput = document.getElementById('description_input');
+
+    if (propertyForm && descriptionHiddenInput) {
+        propertyForm.addEventListener('submit', function() {
+            if (quill.getText().trim().length === 0) {
+                descriptionHiddenInput.value = '';
+            } else {
+                descriptionHiddenInput.value = quill.root.innerHTML;
+            }
+        });
+    }
+
+    // 1) Rates & Multi-Currency Converter
+    const rates = @json($dailyRates);
+    const autoConvertToggle = document.getElementById('auto_convert_toggle');
+    const otherCurrenciesGrid = document.getElementById('other_currencies_grid');
+    const priceGbpInput = document.getElementById('price_gbp');
+
+    function calculateCurrencies() {
+        if (!autoConvertToggle.checked) return;
+        const gbp = parseFloat(priceGbpInput.value) || 0;
+        if (gbp <= 0) return;
+
+        for (const [cur, rate] of Object.entries(rates)) {
+            if (cur === 'GBP') continue;
+            const input = document.getElementById('price_' + cur.toLowerCase());
+            if (input) {
+                const val = gbp * rate;
+                input.value = val >= 1000 ? Math.round(val) : val.toFixed(2);
+            }
+        }
+    }
+
+    function toggleCurrencyInputs() {
+        const currencyInputs = document.querySelectorAll('.currency-converted-input');
+        if (autoConvertToggle.checked) {
+            currencyInputs.forEach(input => {
+                input.readOnly = true;
+                input.classList.add('bg-gray-100/90', 'text-gray-500', 'cursor-not-allowed');
+                input.classList.remove('bg-white', 'text-gray-800', 'cursor-text');
+            });
+            calculateCurrencies();
+        } else {
+            currencyInputs.forEach(input => {
+                input.readOnly = false;
+                input.classList.remove('bg-gray-100/90', 'text-gray-500', 'cursor-not-allowed');
+                input.classList.add('bg-white', 'text-gray-800', 'cursor-text');
+            });
+        }
+    }
+
+    priceGbpInput.addEventListener('input', calculateCurrencies);
+    autoConvertToggle.addEventListener('change', toggleCurrencyInputs);
+    toggleCurrencyInputs();
+
+    // 2) Torpaq (Land) Dynamic Conditional Visibility
+    const wrapperArea = document.getElementById('wrapper_area');
+    const wrapperLandArea = document.getElementById('wrapper_land_area');
+    const wrapperRooms = document.getElementById('wrapper_rooms');
+    const wrapperFloor = document.getElementById('wrapper_floor');
+    const wrapperTotalFloors = document.getElementById('wrapper_total_floors');
+    const sectionFeatures = document.getElementById('section_features');
+    const sectionAmenities = document.getElementById('section_amenities');
+
+    function checkLand() {
+        let isLand = false;
+        const propTypeSelect = document.getElementById('property_type_id');
+        if (propTypeSelect && propTypeSelect.tagName === 'SELECT') {
+            const selectedText = propTypeSelect.options[propTypeSelect.selectedIndex]?.text?.toLowerCase() || '';
+            isLand = selectedText.includes('torpaq');
+        } else {
+            const checkedRadio = document.querySelector('input[name="property_type_id"]:checked');
+            if (checkedRadio) {
+                const labelText = checkedRadio.closest('label')?.innerText?.toLowerCase() || '';
+                isLand = labelText.includes('torpaq');
+            }
+        }
+
+        if (isLand) {
+            wrapperArea?.classList.add('hidden');
+            wrapperLandArea?.classList.remove('hidden');
+            wrapperRooms?.classList.add('hidden');
+            wrapperFloor?.classList.add('hidden');
+            wrapperTotalFloors?.classList.add('hidden');
+            sectionFeatures?.classList.add('hidden');
+            sectionAmenities?.classList.add('hidden');
+        } else {
+            wrapperArea?.classList.remove('hidden');
+            wrapperLandArea?.classList.add('hidden');
+            wrapperRooms?.classList.remove('hidden');
+            wrapperFloor?.classList.remove('hidden');
+            wrapperTotalFloors?.classList.remove('hidden');
+            sectionFeatures?.classList.remove('hidden');
+            sectionAmenities?.classList.remove('hidden');
+        }
+    }
+
+    const propTypeEl = document.getElementById('property_type_id') || document.querySelectorAll('input[name="property_type_id"]');
+    if (propTypeEl instanceof NodeList) {
+        propTypeEl.forEach(r => r.addEventListener('change', checkLand));
+    } else if (propTypeEl) {
+        propTypeEl.addEventListener('change', checkLand);
+    }
+    checkLand();
+
+    // 2.2) Toggle "Sənəd və Kredit Şərtləri" based on Deal Type (Hide when Rent / Kirayə)
+    const sectionDocsCredit = document.getElementById('section_documents_credit');
+
+    function checkDealType() {
+        const dealSelect = document.getElementById('deal_type_id');
+        let isRent = false;
+
+        if (dealSelect && dealSelect.tagName === 'SELECT') {
+            const selectedText = dealSelect.options[dealSelect.selectedIndex]?.text?.toLowerCase() || '';
+            isRent = selectedText.includes('kirayə') || selectedText.includes('kira') || selectedText.includes('rent');
+        } else {
+            const checkedRadio = document.querySelector('input[name="deal_type_id"]:checked');
+            if (checkedRadio) {
+                const labelText = checkedRadio.closest('label')?.innerText?.toLowerCase() || '';
+                isRent = labelText.includes('kirayə') || labelText.includes('kira') || labelText.includes('rent');
+            }
+        }
+
+        if (isRent) {
+            sectionDocsCredit?.classList.add('hidden');
+            // Uncheck the checkboxes when hidden so they are not accidentally submitted
+            const checkboxes = sectionDocsCredit?.querySelectorAll('input[type="checkbox"]');
+            checkboxes?.forEach(cb => cb.checked = false);
+        } else {
+            sectionDocsCredit?.classList.remove('hidden');
+        }
+    }
+
+    const dealTypeEl = document.getElementById('deal_type_id') || document.querySelectorAll('input[name="deal_type_id"]');
+    if (dealTypeEl instanceof NodeList) {
+        dealTypeEl.forEach(r => r.addEventListener('change', checkDealType));
+    } else if (dealTypeEl) {
+        dealTypeEl.addEventListener('change', checkDealType);
+    }
+    checkDealType();
+
+    // 3) City & District dynamic filter options with Strict Map Boundary Restriction
+    const citySelect = document.getElementById('city_id');
+    const districtSelect = document.getElementById('district_id');
+
+    let currentAllowedBounds = null;
+    let currentBoundaryLayer = null;
+    let currentRegionName = '';
+    let lastValidLat = parseFloat(document.getElementById('latitude').value) || 35.3382;
+    let lastValidLng = parseFloat(document.getElementById('longitude').value) || 33.3186;
+    let noticeTimeout = null;
+
+    function showBoundaryAlert(msg) {
+        const notice = document.getElementById('map_boundary_notice');
+        const noticeMsg = document.getElementById('map_boundary_msg');
+        if (!notice || !noticeMsg) return;
+        noticeMsg.textContent = msg;
+        notice.classList.remove('hidden');
+        clearTimeout(noticeTimeout);
+        noticeTimeout = setTimeout(() => {
+            notice.classList.add('hidden');
+        }, 3500);
+    }
+
+    function updateMapBoundary(query, label) {
+        currentRegionName = label;
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', Cyprus')}&polygon_geojson=1&limit=1&accept-language=tr,en,az`)
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    const item = data[0];
+                    const bbox = item.boundingbox;
+                    if (bbox && bbox.length === 4) {
+                        const latMin = parseFloat(bbox[0]);
+                        const latMax = parseFloat(bbox[1]);
+                        const lonMin = parseFloat(bbox[2]);
+                        const lonMax = parseFloat(bbox[3]);
+
+                        currentAllowedBounds = L.latLngBounds([[latMin, lonMin], [latMax, lonMax]]);
+
+                        // Remove previous boundary overlay
+                        if (currentBoundaryLayer) {
+                            map.removeLayer(currentBoundaryLayer);
+                            currentBoundaryLayer = null;
+                        }
+
+                        // Render boundary polygon/box
+                        if (item.geojson && (item.geojson.type === 'Polygon' || item.geojson.type === 'MultiPolygon')) {
+                            currentBoundaryLayer = L.geoJSON(item.geojson, {
+                                style: {
+                                    color: '#ea580c',
+                                    weight: 2,
+                                    dashArray: '6, 6',
+                                    fillOpacity: 0.06,
+                                    fillColor: '#ea580c'
+                                }
+                            }).addTo(map);
+                        } else {
+                            currentBoundaryLayer = L.rectangle(currentAllowedBounds, {
+                                color: '#ea580c',
+                                weight: 2,
+                                dashArray: '6, 6',
+                                fillOpacity: 0.06,
+                                fillColor: '#ea580c'
+                            }).addTo(map);
+                        }
+
+                        // Strictly restrict panning and fit to bounds
+                        map.setMaxBounds(currentAllowedBounds.pad(0.12));
+                        map.options.maxBoundsViscosity = 1.0;
+                        map.fitBounds(currentAllowedBounds, { padding: [25, 25] });
+
+                        // Center marker inside the chosen territory
+                        const centerLat = parseFloat(item.lat);
+                        const centerLng = parseFloat(item.lon);
+                        marker.setLatLng([centerLat, centerLng]);
+                        lastValidLat = centerLat;
+                        lastValidLng = centerLng;
+                        updateCoords(centerLat, centerLng);
+                        reverseGeocode(centerLat, centerLng);
+                    }
+                }
+            })
+            .catch(() => {});
+    }
+
+    citySelect.addEventListener('change', function() {
+        districtSelect.innerHTML = '<option value="">Rayon seçin...</option>';
+        const selectedOpt = citySelect.options[citySelect.selectedIndex];
+        const districtsData = selectedOpt.getAttribute('data-districts');
+
+        if (districtsData) {
+            try {
+                const districts = JSON.parse(districtsData);
+                districts.forEach(d => {
+                    const opt = document.createElement('option');
+                    opt.value = d.id;
+                    opt.text = d.name?.tr || d.name?.az || d.slug;
+                    districtSelect.appendChild(opt);
+                });
+            } catch(e) {}
+        }
+
+        const cityName = selectedOpt.text.trim();
+        if (cityName && cityName !== 'Şəhər seçin...') {
+            updateMapBoundary(cityName, cityName);
+        }
+    });
+
+    districtSelect.addEventListener('change', function() {
+        const districtName = districtSelect.options[districtSelect.selectedIndex]?.text?.trim();
+        const cityName = citySelect.options[citySelect.selectedIndex]?.text?.trim() || 'Girne';
+        if (districtName && districtName !== 'Rayon seçin...') {
+            updateMapBoundary(districtName + ', ' + cityName, districtName);
+        } else if (cityName && cityName !== 'Şəhər seçin...') {
+            updateMapBoundary(cityName, cityName);
+        }
+    });
+
+    // 4) Modern OpenStreetMap with 2-Way Geocoding
+    let lat = lastValidLat;
+    let lng = lastValidLng;
+
+    const map = L.map('add_property_map', {
+        zoomControl: false,
+        attributionControl: false
+    }).setView([lat, lng], 14);
+
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+    const cartoLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+        subdomains: 'abcd'
+    }).addTo(map);
+
+    const satLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19
+    });
+
+    let currentLayer = 'carto';
+    window.switchMapLayer = function(type) {
+        if (type === 'satellite' && currentLayer !== 'satellite') {
+            map.removeLayer(cartoLayer);
+            satLayer.addTo(map);
+            currentLayer = 'satellite';
+            document.getElementById('btn_map_sat').className = 'px-2.5 py-1 rounded-lg bg-orange-500 text-white shadow-sm transition';
+            document.getElementById('btn_map_carto').className = 'px-2.5 py-1 rounded-lg bg-transparent text-gray-700 hover:bg-gray-100 transition';
+        } else if (type === 'carto' && currentLayer !== 'carto') {
+            map.removeLayer(satLayer);
+            cartoLayer.addTo(map);
+            currentLayer = 'carto';
+            document.getElementById('btn_map_carto').className = 'px-2.5 py-1 rounded-lg bg-orange-500 text-white shadow-sm transition';
+            document.getElementById('btn_map_sat').className = 'px-2.5 py-1 rounded-lg bg-transparent text-gray-700 hover:bg-gray-100 transition';
+        }
+    };
+
+    const pulseIcon = L.divIcon({
+        className: 'custom-pulse-marker',
+        html: `
+            <div style="position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                <div style="position: absolute; width: 36px; height: 36px; border-radius: 50%; background: rgba(249, 115, 22, 0.28); animation: leaflet-pulse 2s infinite ease-in-out;"></div>
+                <div style="width: 28px; height: 28px; border-radius: 50%; background: #ea580c; border: 3px solid #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; color: white;">
+                    <svg style="width: 14px; height: 14px;" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                </div>
+            </div>
+        `,
+        iconSize: [40, 40],
+        iconAnchor: [20, 36]
+    });
+
+    const marker = L.marker([lat, lng], {
+        icon: pulseIcon,
+        draggable: true
+    }).addTo(map);
+
+    function updateCoords(newLat, newLng) {
+        document.getElementById('latitude').value = newLat.toFixed(6);
+        document.getElementById('longitude').value = newLng.toFixed(6);
+    }
+
+    function reverseGeocode(newLat, newLng) {
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${newLat}&lon=${newLng}&accept-language=az,en`)
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.display_name) {
+                    const addressField = document.getElementById('address');
+                    if (!addressField.value || addressField.value.length < 5) {
+                        addressField.value = data.display_name.split(',').slice(0, 3).join(',');
+                    }
+                }
+            })
+            .catch(() => {});
+    }
+
+    marker.on('dragend', function(e) {
+        const pos = e.target.getLatLng();
+        if (currentAllowedBounds && !currentAllowedBounds.contains(pos)) {
+            showBoundaryAlert(`Xahiş olunur yalnız seçilmiş ${currentRegionName || 'ərazi'} daxilində yer seçin.`);
+            marker.setLatLng([lastValidLat, lastValidLng]);
+            return;
+        }
+        lastValidLat = pos.lat;
+        lastValidLng = pos.lng;
+        updateCoords(pos.lat, pos.lng);
+        reverseGeocode(pos.lat, pos.lng);
+    });
+
+    map.on('click', function(e) {
+        if (currentAllowedBounds && !currentAllowedBounds.contains(e.latlng)) {
+            showBoundaryAlert(`Xahiş olunur yalnız seçilmiş ${currentRegionName || 'ərazi'} daxilində yer seçin.`);
+            return;
+        }
+        marker.setLatLng(e.latlng);
+        lastValidLat = e.latlng.lat;
+        lastValidLng = e.latlng.lng;
+        updateCoords(e.latlng.lat, e.latlng.lng);
+        reverseGeocode(e.latlng.lat, e.latlng.lng);
+    });
+
+    let searchTimeout = null;
+    const addressInput = document.getElementById('address');
+    addressInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        const query = this.value.trim();
+        if (query.length < 4) return;
+
+        searchTimeout = setTimeout(() => {
+            const cityName = citySelect.options[citySelect.selectedIndex]?.text?.trim() || 'Girne';
+            const fullQuery = (query.includes('Cyprus') || query.includes('Kıbrıs')) ? query : `${query}, ${cityName}, Cyprus`;
+
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullQuery)}&limit=1&accept-language=tr,en,az`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.length > 0) {
+                        const newLat = parseFloat(data[0].lat);
+                        const newLng = parseFloat(data[0].lon);
+                        const newPos = L.latLng(newLat, newLng);
+
+                        if (currentAllowedBounds && !currentAllowedBounds.contains(newPos)) {
+                            showBoundaryAlert(`Axtarılan ünvan seçilmiş ${currentRegionName || 'ərazi'} hüdudlarından kənardadır.`);
+                            return;
+                        }
+
+                        marker.setLatLng(newPos);
+                        lastValidLat = newLat;
+                        lastValidLng = newLng;
+                        map.flyTo(newPos, 16, { duration: 1.2 });
+                        updateCoords(newLat, newLng);
+                    }
+                })
+                .catch(() => {});
+        }, 700);
+    });
+
+    // 5) Multi-Photo Upload Preview
+    const dropzoneBox = document.getElementById('dropzone_box');
+    const photosInput = document.getElementById('photos_input');
+    const previewGrid = document.getElementById('photos_preview_grid');
+
+    dropzoneBox.addEventListener('click', () => photosInput.click());
+
+    dropzoneBox.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzoneBox.classList.add('border-orange-500', 'bg-orange-50/40');
+    });
+
+    dropzoneBox.addEventListener('dragleave', () => {
+        dropzoneBox.classList.remove('border-orange-500', 'bg-orange-50/40');
+    });
+
+    dropzoneBox.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzoneBox.classList.remove('border-orange-500', 'bg-orange-50/40');
+        if (e.dataTransfer.files.length > 0) {
+            photosInput.files = e.dataTransfer.files;
+            renderPhotosPreview();
+        }
+    });
+
+    photosInput.addEventListener('change', renderPhotosPreview);
+
+    function renderPhotosPreview() {
+        previewGrid.innerHTML = '';
+        const files = Array.from(photosInput.files);
+        files.forEach((file, index) => {
+            if (!file.type.startsWith('image/')) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const card = document.createElement('div');
+                card.className = 'relative aspect-square rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-gray-100 group';
+                card.innerHTML = `
+                    <img src="${e.target.result}" class="w-full h-full object-cover">
+                    ${index === 0 ? '<span class="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-orange-500 text-white text-[9px] font-bold shadow">Əsas</span>' : ''}
+                `;
+                previewGrid.appendChild(card);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+});
+</script>
+
+<style>
+.ql-container.ql-snow {
+    border: none !important;
+    font-family: inherit;
+    font-size: 0.875rem;
+}
+.ql-toolbar.ql-snow {
+    border: none !important;
+    border-bottom: 1px solid #f3f4f6 !important;
+    background-color: #fafafa;
+}
+.ql-editor {
+    min-height: 160px;
+    height: 100%;
+    cursor: text !important;
+    padding: 14px 16px !important;
+}
+.ql-editor.ql-blank::before {
+    color: #9ca3af;
+    font-style: normal;
+    left: 16px;
+    right: 16px;
+}
+@keyframes leaflet-pulse {
+    0% { transform: scale(0.6); opacity: 0.8; }
+    50% { transform: scale(1.3); opacity: 0; }
+    100% { transform: scale(0.6); opacity: 0; }
+}
+</style>
+@endsection

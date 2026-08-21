@@ -55,16 +55,9 @@ class DatabaseSeeder extends Seeder
         }
 
         // ==========================================
-        // 3.5. YERLƏŞMƏLƏR (ŞƏHƏRLƏR VƏ RAYONLAR)
+        // 3.5. YERLƏŞMƏLƏR (ŞƏHƏRLƏR VƏ RAYONLAR - KUZEY KIBRIS)
         // ==========================================
-        $baku = \App\Core\Infrastructure\Persistence\Eloquent\Models\City::create(['name' => ['az' => 'Bakı', 'ru' => 'Баку', 'en' => 'Baku'], 'slug' => 'baku', 'sort_order' => 1, 'is_active' => true]);
-        $sumqayit = \App\Core\Infrastructure\Persistence\Eloquent\Models\City::create(['name' => ['az' => 'Sumqayıt', 'ru' => 'Сумгаит', 'en' => 'Sumgayit'], 'slug' => 'sumqayit', 'sort_order' => 2, 'is_active' => true]);
-        $ganja = \App\Core\Infrastructure\Persistence\Eloquent\Models\City::create(['name' => ['az' => 'Gəncə', 'ru' => 'Гянджа', 'en' => 'Ganja'], 'slug' => 'ganja', 'sort_order' => 3, 'is_active' => true]);
-
-        $yasamal = \App\Core\Infrastructure\Persistence\Eloquent\Models\District::create(['city_id' => $baku->id, 'name' => ['az' => 'Yasamal', 'ru' => 'Ясамал', 'en' => 'Yasamal'], 'slug' => 'yasamal', 'sort_order' => 1, 'is_active' => true]);
-        $nasimi = \App\Core\Infrastructure\Persistence\Eloquent\Models\District::create(['city_id' => $baku->id, 'name' => ['az' => 'Nəsimi', 'ru' => 'Насими', 'en' => 'Nasimi'], 'slug' => 'nasimi', 'sort_order' => 2, 'is_active' => true]);
-        $narimanov = \App\Core\Infrastructure\Persistence\Eloquent\Models\District::create(['city_id' => $baku->id, 'name' => ['az' => 'Nərimanov', 'ru' => 'Нариманов', 'en' => 'Narimanov'], 'slug' => 'narimanov', 'sort_order' => 3, 'is_active' => true]);
-        $khatai = \App\Core\Infrastructure\Persistence\Eloquent\Models\District::create(['city_id' => $baku->id, 'name' => ['az' => 'Xətai', 'ru' => 'Хатаи', 'en' => 'Khatai'], 'slug' => 'xatai', 'sort_order' => 4, 'is_active' => true]);
+        $this->call(NorthernCyprusLocationSeeder::class);
 
         // ==========================================
         // 4. DİNAMİK FİLTRLƏR

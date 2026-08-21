@@ -1,19 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="w-full pt-17.5">
-    <div class="flex mx-auto px-4 lg:px-6 gap-6 lg:gap-9">
-
-        {{-- Left Ad — shows at lg, hidden at xl, shows again at 2xl --}}
-        <aside class="hidden lg:block w-[260px] 2xl:w-[300px] mt-8 flex-shrink-0">
-            <div class="sticky top-24">
-                <img src="https://placehold.co/400x1300" alt="Reklam" class="rounded-lg shadow w-full" />
-            </div>
-        </aside>
-
-        <main class="w-full min-w-0">
-            @include('components.breadcrumb', ['items' => $breadcrumbs ?? []])
-            @include('components.scroll-top')
+<div class="w-full pt-4">
+    @include('components.breadcrumb', ['items' => $breadcrumbs ?? []])
+    @include('components.scroll-top')
 
             <section class="py-4 sm:py-6">
                 {{-- Header + Search --}}
@@ -187,15 +177,6 @@
                     </div>
                 @endif
             </section>
-        </main>
-
-        {{-- Right Ad --}}
-        <aside class="hidden lg:block w-[260px] 2xl:w-[300px] mt-8 flex-shrink-0">
-            <div class="sticky top-24">
-                <img src="https://placehold.co/400x1300" alt="Reklam" class="rounded-lg shadow w-full" />
-            </div>
-        </aside>
-    </div>
 </div>
 @endsection
 
