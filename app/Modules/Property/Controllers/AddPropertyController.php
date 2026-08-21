@@ -11,6 +11,7 @@ use App\Modules\Property\Enums\PropertyStatus;
 use App\Modules\Property\Enums\SellerType;
 use App\Http\Controllers\Controller;
 use App\Modules\Property\Requests\StorePropertyRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -53,24 +54,21 @@ class AddPropertyController extends Controller
         ));
     }
 
-    public function store(StorePropertyRequest $request): RedirectResponse
+    public function store(StorePropertyRequest $request): JsonResponse|RedirectResponse
     {
         $validated = $request->validated();
 
-        return DB::transaction(function () use ($request, $validated) {
+        $result = DB::transaction(function () use ($request, $validated) {
             $baseGbp = (float) $validated['price_gbp'];
             $prices = $request->input('prices', []);
 
-            // Auto-calculate rates if missing
             if (empty($prices) || count($prices) < 2) {
                 $prices = $this->currencyService->convertFromGbp($baseGbp);
             }
             $prices['GBP'] = $baseGbp;
 
-            // Unikal elan kodu (həm slug üçün, həm də elan kodudur)
             $code = $this->propertyService->generateCode();
 
-            // Elanın torpaq olub-olmadığını əmlak növündən yoxlayırıq
             $propTypeOption = $this->locationService->filterOptionById($validated['property_type_id']);
             $isLand = $propTypeOption !== null && $this->propertyService->isLandOption($propTypeOption);
 
@@ -137,7 +135,23 @@ class AddPropertyController extends Controller
                 $this->propertyService->storeImages($property, $request->file('photos'));
             }
 
-            return redirect()->route('home')->with('success', 'Elanınız uğurla qəbul edildi! Qısa müddətdə moderator tərəfindən yoxlanıldıqdan sonra saytda dərc olunacaq.');
+            return $property;
         });
+
+        $message = 'Elanınız uğurla qəbul edildi! Qısa müddətdə moderator tərəfindən yoxlanıldıqdan sonra saytda dərc olunacaq.';
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+                'property' => [
+                    'id' => $result->id,
+                    'code' => $result->code,
+                    'slug' => $result->slug,
+                ],
+            ]);
+        }
+
+        return redirect()->route('home')->with('success', $message);
     }
 }

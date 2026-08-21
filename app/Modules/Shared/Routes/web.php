@@ -17,6 +17,7 @@ Route::get('/compares', [StaticPageController::class, 'compares'])->name('compar
 
 // Autentifikasiya & İstifadəçi Paneli
 Route::get('/login', [StaticPageController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');

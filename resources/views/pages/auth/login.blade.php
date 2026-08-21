@@ -7,7 +7,7 @@
                 <img src="/images/metrajlogo.png" class="w-40 mx-auto mb-6" alt="Metraj.az">
                 <h2 class="text-2xl font-semibold text-gray-800 mb-2">{{ __('Xoş gəldiniz') }}!</h2>
                 <p class="text-gray-500 mb-6">{{ auth()->user()->name }}</p>
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}" class="js-logout">
                     @csrf
                     <button type="submit"
                         class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-xl transition duration-300">

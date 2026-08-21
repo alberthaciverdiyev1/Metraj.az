@@ -238,7 +238,8 @@
 
                             </div>
 
-                            <form id="contact-form">
+                            <form id="contact-form" action="{{ route('inquiries.contact') }}" method="post">
+                                @csrf
                                 <input type="text" id="name" name="name" placeholder="Full Name" required>
                                 <textarea id="message" name="message" placeholder="How can an agent help"
                                           required></textarea>
@@ -288,4 +289,44 @@
     </section>
 
 </main>
+
+<script>
+    // FAQ əlaqə forması — JS fetch ilə göndərilir
+    document.addEventListener('DOMContentLoaded', function () {
+        const contactForm = document.getElementById('contact-form');
+        if (!contactForm) return;
+
+        contactForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const btn = contactForm.querySelector('button[type="submit"]');
+            if (btn) {
+                btn.disabled = true;
+                btn.style.opacity = '0.6';
+            }
+
+            const { ok, status, data } = await window.Metraj.post(
+                contactForm.action,
+                new FormData(contactForm)
+            );
+
+            if (btn) {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }
+
+            if (ok) {
+                window.Metraj.toast(data.message || 'Mesajınız göndərildi ✅');
+                contactForm.reset();
+            } else {
+                let msg = data.message || 'Xəta baş verdi, yenidən cəhd edin';
+                if (status === 422 && data.errors) {
+                    const firstKey = Object.keys(data.errors)[0];
+                    if (firstKey) msg = data.errors[firstKey][0];
+                }
+                window.Metraj.toast(msg, 'error');
+            }
+        });
+    });
+</script>
 @endsection

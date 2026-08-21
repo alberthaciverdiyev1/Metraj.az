@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const loginBtn = document.getElementById('login-btn');
     const loginForm = document.getElementById('login-form');
+    if (!loginForm) return;
 
     const emailInput = loginForm.querySelector('input[name="email"]');
     const passwordInput = loginForm.querySelector('input[name="password"]');
@@ -37,8 +38,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 3000);
     }
 
-    if (loginBtn && loginForm) {
-        loginBtn.addEventListener('click', async function (e) {
+    if (loginForm) {
+        loginForm.addEventListener('submit', async function (e) {
             e.preventDefault();
 
             // error mesajlarını sıfırla
@@ -67,33 +68,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (!valid) return; // səhv varsa POST getmir
 
+            if (loginBtn) {
+                loginBtn.disabled = true;
+                loginBtn.style.opacity = '0.6';
+            }
+
             try {
-                const response = await fetch('/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    body: JSON.stringify(data),
-                });
+                const { ok, status, data: result } = await window.Metraj.post('/login', data);
 
-                const result = await response.json();
+                if (ok) {
+                    console.log("Login successful:", result);
+                    showToast(result.message || "Uğurla daxil oldunuz ✅", "success");
 
-                if (response.ok) {
-                    if (response.ok) {
-    console.log("Login successful:", result);
-    showToast(result.message || "Uğurla daxil oldunuz ✅", "success");
+                    // Backenddən gələn rol və token (əgər varsa)
+                    localStorage.setItem("userRole", result.role || "user");
+                    localStorage.setItem("isLoggedIn", "true");
 
-    // Backenddən gələn rol və token (əgər varsa)
-    localStorage.setItem("userRole", result.role || "user"); 
-    localStorage.setItem("isLoggedIn", "true");
-
-    setTimeout(() => {
-        window.location.href = result.redirect || '/';
-    }, 1500);
-}
-
+                    setTimeout(() => {
+                        window.location.href = result.redirect || '/';
+                    }, 1500);
                 } else {
                     console.log("Login error:", result);
                     showToast(result.message || "Email və ya şifrə səhvdir ❌", "error");
@@ -112,6 +105,11 @@ document.addEventListener("DOMContentLoaded", function () {
             } catch (error) {
                 console.error('Network error:', error);
                 showToast("Şəbəkə xətası baş verdi. Yenidən cəhd edin ❌", "error");
+            } finally {
+                if (loginBtn) {
+                    loginBtn.disabled = false;
+                    loginBtn.style.opacity = '1';
+                }
             }
         });
     }

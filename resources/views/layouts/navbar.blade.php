@@ -123,7 +123,7 @@
 
             <div class="border-t border-gray-100 my-1"></div>
 
-            <form method="POST" action="{{ route('logout') }}" class="m-0">
+            <form method="POST" action="{{ route('logout') }}" class="m-0 js-logout">
               @csrf
               <button type="submit" class="w-full flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 text-left font-medium">
                 <i class="bi bi-box-arrow-right mr-3"></i> {{ __('Logout') }}

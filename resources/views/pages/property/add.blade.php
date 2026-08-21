@@ -516,12 +516,60 @@ document.addEventListener('DOMContentLoaded', function() {
     const propertyForm = document.getElementById('propertyForm');
     const descriptionHiddenInput = document.getElementById('description_input');
 
-    if (propertyForm && descriptionHiddenInput) {
-        propertyForm.addEventListener('submit', function() {
-            if (quill.getText().trim().length === 0) {
-                descriptionHiddenInput.value = '';
+    if (propertyForm) {
+        const submitBtn = propertyForm.querySelector('button[type="submit"]');
+
+        propertyForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            // Quill məzmununu gizli input-a yaz
+            if (descriptionHiddenInput) {
+                if (quill.getText().trim().length === 0) {
+                    descriptionHiddenInput.value = '';
+                } else {
+                    descriptionHiddenInput.value = quill.root.innerHTML;
+                }
+            }
+
+            // Yükləmə halında düyməni deaktiv et
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.6';
+                const original = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<span class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>';
+                submitBtn.dataset.originalHtml = original;
+            }
+
+            const { ok, status, data } = await window.Metraj.post(
+                propertyForm.action,
+                new FormData(propertyForm)
+            );
+
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+                submitBtn.innerHTML = submitBtn.dataset.originalHtml || '{{ __('Elanı Yerləşdir') }}';
+            }
+
+            if (ok) {
+                window.Metraj.toast(data.message || 'Elanınız uğurla qəbul edildi ✅');
+                setTimeout(() => {
+                    window.location.href = data.redirect || '/';
+                }, 2000);
             } else {
-                descriptionHiddenInput.value = quill.root.innerHTML;
+                let msg = data.message || 'Xəta baş verdi, zəhmət olmasa formu yoxlayın';
+                if (status === 422 && data.errors) {
+                    const firstKey = Object.keys(data.errors)[0];
+                    if (firstKey) msg = data.errors[firstKey][0];
+                    // Xəta olan ilk inputa fokuslan
+                    const errInput = propertyForm.querySelector('[name="' + firstKey + '"], [name="' + firstKey + '[]"]');
+                    if (errInput) {
+                        errInput.focus();
+                        errInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        errInput.classList.add('ring-2', 'ring-red-400');
+                    }
+                }
+                window.Metraj.toast(msg, 'error');
             }
         });
     }

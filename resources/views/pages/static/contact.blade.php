@@ -12,7 +12,7 @@
                     <h2 class="contact-form-title">We Would Love to Hear From You</h2>
                     <p class="contact-form-subtitle">We'll get to know you to understand your selling goals, explain the selling process so you know what to expect.</p>
 
-                    <form action="" method="post" class="contact-form">
+                    <form action="{{ route('inquiries.contact') }}" method="post" id="contact-form" class="contact-form">
                         @csrf
                         <div class="contact-form-grid">
                             <div class="contact-form-group">
@@ -133,4 +133,44 @@
     </main>
 
 </div>
+
+<script>
+    // Əlaqə forması — JS fetch ilə göndərilir
+    document.addEventListener('DOMContentLoaded', function () {
+        const contactForm = document.getElementById('contact-form');
+        if (!contactForm) return;
+
+        contactForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const btn = contactForm.querySelector('button[type="submit"]');
+            if (btn) {
+                btn.disabled = true;
+                btn.style.opacity = '0.6';
+            }
+
+            const { ok, status, data } = await window.Metraj.post(
+                contactForm.action,
+                new FormData(contactForm)
+            );
+
+            if (btn) {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }
+
+            if (ok) {
+                window.Metraj.toast(data.message || 'Mesajınız göndərildi ✅');
+                contactForm.reset();
+            } else {
+                let msg = data.message || 'Xəta baş verdi, yenidən cəhd edin';
+                if (status === 422 && data.errors) {
+                    const firstKey = Object.keys(data.errors)[0];
+                    if (firstKey) msg = data.errors[firstKey][0];
+                }
+                window.Metraj.toast(msg, 'error');
+            }
+        });
+    });
+</script>
 @endsection
