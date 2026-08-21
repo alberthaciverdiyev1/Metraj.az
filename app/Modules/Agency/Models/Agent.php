@@ -10,6 +10,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property int $id
+ * @property int|null $agency_id
+ * @property int|null $user_id
+ * @property string|null $position
+ * @property string|null $phone
+ * @property string|null $whatsapp
+ * @property string|null $avatar
+ * @property bool $is_active
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Modules\Agency\Models\Agency|null $agency
+ * @property-read \App\Modules\Shared\Models\User|null $user
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Property\Models\Property> $properties
+ */
 class Agent extends Model
 {
     use HasFactory, SoftDeletes;

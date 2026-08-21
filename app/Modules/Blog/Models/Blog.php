@@ -7,6 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 /**
+ * @property int $id
+ * @property string $title
+ * @property string $slug
+ * @property string|null $category
+ * @property string|null $cover_image
+ * @property string|null $excerpt
+ * @property string $content
+ * @property \Illuminate\Support\Carbon|null $published_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read string $formatted_date
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static> published()

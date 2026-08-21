@@ -20,7 +20,49 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 /**
+ * @property int $id
+ * @property string $code
+ * @property string $title
+ * @property string $slug
+ * @property string|null $description
+ * @property string $price
+ * @property string $currency
+ * @property array<string, int|float>|null $prices
+ * @property bool $has_document
+ * @property bool $has_mortgage
+ * @property bool $has_internal_credit
+ * @property int|null $area
+ * @property int|null $land_area
+ * @property int|null $rooms
+ * @property int|null $floor
+ * @property int|null $total_floors
+ * @property string|null $landmark
+ * @property string|null $address
+ * @property string|null $latitude
+ * @property string|null $longitude
+ * @property int|null $agency_id
+ * @property int|null $agent_id
+ * @property int|null $user_id
+ * @property int|null $city_id
+ * @property int|null $district_id
+ * @property \App\Modules\Property\Enums\PropertyStatus $status
+ * @property \App\Modules\Property\Enums\SellerType $seller_type
+ * @property bool $is_featured
+ * @property bool $is_vip
+ * @property int $views_count
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read string $first_image_url
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Property\Models\PropertyImage> $images
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Inquiry\Models\Inquiry> $inquiries
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Location\Models\FilterOption> $filterOptions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Location\Models\Amenity> $amenities
+ * @property-read \App\Modules\Shared\Models\User|null $user
+ * @property-read \App\Modules\Agency\Models\Agency|null $agency
+ * @property-read \App\Modules\Agency\Models\Agent|null $agent
+ * @property-read \App\Modules\Location\Models\City|null $city
+ * @property-read \App\Modules\Location\Models\District|null $district
  */
 class Property extends Model
 {

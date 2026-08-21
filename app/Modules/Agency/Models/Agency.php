@@ -12,6 +12,28 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
+/**
+ * @property int $id
+ * @property int|null $owner_id
+ * @property string $name
+ * @property string $slug
+ * @property string|null $description
+ * @property string|null $logo
+ * @property string|null $banner
+ * @property string|null $phone
+ * @property string|null $whatsapp
+ * @property string|null $email
+ * @property string|null $website
+ * @property string|null $address
+ * @property \App\Modules\Agency\Enums\AgencyStatus $status
+ * @property bool $is_verified
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Modules\Shared\Models\User|null $owner
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Agency\Models\Agent> $agents
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Property\Models\Property> $properties
+ */
 class Agency extends Model
 {
     use HasFactory, SoftDeletes;

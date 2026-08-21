@@ -8,6 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property int $id
+ * @property \App\Modules\Location\Enums\FilterKey $key
+ * @property array<string, string> $name
+ * @property int $sort_order
+ * @property bool $is_active
+ * @property bool $is_searchable
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Location\Models\FilterOption> $options
+ */
 class Filter extends Model
 {
     use HasFactory, SoftDeletes;

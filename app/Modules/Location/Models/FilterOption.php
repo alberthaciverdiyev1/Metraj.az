@@ -10,7 +10,22 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * @property int $id
+ * @property int $filter_id
+ * @property int|null $parent_id
+ * @property string $value
+ * @property array<string, string> $name
+ * @property string|null $icon
+ * @property int $sort_order
+ * @property bool $is_active
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read string $hierarchical_name
+ * @property-read \App\Modules\Location\Models\Filter $filter
+ * @property-read \App\Modules\Location\Models\FilterOption|null $parent
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Location\Models\FilterOption> $children
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Property\Models\Property> $properties
  */
 class FilterOption extends Model
 {
