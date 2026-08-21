@@ -30,6 +30,8 @@ use Illuminate\Support\Str;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read string|null $logo_url
+ * @property-read string|null $banner_url
  * @property-read \App\Modules\Shared\Models\User|null $owner
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Agency\Models\Agent> $agents
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Property\Models\Property> $properties
@@ -78,6 +80,38 @@ class Agency extends Model
                 $model->slug = Str::slug($model->name) . '-' . Str::random(5);
             }
         });
+    }
+
+    /**
+     * Loqo faylının tam URL-ni qaytarır (lokal storage və ya xarici link).
+     */
+    public function getLogoUrlAttribute(): ?string
+    {
+        if (empty($this->logo)) {
+            return null;
+        }
+
+        if (str_starts_with($this->logo, 'http://') || str_starts_with($this->logo, 'https://') || str_starts_with($this->logo, '/')) {
+            return $this->logo;
+        }
+
+        return asset('storage/' . $this->logo);
+    }
+
+    /**
+     * Banner faylının tam URL-ni qaytarır (lokal storage və ya xarici link).
+     */
+    public function getBannerUrlAttribute(): ?string
+    {
+        if (empty($this->banner)) {
+            return null;
+        }
+
+        if (str_starts_with($this->banner, 'http://') || str_starts_with($this->banner, 'https://') || str_starts_with($this->banner, '/')) {
+            return $this->banner;
+        }
+
+        return asset('storage/' . $this->banner);
     }
 
     /**

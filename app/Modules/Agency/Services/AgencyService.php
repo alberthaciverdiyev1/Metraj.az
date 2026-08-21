@@ -22,9 +22,9 @@ class AgencyService
      *
      * @return Collection<int, Agency>
      */
-    public function activeAgencies(): Collection
+    public function activeAgencies(?string $search = null): Collection
     {
-        return $this->agencyRepository->activeWithPropertiesCount();
+        return $this->agencyRepository->activeWithPropertiesCount($search);
     }
 
     /**
@@ -32,14 +32,23 @@ class AgencyService
      *
      * @return Collection<int, Agent>
      */
-    public function independentAgents(): Collection
+    public function independentAgents(?string $search = null): Collection
     {
-        return Agent::with('user')
+        $query = Agent::with('user')
             ->withCount(['properties as published_properties_count' => fn ($q) => $q->where('status', PropertyStatus::Published)])
             ->whereNull('agency_id')
-            ->where('is_active', true)
-            ->orderByDesc('published_properties_count')
-            ->get();
+            ->where('is_active', true);
+
+        if (!empty($search)) {
+            $term = trim($search);
+            $query->where(function ($q) use ($term) {
+                $q->whereHas('user', fn ($uq) => $uq->where('name', 'ilike', "%{$term}%"))
+                    ->orWhere('position', 'ilike', "%{$term}%")
+                    ->orWhere('phone', 'like', "%{$term}%");
+            });
+        }
+
+        return $query->orderByDesc('published_properties_count')->get();
     }
 
     /**

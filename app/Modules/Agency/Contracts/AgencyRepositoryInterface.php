@@ -12,7 +12,7 @@ interface AgencyRepositoryInterface
      *
      * @return Collection<int, Agency>
      */
-    public function activeWithPropertiesCount(): Collection;
+    public function activeWithPropertiesCount(?string $search = null): Collection;
 
     /**
      * Aktiv agentliyi ID və ya slug ilə (əlaqələri yüklü) qaytarır.

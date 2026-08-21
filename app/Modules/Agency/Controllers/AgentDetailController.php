@@ -27,6 +27,23 @@ class AgentDetailController extends Controller
             12
         );
 
-        return view('agents.show', compact('agent', 'properties'));
+        $breadcrumbs = [
+            ['label' => __('Ana səhifə'), 'url' => '/'],
+            ['label' => __('Agencies'), 'url' => '/agencies'],
+        ];
+
+        if ($agent->agency) {
+            $breadcrumbs[] = [
+                'label' => $agent->agency->name,
+                'url' => '/agency/' . $agent->agency->id,
+            ];
+        }
+
+        $breadcrumbs[] = [
+            'label' => $agent->user?->name ?? __('Rieltor Profili'),
+            'url' => null,
+        ];
+
+        return view('agents.show', compact('agent', 'properties', 'breadcrumbs'));
     }
 }

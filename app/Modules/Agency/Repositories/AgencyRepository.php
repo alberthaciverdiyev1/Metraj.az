@@ -14,11 +14,22 @@ class AgencyRepository implements AgencyRepositoryInterface
     ) {
     }
 
-    public function activeWithPropertiesCount(): Collection
+    public function activeWithPropertiesCount(?string $search = null): Collection
     {
-        return $this->model->withCount('properties')
-            ->where('status', AgencyStatus::Active)
-            ->get();
+        $query = $this->model->withCount('properties')
+            ->where('status', AgencyStatus::Active);
+
+        if (!empty($search)) {
+            $term = trim($search);
+            $query->where(function ($q) use ($term) {
+                $q->where('name', 'ilike', "%{$term}%")
+                    ->orWhere('address', 'ilike', "%{$term}%")
+                    ->orWhere('phone', 'like', "%{$term}%")
+                    ->orWhere('description', 'ilike', "%{$term}%");
+            });
+        }
+
+        return $query->get();
     }
 
     public function findActive(int|string $idOrSlug): ?Agency

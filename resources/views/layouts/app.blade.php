@@ -39,25 +39,17 @@
         @include('layouts.navbar')
 
         <div class="w-full relative z-0">
-            <div class="flex mx-auto max-w-[1920px] px-3 sm:px-5 lg:px-7 gap-5 xl:gap-7 justify-center">
+            <div class="flex flex-nowrap w-full px-2 sm:px-3 xl:px-4 gap-3 xl:gap-5 justify-between items-start">
                 <!-- Sol Reklam -->
-                <aside class="hidden xl:block w-[210px] 2xl:w-[260px] 3xl:w-[280px] mt-6 shrink-0 relative z-10">
-                    <div class="sticky top-24 z-10">
-                        <img src="https://placehold.co/400x1300" alt="Sol Reklam" class="rounded-2xl shadow-sm w-full object-cover max-h-[calc(100vh-120px)]"/>
-                    </div>
-                </aside>
+                <x-ads.sidebar-ad position="left" />
 
                 <!-- Əsas Məzmun (Bütün Səhifələr Eyni Genişlikdə) -->
-                <main class="flex-1 min-w-0 max-w-full">
+                <main class="flex-1 min-w-0 w-full">
                     @yield('content')
                 </main>
 
                 <!-- Sağ Reklam -->
-                <aside class="hidden xl:block w-[210px] 2xl:w-[260px] 3xl:w-[280px] mt-6 shrink-0 relative z-10">
-                    <div class="sticky top-24 z-10">
-                        <img src="https://placehold.co/400x1300" alt="Sağ Reklam" class="rounded-2xl shadow-sm w-full object-cover max-h-[calc(100vh-120px)]"/>
-                    </div>
-                </aside>
+                <x-ads.sidebar-ad position="right" />
             </div>
         </div>
 

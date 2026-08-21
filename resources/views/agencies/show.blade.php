@@ -3,15 +3,15 @@
 @section('title', ($agency->name ?? '') . ' - Daşınmaz Əmlak Agentliyi - Metraj.az')
 
 @section('content')
-<div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16">
+<div class="w-full pt-4 pb-16">
     @include('components.breadcrumb', ['items' => $breadcrumbs ?? []])
 
     {{-- ==================== AGENCY PROFILE CARD ==================== --}}
     <div class="bg-white rounded-3xl shadow-sm border border-gray-100 mt-4 sm:mt-6 overflow-hidden">
         {{-- Banner strip --}}
-        <div class="h-28 sm:h-36 relative overflow-hidden @if(!$agency->banner) bg-gradient-to-r from-[var(--primary)] via-orange-400 to-orange-300 @endif">
-            @if($agency->banner)
-                <img src="{{ $agency->banner }}" alt="{{ $agency->name }} banner" class="w-full h-full object-cover">
+        <div class="h-28 sm:h-36 relative overflow-hidden @if(!$agency->banner_url) bg-gradient-to-r from-[var(--primary)] via-orange-400 to-orange-300 @endif">
+            @if($agency->banner_url)
+                <img src="{{ $agency->banner_url }}" alt="{{ $agency->name }} banner" class="w-full h-full object-cover">
             @else
                 <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 50%, white 1.5px, transparent 1.5px); background-size: 22px 22px;"></div>
             @endif
@@ -21,8 +21,8 @@
             {{-- Logo + Name --}}
             <div class="flex flex-col sm:flex-row sm:items-end gap-4 -mt-10 sm:-mt-12">
                 <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-4 border-white shadow-lg overflow-hidden bg-white flex-shrink-0">
-                    @if($agency->logo)
-                        <img src="{{ $agency->logo }}" alt="{{ $agency->name }}" class="w-full h-full object-cover">
+                    @if($agency->logo_url)
+                        <img src="{{ $agency->logo_url }}" alt="{{ $agency->name }}" class="w-full h-full object-cover">
                     @else
                         <div class="w-full h-full bg-[var(--primary)] text-white font-black text-3xl sm:text-4xl flex items-center justify-center">
                             {{ strtoupper(substr($agency->name ?? 'A', 0, 1)) }}
@@ -118,8 +118,8 @@
                         <a href="/agent/{{ $agent->id }}"
                            class="flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-3.5 sm:py-4 hover:bg-orange-50/50 transition duration-150 group">
                             <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100">
-                                @if($agent->avatar)
-                                    <img src="{{ $agent->avatar }}" alt="{{ $agent->user?->name }}" class="w-full h-full object-cover">
+                                @if($agent->avatar_url)
+                                    <img src="{{ $agent->avatar_url }}" alt="{{ $agent->user?->name }}" class="w-full h-full object-cover">
                                 @else
                                     <div class="w-full h-full bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center">
                                         <i class="bi bi-person text-base sm:text-lg"></i>

@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read string|null $avatar_url
  * @property-read \App\Modules\Agency\Models\Agency|null $agency
  * @property-read \App\Modules\Shared\Models\User|null $user
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Property\Models\Property> $properties
@@ -49,6 +50,22 @@ class Agent extends Model
     protected $casts = [
         'is_active' => 'boolean', // Aktivlik statusu
     ];
+
+    /**
+     * Avatarların tam URL-ni qaytarır (lokal storage və ya xarici link).
+     */
+    public function getAvatarUrlAttribute(): ?string
+    {
+        if (empty($this->avatar)) {
+            return null;
+        }
+
+        if (str_starts_with($this->avatar, 'http://') || str_starts_with($this->avatar, 'https://') || str_starts_with($this->avatar, '/')) {
+            return $this->avatar;
+        }
+
+        return asset('storage/' . $this->avatar);
+    }
 
     /**
      * Agentin aid olduğu şirkət / agentlik
