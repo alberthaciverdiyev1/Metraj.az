@@ -2,13 +2,13 @@
 
 namespace App\Console\Commands;
 
-use App\Core\Domain\Property\Enums\PropertyStatus;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Agency;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Agent;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Amenity;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\FilterOption;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Property;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\PropertyImage;
+use App\Modules\Property\Enums\PropertyStatus;
+use App\Modules\Agency\Models\Agency;
+use App\Modules\Agency\Models\Agent;
+use App\Modules\Location\Models\Amenity;
+use App\Modules\Location\Models\FilterOption;
+use App\Modules\Property\Models\Property;
+use App\Modules\Property\Models\PropertyImage;
 use App\Models\User;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
@@ -57,7 +57,7 @@ class SeedProperties extends Command
             'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=80',
         ];
 
-        $cities = \App\Core\Infrastructure\Persistence\Eloquent\Models\City::with('districts')->get()->map(function ($c) {
+        $cities = \App\Modules\Location\Models\City::with('districts')->get()->map(function ($c) {
             return [
                 'id' => $c->id,
                 'name' => $c->name['az'] ?? $c->slug,
@@ -168,8 +168,8 @@ class SeedProperties extends Command
 
             $isComplex = rand(0, 10) < 2;
             $sellerType = $isComplex 
-                ? \App\Core\Domain\Property\Enums\SellerType::Complex 
-                : ($propAgencyId ? \App\Core\Domain\Property\Enums\SellerType::Agency : \App\Core\Domain\Property\Enums\SellerType::Owner);
+                ? \App\Modules\Property\Enums\SellerType::Complex 
+                : ($propAgencyId ? \App\Modules\Property\Enums\SellerType::Agency : \App\Modules\Property\Enums\SellerType::Owner);
 
             $property = Property::create([
                 'code' => $code,

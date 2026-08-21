@@ -2,8 +2,8 @@
 
 namespace App\Filament\Agency\Resources;
 
-use App\Core\Domain\Property\Enums\PropertyStatus;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Property;
+use App\Modules\Property\Enums\PropertyStatus;
+use App\Modules\Property\Models\Property;
 use App\Filament\Agency\Resources\PropertyResource\Pages;
 use Filament\Forms;
 use Filament\Forms\Form;

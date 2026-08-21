@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Blog;
+use App\Modules\Blog\Models\Blog;
 use Illuminate\Database\Seeder;
 
 class BlogSeeder extends Seeder

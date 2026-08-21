@@ -2,7 +2,7 @@
 
 namespace App\Filament\Admin\Resources\FilterResource\RelationManagers;
 
-use App\Core\Infrastructure\Persistence\Eloquent\Models\FilterOption;
+use App\Modules\Location\Models\FilterOption;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;

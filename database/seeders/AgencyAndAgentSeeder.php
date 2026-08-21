@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Core\Domain\Agency\Enums\AgencyStatus;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Agency;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Agent;
+use App\Modules\Agency\Enums\AgencyStatus;
+use App\Modules\Agency\Models\Agency;
+use App\Modules\Agency\Models\Agent;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;

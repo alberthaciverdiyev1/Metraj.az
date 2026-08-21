@@ -2,7 +2,7 @@
 
 namespace App\Filament\Admin\Resources\AgencyResource\RelationManagers;
 
-use App\Core\Domain\Property\Enums\PropertyStatus;
+use App\Modules\Property\Enums\PropertyStatus;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;

@@ -2,10 +2,10 @@
 
 namespace App\Filament\Admin\Widgets;
 
-use App\Core\Domain\Property\Enums\PropertyStatus;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Agency;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Inquiry;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Property;
+use App\Modules\Property\Enums\PropertyStatus;
+use App\Modules\Agency\Models\Agency;
+use App\Modules\Inquiry\Models\Inquiry;
+use App\Modules\Property\Models\Property;
 use App\Models\User;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;

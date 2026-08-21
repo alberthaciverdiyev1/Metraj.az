@@ -2,8 +2,8 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Core\Domain\Filter\Enums\FilterKey;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Filter;
+use App\Modules\Location\Enums\FilterKey;
+use App\Modules\Location\Models\Filter;
 use App\Filament\Admin\Resources\FilterResource\Pages;
 use App\Filament\Admin\Resources\FilterResource\RelationManagers\FilterOptionsRelationManager;
 use Filament\Forms;

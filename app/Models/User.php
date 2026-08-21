@@ -3,9 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Agency;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Agent;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Property;
+use App\Modules\Agency\Models\Agency;
+use App\Modules\Agency\Models\Agent;
+use App\Modules\Property\Models\Property;
 use Database\Factories\UserFactory;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;

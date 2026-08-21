@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Core\Domain\Filter\Enums\FilterKey;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Amenity;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Filter;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\FilterOption;
+use App\Modules\Location\Enums\FilterKey;
+use App\Modules\Location\Models\Amenity;
+use App\Modules\Location\Models\Filter;
+use App\Modules\Location\Models\FilterOption;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;

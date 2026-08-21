@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Agent;
+use App\Modules\Agency\Models\Agent;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Livewire\Livewire;

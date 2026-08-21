@@ -2,7 +2,7 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Inquiry;
+use App\Modules\Inquiry\Models\Inquiry;
 use App\Filament\Admin\Resources\InquiryResource\Pages;
 use Filament\Forms;
 use Filament\Forms\Form;

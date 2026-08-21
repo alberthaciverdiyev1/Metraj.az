@@ -2,12 +2,12 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Core\Domain\Filter\Enums\FilterKey;
-use App\Core\Domain\Property\Enums\PropertyStatus;
-use App\Core\Domain\Property\Enums\SellerType;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Filter;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\FilterOption;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Property;
+use App\Modules\Location\Enums\FilterKey;
+use App\Modules\Property\Enums\PropertyStatus;
+use App\Modules\Property\Enums\SellerType;
+use App\Modules\Location\Models\Filter;
+use App\Modules\Location\Models\FilterOption;
+use App\Modules\Property\Models\Property;
 use App\Filament\Admin\Resources\PropertyResource\Pages;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -110,7 +110,7 @@ class PropertyResource extends Resource
             ->schema([
                 Forms\Components\Select::make('city_id')
                     ->label('Şəhər')
-                    ->options(fn () => \App\Core\Infrastructure\Persistence\Eloquent\Models\City::where('is_active', true)->orderBy('sort_order')->get()->mapWithKeys(fn ($c) => [$c->id => $c->name['az'] ?? $c->slug]))
+                    ->options(fn () => \App\Modules\Location\Models\City::where('is_active', true)->orderBy('sort_order')->get()->mapWithKeys(fn ($c) => [$c->id => $c->name['az'] ?? $c->slug]))
                     ->searchable()
                     ->preload()
                     ->placeholder('Şəhər seçin')
@@ -122,7 +122,7 @@ class PropertyResource extends Resource
                     ->label('Rayon / Bölqə')
                     ->options(fn (Forms\Get $get) =>
                         $get('city_id')
-                            ? \App\Core\Infrastructure\Persistence\Eloquent\Models\District::where('city_id', $get('city_id'))
+                            ? \App\Modules\Location\Models\District::where('city_id', $get('city_id'))
                                 ->where('is_active', true)
                                 ->orderBy('sort_order')
                                 ->get()
@@ -225,7 +225,7 @@ class PropertyResource extends Resource
                     ->live()
                     ->afterStateUpdated(function (bool $state, Forms\Get $get, Forms\Set $set) {
                         if ($state && $get('price_gbp')) {
-                            $converted = app(\App\Core\Application\Currency\CurrencyService::class)->convertFromGbp((float) $get('price_gbp'));
+                            $converted = app(\App\Modules\Shared\Services\CurrencyService::class)->convertFromGbp((float) $get('price_gbp'));
                             $set('price_usd', $converted['USD'] ?? null);
                             $set('price_eur', $converted['EUR'] ?? null);
                             $set('price_azn', $converted['AZN'] ?? null);
@@ -247,7 +247,7 @@ class PropertyResource extends Resource
                     ->afterStateUpdated(function ($state, Forms\Get $get, Forms\Set $set) {
                         $set('price', $state);
                         if ($get('auto_convert_currency') && !empty($state)) {
-                            $converted = app(\App\Core\Application\Currency\CurrencyService::class)->convertFromGbp((float) $state);
+                            $converted = app(\App\Modules\Shared\Services\CurrencyService::class)->convertFromGbp((float) $state);
                             $set('price_usd', $converted['USD'] ?? null);
                             $set('price_eur', $converted['EUR'] ?? null);
                             $set('price_azn', $converted['AZN'] ?? null);

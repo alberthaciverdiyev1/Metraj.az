@@ -2,7 +2,7 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Agent;
+use App\Modules\Agency\Models\Agent;
 use App\Filament\Admin\Resources\AgentResource\Pages;
 use Filament\Forms;
 use Filament\Forms\Form;

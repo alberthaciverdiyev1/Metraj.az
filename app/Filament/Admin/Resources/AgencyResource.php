@@ -2,8 +2,8 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Core\Domain\Agency\Enums\AgencyStatus;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Agency;
+use App\Modules\Agency\Enums\AgencyStatus;
+use App\Modules\Agency\Models\Agency;
 use App\Filament\Admin\Resources\AgencyResource\Pages;
 use App\Filament\Admin\Resources\AgencyResource\RelationManagers\AgentsRelationManager;
 use App\Filament\Admin\Resources\AgencyResource\RelationManagers\PropertiesRelationManager;

@@ -94,9 +94,9 @@ trait SyncsDynamicFilters
             $data['agency_id'] = $user?->tenantAgency()?->id;
             $data['agent_id'] = $user?->agent?->id;
             $data['seller_type'] = ($user?->tenantAgency() || $user?->agent)
-                ? \App\Core\Domain\Property\Enums\SellerType::Agency->value
-                : \App\Core\Domain\Property\Enums\SellerType::Owner->value;
-            $data['status'] = \App\Core\Domain\Property\Enums\PropertyStatus::PendingApproval->value;
+                ? \App\Modules\Property\Enums\SellerType::Agency->value
+                : \App\Modules\Property\Enums\SellerType::Owner->value;
+            $data['status'] = \App\Modules\Property\Enums\PropertyStatus::PendingApproval->value;
         }
 
         // Multi-currency price packaging
@@ -105,7 +105,7 @@ trait SyncsDynamicFilters
             $data['price'] = $basePrice;
             $data['currency'] = 'GBP';
 
-            $prices = app(\App\Core\Application\Currency\CurrencyService::class)->convertFromGbp($basePrice);
+            $prices = app(\App\Modules\Shared\Services\CurrencyService::class)->convertFromGbp($basePrice);
             if (empty($data['auto_convert_currency'])) {
                 if (!empty($data['price_usd'])) $prices['USD'] = (float) $data['price_usd'];
                 if (!empty($data['price_eur'])) $prices['EUR'] = (float) $data['price_eur'];
@@ -120,7 +120,7 @@ trait SyncsDynamicFilters
 
         // Əgər "Draft" düyməsi sıxılıbsa status Qaralama (Draft) olaraq qeyd edilir
         if ($this->isDraft ?? false) {
-            $data['status'] = \App\Core\Domain\Property\Enums\PropertyStatus::Draft->value;
+            $data['status'] = \App\Modules\Property\Enums\PropertyStatus::Draft->value;
         }
 
         return $data;
@@ -134,7 +134,7 @@ trait SyncsDynamicFilters
             $data['price'] = $basePrice;
             $data['currency'] = 'GBP';
 
-            $prices = app(\App\Core\Application\Currency\CurrencyService::class)->convertFromGbp($basePrice);
+            $prices = app(\App\Modules\Shared\Services\CurrencyService::class)->convertFromGbp($basePrice);
             if (empty($data['auto_convert_currency'])) {
                 if (!empty($data['price_usd'])) $prices['USD'] = (float) $data['price_usd'];
                 if (!empty($data['price_eur'])) $prices['EUR'] = (float) $data['price_eur'];
@@ -175,7 +175,7 @@ trait SyncsDynamicFilters
 
     protected function buildTitleFromOptions(array $filterOptionIds, ?int $rooms, ?float $area, ?float $landArea, string $location = ''): string
     {
-        return app(\App\Core\Application\Property\Services\PropertyTitleBuilder::class)
+        return app(\App\Modules\Property\Services\PropertyTitleBuilder::class)
             ->build($filterOptionIds, $rooms, $area, $landArea, $location);
     }
 }

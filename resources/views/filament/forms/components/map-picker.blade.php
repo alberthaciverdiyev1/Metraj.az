@@ -1,5 +1,5 @@
 @php
-    $citiesData = \App\Core\Infrastructure\Persistence\Eloquent\Models\City::with('districts')
+    $citiesData = \App\Modules\Location\Models\City::with('districts')
         ->where('is_active', true)
         ->get()
         ->mapWithKeys(function ($city) {

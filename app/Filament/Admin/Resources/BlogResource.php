@@ -2,7 +2,7 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Blog;
+use App\Modules\Blog\Models\Blog;
 use App\Filament\Admin\Resources\BlogResource\Pages;
 use Filament\Forms;
 use Filament\Forms\Form;

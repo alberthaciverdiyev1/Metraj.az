@@ -2,7 +2,7 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Core\Infrastructure\Persistence\Eloquent\Models\City;
+use App\Modules\Location\Models\City;
 use App\Filament\Admin\Resources\LocationResource\Pages;
 use App\Filament\Admin\Resources\LocationResource\RelationManagers\DistrictsRelationManager;
 use Filament\Forms;

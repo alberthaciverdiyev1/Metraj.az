@@ -2,7 +2,7 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Amenity;
+use App\Modules\Location\Models\Amenity;
 use App\Filament\Admin\Resources\AmenityResource\Pages;
 use Filament\Forms;
 use Filament\Forms\Form;

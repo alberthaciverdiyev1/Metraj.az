@@ -2,14 +2,14 @@
 
 namespace Database\Seeders;
 
-use App\Core\Domain\Filter\Enums\FilterKey;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Amenity;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\City;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\District;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Filter;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\FilterOption;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Property;
-use App\Core\Infrastructure\Persistence\Eloquent\Models\PropertyImage;
+use App\Modules\Location\Enums\FilterKey;
+use App\Modules\Location\Models\Amenity;
+use App\Modules\Location\Models\City;
+use App\Modules\Location\Models\District;
+use App\Modules\Location\Models\Filter;
+use App\Modules\Location\Models\FilterOption;
+use App\Modules\Property\Models\Property;
+use App\Modules\Property\Models\PropertyImage;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -202,7 +202,7 @@ class NorthernCyprusLocationSeeder extends Seeder
             $lat = (float) $baseCoords['lat'] + ($idx * 0.003 - 0.02);
             $lon = (float) $baseCoords['lon'] + ($idx * 0.004 - 0.02);
 
-            $prices = app(\App\Core\Application\Currency\CurrencyService::class)->convertFromGbp((float) $tpl['price']);
+            $prices = app(\App\Modules\Shared\Services\CurrencyService::class)->convertFromGbp((float) $tpl['price']);
             $code = (string) (100500 + $idx);
 
             $prop = Property::updateOrCreate(
@@ -229,8 +229,8 @@ class NorthernCyprusLocationSeeder extends Seeder
                     'has_document' => true,
                     'has_mortgage' => ($idx % 2 === 0),
                     'has_internal_credit' => ($idx % 3 === 0),
-                    'seller_type' => ($idx % 3 === 0) ? \App\Core\Domain\Property\Enums\SellerType::Agency : (($idx % 3 === 1) ? \App\Core\Domain\Property\Enums\SellerType::Complex : \App\Core\Domain\Property\Enums\SellerType::Owner),
-                    'status' => \App\Core\Domain\Property\Enums\PropertyStatus::Published,
+                    'seller_type' => ($idx % 3 === 0) ? \App\Modules\Property\Enums\SellerType::Agency : (($idx % 3 === 1) ? \App\Modules\Property\Enums\SellerType::Complex : \App\Modules\Property\Enums\SellerType::Owner),
+                    'status' => \App\Modules\Property\Enums\PropertyStatus::Published,
                     'is_featured' => ($idx < 6),
                     'is_vip' => ($idx < 4),
                     'views_count' => rand(50, 450),

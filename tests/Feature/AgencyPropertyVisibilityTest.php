@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Property;
+use App\Modules\Property\Models\Property;
 use App\Models\User;
 use Tests\TestCase;
 

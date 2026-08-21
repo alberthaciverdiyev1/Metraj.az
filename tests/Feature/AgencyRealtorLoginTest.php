@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Agent;
+use App\Modules\Agency\Models\Agent;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;

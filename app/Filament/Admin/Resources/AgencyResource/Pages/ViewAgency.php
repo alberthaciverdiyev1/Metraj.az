@@ -2,7 +2,7 @@
 
 namespace App\Filament\Admin\Resources\AgencyResource\Pages;
 
-use App\Core\Domain\Agency\Enums\AgencyStatus;
+use App\Modules\Agency\Enums\AgencyStatus;
 use App\Filament\Admin\Resources\AgencyResource;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\ImageEntry;

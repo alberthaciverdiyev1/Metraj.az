@@ -2,7 +2,7 @@
 
 namespace App\Filament\Agency\Resources;
 
-use App\Core\Infrastructure\Persistence\Eloquent\Models\Agency;
+use App\Modules\Agency\Models\Agency;
 use App\Filament\Admin\Resources\AgencyResource\RelationManagers\AgentsRelationManager;
 use App\Filament\Admin\Resources\AgencyResource\RelationManagers\PropertiesRelationManager;
 use App\Filament\Agency\Resources\AgencyResource\Pages;
