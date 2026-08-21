@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
     {
         \Filament\Tables\Table::configureUsing(function (\Filament\Tables\Table $table): void {
             $table
-                ->paginationPageOptions([20, 40, 60])
+                ->paginationPageOptions([20])
                 ->defaultPaginationPageOption(20);
         });
     }

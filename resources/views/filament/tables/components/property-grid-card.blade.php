@@ -6,12 +6,12 @@
 
     $status = $record->status;
     $statusBg = match ($status?->value ?? '') {
-        'draft' => '#f1f5f9; color: #475569; border: 1px solid #cbd5e1;',
-        'pending_approval' => '#fef3c7; color: #b45309; border: 1px solid #fde68a;',
-        'published' => '#dcfce7; color: #15803d; border: 1px solid #bbf7d0;',
-        'rejected' => '#ffe4e6; color: #be123c; border: 1px solid #fecdd3;',
-        'sold', 'rented' => '#dbeafe; color: #1d4ed8; border: 1px solid #bfdbfe;',
-        default => '#f1f5f9; color: #475569; border: 1px solid #cbd5e1;',
+        'draft' => 'background: #475569; color: #ffffff; box-shadow: 0 2px 6px rgba(71, 85, 105, 0.45);',
+        'pending_approval' => 'background: #d97706; color: #ffffff; box-shadow: 0 2px 6px rgba(217, 119, 6, 0.45);',
+        'published' => 'background: #16a34a; color: #ffffff; box-shadow: 0 2px 6px rgba(22, 163, 74, 0.45);',
+        'rejected' => 'background: #dc2626; color: #ffffff; box-shadow: 0 2px 6px rgba(220, 38, 38, 0.45);',
+        'sold', 'rented' => 'background: #2563eb; color: #ffffff; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.45);',
+        default => 'background: #475569; color: #ffffff; box-shadow: 0 2px 6px rgba(71, 85, 105, 0.45);',
     };
 
     $locationName = $record->district?->name['az'] ?? ($record->city?->name['az'] ?? 'Bakı');
@@ -28,10 +28,7 @@
     }
 @endphp
 
-<div style="width: 100%; height: 100%; display: flex; flex-direction: column; background: #ffffff; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s ease, box-shadow 0.2s ease;"
-     onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 24px rgba(0,0,0,0.1)';"
-     onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)';"
->
+<div style="width: 100%; height: 100%; display: flex; flex-direction: column; background: transparent; overflow: hidden;">
     <!-- Cover Image Container -->
     <div style="position: relative; width: 100%; height: 185px; overflow: hidden; background-color: #f1f5f9;">
         <img
@@ -138,12 +135,27 @@
                     style="display: flex; align-items: center; gap: 4px; padding: 5px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; color: #ea580c; background: #fff7ed; border: 1px solid #ffedd5; text-decoration: none; transition: all 0.2s ease;"
                     onmouseover="this.style.background='#ffedd5';"
                     onmouseout="this.style.background='#fff7ed';"
+                    title="Düzəliş et"
                 >
                     <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                     </svg>
                     <span>Düzəliş et</span>
                 </a>
+
+                <button
+                    type="button"
+                    wire:click="mountTableAction('delete', '{{ $record->getKey() }}')"
+                    style="display: flex; align-items: center; gap: 4px; padding: 5px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; color: #dc2626; background: #fef2f2; border: 1px solid #fee2e2; cursor: pointer; transition: all 0.2s ease;"
+                    onmouseover="this.style.background='#fee2e2';"
+                    onmouseout="this.style.background='#fef2f2';"
+                    title="Sil"
+                >
+                    <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                    <span>Sil</span>
+                </button>
             </div>
         </div>
     </div>

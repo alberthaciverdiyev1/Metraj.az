@@ -18,7 +18,7 @@ class ListProperties extends ListRecords
             Actions\CreateAction::make(),
 
             Actions\Action::make('setTableView')
-                ->label('Cədvəl Görünüşü')
+                ->label(false)
                 ->icon('heroicon-o-table-cells')
                 ->color($currentLayout === 'table' ? 'primary' : 'gray')
                 ->outlined($currentLayout !== 'table')
@@ -28,7 +28,7 @@ class ListProperties extends ListRecords
                 }),
 
             Actions\Action::make('setGridView')
-                ->label('Grid (Kart) Görünüşü')
+                ->label(false)
                 ->icon('heroicon-o-squares-2x2')
                 ->color($currentLayout === 'grid' ? 'primary' : 'gray')
                 ->outlined($currentLayout !== 'grid')

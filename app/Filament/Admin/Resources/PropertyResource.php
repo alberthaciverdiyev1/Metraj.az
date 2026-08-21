@@ -619,7 +619,12 @@ class PropertyResource extends Resource
                         ->label('Status')
                         ->options(collect(PropertyStatus::cases())->mapWithKeys(fn ($status) => [$status->value => $status->label()])),
                 ])
-                ->actions([])
+                ->actions([
+                    Tables\Actions\ViewAction::make()
+                        ->url(fn (\Illuminate\Database\Eloquent\Model $record): string => static::getUrl('view', ['record' => $record])),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
                 ->bulkActions([]);
         }
 
