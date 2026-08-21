@@ -160,7 +160,7 @@
         @else
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
                 @foreach($properties as $property)
-                    @include('property::components.property-card', ['property' => $property])
+                    @include('components.property-card', ['property' => $property])
                 @endforeach
             </div>
 

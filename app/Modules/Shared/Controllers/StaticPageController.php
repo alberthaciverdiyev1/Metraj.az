@@ -9,31 +9,31 @@ class StaticPageController extends Controller
 {
     public function about(): View
     {
-        return view('shared::pages.static.about-us');
+        return view('pages.static.about-us');
     }
 
     public function contact(): View
     {
-        return view('shared::pages.static.contact');
+        return view('pages.static.contact');
     }
 
     public function faq(): View
     {
-        return view('shared::pages.static.faq');
+        return view('pages.static.faq');
     }
 
     public function favorites(): View
     {
-        return view('shared::pages.favorites.favorites');
+        return view('pages.favorites.favorites');
     }
 
     public function compares(): View
     {
-        return view('shared::pages.compare.compare');
+        return view('pages.compare.compare');
     }
 
     public function login(): View
     {
-        return view('shared::pages.auth.login');
+        return view('pages.auth.login');
     }
 }

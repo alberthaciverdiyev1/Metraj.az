@@ -141,14 +141,14 @@
             </div>
 
             <!-- Property Specs Component -->
-            @include('property::components.property.specs', ['item' => $property])
+            @include('components.property.specs', ['item' => $property])
 
-            @include('property::components.property.map', ['location' => $property, 'zoom' => 15])
+            @include('components.property.map', ['location' => $property, 'zoom' => 15])
             <!-- Features (Təchizatlar) Component -->
-            @include('property::components.property.features', ['features' => $property->amenities ?? [], 'column' => 3])
+            @include('components.property.features', ['features' => $property->amenities ?? [], 'column' => 3])
 
             <!-- Similar Cards Section -->
-            @include('property::components.similar-cards', ['similarProperties' => $similarProperties, 'currentProperty' => $property])
+            @include('components.similar-cards', ['similarProperties' => $similarProperties, 'currentProperty' => $property])
         </div>
 
         <!-- Right Side: Sidebar (Sticky) -->
@@ -265,10 +265,10 @@
                     @endif
                 </div>
 
-                @include('property::components.property.multiple-phone-modal')
-                @include('property::components.property.premium-buttons')
-                @include('property::components.property.premium-modal')
-                @include('property::components.property.move-forward-modal')
+                @include('components.property.multiple-phone-modal')
+                @include('components.property.premium-buttons')
+                @include('components.property.premium-modal')
+                @include('components.property.move-forward-modal')
             </div>
         </div>
 

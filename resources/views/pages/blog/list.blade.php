@@ -32,7 +32,7 @@
             <div class="blog-cards">
 
                 @forelse($blogs as $blog)
-                    @include('blog::components.cards.blog', [
+                    @include('components.cards.blog', [
                         'slug' => $blog->slug,
                         'images' => $blog->cover_image ? [$blog->cover_image] : [],
                         'category' => (object) ['name' => $blog->category ?? 'Bloq'],

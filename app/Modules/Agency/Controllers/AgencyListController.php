@@ -19,6 +19,6 @@ class AgencyListController extends Controller
         // Heç bir agentliyə bağlı olmayan müstəqil rieltorlar da görsənsin
         $independentAgents = $this->agencyService->independentAgents();
 
-        return view('agency::pages.agency.list', compact('agencies', 'independentAgents'));
+        return view('pages.agency.list', compact('agencies', 'independentAgents'));
     }
 }

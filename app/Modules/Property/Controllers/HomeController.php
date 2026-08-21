@@ -70,9 +70,9 @@ class HomeController extends Controller
             $premiumProperties = $this->propertyService->filterPremium($properties);
 
             return response()->json([
-                'premium' => view('property::pages.property.partials.premium', compact('premiumProperties'))->render(),
-                'properties' => view('property::pages.property.partials.cards', compact('properties'))->render(),
-                'pagination' => view('property::pages.property.partials.pagination', compact('properties'))->render(),
+                'premium' => view('pages.property.partials.premium', compact('premiumProperties'))->render(),
+                'properties' => view('pages.property.partials.cards', compact('properties'))->render(),
+                'pagination' => view('pages.property.partials.pagination', compact('properties'))->render(),
                 'total' => $properties->total(),
             ]);
         }
@@ -91,7 +91,7 @@ class HomeController extends Controller
             ['label' => __('Property Listing')],
         ];
 
-        return view('property::pages.property.list', compact(
+        return view('pages.property.list', compact(
             'properties',
             'cities',
             'buildingTypes',

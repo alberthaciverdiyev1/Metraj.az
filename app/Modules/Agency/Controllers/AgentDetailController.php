@@ -27,6 +27,6 @@ class AgentDetailController extends Controller
             12
         );
 
-        return view('agency::agents.show', compact('agent', 'properties'));
+        return view('agents.show', compact('agent', 'properties'));
     }
 }

@@ -22,7 +22,7 @@ class BlogController extends Controller
             ['label' => __('Blog'), 'url' => '/blog'],
         ];
 
-        return view('blog::pages.blog.list', compact('blogs', 'breadcrumbs'));
+        return view('pages.blog.list', compact('blogs', 'breadcrumbs'));
     }
 
     public function show(Blog $blog): View
@@ -35,6 +35,6 @@ class BlogController extends Controller
             ['label' => $blog->title],
         ];
 
-        return view('blog::pages.blog.show', compact('blog', 'related', 'breadcrumbs'));
+        return view('pages.blog.show', compact('blog', 'related', 'breadcrumbs'));
     }
 }

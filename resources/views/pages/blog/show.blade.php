@@ -97,7 +97,7 @@
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 @foreach($related as $item)
-                    @include('blog::components.cards.blog', [
+                    @include('components.cards.blog', [
                         'slug' => $item->slug,
                         'images' => $item->cover_image ? [$item->cover_image] : [],
                         'category' => (object) ['name' => $item->category ?? 'Bloq'],

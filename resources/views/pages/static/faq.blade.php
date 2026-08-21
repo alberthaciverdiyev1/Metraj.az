@@ -248,7 +248,7 @@
                                 </button>
                             </form>
                         </div>
-                        <x-agency::connect-agent/>
+                        <x-connect-agent/>
 
                     </div>
 

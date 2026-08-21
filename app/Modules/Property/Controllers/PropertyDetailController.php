@@ -30,7 +30,7 @@ class PropertyDetailController extends Controller
             ['label' => __('Property Details')],
         ];
 
-        return view('property::pages.property.details', compact('property', 'similarProperties', 'breadcrumbs'))
+        return view('pages.property.details', compact('property', 'similarProperties', 'breadcrumbs'))
             ->with('css', ['listing-details.css'])
             ->with('js', [
                 '/js/pages/property/detail/phone-modal.js',

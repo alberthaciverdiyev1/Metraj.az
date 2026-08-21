@@ -159,7 +159,7 @@
             </div>
 
             <div class="md:w-full space-y-6 p-8">
-                @include('property::components.do-you-need-loan')
+                @include('components.do-you-need-loan')
             </div>
 
         </section>

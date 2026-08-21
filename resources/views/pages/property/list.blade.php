@@ -186,8 +186,8 @@
                                 </div>
                             </div>
 
-                            @include('property::components.modals.city-filter')
-                            @include('property::components.modals.filter-more')
+                            @include('components.modals.city-filter')
+                            @include('components.modals.filter-more')
                         </form>
 
                         <hr class="text-gray-300 mt-7">
@@ -208,11 +208,11 @@
 
                             <div id="propertyContainer"
                                  class="pt-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-3 sm:gap-6">
-                                @include('property::pages.property.partials.cards', ['properties' => $properties])
+                                @include('pages.property.partials.cards', ['properties' => $properties])
                             </div>
 
                             <div id="paginationContainer" class="mt-14">
-                                @include('property::pages.property.partials.pagination', ['properties' => $properties])
+                                @include('pages.property.partials.pagination', ['properties' => $properties])
                             </div>
                         </div>
                     </div>

@@ -40,7 +40,7 @@ class AddPropertyController extends Controller
         $amenities = $this->locationService->amenities();
         $dailyRates = $this->currencyService->getRatesFromGbp();
 
-        return view('property::pages.property.add', compact(
+        return view('pages.property.add', compact(
             'cities',
             'dealTypes',
             'propertyTypes',
