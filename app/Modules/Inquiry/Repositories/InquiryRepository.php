@@ -5,7 +5,7 @@ namespace App\Modules\Inquiry\Repositories;
 use App\Modules\Inquiry\Repositories\InquiryRepositoryInterface;
 use App\Modules\Inquiry\Models\Inquiry;
 
-class EloquentInquiryRepository implements InquiryRepositoryInterface
+class InquiryRepository implements InquiryRepositoryInterface
 {
     public function create(array $data): Inquiry
     {

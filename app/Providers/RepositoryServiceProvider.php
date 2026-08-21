@@ -7,11 +7,11 @@ use App\Modules\Agency\Repositories\AgentRepositoryInterface;
 use App\Modules\Blog\Repositories\BlogRepositoryInterface;
 use App\Modules\Inquiry\Repositories\InquiryRepositoryInterface;
 use App\Modules\Property\Repositories\PropertyRepositoryInterface;
-use App\Modules\Agency\Repositories\EloquentAgencyRepository;
-use App\Modules\Agency\Repositories\EloquentAgentRepository;
-use App\Modules\Blog\Repositories\EloquentBlogRepository;
-use App\Modules\Inquiry\Repositories\EloquentInquiryRepository;
-use App\Modules\Property\Repositories\EloquentPropertyRepository;
+use App\Modules\Agency\Repositories\AgencyRepository;
+use App\Modules\Agency\Repositories\AgentRepository;
+use App\Modules\Blog\Repositories\BlogRepository;
+use App\Modules\Inquiry\Repositories\InquiryRepository;
+use App\Modules\Property\Repositories\PropertyRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -20,27 +20,27 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             PropertyRepositoryInterface::class,
-            EloquentPropertyRepository::class
+            PropertyRepository::class
         );
 
         $this->app->bind(
             AgencyRepositoryInterface::class,
-            EloquentAgencyRepository::class
+            AgencyRepository::class
         );
 
         $this->app->bind(
             AgentRepositoryInterface::class,
-            EloquentAgentRepository::class
+            AgentRepository::class
         );
 
         $this->app->bind(
             BlogRepositoryInterface::class,
-            EloquentBlogRepository::class
+            BlogRepository::class
         );
 
         $this->app->bind(
             InquiryRepositoryInterface::class,
-            EloquentInquiryRepository::class
+            InquiryRepository::class
         );
     }
 

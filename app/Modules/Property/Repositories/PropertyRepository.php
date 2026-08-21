@@ -11,7 +11,7 @@ use App\Modules\Property\Models\Property;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
-class EloquentPropertyRepository implements PropertyRepositoryInterface
+class PropertyRepository implements PropertyRepositoryInterface
 {
     public function findById(int $id): ?Property
     {

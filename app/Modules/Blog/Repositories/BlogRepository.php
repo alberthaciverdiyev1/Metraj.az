@@ -7,7 +7,7 @@ use App\Modules\Blog\Models\Blog;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
-class EloquentBlogRepository implements BlogRepositoryInterface
+class BlogRepository implements BlogRepositoryInterface
 {
     public function paginatePublished(int $perPage = 12): LengthAwarePaginator
     {

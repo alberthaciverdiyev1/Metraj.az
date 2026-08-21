@@ -7,7 +7,7 @@ use App\Modules\Agency\Repositories\AgencyRepositoryInterface;
 use App\Modules\Agency\Models\Agency;
 use Illuminate\Database\Eloquent\Collection;
 
-class EloquentAgencyRepository implements AgencyRepositoryInterface
+class AgencyRepository implements AgencyRepositoryInterface
 {
     public function activeWithPropertiesCount(): Collection
     {
