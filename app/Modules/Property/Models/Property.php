@@ -4,7 +4,7 @@ namespace App\Modules\Property\Models;
 
 use App\Modules\Property\Enums\PropertyStatus;
 use App\Modules\Property\Enums\SellerType;
-use App\Models\User;
+use App\Modules\Shared\Models\User;
 use App\Modules\Agency\Models\Agency;
 use App\Modules\Agency\Models\Agent;
 use App\Modules\Location\Models\City;

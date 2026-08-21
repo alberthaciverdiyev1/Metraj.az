@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use App\Modules\Shared\Models\User;
 use Tests\TestCase;
 
 class FinalNavCheckTest extends TestCase

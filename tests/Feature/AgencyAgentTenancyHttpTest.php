@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Modules\Agency\Models\Agent;
-use App\Models\User;
+use App\Modules\Shared\Models\User;
 use Tests\TestCase;
 
 class AgencyAgentTenancyHttpTest extends TestCase

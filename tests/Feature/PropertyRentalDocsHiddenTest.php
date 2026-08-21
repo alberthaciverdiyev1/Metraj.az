@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use App\Modules\Shared\Models\User;
 use Filament\Facades\Filament;
 use Livewire\Livewire;
 use Tests\TestCase;

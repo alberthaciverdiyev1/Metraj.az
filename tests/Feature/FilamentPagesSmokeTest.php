@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Modules\Property\Models\Property;
-use App\Models\User;
+use App\Modules\Shared\Models\User;
 use Livewire\Livewire;
 use Tests\TestCase;
 

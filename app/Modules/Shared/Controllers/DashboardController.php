@@ -3,7 +3,7 @@
 namespace App\Modules\Shared\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Modules\Shared\Models\User;
 use Illuminate\Http\RedirectResponse;
 
 class DashboardController extends Controller

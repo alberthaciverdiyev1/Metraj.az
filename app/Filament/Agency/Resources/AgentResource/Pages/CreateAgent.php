@@ -3,7 +3,7 @@
 namespace App\Filament\Agency\Resources\AgentResource\Pages;
 
 use App\Filament\Agency\Resources\AgentResource;
-use App\Models\User;
+use App\Modules\Shared\Models\User;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;

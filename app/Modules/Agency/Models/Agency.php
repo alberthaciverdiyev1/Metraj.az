@@ -3,7 +3,7 @@
 namespace App\Modules\Agency\Models;
 
 use App\Modules\Agency\Enums\AgencyStatus;
-use App\Models\User;
+use App\Modules\Shared\Models\User;
 use App\Modules\Property\Models\Property;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

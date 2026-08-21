@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Modules\Agency\Enums\AgencyStatus;
 use App\Modules\Agency\Models\Agency;
 use App\Modules\Agency\Models\Agent;
-use App\Models\User;
+use App\Modules\Shared\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 

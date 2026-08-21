@@ -2,7 +2,7 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\User;
+use App\Modules\Shared\Models\User;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Placeholder;

@@ -10,7 +10,7 @@ use App\Modules\Location\Models\Filter;
 use App\Modules\Location\Models\FilterOption;
 use App\Modules\Property\Models\Property;
 use App\Modules\Property\Models\PropertyImage;
-use App\Models\User;
+use App\Modules\Shared\Models\User;
 use Illuminate\Database\Seeder;
 
 class NorthernCyprusLocationSeeder extends Seeder

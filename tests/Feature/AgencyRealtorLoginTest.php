@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Modules\Agency\Models\Agent;
-use App\Models\User;
+use App\Modules\Shared\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
@@ -43,7 +43,7 @@ class AgencyRealtorLoginTest extends TestCase
     public function test_edit_page_shows_linked_user_as_readonly(): void
     {
         $this->actingAs(User::where('email', 'agency@metraj.az')->firstOrFail());
-        $own = Agent::where('agency_id', \App\Models\User::where('email', 'agency@metraj.az')->firstOrFail()->tenantAgency()->id)->first();
+        $own = Agent::where('agency_id', \App\Modules\Shared\Models\User::where('email', 'agency@metraj.az')->firstOrFail()->tenantAgency()->id)->first();
         $this->assertNotNull($own);
 
         $response = $this->get('/agency/agents/' . $own->id . '/edit');

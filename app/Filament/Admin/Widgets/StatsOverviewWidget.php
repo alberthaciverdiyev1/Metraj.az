@@ -6,7 +6,7 @@ use App\Modules\Property\Enums\PropertyStatus;
 use App\Modules\Agency\Models\Agency;
 use App\Modules\Inquiry\Models\Inquiry;
 use App\Modules\Property\Models\Property;
-use App\Models\User;
+use App\Modules\Shared\Models\User;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 

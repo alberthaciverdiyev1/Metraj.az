@@ -2,7 +2,7 @@
 
 namespace App\Modules\Inquiry\Models;
 
-use App\Models\User;
+use App\Modules\Shared\Models\User;
 use App\Modules\Property\Models\Property;
 use App\Modules\Agency\Models\Agency;
 use App\Modules\Agency\Models\Agent;

@@ -6,7 +6,7 @@ use App\Modules\Location\Enums\FilterKey;
 use App\Modules\Location\Models\Amenity;
 use App\Modules\Location\Models\Filter;
 use App\Modules\Location\Models\FilterOption;
-use App\Models\User;
+use App\Modules\Shared\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
