@@ -67,8 +67,17 @@ class PropertyResource extends Resource
             self::filterField(FilterKey::PropertyType, 'toggle', ['columns' => 3])
                 ->columnSpanFull(),
 
-            self::filterField(FilterKey::DealType, 'toggle', ['columns' => 3])
-                ->columnSpanFull(),
+            self::filterField(FilterKey::DealType, 'toggle', [
+                'columns' => 3,
+                // Kirayə seçiləndə sənəd / kredit sahələri təmizlənir (frontend JS-dəki davranışa uyğun)
+                'afterStateUpdated' => function ($component, Forms\Set $set, Forms\Get $get, $filter): void {
+                    if (static::isRental($get)) {
+                        $set('has_document', false);
+                        $set('has_mortgage', false);
+                        $set('has_internal_credit', false);
+                    }
+                },
+            ])->columnSpanFull(),
         ];
 
         if ($isAdmin) {
@@ -172,6 +181,33 @@ class PropertyResource extends Resource
     }
 
     /**
+     * Alqı-satqı növü "Kirayə" seçilibsə true qaytarır.
+     * Bu zaman sənəd və kredit şərtləri (kupça, ipoteka, daxili kredit) göstərilmir.
+     */
+    public static function isRental(Forms\Get $get): bool
+    {
+        $dealTypeFilter = Filter::where('key', FilterKey::DealType->value)->first();
+        if (! $dealTypeFilter) {
+            return false;
+        }
+
+        $selectedOptionId = $get('filter_' . $dealTypeFilter->id);
+        if (blank($selectedOptionId)) {
+            return false;
+        }
+
+        $option = FilterOption::find((int) $selectedOptionId);
+        if (! $option) {
+            return false;
+        }
+
+        $value = mb_strtolower((string) $option->value);
+        $azName = mb_strtolower((string) ($option->name['az'] ?? ''));
+
+        return str_contains($value, 'rent') || str_contains($azName, 'kirayə');
+    }
+
+    /**
      * 3) Qiymət və Valyutalar (Çoxvalyutalı qiymət və avtomatik məzənnə konvertasiyası)
      */
     protected static function sectionPricing(): Forms\Components\Section
@@ -189,7 +225,7 @@ class PropertyResource extends Resource
                     ->live()
                     ->afterStateUpdated(function (bool $state, Forms\Get $get, Forms\Set $set) {
                         if ($state && $get('price_gbp')) {
-                            $converted = \App\Core\Application\Currency\CurrencyService::convertFromGbp((float) $get('price_gbp'));
+                            $converted = app(\App\Core\Application\Currency\CurrencyService::class)->convertFromGbp((float) $get('price_gbp'));
                             $set('price_usd', $converted['USD'] ?? null);
                             $set('price_eur', $converted['EUR'] ?? null);
                             $set('price_azn', $converted['AZN'] ?? null);
@@ -211,7 +247,7 @@ class PropertyResource extends Resource
                     ->afterStateUpdated(function ($state, Forms\Get $get, Forms\Set $set) {
                         $set('price', $state);
                         if ($get('auto_convert_currency') && !empty($state)) {
-                            $converted = \App\Core\Application\Currency\CurrencyService::convertFromGbp((float) $state);
+                            $converted = app(\App\Core\Application\Currency\CurrencyService::class)->convertFromGbp((float) $state);
                             $set('price_usd', $converted['USD'] ?? null);
                             $set('price_eur', $converted['EUR'] ?? null);
                             $set('price_azn', $converted['AZN'] ?? null);
@@ -404,6 +440,7 @@ class PropertyResource extends Resource
             ->icon('heroicon-o-document-check')
             ->columnSpan(2)
             ->columns(3)
+            ->hidden(fn (Forms\Get $get): bool => static::isRental($get))
             ->schema([
                 Forms\Components\Toggle::make('has_document')
                     ->label('Çıxarış var (Kupça)')
@@ -590,6 +627,12 @@ class PropertyResource extends Resource
             ->label($filter->name['az'] ?? $key->label())
             ->helperText($options['helperText'] ?? null)
             ->live()
+            ->afterStateUpdated(function ($component, Forms\Set $set, Forms\Get $get) use ($filter, $options) {
+                // Xüsusi callback verilibsə onu çağırırıq (Məs: deal_type dəyişəndə kredit sahələrini təmizləmək)
+                if (isset($options['afterStateUpdated']) && is_callable($options['afterStateUpdated'])) {
+                    ($options['afterStateUpdated'])($component, $set, $get, $filter);
+                }
+            })
             ->afterStateHydrated(function ($component, $record) use ($filter) {
                 if ($record) {
                     $selected = $record->filterOptions->where('filter_id', $filter->id)->first();

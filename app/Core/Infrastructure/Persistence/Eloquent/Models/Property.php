@@ -5,7 +5,6 @@ namespace App\Core\Infrastructure\Persistence\Eloquent\Models;
 use App\Core\Domain\Property\Enums\PropertyStatus;
 use App\Core\Domain\Property\Enums\SellerType;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -15,7 +14,7 @@ use Illuminate\Support\Str;
 
 class Property extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     /**
      * Kütləvi doldurula bilən sütunlar (Mass Assignable)
@@ -99,10 +98,25 @@ class Property extends Model
                 $model->slug = Str::slug($model->title) . '-' . Str::random(6);
             }
             // Əgər elan kodu boşdursa, 6 rəqəmli unikal kod generasiya olunur
+            // (code kolonu UNIQUE-dur; çakışma olarsa UniqueConstraintViolationException
+            //  fırlanmaması üçün mövcud kod yoxlanıb təkrar yaradılır)
             if (empty($model->code)) {
-                $model->code = (string) mt_rand(100000, 999999);
+                $model->code = static::generateUniqueCode();
             }
         });
+    }
+
+    /**
+     * 6 rəqəmli unikal elan kodu generasiya edir.
+     * Bütün oluşturma yolları (Filament, web controller, seeder) üçün tək qaynaqdır.
+     */
+    public static function generateUniqueCode(): string
+    {
+        do {
+            $code = (string) mt_rand(100000, 999999);
+        } while (static::where('code', $code)->exists());
+
+        return $code;
     }
 
     /**
@@ -186,7 +200,7 @@ class Property extends Model
         if ($firstImage && !empty($firstImage->url)) {
             return $firstImage->url;
         }
-        return 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80';
+        return \App\Core\Infrastructure\Persistence\Eloquent\Models\PropertyImage::FALLBACK_IMAGE;
     }
 
     /**
@@ -194,45 +208,6 @@ class Property extends Model
      */
     public function getFilterOption(string $key): ?FilterOption
     {
-        return $this->filterOptions->first(function ($option) use ($key) {
-            $filterKey = $option->filter?->key;
-            $filterKeyValue = is_object($filterKey) ? $filterKey->value : (string) $filterKey;
-            return $filterKeyValue === $key;
-        });
-    }
-
-    /**
-     * Aktiv valyutaya uyğun formatlaşdırılmış qiyməti qaytarır
-     */
-    public function getDisplayPrice(?string $targetCurrency = null): array
-    {
-        $currency = strtoupper($targetCurrency ?: session('currency', 'AZN'));
-        $prices = $this->prices ?? [];
-        $symbol = match ($currency) {
-            'GBP' => '£',
-            'USD' => '$',
-            'EUR' => '€',
-            'AZN' => '₼',
-            'TRY' => '₺',
-            'RUB' => '₽',
-            'AED' => 'AED',
-            default => $currency,
-        };
-
-        if (!empty($prices[$currency])) {
-            $amount = (float) $prices[$currency];
-        } else {
-            $baseGbp = (float) $this->price;
-            $rates = \App\Core\Application\Currency\CurrencyService::getRatesFromGbp();
-            $rate = $rates[$currency] ?? 1.0;
-            $amount = $baseGbp * $rate;
-        }
-
-        return [
-            'amount' => $amount,
-            'formatted' => number_format($amount, 0, '.', ' '),
-            'currency' => $currency,
-            'symbol' => $symbol,
-        ];
+        return $this->filterOptions->first(fn ($option) => $option->filter?->key?->value === $key);
     }
 }

@@ -4,43 +4,54 @@ namespace App\Core\Infrastructure\Persistence\Eloquent\Repositories;
 
 use App\Core\Application\Property\DTOs\CreatePropertyDTO;
 use App\Core\Application\Property\DTOs\PropertyFilterDTO;
+use App\Core\Domain\Property\Entities\Property as PropertyEntity;
 use App\Core\Domain\Property\Repositories\PropertyRepositoryInterface;
+use App\Core\Infrastructure\Persistence\Eloquent\Mappers\PropertyMapper;
 use App\Core\Infrastructure\Persistence\Eloquent\Models\Property;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class EloquentPropertyRepository implements PropertyRepositoryInterface
 {
-    public function findById(int $id): ?Model
+    public function findById(int $id): ?PropertyEntity
     {
-        return Property::with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])->find($id);
+        $property = Property::with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])->find($id);
+
+        return $property ? PropertyMapper::fromModel($property) : null;
     }
 
-    public function findBySlug(string $slug): ?Model
+    public function findBySlug(string $slug): ?PropertyEntity
     {
-        return Property::with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
+        $property = Property::with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
             ->where('slug', $slug)
             ->first();
+
+        return $property ? PropertyMapper::fromModel($property) : null;
     }
 
-    public function findByCode(string $code): ?Model
+    public function findByCode(string $code): ?PropertyEntity
     {
-        return Property::with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
+        $property = Property::with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
             ->where('code', $code)
             ->first();
+
+        return $property ? PropertyMapper::fromModel($property) : null;
     }
 
-    public function create(CreatePropertyDTO $dto): Model
+    public function create(CreatePropertyDTO $dto): PropertyEntity
     {
         $property = Property::create([
             'title' => $dto->title,
             'description' => $dto->description,
+            'code' => $dto->code,
+            'slug' => $dto->slug,
             'has_document' => $dto->hasDocument,
             'has_mortgage' => $dto->hasMortgage,
             'has_internal_credit' => $dto->hasInternalCredit,
             'price' => $dto->price,
             'currency' => $dto->currency,
+            'prices' => $dto->prices,
+            'views_count' => $dto->viewsCount,
             'area' => $dto->area,
             'land_area' => $dto->landArea,
             'rooms' => $dto->rooms,
@@ -69,7 +80,9 @@ class EloquentPropertyRepository implements PropertyRepositoryInterface
             $property->amenities()->sync($dto->amenityIds);
         }
 
-        return $property;
+        return PropertyMapper::fromModel($property->load([
+            'agency', 'agent', 'amenities', 'filterOptions.filter', 'images',
+        ]));
     }
 
     public function update(int $id, array $data): bool
@@ -252,24 +265,28 @@ class EloquentPropertyRepository implements PropertyRepositoryInterface
         return $query->paginate($perPage);
     }
 
-    public function getFeatured(int $limit = 6): Collection
+    public function getFeatured(int $limit = 6): array
     {
-        return Property::with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
+        $properties = Property::with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
             ->where('is_featured', true)
             ->where('status', 'published')
             ->orderBy('created_at', 'desc')
             ->limit($limit)
             ->get();
+
+        return PropertyMapper::fromCollection($properties);
     }
 
-    public function getVip(int $limit = 6): Collection
+    public function getVip(int $limit = 6): array
     {
-        return Property::with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
+        $properties = Property::with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
             ->where('is_vip', true)
             ->where('status', 'published')
             ->orderBy('created_at', 'desc')
             ->limit($limit)
             ->get();
+
+        return PropertyMapper::fromCollection($properties);
     }
 
     public function incrementViews(int $id): void

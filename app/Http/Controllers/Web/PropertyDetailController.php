@@ -33,7 +33,7 @@ class PropertyDetailController extends Controller
         $this->propertyRepository->incrementViews($property->id);
 
         // Oxşar elanlar: eyni əmlak növü və ya eyni şəhər/rayonda olan digər dərc edilmiş elanlar
-        $propertyTypeOpt = $property->filterOptions->firstWhere('filter_id', 3);
+        $propertyTypeOpt = $property->filterOptions->first(fn ($opt) => $opt->filter?->key === \App\Core\Domain\Filter\Enums\FilterKey::PropertyType);
         $similarQuery = Property::with([
             'images',
             'city',

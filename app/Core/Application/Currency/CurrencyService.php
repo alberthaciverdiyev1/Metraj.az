@@ -8,9 +8,16 @@ use Illuminate\Support\Facades\Http;
 class CurrencyService
 {
     /**
+     * Exchange rates are cached for 12 hours (cache key versioned).
+     */
+    public const string CACHE_KEY = 'currency_rates_gbp_v1';
+
+    public const int CACHE_TTL_SECONDS = 3600 * 12;
+
+    /**
      * Standard fallback rates per 1 GBP if network is unavailable
      */
-    public const DEFAULT_RATES_FROM_GBP = [
+    public const array DEFAULT_RATES_FROM_GBP = [
         'GBP' => 1.0,
         'USD' => 1.30,
         'EUR' => 1.18,
@@ -23,7 +30,7 @@ class CurrencyService
     /**
      * Get currency symbols and labels
      */
-    public static function getCurrencies(): array
+    public function getCurrencies(): array
     {
         return [
             'GBP' => ['symbol' => '£', 'label' => 'Funt Sterlinq (GBP)', 'code' => 'GBP'],
@@ -39,9 +46,9 @@ class CurrencyService
     /**
      * Get live daily exchange rates with caching and graceful fallback
      */
-    public static function getRatesFromGbp(): array
+    public function getRatesFromGbp(): array
     {
-        return Cache::remember('currency_rates_gbp_v1', 3600 * 12, function () {
+        return Cache::remember(self::CACHE_KEY, self::CACHE_TTL_SECONDS, function () {
             try {
                 $response = Http::timeout(3)->get('https://open.er-api.com/v6/latest/GBP');
                 if ($response->successful() && isset($response->json()['rates'])) {
@@ -67,9 +74,9 @@ class CurrencyService
     /**
      * Convert an amount from GBP to all target currencies
      */
-    public static function convertFromGbp(float $amountGbp): array
+    public function convertFromGbp(float $amountGbp): array
     {
-        $rates = self::getRatesFromGbp();
+        $rates = $this->getRatesFromGbp();
         $converted = [];
 
         foreach ($rates as $cur => $rate) {

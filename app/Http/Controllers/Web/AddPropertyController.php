@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Web;
 
 use App\Core\Application\Currency\CurrencyService;
+use App\Core\Application\Property\DTOs\CreatePropertyDTO;
+use App\Core\Application\Property\Services\PropertyTitleBuilder;
+use App\Core\Application\Property\UseCases\CreatePropertyUseCase;
 use App\Core\Domain\Property\Enums\PropertyStatus;
 use App\Core\Domain\Property\Enums\SellerType;
 use App\Core\Infrastructure\Persistence\Eloquent\Models\Amenity;
@@ -16,12 +19,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class AddPropertyController extends Controller
 {
+    public function __construct(
+        protected CurrencyService $currencyService,
+        protected CreatePropertyUseCase $createPropertyUseCase,
+    ) {}
+
     public function create(): View
     {
         $cities = City::with('activeDistricts')
@@ -38,7 +45,7 @@ class AddPropertyController extends Controller
         $heatingSystems = $filters['heating_system']?->options ?? collect();
         $windowViews = $filters['window_view']?->options ?? collect();
         $amenities = Amenity::orderBy('name')->get();
-        $dailyRates = CurrencyService::getRatesFromGbp();
+        $dailyRates = $this->currencyService->getRatesFromGbp();
 
         return view('pages.property.add', compact(
             'cities',
@@ -94,80 +101,25 @@ class AddPropertyController extends Controller
 
             // Auto-calculate rates if missing
             if (empty($prices) || count($prices) < 2) {
-                $prices = CurrencyService::convertFromGbp($baseGbp);
+                $prices = $this->currencyService->convertFromGbp($baseGbp);
             }
             $prices['GBP'] = $baseGbp;
 
-            // Generate unique code
-            $code = (string) mt_rand(100000, 999999);
-            while (Property::where('code', $code)->exists()) {
-                $code = (string) mt_rand(100000, 999999);
-            }
+            // Unique kod Property modelinin generateUniqueCode() metodu ilə alınır;
+            // bu kod həm slug üçün, həm də create zamanı istifadə olunur.
+            $code = Property::generateUniqueCode();
 
             // Detect if property is land
             $propTypeOption = FilterOption::find($validated['property_type_id']);
             $isLand = $propTypeOption && str_contains(mb_strtolower($propTypeOption->name['az'] ?? $propTypeOption->value), 'torpaq');
 
-            // Build dynamic title
+            // Build dynamic title (tək qaynaq: PropertyTitleBuilder servisi)
             $city = City::find($validated['city_id']);
-            $locationLabel = $district ? ($district->name['az'] ?? $district->name['tr'] ?? 'Girne') : ($city ? ($city->name['az'] ?? $city->name['tr'] ?? 'Girne') : 'Girne');
+            $district = !empty($validated['district_id']) ? District::find($validated['district_id']) : null;
 
-            $titleParts = [];
-            $titleParts[] = $locationLabel;
-            if ($isLand && !empty($validated['land_area'])) {
-                $titleParts[] = $validated['land_area'] . ' sot';
-            } elseif (!empty($validated['rooms'])) {
-                $titleParts[] = $validated['rooms'] . ' otaqlı';
-            }
-            $titleParts[] = $typeName;
-            if (!$isLand && !empty($validated['area'])) {
-                $titleParts[] = $validated['area'] . ' m²';
-            }
+            $locationLabel = $district ? ($district->name['az'] ?? $district->name['tr'] ?? '')
+                : ($city ? ($city->name['az'] ?? $city->name['tr'] ?? '') : '');
 
-            $dealTypeOpt = FilterOption::find($validated['deal_type_id']);
-            $dealName = $dealTypeOpt ? ($dealTypeOpt->name['az'] ?? 'satılır') : 'satılır';
-            $titleParts[] = $dealName;
-
-            $generatedTitle = implode(' ', array_filter($titleParts));
-            $baseSlug = Str::slug($generatedTitle);
-            $slug = $baseSlug . '-' . $code;
-
-            $sellerType = ($validated['advertiser'] === 'agent') ? SellerType::Agent->value : SellerType::Owner->value;
-
-            // Create Property
-            $property = Property::create([
-                'user_id' => auth()->id() ?? null,
-                'code' => $code,
-                'slug' => $slug,
-                'title' => $generatedTitle,
-                'description' => $validated['description'] ?? null,
-                'price' => $baseGbp,
-                'currency' => 'GBP',
-                'prices' => $prices,
-                'area' => $isLand ? null : ($validated['area'] ?? null),
-                'land_area' => $validated['land_area'] ?? null,
-                'rooms' => $isLand ? null : ($validated['rooms'] ?? null),
-                'floor' => $isLand ? null : ($validated['floor'] ?? null),
-                'total_floors' => $isLand ? null : ($validated['total_floors'] ?? null),
-                'city_id' => $validated['city_id'],
-                'district_id' => $validated['district_id'] ?? null,
-                'address' => $validated['address'],
-                'latitude' => $validated['latitude'] ?? null,
-                'longitude' => $validated['longitude'] ?? null,
-                'has_document' => $request->boolean('has_document'),
-                'has_mortgage' => $request->boolean('has_mortgage'),
-                'has_internal_credit' => $request->boolean('has_internal_credit'),
-                'seller_type' => $sellerType,
-                'status' => PropertyStatus::PendingApproval->value,
-                'views_count' => 0,
-            ]);
-
-            // Sync Amenities
-            if (!empty($validated['amenities']) && !$isLand) {
-                $property->amenities()->sync($validated['amenities']);
-            }
-
-            // Sync Filter Options
             $filterOptionIds = array_filter([
                 $validated['property_type_id'] ?? null,
                 $validated['deal_type_id'] ?? null,
@@ -176,7 +128,52 @@ class AddPropertyController extends Controller
                 $isLand ? null : ($validated['heating_system_id'] ?? null),
                 $isLand ? null : ($validated['window_view_id'] ?? null),
             ]);
-            $property->filterOptions()->sync($filterOptionIds);
+
+            $generatedTitle = app(PropertyTitleBuilder::class)
+                ->build(
+                    array_values($filterOptionIds),
+                    $isLand ? null : ($validated['rooms'] ?? null),
+                    $isLand ? null : ($validated['area'] ?? null),
+                    $validated['land_area'] ?? null,
+                    $locationLabel
+                );
+            $baseSlug = Str::slug($generatedTitle);
+            $slug = $baseSlug . '-' . $code;
+
+            $sellerType = ($validated['advertiser'] === 'agent') ? SellerType::Agent : SellerType::Owner;
+
+            // Tək qaynaq: CreatePropertyUseCase + CreatePropertyDTO
+            // Repo property, filterOptions və amenities sync-lərini özü idarə edir.
+            $property = $this->createPropertyUseCase->execute(new CreatePropertyDTO(
+                title: $generatedTitle,
+                description: $validated['description'] ?? '',
+                code: $code,
+                slug: $slug,
+                hasDocument: $request->boolean('has_document'),
+                hasMortgage: $request->boolean('has_mortgage'),
+                hasInternalCredit: $request->boolean('has_internal_credit'),
+                price: $baseGbp,
+                currency: 'GBP',
+                prices: $prices,
+                viewsCount: 0,
+                area: $isLand ? null : (isset($validated['area']) ? (int) $validated['area'] : null),
+                landArea: isset($validated['land_area']) ? (int) $validated['land_area'] : null,
+                rooms: $isLand ? null : (isset($validated['rooms']) ? (int) $validated['rooms'] : null),
+                floor: $isLand ? null : (isset($validated['floor']) ? (int) $validated['floor'] : null),
+                totalFloors: $isLand ? null : (isset($validated['total_floors']) ? (int) $validated['total_floors'] : null),
+                cityId: (int) $validated['city_id'],
+                districtId: !empty($validated['district_id']) ? (int) $validated['district_id'] : null,
+                address: $validated['address'],
+                latitude: isset($validated['latitude']) ? (float) $validated['latitude'] : null,
+                longitude: isset($validated['longitude']) ? (float) $validated['longitude'] : null,
+                userId: auth()->id(),
+                sellerType: $sellerType,
+                status: PropertyStatus::PendingApproval,
+                filterOptionIds: array_values($filterOptionIds),
+                amenityIds: (!empty($validated['amenities']) && !$isLand)
+                    ? array_map('intval', $validated['amenities'])
+                    : [],
+            ));
 
             // Handle Images Upload
             if ($request->hasFile('photos')) {
@@ -187,7 +184,6 @@ class AddPropertyController extends Controller
                         'property_id' => $property->id,
                         'url' => $path,
                         'sort_order' => $order++,
-                        'is_main' => ($order === 1),
                     ]);
                 }
             }

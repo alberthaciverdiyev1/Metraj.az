@@ -127,7 +127,7 @@
 
     <div class="flex justify-between items-center mt-auto border-t border-[color:var(--border-color)] pt-3">
       @php
-          $displayPrice = $property->getDisplayPrice();
+          $displayPrice = app(\App\Core\Application\Property\Services\PropertyPricePresenter::class)->display($property);
       @endphp
       <span class="text-[color:var(--primary)] font-bold text-sm sm:text-base md:text-lg">
         {{ $displayPrice['symbol'] }} {{ $displayPrice['formatted'] }}

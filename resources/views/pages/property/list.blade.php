@@ -208,15 +208,11 @@
 
                             <div id="propertyContainer"
                                  class="pt-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-3 sm:gap-6">
-                                @forelse($properties as $property)
-                                    @include('components.property-card', ['property' => $property])
-                                @empty
-                                    <p class="col-span-full text-center text-gray-500 py-10">{{ __('Elan tapılmadı.') }}</p>
-                                @endforelse
+                                @include('pages.property.partials.cards', ['properties' => $properties])
                             </div>
 
                             <div id="paginationContainer" class="mt-14">
-                                {{ $properties->onEachSide(2)->appends(request()->query())->links('pagination.metraj') }}
+                                @include('pages.property.partials.pagination', ['properties' => $properties])
                             </div>
                         </div>
                     </div>

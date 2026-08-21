@@ -6,38 +6,25 @@ trait SyncsDynamicFilters
 {
     protected function afterCreate(): void
     {
-        $this->syncDynamicFilters();
-        $this->syncPropertyImages();
-        
-        // Həmçinin yaratdıqdan sonra title və slug-ı bazaya yazırıq (çünki buildTitleFromOptions
-        // verilənlər bazasındakı əlaqələrə əsasən title qurur və yaratdıqdan sonra əlaqələr artıq bazada olur)
-        $record = $this->getRecord();
-        $rawState = $this->form->getRawState();
-        $filterOptionIds = [];
-        foreach ($rawState as $key => $value) {
-            if (str_starts_with($key, 'filter_') && !empty($value)) {
-                $filterOptionIds[] = (int) $value;
-            }
-        }
-        
-        $rooms = $record->rooms;
-        $area = $record->area;
-        $record->loadMissing(['city', 'district']);
-        $location = $record->district?->name['az'] ?? ($record->city?->name['az'] ?? '');
-        $landArea = $record->land_area;
-        
-        $title = $this->buildTitleFromOptions($filterOptionIds, $rooms, $area, $landArea, $location);
-        $record->update([
-            'title' => $title,
-            'slug' => \Illuminate\Support\Str::slug($title) . '-' . $record->id,
-        ]);
+        $this->syncAfterSave();
     }
 
     protected function afterSave(): void
     {
+        $this->syncAfterSave();
+    }
+
+    /**
+     * Yaratma və ya yeniləmədən sonra ortaq sinxronizasiya addımları:
+     * filtr seçimləri, şəkillər və title/slug yeniləməsi.
+     */
+    protected function syncAfterSave(): void
+    {
         $this->syncDynamicFilters();
         $this->syncPropertyImages();
 
+        // buildTitleFromOptions verilənlər bazasındakı əlaqələrə əsasən title qurur;
+        // bu səbəbdən əlaqələr bazaya yazıldıqdan sonra title və slug yenilənir.
         $record = $this->getRecord();
         $rawState = $this->form->getRawState();
         $filterOptionIds = [];
@@ -46,13 +33,13 @@ trait SyncsDynamicFilters
                 $filterOptionIds[] = (int) $value;
             }
         }
-        
+
         $rooms = $record->rooms;
         $area = $record->area;
         $record->loadMissing(['city', 'district']);
         $location = $record->district?->name['az'] ?? ($record->city?->name['az'] ?? '');
         $landArea = $record->land_area;
-        
+
         $title = $this->buildTitleFromOptions($filterOptionIds, $rooms, $area, $landArea, $location);
         $record->update([
             'title' => $title,
@@ -88,9 +75,10 @@ trait SyncsDynamicFilters
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        // İlkin olaraq boş keçməsin deyə müvəqqəti title və slug veririk, afterCreate-də dəqiq olanla əvəz edəcəyik
+        // İlkin olaraq boş keçməsin deyə müvəqqəti title və slug veririk, afterCreate-də dəqiq olanla əvəz edəcəyik.
+        // Sabit müvəqqəti slug istifadə olunur — qeyd yaradılan kimi dərhal dəqiq slug ilə əvəz edilir.
         $data['title'] = 'Müvəqqəti Elan Başlığı';
-        $data['slug'] = 'temp-slug-' . rand(10000, 99999);
+        $data['slug'] = 'temp-slug-' . now()->timestamp;
 
         $user = \Illuminate\Support\Facades\Auth::user();
 
@@ -117,7 +105,7 @@ trait SyncsDynamicFilters
             $data['price'] = $basePrice;
             $data['currency'] = 'GBP';
 
-            $prices = \App\Core\Application\Currency\CurrencyService::convertFromGbp($basePrice);
+            $prices = app(\App\Core\Application\Currency\CurrencyService::class)->convertFromGbp($basePrice);
             if (empty($data['auto_convert_currency'])) {
                 if (!empty($data['price_usd'])) $prices['USD'] = (float) $data['price_usd'];
                 if (!empty($data['price_eur'])) $prices['EUR'] = (float) $data['price_eur'];
@@ -146,7 +134,7 @@ trait SyncsDynamicFilters
             $data['price'] = $basePrice;
             $data['currency'] = 'GBP';
 
-            $prices = \App\Core\Application\Currency\CurrencyService::convertFromGbp($basePrice);
+            $prices = app(\App\Core\Application\Currency\CurrencyService::class)->convertFromGbp($basePrice);
             if (empty($data['auto_convert_currency'])) {
                 if (!empty($data['price_usd'])) $prices['USD'] = (float) $data['price_usd'];
                 if (!empty($data['price_eur'])) $prices['EUR'] = (float) $data['price_eur'];
@@ -187,61 +175,7 @@ trait SyncsDynamicFilters
 
     protected function buildTitleFromOptions(array $filterOptionIds, ?int $rooms, ?float $area, ?float $landArea, string $location = ''): string
     {
-        if (empty($filterOptionIds)) {
-            return 'Əmlak Elanı';
-        }
-
-        $options = \App\Core\Infrastructure\Persistence\Eloquent\Models\FilterOption::whereIn('id', $filterOptionIds)
-            ->with('filter')
-            ->get();
-
-        $propertyType = $options->first(fn ($opt) => $opt->filter?->key === \App\Core\Domain\Filter\Enums\FilterKey::PropertyType)?->name['az'] ?? '';
-        $dealType = $options->first(fn ($opt) => $opt->filter?->key === \App\Core\Domain\Filter\Enums\FilterKey::DealType)?->name['az'] ?? '';
-        $buildingType = $options->first(fn ($opt) => $opt->filter?->key === \App\Core\Domain\Filter\Enums\FilterKey::BuildingType)?->name['az'] ?? '';
-
-        $titleParts = [];
-
-        // E.g. "Yasamal"
-        if ($location) {
-            $titleParts[] = $location;
-        }
-
-        // E.g. "3 otaqlı"
-        if ($rooms && strtolower($propertyType) !== 'torpaq') {
-            $titleParts[] = $rooms . ' otaqlı';
-        }
-
-        // E.g. "yeni tikili"
-        if ($buildingType) {
-            $titleParts[] = mb_strtolower($buildingType);
-        }
-
-        // E.g. "mənzil" or "torpaq"
-        if ($propertyType) {
-            $titleParts[] = mb_strtolower($propertyType);
-        }
-
-        // Area: "120 m²" or "10 sot"
-        if (strtolower($propertyType) === 'torpaq' && $landArea) {
-            $titleParts[] = $landArea . ' sot';
-        } elseif ($area) {
-            $titleParts[] = $area . ' m²';
-        }
-
-        // Deal type: "satılır" or "kirayə verilir"
-        if ($dealType) {
-            $dealLower = mb_strtolower($dealType);
-            if (str_contains($dealLower, 'satış') || str_contains($dealLower, 'satılır') || $dealLower === 'alış') {
-                $titleParts[] = 'satılır';
-            } elseif (str_contains($dealLower, 'kirayə') || str_contains($dealLower, 'icarə')) {
-                $titleParts[] = 'kirayə verilir';
-            } else {
-                $titleParts[] = $dealLower;
-            }
-        }
-
-        $title = implode(' ', array_filter($titleParts));
-        
-        return $title ?: 'Əmlak Elanı';
+        return app(\App\Core\Application\Property\Services\PropertyTitleBuilder::class)
+            ->build($filterOptionIds, $rooms, $area, $landArea, $location);
     }
 }

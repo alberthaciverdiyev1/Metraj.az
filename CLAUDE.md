@@ -196,3 +196,5 @@ app/
    - `Request` -> `DTO` -> `UseCase` -> `Repository Interface` -> `Eloquent Repository` -> `Database`.
 4. **Tip Təhlükəsizliyi (Type Safety):**
    - Bütün metodlarda PHP 8.2+ tiplər (Strict Types, Enums, Readonly DTOs) istifadə olunmalıdır.
+
+TEST YAZMA HIC BIR ZAMAN

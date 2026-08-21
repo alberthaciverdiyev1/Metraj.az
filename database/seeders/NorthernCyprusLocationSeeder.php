@@ -2,23 +2,27 @@
 
 namespace Database\Seeders;
 
+use App\Core\Domain\Filter\Enums\FilterKey;
+use App\Core\Infrastructure\Persistence\Eloquent\Models\Amenity;
 use App\Core\Infrastructure\Persistence\Eloquent\Models\City;
 use App\Core\Infrastructure\Persistence\Eloquent\Models\District;
+use App\Core\Infrastructure\Persistence\Eloquent\Models\Filter;
+use App\Core\Infrastructure\Persistence\Eloquent\Models\FilterOption;
 use App\Core\Infrastructure\Persistence\Eloquent\Models\Property;
+use App\Core\Infrastructure\Persistence\Eloquent\Models\PropertyImage;
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class NorthernCyprusLocationSeeder extends Seeder
 {
     /**
      * Run the database seeds for Northern Cyprus (KKTC) locations.
+     *
+     * Idempotent: updateOrCreate istifadə edir, təkrar işə salmaq təhlükəsizdir.
      */
     public function run(): void
     {
-        // 1. Clean up existing locations (PostgreSQL CASCADE)
-        DB::statement('TRUNCATE TABLE districts, cities CASCADE;');
-
-        // 2. Comprehensive Northern Cyprus Cities & Districts
+        // 1. Comprehensive Northern Cyprus Cities & Districts
         $locations = [
             [
                 'name' => ['az' => 'Girne', 'tr' => 'Girne', 'en' => 'Kyrenia', 'ru' => 'Гирне (Кирения)'],
@@ -123,27 +127,28 @@ class NorthernCyprusLocationSeeder extends Seeder
         ];
 
         $createdCities = [];
-        $allCreatedDistricts = [];
 
         foreach ($locations as $loc) {
-            $city = City::create([
-                'name' => $loc['name'],
-                'slug' => $loc['slug'],
-                'sort_order' => $loc['sort_order'],
-                'is_active' => true,
-            ]);
+            $city = City::updateOrCreate(
+                ['slug' => $loc['slug']],
+                [
+                    'name' => $loc['name'],
+                    'sort_order' => $loc['sort_order'],
+                    'is_active' => true,
+                ]
+            );
             $createdCities[] = $city;
 
             $dOrder = 1;
             foreach ($loc['districts'] as $dist) {
-                $district = District::create([
-                    'city_id' => $city->id,
-                    'name' => $dist['name'],
-                    'slug' => $dist['slug'],
-                    'sort_order' => $dOrder++,
-                    'is_active' => true,
-                ]);
-                $allCreatedDistricts[$city->id][] = $district;
+                District::updateOrCreate(
+                    ['city_id' => $city->id, 'slug' => $dist['slug']],
+                    [
+                        'name' => $dist['name'],
+                        'sort_order' => $dOrder++,
+                        'is_active' => true,
+                    ]
+                );
             }
         }
 
@@ -186,7 +191,8 @@ class NorthernCyprusLocationSeeder extends Seeder
             'lefke' => ['lat' => 35.1167, 'lon' => 32.8500],
         ];
 
-        $amenityIds = \App\Core\Infrastructure\Persistence\Eloquent\Models\Amenity::pluck('id')->toArray();
+        $amenityIds = Amenity::pluck('id')->toArray();
+        $adminUserId = User::where('email', 'admin@metraj.az')->first()?->id ?? 1;
 
         foreach ($propertyTemplates as $idx => $tpl) {
             $city = City::where('slug', $tpl['city_slug'])->first() ?? $createdCities[0];
@@ -196,51 +202,68 @@ class NorthernCyprusLocationSeeder extends Seeder
             $lat = (float) $baseCoords['lat'] + ($idx * 0.003 - 0.02);
             $lon = (float) $baseCoords['lon'] + ($idx * 0.004 - 0.02);
 
-            $prices = \App\Core\Application\Currency\CurrencyService::convertFromGbp((float) $tpl['price']);
+            $prices = app(\App\Core\Application\Currency\CurrencyService::class)->convertFromGbp((float) $tpl['price']);
             $code = (string) (100500 + $idx);
 
-            $prop = Property::create([
-                'user_id' => 1,
-                'code' => $code,
-                'slug' => \Illuminate\Support\Str::slug($tpl['title']) . '-' . $code,
-                'title' => $tpl['title'],
-                'description' => "<p><strong>{$tpl['title']}</strong></p><p>Kuzey Kıbrısın ən prestijli və sürətlə inkişaf edən bölgəsində yerləşir. Bütün zəruri infrastruktur (məktəb, supermarketlər, çimərlik və restoranlar) yaxınlıqdadır. Əla investisiya və daimi yaşayış imkanı təqdim edir.</p><ul><li>Tam təchizatlı və yüksək keyfiyyətli materiallar</li><li>Dəniz və ya dağ panoraması</li><li>Rahat nəqliyyat əlçatanlığı</li></ul>",
-                'price' => $tpl['price'],
-                'currency' => 'GBP',
-                'prices' => $prices,
-                'area' => $tpl['area'],
-                'land_area' => ($tpl['type'] === 'land') ? 10 : null,
-                'rooms' => $tpl['rooms'],
-                'floor' => ($tpl['type'] === 'apartment') ? ($idx % 5 + 1) : 1,
-                'total_floors' => ($tpl['type'] === 'apartment') ? 6 : 2,
-                'city_id' => $city->id,
-                'district_id' => $district?->id,
-                'landmark' => 'Dəniz sahili və ya Mərkəz yaxınlığı',
-                'address' => "Kuzey Kıbrıs, " . ($city->name['tr'] ?? $city->name['az']) . ", " . ($district ? ($district->name['tr'] ?? $district->name['az']) : 'Merkez') . ", No " . ($idx + 12),
-                'latitude' => number_format($lat, 8, '.', ''),
-                'longitude' => number_format($lon, 8, '.', ''),
-                'has_document' => true,
-                'has_mortgage' => ($idx % 2 === 0),
-                'has_internal_credit' => ($idx % 3 === 0),
-                'seller_type' => ($idx % 3 === 0) ? \App\Core\Domain\Property\Enums\SellerType::Agency : (($idx % 3 === 1) ? \App\Core\Domain\Property\Enums\SellerType::Complex : \App\Core\Domain\Property\Enums\SellerType::Owner),
-                'status' => \App\Core\Domain\Property\Enums\PropertyStatus::Published,
-                'is_featured' => ($idx < 6),
-                'is_vip' => ($idx < 4),
-                'views_count' => rand(50, 450),
-            ]);
+            $prop = Property::updateOrCreate(
+                ['code' => $code],
+                [
+                    'user_id' => $adminUserId,
+                    'slug' => \Illuminate\Support\Str::slug($tpl['title']) . '-' . $code,
+                    'title' => $tpl['title'],
+                    'description' => "<p><strong>{$tpl['title']}</strong></p><p>Kuzey Kıbrısın ən prestijli və sürətlə inkişaf edən bölgəsində yerləşir. Bütün zəruri infrastruktur (məktəb, supermarketlər, çimərlik və restoranlar) yaxınlıqdadır. Əla investisiya və daimi yaşayış imkanı təqdim edir.</p><ul><li>Tam təchizatlı və yüksək keyfiyyətli materiallar</li><li>Dəniz və ya dağ panoraması</li><li>Rahat nəqliyyat əlçatanlığı</li></ul>",
+                    'price' => $tpl['price'],
+                    'currency' => 'GBP',
+                    'prices' => $prices,
+                    'area' => $tpl['area'],
+                    'land_area' => ($tpl['type'] === 'land') ? 10 : null,
+                    'rooms' => $tpl['rooms'],
+                    'floor' => ($tpl['type'] === 'apartment') ? ($idx % 5 + 1) : 1,
+                    'total_floors' => ($tpl['type'] === 'apartment') ? 6 : 2,
+                    'city_id' => $city->id,
+                    'district_id' => $district?->id,
+                    'landmark' => 'Dəniz sahili və ya Mərkəz yaxınlığı',
+                    'address' => "Kuzey Kıbrıs, " . ($city->name['tr'] ?? $city->name['az']) . ", " . ($district ? ($district->name['tr'] ?? $district->name['az']) : 'Merkez') . ", No " . ($idx + 12),
+                    'latitude' => number_format($lat, 8, '.', ''),
+                    'longitude' => number_format($lon, 8, '.', ''),
+                    'has_document' => true,
+                    'has_mortgage' => ($idx % 2 === 0),
+                    'has_internal_credit' => ($idx % 3 === 0),
+                    'seller_type' => ($idx % 3 === 0) ? \App\Core\Domain\Property\Enums\SellerType::Agency : (($idx % 3 === 1) ? \App\Core\Domain\Property\Enums\SellerType::Complex : \App\Core\Domain\Property\Enums\SellerType::Owner),
+                    'status' => \App\Core\Domain\Property\Enums\PropertyStatus::Published,
+                    'is_featured' => ($idx < 6),
+                    'is_vip' => ($idx < 4),
+                    'views_count' => rand(50, 450),
+                ]
+            );
 
             if (!empty($amenityIds)) {
                 $prop->amenities()->sync(array_slice($amenityIds, 0, rand(4, count($amenityIds))));
             }
 
-            // Add Images
+            // Property Type + Deal Type filter options
+            $propertyTypeOption = FilterOption::whereHas('filter', function ($q) {
+                $q->where('key', FilterKey::PropertyType->value);
+            })->where('value', $tpl['type'])->first();
+
+            $dealTypeOption = FilterOption::whereHas('filter', function ($q) {
+                $q->where('key', FilterKey::DealType->value);
+            })->where('value', $tpl['deal'])->first();
+
+            $optionIds = array_filter([$propertyTypeOption?->id, $dealTypeOption?->id]);
+            if (!empty($optionIds)) {
+                $prop->filterOptions()->sync($optionIds);
+            }
+
+            // Add Images (idempotent — mövcud şəkillər silinir və yenidən yaradılır)
             $img1 = $samplePhotos[$idx % count($samplePhotos)];
             $img2 = $samplePhotos[($idx + 1) % count($samplePhotos)];
             $img3 = $samplePhotos[($idx + 2) % count($samplePhotos)];
 
-            \App\Core\Infrastructure\Persistence\Eloquent\Models\PropertyImage::create(['property_id' => $prop->id, 'url' => $img1, 'sort_order' => 0]);
-            \App\Core\Infrastructure\Persistence\Eloquent\Models\PropertyImage::create(['property_id' => $prop->id, 'url' => $img2, 'sort_order' => 1]);
-            \App\Core\Infrastructure\Persistence\Eloquent\Models\PropertyImage::create(['property_id' => $prop->id, 'url' => $img3, 'sort_order' => 2]);
+            $prop->images()->delete();
+            PropertyImage::create(['property_id' => $prop->id, 'url' => $img1, 'sort_order' => 0]);
+            PropertyImage::create(['property_id' => $prop->id, 'url' => $img2, 'sort_order' => 1]);
+            PropertyImage::create(['property_id' => $prop->id, 'url' => $img3, 'sort_order' => 2]);
         }
     }
 }

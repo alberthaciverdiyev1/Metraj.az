@@ -221,12 +221,9 @@ class BlogSeeder extends Seeder
 
         foreach ($blogs as $i => $blog) {
             $title = $blog['title'];
+            // Başlıqlar unikal olduğu üçün slug çakışması olmur;
+            // updateOrCreate idempotentlik üçün həmişə eyni slug üzərindən işləyir.
             $slug = \Illuminate\Support\Str::slug($title);
-
-            // Eyni başlığa düşən təkrarlanma hallarının qarşısını almaq üçün
-            if (Blog::where('slug', $slug)->exists()) {
-                $slug .= '-' . ($i + 1);
-            }
 
             Blog::updateOrCreate(
                 ['slug' => $slug],

@@ -105,11 +105,11 @@
             <!-- Title & Price Card -->
             <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-gray-100 space-y-5">
                 @php
-                    $displayPrice = $property->getDisplayPrice();
+                    $displayPrice = app(\App\Core\Application\Property\Services\PropertyPricePresenter::class)->display($property);
                     $activeCur = $displayPrice['currency'];
                     $prices = $property->prices ?? [];
                     if (empty($prices) && $property->price > 0) {
-                        $prices = \App\Core\Application\Currency\CurrencyService::convertFromGbp((float) $property->price);
+                        $prices = app(\App\Core\Application\Currency\CurrencyService::class)->convertFromGbp((float) $property->price);
                     }
                 @endphp
 

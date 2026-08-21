@@ -10,6 +10,11 @@ class PropertyImage extends Model
 {
     use HasFactory;
 
+    /**
+     * Elanda şəkil yoxdursa istifadə olunan standart şəkil.
+     */
+    public const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80';
+
     protected $fillable = [
         'property_id',
         'url',
@@ -27,7 +32,7 @@ class PropertyImage extends Model
     public function getUrlAttribute($value): string
     {
         if (empty($value)) {
-            return 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80';
+            return self::FALLBACK_IMAGE;
         }
 
         if (str_starts_with($value, 'http://') || str_starts_with($value, 'https://') || str_starts_with($value, '/')) {

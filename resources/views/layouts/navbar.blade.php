@@ -1,6 +1,6 @@
 <header class="bg-white border-b border-gray-200 sticky top-0 z-[100]">
   <div class="container mx-auto px-4 h-[70px] flex items-center justify-between gap-4">
-    
+
     <!-- Logo -->
     <a href="/" class="flex items-center space-x-2 shrink-0">
       <img class="h-9 w-auto object-contain" src="/images/metrajlogo1.png" alt="Metraj.az" />
@@ -12,9 +12,6 @@
 
     <!-- Desktop Navigation Links (Always visible on md and up) -->
     <nav class="hidden md:flex items-center space-x-6 lg:space-x-8 text-[15px] font-medium">
-      <a href="/" class="{{ request()->is('/') ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
-        {{ __('Home') }}
-      </a>
       <a href="/listing" class="{{ request()->is('listing*') || request()->is('properties*') ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
         {{ __('Elanlar') }}
       </a>
@@ -34,7 +31,7 @@
 
     <!-- Right Actions -->
     <div class="flex items-center space-x-3 sm:space-x-4">
-      
+
       <!-- Favorites -->
       <a href="/favorites" class="relative text-gray-600 hover:text-[#f1913d] p-2 transition hidden sm:inline-flex" title="{{ __('Favorites') }}">
         <i class="fa-regular fa-heart text-xl"></i>
@@ -52,7 +49,7 @@
         $currentCurrency = session('currency', 'AZN');
       @endphp
       <div class="relative">
-        <select onchange="window.location.href='/currency/'+this.value" 
+        <select onchange="window.location.href='/currency/'+this.value"
                 class="bg-gray-50 border border-gray-200 text-gray-800 text-xs font-bold rounded-lg px-2 py-2 focus:outline-none focus:border-[#f1913d] cursor-pointer shadow-sm"
                 title="Valyuta seçimi">
           <option value="AZN" {{ $currentCurrency == 'AZN' ? 'selected' : '' }}>₼ AZN</option>
@@ -70,7 +67,7 @@
         $currentLocale = session('lang', app()->getLocale() ?? 'az');
       @endphp
       <div class="relative">
-        <select onchange="window.location.href='/lang/'+this.value" 
+        <select onchange="window.location.href='/lang/'+this.value"
                 class="bg-gray-50 border border-gray-200 text-gray-700 text-xs font-semibold rounded-lg px-2.5 py-2 focus:outline-none focus:border-[#f1913d] cursor-pointer"
                 title="Dil seçimi">
           <option value="az" {{ $currentLocale == 'az' ? 'selected' : '' }}>AZ</option>
@@ -100,7 +97,7 @@
               <p class="text-sm font-semibold text-gray-900 truncate">{{ auth()->user()->name }}</p>
               <p class="text-xs text-gray-500 truncate">{{ auth()->user()->email }}</p>
             </div>
-            
+
             <a href="/dashboard" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
               <i class="bi bi-grid mr-3 text-gray-400"></i> {{ __('Dashboard') }}
             </a>
@@ -116,7 +113,7 @@
             <a href="/mysavesearches" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
               <i class="bi bi-bookmark mr-3 text-gray-400"></i> {{ __('My save searches') }}
             </a>
-            
+
             @if(auth()->user()->is_admin ?? false)
               <div class="border-t border-gray-100 my-1"></div>
               <a href="/admin" class="flex items-center px-4 py-2 text-sm text-indigo-600 hover:bg-indigo-50 font-medium">
@@ -125,7 +122,7 @@
             @endif
 
             <div class="border-t border-gray-100 my-1"></div>
-            
+
             <form method="POST" action="{{ route('logout') }}" class="m-0">
               @csrf
               <button type="submit" class="w-full flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 text-left font-medium">
@@ -176,7 +173,7 @@
       <a href="/add-property" class="w-full flex items-center justify-center py-2.5 bg-[#f1913d] text-white rounded-lg font-medium text-sm">
         <i class="bi bi-plus-circle mr-2"></i> {{ __('Add property') }}
       </a>
-      
+
       <div class="flex items-center justify-between gap-2 pt-1">
         <a href="/favorites" class="flex-1 flex items-center justify-center gap-1.5 py-2 border border-gray-200 rounded-lg text-gray-700 text-xs font-medium">
           <i class="fa-regular fa-heart text-[#f1913d]"></i>

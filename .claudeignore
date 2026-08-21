@@ -42,3 +42,5 @@ Thumbs.db
 *.tar.gz
 *.sql
 *.sqlite
+ARCHITECTURE.md
+.geminiignore

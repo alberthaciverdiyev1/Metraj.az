@@ -37,7 +37,6 @@ class Blog extends Model
     {
         parent::boot();
 
-        // Bloq yaradılarkən avtomatik slug generasiyası
         static::creating(function ($model) {
             if (empty($model->slug)) {
                 $model->slug = Str::slug($model->title);

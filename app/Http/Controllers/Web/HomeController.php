@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Core\Application\Property\DTOs\PropertyFilterDTO;
 use App\Core\Application\Property\UseCases\SearchPropertiesUseCase;
-use App\Core\Domain\Property\Repositories\PropertyRepositoryInterface;
+use App\Core\Domain\Filter\Enums\FilterKey;
 use App\Core\Infrastructure\Persistence\Eloquent\Models\Filter;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,7 +14,6 @@ class HomeController extends Controller
 {
     public function __construct(
         protected SearchPropertiesUseCase $searchPropertiesUseCase,
-        protected PropertyRepositoryInterface $propertyRepository,
     ) {}
 
     public function __invoke(Request $request)
@@ -70,30 +69,10 @@ class HomeController extends Controller
         if ($request->ajax() || $request->wantsJson()) {
             $premiumProperties = $properties->filter(fn($p) => $p->is_vip || $p->is_featured);
 
-            $premiumHtml = '';
-            if ($premiumProperties->isNotEmpty()) {
-                foreach ($premiumProperties as $property) {
-                    $premiumHtml .= view('components.property-card', ['property' => $property])->render();
-                }
-            } else {
-                $premiumHtml = '<p class="col-span-full text-center text-gray-500">' . __('Axtarışınıza uyğun premium elan tapılmadı.') . '</p>';
-            }
-
-            $propertiesHtml = '';
-            if ($properties->count() > 0) {
-                foreach ($properties as $property) {
-                    $propertiesHtml .= view('components.property-card', ['property' => $property])->render();
-                }
-            } else {
-                $propertiesHtml = '<p class="col-span-full text-center text-gray-500 py-10">' . __('Elan tapılmadı.') . '</p>';
-            }
-
-            $paginationHtml = $properties->onEachSide(2)->appends($request->except('json'))->links('pagination.metraj')->render();
-
             return response()->json([
-                'premium' => $premiumHtml,
-                'properties' => $propertiesHtml,
-                'pagination' => $paginationHtml,
+                'premium' => view('pages.property.partials.premium', compact('premiumProperties'))->render(),
+                'properties' => view('pages.property.partials.cards', compact('properties'))->render(),
+                'pagination' => view('pages.property.partials.pagination', compact('properties'))->render(),
                 'total' => $properties->total(),
             ]);
         }
@@ -102,12 +81,20 @@ class HomeController extends Controller
             ->orderBy('sort_order')
             ->get();
 
-        $buildingTypes = \App\Core\Infrastructure\Persistence\Eloquent\Models\FilterOption::where('filter_id', 3)
-            ->get();
+        // Əsas axtarışda göstərilən əmlak növü seçimləri
+        $propertyTypeFilterId = \App\Core\Infrastructure\Persistence\Eloquent\Models\Filter::where('key', FilterKey::PropertyType->value)->value('id');
+        $buildingTypes = $propertyTypeFilterId
+            ? \App\Core\Infrastructure\Persistence\Eloquent\Models\FilterOption::where('filter_id', $propertyTypeFilterId)->get()
+            : collect();
 
+        // Əlavə filtr pəncərəsində göstərilən dinamik filtrlər
+        // (əsas axtarışda olan deal_type və property_type istisna olunur)
         $dynamicFilters = \App\Core\Infrastructure\Persistence\Eloquent\Models\Filter::with('options')
             ->where('is_active', true)
-            ->whereNotIn('id', [1, 2, 3])
+            ->whereNotIn('key', [
+                FilterKey::DealType->value,
+                FilterKey::PropertyType->value,
+            ])
             ->get();
 
         $breadcrumbs = [

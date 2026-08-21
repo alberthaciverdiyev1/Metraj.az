@@ -3,8 +3,8 @@
 namespace App\Core\Application\Property\UseCases;
 
 use App\Core\Application\Property\DTOs\CreatePropertyDTO;
+use App\Core\Domain\Property\Entities\Property;
 use App\Core\Domain\Property\Repositories\PropertyRepositoryInterface;
-use Illuminate\Database\Eloquent\Model;
 
 class CreatePropertyUseCase
 {
@@ -12,7 +12,7 @@ class CreatePropertyUseCase
         protected PropertyRepositoryInterface $propertyRepository
     ) {}
 
-    public function execute(CreatePropertyDTO $dto): Model
+    public function execute(CreatePropertyDTO $dto): Property
     {
         return $this->propertyRepository->create($dto);
     }
