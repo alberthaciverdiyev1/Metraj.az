@@ -57,6 +57,7 @@ Controllers → Services → Repositories → Eloquent Models → Database
 - **Interfaces (kontraktlar):** `app/Modules/{Modul}/Contracts/` — `PropertyRepositoryInterface`, `AgencyRepositoryInterface`, `AgentRepositoryInterface`, `BlogRepositoryInterface`, `InquiryRepositoryInterface`.
 - Concrete sınıflar interface-ləri `implements` edir; interface yalnız kontrakt sənədidir.
 - Service-lər constructor-də **concrete** repository-ni qəbul edir (interface yox) — Laravel DI avtomatik çözür, bind-provider yoxdur.
+- Repository-lər constructor-də **model-i inject edir** (`protected Property $model` kimi) və sorğularda `$this->model` istifadə edir — statik `Model::all()`, `Model::where()` kimi çağrılar yazılmır.
 - Bütün verilənlər bazası sorğuları repository-lərdə cəmlənir.
 - Controller-lər repository-ləri **birbaşa çağırmır** — həmişə Service vasitəsilə.
 

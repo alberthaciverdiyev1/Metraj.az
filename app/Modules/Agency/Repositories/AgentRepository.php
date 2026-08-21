@@ -7,8 +7,13 @@ use App\Modules\Agency\Models\Agent;
 
 class AgentRepository implements AgentRepositoryInterface
 {
+    public function __construct(
+        protected Agent $model,
+    ) {
+    }
+
     public function findWithUserAndAgency(int $id): ?Agent
     {
-        return Agent::with(['user', 'agency'])->find($id);
+        return $this->model->with(['user', 'agency'])->find($id);
     }
 }

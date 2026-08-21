@@ -9,16 +9,21 @@ use Illuminate\Database\Eloquent\Collection;
 
 class AgencyRepository implements AgencyRepositoryInterface
 {
+    public function __construct(
+        protected Agency $model,
+    ) {
+    }
+
     public function activeWithPropertiesCount(): Collection
     {
-        return Agency::withCount('properties')
+        return $this->model->withCount('properties')
             ->where('status', AgencyStatus::Active)
             ->get();
     }
 
     public function findActive(int|string $idOrSlug): ?Agency
     {
-        $query = Agency::with(['agents.user', 'owner'])->where('status', AgencyStatus::Active);
+        $query = $this->model->with(['agents.user', 'owner'])->where('status', AgencyStatus::Active);
 
         return ctype_digit((string) $idOrSlug)
             ? $query->where('id', (int) $idOrSlug)->first()

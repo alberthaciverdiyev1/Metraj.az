@@ -7,8 +7,13 @@ use App\Modules\Inquiry\Models\Inquiry;
 
 class InquiryRepository implements InquiryRepositoryInterface
 {
+    public function __construct(
+        protected Inquiry $model,
+    ) {
+    }
+
     public function create(array $data): Inquiry
     {
-        return Inquiry::create($data);
+        return $this->model->create($data);
     }
 }

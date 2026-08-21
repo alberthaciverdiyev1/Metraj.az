@@ -9,14 +9,19 @@ use Illuminate\Database\Eloquent\Collection;
 
 class BlogRepository implements BlogRepositoryInterface
 {
+    public function __construct(
+        protected Blog $model,
+    ) {
+    }
+
     public function paginatePublished(int $perPage = 12): LengthAwarePaginator
     {
-        return Blog::published()->latest('published_at')->paginate($perPage);
+        return $this->model->published()->latest('published_at')->paginate($perPage);
     }
 
     public function related(Blog $blog, int $limit = 3): Collection
     {
-        return Blog::published()
+        return $this->model->published()
             ->where('id', '!=', $blog->id)
             ->where('category', $blog->category)
             ->latest('published_at')

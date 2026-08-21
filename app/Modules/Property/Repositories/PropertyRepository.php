@@ -13,28 +13,33 @@ use Illuminate\Database\Eloquent\Collection;
 
 class PropertyRepository implements PropertyRepositoryInterface
 {
+    public function __construct(
+        protected Property $model,
+    ) {
+    }
+
     public function findById(int $id): ?Property
     {
-        return Property::with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])->find($id);
+        return $this->model->with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])->find($id);
     }
 
     public function findBySlug(string $slug): ?Property
     {
-        return Property::with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
+        return $this->model->with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
             ->where('slug', $slug)
             ->first();
     }
 
     public function findByCode(string $code): ?Property
     {
-        return Property::with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
+        return $this->model->with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
             ->where('code', $code)
             ->first();
     }
 
     public function findPublishedBySlug(string $slug): ?Property
     {
-        return Property::with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
+        return $this->model->with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
             ->where('slug', $slug)
             ->where('status', PropertyStatus::Published)
             ->first();
@@ -42,7 +47,7 @@ class PropertyRepository implements PropertyRepositoryInterface
 
     public function create(CreatePropertyDTO $dto): Property
     {
-        $property = Property::create([
+        $property = $this->model->create([
             'title' => $dto->title,
             'description' => $dto->description,
             'code' => $dto->code,
@@ -89,7 +94,7 @@ class PropertyRepository implements PropertyRepositoryInterface
 
     public function update(int $id, array $data): bool
     {
-        $property = Property::find($id);
+        $property = $this->model->find($id);
         if (!$property) {
             return false;
         }
@@ -109,12 +114,12 @@ class PropertyRepository implements PropertyRepositoryInterface
 
     public function delete(int $id): bool
     {
-        return (bool) Property::destroy($id);
+        return (bool) $this->model->where('id', $id)->delete();
     }
 
     public function paginate(PropertyFilterDTO $filter, int $perPage = 15): LengthAwarePaginator
     {
-        $query = Property::query()->with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images']);
+        $query = $this->model->query()->with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images']);
 
         if ($filter->status) {
             $query->where('status', $filter->status);
@@ -272,7 +277,7 @@ class PropertyRepository implements PropertyRepositoryInterface
         $propertyTypeOpt = $property->filterOptions
             ->first(fn ($opt) => $opt->filter?->key?->value === FilterKey::PropertyType->value);
 
-        $query = Property::with(['images', 'city', 'district', 'agency', 'agent.user', 'filterOptions.filter'])
+        $query = $this->model->with(['images', 'city', 'district', 'agency', 'agent.user', 'filterOptions.filter'])
             ->where('id', '!=', $property->id)
             ->where('status', PropertyStatus::Published);
 
@@ -289,7 +294,7 @@ class PropertyRepository implements PropertyRepositoryInterface
             $excludeIds = $similar->pluck('id')->push($property->id)->toArray();
             $fillCount = $limit - $similar->count();
 
-            $more = Property::with(['images', 'city', 'district', 'agency', 'agent.user', 'filterOptions.filter'])
+            $more = $this->model->with(['images', 'city', 'district', 'agency', 'agent.user', 'filterOptions.filter'])
                 ->whereNotIn('id', $excludeIds)
                 ->where('status', PropertyStatus::Published)
                 ->latest('id')
@@ -304,7 +309,7 @@ class PropertyRepository implements PropertyRepositoryInterface
 
     public function getFeatured(int $limit = 6): Collection
     {
-        return Property::with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
+        return $this->model->with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
             ->where('is_featured', true)
             ->where('status', 'published')
             ->orderBy('created_at', 'desc')
@@ -314,7 +319,7 @@ class PropertyRepository implements PropertyRepositoryInterface
 
     public function getVip(int $limit = 6): Collection
     {
-        return Property::with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
+        return $this->model->with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
             ->where('is_vip', true)
             ->where('status', 'published')
             ->orderBy('created_at', 'desc')
@@ -324,6 +329,6 @@ class PropertyRepository implements PropertyRepositoryInterface
 
     public function incrementViews(int $id): void
     {
-        Property::where('id', $id)->increment('views_count');
+        $this->model->where('id', $id)->increment('views_count');
     }
 }
