@@ -1,0 +1,966 @@
+(function () {
+    'use strict';
+
+    /* ===== STATE ===== */
+    let isLoading = false;
+    let activeTab = 'rayonTab';
+
+    /* ===== BUILD CLEAN FILTER URL PARAMS ===== */
+    /* The hidden inputs in the main form are the single source of truth.
+       - Skips disabled / unchecked / empty controls
+       - Ignores the modal's adType radios (they are synced into #adTypeInput and must not override it)
+       - "all" adType means no filter → omitted from the URL entirely
+       - When duplicate names exist, the FIRST non-empty value wins (main-form field beats modal) */
+    function buildFilterParams() {
+        const form = document.getElementById('filterForm');
+        const params = new URLSearchParams();
+        const seen = {};
+
+        if (!form) return params;
+
+        Array.from(form.elements).forEach(function (el) {
+            if (!el.name) return;
+            if (el.disabled) return;
+
+            let val;
+            if (el.type === 'checkbox' || el.type === 'radio') {
+                if (!el.checked) return;
+                val = el.value;
+            } else {
+                val = el.value;
+            }
+            val = (val === null || val === undefined) ? '' : val.toString().trim();
+            if (val === '') return;
+
+            /* Modal's adType radios are secondary; the main toggle (#adTypeInput) decides */
+            if (el.name === 'adType' && el.type === 'radio') return;
+            /* "all" = no type filter → drop it from the URL */
+            if (el.name === 'adType' && val === 'all') return;
+
+            if (!(el.name in seen)) seen[el.name] = val;
+        });
+
+        for (let pk in seen) params.append(pk, seen[pk]);
+        return params;
+    }
+
+    /* ===== FETCH LISTINGS VIA AJAX ===== */
+    function fetchListings() {
+        if (isLoading) return;
+        isLoading = true;
+        showLoading(true);
+
+        const params = buildFilterParams();
+        params.set('json', '1');
+        const url = '/listing?' + params.toString();
+
+        window.history.pushState({}, '', url);
+
+        fetch(url, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            }
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+            updateListings(data);
+        })
+        .catch(function () {
+            window.location.reload();
+        })
+        .finally(function () {
+            isLoading = false;
+            showLoading(false);
+        });
+    }
+
+    /* ===== UPDATE DOM ===== */
+    function updateListings(data) {
+        const premiumCard = document.getElementById('premiumCard');
+        const propertyContainer = document.getElementById('propertyContainer');
+        const paginationContainer = document.getElementById('paginationContainer');
+
+        if (premiumCard) premiumCard.innerHTML = data.premium;
+        if (propertyContainer) propertyContainer.innerHTML = data.properties;
+        if (paginationContainer) paginationContainer.innerHTML = data.pagination;
+
+        initHoverImages();
+    }
+
+    /* ===== LOADING ===== */
+    function showLoading(show) {
+        const loader = document.getElementById('listingLoader');
+        if (loader) loader.classList.toggle('hidden', !show);
+    }
+
+    /* ===== DROPDOWN SELECTS ===== */
+    function initDropdowns() {
+        const dropdowns = document.querySelectorAll('.dropdown-select');
+
+        function closeAll(exclude) {
+            dropdowns.forEach(function (d) {
+                if (d === exclude) return;
+                const menu = d.querySelector('.dropdown-menu');
+                let icon = d.querySelector('.bi-chevron-down');
+                if (menu) menu.classList.add('hidden');
+                if (icon) icon.classList.remove('rotate-180');
+            });
+        }
+
+        dropdowns.forEach(function (dropdown) {
+            const header = dropdown.querySelector('.flex.items-center.justify-between');
+            const menu = dropdown.querySelector('.dropdown-menu');
+            let icon = dropdown.querySelector('.bi-chevron-down');
+            const hiddenInput = dropdown.querySelector('input[type=hidden]');
+            const display = dropdown.querySelector('[data-role="display-value"]');
+
+            header.addEventListener('click', function (e) {
+                e.stopPropagation();
+                closeAll(dropdown);
+                if (menu) menu.classList.toggle('hidden');
+                if (icon) icon.classList.toggle('rotate-180');
+            });
+
+            if (menu) {
+                menu.querySelectorAll('li').forEach(function (item) {
+                    item.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        const val = this.getAttribute('data-value');
+                        const label = this.textContent.trim();
+
+                        const prev = hiddenInput ? hiddenInput.value : '';
+                        if (hiddenInput) hiddenInput.value = val;
+                        if (display) display.textContent = label;
+                        if (menu) menu.classList.add('hidden');
+                        if (icon) icon.classList.remove('rotate-180');
+
+                        /* Main page filters: apply immediately on change */
+                        if (prev !== val) fetchListings();
+                    });
+                });
+            }
+        });
+
+        document.addEventListener('click', function () { closeAll(null); });
+    }
+
+    /* ===== ADD-TYPE TOGGLE ===== */
+    function initAddTypeToggle() {
+        const toggle = document.querySelector('[data-role="add-type-toggle"]');
+        if (!toggle) return;
+
+        const buttons = toggle.querySelectorAll('button[data-add-type]');
+        const hiddenInput = document.getElementById('adTypeInput');
+
+        buttons.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const val = this.getAttribute('data-value');
+                const prev = hiddenInput.value;
+                hiddenInput.value = val;
+
+                buttons.forEach(function (b) {
+                    b.classList.remove('bg-white', 'text-orange-500', 'shadow-sm');
+                    b.classList.add('text-gray-600', 'hover:text-gray-900', 'hover:bg-white/50');
+                });
+                this.classList.remove('text-gray-600', 'hover:text-gray-900', 'hover:bg-white/50');
+                this.classList.add('bg-white', 'text-orange-500', 'shadow-sm');
+
+                /* Toggle rent type section in the modal */
+                const rentWrapper = document.getElementById('rentTypeWrapper');
+                if (rentWrapper) {
+                    rentWrapper.classList.toggle('hidden', val !== 'rent');
+                }
+
+                /* Main page filter: apply immediately on change */
+                if (prev !== val) fetchListings();
+            });
+
+            if (hiddenInput.value === btn.getAttribute('data-value')) {
+                btn.click();
+            }
+        });
+    }
+
+    /* ===== FORM SUBMIT ===== */
+    function initFormSubmit() {
+        const form = document.getElementById('filterForm');
+        if (!form) return;
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Close modals when filter is applied
+            const moreFiltersModal = document.getElementById('moreFiltersModal');
+            if (moreFiltersModal) moreFiltersModal.classList.add('hidden');
+
+            const cityFilterModal = document.getElementById('cityFilterModal');
+            if (cityFilterModal) cityFilterModal.classList.add('hidden');
+
+            fetchListings();
+        });
+
+        /* Search on Enter key press (not keyup/keydown auto-search) */
+        const textInputs = form.querySelectorAll('input[type="text"]');
+        textInputs.forEach(function (input) {
+            input.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    
+                    const moreFiltersModal = document.getElementById('moreFiltersModal');
+                    if (moreFiltersModal) moreFiltersModal.classList.add('hidden');
+
+                    const cityFilterModal = document.getElementById('cityFilterModal');
+                    if (cityFilterModal) cityFilterModal.classList.add('hidden');
+
+                    fetchListings();
+                }
+            });
+        });
+
+        /* Search button triggers immediate fetch */
+        const searchBtn = form.querySelector('button[type="submit"]');
+        if (searchBtn) {
+            searchBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const moreFiltersModal = document.getElementById('moreFiltersModal');
+                if (moreFiltersModal) moreFiltersModal.classList.add('hidden');
+
+                const cityFilterModal = document.getElementById('cityFilterModal');
+                if (cityFilterModal) cityFilterModal.classList.add('hidden');
+
+                fetchListings();
+            });
+        }
+
+        /* Main page text filters (price/area): apply on change (blur/commit) — NOT inside modals */
+        textInputs.forEach(function (input) {
+            if (input.closest('#cityFilterModal, #moreFiltersModal')) return;
+            input.addEventListener('change', function () {
+                fetchListings();
+            });
+        });
+    }
+
+    /* ===== RESET FILTERS ===== */
+    function initResetFilters() {
+        const btn = document.getElementById('resetFiltersBtn');
+        if (!btn) return;
+
+        btn.addEventListener('click', function () {
+            const form = document.getElementById('filterForm');
+            const modal = document.getElementById('moreFiltersModal');
+
+            /* Reset main form hidden inputs */
+            form.querySelectorAll('input[type=hidden]').forEach(function (input) {
+                input.value = '';
+            });
+
+            /* Reset text inputs */
+            form.querySelectorAll('input[type="text"]').forEach(function (input) {
+                input.value = '';
+            });
+
+            /* Reset chip radio groups — check the empty-value option (Hamısı / Fərqi yoxdur) */
+            const radioGroupNames = ['buildingType', 'roomCount', 'adType', 'propertyCondition', 'advertiserType', 'rentType'];
+            radioGroupNames.forEach(function (name) {
+                const radios = (modal || form).querySelectorAll('input[type="radio"][name="' + name + '"]');
+                radios.forEach(function (r) {
+                    r.checked = r.value === '';
+                });
+            });
+
+            /* Reset checkbox chips in modal */
+            const chipCheckboxes = ['hasDeed', 'inCredit', 'hasVideo'];
+            chipCheckboxes.forEach(function (name) {
+                const cb = (modal || form).querySelector('input[type="checkbox"][name="' + name + '"]');
+                if (cb) cb.checked = false;
+            });
+
+            /* Reset display values on main page */
+            form.querySelectorAll('[data-role="display-value"]').forEach(function (el) {
+                let filter = el.getAttribute('data-filter');
+                const defaults = {
+                    roomCount: 'Otaq sayi',
+                    buildingType: 'Butun Kateqoriyalar',
+                    city: 'Butun Seherler'
+                };
+                if (defaults[filter]) el.textContent = defaults[filter];
+            });
+            /* Reset add-type toggle */
+            const allBtn = document.querySelector('[data-add-type="all"]');
+            if (allBtn) {
+                /* Pre-set the value so the click handler sees no change and skips its own fetch */
+                const adTypeInput = document.getElementById('adTypeInput');
+                if (adTypeInput) adTypeInput.value = 'all';
+                allBtn.click();
+            }
+
+            /* Hide rent type wrapper */
+            const rentWrapper = document.getElementById('rentTypeWrapper');
+            if (rentWrapper) rentWrapper.classList.add('hidden');
+
+            /* Hide input clear buttons */
+            document.querySelectorAll('.modal-input-clear').forEach(function (btn) {
+                btn.classList.add('hidden');
+            });
+
+            fetchListings();
+        });
+    }
+
+    /* ===== SCROLL TO TOP ===== */
+    function initScrollToTop() {
+        const gotop = document.getElementById('scrollToTop');
+        const progress = document.querySelector('.progress-circle .progress');
+        const radius = 18;
+        const circumference = 2 * Math.PI * radius;
+
+        if (progress) {
+            progress.style.strokeDasharray = circumference;
+            progress.style.strokeDashoffset = circumference;
+        }
+
+        window.addEventListener('scroll', function () {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
+            if (progress) {
+                progress.style.strokeDashoffset = circumference - scrollPercent * circumference;
+            }
+            if (gotop) {
+                gotop.style.display = scrollTop > window.innerHeight / 2 ? 'flex' : 'none';
+            }
+        });
+
+        if (gotop) {
+            gotop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        }
+    }
+
+    /* ===== GRID / LIST VIEW TOGGLE ===== */
+    function initViewToggle() {
+        const gridBtn = document.getElementById('gridViewBtn');
+        const listBtn = document.getElementById('listViewBtn');
+        const propertyContainer = document.getElementById('propertyContainer');
+        const premiumCard = document.getElementById('premiumCard');
+
+        if (!gridBtn || !listBtn) return;
+
+        const gridClasses = [
+            'grid', 'grid-cols-1', 'sm:grid-cols-1', 'md:grid-cols-2',
+            'lg:grid-cols-2', 'xl:grid-cols-3', '2xl:grid-cols-4', 'gap-3', 'sm:gap-6'
+        ];
+
+        function setView(view) {
+            [propertyContainer, premiumCard].forEach(function (container) {
+                if (!container) return;
+                if (view === 'list') {
+                    container.classList.remove.apply(container.classList, gridClasses);
+                    container.classList.add('list-view');
+                } else {
+                    container.classList.remove('list-view');
+                    container.classList.add.apply(container.classList, gridClasses);
+                }
+            });
+
+            if (view === 'list') {
+                gridBtn.classList.remove('bg-[var(--primary)]', 'text-white');
+                gridBtn.classList.add('border', 'border-gray-300', 'text-gray-500');
+                listBtn.classList.remove('border', 'border-gray-300', 'text-gray-500');
+                listBtn.classList.add('bg-[var(--primary)]', 'text-white');
+            } else {
+                listBtn.classList.remove('bg-[var(--primary)]', 'text-white');
+                listBtn.classList.add('border', 'border-gray-300', 'text-gray-500');
+                gridBtn.classList.remove('border', 'border-gray-300', 'text-gray-500');
+                gridBtn.classList.add('bg-[var(--primary)]', 'text-white');
+            }
+            try { localStorage.setItem('listingView', view); } catch (e) {}
+        }
+
+        gridBtn.addEventListener('click', function () { setView('grid'); });
+        listBtn.addEventListener('click', function () { setView('list'); });
+
+        try {
+            const saved = localStorage.getItem('listingView');
+            if (saved) setView(saved);
+        } catch (e) {}
+    }
+
+    /* ===== MORE FILTERS MODAL (chip-based) ===== */
+    function initMoreFilters() {
+        const btn = document.getElementById('moreFiltersBtn');
+        const modal = document.getElementById('moreFiltersModal');
+        const close1 = document.getElementById('closeMoreFilters');
+        const close2 = document.getElementById('closeMoreFiltersBtn');
+
+        if (!btn || !modal) return;
+
+        /* Modal filters only apply on "Nəticələri Göstər" (form submit) or when the modal closes */
+        let modalChanged = false;
+
+        function closeAndApply() {
+            modal.classList.add('hidden');
+            if (modalChanged) fetchListings();
+        }
+
+        if (close1) close1.addEventListener('click', closeAndApply);
+        if (close2) close2.addEventListener('click', closeAndApply);
+
+        /* Close on backdrop click + clear button handling */
+        modal.addEventListener('click', function (e) {
+            const clearBtn = e.target.closest('.modal-input-clear');
+            if (clearBtn) {
+                const input = clearBtn.parentElement.querySelector('input');
+                if (input) {
+                    input.value = '';
+                    clearBtn.classList.add('hidden');
+                    input.dispatchEvent(new Event('change'));
+                }
+                return;
+            }
+            if (e.target === modal) closeAndApply();
+        });
+
+        /* Show/hide clear buttons on input change */
+        modal.addEventListener('input', function (e) {
+            const input = e.target.closest('input');
+            if (input) {
+                const clearBtn = input.parentElement.querySelector('.modal-input-clear');
+                if (clearBtn) {
+                    clearBtn.classList.toggle('hidden', input.value.trim() === '');
+                }
+            }
+        });
+
+        /* Live sync: update hidden inputs AND main page display when modal chips change.
+           Results only appear on submit or when the modal closes. */
+        modal.addEventListener('change', function (e) {
+            const input = e.target.closest('input');
+            if (!input || !input.name) return;
+
+            modalChanged = true;
+            const form = document.getElementById('filterForm');
+
+            /* Text inputs: sync to the matching main-page input so the applied filter matches */
+            if (input.type === 'text') {
+                const mainTextInput = form.querySelector('input[name="' + input.name + '"]');
+                if (mainTextInput) mainTextInput.value = input.value;
+                return;
+            }
+
+            /* Update main form hidden input */
+            const hidden = form.querySelector('input[type="hidden"][name="' + input.name + '"]');
+            if (input.type === 'radio' && input.checked) {
+                if (hidden) hidden.value = input.value;
+            } else if (input.type === 'checkbox') {
+                if (hidden) hidden.value = input.checked ? input.value : '';
+            }
+
+            /* Update main page display values */
+            updateMainDisplay(input.name, input);
+        });
+
+        /* Buy/Rent toggle in modal — show/hide rent period */
+        modal.querySelectorAll('input[name="adType"]').forEach(function (radio) {
+            radio.addEventListener('change', function () {
+                const wrapper = document.getElementById('rentTypeWrapper');
+                if (wrapper) wrapper.classList.toggle('hidden', this.value !== 'rent');
+            });
+        });
+
+        /* Update main page display elements to reflect modal chip changes */
+        function updateMainDisplay(name, input) {
+            const form = document.getElementById('filterForm');
+            const isChecked = input.type === 'radio' ? input.checked : true;
+
+            if (name === 'buildingType') {
+                const display = form.querySelector('[data-role="display-value"][data-filter="buildingType"]');
+                if (display) {
+                    display.textContent = (isChecked && input.value)
+                        ? (input.parentElement.textContent.trim())
+                        : 'Butun Kateqoriyalar';
+                }
+            } else if (name === 'roomCount') {
+                const display = form.querySelector('[data-role="display-value"][data-filter="roomCount"]');
+                if (display) {
+                    display.textContent = (isChecked && input.value)
+                        ? input.value + ' otaqli'
+                        : 'Otaq sayi';
+                }
+            } else if (name === 'adType') {
+                const adHidden = document.getElementById('adTypeInput');
+                if (adHidden) adHidden.value = isChecked ? input.value : '';
+                const toggleVal = (isChecked ? input.value : '') || 'all';
+                document.querySelectorAll('[data-add-type]').forEach(function (btn) {
+                    let bv = btn.getAttribute('data-add-type');
+                    if (bv === toggleVal) {
+                        btn.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100');
+                        btn.classList.add('bg-[color:var(--primary)]', 'text-white');
+                    } else {
+                        btn.classList.remove('bg-[color:var(--primary)]', 'text-white');
+                        btn.classList.add('bg-white', 'text-gray-700', 'hover:bg-gray-100');
+                    }
+                });
+            }
+        }
+
+        /* On modal open: sync main form values TO modal chips */
+        btn.addEventListener('click', function () {
+            modal.classList.remove('hidden');
+            modalChanged = false;
+
+            /* Sync radio chips: check the radio matching the current hidden value (uncheck the rest) */
+            const form = document.getElementById('filterForm');
+            ['adType', 'buildingType', 'roomCount'].forEach(function (name) {
+                const hidden = form.querySelector('input[type="hidden"][name="' + name + '"]');
+                const curVal = hidden ? hidden.value : '';
+                modal.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+                    r.checked = r.value === curVal;
+                });
+            });
+
+            /* Sync text inputs: main → modal */
+            ['minPrice', 'maxPrice', 'minArea', 'maxArea', 'fieldAreaMin', 'fieldAreaMax', 'floorMin', 'floorMax'].forEach(function (name) {
+                const modalInput = modal.querySelector('input[name="' + name + '"]');
+                const mainInput = form.querySelector('input[name="' + name + '"]');
+                if (modalInput && mainInput) modalInput.value = mainInput.value;
+            });
+        });
+    }
+
+    /* ===== CITY FILTER MODAL ===== */
+    function initCityModal() {
+        const openBtn = document.getElementById('openModal');
+        const modal = document.getElementById('cityFilterModal');
+        const closeBtn = document.getElementById('closeCityModal');
+        const applyBtn = document.getElementById('applyCityFilters');
+        const resetBtn = document.getElementById('resetCityFilters');
+        const applyCount = document.getElementById('applyCount');
+        const citySelect = document.getElementById('citySelect');
+
+        if (!modal) return;
+
+        /* City filters only apply on "elan göstər" (apply) or when the modal closes */
+        let cityModalChanged = false;
+
+        function openModalFn() {
+            modal.classList.remove('hidden');
+            cityModalChanged = false;
+            showTab(activeTab);
+            loadCityData();
+        }
+
+        function closeModalFn() {
+            modal.classList.add('hidden');
+        }
+
+        /* Apply current city selection to the form */
+        function applyCitySelection() {
+            const form = document.getElementById('filterForm');
+            let cityInput = form.querySelector('input[name=cityId]');
+            if (!cityInput) {
+                cityInput = document.createElement('input');
+                cityInput.type = 'hidden';
+                cityInput.name = 'cityId';
+                form.appendChild(cityInput);
+            }
+            cityInput.value = citySelect.value;
+
+            const cityDisplay = document.querySelector('[data-role="display-value"][data-filter="city"]');
+            if (cityDisplay && citySelect.selectedOptions[0]) {
+                cityDisplay.textContent = citySelect.selectedOptions[0].textContent.replace(/^.*?:\s*/, '');
+            }
+        }
+
+        /* Closing the modal applies the selected filters */
+        function closeAndApply() {
+            applyCitySelection();
+            closeModalFn();
+            if (cityModalChanged) fetchListings();
+        }
+
+        if (openBtn) openBtn.addEventListener('click', openModalFn);
+        /* Also open from the filter modal's location button */
+        const modalLocationBtn = document.getElementById('modalLocationBtn');
+        if (modalLocationBtn) modalLocationBtn.addEventListener('click', openModalFn);
+        if (closeBtn) closeBtn.addEventListener('click', closeAndApply);
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) closeAndApply();
+        });
+
+        const tabBtns = modal.querySelectorAll('.tabBtn');
+        tabBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                activeTab = this.getAttribute('data-tab');
+                showTab(activeTab);
+                loadCityData();
+            });
+        });
+
+        function showTab(tabId) {
+            const contents = modal.querySelectorAll('.tabContent');
+            contents.forEach(function (c) { c.classList.add('hidden'); });
+            const target = document.getElementById(tabId);
+            if (target) target.classList.remove('hidden');
+
+            tabBtns.forEach(function (b) {
+                b.classList.remove('border-orange-600', 'text-orange-600', 'bg-orange-50');
+                b.classList.add('text-gray-600', 'hover:bg-gray-100');
+            });
+            const activeBtn = modal.querySelector('[data-tab="' + tabId + '"]');
+            if (activeBtn) {
+                activeBtn.classList.remove('text-gray-600', 'hover:bg-gray-100');
+                activeBtn.classList.add('border-orange-600', 'text-orange-600', 'bg-orange-50');
+            }
+        }
+
+        let dataLoaded = false;
+
+        function loadCityData() {
+            if (dataLoaded) return;
+            const cityId = citySelect ? citySelect.value : '';
+
+            const rayonList = document.getElementById('rayonList');
+            const nishangahList = document.getElementById('nishangahList');
+
+            if (rayonList && cityId) {
+                fetch('/api/cities')
+                    .then(function (r) { return r.json(); })
+                    .then(function (cities) {
+                        const cityList = cities.data || cities;
+                        const city = cityList.find(function (c) { return c.id == cityId; });
+                        const districtList = city && (city.districts && city.districts.data ? city.districts.data : city.districts);
+                        if (districtList && districtList.length) {
+                            rayonList.innerHTML = '';
+                            districtList.forEach(function (d) {
+                                rayonList.appendChild(createCheckbox(d.id, d.name, 'district'));
+                            });
+                            toggleEmpty(rayonList, document.getElementById('rayonEmpty'));
+                        }
+                    }).catch(function () {});
+            }
+
+            if (nishangahList) {
+                fetch('/api/nearby')
+                    .then(function (r) { return r.json(); })
+                    .then(function (items) {
+                        nishangahList.innerHTML = '';
+                        const list = items.data || items;
+                        list.forEach(function (i) {
+                            nishangahList.appendChild(createCheckbox(i.id, i.name, 'nearby'));
+                        });
+                        toggleEmpty(nishangahList, document.getElementById('nishangahEmpty'));
+                    }).catch(function () {});
+            }
+
+            dataLoaded = true;
+        }
+
+        function createCheckbox(value, label, name) {
+            const lbl = document.createElement('label');
+            lbl.className = 'flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-50';
+            lbl.dataset.text = label.toLowerCase();
+
+            const input = document.createElement('input');
+            input.type = 'checkbox';
+            input.className = 'accent-orange-600';
+            input.name = name;
+            input.value = value;
+
+            lbl.appendChild(input);
+            lbl.append(' ' + label);
+
+            input.addEventListener('change', function () {
+                cityModalChanged = true;
+                updateApplyCount();
+            });
+            return lbl;
+        }
+
+        function toggleEmpty(listEl, emptyEl) {
+            if (!emptyEl) return;
+            const hasItems = listEl && listEl.querySelector('label');
+            emptyEl.classList.toggle('hidden', !!hasItems);
+        }
+
+        function updateApplyCount() {
+            const count = modal.querySelectorAll('input[type=checkbox]:checked').length;
+            if (applyCount) applyCount.textContent = count;
+        }
+
+        function wireSearch(inputId, listId, emptyId) {
+            const input = document.getElementById(inputId);
+            const list = document.getElementById(listId);
+            const empty = document.getElementById(emptyId);
+            if (!input || !list) return;
+
+            input.addEventListener('input', function () {
+                const q = this.value.trim().toLowerCase();
+                let visible = 0;
+                list.querySelectorAll('label').forEach(function (l) {
+                    const show = l.dataset.text ? l.dataset.text.includes(q) : true;
+                    l.classList.toggle('hidden', !show);
+                    if (show) visible++;
+                });
+                if (empty) empty.classList.toggle('hidden', visible !== 0);
+            });
+        }
+
+        wireSearch('rayonSearch', 'rayonList', 'rayonEmpty');
+        wireSearch('nishangahSearch', 'nishangahList', 'nishangahEmpty');
+
+        if (citySelect) {
+            citySelect.addEventListener('change', function () {
+                cityModalChanged = true;
+                dataLoaded = false;
+                if (document.getElementById('rayonList')) document.getElementById('rayonList').innerHTML = '';
+                if (document.getElementById('nishangahList')) document.getElementById('nishangahList').innerHTML = '';
+                loadCityData();
+            });
+        }
+
+        if (resetBtn) {
+            resetBtn.addEventListener('click', function () {
+                cityModalChanged = true;
+                modal.querySelectorAll('input[type=checkbox]').forEach(function (ch) {
+                    ch.checked = false;
+                });
+                updateApplyCount();
+                ['rayonSearch', 'nishangahSearch'].forEach(function (id) {
+                    const el = document.getElementById(id);
+                    if (el) el.value = '';
+                });
+                ['rayonList', 'nishangahList'].forEach(function (id) {
+                    const list = document.getElementById(id);
+                    if (list) list.querySelectorAll('label').forEach(function (l) { l.classList.remove('hidden'); });
+                });
+                toggleEmpty(document.getElementById('rayonList'), document.getElementById('rayonEmpty'));
+                toggleEmpty(document.getElementById('nishangahList'), document.getElementById('nishangahEmpty'));
+            });
+        }
+
+        /* Apply — set cityId and fetch */
+        if (applyBtn) {
+            applyBtn.addEventListener('click', function () {
+                applyCitySelection();
+                closeModalFn();
+                fetchListings();
+            });
+        }
+    }
+
+    /* ===== FAVORITE TOGGLE ===== */
+    window.toggleFavorite = function (element, propertyId) {
+        let icon = element.tagName === 'I' ? element : element.querySelector('i');
+        if (!icon) icon = element;
+        const isFav = icon.classList.contains('fa-solid');
+
+        let favorites = [];
+        try { favorites = JSON.parse(localStorage.getItem('favorites')) || []; } catch (e) {}
+
+        if (isFav) {
+            icon.classList.remove('fa-solid');
+            icon.classList.add('fa-regular');
+            favorites = favorites.filter(function (f) { return f.id !== propertyId; });
+        } else {
+            icon.classList.remove('fa-regular');
+            icon.classList.add('fa-solid');
+            favorites.push({ id: propertyId });
+        }
+        try { localStorage.setItem('favorites', JSON.stringify(favorites)); } catch (e) {}
+
+        const token = getCookie('session');
+        if (token) {
+            fetch('/api/favorite', {
+                method: isFav ? 'DELETE' : 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                body: JSON.stringify({ property_id: propertyId })
+            }).catch(function () {});
+        }
+    };
+
+    window.toggleCompare = function (element, propertyId) {
+        let compareList = [];
+        try { compareList = JSON.parse(localStorage.getItem('compareList')) || []; } catch (e) {}
+        const maxItems = 3;
+
+        const isInList = compareList.some(function (c) { return c.id === propertyId; });
+
+        if (isInList) {
+            compareList = compareList.filter(function (c) { return c.id !== propertyId; });
+            showCompareToast('Müqayisə siyahısından çıxarıldı.');
+        } else {
+            if (compareList.length < maxItems) {
+                compareList.push({ id: propertyId });
+                showCompareToast('Müqayisə siyahısına əlavə edildi.');
+            } else {
+                showCompareToast('Ən çox ' + maxItems + ' mülk müqayisə edilə bilər.');
+                return;
+            }
+        }
+        try { localStorage.setItem('compareList', JSON.stringify(compareList)); } catch (e) {}
+    };
+
+    function getCookie(name) {
+        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        return match ? decodeURIComponent(match[2]) : null;
+    }
+
+    function showCompareToast(message) {
+        let container = document.getElementById('toastContainer');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'toastContainer';
+            container.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9999';
+            document.body.appendChild(container);
+        }
+        const toast = document.createElement('div');
+        toast.style.cssText = 'background:#2C2E33;color:#fff;padding:12px 16px;margin-top:8px;border-radius:8px;font-size:14px;box-shadow:0 2px 6px rgba(0,0,0,0.2)';
+        toast.innerHTML = message + ' <a href="/compares" style="color:#4f9ef7;margin-left:10px;text-decoration:underline;">Müqayisə səhifəsinə bax</a>';
+        container.appendChild(toast);
+        setTimeout(function () { toast.remove(); }, 4000);
+    }
+
+    /* ===== IMAGE NAVIGATION ===== */
+    window.nextImage = function (btn) {
+        let container = btn.closest('[data-images]');
+        if (!container) return;
+        const images = JSON.parse(container.getAttribute('data-images'));
+        let current = parseInt(container.getAttribute('data-current')) || 0;
+        const next = (current + 1) % images.length;
+        showImage(container, images, next);
+    };
+
+    window.prevImage = function (btn) {
+        let container = btn.closest('[data-images]');
+        if (!container) return;
+        const images = JSON.parse(container.getAttribute('data-images'));
+        let current = parseInt(container.getAttribute('data-current')) || 0;
+        const prev = (current - 1 + images.length) % images.length;
+        showImage(container, images, prev);
+    };
+
+    function showImage(container, images, index) {
+        const img = container.querySelector('.card-image');
+        if (img) img.src = images[index];
+        container.setAttribute('data-current', index);
+
+        const dots = container.querySelectorAll('.absolute.bottom-2 > span');
+        dots.forEach(function (dot, i) {
+            dot.classList.toggle('bg-white', i === index);
+            dot.classList.toggle('bg-white/50', i !== index);
+        });
+    }
+
+    /* ===== HOVER IMAGE SWITCH ===== */
+    function initHoverImages() {
+        document.querySelectorAll('[data-images]').forEach(function (container) {
+            const images = JSON.parse(container.getAttribute('data-images'));
+            if (images.length < 2) return;
+
+            let hoverInterval = null;
+
+            container.addEventListener('mouseenter', function () {
+                let current = 0;
+                hoverInterval = setInterval(function () {
+                    current = (current + 1) % images.length;
+                    showImage(container, images, current);
+                }, 1500);
+            });
+
+            container.addEventListener('mouseleave', function () {
+                if (hoverInterval) {
+                    clearInterval(hoverInterval);
+                    hoverInterval = null;
+                }
+                container.setAttribute('data-current', '0');
+                showImage(container, images, 0);
+            });
+        });
+    }
+
+    /* ===== PAGINATION CLICK DELEGATION ===== */
+    function initPagination() {
+        let container = document.getElementById('paginationContainer');
+        if (!container) return;
+
+        container.addEventListener('click', function (e) {
+            const link = e.target.closest('a');
+            if (!link) return;
+            let href = link.getAttribute('href');
+            if (!href || href === '#') return;
+
+            e.preventDefault();
+
+            /* Build current filter params and update page param */
+            const params = buildFilterParams();
+
+            const url = new URL(href, window.location.origin);
+            params.set('page', url.searchParams.get('page') || '1');
+            params.set('json', '1');
+
+            const fetchUrl = '/listing?' + params.toString();
+            window.history.pushState({}, '', '/listing?' + params.toString());
+
+            if (isLoading) return;
+            isLoading = true;
+            showLoading(true);
+
+            fetch(fetchUrl, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                updateListings(data);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            })
+            .catch(function () {
+                window.location.href = href;
+            })
+            .finally(function () {
+                isLoading = false;
+                showLoading(false);
+            });
+        });
+    }
+
+    /* ===== POPSTATE (browser back/forward) ===== */
+    function initPopState() {
+        window.addEventListener('popstate', function () {
+            const params = new URLSearchParams(window.location.search);
+            const form = document.getElementById('filterForm');
+
+            /* Restore form values from URL params */
+            form.querySelectorAll('input, select').forEach(function (input) {
+                let name = input.getAttribute('name');
+                if (!name) return;
+                if (input.type === 'hidden') {
+                    input.value = params.get(name) || '';
+                }
+            });
+
+            fetchListings();
+        });
+    }
+
+    /* ===== INIT ===== */
+    document.addEventListener('DOMContentLoaded', function () {
+        initDropdowns();
+        initAddTypeToggle();
+        initFormSubmit();
+        initResetFilters();
+        initScrollToTop();
+        initViewToggle();
+        initMoreFilters();
+        initCityModal();
+        initHoverImages();
+        initPagination();
+        initPopState();
+    });
+
+})();

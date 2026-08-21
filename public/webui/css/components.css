@@ -1,0 +1,150 @@
+
+#settings-icon {
+    top: 25%;
+    right: 5px;
+    z-index: 1100;
+    position: fixed;
+}
+
+.settings-icon {
+    display: flex;
+    width: 20px;
+    height: 20px;
+    padding: 25px;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary);
+}
+
+.settings-icon i {
+    font-size: 25px;
+    color: var(--white);
+    animation: rotateIcon 5s linear infinite;
+}
+
+@keyframes rotateIcon {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.gotop {
+    position: fixed;
+    bottom: 60px;
+    right: 30px;
+    width: 45px;
+    height: 45px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    border-radius: 50%;
+    background-color: var(--white);
+}
+
+.gotop .up {
+    border-radius: 50%;
+    position: absolute;
+    z-index: 2;
+}
+
+.gotop .up i {
+    color: var(--primary);
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.progress-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(-90deg);
+    z-index: 1;
+}
+
+circle {
+    fill: none;
+    stroke-width: 2;
+}
+
+circle.bg {
+    stroke: #eee;
+}
+
+circle.progress {
+    stroke: var(--primary);
+    stroke-dasharray: 113.1; /* 2 * π * 18 */
+    stroke-dashoffset: 113.1;
+    transition: stroke-dashoffset 0.2s linear;
+}
+
+.hover-effect-button:hover .hover-effect-button-fill {
+    width: 100%;
+}
+
+.hover-effect-button:hover span:not(.hover-effect-button-fill) {
+    color: white;
+}
+
+
+.gotop {
+    position: fixed;
+    bottom: 60px;
+    right: 30px;
+    width: 45px;
+    height: 45px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1100;
+    border-radius: 50%;
+    background-color: var(--white);
+}
+
+.gotop .up {
+    border-radius: 50%;
+    position: absolute;
+    z-index: 1100;
+}
+
+.gotop .up i {
+    color: var(--primary);
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.progress-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(-90deg);
+    z-index: 1100;
+}
+
+circle {
+    fill: none;
+    stroke-width: 2;
+}
+
+circle.bg {
+    stroke: #eee;
+}
+
+circle.progress {
+    stroke: var(--primary);
+    stroke-dasharray: 113.1; /* 2 * π * 18 */
+    stroke-dashoffset: 113.1;
+    transition: stroke-dashoffset 0.2s linear;
+}
+
+.hover-effect-button:hover .hover-effect-button-fill {
+    width: 100%;
+}
+
+.hover-effect-button:hover span:not(.hover-effect-button-fill) {
+    color: white;
+}

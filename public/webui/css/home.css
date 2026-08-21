@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap");
+
+* {
+    /* background-color: orange; */
+}
+:root {
+    --primary: #f1913d;
+}
+.select-wrapper .select-arrow {
+    transition: transform 0.2s ease-in-out;
+}
+
+.select-wrapper.focused .select-arrow {
+    transform: rotate(180deg);
+}
+ .link-underline {
+    position: absolute;
+    left: 16px;
+    bottom: -3px;
+    height: 2px;
+    width: 0%;
+    background-color: #f7923a;
+    transition: width 0.3s ease;
+  }
+
+  .group:hover .link-underline {
+    width: 100%;
+  }
+
+
+
+  .custom-checkbox {
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 1px solid #3a3a3d;
+  border-radius: 0.125rem;
+  background-color: transparent;
+  transition-property: all;
+  transition-duration: 200ms;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.custom-checkbox:checked {
+  background-color: #F7923A;
+  border-color: #F7923A;
+}
+
+.custom-checkbox:checked::before {
+  content: '✔';
+  color: white;
+  font-size: 0.75rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}

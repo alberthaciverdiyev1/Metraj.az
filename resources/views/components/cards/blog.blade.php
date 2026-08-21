@@ -1,0 +1,19 @@
+<div onclick="window.location.href='/blog/{{ $slug }}'" class="blog-card cursor-pointer">
+    <div class="blog-card-image">
+        <img src="{{ $images[0] ?? '' }}" alt="blog-card-image">
+        <span>{{ $category->name ?? '' }}</span>
+    </div>
+    <div class="blog-card-info">
+        <div class="blog-time">
+            <i class="bi bi-clock-history"></i>
+            <p>{{ $date }}</p>
+        </div>
+        <div class="blog-title">
+            <h3>{{ Str::limit($name, 50) }}</h3>
+        </div>
+
+        <a href="/blog/{{ $slug }}" onclick="event.stopPropagation()" class="blog-button">
+            Read More <i class="bi bi-arrow-right-circle"></i>
+        </a>
+    </div>
+</div>
