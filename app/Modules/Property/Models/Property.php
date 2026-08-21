@@ -19,6 +19,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
+/**
+ * @property-read string $first_image_url
+ */
 class Property extends Model
 {
     use SoftDeletes;

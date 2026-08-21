@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
+/**
+ * @property-read string $formatted_date
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static> published()
+ */
 class Blog extends Model
 {
     use HasFactory;
