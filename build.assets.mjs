@@ -1,8 +1,8 @@
 /**
  * Front-end asset build script
  * ----------------------------------
- * Source:  resources/frontend/js  (all .js files, recursive)
- *          resources/frontend/css (all .css files, recursive)
+ * Source:  resources/js  (all .js files, recursive)
+ *          resources/css (all .css files, recursive)
  * Output:  public/js (minified, structure preserved)
  *          public/css (minified, structure preserved)
  *
@@ -11,7 +11,7 @@
  *
  * Vite-managed entries (resources/css/app.css, resources/js/app.js) and
  * Filament vendor assets (public/js/filament, public/css/filament) are
- * intentionally NOT processed here.
+ * intentionally NOT processed here — they are excluded from the globs.
  *
  * Usage:
  *   node build.assets.mjs           # one-shot minified build
@@ -23,19 +23,21 @@ import process from 'node:process';
 
 const WATCH = process.argv.includes('--watch');
 
+const isViteEntry = (f) => f.endsWith('/app.css') || f.endsWith('/app.js');
+
 const targets = [
     {
         name: 'JS',
-        entryPoints: globSync('resources/frontend/js/**/*.js'),
+        entryPoints: globSync('resources/js/**/*.js').filter((f) => !isViteEntry(f)),
         outdir: 'public/js',
-        outbase: 'resources/frontend/js',
+        outbase: 'resources/js',
         target: 'es2019',
     },
     {
         name: 'CSS',
-        entryPoints: globSync('resources/frontend/css/**/*.css'),
+        entryPoints: globSync('resources/css/**/*.css').filter((f) => !isViteEntry(f)),
         outdir: 'public/css',
-        outbase: 'resources/frontend/css',
+        outbase: 'resources/css',
     },
 ];
 

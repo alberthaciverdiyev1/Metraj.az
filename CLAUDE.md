@@ -184,21 +184,21 @@ resources/views/                       (bütün Blade view-lar — merkezi)
 
 1. **Vite (Tailwind 4)** — `resources/css/app.css` + `resources/js/app.js` giriş nöqtələri ilə `@vite()` direktivi vasitəsilə yüklənir. Yalnız Tailwind/Instrument Sans fontu üçün istifadə olunur.
 
-2. **Legacy front assetlər (esbuild minify)** — əl ilə yazılmış front-end JS/CSS faylları `resources/frontend/` qovluğunda saxlanır və `npm run assets:build` (və ya development üçün `npm run assets:dev` watch) əmri ilə minify edilib `public/`-ə köçürülür:
+2. **Legacy front assetlər (esbuild minify)** — əl ilə yazılmış front-end JS/CSS faylları `resources/js/` və `resources/css/` qovluqlarında saxlanır və `npm run assets:build` (və ya development üçün `npm run assets:dev` watch) əmri ilə minify edilib `public/`-ə köçürülür:
 
 ```
-resources/frontend/
-├── js/     (components/, layouts/, pages/, filament/forms/map-picker.js)
-└── css/    (app.css, components.css, listing.css, ... filament/head-end.css, ...)
+resources/
+├── css/     (app.css = Vite entry, app-legacy.css + digər legacy CSS, components/, filament/)
+└── js/      (app.js = Vite entry, components/, layouts/, pages/, filament/forms/map-picker.js)
 ```
 
-- **Source:** `resources/frontend/js/**/*.js` və `resources/frontend/css/**/*.css`
+- **Source:** `resources/js/**/*.js` və `resources/css/**/*.css` (Vite entry-ləri `app.css`/`app.js` istisna)
 - **Output:** `public/js/**` və `public/css/**` (qovluq strukturu qorunur, minified)
-- **Blade istinadları dəyişmir:** `asset('js/pages/faq.js')`, `asset('css/app.css')` kimi davam edir
-- **İstisnalar:** `resources/css/app.css`, `resources/js/app.js` (Vite idarə edir); `public/js/filament/`, `public/css/filament/` vendor assetləri (Filament publish — toxunulmur)
-- **Build skripti:** `build.assets.mjs` (esbuild, `bundle: false`, `minify: true`)
+- **Blade istinadları:** `asset('js/pages/faq.js')`, `asset('css/app-legacy.css')` kimi davam edir
+- **İstisnalar:** `resources/css/app.css`, `resources/js/app.js` (Vite idarə edir — esbuild glob-larından exclude edilir); `public/js/filament/`, `public/css/filament/` vendor assetləri (Filament publish — toxunulmur)
+- **Build skripti:** `build.assets.mjs` (esbuild, `bundle: false`, `minify: true`, `isViteEntry()` filteri)
 
-> ⚠️ **Diqqət:** `resources/css/app.css` (Vite Tailwind entry) ilə `resources/frontend/css/app.css` (legacy global CSS) **eyni ada malik fərqli fayllardır** — qarışdırmayın. Blade-də `@vite()` Tailwind-in, `asset('css/app.css')` isə legacy faylın yüklənməsidir.
+> ⚠️ **Diqqət:** `resources/css/app.css` (Vite Tailwind entry) ilə `resources/css/app-legacy.css` (legacy global CSS: Lexend fontu + `:root` dəyişənləri) fərqli fayllardır. Blade-də `@vite()` Tailwind-in, `asset('css/app-legacy.css')` isə legacy faylın yüklənməsidir. `app.css` adı yalnız Vite-yə məxsusdur; legacy fayl `app-legacy.css` adlanır (ad toqquşmasının qarşısını almaq üçün).
 
 ---
 
