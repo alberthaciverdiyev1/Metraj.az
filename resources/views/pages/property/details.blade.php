@@ -77,12 +77,12 @@
 </div>
 
 <!-- Modal Fullscreen Slider -->
-<div id="modal" class="modal">
-    <div class="modal-header">
+<div id="modal" class="modal" style="z-index: 99999;">
+    <div class="modal-header" style="z-index: 100002;">
         <span id="counter" class="text-sm font-semibold">1/{{ count($property->images ?? []) }}</span>
         <div class="modal-actions">
-            <button onclick="toggleFullscreen()"><i class="bi bi-fullscreen"></i></button>
-            <button onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
+            <button type="button" onclick="toggleFullscreen()"><i class="bi bi-fullscreen"></i></button>
+            <button type="button" onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
         </div>
     </div>
     <div class="modal-navigation">
