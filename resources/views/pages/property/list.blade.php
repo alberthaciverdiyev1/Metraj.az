@@ -54,86 +54,45 @@
                                 </div>
 
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-20">
-                                    <div
-                                        class="relative p-3 bg-gray-50 rounded-xl border border-gray-200 cursor-pointer dropdown-select select-none transition hover:bg-gray-100/70"
-                                        data-filter="roomCount">
-                                        <div class="flex items-center justify-between">
-                                            <div class="flex items-center gap-2">
-                                                <img src="/images/door.svg" alt="door" class="w-4 h-4">
-                                                <span class="text-gray-700 font-medium" data-role="display-value"
-                                                      data-filter="roomCount">
-                                                {{ request('roomCount') ? request('roomCount').' otaqlı' : __('Otaq sayı') }}
-                                            </span>
-                                            </div>
-                                            <i class="bi bi-chevron-down text-orange-500 transition-transform duration-200"></i>
-                                        </div>
-                                        <div
-                                            class="absolute left-0 top-full mt-1.5 w-full bg-white shadow-xl border border-gray-200 rounded-xl z-50 hidden dropdown-menu max-h-64 overflow-y-auto">
-                                            <ul class="divide-y divide-gray-100 py-1 text-xs sm:text-sm">
-                                                <li class="px-3 py-2 hover:bg-orange-50 hover:text-orange-600 cursor-pointer font-medium"
-                                                    data-value="">{{ __('Hamısı') }}</li>
-                                                @for($i=1; $i<6; $i++)
-                                                    <li class="px-3 py-2 hover:bg-orange-50 hover:text-orange-600 cursor-pointer font-medium"
-                                                        data-value="{{$i}}">{{$i}} {{ __('otaqlı') }}
-                                                    </li>
-                                                @endfor
-                                                <li class="px-3 py-2 hover:bg-orange-50 hover:text-orange-600 cursor-pointer font-medium" data-value="6">6+ {{ __('otaqlı') }}
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <input type="hidden" name="roomCount" value="{{ request('roomCount') }}">
+                                    <!-- Room Count Select -->
+                                    <div class="relative bg-gray-50 hover:bg-white border border-gray-200 rounded-xl p-3 transition focus-within:border-[#f1913d] focus-within:bg-white shadow-2xs flex items-center gap-2.5">
+                                        <img src="/images/door.svg" alt="door" class="w-4 h-4 shrink-0">
+                                        <select name="roomCount" id="roomCountSelect" class="w-full bg-transparent text-gray-800 font-semibold text-xs sm:text-sm focus:outline-none cursor-pointer appearance-none pr-6">
+                                            <option value="">{{ __('Otaq sayı (Hamısı)') }}</option>
+                                            <option value="1" {{ request('roomCount') == '1' ? 'selected' : '' }}>1 {{ __('otaqlı') }}</option>
+                                            <option value="2" {{ request('roomCount') == '2' ? 'selected' : '' }}>2 {{ __('otaqlı') }}</option>
+                                            <option value="3" {{ request('roomCount') == '3' ? 'selected' : '' }}>3 {{ __('otaqlı') }}</option>
+                                            <option value="4" {{ request('roomCount') == '4' ? 'selected' : '' }}>4 {{ __('otaqlı') }}</option>
+                                            <option value="5" {{ request('roomCount') == '5' ? 'selected' : '' }}>5 {{ __('otaqlı') }}</option>
+                                            <option value="6" {{ request('roomCount') == '6' ? 'selected' : '' }}>6+ {{ __('otaqlı') }}</option>
+                                        </select>
+                                        <i class="bi bi-chevron-down text-orange-500 text-xs absolute right-3 pointer-events-none"></i>
                                     </div>
 
-                                    <div
-                                        class="relative p-3 bg-gray-50 rounded-xl border border-gray-200 cursor-pointer dropdown-select select-none transition hover:bg-gray-100/70"
-                                        data-filter="buildingType">
-                                        <div class="flex items-center justify-between">
-                                            <div class="flex items-center gap-2">
-                                                <img src="/images/layers.svg" alt="layers" class="w-4 h-4">
-                                                <span class="text-gray-700 font-medium" data-role="display-value"
-                                                      data-filter="buildingType">
-                                                @php
-                                                    $selectedType = request('buildingType');
-                                                    $selectedTypeLabel = __('Bütün Kateqoriyalar');
-                                                    if ($selectedType) {
-                                                        $matchingType = collect($buildingTypes)->firstWhere('value', $selectedType);
-                                                        if ($matchingType) $selectedTypeLabel = $matchingType->name['az'] ?? $matchingType->value;
-                                                    }
-                                                @endphp
-                                                    {{ $selectedTypeLabel }}
-                                            </span>
-                                            </div>
-                                            <i class="bi bi-chevron-down text-orange-500 transition-transform duration-200"></i>
-                                        </div>
-                                        <div
-                                            class="absolute dropdown-menu left-0 top-full mt-1.5 w-full bg-white shadow-xl border border-gray-200 rounded-xl z-50 hidden max-h-64 overflow-y-auto">
-                                            <ul class="divide-y divide-gray-100 py-1 text-xs sm:text-sm">
-                                                <li class="px-3 py-2 hover:bg-orange-50 hover:text-orange-600 cursor-pointer font-medium"
-                                                    data-value="">{{ __('Bütün Kateqoriyalar') }}</li>
-                                                @foreach($buildingTypes ?? [] as $buildingType)
-                                                    <li class="px-3 py-2 hover:bg-orange-50 hover:text-orange-600 cursor-pointer font-medium"
-                                                        data-value="{{ $buildingType->value }}">
-                                                        {{ $buildingType->name['az'] ?? $buildingType->value }}
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                        <input type="hidden" name="buildingType" value="{{ request('buildingType') }}">
+                                    <!-- Building Type Select -->
+                                    <div class="relative bg-gray-50 hover:bg-white border border-gray-200 rounded-xl p-3 transition focus-within:border-[#f1913d] focus-within:bg-white shadow-2xs flex items-center gap-2.5">
+                                        <img src="/images/layers.svg" alt="layers" class="w-4 h-4 shrink-0">
+                                        <select name="buildingType" id="buildingTypeSelect" class="w-full bg-transparent text-gray-800 font-semibold text-xs sm:text-sm focus:outline-none cursor-pointer appearance-none pr-6">
+                                            <option value="">{{ __('Bütün Kateqoriyalar') }}</option>
+                                            @foreach($buildingTypes ?? [] as $buildingType)
+                                                <option value="{{ $buildingType->value }}" {{ request('buildingType') == $buildingType->value ? 'selected' : '' }}>
+                                                    {{ $buildingType->name['az'] ?? $buildingType->value }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <i class="bi bi-chevron-down text-orange-500 text-xs absolute right-3 pointer-events-none"></i>
                                     </div>
 
-                                    <div
-                                        class="relative p-3 bg-gray-50 rounded-xl border border-gray-200 cursor-pointer w-full select-none transition hover:bg-gray-100/70"
-                                        id="openModal">
-                                        <div class="flex items-center justify-between">
-                                            <div class="flex items-center gap-2">
-                                                <img src="/images/city.svg" alt="city" class="w-4 h-4">
-                                                <span class="text-gray-700 font-medium" data-role="display-value"
-                                                      data-filter="city">
+                                    <!-- City Filter Trigger -->
+                                    <div class="relative bg-gray-50 hover:bg-white border border-gray-200 rounded-xl p-3 transition cursor-pointer select-none shadow-2xs flex items-center justify-between hover:border-orange-400"
+                                         id="openModal">
+                                        <div class="flex items-center gap-2.5 min-w-0">
+                                            <img src="/images/city.svg" alt="city" class="w-4 h-4 shrink-0">
+                                            <span class="text-gray-800 font-semibold text-xs sm:text-sm truncate" data-role="display-value" data-filter="city">
                                                 {{ $cities->firstWhere('id', request('cityId'))?->name['az'] ?? ($cities->firstWhere('id', request('cityId'))?->value ?? __('Bütün Şəhərlər')) }}
                                             </span>
-                                            </div>
-                                            <i class="bi bi-chevron-down text-orange-500 transition-transform duration-200"></i>
                                         </div>
+                                        <i class="bi bi-chevron-down text-orange-500 text-xs shrink-0"></i>
                                     </div>
 
                                 </div>

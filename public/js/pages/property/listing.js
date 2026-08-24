@@ -239,6 +239,14 @@
             });
         }
 
+        /* Main page select filters (roomCount, buildingType): apply on change */
+        const selects = form.querySelectorAll('select');
+        selects.forEach(function (sel) {
+            sel.addEventListener('change', function () {
+                fetchListings();
+            });
+        });
+
         /* Main page text filters (price/area): apply on change (blur/commit) — NOT inside modals */
         textInputs.forEach(function (input) {
             if (input.closest('#cityFilterModal, #moreFiltersModal')) return;
