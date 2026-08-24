@@ -1,4 +1,4 @@
-<header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+<header class="hidden md:block bg-white border-b border-gray-200 sticky top-0 z-30">
   <div class="ml-4 mx-auto h-17.5 flex items-center justify-between gap-4">
 
     <!-- Logo -->
@@ -188,103 +188,202 @@
         @endauth
       </div>
 
-      <!-- Mobile Hamburger Button -->
-      <button type="button" id="mobileNavToggle" class="md:hidden p-2 text-gray-700 hover:text-[#f1913d] focus:outline-none cursor-pointer">
-        <i class="bi bi-list text-2xl" id="mobileNavIcon"></i>
-      </button>
-
     </div>
   </div>
+</header>
 
-  <!-- Mobile Dropdown Menu -->
-  <div id="mobileNavMenu" class="hidden md:hidden border-t border-gray-100 bg-white px-4 py-4 space-y-4 shadow-lg">
-    <div class="flex flex-col space-y-1 text-sm font-medium">
-      <a href="/" class="px-3 py-2 rounded-xl {{ request()->is('/') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
-        {{ __('Home') }}
+<!-- Mobile Instagram-style Bottom Navigation Bar -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200/90 shadow-[0_-4px_25px_rgba(0,0,0,0.08)] px-2 py-2 flex items-center justify-around select-none">
+  
+  <!-- 1. ƏMLAK -->
+  <a href="/listing" class="flex flex-col items-center justify-center flex-1 py-1 text-center transition {{ request()->is('listing*') || request()->is('/') ? 'text-gray-900 font-extrabold' : 'text-gray-400 hover:text-gray-700' }}">
+    <i class="fa-solid fa-house text-lg mb-0.5"></i>
+    <span class="text-[10px] font-bold uppercase tracking-tight">{{ __('ƏMLAK') }}</span>
+  </a>
+
+  <!-- 2. SEÇİLMİŞLƏR -->
+  <a href="/favorites" class="flex flex-col items-center justify-center flex-1 py-1 text-center relative transition {{ request()->is('favorites*') ? 'text-gray-900 font-extrabold' : 'text-gray-400 hover:text-gray-700' }}">
+    <div class="relative">
+      <i class="fa-solid fa-heart text-lg mb-0.5"></i>
+      <span id="mobile-fav-count" class="hidden absolute -top-1 -right-2 bg-orange-500 text-white text-[8px] min-w-[14px] h-3.5 px-0.5 flex items-center justify-center rounded-full font-bold shadow-xs">0</span>
+    </div>
+    <span class="text-[10px] font-bold uppercase tracking-tight">{{ __('SEÇİLMİŞLƏR') }}</span>
+  </a>
+
+  <!-- 3. YENİ ELAN (Center Elevated Green Circular Button) -->
+  <div class="flex flex-col items-center justify-center flex-1 relative -top-3.5">
+    <a href="/add-property" class="w-13 h-13 bg-[#22c55e] hover:bg-[#16a34a] text-white rounded-full shadow-lg flex items-center justify-center border-4 border-white transition-all transform hover:scale-105 active:scale-95" title="{{ __('Yeni Elan') }}">
+      <i class="fa-solid fa-plus text-2xl font-black"></i>
+    </a>
+    <span class="text-[10px] font-bold uppercase tracking-tight text-gray-500 mt-0.5">{{ __('YENİ ELAN') }}</span>
+  </div>
+
+  <!-- 4. KABİNET -->
+  @auth
+    <a href="/profile" class="flex flex-col items-center justify-center flex-1 py-1 text-center transition {{ request()->is('profile*') || request()->is('dashboard*') || request()->is('my-*') ? 'text-gray-900 font-extrabold' : 'text-gray-400 hover:text-gray-700' }}">
+      <i class="fa-solid fa-circle-user text-lg mb-0.5"></i>
+      <span class="text-[10px] font-bold uppercase tracking-tight truncate max-w-[65px]">{{ __('KABİNET') }}</span>
+    </a>
+  @else
+    <a href="/login" class="flex flex-col items-center justify-center flex-1 py-1 text-center transition {{ request()->is('login*') || request()->is('register*') ? 'text-gray-900 font-extrabold' : 'text-gray-400 hover:text-gray-700' }}">
+      <i class="fa-solid fa-circle-user text-lg mb-0.5"></i>
+      <span class="text-[10px] font-bold uppercase tracking-tight">{{ __('KABİNET') }}</span>
+    </a>
+  @endauth
+
+  <!-- 5. DAHA ÇOX -->
+  <button type="button" id="mobileMoreDrawerBtn" class="flex flex-col items-center justify-center flex-1 py-1 text-center text-gray-400 hover:text-gray-700 transition cursor-pointer">
+    <i class="fa-solid fa-bars text-lg mb-0.5"></i>
+    <span class="text-[10px] font-bold uppercase tracking-tight">{{ __('DAHA ÇOX') }}</span>
+  </button>
+
+</nav>
+
+<!-- Mobile "Daha Çox" Drawer / Sheet -->
+<div id="mobileMoreDrawer" class="hidden md:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex flex-col justify-end transition-opacity duration-300">
+  <div class="flex-1" id="mobileMoreDrawerBackdrop"></div>
+
+  <div class="bg-white rounded-t-3xl max-h-[85vh] overflow-y-auto shadow-2xl p-5 space-y-4 border-t border-gray-100 transform transition-transform duration-300">
+    
+    <!-- Drawer Header -->
+    <div class="flex items-center justify-between pb-3 border-b border-gray-100">
+      <div class="flex items-center space-x-2">
+        <img class="h-8 w-auto object-contain" src="/images/metrajlogo1.png" alt="Metraj.az" />
+        <span class="font-extrabold text-base text-gray-800">Metraj.az</span>
+      </div>
+      <button type="button" id="closeMobileMoreDrawer" class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 flex items-center justify-center transition">
+        <i class="bi bi-x-lg text-sm"></i>
+      </button>
+    </div>
+
+    <!-- Quick Action Buttons -->
+    <div class="grid grid-cols-2 gap-2.5">
+      <a href="/add-property" class="flex items-center justify-center gap-2 py-3 px-4 bg-[#22c55e] text-white rounded-2xl font-bold text-xs shadow-sm">
+        <i class="fa-solid fa-plus text-sm"></i>
+        <span>{{ __('Elan yerləşdir') }}</span>
       </a>
-      <a href="/listing?deal_type=sale" class="px-3 py-2 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'sale' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
-        {{ __('Alqı-satqı') }}
-      </a>
-      <a href="/listing?deal_type=rent_monthly" class="px-3 py-2 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
-        {{ __('Kirayə') }}
-      </a>
-      <a href="/listing?deal_type=rent_daily" class="px-3 py-2 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'rent_daily' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
-        {{ __('Günlük') }}
-      </a>
-      <a href="/axtariram" class="px-3 py-2 rounded-xl {{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
-        {{ __('Axtarıram') }}
-      </a>
-      <a href="/agencies" class="px-3 py-2 rounded-xl {{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
-        {{ __('Agencies') }}
-      </a>
-      <a href="/contact" class="px-3 py-2 rounded-xl {{ request()->is('contact*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
-        {{ __('Contact') }}
+      <a href="/axtariram/elan-ver" class="flex items-center justify-center gap-2 py-3 px-4 bg-orange-500 text-white rounded-2xl font-bold text-xs shadow-sm">
+        <i class="fa-solid fa-bullhorn text-xs"></i>
+        <span>{{ __('Tələb yerləşdir') }}</span>
       </a>
     </div>
 
-    <!-- Mobile Language Selector -->
-    <div class="pt-2 border-t border-gray-100">
+    <!-- Navigation Links List -->
+    <div class="space-y-1 py-1">
+      <a href="/" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('/') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+        <span class="flex items-center gap-3"><i class="fa-solid fa-house text-gray-400 w-5 text-center"></i> {{ __('Ana Səhifə') }}</span>
+        <i class="bi bi-chevron-right text-xs text-gray-300"></i>
+      </a>
+      <a href="/listing?deal_type=sale" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'sale' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+        <span class="flex items-center gap-3"><i class="fa-solid fa-key text-gray-400 w-5 text-center"></i> {{ __('Alqı-satqı') }}</span>
+        <i class="bi bi-chevron-right text-xs text-gray-300"></i>
+      </a>
+      <a href="/listing?deal_type=rent_monthly" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+        <span class="flex items-center gap-3"><i class="fa-solid fa-calendar-days text-gray-400 w-5 text-center"></i> {{ __('Kirayə') }}</span>
+        <i class="bi bi-chevron-right text-xs text-gray-300"></i>
+      </a>
+      <a href="/listing?deal_type=rent_daily" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'rent_daily' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+        <span class="flex items-center gap-3"><i class="fa-solid fa-clock text-gray-400 w-5 text-center"></i> {{ __('Günlük') }}</span>
+        <i class="bi bi-chevron-right text-xs text-gray-300"></i>
+      </a>
+      <a href="/axtariram" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+        <span class="flex items-center gap-3"><i class="fa-solid fa-magnifying-glass text-gray-400 w-5 text-center"></i> {{ __('Axtarıram') }}</span>
+        <i class="bi bi-chevron-right text-xs text-gray-300"></i>
+      </a>
+      <a href="/agencies" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+        <span class="flex items-center gap-3"><i class="fa-solid fa-building text-gray-400 w-5 text-center"></i> {{ __('Agencies') }}</span>
+        <i class="bi bi-chevron-right text-xs text-gray-300"></i>
+      </a>
+      <a href="/contact" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('contact*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+        <span class="flex items-center gap-3"><i class="fa-solid fa-envelope text-gray-400 w-5 text-center"></i> {{ __('Contact') }}</span>
+        <i class="bi bi-chevron-right text-xs text-gray-300"></i>
+      </a>
+      <a href="/compares" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('compares*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+        <span class="flex items-center gap-3"><i class="bi bi-arrow-left-right text-gray-400 w-5 text-center"></i> {{ __('Compare') }}</span>
+        <i class="bi bi-chevron-right text-xs text-gray-300"></i>
+      </a>
+    </div>
+
+    <!-- Language Selector with Flags -->
+    <div class="pt-3 border-t border-gray-100">
       <div class="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-2">{{ __('Dil seçimi') }}</div>
       <div class="grid grid-cols-3 gap-2">
         @foreach($languages as $lKey => $lData)
           <a href="/lang/{{ $lKey }}"
-             class="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-bold border {{ $currentLocale === $lKey ? 'border-orange-500 bg-orange-50 text-orange-600' : 'border-gray-200 text-gray-700 hover:bg-gray-50' }}">
-            <span>{{ $lData['flag'] }}</span>
+             class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-2xl text-xs font-bold border {{ $currentLocale === $lKey ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-2xs' : 'border-gray-200 text-gray-700 hover:bg-gray-50' }}">
+            <span class="text-sm">{{ $lData['flag'] }}</span>
             <span>{{ $lData['label'] }}</span>
           </a>
         @endforeach
       </div>
     </div>
 
-    <!-- Mobile Currency Selector -->
-    <div class="pt-2 border-t border-gray-100">
+    <!-- Currency Selector -->
+    <div class="pt-3 border-t border-gray-100">
       <div class="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-2">{{ __('Valyuta') }}</div>
       <div class="grid grid-cols-4 gap-1.5">
         @foreach($currencySymbols as $cCode => $cSym)
           <a href="/currency/{{ $cCode }}"
-             class="flex items-center justify-center py-1.5 px-2 rounded-lg text-xs font-bold border {{ $currentCurrency === $cCode ? 'border-orange-500 bg-orange-50 text-orange-600' : 'border-gray-200 text-gray-700 hover:bg-gray-50' }}">
-            <span>{{ $cCode }}</span>
+             class="flex items-center justify-center py-2 px-2 rounded-xl text-xs font-bold border {{ $currentCurrency === $cCode ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-2xs' : 'border-gray-200 text-gray-700 hover:bg-gray-50' }}">
+            <span>{{ $cSym }} {{ $cCode }}</span>
           </a>
         @endforeach
       </div>
     </div>
 
-    <div class="pt-3 border-t border-gray-100 flex flex-col space-y-2">
-      <div class="grid grid-cols-2 gap-2">
-        <a href="/axtariram/elan-ver" class="w-full flex items-center justify-center py-2.5 border border-orange-500 text-orange-600 rounded-xl font-semibold text-xs text-center">
-          <i class="fa-solid fa-bullhorn mr-1.5 text-xs"></i> {{ __('Tələb yerləşdir') }}
+    <!-- Auth / Account Actions -->
+    <div class="pt-3 border-t border-gray-100">
+      @auth
+        <div class="space-y-1">
+          <a href="/dashboard" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
+            <i class="bi bi-grid mr-3 text-gray-400"></i> {{ __('Dashboard') }}
+          </a>
+          <a href="/profile" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
+            <i class="bi bi-person mr-3 text-gray-400"></i> {{ __('My profile') }}
+          </a>
+          <a href="/my-properties" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
+            <i class="bi bi-folder-check mr-3 text-gray-400"></i> {{ __('My properties') }}
+          </a>
+          @if(auth()->user()->is_admin ?? false)
+            <a href="/admin" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-semibold text-indigo-600 hover:bg-indigo-50">
+              <i class="bi bi-shield-lock mr-3"></i> Admin Panel
+            </a>
+          @endif
+          <form method="POST" action="{{ route('logout') }}" class="m-0 js-logout pt-1">
+            @csrf
+            <button type="submit" class="w-full flex items-center px-3.5 py-2.5 text-sm text-red-600 hover:bg-red-50 text-left font-medium rounded-xl">
+              <i class="bi bi-box-arrow-right mr-3"></i> {{ __('Logout') }}
+            </button>
+          </form>
+        </div>
+      @else
+        <a href="/login" class="w-full flex items-center justify-center gap-2 py-3 px-4 bg-gray-900 text-white rounded-2xl font-bold text-xs shadow-sm">
+          <i class="bi bi-person text-sm"></i>
+          <span>{{ __('Login / Register') }}</span>
         </a>
-        <a href="/add-property" class="w-full flex items-center justify-center py-2.5 bg-[#f1913d] text-white rounded-xl font-semibold text-xs text-center">
-          <i class="bi bi-plus-circle mr-1.5"></i> {{ __('Elan yerləşdir') }}
-        </a>
-      </div>
-
-      <div class="flex items-center justify-between gap-2 pt-1">
-        <a href="/favorites" class="flex-1 flex items-center justify-center gap-1.5 py-2 border border-gray-200 rounded-xl text-gray-700 text-xs font-medium hover:border-orange-500 hover:text-orange-500 transition">
-          <i class="fa-regular fa-heart text-rose-500"></i>
-          <span>{{ __('Favorites') }}</span>
-        </a>
-        <a href="/compares" class="flex-1 flex items-center justify-center gap-1.5 py-2 border border-gray-200 rounded-xl text-gray-700 text-xs font-medium hover:border-orange-500 hover:text-orange-500 transition">
-          <i class="bi bi-arrow-left-right text-gray-700"></i>
-          <span>{{ __('Compare') }}</span>
-        </a>
-      </div>
+      @endauth
     </div>
+
   </div>
-</header>
+</div>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     // Nav count badges
     function updateNavBadges() {
       const favBadge = document.getElementById('favorites-count');
+      const mobileFavBadge = document.getElementById('mobile-bottom-fav-count');
       const compBadge = document.getElementById('compares-count');
-      if (favBadge) {
-        try {
-          const favs = JSON.parse(localStorage.getItem('favorites')) || [];
-          favBadge.textContent = favs.length;
-        } catch(e) {}
-      }
+
+      try {
+        const favs = JSON.parse(localStorage.getItem('favorites')) || [];
+        if (favBadge) favBadge.textContent = favs.length;
+        if (mobileFavBadge) {
+          mobileFavBadge.textContent = favs.length;
+          mobileFavBadge.classList.toggle('hidden', favs.length === 0);
+        }
+      } catch(e) {}
+
       if (compBadge) {
         try {
           const comps = JSON.parse(localStorage.getItem('compareList')) || [];
@@ -304,7 +403,6 @@
 
       btn.addEventListener('click', function (e) {
         e.stopPropagation();
-        // Close other dropdowns
         ['navCurrencyDropdown', 'navLangDropdown', 'navUserDropdown'].forEach(id => {
           if (id !== menuId) {
             const el = document.getElementById(id);
@@ -339,20 +437,21 @@
       });
     });
 
-    // Mobile navigation toggle
-    const mobileBtn = document.getElementById('mobileNavToggle');
-    const mobileMenu = document.getElementById('mobileNavMenu');
-    const mobileIcon = document.getElementById('mobileNavIcon');
+    // Mobile "Daha Çox" Drawer toggle
+    const mobileMoreBtn = document.getElementById('mobileMoreDrawerBtn');
+    const mobileDrawer = document.getElementById('mobileMoreDrawer');
+    const closeDrawerBtn = document.getElementById('closeMobileMoreDrawer');
+    const backdrop = document.getElementById('mobileMoreDrawerBackdrop');
 
-    if (mobileBtn && mobileMenu) {
-      mobileBtn.addEventListener('click', function () {
-        const isHidden = mobileMenu.classList.contains('hidden');
-        mobileMenu.classList.toggle('hidden', !isHidden);
-        if (mobileIcon) {
-          mobileIcon.classList.toggle('bi-list', !isHidden);
-          mobileIcon.classList.toggle('bi-x-lg', isHidden);
-        }
-      });
+    function openDrawer() {
+      if (mobileDrawer) mobileDrawer.classList.remove('hidden');
     }
+    function closeDrawer() {
+      if (mobileDrawer) mobileDrawer.classList.add('hidden');
+    }
+
+    if (mobileMoreBtn) mobileMoreBtn.addEventListener('click', openDrawer);
+    if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+    if (backdrop) backdrop.addEventListener('click', closeDrawer);
   });
 </script>

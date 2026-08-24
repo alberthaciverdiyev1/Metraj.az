@@ -61,7 +61,7 @@
 
     @stack('styles')
 </head>
-<body class="bg-[#F7F7F7]">
+<body class="bg-[#F7F7F7] pb-20 md:pb-0">
     @if(!isset($useLayout) || $useLayout !== false)
         @include('layouts.navbar')
 
