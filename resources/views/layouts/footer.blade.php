@@ -35,6 +35,7 @@
                 <ul class="space-y-2.5 text-sm">
                     <li><a href="/" class="hover:text-white hover:underline transition">{{ __('Ana Səhifə') }}</a></li>
                     <li><a href="/listing" class="hover:text-white hover:underline transition">{{ __('Elanlar') }}</a></li>
+                    <li><a href="/otaq-yoldasi" class="hover:text-white hover:underline transition">{{ __('Otaq Yoldaşı') }}</a></li>
                     <li><a href="/agencies" class="hover:text-white hover:underline transition">{{ __('Agentliklər') }}</a></li>
                     <li><a href="/blog" class="hover:text-white hover:underline transition">{{ __('Bloq') }}</a></li>
                     <li><a href="/about-us" class="hover:text-white hover:underline transition">{{ __('Haqqımızda') }}</a></li>

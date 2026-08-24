@@ -38,3 +38,10 @@ Route::get('/my-properties', [DashboardController::class, 'myProperties'])->name
 // Dil & Valyuta Dəyişimi
 Route::get('/lang/{locale}', [LocaleController::class, 'switchLanguage'])->name('lang.switch');
 Route::get('/currency/{code}', [LocaleController::class, 'switchCurrency'])->name('currency.switch');
+
+// Otaq / Ev Yoldaşı Elanları (Roommates)
+Route::get('/otaq-yoldasi', [\App\Modules\Roommate\Controllers\RoommateController::class, 'index'])->name('roommates.index');
+Route::get('/otaq-yoldasi/elan-ver', [\App\Modules\Roommate\Controllers\RoommateController::class, 'create'])->name('roommates.create');
+Route::post('/otaq-yoldasi/elan-ver', [\App\Modules\Roommate\Controllers\RoommateController::class, 'store'])->name('roommates.store');
+Route::get('/otaq-yoldasi/{slug}', [\App\Modules\Roommate\Controllers\RoommateController::class, 'show'])->name('roommates.show');
+
