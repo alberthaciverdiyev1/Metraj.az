@@ -65,7 +65,7 @@
     @if(!isset($useLayout) || $useLayout !== false)
         @include('layouts.navbar')
 
-        <div class="w-full relative z-0">
+        <div class="w-full">
             <div class="flex flex-nowrap w-full px-2 sm:px-3 xl:px-4 gap-3 xl:gap-5 justify-between items-start">
                 <!-- Sol Reklam -->
                 <x-ads.sidebar-ad position="left" />

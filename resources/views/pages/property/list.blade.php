@@ -4,7 +4,7 @@
     <div class="w-full pt-4">
         @include('components.scroll-top')
 
-        <section class="property-listing relative py-4">
+        <section class="property-listing py-4">
                     <div class="container mx-auto px-4 text-sm">
 
                         <form method="GET" action="/listing" id="filterForm" class="space-y-4">
