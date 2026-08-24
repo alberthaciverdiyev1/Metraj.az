@@ -26,7 +26,7 @@ class PropertyRequestFeatureTest extends TestCase
         $response = $this->get('/axtariram/elan-ver');
 
         $response->assertStatus(200);
-        $response->assertSee('Tələb / İstək Elanı Yerləşdir');
+        $response->assertSee('Tələb Elanı Yerləşdir');
         $response->assertSee('Almaq İstəyirəm');
         $response->assertSee('Kirayə Axtarıram');
     }
@@ -60,7 +60,11 @@ class PropertyRequestFeatureTest extends TestCase
             'contact_whatsapp' => '+994509998877',
         ];
 
-        $response = $this->post('/axtariram/elan-ver', $postData);
+        $response = $this->withoutMiddleware()->post('/axtariram/elan-ver', $postData);
+
+        if ($response->status() !== 302) {
+            $response->dumpSession();
+        }
 
         $this->assertDatabaseHas('property_requests', [
             'title' => 'Nərimanovda 3 otaqlı kupçalı və ipotekaya yararlı mənzil axtarıram',

@@ -11,29 +11,6 @@
         </div>
     @endif
 
-    <!-- Hero Header Banner -->
-    <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 mb-8 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <div class="space-y-2 max-w-2xl">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-orange-50 text-orange-600 border border-orange-200/60">
-                <i class="fa-solid fa-bullhorn"></i>
-                <span>{{ __('Tələb və İstək Elanları') }}</span>
-            </div>
-            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-900 tracking-tight">
-                {{ __('Nə axtardığınızı bildirin, uyğun təklifləri qəbul edin') }}
-            </h1>
-            <p class="text-xs sm:text-sm text-gray-500 leading-relaxed">
-                {{ __('Ev almaq, kirayələmək, günlük qalmaq və ya otaq yoldaşı tapmaq istəyirsinizsə elanınızı yerləşdirin. Əmlak sahibləri və agentlər sizinlə birbaşa əlaqə saxlasın.') }}
-            </p>
-        </div>
-
-        <div class="flex items-center gap-3 shrink-0 w-full sm:w-auto">
-            <a href="{{ route('requests.create') }}"
-               class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#f1913d] hover:bg-[#e07f2c] text-white font-bold text-sm rounded-2xl shadow-sm transition hover:shadow-md">
-                <i class="bi bi-plus-circle-fill text-base"></i>
-                <span>{{ __('Tələb Elanı Yerləşdir') }}</span>
-            </a>
-        </div>
-    </div>
 
     <!-- Filter Card with Dynamic JS Mode Switching -->
     <div class="bg-white border border-gray-200 rounded-3xl p-5 sm:p-6 mb-8 shadow-xs">
@@ -69,7 +46,7 @@
 
             <!-- Primary Inputs Row -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                
+
                 <!-- Search -->
                 <div>
                     <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Axtarış') }}</label>
@@ -136,7 +113,7 @@
             <!-- Dynamic Bottom Checkboxes & Options -->
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-3 border-t border-gray-100">
                 <div class="flex flex-wrap items-center gap-4 text-xs font-medium text-gray-700" id="dynamicCheckboxes">
-                    
+
                     <!-- Buy Options -->
                     <div id="buyCheckboxes" class="flex items-center gap-4">
                         <label class="inline-flex items-center gap-2 cursor-pointer select-none">
@@ -210,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('requestFilterForm');
     const typeInput = document.getElementById('filterTypeInput');
     const tabBtns = document.querySelectorAll('.cat-tab-btn');
-    
+
     const propTypeCol = document.getElementById('filterPropertyTypeCol');
     const roommateGenderCol = document.getElementById('filterRoommateGenderCol');
     const budgetLabel = document.getElementById('budgetLabel');
@@ -223,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
         tabBtns.forEach(btn => {
             const btnType = btn.getAttribute('data-type');
             btn.className = 'cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl whitespace-nowrap transition cursor-pointer text-gray-600 hover:text-gray-900';
-            
+
             if (btnType === type) {
                 if (type === 'buy') btn.className = 'cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl whitespace-nowrap transition cursor-pointer bg-emerald-600 text-white shadow-xs';
                 else if (type === 'rent') btn.className = 'cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl whitespace-nowrap transition cursor-pointer bg-blue-600 text-white shadow-xs';
