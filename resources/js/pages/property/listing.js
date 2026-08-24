@@ -129,13 +129,13 @@
 
         const params = buildFilterParams();
         const seoPath = buildSeoPath(params);
-        params.set('json', '1');
 
         /* Şəhər və deal tipi artıq path-də olduğu üçün query-dən çıxarılır */
         params.delete('adType');
         params.delete('cityId');
 
-        const url = seoPath + '?' + params.toString();
+        const query = params.toString();
+        const url = query ? seoPath + '?' + query : seoPath;
 
         window.history.pushState({}, '', url);
 
@@ -934,13 +934,13 @@
 
             const url = new URL(href, window.location.origin);
             params.set('page', url.searchParams.get('page') || '1');
-            params.set('json', '1');
 
             const seoPath = buildSeoPath(params);
             params.delete('adType');
             params.delete('cityId');
 
-            const fetchUrl = seoPath + '?' + params.toString();
+            const query = params.toString();
+            const fetchUrl = query ? seoPath + '?' + query : seoPath;
             window.history.pushState({}, '', fetchUrl);
 
             if (isLoading) return;
