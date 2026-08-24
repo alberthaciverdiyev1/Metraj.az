@@ -11,14 +11,20 @@
     </a>
 
     <!-- Desktop Navigation Links (Always visible on md and up) -->
-    <nav class="hidden md:flex items-center space-x-6 lg:space-x-8 text-[15px] font-medium">
-      <a href="/listing" class="{{ request()->is('listing*') || request()->is('properties*') ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
-        {{ __('Elanlar') }}
+    <nav class="hidden md:flex items-center space-x-5 lg:space-x-7 text-[15px] font-medium">
+      <a href="/listing?deal_type=sale" class="{{ request()->is('listing*') && request('deal_type') === 'sale' ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+        {{ __('Alqı-satqı') }}
       </a>
-      <a href="/agencies" class="{{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+      <a href="/listing?deal_type=rent_monthly" class="{{ request()->is('listing*') && request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+        {{ __('Kirayə') }}
+      </a>
+      <a href="/listing?deal_type=rent_daily" class="{{ request()->is('listing*') && request('deal_type') === 'rent_daily' ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+        {{ __('Günlük') }}
+      </a>
+      <a href="/agencies" class="{{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
         {{ __('Agencies') }}
       </a>
-      <a href="/contact" class="{{ request()->is('contact*') ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+      <a href="/contact" class="{{ request()->is('contact*') ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
         {{ __('Contact') }}
       </a>
     </nav>
@@ -142,12 +148,18 @@
 
   <!-- Mobile Dropdown Menu -->
   <div id="mobileNavMenu" class="hidden md:hidden border-t border-gray-100 bg-white px-4 py-4 space-y-3 shadow-md">
-    <div class="flex flex-col space-y-2 text-sm font-medium">
+    <div class="flex flex-col space-y-1.5 text-sm font-medium">
       <a href="/" class="px-3 py-2 rounded-md {{ request()->is('/') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
         {{ __('Home') }}
       </a>
-      <a href="/listing" class="px-3 py-2 rounded-md {{ request()->is('listing*') || request()->is('properties*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
-        {{ __('Elanlar') }}
+      <a href="/listing?deal_type=sale" class="px-3 py-2 rounded-md {{ request()->is('listing*') && request('deal_type') === 'sale' ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
+        {{ __('Alqı-satqı') }}
+      </a>
+      <a href="/listing?deal_type=rent_monthly" class="px-3 py-2 rounded-md {{ request()->is('listing*') && request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
+        {{ __('Kirayə') }}
+      </a>
+      <a href="/listing?deal_type=rent_daily" class="px-3 py-2 rounded-md {{ request()->is('listing*') && request('deal_type') === 'rent_daily' ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
+        {{ __('Günlük') }}
       </a>
       <a href="/agencies" class="px-3 py-2 rounded-md {{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
         {{ __('Agencies') }}
