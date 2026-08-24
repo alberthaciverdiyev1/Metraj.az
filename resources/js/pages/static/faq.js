@@ -42,9 +42,9 @@ document.addEventListener('DOMContentLoaded', function () {
     filterButtons.forEach(btn => {
         btn.addEventListener('click', function () {
             filterButtons.forEach(b => {
-                b.className = 'faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap bg-white text-gray-700 hover:bg-gray-50 border border-gray-200';
+                b.className = 'faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold transition duration-200 whitespace-nowrap bg-white text-gray-700 hover:bg-gray-50 border border-gray-200';
             });
-            this.className = 'faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap bg-orange-500 text-white shadow-sm';
+            this.className = 'faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold transition duration-200 whitespace-nowrap bg-orange-500 text-white shadow-sm';
 
             activeCategory = this.dataset.category || 'all';
             applyFilters();

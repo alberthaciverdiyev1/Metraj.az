@@ -219,7 +219,7 @@
                         const isActive = (i.getAttribute('data-val') || '') === val;
                         i.classList.toggle('text-[#f1913d]', isActive);
                         i.classList.toggle('bg-orange-50/60', isActive);
-                        i.classList.toggle('font-bold', isActive);
+                        i.classList.toggle('font-semibold', isActive);
                         i.classList.toggle('text-gray-700', !isActive);
                         const check = i.querySelector('.item-check');
                         if (check) check.classList.toggle('hidden', !isActive);
@@ -352,6 +352,37 @@
         });
     }
 
+    /* ===== RESET CUSTOM DROPDOWN (room count / building type) ===== */
+    function resetCustomDropdown(menuId, btnId, hiddenInputId) {
+        const menu = document.getElementById(menuId);
+        const btn = document.getElementById(btnId);
+        const hiddenInput = document.getElementById(hiddenInputId);
+
+        if (menu) {
+            let defaultLabel = '';
+            menu.querySelectorAll('[data-val]').forEach(function (item) {
+                const val = item.getAttribute('data-val') || '';
+                const isActive = val === '';
+                if (isActive) {
+                    const labelElem = item.querySelector('.item-label');
+                    defaultLabel = labelElem ? labelElem.textContent.trim() : item.textContent.trim();
+                }
+                item.classList.toggle('text-[#f1913d]', isActive);
+                item.classList.toggle('bg-orange-50/60', isActive);
+                item.classList.toggle('font-semibold', isActive);
+                item.classList.toggle('text-gray-700', !isActive);
+                const check = item.querySelector('.item-check');
+                if (check) check.classList.toggle('hidden', !isActive);
+            });
+
+            if (btn) {
+                const displaySpan = btn.querySelector('.btn-display-text');
+                if (displaySpan) displaySpan.textContent = defaultLabel;
+            }
+        }
+        if (hiddenInput) hiddenInput.value = '';
+    }
+
     /* ===== RESET FILTERS ===== */
     function initResetFilters() {
         const btn = document.getElementById('resetFiltersBtn');
@@ -371,6 +402,11 @@
                 input.value = '';
             });
 
+            /* Reset ALL checkboxes — including district (rayon), advertiserType and filter_options chips */
+            form.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+                cb.checked = false;
+            });
+
             /* Reset chip radio groups — check the empty-value option (Hamısı / Fərqi yoxdur) */
             const radioGroupNames = ['buildingType', 'roomCount', 'adType', 'propertyCondition', 'advertiserType', 'rentType'];
             radioGroupNames.forEach(function (name) {
@@ -380,20 +416,22 @@
                 });
             });
 
-            /* Reset checkbox chips in modal */
-            const chipCheckboxes = ['hasDeed', 'inCredit', 'hasVideo'];
-            chipCheckboxes.forEach(function (name) {
-                const cb = (modal || form).querySelector('input[type="checkbox"][name="' + name + '"]');
-                if (cb) cb.checked = false;
+            /* Reset dynamic filter selects (filter_options[]) to "Fərqi yoxdur" */
+            form.querySelectorAll('select[name^="filter_options"]').forEach(function (sel) {
+                sel.value = '';
             });
+
+            /* Reset main page custom dropdowns (room count / building type) — label + active state */
+            resetCustomDropdown('filterRoomDropdown', 'filterRoomBtn', 'roomCountInput');
+            resetCustomDropdown('filterBuildingDropdown', 'filterBuildingBtn', 'buildingTypeInput');
 
             /* Reset display values on main page */
             form.querySelectorAll('[data-role="display-value"]').forEach(function (el) {
                 let filter = el.getAttribute('data-filter');
                 const defaults = {
-                    roomCount: 'Otaq sayi',
-                    buildingType: 'Butun Kateqoriyalar',
-                    city: 'Butun Seherler'
+                    roomCount: 'Otaq sayı (Hamısı)',
+                    buildingType: 'Bütün Kateqoriyalar',
+                    city: 'Bütün Şəhərlər'
                 };
                 if (defaults[filter]) el.textContent = defaults[filter];
             });
@@ -405,6 +443,10 @@
                 if (adTypeInput) adTypeInput.value = 'all';
                 allBtn.click();
             }
+
+            /* Reset city filter modal (city, districts/rayon list, search, apply count, placeholder) */
+            const cityResetBtn = document.getElementById('resetCityFilters');
+            if (cityResetBtn) cityResetBtn.click();
 
             /* Hide rent type wrapper */
             const rentWrapper = document.getElementById('rentTypeWrapper');
@@ -659,7 +701,7 @@
                 b.classList.toggle('border-orange-500', match);
                 b.classList.toggle('bg-orange-50/50', match);
                 b.classList.toggle('text-orange-600', match);
-                b.classList.toggle('font-bold', match);
+                b.classList.toggle('font-semibold', match);
                 b.classList.toggle('border-gray-200/60', !match);
                 b.classList.toggle('bg-white', !match);
                 b.classList.toggle('text-gray-700', !match);

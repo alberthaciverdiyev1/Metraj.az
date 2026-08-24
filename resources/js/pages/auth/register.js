@@ -27,9 +27,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Update Tab UI
             roleTabs.forEach(b => {
-                b.className = 'role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-extrabold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 text-gray-600 hover:text-gray-900';
+                b.className = 'role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-bold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 text-gray-600 hover:text-gray-900';
             });
-            this.className = 'role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-extrabold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 bg-white text-orange-600 shadow-sm';
+            this.className = 'role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-bold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 bg-white text-orange-600 shadow-sm';
 
             // Show/Hide Role-specific Fields
             if (role === 'user') {

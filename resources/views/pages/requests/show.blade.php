@@ -31,7 +31,7 @@
                      alt="{{ $propertyRequest->title }}"
                      class="w-full h-full object-cover transition duration-300 group-hover:scale-[1.01]">
                 
-                <span class="absolute bottom-4 left-4 bg-black/60 text-white text-xs px-3.5 py-2 rounded-xl font-bold backdrop-blur-md flex items-center gap-1.5 shadow select-none">
+                <span class="absolute bottom-4 left-4 bg-black/60 text-white text-xs px-3.5 py-2 rounded-xl font-semibold backdrop-blur-md flex items-center gap-1.5 shadow select-none">
                     <i class="bi bi-camera"></i>
                     <span>{{ $totalImages }} {{ __('şəkil') }}</span>
                     <span class="text-white/60 ml-1">({{ __('Böyütmək üçün klikləyin') }})</span>
@@ -85,7 +85,7 @@
                 <div class="flex flex-wrap items-center gap-2 mb-3">
                     
                     <!-- Request Type Badge -->
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold {{ $propertyRequest->request_type->badgeClass() }} shadow-xs">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold {{ $propertyRequest->request_type->badgeClass() }} shadow-xs">
                         @if($propertyRequest->request_type->value === 'buy')
                             <i class="fa-solid fa-cart-shopping text-[10px]"></i>
                         @elseif($propertyRequest->request_type->value === 'rent_monthly')
@@ -113,7 +113,7 @@
                     </span>
                 </div>
 
-                <h1 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-900 tracking-tight mb-3 leading-snug">
+                <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 tracking-tight mb-3 leading-snug">
                     {{ $propertyRequest->title }}
                 </h1>
 
@@ -136,14 +136,14 @@
 
             <!-- Key Parameters Grid -->
             <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs">
-                <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-4">{{ __('Tələbin Təfərrüatları') }}</h2>
+                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-4">{{ __('Tələbin Təfərrüatları') }}</h2>
                 
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     
                     <!-- Budget Box -->
                     <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
                         <span class="text-xs text-gray-500 font-medium">{{ __('Büdcə') }}</span>
-                        <div class="text-lg font-extrabold text-[#f1913d] mt-1">
+                        <div class="text-lg font-bold text-[#f1913d] mt-1">
                             {{ $propertyRequest->formatted_budget }}
                         </div>
                         <span class="text-[11px] font-semibold {{ $propertyRequest->bills_included ? 'text-emerald-600' : 'text-gray-400' }} mt-0.5">
@@ -154,7 +154,7 @@
                     @if($propertyRequest->property_type)
                         <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
                             <span class="text-xs text-gray-500 font-medium">{{ __('Əmlak Növü') }}</span>
-                            <div class="text-base font-bold text-gray-900 mt-1">
+                            <div class="text-base font-semibold text-gray-900 mt-1">
                                 {{ $propertyRequest->property_type }}
                             </div>
                             <span class="text-[11px] text-gray-400 mt-0.5">{{ __('Axtarılan kateqoriya') }}</span>
@@ -164,7 +164,7 @@
                     @if($propertyRequest->rooms)
                         <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
                             <span class="text-xs text-gray-500 font-medium">{{ __('Otaq Sayı') }}</span>
-                            <div class="text-base font-bold text-gray-900 mt-1">
+                            <div class="text-base font-semibold text-gray-900 mt-1">
                                 {{ $propertyRequest->rooms }} {{ __('otaqlı') }}
                             </div>
                             <span class="text-[11px] text-gray-400 mt-0.5">{{ __('Planlaşdırma') }}</span>
@@ -174,7 +174,7 @@
                     @if($propertyRequest->has_deed !== null)
                         <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
                             <span class="text-xs text-gray-500 font-medium">{{ __('Sənəd Tələbi') }}</span>
-                            <div class="text-base font-bold {{ $propertyRequest->has_deed ? 'text-emerald-600' : 'text-gray-800' }} mt-1">
+                            <div class="text-base font-semibold {{ $propertyRequest->has_deed ? 'text-emerald-600' : 'text-gray-800' }} mt-1">
                                 {{ $propertyRequest->has_deed ? __('Kupçalı (Çıxarış)') : __('Fərqi yoxdur') }}
                             </div>
                             <span class="text-[11px] text-gray-400 mt-0.5">{{ __('Mülkiyyət sənədi') }}</span>
@@ -184,7 +184,7 @@
                     @if($propertyRequest->mortgage_eligible !== null)
                         <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
                             <span class="text-xs text-gray-500 font-medium">{{ __('İpoteka') }}</span>
-                            <div class="text-base font-bold {{ $propertyRequest->mortgage_eligible ? 'text-blue-600' : 'text-gray-800' }} mt-1">
+                            <div class="text-base font-semibold {{ $propertyRequest->mortgage_eligible ? 'text-blue-600' : 'text-gray-800' }} mt-1">
                                 {{ $propertyRequest->mortgage_eligible ? __('İpotekaya yararlı') : __('Fərqi yoxdur') }}
                             </div>
                             <span class="text-[11px] text-gray-400 mt-0.5">{{ __('Bank ipotekası') }}</span>
@@ -194,7 +194,7 @@
                     @if($propertyRequest->occupancy_type)
                         <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
                             <span class="text-xs text-gray-500 font-medium">{{ __('Kimlər qalacaq') }}</span>
-                            <div class="text-base font-bold text-gray-900 mt-1">
+                            <div class="text-base font-semibold text-gray-900 mt-1">
                                 {{ $propertyRequest->occupancy_type }}
                             </div>
                             <span class="text-[11px] text-gray-400 mt-0.5">{{ __('Sakin növü') }}</span>
@@ -204,7 +204,7 @@
                     @if($propertyRequest->gender_preference)
                         <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
                             <span class="text-xs text-gray-500 font-medium">{{ __('Cinsiyyət Tələbi') }}</span>
-                            <div class="text-base font-bold text-gray-900 mt-1">
+                            <div class="text-base font-semibold text-gray-900 mt-1">
                                 {{ $propertyRequest->gender_preference === 'female' ? __('Yalnız Xanım') : ($propertyRequest->gender_preference === 'male' ? __('Yalnız Bəy') : __('Fərqi yoxdur')) }}
                             </div>
                             <span class="text-[11px] text-gray-400 mt-0.5">{{ __('Otaq yoldaşı üçün') }}</span>
@@ -216,7 +216,7 @@
 
             <!-- Description -->
             <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs">
-                <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-3">{{ __('Ətraflı Təsvir və Şərtlər') }}</h2>
+                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-3">{{ __('Ətraflı Təsvir və Şərtlər') }}</h2>
                 <div class="text-xs sm:text-sm text-gray-700 leading-relaxed prose prose-sm max-w-none">
                     {!! $propertyRequest->description !!}
                 </div>
@@ -233,18 +233,18 @@
                 <!-- Budget Header -->
                 <div class="pb-5 border-b border-gray-100">
                     <span class="text-xs text-gray-500 font-medium">{{ __('Axtarılan Büdcə') }}</span>
-                    <div class="text-2xl sm:text-3xl font-extrabold text-[#f1913d] mt-0.5">
+                    <div class="text-2xl sm:text-3xl font-bold text-[#f1913d] mt-0.5">
                         {{ $propertyRequest->formatted_budget }}
                     </div>
                 </div>
 
                 <!-- Contact Profile -->
                 <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-lg">
+                    <div class="w-12 h-12 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center font-semibold text-lg">
                         {{ mb_strtoupper(mb_substr($propertyRequest->contact_name, 0, 1)) }}
                     </div>
                     <div>
-                        <div class="font-bold text-sm sm:text-base text-gray-900">{{ $propertyRequest->contact_name }}</div>
+                        <div class="font-semibold text-sm sm:text-base text-gray-900">{{ $propertyRequest->contact_name }}</div>
                         <div class="text-xs text-gray-400">{{ __('Müştəri / Axtaran şəxs') }}</div>
                     </div>
                 </div>
@@ -258,14 +258,14 @@
                         @endphp
                         <a href="https://wa.me/{{ $wa }}?text={{ urlencode('Salam, Metraj.az saytında yerləşdirdiyiniz tələb elanınızla bağlı sizə uyğun təklifim var: ' . $propertyRequest->title) }}"
                            target="_blank" rel="noopener noreferrer"
-                           class="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm rounded-2xl shadow-xs transition hover:shadow-md">
+                           class="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm rounded-2xl shadow-xs transition hover:shadow-md">
                             <i class="bi bi-whatsapp text-lg"></i>
                             <span>{{ __('WhatsApp ilə Təklif Göndər') }}</span>
                         </a>
                     @endif
 
                     <a href="tel:{{ $propertyRequest->contact_phone }}"
-                       class="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-gray-900 hover:bg-[#f1913d] text-white font-bold text-sm rounded-2xl shadow-xs transition hover:shadow-md">
+                       class="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-gray-900 hover:bg-[#f1913d] text-white font-semibold text-sm rounded-2xl shadow-xs transition hover:shadow-md">
                         <i class="bi bi-telephone-fill text-base"></i>
                         <span>{{ $propertyRequest->contact_phone }}</span>
                     </a>
@@ -274,7 +274,7 @@
 
                 <!-- Safety Note -->
                 <div class="bg-gray-50 border border-gray-100 rounded-2xl p-4 text-[11px] text-gray-500 leading-relaxed space-y-1">
-                    <div class="font-bold text-gray-700 flex items-center gap-1.5">
+                    <div class="font-semibold text-gray-700 flex items-center gap-1.5">
                         <i class="bi bi-info-circle text-orange-500"></i>
                         <span>{{ __('Agentlər və Ev Sahibləri üçün') }}</span>
                     </div>
@@ -291,10 +291,10 @@
     @if($similarRequests->isNotEmpty())
         <div class="mt-12 pt-8 border-t border-gray-200">
             <div class="flex items-center justify-between mb-6">
-                <h2 class="text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight">
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">
                     {{ __('Oxşar Tələb Elanları') }}
                 </h2>
-                <a href="{{ route('requests.index') }}" class="text-xs sm:text-sm font-bold text-orange-600 hover:underline">
+                <a href="{{ route('requests.index') }}" class="text-xs sm:text-sm font-semibold text-orange-600 hover:underline">
                     {{ __('Hamısına Bax') }} <i class="bi bi-arrow-right ml-1"></i>
                 </a>
             </div>

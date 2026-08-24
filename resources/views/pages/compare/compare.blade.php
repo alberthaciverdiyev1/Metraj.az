@@ -15,13 +15,13 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-gray-200">
             <div class="flex items-center gap-3">
                 <div class="w-12 h-12 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-500 shadow-sm">
-                    <i class="bi bi-arrow-left-right text-2xl font-bold"></i>
+                    <i class="bi bi-arrow-left-right text-2xl font-semibold"></i>
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">{{ __('Mülkləri Müqayisə Et') }}</h1>
+                        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">{{ __('Mülkləri Müqayisə Et') }}</h1>
                         <span id="compareTotalBadge"
-                              class="{{ count($properties) > 0 ? '' : 'hidden' }} px-2.5 py-0.5 rounded-full text-xs font-bold bg-orange-100 text-orange-600">
+                              class="{{ count($properties) > 0 ? '' : 'hidden' }} px-2.5 py-0.5 rounded-full text-xs font-semibold bg-orange-100 text-orange-600">
                         {{ count($properties) }} / 4
                     </span>
                     </div>
@@ -50,12 +50,12 @@
             <div class="w-20 h-20 bg-orange-50 text-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl shadow-sm">
                 <i class="bi bi-arrow-left-right"></i>
             </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2">{{ __('Müqayisə siyahınız boşdur') }}</h3>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ __('Müqayisə siyahınız boşdur') }}</h3>
             <p class="text-gray-500 text-sm mb-6 max-w-sm mx-auto leading-relaxed">
                 {{ __('Elanların üzərindəki müqayisə ikonuna klikləyərək eyni anda 4 əmlaka qədər parametri yan-yana müqayisə edə bilərsiniz.') }}
             </p>
             <a href="{{ route('listing') }}"
-               class="inline-flex items-center px-6 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm rounded-xl shadow-md transition-all duration-200 hover:shadow-lg">
+               class="inline-flex items-center px-6 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm rounded-xl shadow-md transition-all duration-200 hover:shadow-lg">
                 <i class="bi bi-search mr-2"></i>
                 <span>{{ __('Elanları Kəşf Et') }}</span>
             </a>
@@ -68,7 +68,7 @@
                 <table class="w-full text-left border-collapse table-auto">
                     <thead>
                     <tr class="bg-gray-50/80 border-b border-gray-200">
-                        <th class="p-3 sm:p-4 w-32 sm:w-44 text-xs font-bold uppercase tracking-wider text-gray-400 align-top">
+                        <th class="p-3 sm:p-4 w-32 sm:w-44 text-xs font-semibold uppercase tracking-wider text-gray-400 align-top">
                             {{ __('Parametr') }}
                         </th>
                         @foreach($properties as $property)
@@ -84,13 +84,13 @@
                                          class="w-full h-full object-cover"/>
                                 </div>
                                 <a href="{{ route('properties.show', $property->slug) }}"
-                                   class="font-bold text-xs sm:text-sm text-gray-900 hover:text-orange-500 line-clamp-2 transition mb-1.5 block max-w-[240px] mx-auto min-h-[34px]">
+                                   class="font-semibold text-xs sm:text-sm text-gray-900 hover:text-orange-500 line-clamp-2 transition mb-1.5 block max-w-[240px] mx-auto min-h-[34px]">
                                     {{ $property->title }}
                                 </a>
                                 @php
                                     $displayPrice = app(\App\Modules\Property\Services\PropertyPricePresenter::class)->display($property);
                                 @endphp
-                                <div class="text-sm sm:text-base font-extrabold text-orange-600">
+                                <div class="text-sm sm:text-base font-bold text-orange-600">
                                     {{ $displayPrice['symbol'] }} {{ $displayPrice['formatted'] }}
                                 </div>
                             </th>
@@ -217,7 +217,7 @@
                             <td class="p-3 sm:p-4 text-center border-l border-gray-100"
                                 data-comp-col-id="{{ $property->id }}">
                                 <a href="{{ route('properties.show', $property->slug) }}"
-                                   class="inline-flex items-center justify-center max-w-[200px] w-full py-2 sm:py-2.5 px-3 sm:px-4 bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs rounded-xl shadow-sm transition">
+                                   class="inline-flex items-center justify-center max-w-[200px] w-full py-2 sm:py-2.5 px-3 sm:px-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-xs rounded-xl shadow-sm transition">
                                     {{ __('Elana Bax') }} <i class="bi bi-arrow-right ml-1.5"></i>
                                 </a>
                             </td>

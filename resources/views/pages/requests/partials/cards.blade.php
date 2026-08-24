@@ -46,7 +46,7 @@
             @else
                 <div class="flex flex-col items-center justify-center select-none py-6 px-4">
                     <img src="{{ asset('images/metrajlogo1.png') }}" alt="Metraj.az" class="h-10 sm:h-12 w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
-                    <span class="text-[11px] font-bold text-gray-500 tracking-wider mt-1.5">Metraj.az</span>
+                    <span class="text-[11px] font-semibold text-gray-500 tracking-wider mt-1.5">Metraj.az</span>
                 </div>
             @endif
 
@@ -70,7 +70,7 @@
                     {{ $req->property_type }}
                 </span>
             @elseif($req->gender_preference && $req->gender_preference !== 'any')
-                <span class="absolute top-2.5 right-2.5 bg-white/95 text-purple-700 text-xs font-bold px-2.5 py-1 rounded-full shadow-xs z-10">
+                <span class="absolute top-2.5 right-2.5 bg-white/95 text-purple-700 text-xs font-semibold px-2.5 py-1 rounded-full shadow-xs z-10">
                     {{ $req->gender_preference === 'female' ? __('Yalnız Xanım') : __('Yalnız Bəy') }}
                 </span>
             @endif
@@ -143,7 +143,7 @@
 
             <!-- Bottom Price & Details Indicator -->
             <div class="flex justify-between items-center mt-auto border-t border-[color:var(--border-color)] pt-3">
-                <span class="text-[color:var(--primary)] font-bold text-sm sm:text-base md:text-lg truncate">
+                <span class="text-[color:var(--primary)] font-semibold text-sm sm:text-base md:text-lg truncate">
                     {{ $req->formatted_budget }}
                 </span>
 

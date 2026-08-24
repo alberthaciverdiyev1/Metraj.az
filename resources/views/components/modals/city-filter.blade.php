@@ -4,7 +4,7 @@
     <div class="bg-white w-[95%] max-w-5xl h-[85vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-gray-100 transform scale-100 transition-all">
         <!-- Header -->
         <div class="flex items-center justify-between px-8 py-5 border-b border-gray-100 shrink-0 bg-gray-50/50">
-            <span class="font-bold text-xl text-gray-900 flex items-center gap-2">
+            <span class="font-semibold text-xl text-gray-900 flex items-center gap-2">
                 <i class="bi bi-geo-alt text-orange-500 text-lg"></i>
                 {{ __('Şəhər və Bölqə') }}
             </span>
@@ -17,7 +17,7 @@
         <div class="flex-1 flex overflow-hidden">
             <!-- Left Panel: City List -->
             <div class="w-1/3 border-r border-gray-100 overflow-y-auto p-6 bg-gray-50/50 space-y-4 shrink-0">
-                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">{{ __('Şəhərlər') }}</h4>
+                <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-widest">{{ __('Şəhərlər') }}</h4>
                 <div class="flex flex-col gap-2" id="cityButtonContainer">
                     @foreach($cities as $city)
                         <button type="button" data-city-id="{{ $city->id }}"
@@ -45,7 +45,7 @@
                     <div class="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mb-4">
                         <i class="bi bi-geo text-orange-500 text-2xl animate-bounce"></i>
                     </div>
-                    <h5 class="text-base font-bold text-gray-800 mb-1">{{ __('Bölqə axtarışı') }}</h5>
+                    <h5 class="text-base font-semibold text-gray-800 mb-1">{{ __('Bölqə axtarışı') }}</h5>
                     <p class="text-xs text-gray-500 max-w-xs">{{ __('Əlaqəli bölqələri görmək üçün soldan şəhər seçin.') }}</p>
                 </div>
 
@@ -67,11 +67,11 @@
         <!-- Footer -->
         <div class="flex items-center justify-between px-8 py-5 border-t border-gray-100 bg-gray-50 shrink-0">
             <button type="button" id="resetCityFilters"
-                    class="px-5 py-2.5 bg-white border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-100 hover:text-gray-900 font-bold text-xs transition duration-200 shadow-sm">
+                    class="px-5 py-2.5 bg-white border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-100 hover:text-gray-900 font-semibold text-xs transition duration-200 shadow-sm">
                 {{ __('Sıfırla') }}
             </button>
             <button type="button" id="applyCityFilters"
-                    class="px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-bold text-xs shadow-md transition duration-200 transform active:scale-95 flex items-center gap-2">
+                    class="px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-semibold text-xs shadow-md transition duration-200 transform active:scale-95 flex items-center gap-2">
                 <span id="applyCount" class="bg-white/20 px-2 py-0.5 rounded-md text-[10px]">0</span>
                 <span>{{ __('elan göstər') }}</span>
             </button>

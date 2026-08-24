@@ -15,7 +15,7 @@
     {{-- ==================== PAGE HEADER ==================== --}}
     <div class="py-4 sm:py-6">
         <div class="max-w-3xl mb-8 sm:mb-10">
-            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[color:var(--text-color)] leading-tight">
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-[color:var(--text-color)] leading-tight">
                 {{ __('Bizimlə Əlaqə') }}
             </h1>
             <p class="text-sm sm:text-base text-[color:var(--grey-text)] mt-2 leading-relaxed">
@@ -30,9 +30,9 @@
                 <div class="w-12 h-12 rounded-2xl bg-orange-50 text-[var(--primary)] flex items-center justify-center text-xl mb-4 shrink-0">
                     <i class="bi bi-telephone-fill"></i>
                 </div>
-                <h3 class="font-bold text-gray-900 text-base mb-1">{{ __('Telefon') }}</h3>
+                <h3 class="font-semibold text-gray-900 text-base mb-1">{{ __('Telefon') }}</h3>
                 <p class="text-xs text-gray-500 mb-3">{{ __('İş saatlarında zəng edin') }}</p>
-                <a href="tel:+994501234567" class="text-sm font-bold text-[var(--primary)] hover:underline mt-auto">
+                <a href="tel:+994501234567" class="text-sm font-semibold text-[var(--primary)] hover:underline mt-auto">
                     +994 50 123 45 67
                 </a>
                 <a href="tel:+994124000000" class="text-xs text-gray-600 hover:text-[var(--primary)] mt-1">
@@ -45,9 +45,9 @@
                 <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl mb-4 shrink-0">
                     <i class="bi bi-whatsapp"></i>
                 </div>
-                <h3 class="font-bold text-gray-900 text-base mb-1">{{ __('WhatsApp') }}</h3>
+                <h3 class="font-semibold text-gray-900 text-base mb-1">{{ __('WhatsApp') }}</h3>
                 <p class="text-xs text-gray-500 mb-3">{{ __('24/7 onlayn mesaj dəstəyi') }}</p>
-                <a href="https://wa.me/994501234567" target="_blank" class="text-sm font-bold text-emerald-600 hover:underline mt-auto flex items-center gap-1.5">
+                <a href="https://wa.me/994501234567" target="_blank" class="text-sm font-semibold text-emerald-600 hover:underline mt-auto flex items-center gap-1.5">
                     {{ __('Çata Başla') }} <i class="bi bi-arrow-right text-xs"></i>
                 </a>
             </div>
@@ -57,9 +57,9 @@
                 <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-4 shrink-0">
                     <i class="bi bi-envelope-fill"></i>
                 </div>
-                <h3 class="font-bold text-gray-900 text-base mb-1">{{ __('E-poçt') }}</h3>
+                <h3 class="font-semibold text-gray-900 text-base mb-1">{{ __('E-poçt') }}</h3>
                 <p class="text-xs text-gray-500 mb-3">{{ __('Rəsmi müraciətlər üçün') }}</p>
-                <a href="mailto:info@metraj.az" class="text-sm font-bold text-blue-600 hover:underline mt-auto break-all">
+                <a href="mailto:info@metraj.az" class="text-sm font-semibold text-blue-600 hover:underline mt-auto break-all">
                     info@metraj.az
                 </a>
             </div>
@@ -69,7 +69,7 @@
                 <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl mb-4 shrink-0">
                     <i class="bi bi-geo-alt-fill"></i>
                 </div>
-                <h3 class="font-bold text-gray-900 text-base mb-1">{{ __('Baş Ofis') }}</h3>
+                <h3 class="font-semibold text-gray-900 text-base mb-1">{{ __('Baş Ofis') }}</h3>
                 <p class="text-xs text-gray-500 mb-2">{{ __('Bakı & Şimali Kipr') }}</p>
                 <span class="text-xs text-gray-700 leading-relaxed mt-auto">
                     Bakı ş., Nəsimi r., Nizami küç. 45
@@ -82,10 +82,10 @@
             {{-- Left: Contact Form (7 cols) --}}
             <div class="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-gray-100/90 shadow-sm">
                 <div class="mb-6 sm:mb-8">
-                    <span class="bg-orange-50 text-[var(--primary)] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-2">
+                    <span class="bg-orange-50 text-[var(--primary)] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-2">
                         {{ __('Bizə Yazın') }}
                     </span>
-                    <h2 class="text-xl sm:text-2xl font-bold text-[color:var(--text-color)]">
+                    <h2 class="text-xl sm:text-2xl font-semibold text-[color:var(--text-color)]">
                         {{ __('Müraciət Formu') }}
                     </h2>
                     <p class="text-xs sm:text-sm text-[color:var(--grey-text)] mt-1">
@@ -99,7 +99,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {{-- Name --}}
                         <div>
-                            <label for="contact_name" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                            <label for="contact_name" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">
                                 {{ __('Adınız və Soyadınız') }} <span class="text-red-500">*</span>
                             </label>
                             <input type="text" id="contact_name" name="name" required placeholder="{{ __('Məs: Samir Əliyev') }}"
@@ -108,7 +108,7 @@
 
                         {{-- Phone --}}
                         <div>
-                            <label for="contact_phone" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                            <label for="contact_phone" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">
                                 {{ __('Əlaqə Nömrəniz') }} <span class="text-red-500">*</span>
                             </label>
                             <input type="tel" id="contact_phone" name="phone" required placeholder="{{ __('+994 50 000 00 00') }}"
@@ -119,7 +119,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {{-- Email --}}
                         <div>
-                            <label for="contact_email" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                            <label for="contact_email" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">
                                 {{ __('E-poçt Ünvanı') }}
                             </label>
                             <input type="email" id="contact_email" name="email" placeholder="{{ __('email@example.com') }}"
@@ -128,7 +128,7 @@
 
                         {{-- Service Interest --}}
                         <div>
-                            <label for="contact_subject" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                            <label for="contact_subject" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">
                                 {{ __('Mövzu / Xidmət növü') }}
                             </label>
                             <select id="contact_subject" name="interest"
@@ -145,7 +145,7 @@
 
                     {{-- Message --}}
                     <div>
-                        <label for="contact_message" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                        <label for="contact_message" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">
                             {{ __('Mesajınız') }}
                         </label>
                         <textarea id="contact_message" name="message" rows="4" placeholder="{{ __('Sualınızı və ya təklifinizi ətraflı qeyd edin...') }}"
@@ -154,7 +154,7 @@
 
                     <div class="pt-2 flex items-center justify-between flex-wrap gap-4">
                         <button type="submit" id="contactSubmitBtn"
-                                class="w-full sm:w-auto px-8 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm rounded-2xl shadow-md hover:shadow-lg transition duration-200 flex items-center justify-center gap-2">
+                                class="w-full sm:w-auto px-8 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm rounded-2xl shadow-md hover:shadow-lg transition duration-200 flex items-center justify-center gap-2">
                             <span>{{ __('Mesajı Göndər') }}</span>
                             <i class="bi bi-send-fill text-xs"></i>
                         </button>
@@ -179,7 +179,7 @@
                             <i class="bi bi-clock-history"></i>
                         </div>
                         <div>
-                            <h3 class="font-bold text-gray-900 text-sm sm:text-base">{{ __('İş Qrafiki') }}</h3>
+                            <h3 class="font-semibold text-gray-900 text-sm sm:text-base">{{ __('İş Qrafiki') }}</h3>
                             <p class="text-xs text-gray-400">{{ __('Müştəri xidmətləri') }}</p>
                         </div>
                     </div>
@@ -187,11 +187,11 @@
                     <div class="space-y-2.5 text-xs sm:text-sm text-gray-600">
                         <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
                             <span class="font-medium text-gray-800">{{ __('Bazar ertəsi – Cümə:') }}</span>
-                            <span class="font-bold text-gray-900">09:00 – 19:00</span>
+                            <span class="font-semibold text-gray-900">09:00 – 19:00</span>
                         </div>
                         <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
                             <span class="font-medium text-gray-800">{{ __('Şənbə:') }}</span>
-                            <span class="font-bold text-gray-900">10:00 – 18:00</span>
+                            <span class="font-semibold text-gray-900">10:00 – 18:00</span>
                         </div>
                         <div class="flex items-center justify-between py-1.5 text-gray-500">
                             <span class="font-medium">{{ __('Bazar:') }}</span>
@@ -205,7 +205,7 @@
         {{-- ==================== FAQ BANNER CTA ==================== --}}
         <div class="mt-10 sm:mt-12 bg-orange-500 rounded-3xl p-8 sm:p-10 text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="max-w-xl">
-                <span class="text-xs font-bold uppercase tracking-wider bg-white/20 px-3 py-1 rounded-full inline-block mb-2 backdrop-blur-sm">
+                <span class="text-xs font-semibold uppercase tracking-wider bg-white/20 px-3 py-1 rounded-full inline-block mb-2 backdrop-blur-sm">
                     {{ __('Kömək Lazımdır?') }}
                 </span>
                 <h3 class="text-xl sm:text-2xl font-black">{{ __('Tez-tez verilən suallarınız var?') }}</h3>
@@ -214,7 +214,7 @@
                 </p>
             </div>
             <a href="{{ route('faq') }}"
-               class="px-6 sm:px-8 py-3.5 bg-white text-orange-600 hover:bg-orange-50 font-extrabold text-sm rounded-2xl shadow-md transition duration-200 whitespace-nowrap flex items-center gap-2 shrink-0">
+               class="px-6 sm:px-8 py-3.5 bg-white text-orange-600 hover:bg-orange-50 font-bold text-sm rounded-2xl shadow-md transition duration-200 whitespace-nowrap flex items-center gap-2 shrink-0">
                 <span>{{ __('FAQ Səhifəsinə Keç') }}</span>
                 <i class="bi bi-arrow-right"></i>
             </a>

@@ -13,7 +13,7 @@
 
     @if ($errors->any())
         <div class="bg-rose-50 border border-rose-200 text-rose-700 px-5 py-4 rounded-2xl mb-8 text-xs sm:text-sm space-y-1">
-            <div class="font-bold flex items-center gap-2">
+            <div class="font-semibold flex items-center gap-2">
                 <i class="bi bi-exclamation-octagon-fill text-base text-rose-500"></i>
                 <span>{{ __('Zəhmət olmasa xətaları düzəldin:') }}</span>
             </div>
@@ -31,8 +31,8 @@
 
         <!-- SECTION 1: ELAN NÖVÜ -->
         <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs">
-            <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
-                <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-extrabold flex items-center justify-center">1</span>
+            <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-1 flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-bold flex items-center justify-center">1</span>
                 <span>{{ __('Elanın Məqsədi') }}</span>
             </h2>
             <p class="text-xs text-gray-500 mb-5 ml-8">{{ __('Elanınız hansı məqsədlə verilir?') }}</p>
@@ -52,7 +52,7 @@
                             </div>
                         </div>
                         <div>
-                            <h3 class="font-bold text-sm sm:text-base text-gray-900 mb-1">{{ __('Evim var, otaq yoldaşı axtarıram') }}</h3>
+                            <h3 class="font-semibold text-sm sm:text-base text-gray-900 mb-1">{{ __('Evim var, otaq yoldaşı axtarıram') }}</h3>
                             <p class="text-xs text-gray-500">{{ __('Mövcud kirayə və ya şəxsi evinizdə boş otaq / yer üçün yoldaş axtarırsınız.') }}</p>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <div>
-                            <h3 class="font-bold text-sm sm:text-base text-gray-900 mb-1">{{ __('Ev axtarıram, ortaq yoldaş axtarıram') }}</h3>
+                            <h3 class="font-semibold text-sm sm:text-base text-gray-900 mb-1">{{ __('Ev axtarıram, ortaq yoldaş axtarıram') }}</h3>
                             <p class="text-xs text-gray-500">{{ __('Büdcəniz var və birgə ev tutub qalmaq üçün yoldaş axtarırsınız.') }}</p>
                         </div>
                     </div>
@@ -83,8 +83,8 @@
         <!-- SECTION 2: ƏSAS MƏLUMATLAR VƏ QİYMƏT -->
         <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
             <div>
-                <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
-                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-extrabold flex items-center justify-center">2</span>
+                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-1 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-bold flex items-center justify-center">2</span>
                     <span>{{ __('Elanın Başlığı və Qiyməti') }}</span>
                 </h2>
                 <p class="text-xs text-gray-500 ml-8">{{ __('Aylıq ödəniş və əsas parametrlər') }}</p>
@@ -92,7 +92,7 @@
 
             <!-- Title -->
             <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Elanın Başlığı') }} <span class="text-rose-500">*</span></label>
+                <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Elanın Başlığı') }} <span class="text-rose-500">*</span></label>
                 <input type="text" name="title" value="{{ old('title') }}" required
                        placeholder="{{ __('Məs: Nərimanov metrosu yaxınlığında tələbə qız üçün otaq yoldaşı') }}"
                        class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
@@ -101,12 +101,12 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <!-- Price -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Aylıq Ödəniş (₼)') }} <span class="text-rose-500">*</span></label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Aylıq Ödəniş (₼)') }} <span class="text-rose-500">*</span></label>
                     <div class="relative">
                         <input type="number" name="price" value="{{ old('price') }}" required min="1" step="any"
                                placeholder="150"
                                class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl pl-4 pr-12 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
-                        <span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold text-gray-500 text-xs sm:text-sm">₼ / ay</span>
+                        <span class="absolute right-4 top-1/2 -translate-y-1/2 font-semibold text-gray-500 text-xs sm:text-sm">₼ / ay</span>
                     </div>
                 </div>
 
@@ -123,7 +123,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <!-- Stay Duration -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Qalma Müddəti') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Qalma Müddəti') }}</label>
                     <select name="stay_duration"
                             class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
                         <option value="">{{ __('Seçin (Fərqi yoxdur)') }}</option>
@@ -135,14 +135,14 @@
 
                 <!-- Available From -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Köçmə Tarixi') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Köçmə Tarixi') }}</label>
                     <input type="date" name="available_from" value="{{ old('available_from') }}"
                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
                 </div>
 
                 <!-- Total Roommates -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Evdə Ümumi Adam Sayı') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Evdə Ümumi Adam Sayı') }}</label>
                     <input type="number" name="total_roommates" value="{{ old('total_roommates') }}" min="1" max="20" placeholder="2"
                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
                 </div>
@@ -152,8 +152,8 @@
         <!-- SECTION 3: MƏKAN -->
         <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
             <div>
-                <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
-                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-extrabold flex items-center justify-center">3</span>
+                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-1 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-bold flex items-center justify-center">3</span>
                     <span>{{ __('Məkan və Ünvan') }}</span>
                 </h2>
                 <p class="text-xs text-gray-500 ml-8">{{ __('Mənzilin və ya axtarılan ərazinin yerləşməsi') }}</p>
@@ -162,7 +162,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <!-- City -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Şəhər') }} <span class="text-rose-500">*</span></label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Şəhər') }} <span class="text-rose-500">*</span></label>
                     <select name="city_id" id="createCitySelect" required
                             class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
                         <option value="">{{ __('Şəhər seçin') }}</option>
@@ -179,7 +179,7 @@
 
                 <!-- Location Note / Metro / Street -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Metro, Qəsəbə və ya Nişangah') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Metro, Qəsəbə və ya Nişangah') }}</label>
                     <input type="text" name="location_note" value="{{ old('location_note') }}"
                            placeholder="{{ __('Məs: 28 May metrosu, Tibb Universitetinin yanı') }}"
                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
@@ -190,8 +190,8 @@
         <!-- SECTION 4: OTAQ YOLDAŞI TƏLƏBLƏRİ VƏ İMKANLAR -->
         <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
             <div>
-                <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
-                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-extrabold flex items-center justify-center">4</span>
+                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-1 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-bold flex items-center justify-center">4</span>
                     <span>{{ __('Tələblər və Ev Şəraiti') }}</span>
                 </h2>
                 <p class="text-xs text-gray-500 ml-8">{{ __('Yoldaş üçün tələbləriniz və mənzildə olan imkanlar') }}</p>
@@ -199,23 +199,23 @@
 
             <!-- Gender Preference -->
             <div>
-                <label class="block text-xs font-bold text-gray-700 mb-2">{{ __('Cinsiyyət Tələbi') }} <span class="text-rose-500">*</span></label>
+                <label class="block text-xs font-semibold text-gray-700 mb-2">{{ __('Cinsiyyət Tələbi') }} <span class="text-rose-500">*</span></label>
                 <div class="grid grid-cols-3 gap-3">
                     <label class="cursor-pointer">
                         <input type="radio" name="gender_preference" value="any" class="peer sr-only" {{ old('gender_preference', 'any') === 'any' ? 'checked' : '' }}>
-                        <div class="p-3 text-center rounded-xl border-2 border-gray-200 peer-checked:border-orange-500 peer-checked:bg-orange-50/50 hover:bg-gray-50 transition text-xs sm:text-sm font-bold text-gray-800">
+                        <div class="p-3 text-center rounded-xl border-2 border-gray-200 peer-checked:border-orange-500 peer-checked:bg-orange-50/50 hover:bg-gray-50 transition text-xs sm:text-sm font-semibold text-gray-800">
                             <i class="fa-solid fa-users mr-1.5 text-gray-400"></i> {{ __('Fərqi yoxdur') }}
                         </div>
                     </label>
                     <label class="cursor-pointer">
                         <input type="radio" name="gender_preference" value="female" class="peer sr-only" {{ old('gender_preference') === 'female' ? 'checked' : '' }}>
-                        <div class="p-3 text-center rounded-xl border-2 border-gray-200 peer-checked:border-pink-500 peer-checked:bg-pink-50/50 hover:bg-gray-50 transition text-xs sm:text-sm font-bold text-gray-800">
+                        <div class="p-3 text-center rounded-xl border-2 border-gray-200 peer-checked:border-pink-500 peer-checked:bg-pink-50/50 hover:bg-gray-50 transition text-xs sm:text-sm font-semibold text-gray-800">
                             <i class="fa-solid fa-venus mr-1.5 text-pink-500"></i> {{ __('Yalnız Xanım') }}
                         </div>
                     </label>
                     <label class="cursor-pointer">
                         <input type="radio" name="gender_preference" value="male" class="peer sr-only" {{ old('gender_preference') === 'male' ? 'checked' : '' }}>
-                        <div class="p-3 text-center rounded-xl border-2 border-gray-200 peer-checked:border-indigo-500 peer-checked:bg-indigo-50/50 hover:bg-gray-50 transition text-xs sm:text-sm font-bold text-gray-800">
+                        <div class="p-3 text-center rounded-xl border-2 border-gray-200 peer-checked:border-indigo-500 peer-checked:bg-indigo-50/50 hover:bg-gray-50 transition text-xs sm:text-sm font-semibold text-gray-800">
                             <i class="fa-solid fa-mars mr-1.5 text-indigo-500"></i> {{ __('Yalnız Bəy') }}
                         </div>
                     </label>
@@ -225,7 +225,7 @@
             <!-- Occupation & Rules -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Məşğuliyyət') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Məşğuliyyət') }}</label>
                     <select name="occupation_preference"
                             class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
                         <option value="any" {{ old('occupation_preference') === 'any' ? 'selected' : '' }}>{{ __('Fərqi yoxdur') }}</option>
@@ -253,7 +253,7 @@
 
             <!-- Amenities Checkboxes -->
             <div class="pt-2">
-                <label class="block text-xs font-bold text-gray-700 mb-2">{{ __('Mənzildə Olan Şərait və Təchizatlar') }}</label>
+                <label class="block text-xs font-semibold text-gray-700 mb-2">{{ __('Mənzildə Olan Şərait və Təchizatlar') }}</label>
                 @php
                     $availableAmenities = [
                         'Wi-Fi İnternet', 'Kondisioner', 'Paltaryuyan', 'Mərkəzi İstilik / Kombi',
@@ -277,8 +277,8 @@
         <!-- SECTION 5: TƏSVİR VƏ ŞƏKİLLƏR -->
         <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
             <div>
-                <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
-                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-extrabold flex items-center justify-center">5</span>
+                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-1 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-bold flex items-center justify-center">5</span>
                     <span>{{ __('Ətraflı Məlumat və Fotolar') }}</span>
                 </h2>
                 <p class="text-xs text-gray-500 ml-8">{{ __('Mənzil qaydaları və otaq şəkilləri') }}</p>
@@ -286,7 +286,7 @@
 
             <!-- Description -->
             <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Ətraflı Təsvir') }} <span class="text-rose-500">*</span></label>
+                <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Ətraflı Təsvir') }} <span class="text-rose-500">*</span></label>
                 <textarea name="description" rows="5" required
                           placeholder="{{ __('Mənzil, otaq, birgə yaşayış qaydaları və istədiyiniz otaq yoldaşı haqqında ətraflı məlumat yazın...') }}"
                           class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-2xl p-4 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">{{ old('description') }}</textarea>
@@ -294,14 +294,14 @@
 
             <!-- Image Upload Zone -->
             <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Şəkillər Əlavə Et (Maksimum 10 foto)') }}</label>
+                <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Şəkillər Əlavə Et (Maksimum 10 foto)') }}</label>
                 <div class="border-2 border-dashed border-gray-300 hover:border-orange-400 rounded-2xl p-6 text-center cursor-pointer transition bg-gray-50/50 relative group"
                      onclick="document.getElementById('imageUploadInput').click()">
                     <input type="file" id="imageUploadInput" name="images[]" multiple accept="image/*" class="sr-only">
                     <div class="w-12 h-12 rounded-full bg-orange-50 group-hover:bg-orange-100 text-orange-500 flex items-center justify-center mx-auto mb-2 text-xl transition">
                         <i class="bi bi-cloud-arrow-up-fill"></i>
                     </div>
-                    <p class="text-xs sm:text-sm font-bold text-gray-800 mb-0.5">{{ __('Fotoları yükləmək üçün klikləyin') }}</p>
+                    <p class="text-xs sm:text-sm font-semibold text-gray-800 mb-0.5">{{ __('Fotoları yükləmək üçün klikləyin') }}</p>
                     <p class="text-[11px] text-gray-400">{{ __('PNG, JPG, JPEG və ya WEBP (hər biri maks. 8MB)') }}</p>
                 </div>
                 <div id="imagePreviewContainer" class="grid grid-cols-3 sm:grid-cols-5 gap-3 mt-3 hidden"></div>
@@ -311,8 +311,8 @@
         <!-- SECTION 6: ƏLAQƏ MƏLUMATLARI -->
         <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
             <div>
-                <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
-                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-extrabold flex items-center justify-center">6</span>
+                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-1 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-bold flex items-center justify-center">6</span>
                     <span>{{ __('Əlaqə Məlumatları') }}</span>
                 </h2>
                 <p class="text-xs text-gray-500 ml-8">{{ __('Sizinlə əlaqə qurulacaq şəxsi nömrələr') }}</p>
@@ -321,7 +321,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <!-- Name -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Adınız') }} <span class="text-rose-500">*</span></label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Adınız') }} <span class="text-rose-500">*</span></label>
                     <input type="text" name="contact_name" value="{{ old('contact_name', auth()->user()?->name) }}" required
                            placeholder="Əli Məmmədov"
                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
@@ -329,7 +329,7 @@
 
                 <!-- Phone -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Telefon Nömrəsi') }} <span class="text-rose-500">*</span></label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Telefon Nömrəsi') }} <span class="text-rose-500">*</span></label>
                     <input type="tel" name="contact_phone" value="{{ old('contact_phone', auth()->user()?->phone) }}" required
                            placeholder="+994 50 123 45 67"
                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
@@ -337,7 +337,7 @@
 
                 <!-- WhatsApp -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('WhatsApp Nömrəsi') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('WhatsApp Nömrəsi') }}</label>
                     <input type="tel" name="contact_whatsapp" value="{{ old('contact_whatsapp', auth()->user()?->phone) }}"
                            placeholder="+994 50 123 45 67"
                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
@@ -348,7 +348,7 @@
         <!-- Submit Button -->
         <div class="text-center pt-2">
             <button type="submit" id="submitRoommateBtn"
-                    class="inline-flex items-center justify-center gap-2 px-10 py-4 bg-[#f1913d] hover:bg-[#e07f2c] text-white font-bold text-base rounded-2xl shadow-md transition hover:shadow-lg w-full sm:w-auto cursor-pointer">
+                    class="inline-flex items-center justify-center gap-2 px-10 py-4 bg-[#f1913d] hover:bg-[#e07f2c] text-white font-semibold text-base rounded-2xl shadow-md transition hover:shadow-lg w-full sm:w-auto cursor-pointer">
                 <i class="bi bi-check2-circle text-lg"></i>
                 <span>{{ __('Elanı Dərc Et') }}</span>
             </button>

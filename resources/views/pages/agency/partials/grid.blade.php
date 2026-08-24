@@ -27,7 +27,7 @@
         </div>
 
         <div class="px-4 sm:px-5 pb-4 sm:pb-5 pt-2 sm:pt-3 flex flex-col flex-1">
-            <h3 class="font-bold text-[color:var(--text-color)] text-sm sm:text-base lg:text-lg leading-snug hover:text-[color:var(--primary)] transition-colors line-clamp-1">
+            <h3 class="font-semibold text-[color:var(--text-color)] text-sm sm:text-base lg:text-lg leading-snug hover:text-[color:var(--primary)] transition-colors line-clamp-1">
                 {{ $item->name }}
             </h3>
 

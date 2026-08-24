@@ -131,7 +131,7 @@ const R = window.MetrajRoutes || {};
                 : '<i class="fa-regular fa-heart text-gray-400 text-base mr-2"></i>';
         } else if (isComp) {
             iconHtml = opts.active
-                ? '<i class="bi bi-arrow-left-right text-orange-500 text-base mr-2 font-bold"></i>'
+                ? '<i class="bi bi-arrow-left-right text-orange-500 text-base mr-2 font-semibold"></i>'
                 : '<i class="bi bi-arrow-left-right text-gray-400 text-base mr-2"></i>';
         } else if (isError) {
             iconHtml = '<i class="bi bi-exclamation-triangle-fill text-amber-400 text-base mr-2"></i>';
@@ -139,7 +139,7 @@ const R = window.MetrajRoutes || {};
 
         let linkHtml = '';
         if (opts.linkUrl && opts.linkText) {
-            linkHtml = `<a href="${opts.linkUrl}" class="ml-3 text-orange-400 hover:text-orange-300 font-bold underline text-xs inline-block">${opts.linkText}</a>`;
+            linkHtml = `<a href="${opts.linkUrl}" class="ml-3 text-orange-400 hover:text-orange-300 font-semibold underline text-xs inline-block">${opts.linkText}</a>`;
         }
 
         const div = document.createElement('div');
@@ -176,14 +176,14 @@ const R = window.MetrajRoutes || {};
             const textSpan = btn.querySelector('.compare-btn-text');
             const icon = btn.querySelector('i');
             if (isCompared) {
-                btn.classList.add('text-orange-600', 'bg-orange-100', 'font-bold');
+                btn.classList.add('text-orange-600', 'bg-orange-100', 'font-semibold');
                 btn.classList.remove('text-gray-700');
                 if (textSpan) textSpan.textContent = 'Müqayisədə';
                 if (icon) {
                     icon.className = 'bi bi-check-circle-fill text-sm sm:text-base text-orange-600';
                 }
             } else {
-                btn.classList.remove('text-orange-600', 'bg-orange-100', 'font-bold');
+                btn.classList.remove('text-orange-600', 'bg-orange-100', 'font-semibold');
                 btn.classList.add('text-gray-700');
                 if (textSpan) textSpan.textContent = 'Müqayisə';
                 if (icon) {

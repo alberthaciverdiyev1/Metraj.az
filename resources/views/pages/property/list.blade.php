@@ -18,13 +18,13 @@
                                         class="flex gap-1 bg-gray-100 p-1 rounded-2xl border border-gray-200/50 max-w-max shadow-sm"
                                         data-role="add-type-toggle">
                                         <button type="button" data-value="all"
-                                                class="px-5 py-2.5 rounded-xl font-bold text-xs tracking-wide uppercase transition duration-200 {{ $selectedAdType === 'all' || !$selectedAdType ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}"
+                                                class="px-5 py-2.5 rounded-xl font-semibold text-xs tracking-wide uppercase transition duration-200 {{ $selectedAdType === 'all' || !$selectedAdType ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}"
                                                 data-add-type="all">
                                             {{ __("Hamısı") }}
                                         </button>
                                         @foreach($dealTypes as $dt)
                                             <button type="button" data-value="{{ $dt->value }}"
-                                                    class="px-5 py-2.5 rounded-xl font-bold text-xs tracking-wide uppercase transition duration-200 {{ $selectedAdType === $dt->value ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}"
+                                                    class="px-5 py-2.5 rounded-xl font-semibold text-xs tracking-wide uppercase transition duration-200 {{ $selectedAdType === $dt->value ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}"
                                                     data-add-type="{{ $dt->value }}">
                                                 {{ $dt->name['az'] ?? $dt->value }}
                                             </button>
@@ -70,10 +70,10 @@
                                     @endphp
                                     <div class="relative">
                                         <button id="filterRoomBtn" type="button"
-                                                class="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 bg-gray-50 hover:bg-gray-100/80 border border-gray-200/90 rounded-2xl text-xs sm:text-sm font-bold text-gray-800 transition shadow-2xs cursor-pointer select-none">
+                                                class="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 bg-gray-50 hover:bg-gray-100/80 border border-gray-200/90 rounded-2xl text-xs sm:text-sm font-semibold text-gray-800 transition shadow-2xs cursor-pointer select-none">
                                             <div class="flex items-center gap-2 min-w-0">
                                                 <img src="{{ asset('images/door.svg') }}" alt="door" class="w-4 h-4 shrink-0">
-                                                <span class="btn-display-text truncate font-bold text-gray-800">{{ $currentRoomsLabel }}</span>
+                                                <span class="btn-display-text truncate font-semibold text-gray-800">{{ $currentRoomsLabel }}</span>
                                             </div>
                                             <i class="bi bi-chevron-down text-xs text-gray-400 transition-transform duration-200 filter-custom-chevron shrink-0" id="filterRoomChevron"></i>
                                         </button>
@@ -82,7 +82,7 @@
                                              class="hidden absolute left-0 top-full mt-2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden filter-custom-menu max-h-60 overflow-y-auto">
                                             @foreach($roomOptions as $rVal => $rLabel)
                                                 <div data-val="{{ $rVal }}"
-                                                     class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ (string)$currentRooms === (string)$rVal ? 'text-[#f1913d] bg-orange-50/60 font-bold' : 'text-gray-700 hover:bg-gray-50' }} transition cursor-pointer">
+                                                     class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ (string)$currentRooms === (string)$rVal ? 'text-[#f1913d] bg-orange-50/60 font-semibold' : 'text-gray-700 hover:bg-gray-50' }} transition cursor-pointer">
                                                     <span class="item-label">{{ $rLabel }}</span>
                                                     <i class="bi bi-check2 text-sm text-[#f1913d] item-check {{ (string)$currentRooms === (string)$rVal ? '' : 'hidden' }}"></i>
                                                 </div>
@@ -102,10 +102,10 @@
                                     @endphp
                                     <div class="relative">
                                         <button id="filterBuildingBtn" type="button"
-                                                class="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 bg-gray-50 hover:bg-gray-100/80 border border-gray-200/90 rounded-2xl text-xs sm:text-sm font-bold text-gray-800 transition shadow-2xs cursor-pointer select-none">
+                                                class="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 bg-gray-50 hover:bg-gray-100/80 border border-gray-200/90 rounded-2xl text-xs sm:text-sm font-semibold text-gray-800 transition shadow-2xs cursor-pointer select-none">
                                             <div class="flex items-center gap-2 min-w-0">
                                                 <img src="{{ asset('images/layers.svg') }}" alt="layers" class="w-4 h-4 shrink-0">
-                                                <span class="btn-display-text truncate font-bold text-gray-800">{{ $currentBuildingLabel }}</span>
+                                                <span class="btn-display-text truncate font-semibold text-gray-800">{{ $currentBuildingLabel }}</span>
                                             </div>
                                             <i class="bi bi-chevron-down text-xs text-gray-400 transition-transform duration-200 filter-custom-chevron shrink-0" id="filterBuildingChevron"></i>
                                         </button>
@@ -113,7 +113,7 @@
                                         <div id="filterBuildingDropdown"
                                              class="hidden absolute left-0 top-full mt-2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden filter-custom-menu max-h-60 overflow-y-auto">
                                             <div data-val=""
-                                                 class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ empty($currentBuildingType) ? 'text-[#f1913d] bg-orange-50/60 font-bold' : 'text-gray-700 hover:bg-gray-50' }} transition cursor-pointer">
+                                                 class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ empty($currentBuildingType) ? 'text-[#f1913d] bg-orange-50/60 font-semibold' : 'text-gray-700 hover:bg-gray-50' }} transition cursor-pointer">
                                                 <span class="item-label">{{ __('Bütün Kateqoriyalar') }}</span>
                                                 <i class="bi bi-check2 text-sm text-[#f1913d] item-check {{ empty($currentBuildingType) ? '' : 'hidden' }}"></i>
                                             </div>
@@ -123,7 +123,7 @@
                                                     $isSel = $currentBuildingType === $bType->value;
                                                 @endphp
                                                 <div data-val="{{ $bType->value }}"
-                                                     class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ $isSel ? 'text-[#f1913d] bg-orange-50/60 font-bold' : 'text-gray-700 hover:bg-gray-50' }} transition cursor-pointer">
+                                                     class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ $isSel ? 'text-[#f1913d] bg-orange-50/60 font-semibold' : 'text-gray-700 hover:bg-gray-50' }} transition cursor-pointer">
                                                     <span class="item-label">{{ $bLabel }}</span>
                                                     <i class="bi bi-check2 text-sm text-[#f1913d] item-check {{ $isSel ? '' : 'hidden' }}"></i>
                                                 </div>
@@ -135,10 +135,10 @@
                                     <!-- City Filter Trigger Button (Navbar Style) -->
                                     <div class="relative">
                                         <button id="openModal" type="button"
-                                                class="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 bg-gray-50 hover:bg-gray-100/80 border border-gray-200/90 rounded-2xl text-xs sm:text-sm font-bold text-gray-800 transition shadow-2xs cursor-pointer select-none">
+                                                class="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 bg-gray-50 hover:bg-gray-100/80 border border-gray-200/90 rounded-2xl text-xs sm:text-sm font-semibold text-gray-800 transition shadow-2xs cursor-pointer select-none">
                                             <div class="flex items-center gap-2 min-w-0">
                                                 <img src="{{ asset('images/city.svg') }}" alt="city" class="w-4 h-4 shrink-0">
-                                                <span class="truncate font-bold text-gray-800" data-role="display-value" data-filter="city">
+                                                <span class="truncate font-semibold text-gray-800" data-role="display-value" data-filter="city">
                                                     {{ $cities->firstWhere('id', request('cityId'))?->name['az'] ?? ($cities->firstWhere('id', request('cityId'))?->value ?? __('Bütün Şəhərlər')) }}
                                                 </span>
                                             </div>
@@ -206,7 +206,7 @@
                                 <div class="bg-white/95 border border-gray-150 rounded-2xl p-6 shadow-xl flex items-center gap-3">
                                     <div
                                         class="w-7 h-7 border-3 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
-                                    <span class="text-gray-700 font-bold text-sm">{{ __('Yüklənir...') }}</span>
+                                    <span class="text-gray-700 font-semibold text-sm">{{ __('Yüklənir...') }}</span>
                                 </div>
                             </div>
 

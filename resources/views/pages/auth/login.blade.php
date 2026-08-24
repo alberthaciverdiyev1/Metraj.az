@@ -14,7 +14,7 @@
                 <a href="{{ route('home') }}" class="inline-block">
                     <img src="{{ asset('images/metrajlogo1.png') }}" alt="Metraj.az" class="h-10 mx-auto object-contain">
                 </a>
-                <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+                <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
                     {{ __('Hesaba Daxil Ol') }}
                 </h1>
                 <p class="text-xs sm:text-sm text-gray-500">
@@ -26,7 +26,7 @@
             <div class="p-3.5 rounded-2xl bg-orange-50/80 border border-orange-100/80 flex items-start gap-3 text-xs text-orange-900">
                 <i class="bi bi-info-circle-fill text-orange-500 text-base shrink-0 mt-0.5"></i>
                 <div class="leading-relaxed">
-                    <span class="font-bold">{{ __('Agentlik və Rieltorlar:') }}</span>
+                    <span class="font-semibold">{{ __('Agentlik və Rieltorlar:') }}</span>
                     <span>{{ __('Daxil olduqdan sonra avtomatik olaraq biznes idarəetmə panelinə yönləndiriləcəksiniz.') }}</span>
                 </div>
             </div>
@@ -37,7 +37,7 @@
 
                 {{-- Email Input --}}
                 <div class="space-y-1.5">
-                    <label for="login_email" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    <label for="login_email" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
                         {{ __('E-poçt ünvanı') }} <span class="text-rose-500">*</span>
                     </label>
                     <div class="relative">
@@ -52,7 +52,7 @@
                 {{-- Password Input --}}
                 <div class="space-y-1.5">
                     <div class="flex items-center justify-between">
-                        <label for="login_password" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        <label for="login_password" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
                             {{ __('Şifrə') }} <span class="text-rose-500">*</span>
                         </label>
                     </div>
@@ -79,7 +79,7 @@
 
                 {{-- Submit Button --}}
                 <button type="submit" id="loginSubmitBtn"
-                        class="w-full py-4 bg-orange-500 hover:bg-orange-600 text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-md transition duration-200 transform active:scale-98 flex items-center justify-center gap-2 mt-2">
+                        class="w-full py-4 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm sm:text-base rounded-2xl shadow-md transition duration-200 transform active:scale-98 flex items-center justify-center gap-2 mt-2">
                     <span>{{ __('Daxil Ol') }}</span>
                     <i class="bi bi-arrow-right text-sm"></i>
                 </button>
@@ -89,7 +89,7 @@
             <div class="pt-4 border-t border-gray-100 text-center text-xs sm:text-sm text-gray-600 space-y-2">
                 <p>
                     {{ __('Hesabınız yoxdur?') }}
-                    <a href="{{ route('register') }}" class="font-bold text-orange-600 hover:text-orange-700 hover:underline">
+                    <a href="{{ route('register') }}" class="font-semibold text-orange-600 hover:text-orange-700 hover:underline">
                         {{ __('Qeydiyyatdan keçin') }}
                     </a>
                 </p>

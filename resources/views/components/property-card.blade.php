@@ -126,7 +126,7 @@
       @php
           $displayPrice = app(\App\Modules\Property\Services\PropertyPricePresenter::class)->display($property);
       @endphp
-      <span class="text-[color:var(--primary)] font-bold text-sm sm:text-base md:text-lg">
+      <span class="text-[color:var(--primary)] font-semibold text-sm sm:text-base md:text-lg">
         {{ $displayPrice['symbol'] }} {{ $displayPrice['formatted'] }}
       </span>
       <button type="button" onclick="event.stopPropagation(); toggleCompare(this, {{ $property->id }})"

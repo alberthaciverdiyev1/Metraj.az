@@ -535,7 +535,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 card.className = 'relative aspect-square rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-gray-100 group';
                 card.innerHTML = `
                     <img src="${e.target.result}" class="w-full h-full object-cover">
-                    ${index === 0 ? '<span class="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-orange-500 text-white text-[9px] font-bold shadow">Əsas</span>' : ''}
+                    ${index === 0 ? '<span class="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-orange-500 text-white text-[9px] font-semibold shadow">Əsas</span>' : ''}
                 `;
                 previewGrid.appendChild(card);
             };

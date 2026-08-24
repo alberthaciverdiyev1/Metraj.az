@@ -1,5 +1,5 @@
 <section id="amenities" class="bg-white rounded-2xl shadow p-4 sm:p-6 space-y-4 sm:space-y-6">
-    <h3 class="text-xl sm:text-2xl font-bold text-black">{{ __('Amenities And Features') }}</h3>
+    <h3 class="text-xl sm:text-2xl font-semibold text-black">{{ __('Amenities And Features') }}</h3>
 
     @php $features = collect($features); @endphp
     @if($features->isNotEmpty())

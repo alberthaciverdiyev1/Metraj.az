@@ -21,7 +21,7 @@
 
     @if ($errors->any())
         <div class="bg-rose-50 border border-rose-200 text-rose-700 px-5 py-4 rounded-2xl mb-8 text-xs sm:text-sm space-y-1">
-            <div class="font-bold flex items-center gap-2">
+            <div class="font-semibold flex items-center gap-2">
                 <i class="bi bi-exclamation-octagon-fill text-base text-rose-500"></i>
                 <span>{{ __('Zəhmət olmasa xətaları düzəldin:') }}</span>
             </div>
@@ -39,8 +39,8 @@
 
         <!-- SECTION 1: TƏLƏB NÖVÜNÜN SEÇİLMƏSİ (4 CATEGORY CARDS) -->
         <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs">
-            <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
-                <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-extrabold flex items-center justify-center">1</span>
+            <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-1 flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-bold flex items-center justify-center">1</span>
                 <span>{{ __('Nə axtarırsınız?') }}</span>
             </h2>
             <p class="text-xs text-gray-500 mb-5 ml-8">{{ __('Tələbinizə uyğun kateqoriyanı seçin') }}</p>
@@ -55,7 +55,7 @@
                             <i class="fa-solid fa-cart-shopping"></i>
                         </div>
                         <div>
-                            <h3 class="font-bold text-xs sm:text-sm text-gray-900 mb-0.5">{{ __('Almaq İstəyirəm') }}</h3>
+                            <h3 class="font-semibold text-xs sm:text-sm text-gray-900 mb-0.5">{{ __('Almaq İstəyirəm') }}</h3>
                             <p class="text-[11px] text-gray-500 leading-tight">{{ __('Mənzil, ev, torpaq və ya obyekt almaq üçün') }}</p>
                         </div>
                     </div>
@@ -69,7 +69,7 @@
                             <i class="fa-solid fa-key"></i>
                         </div>
                         <div>
-                            <h3 class="font-bold text-xs sm:text-sm text-gray-900 mb-0.5">{{ __('Kirayə Axtarıram') }}</h3>
+                            <h3 class="font-semibold text-xs sm:text-sm text-gray-900 mb-0.5">{{ __('Kirayə Axtarıram') }}</h3>
                             <p class="text-[11px] text-gray-500 leading-tight">{{ __('Aylıq uzunmüddətli kirayə mənzil/ev tapmaq üçün') }}</p>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                             <i class="fa-solid fa-calendar-day"></i>
                         </div>
                         <div>
-                            <h3 class="font-bold text-xs sm:text-sm text-gray-900 mb-0.5">{{ __('Günlük Qalmaq') }}</h3>
+                            <h3 class="font-semibold text-xs sm:text-sm text-gray-900 mb-0.5">{{ __('Günlük Qalmaq') }}</h3>
                             <p class="text-[11px] text-gray-500 leading-tight">{{ __('Qısamüddətli və ya istirahət üçün günlük ev') }}</p>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                             <i class="fa-solid fa-people-roof"></i>
                         </div>
                         <div>
-                            <h3 class="font-bold text-xs sm:text-sm text-gray-900 mb-0.5">{{ __('Otaq Yoldaşı') }}</h3>
+                            <h3 class="font-semibold text-xs sm:text-sm text-gray-900 mb-0.5">{{ __('Otaq Yoldaşı') }}</h3>
                             <p class="text-[11px] text-gray-500 leading-tight">{{ __('Evim var yoldaş axtarıram və ya ev axtarıram') }}</p>
                         </div>
                     </div>
@@ -109,8 +109,8 @@
         <!-- SECTION 2: ƏSAS MƏLUMATLAR -->
         <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
             <div>
-                <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
-                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-extrabold flex items-center justify-center">2</span>
+                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-1 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-bold flex items-center justify-center">2</span>
                     <span>{{ __('Əsas Məlumatlar') }}</span>
                 </h2>
                 <p class="text-xs text-gray-500 ml-8">{{ __('Elanınızın başlığı və əsas parametrləri') }}</p>
@@ -118,7 +118,7 @@
 
             <!-- Title -->
             <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Elanın Başlığı') }} <span class="text-rose-500">*</span></label>
+                <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Elanın Başlığı') }} <span class="text-rose-500">*</span></label>
                 <input type="text" name="title" value="{{ old('title') }}" required
                        placeholder="{{ __('Məs: Nərimanovda 2-3 otaqlı kupçalı mənzil axtarıram') }}"
                        class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
@@ -128,7 +128,7 @@
 
                 <!-- Property Type (for Buy/Rent/Daily) -->
                 <div id="propertyTypeField">
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Əmlak Növü') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Əmlak Növü') }}</label>
                     <select name="property_type" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
                         <option value="Mənzil" {{ old('property_type') === 'Mənzil' ? 'selected' : '' }}>{{ __('Mənzil') }}</option>
                         <option value="Həyət evi" {{ old('property_type') === 'Həyət evi' ? 'selected' : '' }}>{{ __('Həyət evi / Bağ') }}</option>
@@ -141,7 +141,7 @@
 
                 <!-- Rooms -->
                 <div id="roomsField">
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Otaq Sayı') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Otaq Sayı') }}</label>
                     <select name="rooms" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
                         <option value="">{{ __('Fərqi yoxdur') }}</option>
                         <option value="1" {{ old('rooms') === '1' ? 'selected' : '' }}>{{ __('1 otaqlı') }}</option>
@@ -153,7 +153,7 @@
 
                 <!-- Max Budget -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Maksimum Büdcə (₼)') }} <span class="text-rose-500">*</span></label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Maksimum Büdcə (₼)') }} <span class="text-rose-500">*</span></label>
                     <input type="number" name="budget_max" value="{{ old('budget_max') }}" required placeholder="Məs: 800" min="1"
                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
                 </div>
@@ -165,8 +165,8 @@
         <!-- SECTION 3: YERLƏŞMƏ VƏ XÜSUSİ TƏLƏBLƏR -->
         <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
             <div>
-                <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
-                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-extrabold flex items-center justify-center">3</span>
+                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-1 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-bold flex items-center justify-center">3</span>
                     <span>{{ __('Yerləşmə və Şərtlər') }}</span>
                 </h2>
                 <p class="text-xs text-gray-500 ml-8">{{ __('Ərazi və xüsusi şərtləriniz') }}</p>
@@ -176,7 +176,7 @@
 
                 <!-- City -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Şəhər') }} <span class="text-rose-500">*</span></label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Şəhər') }} <span class="text-rose-500">*</span></label>
                     <select name="city_id" required class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
                         @foreach($cities as $city)
                             @php
@@ -191,7 +191,7 @@
 
                 <!-- Location Note -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Metro / Rayon / Ünvan Qeydi') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Metro / Rayon / Ünvan Qeydi') }}</label>
                     <input type="text" name="location_note" value="{{ old('location_note') }}"
                            placeholder="{{ __('Məs: Elmlər m/s yaxınlığı, 28 May') }}"
                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
@@ -217,7 +217,7 @@
             <div id="rentFields" class="hidden pt-2 border-t border-gray-100 space-y-4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Kimlər qalacaq?') }}</label>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Kimlər qalacaq?') }}</label>
                         <select name="occupancy_type" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
                             <option value="Ailə">{{ __('Ailə üçün') }}</option>
                             <option value="Tələbələr">{{ __('Tələbələr üçün') }}</option>
@@ -239,7 +239,7 @@
             <div id="roommateFields" class="hidden pt-2 border-t border-gray-100 space-y-4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Cinsiyyət Tələbi') }}</label>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Cinsiyyət Tələbi') }}</label>
                         <select name="gender_preference" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
                             <option value="any">{{ __('Fərqi yoxdur (Hamı)') }}</option>
                             <option value="female">{{ __('Yalnız Xanım') }}</option>
@@ -254,8 +254,8 @@
         <!-- SECTION 4: ƏTRAFLI TƏSVİR (QUİLL RİCH TEXT EDİTOR) -->
         <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
             <div>
-                <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
-                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-extrabold flex items-center justify-center">4</span>
+                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-1 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-bold flex items-center justify-center">4</span>
                     <span>{{ __('Ətraflı Tələbləriniz') }}</span>
                 </h2>
                 <p class="text-xs text-gray-500 ml-8">{{ __('İstədiyiniz xüsusiyyətləri aydın şəkildə izah edin') }}</p>
@@ -263,7 +263,7 @@
 
             <!-- Description via Quill Rich Text Editor -->
             <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Ətraflı Təsvir') }} <span class="text-rose-500">*</span></label>
+                <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Ətraflı Təsvir') }} <span class="text-rose-500">*</span></label>
                 <div id="editor_wrapper" class="bg-white border border-gray-200 rounded-2xl overflow-hidden focus-within:border-[#f1913d] transition shadow-2xs">
                     <div id="editor_container" class="min-h-[160px] text-xs sm:text-sm font-normal">
                         {!! old('description') !!}
@@ -276,8 +276,8 @@
         <!-- SECTION 5: FOTOŞƏKİLLƏR (Otaq Yoldaşı və ya Mənzil şəkilləri) -->
         <div id="imageUploadSection" class="hidden bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
             <div>
-                <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
-                    <span class="w-6 h-6 rounded-full bg-purple-600 text-white text-xs font-extrabold flex items-center justify-center">
+                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-1 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-purple-600 text-white text-xs font-bold flex items-center justify-center">
                         <i class="fa-solid fa-camera text-[10px]"></i>
                     </span>
                     <span>{{ __('Fotoşəkillər (Otaq / Mənzil şəkilləri)') }}</span>
@@ -291,7 +291,7 @@
                 <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mx-auto mb-3 text-xl">
                     <i class="bi bi-images"></i>
                 </div>
-                <p class="text-xs sm:text-sm font-bold text-gray-800 mb-1">{{ __('Şəkilləri seçmək üçün klikləyin') }}</p>
+                <p class="text-xs sm:text-sm font-semibold text-gray-800 mb-1">{{ __('Şəkilləri seçmək üçün klikləyin') }}</p>
                 <p class="text-[11px] text-gray-400">JPG, PNG, WEBP (Hər biri maks. 8MB)</p>
             </div>
 
@@ -302,8 +302,8 @@
         <!-- SECTION 6: ƏLAQƏ MƏLUMATLARI -->
         <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
             <div>
-                <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
-                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-extrabold flex items-center justify-center">5</span>
+                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-1 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-bold flex items-center justify-center">5</span>
                     <span>{{ __('Əlaqə Məlumatları') }}</span>
                 </h2>
                 <p class="text-xs text-gray-500 ml-8">{{ __('Təkliflərin sizə çatması üçün əlaqə vasitələri') }}</p>
@@ -312,7 +312,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <!-- Name -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Adınız') }} <span class="text-rose-500">*</span></label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Adınız') }} <span class="text-rose-500">*</span></label>
                     <input type="text" name="contact_name" value="{{ old('contact_name', auth()->user()?->name) }}" required
                            placeholder="Əli Məmmədov"
                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
@@ -320,7 +320,7 @@
 
                 <!-- Phone -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Telefon Nömrəsi') }} <span class="text-rose-500">*</span></label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Telefon Nömrəsi') }} <span class="text-rose-500">*</span></label>
                     <input type="tel" name="contact_phone" value="{{ old('contact_phone', auth()->user()?->phone) }}" required
                            placeholder="+994 50 123 45 67"
                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
@@ -328,7 +328,7 @@
 
                 <!-- WhatsApp -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('WhatsApp Nömrəsi') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('WhatsApp Nömrəsi') }}</label>
                     <input type="tel" name="contact_whatsapp" value="{{ old('contact_whatsapp', auth()->user()?->phone) }}"
                            placeholder="+994 50 123 45 67"
                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
@@ -339,7 +339,7 @@
         <!-- Submit Button -->
         <div class="text-center pt-2">
             <button type="submit"
-                    class="inline-flex items-center justify-center gap-2 px-10 py-4 bg-[#f1913d] hover:bg-[#e07f2c] text-white font-bold text-base rounded-2xl shadow-md transition hover:shadow-lg w-full sm:w-auto cursor-pointer">
+                    class="inline-flex items-center justify-center gap-2 px-10 py-4 bg-[#f1913d] hover:bg-[#e07f2c] text-white font-semibold text-base rounded-2xl shadow-md transition hover:shadow-lg w-full sm:w-auto cursor-pointer">
                 <i class="bi bi-check2-circle text-lg"></i>
                 <span>{{ __('Tələb Elanını Dərc Et') }}</span>
             </button>

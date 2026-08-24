@@ -10,7 +10,7 @@
     {{-- ==================== HERO / HEADER SECTION ==================== --}}
     <section class="mt-4 sm:mt-6 bg-white rounded-3xl p-6 sm:p-10 border border-gray-100/90 shadow-sm text-center">
         <div class="max-w-2xl mx-auto space-y-3">
-            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-900 tracking-tight">
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 tracking-tight">
                 {{ __('Tez-tez Verilən Suallar') }}
             </h1>
 
@@ -34,19 +34,19 @@
 
                 {{-- Category Pills --}}
                 <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-                    <button type="button" class="faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap bg-orange-500 text-white shadow-sm" data-category="all">
+                    <button type="button" class="faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold transition duration-200 whitespace-nowrap bg-orange-500 text-white shadow-sm" data-category="all">
                         {{ __('Hamısı') }}
                     </button>
-                    <button type="button" class="faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap bg-white text-gray-700 hover:bg-gray-50 border border-gray-200" data-category="general">
+                    <button type="button" class="faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold transition duration-200 whitespace-nowrap bg-white text-gray-700 hover:bg-gray-50 border border-gray-200" data-category="general">
                         {{ __('Ümumi & Qeydiyyat') }}
                     </button>
-                    <button type="button" class="faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap bg-white text-gray-700 hover:bg-gray-50 border border-gray-200" data-category="listings">
+                    <button type="button" class="faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold transition duration-200 whitespace-nowrap bg-white text-gray-700 hover:bg-gray-50 border border-gray-200" data-category="listings">
                         {{ __('Elan Yerləşdirmə') }}
                     </button>
-                    <button type="button" class="faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap bg-white text-gray-700 hover:bg-gray-50 border border-gray-200" data-category="payments">
+                    <button type="button" class="faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold transition duration-200 whitespace-nowrap bg-white text-gray-700 hover:bg-gray-50 border border-gray-200" data-category="payments">
                         {{ __('VIP & Ödənişlər') }}
                     </button>
-                    <button type="button" class="faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap bg-white text-gray-700 hover:bg-gray-50 border border-gray-200" data-category="safety">
+                    <button type="button" class="faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold transition duration-200 whitespace-nowrap bg-white text-gray-700 hover:bg-gray-50 border border-gray-200" data-category="safety">
                         {{ __('Təhlükəsizlik') }}
                     </button>
                 </div>
@@ -57,7 +57,7 @@
                     {{-- Category 1: Ümumi --}}
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="general">
                         <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
-                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Metraj.az nədir və necə işləyir?') }}</span>
+                            <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('Metraj.az nədir və necə işləyir?') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
                             </span>
@@ -69,7 +69,7 @@
 
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="general">
                         <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
-                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Elanlara baxmaq üçün qeydiyyatdan keçmək məcburidirmi?') }}</span>
+                            <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('Elanlara baxmaq üçün qeydiyyatdan keçmək məcburidirmi?') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
                             </span>
@@ -81,7 +81,7 @@
 
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="general">
                         <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
-                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Şəxsi hesabımın məlumatlarını necə dəyişə bilərəm?') }}</span>
+                            <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('Şəxsi hesabımın məlumatlarını necə dəyişə bilərəm?') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
                             </span>
@@ -94,7 +94,7 @@
                     {{-- Category 2: Elan Yerləşdirmə --}}
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="listings">
                         <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
-                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Saytda necə yeni elan yerləşdirə bilərəm?') }}</span>
+                            <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('Saytda necə yeni elan yerləşdirə bilərəm?') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
                             </span>
@@ -106,7 +106,7 @@
 
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="listings">
                         <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
-                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Əlavə etdiyim elan nə vaxt saytda görünəcək?') }}</span>
+                            <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('Əlavə etdiyim elan nə vaxt saytda görünəcək?') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
                             </span>
@@ -118,7 +118,7 @@
 
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="listings">
                         <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
-                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Şəkillərlə bağlı hansı tələblər mövcuddur?') }}</span>
+                            <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('Şəkillərlə bağlı hansı tələblər mövcuddur?') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
                             </span>
@@ -131,7 +131,7 @@
                     {{-- Category 3: VIP & Ödənişlər --}}
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="payments">
                         <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
-                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Standart elan yerləşdirmək ödənişlidirmi?') }}</span>
+                            <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('Standart elan yerləşdirmək ödənişlidirmi?') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
                             </span>
@@ -143,7 +143,7 @@
 
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="payments">
                         <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
-                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('VIP və Seçilmiş elan xidmətinin nə kimi üstünlükləri var?') }}</span>
+                            <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('VIP və Seçilmiş elan xidmətinin nə kimi üstünlükləri var?') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
                             </span>
@@ -155,7 +155,7 @@
 
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="payments">
                         <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
-                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Ödənişləri hansı üsullarla həyata keçirə bilərəm?') }}</span>
+                            <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('Ödənişləri hansı üsullarla həyata keçirə bilərəm?') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
                             </span>
@@ -168,7 +168,7 @@
                     {{-- Category 4: Təhlükəsizlik --}}
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="safety">
                         <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
-                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Şəxsi məlumatlarımın təhlükəsizliyinə necə zəmanət verilir?') }}</span>
+                            <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('Şəxsi məlumatlarımın təhlükəsizliyinə necə zəmanət verilir?') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
                             </span>
@@ -180,7 +180,7 @@
 
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="safety">
                         <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
-                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Şübhəli elan və ya dələduzluqla qarşılaşdıqda nə etməliyəm?') }}</span>
+                            <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('Şübhəli elan və ya dələduzluqla qarşılaşdıqda nə etməliyəm?') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
                             </span>
@@ -195,7 +195,7 @@
                         <div class="w-16 h-16 bg-orange-50 text-orange-500 rounded-full flex items-center justify-center mx-auto text-2xl mb-3">
                             <i class="bi bi-search"></i>
                         </div>
-                        <h4 class="font-bold text-base text-gray-900">{{ __('Axtarışa uyğun sual tapılmadı') }}</h4>
+                        <h4 class="font-semibold text-base text-gray-900">{{ __('Axtarışa uyğun sual tapılmadı') }}</h4>
                         <p class="text-xs text-gray-500 mt-1 max-w-sm mx-auto">
                             {{ __('Fərqli açar sözlərlə axtarış edin və ya birbaşa dəstək komandamızla əlaqə saxlayın.') }}
                         </p>
@@ -214,7 +214,7 @@
                             <i class="bi bi-headset"></i>
                         </div>
                         <div>
-                            <h3 class="font-extrabold text-gray-900 text-base leading-tight">{{ __('Kömək Lazımdır?') }}</h3>
+                            <h3 class="font-bold text-gray-900 text-base leading-tight">{{ __('Kömək Lazımdır?') }}</h3>
                             <p class="text-xs text-gray-400 mt-0.5">{{ __('Bizimlə əlaqə saxlayın') }}</p>
                         </div>
                     </div>
@@ -228,7 +228,7 @@
                             <i class="bi bi-telephone-fill text-orange-500 text-sm"></i>
                             <div class="flex-1 min-w-0">
                                 <span class="block text-[11px] text-gray-400">{{ __('Qaynar Xətt') }}</span>
-                                <span class="font-bold text-gray-900 group-hover:text-orange-600 transition">+994 50 123 45 67</span>
+                                <span class="font-semibold text-gray-900 group-hover:text-orange-600 transition">+994 50 123 45 67</span>
                             </div>
                         </a>
 
@@ -236,7 +236,7 @@
                             <i class="bi bi-whatsapp text-emerald-600 text-sm"></i>
                             <div class="flex-1 min-w-0">
                                 <span class="block text-[11px] text-gray-400">WhatsApp</span>
-                                <span class="font-bold text-gray-900 group-hover:text-emerald-600 transition">+994 50 123 45 67</span>
+                                <span class="font-semibold text-gray-900 group-hover:text-emerald-600 transition">+994 50 123 45 67</span>
                             </div>
                         </a>
 
@@ -244,12 +244,12 @@
                             <i class="bi bi-envelope-fill text-orange-500 text-sm"></i>
                             <div class="flex-1 min-w-0">
                                 <span class="block text-[11px] text-gray-400">Email</span>
-                                <span class="font-bold text-gray-900 group-hover:text-orange-600 transition">info@metraj.az</span>
+                                <span class="font-semibold text-gray-900 group-hover:text-orange-600 transition">info@metraj.az</span>
                             </div>
                         </a>
                     </div>
 
-                    <a href="{{ route('contact') }}" class="w-full flex items-center justify-center gap-2 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl shadow transition duration-200 text-xs">
+                    <a href="{{ route('contact') }}" class="w-full flex items-center justify-center gap-2 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl shadow transition duration-200 text-xs">
                         <span>{{ __('Əlaqə Səhifəsinə Keç') }}</span>
                         <i class="bi bi-arrow-right"></i>
                     </a>
@@ -257,16 +257,16 @@
 
                 {{-- Fast Add Listing Promo --}}
                 <div class="bg-gray-900 rounded-3xl p-6 sm:p-7 text-white shadow-sm space-y-4">
-                    <span class="inline-block bg-orange-500 text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-md">
+                    <span class="inline-block bg-orange-500 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-md">
                         {{ __('Pulsuz') }}
                     </span>
-                    <h3 class="text-base sm:text-lg font-bold leading-snug">
+                    <h3 class="text-base sm:text-lg font-semibold leading-snug">
                         {{ __('Öz əmlakınızı dərhal satışa və ya kirayəyə çıxarın') }}
                     </h3>
                     <p class="text-xs text-gray-400 leading-relaxed">
                         {{ __('Cəmi 2 dəqiqə ərzində elanınızı yerləşdirin və minlərlə potensial müştəriyə çatın.') }}
                     </p>
-                    <a href="{{ route('add-property') }}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-gray-900 hover:bg-orange-500 hover:text-white font-bold text-xs rounded-xl shadow transition duration-200">
+                    <a href="{{ route('add-property') }}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-gray-900 hover:bg-orange-500 hover:text-white font-semibold text-xs rounded-xl shadow transition duration-200">
                         <span>{{ __('Elan Yerləşdir') }}</span>
                         <i class="bi bi-plus-lg"></i>
                     </a>

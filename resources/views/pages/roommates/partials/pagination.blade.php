@@ -26,11 +26,11 @@
             <div>
                 <p class="text-xs sm:text-sm text-gray-600">
                     {{ __('Göstərilir') }}
-                    <span class="font-bold text-gray-900">{{ $listings->firstItem() ?? 0 }}</span>
+                    <span class="font-semibold text-gray-900">{{ $listings->firstItem() ?? 0 }}</span>
                     -
-                    <span class="font-bold text-gray-900">{{ $listings->lastItem() ?? 0 }}</span>
+                    <span class="font-semibold text-gray-900">{{ $listings->lastItem() ?? 0 }}</span>
                     /
-                    <span class="font-bold text-gray-900">{{ $listings->total() }}</span>
+                    <span class="font-semibold text-gray-900">{{ $listings->total() }}</span>
                     {{ __('elan') }}
                 </p>
             </div>
@@ -54,7 +54,7 @@
                     @foreach ($listings->getUrlRange(1, $listings->lastPage()) as $page => $url)
                         @if ($page == $listings->currentPage())
                             <span aria-current="page">
-                                <span class="relative inline-flex items-center px-3.5 py-2 text-sm font-bold text-white bg-[#f1913d] border border-[#f1913d] rounded-lg cursor-default">
+                                <span class="relative inline-flex items-center px-3.5 py-2 text-sm font-semibold text-white bg-[#f1913d] border border-[#f1913d] rounded-lg cursor-default">
                                     {{ $page }}
                                 </span>
                             </span>

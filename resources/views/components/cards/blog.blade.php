@@ -27,7 +27,7 @@
              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
         
         @if(!empty($blogCategory))
-            <span class="absolute top-3 left-3 bg-orange-500 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md backdrop-blur-sm">
+            <span class="absolute top-3 left-3 bg-orange-500 text-white text-[11px] font-semibold px-3 py-1 rounded-full shadow-md backdrop-blur-sm">
                 {{ $blogCategory }}
             </span>
         @endif
@@ -46,7 +46,7 @@
             </span>
         </div>
 
-        <h3 class="font-bold text-gray-900 text-base sm:text-lg group-hover:text-[var(--primary)] transition-colors line-clamp-2 leading-snug">
+        <h3 class="font-semibold text-gray-900 text-base sm:text-lg group-hover:text-[var(--primary)] transition-colors line-clamp-2 leading-snug">
             {{ $blogTitle }}
         </h3>
 
@@ -58,7 +58,7 @@
 
         <div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-100/70">
             <a href="{{ route('blog.show', $blogSlug) }}" onclick="event.stopPropagation()"
-               class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[var(--primary)] group-hover:text-orange-700 transition">
+               class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[var(--primary)] group-hover:text-orange-700 transition">
                 {{ __('Ətraflı oxu') }}
                 <i class="bi bi-arrow-right group-hover:translate-x-1 transition-transform"></i>
             </a>

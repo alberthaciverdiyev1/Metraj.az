@@ -11,7 +11,7 @@
         {{-- Header + Search & View Switcher --}}
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 sm:gap-6 mb-6 sm:mb-8">
             <div>
-                <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[color:var(--text-color)] leading-tight">
+                <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-[color:var(--text-color)] leading-tight">
                     {{ __('Bloq və Xəbərlər') }}
                 </h1>
                 <p class="text-sm sm:text-base text-[color:var(--grey-text)] mt-1">
@@ -30,11 +30,11 @@
                 {{-- Grid / List View Toggle --}}
                 <div class="flex items-center bg-gray-100 p-1 rounded-2xl border border-gray-200/50 shadow-sm">
                     <button type="button" id="gridViewBtn" title="Qrid görünüşü"
-                            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition duration-200 bg-white text-orange-500 shadow-sm">
+                            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition duration-200 bg-white text-orange-500 shadow-sm">
                         <i class="bi bi-grid-3x3-gap-fill text-base"></i>
                     </button>
                     <button type="button" id="listViewBtn" title="Siyahı görünüşü"
-                            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition duration-200 text-gray-600 hover:text-gray-900 hover:bg-white/50">
+                            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition duration-200 text-gray-600 hover:text-gray-900 hover:bg-white/50">
                         <i class="bi bi-list-ul text-lg"></i>
                     </button>
                 </div>
@@ -46,12 +46,12 @@
         <div class="mb-6 sm:mb-8 overflow-x-auto pb-2 -mx-2 px-2 scrollbar-none">
             <div class="flex items-center gap-2 flex-nowrap">
                 <a href="{{ route('blog.list', array_filter(['search' => $search, 'category' => 'all'])) }}"
-                   class="px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap {{ ($category ?? 'all') === 'all' ? 'bg-orange-500 text-white shadow-sm' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200' }}">
+                   class="px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold transition duration-200 whitespace-nowrap {{ ($category ?? 'all') === 'all' ? 'bg-orange-500 text-white shadow-sm' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200' }}">
                     {{ __('Hamısı') }}
                 </a>
                 @foreach($categories as $cat)
                     <a href="{{ route('blog.list', array_filter(['search' => $search, 'category' => $cat])) }}"
-                       class="px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap {{ ($category ?? '') === $cat ? 'bg-orange-500 text-white shadow-sm' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200' }}">
+                       class="px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold transition duration-200 whitespace-nowrap {{ ($category ?? '') === $cat ? 'bg-orange-500 text-white shadow-sm' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200' }}">
                         {{ $cat }}
                     </a>
                 @endforeach
@@ -65,11 +65,11 @@
                 <div class="w-20 h-20 bg-orange-50 text-[var(--primary)] rounded-full flex items-center justify-center mx-auto text-3xl mb-4">
                     <i class="bi bi-journal-richtext"></i>
                 </div>
-                <h3 class="text-lg font-bold text-gray-900">{{ __('Məqalə tapılmadı') }}</h3>
+                <h3 class="text-lg font-semibold text-gray-900">{{ __('Məqalə tapılmadı') }}</h3>
                 <p class="text-xs sm:text-sm text-gray-500 mt-1.5 max-w-sm mx-auto">
                     {{ __('Axtarışınıza uyğun heç bir bloq məqaləsi tapılmadı. Zəhmət olmasa axtarış sözünü dəyişin.') }}
                 </p>
-                <a href="{{ route('blog.list') }}" class="inline-flex items-center gap-2 mt-5 px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold rounded-xl transition">
+                <a href="{{ route('blog.list') }}" class="inline-flex items-center gap-2 mt-5 px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-xl transition">
                     <i class="bi bi-arrow-left"></i> {{ __('Bütün məqalələrə qayıt') }}
                 </a>
             </div>

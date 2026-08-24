@@ -22,7 +22,7 @@
                         <span>{{ $item['label'] }}</span>
                     </a>
                 @else
-                    <span class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-gray-900 py-1 px-2.5 rounded-xl bg-gray-50 border border-gray-200/80 max-w-[200px] sm:max-w-[380px] md:max-w-none truncate"
+                    <span class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-gray-900 py-1 px-2.5 rounded-xl bg-gray-50 border border-gray-200/80 max-w-[200px] sm:max-w-[380px] md:max-w-none truncate"
                           aria-current="page">
                         @if($loop->first)
                             <span class="w-6 h-6 rounded-lg bg-orange-500 text-white flex items-center justify-center">

@@ -14,7 +14,7 @@
                 <a href="{{ route('home') }}" class="inline-block">
                     <img src="{{ asset('images/metrajlogo1.png') }}" alt="Metraj.az" class="h-10 mx-auto object-contain">
                 </a>
-                <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+                <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
                     {{ __('Yeni Hesab Yarat') }}
                 </h1>
                 <p class="text-xs sm:text-sm text-gray-500">
@@ -24,15 +24,15 @@
 
             {{-- Role Switcher Tabs (3 columns) --}}
             <div class="grid grid-cols-3 gap-2 p-1.5 bg-gray-100/80 rounded-2xl">
-                <button type="button" class="role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-extrabold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 bg-white text-orange-600 shadow-sm" data-role="user">
+                <button type="button" class="role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-bold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 bg-white text-orange-600 shadow-sm" data-role="user">
                     <i class="bi bi-person text-base"></i>
                     <span>{{ __('Fərdi İstifadəçi') }}</span>
                 </button>
-                <button type="button" class="role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-extrabold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 text-gray-600 hover:text-gray-900" data-role="agent">
+                <button type="button" class="role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-bold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 text-gray-600 hover:text-gray-900" data-role="agent">
                     <i class="bi bi-person-badge text-base"></i>
                     <span>{{ __('Rieltor (Agent)') }}</span>
                 </button>
-                <button type="button" class="role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-extrabold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 text-gray-600 hover:text-gray-900" data-role="agency">
+                <button type="button" class="role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-bold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 text-gray-600 hover:text-gray-900" data-role="agency">
                     <i class="bi bi-building text-base"></i>
                     <span>{{ __('Agentlik') }}</span>
                 </button>
@@ -55,7 +55,7 @@
 
                 {{-- ==================== AGENCY SPECIFIC FIELD ==================== --}}
                 <div id="field_agency_name" class="space-y-1.5 hidden">
-                    <label for="agency_name" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    <label for="agency_name" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
                         {{ __('Agentliyin (Şirkətin) Adı') }} <span class="text-rose-500">*</span>
                     </label>
                     <div class="relative">
@@ -68,7 +68,7 @@
 
                 {{-- Full Name Input (Applies to all) --}}
                 <div class="space-y-1.5">
-                    <label for="reg_name" id="label_name" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    <label for="reg_name" id="label_name" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
                         {{ __('Ad və Soyadınız') }} <span class="text-rose-500">*</span>
                     </label>
                     <div class="relative">
@@ -81,7 +81,7 @@
 
                 {{-- Email Input --}}
                 <div class="space-y-1.5">
-                    <label for="reg_email" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    <label for="reg_email" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
                         {{ __('E-poçt ünvanı') }} <span class="text-rose-500">*</span>
                     </label>
                     <div class="relative">
@@ -95,7 +95,7 @@
                 {{-- ==================== PHONE & WHATSAPP (Agent & Agency) ==================== --}}
                 <div id="contactFields" class="grid grid-cols-1 sm:grid-cols-2 gap-4 hidden">
                     <div class="space-y-1.5">
-                        <label for="reg_phone" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        <label for="reg_phone" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
                             {{ __('Telefon nömrəsi') }} <span class="text-rose-500">*</span>
                         </label>
                         <div class="relative">
@@ -107,7 +107,7 @@
                     </div>
 
                     <div class="space-y-1.5">
-                        <label for="reg_whatsapp" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        <label for="reg_whatsapp" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
                             {{ __('WhatsApp') }} <span class="text-gray-400 font-normal">({{ __('opsional') }})</span>
                         </label>
                         <div class="relative">
@@ -120,7 +120,7 @@
 
                 {{-- ==================== AGENT: AGENCY SELECTION ==================== --}}
                 <div id="field_agency_select" class="space-y-1.5 hidden">
-                    <label for="reg_agency_id" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    <label for="reg_agency_id" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
                         {{ __('Aid Olduğunuz Agentlik') }} <span class="text-gray-400 font-normal">({{ __('opsional') }})</span>
                     </label>
                     <div class="relative">
@@ -138,7 +138,7 @@
 
                 {{-- ==================== AGENCY: ADDRESS ==================== --}}
                 <div id="field_agency_address" class="space-y-1.5 hidden">
-                    <label for="reg_address" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    <label for="reg_address" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
                         {{ __('Ofis Ünvanı') }} <span class="text-gray-400 font-normal">({{ __('opsional') }})</span>
                     </label>
                     <div class="relative">
@@ -151,7 +151,7 @@
                 {{-- Password & Password Confirmation --}}
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="space-y-1.5">
-                        <label for="reg_password" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        <label for="reg_password" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
                             {{ __('Şifrə') }} <span class="text-rose-500">*</span>
                         </label>
                         <div class="relative">
@@ -166,7 +166,7 @@
                     </div>
 
                     <div class="space-y-1.5">
-                        <label for="reg_password_confirmation" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        <label for="reg_password_confirmation" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
                             {{ __('Şifrənin Təkrarı') }} <span class="text-rose-500">*</span>
                         </label>
                         <div class="relative">
@@ -191,7 +191,7 @@
 
                 {{-- Submit Button --}}
                 <button type="submit" id="registerSubmitBtn"
-                        class="w-full py-4 bg-orange-500 hover:bg-orange-600 text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-md transition duration-200 transform active:scale-98 flex items-center justify-center gap-2 mt-2">
+                        class="w-full py-4 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm sm:text-base rounded-2xl shadow-md transition duration-200 transform active:scale-98 flex items-center justify-center gap-2 mt-2">
                     <span id="registerBtnText">{{ __('Qeydiyyatı Tamamla') }}</span>
                     <i class="bi bi-arrow-right text-sm"></i>
                 </button>
@@ -201,7 +201,7 @@
             <div class="pt-4 border-t border-gray-100 text-center text-xs sm:text-sm text-gray-600 space-y-2">
                 <p>
                     {{ __('Artıq hesabınız var?') }}
-                    <a href="{{ route('login') }}" class="font-bold text-orange-600 hover:text-orange-700 hover:underline">
+                    <a href="{{ route('login') }}" class="font-semibold text-orange-600 hover:text-orange-700 hover:underline">
                         {{ __('Daxil olun') }}
                     </a>
                 </p>

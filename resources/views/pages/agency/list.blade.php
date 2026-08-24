@@ -11,23 +11,23 @@
             <div class="flex items-center justify-between flex-wrap gap-4">
                 <div class="flex gap-1 bg-gray-100 p-1 rounded-2xl border border-gray-200/50 max-w-max shadow-sm flex-wrap" id="entityFilter" data-role="entity-filter">
                     <button type="button" data-filter="all"
-                            class="filter-tab px-4 sm:px-5 py-2 rounded-xl font-bold text-xs sm:text-sm tracking-wide transition duration-200 {{ ($activeType ?? 'all') === 'all' ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}">
+                            class="filter-tab px-4 sm:px-5 py-2 rounded-xl font-semibold text-xs sm:text-sm tracking-wide transition duration-200 {{ ($activeType ?? 'all') === 'all' ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}">
                         {{ __('Hamısı') }}
                         <span class="ml-1 text-[10px] bg-gray-200/70 rounded-full px-1.5 py-0.5" id="countAll">{{ $agenciesCount + $agentsCount }}</span>
                     </button>
                     <button type="button" data-filter="agency"
-                            class="filter-tab px-4 sm:px-5 py-2 rounded-xl font-bold text-xs sm:text-sm tracking-wide transition duration-200 {{ ($activeType ?? 'all') === 'agency' ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}">
+                            class="filter-tab px-4 sm:px-5 py-2 rounded-xl font-semibold text-xs sm:text-sm tracking-wide transition duration-200 {{ ($activeType ?? 'all') === 'agency' ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}">
                         <i class="fas fa-building mr-1"></i>{{ __('Agentliklər') }}
                         <span class="ml-1 text-[10px] bg-gray-200/70 rounded-full px-1.5 py-0.5">{{ $agenciesCount }}</span>
                     </button>
                     <button type="button" data-filter="agent"
-                            class="filter-tab px-4 sm:px-5 py-2 rounded-xl font-bold text-xs sm:text-sm tracking-wide transition duration-200 {{ ($activeType ?? 'all') === 'agent' ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}">
+                            class="filter-tab px-4 sm:px-5 py-2 rounded-xl font-semibold text-xs sm:text-sm tracking-wide transition duration-200 {{ ($activeType ?? 'all') === 'agent' ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}">
                         <i class="fas fa-user-tie mr-1"></i>{{ __('Müstəqil Rieltorlar') }}
                         <span class="ml-1 text-[10px] bg-gray-200/70 rounded-full px-1.5 py-0.5">{{ $agentsCount }}</span>
                     </button>
                 </div>
 
-                <div id="gridLoading" class="hidden text-orange-500 text-xs font-bold flex items-center gap-2">
+                <div id="gridLoading" class="hidden text-orange-500 text-xs font-semibold flex items-center gap-2">
                     <i class="fas fa-spinner fa-spin text-sm"></i> {{ __('Yenilənir...') }}
                 </div>
             </div>

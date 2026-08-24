@@ -21,14 +21,14 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateFilterUI(type) {
         tabBtns.forEach(btn => {
             const btnType = btn.getAttribute('data-type');
-            btn.className = 'cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl whitespace-nowrap transition cursor-pointer text-gray-600 hover:text-gray-900';
+            btn.className = 'cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-xl whitespace-nowrap transition cursor-pointer text-gray-600 hover:text-gray-900';
 
             if (btnType === type) {
-                if (type === 'buy') btn.className = 'cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl whitespace-nowrap transition cursor-pointer bg-emerald-600 text-white shadow-xs';
-                else if (type === 'rent') btn.className = 'cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl whitespace-nowrap transition cursor-pointer bg-blue-600 text-white shadow-xs';
-                else if (type === 'daily') btn.className = 'cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl whitespace-nowrap transition cursor-pointer bg-amber-600 text-white shadow-xs';
-                else if (type === 'roommate') btn.className = 'cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl whitespace-nowrap transition cursor-pointer bg-purple-600 text-white shadow-xs';
-                else btn.className = 'cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl whitespace-nowrap transition cursor-pointer bg-white text-gray-900 shadow-xs';
+                if (type === 'buy') btn.className = 'cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-xl whitespace-nowrap transition cursor-pointer bg-emerald-600 text-white shadow-xs';
+                else if (type === 'rent') btn.className = 'cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-xl whitespace-nowrap transition cursor-pointer bg-blue-600 text-white shadow-xs';
+                else if (type === 'daily') btn.className = 'cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-xl whitespace-nowrap transition cursor-pointer bg-amber-600 text-white shadow-xs';
+                else if (type === 'roommate') btn.className = 'cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-xl whitespace-nowrap transition cursor-pointer bg-purple-600 text-white shadow-xs';
+                else btn.className = 'cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-xl whitespace-nowrap transition cursor-pointer bg-white text-gray-900 shadow-xs';
             }
         });
 

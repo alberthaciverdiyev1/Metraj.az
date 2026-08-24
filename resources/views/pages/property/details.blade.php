@@ -40,7 +40,7 @@
         @else
             <img src="https://static.vecteezy.com/system/resources/previews/004/640/986/non_2x/tower-building-illustration-isolated-on-white-background-vector.jpg" alt="Əsas Şəkil" class="w-full h-full object-cover">
         @endif
-        <span class="absolute bottom-4 left-4 bg-black/60 text-white text-xs px-3.5 py-2 rounded-xl font-bold backdrop-blur-md flex items-center gap-1.5 shadow">
+        <span class="absolute bottom-4 left-4 bg-black/60 text-white text-xs px-3.5 py-2 rounded-xl font-semibold backdrop-blur-md flex items-center gap-1.5 shadow">
             <i class="bi bi-camera"></i>
             <span>{{ $totalImages }} {{ __('şəkil') }}</span>
         </span>
@@ -99,7 +99,7 @@
                 @endphp
 
                 <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                    <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 leading-snug">{{ $property->title }}</h1>
+                    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-snug">{{ $property->title }}</h1>
                     <div class="text-right shrink-0">
                         <div class="text-2xl sm:text-3xl font-black text-orange-500 whitespace-nowrap">
                             {{ $displayPrice['symbol'] }} {{ $displayPrice['formatted'] }}
@@ -144,8 +144,8 @@
                     @if($isAgentOrAgency)
                         <!-- Realtor / Agency Layout -->
                         <div class="flex items-center justify-between">
-                            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest">{{ $agentRole }}</h3>
-                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-orange-50 text-orange-600 border border-orange-200">
+                            <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-widest">{{ $agentRole }}</h3>
+                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-orange-50 text-orange-600 border border-orange-200">
                                 <i class="bi bi-patch-check-fill text-orange-500"></i>
                                 {{ __('Təsdiqlənmiş') }}
                             </span>
@@ -154,7 +154,7 @@
                         <div class="flex items-center gap-4">
                             <img src="{{ $agentAvatar }}" alt="{{ $agentName }}" class="w-16 h-16 rounded-2xl object-cover border border-gray-100 shadow-sm">
                             <div class="space-y-0.5">
-                                <h4 class="text-base font-extrabold text-gray-900 leading-tight">{{ $agentName }}</h4>
+                                <h4 class="text-base font-bold text-gray-900 leading-tight">{{ $agentName }}</h4>
                                 <p class="text-xs text-gray-500">{{ $agentRole }}</p>
                             </div>
                         </div>
@@ -164,13 +164,13 @@
                             @if(!empty($agentPhone))
                             <div class="flex items-center justify-between text-sm">
                                 <span class="text-gray-500">{{ __('Telefon') }}:</span>
-                                <a href="tel:{{ $agentPhone }}" class="font-bold text-gray-900 hover:text-orange-500 transition duration-200">{{ $agentPhone }}</a>
+                                <a href="tel:{{ $agentPhone }}" class="font-semibold text-gray-900 hover:text-orange-500 transition duration-200">{{ $agentPhone }}</a>
                             </div>
                             @endif
                             @if(!empty($agentWhatsapp))
                             <div class="flex items-center justify-between text-sm">
                                 <span class="text-gray-500">WhatsApp:</span>
-                                <a href="https://wa.me/{{ $cleanWhatsapp }}" target="_blank" rel="noopener noreferrer" class="font-bold text-emerald-600 hover:text-emerald-700 transition duration-200">{{ $agentWhatsapp }}</a>
+                                <a href="https://wa.me/{{ $cleanWhatsapp }}" target="_blank" rel="noopener noreferrer" class="font-semibold text-emerald-600 hover:text-emerald-700 transition duration-200">{{ $agentWhatsapp }}</a>
                             </div>
                             @endif
                         </div>
@@ -178,7 +178,7 @@
                         <div class="grid {{ (!empty($agentPhone) && !empty($cleanWhatsapp)) ? 'grid-cols-2' : 'grid-cols-1' }} gap-2.5">
                             @if(!empty($agentPhone))
                             <a href="tel:{{ $agentPhone }}"
-                               class="w-full flex items-center justify-center gap-2 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
+                               class="w-full flex items-center justify-center gap-2 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
                                 <i class="bi bi-telephone-fill text-xs"></i>
                                 <span>{{ __('Zəng et') }}</span>
                             </a>
@@ -186,7 +186,7 @@
 
                             @if(!empty($cleanWhatsapp))
                             <a href="https://wa.me/{{ $cleanWhatsapp }}" target="_blank" rel="noopener noreferrer"
-                               class="w-full flex items-center justify-center gap-2 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
+                               class="w-full flex items-center justify-center gap-2 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
                                 <i class="bi bi-whatsapp text-sm"></i>
                                 <span>WhatsApp</span>
                             </a>
@@ -197,7 +197,7 @@
                         <!-- Müraciət Et Formu (Rieltor və ya Agentlik elanlarında) -->
                         <div class="pt-6 border-t border-gray-100 space-y-4">
                             <div class="flex items-center justify-between">
-                                <h4 class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                <h4 class="text-sm font-semibold text-gray-900 flex items-center gap-2">
                                     <i class="bi bi-chat-left-dots-fill text-orange-500"></i>
                                     <span>{{ __('Müraciət Göndər') }}</span>
                                 </h4>
@@ -227,7 +227,7 @@
                                 </div>
 
                                 <button type="submit"
-                                    class="w-full py-3 bg-gray-900 hover:bg-black text-white font-bold text-xs rounded-xl shadow transition duration-200 flex items-center justify-center gap-2 transform active:scale-98">
+                                    class="w-full py-3 bg-gray-900 hover:bg-black text-white font-semibold text-xs rounded-xl shadow transition duration-200 flex items-center justify-center gap-2 transform active:scale-98">
                                     <i class="bi bi-send-fill text-xs text-orange-400"></i>
                                     <span>{{ __('Müraciəti Göndər') }}</span>
                                 </button>
@@ -237,12 +237,12 @@
                         <!-- Guest / Owner Layout (Sadəcə Telefon və Zəng et) -->
                         <div class="space-y-4">
                             <div class="flex items-center justify-between">
-                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest">{{ __('Əlaqədar Şəxs') }}</h3>
+                                <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-widest">{{ __('Əlaqədar Şəxs') }}</h3>
                                 <span class="text-xs font-semibold text-gray-500">{{ __('Mülkiyyətçi') }}</span>
                             </div>
 
                             @if(!empty($agentName) && $agentName !== 'Metraj Təmsilçisi')
-                            <div class="text-base font-extrabold text-gray-900">
+                            <div class="text-base font-bold text-gray-900">
                                 {{ $agentName }}
                             </div>
                             @endif
@@ -265,7 +265,7 @@
                             <div class="grid {{ (!empty($agentPhone) && !empty($cleanWhatsapp)) ? 'grid-cols-2' : 'grid-cols-1' }} gap-2.5">
                                 @if(!empty($agentPhone))
                                 <a href="tel:{{ $agentPhone }}"
-                                   class="w-full flex items-center justify-center gap-2 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
+                                   class="w-full flex items-center justify-center gap-2 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
                                     <i class="bi bi-telephone-fill text-sm"></i>
                                     <span>{{ __('Zəng et') }}</span>
                                 </a>
@@ -273,7 +273,7 @@
 
                                 @if(!empty($cleanWhatsapp))
                                 <a href="https://wa.me/{{ $cleanWhatsapp }}" target="_blank" rel="noopener noreferrer"
-                                   class="w-full flex items-center justify-center gap-2 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
+                                   class="w-full flex items-center justify-center gap-2 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
                                     <i class="bi bi-whatsapp text-sm"></i>
                                     <span>WhatsApp</span>
                                 </a>

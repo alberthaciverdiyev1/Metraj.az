@@ -21,23 +21,23 @@
             @endphp
             <div class="flex items-center gap-1.5 p-1 bg-gray-100/80 rounded-2xl overflow-x-auto" id="categoryTabs">
                 <button type="button" data-type=""
-                        class="cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl whitespace-nowrap transition cursor-pointer {{ empty($activeType) ? 'bg-white text-gray-900 shadow-xs' : 'text-gray-600 hover:text-gray-900' }}">
+                        class="cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-xl whitespace-nowrap transition cursor-pointer {{ empty($activeType) ? 'bg-white text-gray-900 shadow-xs' : 'text-gray-600 hover:text-gray-900' }}">
                     {{ __('Bütün Tələblər') }}
                 </button>
                 <button type="button" data-type="buy"
-                        class="cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl whitespace-nowrap transition cursor-pointer {{ $activeType === 'buy' ? 'bg-emerald-600 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900' }}">
+                        class="cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-xl whitespace-nowrap transition cursor-pointer {{ $activeType === 'buy' ? 'bg-emerald-600 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900' }}">
                     <i class="fa-solid fa-cart-shopping mr-1 text-[11px]"></i> {{ __('Almaq İstəyirəm') }}
                 </button>
                 <button type="button" data-type="rent"
-                        class="cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl whitespace-nowrap transition cursor-pointer {{ $activeType === 'rent' || $activeType === 'rent_monthly' ? 'bg-blue-600 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900' }}">
+                        class="cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-xl whitespace-nowrap transition cursor-pointer {{ $activeType === 'rent' || $activeType === 'rent_monthly' ? 'bg-blue-600 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900' }}">
                     <i class="fa-solid fa-key mr-1 text-[11px]"></i> {{ __('Kirayə Axtarıram') }}
                 </button>
                 <button type="button" data-type="daily"
-                        class="cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl whitespace-nowrap transition cursor-pointer {{ $activeType === 'daily' || $activeType === 'rent_daily' ? 'bg-amber-600 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900' }}">
+                        class="cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-xl whitespace-nowrap transition cursor-pointer {{ $activeType === 'daily' || $activeType === 'rent_daily' ? 'bg-amber-600 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900' }}">
                     <i class="fa-solid fa-calendar-day mr-1 text-[11px]"></i> {{ __('Günlük') }}
                 </button>
                 <button type="button" data-type="roommate"
-                        class="cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl whitespace-nowrap transition cursor-pointer {{ $activeType === 'roommate' ? 'bg-purple-600 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900' }}">
+                        class="cat-tab-btn px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-xl whitespace-nowrap transition cursor-pointer {{ $activeType === 'roommate' ? 'bg-purple-600 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900' }}">
                     <i class="fa-solid fa-people-roof mr-1 text-[11px]"></i> {{ __('Otaq Yoldaşı') }}
                 </button>
             </div>
@@ -48,7 +48,7 @@
 
                 <!-- Search -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Axtarış') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Axtarış') }}</label>
                     <div class="relative">
                         <input type="text" name="search" id="filterSearchInput" value="{{ request('search') }}"
                                placeholder="{{ __('Açar söz, metro, rayon...') }}"
@@ -60,7 +60,7 @@
 
                 <!-- City -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Şəhər') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Şəhər') }}</label>
                     <select name="city_id" id="filterCitySelect"
                             class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
                         <option value="">{{ __('Bütün Şəhərlər') }}</option>
@@ -77,7 +77,7 @@
 
                 <!-- Property Type (Dynamically hidden for roommate) -->
                 <div id="filterPropertyTypeCol">
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Əmlak Növü') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Əmlak Növü') }}</label>
                     <select name="property_type" id="filterPropertyTypeSelect"
                             class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
                         <option value="">{{ __('Bütün Növlər') }}</option>
@@ -92,7 +92,7 @@
 
                 <!-- Roommate Gender Selector (Dynamically shown only for roommate) -->
                 <div id="filterRoommateGenderCol" class="hidden">
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Cinsiyyət Tələbi') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Cinsiyyət Tələbi') }}</label>
                     <select name="gender_preference" id="filterGenderSelect"
                             class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
                         <option value="">{{ __('Fərqi yoxdur (Hamı)') }}</option>
@@ -103,7 +103,7 @@
 
                 <!-- Max Budget -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5" id="budgetLabel">{{ __('Maksimum Büdcə (₼)') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5" id="budgetLabel">{{ __('Maksimum Büdcə (₼)') }}</label>
                     <input type="number" name="max_budget" id="filterMaxBudgetInput" value="{{ request('max_budget') }}" placeholder="0" min="0"
                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
                 </div>
@@ -160,7 +160,7 @@
                         {{ __('Sıfırla') }}
                     </button>
                     <button type="button" id="submitFilterBtn"
-                            class="px-5 py-2 text-xs sm:text-sm font-bold text-white bg-gray-900 hover:bg-[#f1913d] rounded-xl transition shadow-xs cursor-pointer">
+                            class="px-5 py-2 text-xs sm:text-sm font-semibold text-white bg-gray-900 hover:bg-[#f1913d] rounded-xl transition shadow-xs cursor-pointer">
                         <i class="bi bi-funnel mr-1"></i> {{ __('Axtar') }}
                     </button>
                 </div>

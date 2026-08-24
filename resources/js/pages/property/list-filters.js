@@ -37,7 +37,7 @@ function setupFilterDropdown(btnId, menuId, chevronId, hiddenInputId) {
                 const isActive = (i.getAttribute('data-val') || '') === val;
                 i.classList.toggle('text-[#f1913d]', isActive);
                 i.classList.toggle('bg-orange-50/60', isActive);
-                i.classList.toggle('font-bold', isActive);
+                i.classList.toggle('font-semibold', isActive);
                 i.classList.toggle('text-gray-700', !isActive);
                 const check = i.querySelector('.item-check');
                 if (check) check.classList.toggle('hidden', !isActive);

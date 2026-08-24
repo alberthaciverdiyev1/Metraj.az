@@ -6,8 +6,8 @@
                 <a href="{{ route('home') }}" class="flex items-center space-x-2.5">
                     <img class="h-9 w-auto object-contain brightness-0 invert" src="{{ asset('images/metrajlogo1.png') }}" alt="Metraj" />
                     <div class="leading-tight">
-                        <div class="text-xl font-extrabold text-white tracking-tight">Metraj.az</div>
-                        <div class="text-[8px] text-orange-500 underline underline-offset-4 uppercase tracking-[0.15em] font-bold">sənin əmlakın</div>
+                        <div class="text-xl font-bold text-white tracking-tight">Metraj.az</div>
+                        <div class="text-[8px] text-orange-500 underline underline-offset-4 uppercase tracking-[0.15em] font-semibold">sənin əmlakın</div>
                     </div>
                 </a>
                 <p class="text-sm text-neutral-400 leading-relaxed max-w-sm">
@@ -31,7 +31,7 @@
 
             <!-- Column 2: Navigation -->
             <div class="space-y-4">
-                <h4 class="text-sm font-bold text-white uppercase tracking-wider">{{ __('Keçidlər') }}</h4>
+                <h4 class="text-sm font-semibold text-white uppercase tracking-wider">{{ __('Keçidlər') }}</h4>
                 <ul class="space-y-2.5 text-sm">
                     <li><a href="{{ route('home') }}" class="hover:text-white hover:underline transition">{{ __('Ana Səhifə') }}</a></li>
                     <li><a href="{{ route('listing') }}" class="hover:text-white hover:underline transition">{{ __('Elanlar') }}</a></li>
@@ -46,7 +46,7 @@
 
             <!-- Column 3: Locations -->
             <div class="space-y-4">
-                <h4 class="text-sm font-bold text-white uppercase tracking-wider">{{ __('Populyar Bölgələr') }}</h4>
+                <h4 class="text-sm font-semibold text-white uppercase tracking-wider">{{ __('Populyar Bölgələr') }}</h4>
                 <ul class="space-y-2.5 text-sm">
                     <li><a href="{{ route('listing.path1', ['first' => 'girne']) }}" class="hover:text-white hover:underline transition">{{ __('Girne') }}</a></li>
                     <li><a href="{{ route('listing.path1', ['first' => 'lefkosa']) }}" class="hover:text-white hover:underline transition">{{ __('Lefkoşa') }}</a></li>
@@ -58,7 +58,7 @@
 
             <!-- Column 4: Contact -->
             <div class="space-y-4">
-                <h4 class="text-sm font-bold text-white uppercase tracking-wider">{{ __('Əlaqə & Dəstək') }}</h4>
+                <h4 class="text-sm font-semibold text-white uppercase tracking-wider">{{ __('Əlaqə & Dəstək') }}</h4>
                 <ul class="space-y-3.5 text-sm">
                     <li class="flex items-start space-x-3">
                         <i class="bi bi-telephone text-orange-500 mt-0.5 text-base"></i>

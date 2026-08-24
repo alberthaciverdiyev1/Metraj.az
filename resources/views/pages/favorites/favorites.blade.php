@@ -19,8 +19,8 @@
             </div>
             <div>
                 <div class="flex items-center gap-2">
-                    <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">{{ __('Seçilmiş Elanlar') }}</h1>
-                    <span id="favsTotalBadge" class="{{ count($properties) > 0 ? '' : 'hidden' }} px-2.5 py-0.5 rounded-full text-xs font-bold bg-orange-100 text-orange-600">
+                    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">{{ __('Seçilmiş Elanlar') }}</h1>
+                    <span id="favsTotalBadge" class="{{ count($properties) > 0 ? '' : 'hidden' }} px-2.5 py-0.5 rounded-full text-xs font-semibold bg-orange-100 text-orange-600">
                         {{ count($properties) }}
                     </span>
                 </div>
@@ -45,11 +45,11 @@
         <div class="w-20 h-20 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl shadow-sm">
             <i class="fa-regular fa-heart"></i>
         </div>
-        <h3 class="text-xl font-bold text-gray-900 mb-2">{{ __('Seçilmiş elanınız yoxdur') }}</h3>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ __('Seçilmiş elanınız yoxdur') }}</h3>
         <p class="text-gray-500 text-sm mb-6 max-w-sm mx-auto leading-relaxed">
             {{ __('Bəyəndiyiniz elanların üzərindəki ürək ikonuna klikləyərək onları seçilmişlər siyahısına əlavə edə bilərsiniz.') }}
         </p>
-        <a href="{{ route('listing') }}" class="inline-flex items-center px-6 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm rounded-xl shadow-md transition-all duration-200 hover:shadow-lg">
+        <a href="{{ route('listing') }}" class="inline-flex items-center px-6 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm rounded-xl shadow-md transition-all duration-200 hover:shadow-lg">
             <i class="bi bi-search mr-2"></i>
             <span>{{ __('Elanları Kəşf Et') }}</span>
         </a>

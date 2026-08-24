@@ -24,7 +24,7 @@
         <div class="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-10 px-4">
 
             <div class="w-full lg:w-1/2">
-                <h2 class="text-4xl font-bold text-gray-900 mb-6">{{ __('We are here to Help') }}</h2>
+                <h2 class="text-4xl font-semibold text-gray-900 mb-6">{{ __('We are here to Help') }}</h2>
                 <p class="text-gray-600 mb-4">
                     {{ __("If you haven't experienced it before, the home loan process can feel overwhelming, but our agents will help you stay informed throughout the process, from pre-approval to closing. The first thing to do is consult with a mortgage specialist. If you don't already have someone in mind, we partner with some of the best lenders in the industry, and we'd be happy to introduce you, so you'll be taken care of.") }}
                 </p>
@@ -37,17 +37,17 @@
                 <div class="flex flex-col sm:flex-row items-center sm:items-start gap-10 mt-10 flex-wrap">
                     <div class="flex flex-col gap-4 items-start">
                         <i class="bi bi-house text-[var(--primary)] text-4xl mb-2"></i>
-                        <span class="text-4xl font-bold text-gray-900">900+</span>
+                        <span class="text-4xl font-semibold text-gray-900">900+</span>
                         <p class="text-sm text-gray-600">{{ __('Homes for Sale') }}</p>
                     </div>
                     <div class="flex flex-col gap-4 items-start">
                         <i class="bi bi-person text-[var(--primary)] text-4xl mb-2"></i>
-                        <span class="text-4xl font-bold text-gray-900">287+</span>
+                        <span class="text-4xl font-semibold text-gray-900">287+</span>
                         <p class="text-sm text-gray-600">{{ __('Real Estate Agents') }}</p>
                     </div>
                     <div class="flex flex-col gap-4 items-start">
                         <i class="bi bi-patch-check text-[var(--primary)] text-4xl mb-2"></i>
-                        <span class="text-4xl font-bold text-gray-900">3.600+</span>
+                        <span class="text-4xl font-semibold text-gray-900">3.600+</span>
                         <p class="text-sm text-gray-600">{{ __('Properties Sold') }}</p>
                     </div>
                 </div>
@@ -73,19 +73,19 @@
             <div class="max-w-7xl mx-auto">
 
                 <div class="flex justify-between items-center relative mb-14 max-w-3xl mx-auto">
-                    <div class="flex flex-col items-center text-[var(--primary)] font-bold relative">
+                    <div class="flex flex-col items-center text-[var(--primary)] font-semibold relative">
                         <div
                             class="border-2 border-dotted border-[var(--primary)] rounded-full w-12 h-12 flex items-center justify-center bg-white z-10">
                             01</div>
                         <span
                             class="absolute top-1/2 left-0 w-full h-px border-t border-dotted border-[var(--primary)] -z-10"></span>
                     </div>
-                    <div class="flex flex-col items-center text-[var(--primary)] font-bold relative">
+                    <div class="flex flex-col items-center text-[var(--primary)] font-semibold relative">
                         <div
                             class="border-2 border-dotted border-[var(--primary)] rounded-full w-12 h-12 flex items-center justify-center bg-white z-10">
                             02</div>
                     </div>
-                    <div class="flex flex-col items-center text-[var(--primary)] font-bold relative">
+                    <div class="flex flex-col items-center text-[var(--primary)] font-semibold relative">
                         <div
                             class="border-2 border-dotted border-[var(--primary)] rounded-full w-12 h-12 flex items-center justify-center bg-white z-10">
                             03</div>
@@ -184,7 +184,7 @@
                     <img src="{{ $setting->logo }}" class="w-[170px] h-[50px]" alt="">
                     @endif
                 </div>
-                <h2 class="text-4xl sm:text-md mt-5 font-bold">{{ __('Find a Local Real Estate Agent Today') }}</h2>
+                <h2 class="text-4xl sm:text-md mt-5 font-semibold">{{ __('Find a Local Real Estate Agent Today') }}</h2>
                 <p class="my-4">{{ __('If you\'re looking to buy or sell a home. We\'ll help you make the most money possible.') }}
                 </p>
                 <button

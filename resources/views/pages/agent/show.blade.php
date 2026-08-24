@@ -28,11 +28,11 @@
 
                 <div class="flex-1 min-w-0 pb-1">
                     <div class="flex flex-wrap items-center gap-2">
-                        <h1 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[color:var(--text-color)] leading-tight">
+                        <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-[color:var(--text-color)] leading-tight">
                             {{ $agent->user?->name ?? __('Rieltor') }}
                         </h1>
                         @if($agent->is_active)
-                            <span class="bg-orange-50 text-orange-600 text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 border border-orange-100">
+                            <span class="bg-orange-50 text-orange-600 text-[11px] sm:text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1.5 border border-orange-100">
                                 <i class="bi bi-patch-check-fill"></i>
                                 {{ __('Təsdiqlənmiş Rieltor') }}
                             </span>
@@ -56,7 +56,7 @@
                 <div class="flex flex-wrap items-center gap-2 sm:gap-3 pb-1">
                     @if($agent->phone)
                         <a href="tel:{{ $agent->phone }}"
-                           class="flex items-center gap-2 px-5 py-2.5 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-md transition duration-200 text-sm sm:text-base">
+                           class="flex items-center gap-2 px-5 py-2.5 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 text-sm sm:text-base">
                             <i class="bi bi-telephone-fill text-sm"></i>
                             {{ $agent->phone }}
                         </a>
@@ -64,7 +64,7 @@
                     @if($agent->whatsapp || $agent->phone)
                         @php $wa = preg_replace('/[^0-9]/', '', $agent->whatsapp ?: $agent->phone); @endphp
                         <a href="https://wa.me/{{ $wa }}" target="_blank"
-                           class="flex items-center gap-2 px-5 py-2.5 sm:py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-2xl shadow-md transition duration-200 text-sm sm:text-base">
+                           class="flex items-center gap-2 px-5 py-2.5 sm:py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 text-sm sm:text-base">
                             <i class="bi bi-whatsapp text-base"></i>
                             WhatsApp
                         </a>
@@ -75,7 +75,7 @@
             {{-- Real data summary + Contact Info --}}
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 pt-6 border-t border-gray-100 text-sm">
                 <div class="md:col-span-2">
-                    <h3 class="font-bold text-[color:var(--text-color)] mb-3 flex items-center gap-2">
+                    <h3 class="font-semibold text-[color:var(--text-color)] mb-3 flex items-center gap-2">
                         <i class="bi bi-person-lines-fill text-[var(--primary)]"></i>
                         {{ __('Rieltor Haqqında') }}
                     </h3>
@@ -141,7 +141,7 @@
     <div class="mt-10 sm:mt-12">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
             <div>
-                <h2 class="text-xl sm:text-2xl font-bold text-[color:var(--text-color)]">
+                <h2 class="text-xl sm:text-2xl font-semibold text-[color:var(--text-color)]">
                     {{ __('Rieltorun Elanları') }}
                 </h2>
                 <p class="text-xs sm:text-sm text-[color:var(--grey-text)] mt-0.5">
@@ -158,11 +158,11 @@
                 <div class="w-16 h-16 bg-orange-50 text-[var(--primary)] rounded-full flex items-center justify-center mx-auto text-2xl mb-4">
                     <i class="bi bi-house-door"></i>
                 </div>
-                <h3 class="text-base font-bold text-gray-800">{{ __('Hələlik aktiv elan yoxdur') }}</h3>
+                <h3 class="text-base font-semibold text-gray-800">{{ __('Hələlik aktiv elan yoxdur') }}</h3>
                 <p class="text-xs text-gray-500 mt-1 max-w-sm mx-auto">
                     {{ __('Bu rieltor tərəfindən hələ heç bir elan yerləşdirilməyib və ya elanlar moderasiyadadır.') }}
                 </p>
-                <a href="{{ route('agencies.list') }}" class="inline-flex items-center gap-2 mt-5 px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold rounded-xl transition">
+                <a href="{{ route('agencies.list') }}" class="inline-flex items-center gap-2 mt-5 px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-xl transition">
                     <i class="bi bi-arrow-left"></i> {{ __('Digər rieltor və agentliklərə baxın') }}
                 </a>
             </div>

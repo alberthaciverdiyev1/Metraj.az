@@ -12,7 +12,7 @@
             <div class="relative h-56 sm:h-80 lg:h-96 overflow-hidden">
                 <img src="{{ $blog->cover_image }}" alt="{{ $blog->title }}" class="w-full h-full object-cover">
                 @if($blog->category)
-                    <span class="absolute top-4 left-4 bg-[var(--primary)] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow">
+                    <span class="absolute top-4 left-4 bg-[var(--primary)] text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow">
                         {{ $blog->category }}
                     </span>
                 @endif
@@ -20,7 +20,7 @@
         @else
             <div class="relative h-40 sm:h-56 bg-[var(--primary)] flex items-center justify-center">
                 @if($blog->category)
-                    <span class="bg-white/20 backdrop-blur text-white text-xs font-bold px-3 py-1.5 rounded-full">
+                    <span class="bg-white/20 backdrop-blur text-white text-xs font-semibold px-3 py-1.5 rounded-full">
                         {{ $blog->category }}
                     </span>
                 @endif
@@ -42,7 +42,7 @@
                 @endif
             </div>
 
-            <h1 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[color:var(--text-color)] leading-tight mb-4">
+            <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-[color:var(--text-color)] leading-tight mb-4">
                 {{ $blog->title }}
             </h1>
 
@@ -84,7 +84,7 @@
     @if($related->isNotEmpty())
         <div class="mt-10 sm:mt-14">
             <div class="flex items-center gap-3 mb-5">
-                <h2 class="text-lg sm:text-xl font-bold text-[color:var(--text-color)]">{{ __('Oxşar Məqalələr') }}</h2>
+                <h2 class="text-lg sm:text-xl font-semibold text-[color:var(--text-color)]">{{ __('Oxşar Məqalələr') }}</h2>
                 <div class="h-px flex-1 bg-gray-200"></div>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">

@@ -29,11 +29,11 @@
                 </div>
                 <div class="flex-1 min-w-0 pb-1">
                     <div class="flex flex-wrap items-center gap-2">
-                        <h1 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[color:var(--text-color)] leading-tight">
+                        <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-[color:var(--text-color)] leading-tight">
                             {{ $agency->name }}
                         </h1>
                         @if($agency->is_verified)
-                            <span class="bg-blue-50 text-blue-600 text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 border border-blue-100">
+                            <span class="bg-blue-50 text-blue-600 text-[11px] sm:text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1.5 border border-blue-100">
                                 <i class="bi bi-patch-check-fill"></i>
                                 {{ __('Rəsmi Partnyor') }}
                             </span>
@@ -51,7 +51,7 @@
                 <div class="flex flex-wrap items-center gap-2 sm:gap-3 pb-1">
                     @if($agency->phone)
                         <a href="tel:{{ $agency->phone }}"
-                           class="flex items-center gap-2 px-5 py-2.5 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-md transition duration-200 text-sm sm:text-base">
+                           class="flex items-center gap-2 px-5 py-2.5 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 text-sm sm:text-base">
                             <i class="bi bi-telephone-fill text-sm"></i>
                             {{ $agency->phone }}
                         </a>
@@ -59,7 +59,7 @@
                     @if($agency->whatsapp)
                         @php $wa = preg_replace('/[^0-9]/', '', $agency->whatsapp); @endphp
                         <a href="https://wa.me/{{ $wa }}" target="_blank"
-                           class="flex items-center gap-2 px-5 py-2.5 sm:py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-2xl shadow-md transition duration-200 text-sm sm:text-base">
+                           class="flex items-center gap-2 px-5 py-2.5 sm:py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 text-sm sm:text-base">
                             <i class="bi bi-whatsapp text-base"></i>
                             WhatsApp
                         </a>
@@ -70,7 +70,7 @@
             {{-- Description + Contact Info --}}
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 pt-6 border-t border-gray-100 text-sm">
                 <div class="md:col-span-2">
-                    <h3 class="font-bold text-[color:var(--text-color)] mb-2 flex items-center gap-2">
+                    <h3 class="font-semibold text-[color:var(--text-color)] mb-2 flex items-center gap-2">
                         <i class="bi bi-building text-[var(--primary)]"></i>
                         {{ __('Agentlik Haqqında') }}
                     </h3>
@@ -106,7 +106,7 @@
     @if($agency->agents->isNotEmpty())
         <div class="mt-8 sm:mt-10">
             <div class="flex items-center gap-3 mb-4 sm:mb-6">
-                <h2 class="text-lg sm:text-xl font-bold text-[color:var(--text-color)]">{{ __('Agentliyin Rieltorları') }}</h2>
+                <h2 class="text-lg sm:text-xl font-semibold text-[color:var(--text-color)]">{{ __('Agentliyin Rieltorları') }}</h2>
                 <div class="h-px flex-1 bg-gray-200"></div>
                 <span class="text-xs sm:text-sm text-[color:var(--grey-text)]">{{ $agency->agents->count() }} {{ __('nəfər') }}</span>
             </div>
@@ -125,7 +125,7 @@
                                 @endif
                             </div>
                             <div class="min-w-0 flex-1">
-                                <h3 class="font-bold text-[color:var(--text-color)] text-sm sm:text-base truncate group-hover:text-[var(--primary)] transition">{{ $agent->user?->name ?? __('Rieltor') }}</h3>
+                                <h3 class="font-semibold text-[color:var(--text-color)] text-sm sm:text-base truncate group-hover:text-[var(--primary)] transition">{{ $agent->user?->name ?? __('Rieltor') }}</h3>
                                 <p class="text-xs text-[color:var(--grey-text)] mt-0.5">{{ $agent->position ?? __('Rieltor') }}</p>
                             </div>
                             @if($agent->phone)
@@ -145,7 +145,7 @@
     {{-- ==================== PROPERTIES ==================== --}}
     <div class="mt-8 sm:mt-10">
         <div class="flex items-center gap-3 mb-4 sm:mb-6">
-            <h2 class="text-lg sm:text-xl font-bold text-[color:var(--text-color)]">{{ __('Agentliyin Elanları') }}</h2>
+            <h2 class="text-lg sm:text-xl font-semibold text-[color:var(--text-color)]">{{ __('Agentliyin Elanları') }}</h2>
             <div class="h-px flex-1 bg-gray-200"></div>
             <span class="text-xs sm:text-sm text-[color:var(--grey-text)]">{{ $properties->total() }} {{ __('elan') }}</span>
         </div>
