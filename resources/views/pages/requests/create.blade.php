@@ -283,11 +283,37 @@
             </div>
         </div>
 
-        <!-- SECTION 5: ƏLAQƏ MƏLUMATLARI -->
+        <!-- SECTION 5: FOTOŞƏKİLLƏR (Otaq Yoldaşı və ya Mənzil şəkilləri) -->
+        <div id="imageUploadSection" class="hidden bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
+            <div>
+                <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-purple-600 text-white text-xs font-extrabold flex items-center justify-center">
+                        <i class="fa-solid fa-camera text-[10px]"></i>
+                    </span>
+                    <span>{{ __('Fotoşəkillər (Otaq / Mənzil şəkilləri)') }}</span>
+                </h2>
+                <p class="text-xs text-gray-500 ml-8">{{ __('Otağın və ya evin real şəkillərini əlavə edərək elanınızı daha cəlbedici edin (Maks. 10 şəkil)') }}</p>
+            </div>
+
+            <div class="border-2 border-dashed border-gray-200 hover:border-[#f1913d] rounded-2xl p-6 text-center cursor-pointer transition bg-gray-50/50 hover:bg-orange-50/30"
+                 onclick="document.getElementById('requestImagesInput').click()">
+                <input type="file" name="images[]" id="requestImagesInput" multiple accept="image/jpeg,image/png,image/jpg,image/webp" class="hidden">
+                <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="bi bi-images"></i>
+                </div>
+                <p class="text-xs sm:text-sm font-bold text-gray-800 mb-1">{{ __('Şəkilləri seçmək üçün klikləyin') }}</p>
+                <p class="text-[11px] text-gray-400">JPG, PNG, WEBP (Hər biri maks. 8MB)</p>
+            </div>
+
+            <!-- Previews -->
+            <div id="imagePreviewGrid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3 pt-2"></div>
+        </div>
+
+        <!-- SECTION 6: ƏLAQƏ MƏLUMATLARI -->
         <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
             <div>
                 <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
-                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-extrabold flex items-center justify-center">5</span>
+                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-extrabold flex items-center justify-center">6</span>
                     <span>{{ __('Əlaqə Məlumatları') }}</span>
                 </h2>
                 <p class="text-xs text-gray-500 ml-8">{{ __('Təkliflərin sizə çatması üçün əlaqə vasitələri') }}</p>
@@ -342,6 +368,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const roommateFields = document.getElementById('roommateFields');
     const propertyTypeField = document.getElementById('propertyTypeField');
     const roomsField = document.getElementById('roomsField');
+    const imageUploadSection = document.getElementById('imageUploadSection');
+    const imageInput = document.getElementById('requestImagesInput');
+    const previewGrid = document.getElementById('imagePreviewGrid');
 
     function updateSections() {
         let selected = 'buy';
@@ -353,12 +382,14 @@ document.addEventListener('DOMContentLoaded', function () {
             roommateFields.classList.add('hidden');
             propertyTypeField.classList.remove('hidden');
             roomsField.classList.remove('hidden');
+            imageUploadSection.classList.add('hidden');
         } else if (selected === 'rent_monthly' || selected === 'rent_daily') {
             buyFields.classList.add('hidden');
             rentFields.classList.remove('hidden');
             roommateFields.classList.add('hidden');
             propertyTypeField.classList.remove('hidden');
             roomsField.classList.remove('hidden');
+            imageUploadSection.classList.add('hidden');
         } else {
             // roommate
             buyFields.classList.add('hidden');
@@ -366,11 +397,34 @@ document.addEventListener('DOMContentLoaded', function () {
             roommateFields.classList.remove('hidden');
             propertyTypeField.classList.add('hidden');
             roomsField.classList.add('hidden');
+            imageUploadSection.classList.remove('hidden');
         }
     }
 
     radios.forEach(r => r.addEventListener('change', updateSections));
     updateSections();
+
+    // Image preview
+    if (imageInput && previewGrid) {
+        imageInput.addEventListener('change', function () {
+            previewGrid.innerHTML = '';
+            const files = Array.from(this.files);
+
+            files.slice(0, 10).forEach(file => {
+                if (!file.type.startsWith('image/')) return;
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const div = document.createElement('div');
+                    div.className = 'relative rounded-xl overflow-hidden aspect-square border border-gray-200 bg-gray-100 shadow-2xs group';
+                    div.innerHTML = `
+                        <img src="${e.target.result}" class="w-full h-full object-cover">
+                    `;
+                    previewGrid.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+    }
 });
 </script>
 @endpush
