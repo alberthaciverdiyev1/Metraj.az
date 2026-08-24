@@ -35,6 +35,7 @@ readonly class PropertyFilterDTO
         public bool $onlyLastFloor = false,
         public ?int $cityId = null,
         public ?int $districtId = null,
+        public array $districtIds = [],
         public ?string $landmark = null,
         public ?int $agencyId = null,
         public ?int $agentId = null,
@@ -72,6 +73,7 @@ readonly class PropertyFilterDTO
             || $this->onlyLastFloor
             || $this->cityId !== null
             || $this->districtId !== null
+            || !empty($this->districtIds)
             || !empty($this->landmark)
             || $this->agencyId !== null
             || $this->agentId !== null
@@ -143,7 +145,20 @@ readonly class PropertyFilterDTO
         $minFloor = isset($data['min_floor']) && $data['min_floor'] !== '' ? (int) $data['min_floor'] : (isset($data['floorMin']) && $data['floorMin'] !== '' ? (int) $data['floorMin'] : null);
         $maxFloor = isset($data['max_floor']) && $data['max_floor'] !== '' ? (int) $data['max_floor'] : (isset($data['floorMax']) && $data['floorMax'] !== '' ? (int) $data['floorMax'] : null);
         $cityId = isset($data['city_id']) && $data['city_id'] !== '' ? (int) $data['city_id'] : (isset($data['cityId']) && $data['cityId'] !== '' ? (int) $data['cityId'] : null);
-        $districtId = isset($data['district_id']) && $data['district_id'] !== '' ? (int) $data['district_id'] : (isset($data['district']) && $data['district'] !== '' ? (int) $data['district'] : null);
+        
+        $districtIds = [];
+        $rawDistricts = $data['district_ids'] ?? ($data['districts'] ?? ($data['district_id'] ?? ($data['district'] ?? [])));
+        if (!empty($rawDistricts)) {
+            if (is_array($rawDistricts)) {
+                $districtIds = array_values(array_filter(array_map('intval', $rawDistricts)));
+            } elseif (is_string($rawDistricts) && str_contains($rawDistricts, ',')) {
+                $districtIds = array_values(array_filter(array_map('intval', explode(',', $rawDistricts))));
+            } elseif ((int)$rawDistricts > 0) {
+                $districtIds = [(int)$rawDistricts];
+            }
+        }
+        $districtId = count($districtIds) === 1 ? $districtIds[0] : (isset($data['district_id']) && (int)$data['district_id'] > 0 ? (int)$data['district_id'] : null);
+
         $code = !empty($data['code']) ? trim($data['code']) : (!empty($data['adNo']) ? trim($data['adNo']) : null);
         $propertyType = !empty($data['property_type']) ? PropertyType::tryFrom($data['property_type']) : (!empty($data['buildingType']) ? PropertyType::tryFrom($data['buildingType']) : null);
 
@@ -171,6 +186,7 @@ readonly class PropertyFilterDTO
             onlyLastFloor: (bool) ($data['only_last_floor'] ?? false),
             cityId: $cityId,
             districtId: $districtId,
+            districtIds: $districtIds,
             landmark: $data['landmark'] ?? null,
             agencyId: isset($data['agency_id']) && $data['agency_id'] !== '' ? (int) $data['agency_id'] : null,
             agentId: isset($data['agent_id']) && $data['agent_id'] !== '' ? (int) $data['agent_id'] : null,

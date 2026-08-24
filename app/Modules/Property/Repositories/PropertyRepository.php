@@ -300,7 +300,9 @@ class PropertyRepository implements PropertyRepositoryInterface
             $query->where('city_id', $filter->cityId);
         }
 
-        if ($filter->districtId !== null) {
+        if (!empty($filter->districtIds)) {
+            $query->whereIn('district_id', $filter->districtIds);
+        } elseif ($filter->districtId !== null) {
             $query->where('district_id', $filter->districtId);
         }
 

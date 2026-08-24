@@ -6,15 +6,11 @@
     let activeTab = 'rayonTab';
 
     /* ===== BUILD CLEAN FILTER URL PARAMS ===== */
-    /* The hidden inputs in the main form are the single source of truth.
-       - Skips disabled / unchecked / empty controls
-       - Ignores the modal's adType radios (they are synced into #adTypeInput and must not override it)
-       - "all" adType means no filter → omitted from the URL entirely
-       - When duplicate names exist, the FIRST non-empty value wins (main-form field beats modal) */
     function buildFilterParams() {
         const form = document.getElementById('filterForm');
         const params = new URLSearchParams();
-        const seen = {};
+        const seenSingle = {};
+        const multiArrays = {};
 
         if (!form) return params;
 
@@ -37,10 +33,22 @@
             /* "all" = no type filter → drop it from the URL */
             if (el.name === 'adType' && val === 'all') return;
 
-            if (!(el.name in seen)) seen[el.name] = val;
+            const name = el.name;
+            if (el.type === 'checkbox' || name.endsWith('[]')) {
+                const cleanKey = name.replace(/\[\]$/, '');
+                if (!multiArrays[cleanKey]) multiArrays[cleanKey] = [];
+                multiArrays[cleanKey].push(val);
+            } else {
+                if (!(name in seenSingle)) seenSingle[name] = val;
+            }
         });
 
-        for (let pk in seen) params.append(pk, seen[pk]);
+        for (let pk in seenSingle) params.append(pk, seenSingle[pk]);
+        for (let mk in multiArrays) {
+            multiArrays[mk].forEach(function (v) {
+                params.append(mk + '[]', v);
+            });
+        }
         return params;
     }
 
@@ -562,17 +570,62 @@
         const resetBtn = document.getElementById('resetCityFilters');
         const applyCount = document.getElementById('applyCount');
         const citySelect = document.getElementById('citySelect');
+        const placeholder = document.getElementById('rightPanelPlaceholder');
 
         if (!modal) return;
 
-        /* City filters only apply on "elan göstər" (apply) or when the modal closes */
         let cityModalChanged = false;
+        let dataLoaded = false;
+        const cityBtns = modal.querySelectorAll('.city-btn');
+
+        function setActiveCity(cId) {
+            cityBtns.forEach(function (b) {
+                const match = b.getAttribute('data-city-id') == cId;
+                b.classList.toggle('border-orange-500', match);
+                b.classList.toggle('bg-orange-50/50', match);
+                b.classList.toggle('text-orange-600', match);
+                b.classList.toggle('font-bold', match);
+                b.classList.toggle('border-gray-200/60', !match);
+                b.classList.toggle('bg-white', !match);
+                b.classList.toggle('text-gray-700', !match);
+            });
+
+            if (placeholder) {
+                placeholder.classList.toggle('hidden', !!cId);
+            }
+        }
+
+        cityBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const cId = this.getAttribute('data-city-id');
+                if (citySelect) {
+                    citySelect.value = cId;
+                }
+                setActiveCity(cId);
+                cityModalChanged = true;
+                dataLoaded = false;
+                if (document.getElementById('rayonList')) document.getElementById('rayonList').innerHTML = '';
+                if (document.getElementById('nishangahList')) document.getElementById('nishangahList').innerHTML = '';
+                loadCityData();
+            });
+        });
 
         function openModalFn() {
             modal.classList.remove('hidden');
             cityModalChanged = false;
+
+            const form = document.getElementById('filterForm');
+            const curCityInput = form ? form.querySelector('input[name=cityId]') : null;
+            const curCityId = curCityInput ? curCityInput.value : (citySelect ? citySelect.value : '');
+
+            if (curCityId) {
+                if (citySelect) citySelect.value = curCityId;
+                setActiveCity(curCityId);
+            }
+
             showTab(activeTab);
             loadCityData();
+            updateApplyCount();
         }
 
         function closeModalFn() {
@@ -589,15 +642,32 @@
                 cityInput.name = 'cityId';
                 form.appendChild(cityInput);
             }
-            cityInput.value = citySelect.value;
+            if (citySelect) {
+                cityInput.value = citySelect.value;
+            }
 
             const cityDisplay = document.querySelector('[data-role="display-value"][data-filter="city"]');
-            if (cityDisplay && citySelect.selectedOptions[0]) {
-                cityDisplay.textContent = citySelect.selectedOptions[0].textContent.replace(/^.*?:\s*/, '');
+            const checkedDistricts = Array.from(modal.querySelectorAll('input[name^="district"]:checked')).map(function (cb) {
+                return cb.closest('label') ? cb.closest('label').textContent.trim() : '';
+            }).filter(Boolean);
+
+            const cityName = citySelect && citySelect.selectedOptions[0] && citySelect.value
+                ? citySelect.selectedOptions[0].textContent.replace(/^.*?:\s*/, '').trim()
+                : '';
+
+            if (cityDisplay) {
+                if (checkedDistricts.length === 1) {
+                    cityDisplay.textContent = cityName ? cityName + ' (' + checkedDistricts[0] + ')' : checkedDistricts[0];
+                } else if (checkedDistricts.length > 1) {
+                    cityDisplay.textContent = cityName ? cityName + ' (' + checkedDistricts.length + ' rayon)' : checkedDistricts.length + ' rayon';
+                } else if (cityName) {
+                    cityDisplay.textContent = cityName;
+                } else {
+                    cityDisplay.textContent = 'Bütün Şəhərlər';
+                }
             }
         }
 
-        /* Closing the modal applies the selected filters */
         function closeAndApply() {
             applyCitySelection();
             closeModalFn();
@@ -605,7 +675,6 @@
         }
 
         if (openBtn) openBtn.addEventListener('click', openModalFn);
-        /* Also open from the filter modal's location button */
         const modalLocationBtn = document.getElementById('modalLocationBtn');
         if (modalLocationBtn) modalLocationBtn.addEventListener('click', openModalFn);
         if (closeBtn) closeBtn.addEventListener('click', closeAndApply);
@@ -639,14 +708,19 @@
             }
         }
 
-        let dataLoaded = false;
-
         function loadCityData() {
             if (dataLoaded) return;
             const cityId = citySelect ? citySelect.value : '';
 
             const rayonList = document.getElementById('rayonList');
             const nishangahList = document.getElementById('nishangahList');
+
+            // Read currently checked districts from form or URL params
+            const form = document.getElementById('filterForm');
+            const existingParams = new URLSearchParams(window.location.search);
+            const currentCheckedDistricts = existingParams.getAll('district[]').concat(existingParams.getAll('district')).concat(
+                Array.from(form.querySelectorAll('input[name^="district"]:checked')).map(c => c.value)
+            );
 
             if (rayonList && cityId) {
                 fetch('/api/cities')
@@ -658,9 +732,11 @@
                         if (districtList && districtList.length) {
                             rayonList.innerHTML = '';
                             districtList.forEach(function (d) {
-                                rayonList.appendChild(createCheckbox(d.id, d.name, 'district'));
+                                const isChecked = currentCheckedDistricts.includes(String(d.id));
+                                rayonList.appendChild(createCheckbox(d.id, d.name, 'district', isChecked));
                             });
                             toggleEmpty(rayonList, document.getElementById('rayonEmpty'));
+                            updateApplyCount();
                         }
                     }).catch(function () {});
             }
@@ -672,28 +748,34 @@
                         nishangahList.innerHTML = '';
                         const list = items.data || items;
                         list.forEach(function (i) {
-                            nishangahList.appendChild(createCheckbox(i.id, i.name, 'nearby'));
+                            nishangahList.appendChild(createCheckbox(i.id, i.name, 'nearby', false));
                         });
                         toggleEmpty(nishangahList, document.getElementById('nishangahEmpty'));
+                        updateApplyCount();
                     }).catch(function () {});
             }
 
             dataLoaded = true;
         }
 
-        function createCheckbox(value, label, name) {
+        function createCheckbox(value, label, name, checked) {
             const lbl = document.createElement('label');
-            lbl.className = 'flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-50';
+            lbl.className = 'flex items-center gap-2.5 bg-gray-50 hover:bg-orange-50/50 px-3.5 py-2.5 rounded-xl border border-gray-200/60 cursor-pointer transition select-none';
             lbl.dataset.text = label.toLowerCase();
 
             const input = document.createElement('input');
             input.type = 'checkbox';
-            input.className = 'accent-orange-600';
-            input.name = name;
+            input.className = 'accent-orange-600 rounded w-4 h-4 cursor-pointer';
+            input.name = name + '[]';
             input.value = value;
+            if (checked) input.checked = true;
 
             lbl.appendChild(input);
-            lbl.append(' ' + label);
+            
+            const span = document.createElement('span');
+            span.className = 'text-xs font-semibold text-gray-700';
+            span.textContent = label;
+            lbl.appendChild(span);
 
             input.addEventListener('change', function () {
                 cityModalChanged = true;
@@ -734,19 +816,11 @@
         wireSearch('rayonSearch', 'rayonList', 'rayonEmpty');
         wireSearch('nishangahSearch', 'nishangahList', 'nishangahEmpty');
 
-        if (citySelect) {
-            citySelect.addEventListener('change', function () {
-                cityModalChanged = true;
-                dataLoaded = false;
-                if (document.getElementById('rayonList')) document.getElementById('rayonList').innerHTML = '';
-                if (document.getElementById('nishangahList')) document.getElementById('nishangahList').innerHTML = '';
-                loadCityData();
-            });
-        }
-
         if (resetBtn) {
             resetBtn.addEventListener('click', function () {
                 cityModalChanged = true;
+                if (citySelect) citySelect.value = '';
+                setActiveCity('');
                 modal.querySelectorAll('input[type=checkbox]').forEach(function (ch) {
                     ch.checked = false;
                 });
@@ -757,14 +831,13 @@
                 });
                 ['rayonList', 'nishangahList'].forEach(function (id) {
                     const list = document.getElementById(id);
-                    if (list) list.querySelectorAll('label').forEach(function (l) { l.classList.remove('hidden'); });
+                    if (list) list.innerHTML = '';
                 });
                 toggleEmpty(document.getElementById('rayonList'), document.getElementById('rayonEmpty'));
                 toggleEmpty(document.getElementById('nishangahList'), document.getElementById('nishangahEmpty'));
             });
         }
 
-        /* Apply — set cityId and fetch */
         if (applyBtn) {
             applyBtn.addEventListener('click', function () {
                 applyCitySelection();
