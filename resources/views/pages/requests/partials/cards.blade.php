@@ -30,57 +30,79 @@
             ? ($req->created_at->isToday() ? 'Bugün ' . $req->created_at->format('H:i') : $req->created_at->format('d.m.Y'))
             : '';
 
-        $firstImg = $req->first_image_url ?? (
-            $isBuy
-                ? 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80'
-                : ($isRent
-                    ? 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80'
-                    : ($isDaily
-                        ? 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80'
-                        : 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80'))
-        );
+        $hasRealImage = !empty($req->first_image_url);
     @endphp
 
     <div onclick="window.location.href='{{ route('requests.show', $req->slug) }}'"
          class="cursor-pointer border border-[color:var(--border-color)] rounded-2xl overflow-hidden flex flex-col h-full group transition-all duration-300 relative bg-white hover:shadow-md">
 
-        <!-- Top Image Banner & Demand Badge -->
-        <div class="relative overflow-hidden aspect-[4/3] sm:aspect-[5/3] md:aspect-[3/2] lg:aspect-[16/10] bg-gray-100">
-            <img src="{{ $firstImg }}"
-                 alt="{{ $req->title }}"
-                 class="card-image w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                 loading="lazy" />
+        <!-- Top Image Banner ONLY if user uploaded real image -->
+        @if($hasRealImage)
+            <div class="relative overflow-hidden aspect-[4/3] sm:aspect-[5/3] md:aspect-[3/2] lg:aspect-[16/10] bg-gray-100">
+                <img src="{{ $req->first_image_url }}"
+                     alt="{{ $req->title }}"
+                     class="card-image w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                     loading="lazy" />
 
-            <!-- Type Badge (Top Left) -->
-            <span class="absolute top-2.5 left-2.5 {{ $typeBadgeColor }} text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-xs flex items-center gap-1 z-10">
-                @if($isBuy)
-                    <i class="fa-solid fa-house-circle-check text-[11px]"></i>
-                @elseif($isRent)
-                    <i class="fa-solid fa-house-circle-xmark text-[11px]"></i>
-                @elseif($isDaily)
-                    <i class="fa-solid fa-calendar-day text-[11px]"></i>
-                @else
-                    <i class="fa-solid fa-people-roof text-[11px]"></i>
+                <!-- Type Badge (Top Left) -->
+                <span class="absolute top-2.5 left-2.5 {{ $typeBadgeColor }} text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-xs flex items-center gap-1 z-10">
+                    @if($isBuy)
+                        <i class="fa-solid fa-house-circle-check text-[11px]"></i>
+                    @elseif($isRent)
+                        <i class="fa-solid fa-house-circle-xmark text-[11px]"></i>
+                    @elseif($isDaily)
+                        <i class="fa-solid fa-calendar-day text-[11px]"></i>
+                    @else
+                        <i class="fa-solid fa-people-roof text-[11px]"></i>
+                    @endif
+                    <span>{{ $typeLabel }}</span>
+                </span>
+
+                <!-- Property Type / Gender Badge (Top Right) -->
+                @if($req->property_type)
+                    <span class="absolute top-2.5 right-2.5 bg-white/95 text-gray-800 text-xs font-semibold px-2.5 py-1 rounded-full shadow-xs z-10">
+                        {{ $req->property_type }}
+                    </span>
+                @elseif($req->gender_preference && $req->gender_preference !== 'any')
+                    <span class="absolute top-2.5 right-2.5 bg-white/95 text-purple-700 text-xs font-bold px-2.5 py-1 rounded-full shadow-xs z-10">
+                        {{ $req->gender_preference === 'female' ? __('Yalnız Xanım') : __('Yalnız Bəy') }}
+                    </span>
                 @endif
-                <span>{{ $typeLabel }}</span>
-            </span>
+            </div>
+        @endif
 
-            <!-- Property Type / Gender Badge (Top Right) -->
-            @if($req->property_type)
-                <span class="absolute top-2.5 right-2.5 bg-white/95 text-gray-800 text-xs font-semibold px-2.5 py-1 rounded-full shadow-xs z-10">
-                    {{ $req->property_type }}
-                </span>
-            @elseif($req->gender_preference && $req->gender_preference !== 'any')
-                <span class="absolute top-2.5 right-2.5 bg-white/95 text-purple-700 text-xs font-bold px-2.5 py-1 rounded-full shadow-xs z-10">
-                    {{ $req->gender_preference === 'female' ? __('Yalnız Xanım') : __('Yalnız Bəy') }}
-                </span>
-            @endif
-        </div>
-
-        <!-- Card Body (Matched to property-card layout) -->
+        <!-- Card Body -->
         <div class="p-3 sm:p-4 flex flex-col flex-1">
             <div class="flex flex-col gap-2 min-h-[100px] sm:min-h-[120px]">
                 
+                <!-- If NO image, render top badges directly inside header -->
+                @if(!$hasRealImage)
+                    <div class="flex items-center justify-between gap-2 mb-1">
+                        <span class="{{ $typeBadgeColor }} text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-2xs flex items-center gap-1">
+                            @if($isBuy)
+                                <i class="fa-solid fa-house-circle-check text-[11px]"></i>
+                            @elseif($isRent)
+                                <i class="fa-solid fa-house-circle-xmark text-[11px]"></i>
+                            @elseif($isDaily)
+                                <i class="fa-solid fa-calendar-day text-[11px]"></i>
+                            @else
+                                <i class="fa-solid fa-people-roof text-[11px]"></i>
+                            @endif
+                            <span>{{ $typeLabel }}</span>
+                        </span>
+
+                        @if($req->property_type)
+                            <span class="bg-gray-100 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">
+                                {{ $req->property_type }}
+                            </span>
+                        @elseif($req->gender_preference && $req->gender_preference !== 'any')
+                            <span class="bg-purple-50 text-purple-700 text-xs font-bold px-2.5 py-0.5 rounded-full border border-purple-200">
+                                {{ $req->gender_preference === 'female' ? __('Yalnız Xanım') : __('Yalnız Bəy') }}
+                            </span>
+                        @endif
+                    </div>
+                @endif
+
                 <!-- Title -->
                 <h3 class="font-semibold text-[color:var(--text-color)] text-sm sm:text-base md:text-md hover:text-[color:var(--primary)] line-clamp-1 group-hover:line-clamp-none min-h-[20px] sm:min-h-[28px] overflow-hidden text-ellipsis">
                     <span>{{ $req->title }}</span>
@@ -142,7 +164,7 @@
                 </div>
             </div>
 
-            <!-- Bottom Price & Details Indicator (No contact buttons on card) -->
+            <!-- Bottom Price & Details Indicator -->
             <div class="flex justify-between items-center mt-auto border-t border-[color:var(--border-color)] pt-3">
                 <span class="text-[color:var(--primary)] font-bold text-sm sm:text-base md:text-lg truncate">
                     {{ $req->formatted_budget }}
