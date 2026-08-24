@@ -177,6 +177,6 @@
 </div>
 
 @push('scripts')
-    <script src="/js/pages/roommates/index.js"></script>
+    <script src="{{ asset('js/pages/roommates/index.js') }}"></script>
 @endpush
 @endsection

@@ -33,7 +33,7 @@
                 <i class="fa-regular fa-trash-can text-sm"></i>
                 <span>{{ __('Hamısını Təmizlə') }}</span>
             </button>
-            <a href="/listing" class="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-semibold rounded-xl transition duration-200">
+            <a href="{{ route('listing') }}" class="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-semibold rounded-xl transition duration-200">
                 <i class="bi bi-arrow-left"></i>
                 <span>{{ __('Elanlara Qayıt') }}</span>
             </a>
@@ -49,7 +49,7 @@
         <p class="text-gray-500 text-sm mb-6 max-w-sm mx-auto leading-relaxed">
             {{ __('Bəyəndiyiniz elanların üzərindəki ürək ikonuna klikləyərək onları seçilmişlər siyahısına əlavə edə bilərsiniz.') }}
         </p>
-        <a href="/listing" class="inline-flex items-center px-6 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm rounded-xl shadow-md transition-all duration-200 hover:shadow-lg">
+        <a href="{{ route('listing') }}" class="inline-flex items-center px-6 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm rounded-xl shadow-md transition-all duration-200 hover:shadow-lg">
             <i class="bi bi-search mr-2"></i>
             <span>{{ __('Elanları Kəşf Et') }}</span>
         </a>
@@ -63,6 +63,6 @@
 </div>
 
 @push('scripts')
-    <script src="/js/pages/favorites/favorites.js"></script>
+    <script src="{{ asset('js/pages/favorites/favorites.js') }}"></script>
 @endpush
 @endsection

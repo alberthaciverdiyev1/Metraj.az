@@ -18,7 +18,7 @@
 
     @if($totalImages > 0)
         <!-- Listing Details CSS for Fullscreen Modal and Gallery -->
-        <link rel="stylesheet" href="/css/listing-details.css">
+        <link rel="stylesheet" href="{{ asset('css/listing-details.css') }}">
         <style>
             .thumbnails-row::-webkit-scrollbar {
                 display: none;
@@ -333,7 +333,7 @@
             images: @json($galleryImages->pluck('url'))
         };
     </script>
-    <script src="/js/pages/requests/show.js"></script>
-    <script src="/js/pages/property/detail/image-gallery.js"></script>
+    <script src="{{ asset('js/pages/requests/show.js') }}"></script>
+    <script src="{{ asset('js/pages/property/detail/image-gallery.js') }}"></script>
 @endif
 @endsection

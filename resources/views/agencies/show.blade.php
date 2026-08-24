@@ -113,7 +113,7 @@
             <ul class="bg-white rounded-2xl border border-gray-100 shadow-sm divide-y divide-gray-100 overflow-hidden">
                 @foreach($agency->agents as $agent)
                     <li>
-                        <a href="/agent/{{ $agent->id }}"
+                        <a href="{{ route('agents.show', $agent->id) }}"
                            class="flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-3.5 sm:py-4 hover:bg-orange-50/50 transition duration-150 group">
                             <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100">
                                 @if($agent->avatar_url)
@@ -173,5 +173,5 @@
 @endsection
 
 @push('scripts')
-    <script src="/js/pages/property/listing.js"></script>
+    <script src="{{ asset('js/pages/property/listing.js') }}"></script>
 @endpush

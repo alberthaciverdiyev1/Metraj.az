@@ -1,6 +1,10 @@
 /* Metraj global helpers (layouts/js.blade.php-dən çıxarılıb) — window.Metraj, favorite/compare toggle, toast, logout, card image switcher */
+(function () {
+'use strict';
 
 AOS.init();
+
+const R = window.MetrajRoutes || {};
 
     // Qlobal AJAX köməkçisi — bütün POST-lar JS fetch ilə gedir
     window.Metraj = {
@@ -249,7 +253,7 @@ AOS.init();
             localStorage.setItem('favorites', JSON.stringify(newFavs.map(id => ({ id: id }))));
         } catch(e) {}
 
-        fetch('/api/favorites/toggle', {
+        fetch(R.favoritesToggle || '/api/favorites/toggle', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -326,7 +330,7 @@ AOS.init();
             localStorage.setItem('compareList', JSON.stringify(newComps.map(id => ({ id: id }))));
         } catch(e) {}
 
-        fetch('/api/compares/toggle', {
+        fetch(R.comparesToggle || '/api/compares/toggle', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -381,7 +385,7 @@ AOS.init();
     document.addEventListener('DOMContentLoaded', function () {
         window.syncCardStates();
 
-        fetch('/api/favorites/ids', { headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' } })
+        fetch(R.favoritesIds || '/api/favorites/ids', { headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' } })
             .then(r => r.json())
             .then(d => {
                 if (d.success) {
@@ -394,7 +398,7 @@ AOS.init();
                 }
             }).catch(() => {});
 
-        fetch('/api/compares/ids', { headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' } })
+        fetch(R.comparesIds || '/api/compares/ids', { headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' } })
             .then(r => r.json())
             .then(d => {
                 if (d.success) {
@@ -407,3 +411,4 @@ AOS.init();
                 }
             }).catch(() => {});
     });
+})();

@@ -17,7 +17,7 @@
     $blogExcerpt = $blog ? $blog->excerpt : $excerpt;
 @endphp
 
-<article onclick="window.location.href='/blog/{{ $blogSlug }}'"
+<article onclick="window.location.href='{{ route('blog.show', $blogSlug) }}'"
          class="blog-card bg-white rounded-2xl sm:rounded-3xl border border-gray-100/90 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group cursor-pointer h-full">
     
     {{-- Image & Badge --}}
@@ -57,7 +57,7 @@
         @endif
 
         <div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-100/70">
-            <a href="/blog/{{ $blogSlug }}" onclick="event.stopPropagation()"
+            <a href="{{ route('blog.show', $blogSlug) }}" onclick="event.stopPropagation()"
                class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[var(--primary)] group-hover:text-orange-700 transition">
                 {{ __('Ətraflı oxu') }}
                 <i class="bi bi-arrow-right group-hover:translate-x-1 transition-transform"></i>

@@ -546,7 +546,7 @@
         }
     };
 </script>
-<script src="/js/pages/property/add-form.js"></script>
+<script src="{{ asset('js/pages/property/add-form.js') }}"></script>
 
 
 <style>

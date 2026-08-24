@@ -79,4 +79,4 @@
     </div>
 </div>
 
-<script src="/js/components/city-filter.js"></script>
+<script src="{{ asset('js/components/city-filter.js') }}"></script>

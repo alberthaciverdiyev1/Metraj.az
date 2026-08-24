@@ -1,5 +1,6 @@
 /* Favoritlər səhifəsi — seçilmiş elanların idarəsi (favorites.blade.php-dən çıxarılıb) */
 document.addEventListener('DOMContentLoaded', function () {
+    const R = window.MetrajRoutes || {};
     const favsEmptyState = document.getElementById('favsEmptyState');
     const favoritesContainer = document.getElementById('favoritesContainer');
     const favsActions = document.getElementById('favsActions');
@@ -37,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (propertyId) {
                     const csrf = window.Metraj?.csrfToken() || '';
-                    fetch('/api/favorites/toggle', {
+                    fetch(R.favoritesToggle || '/api/favorites/toggle', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -76,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
         clearAllBtn.addEventListener('click', function () {
             if (confirm('Bütün seçilmiş elanları silmək istədiyinizdən əminsiniz?')) {
                 const csrf = window.Metraj?.csrfToken() || '';
-                fetch('/api/favorites/clear', {
+                fetch(R.favoritesClear || '/api/favorites/clear', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

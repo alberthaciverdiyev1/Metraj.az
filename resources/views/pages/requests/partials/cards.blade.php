@@ -45,7 +45,7 @@
                      loading="lazy" />
             @else
                 <div class="flex flex-col items-center justify-center select-none py-6 px-4">
-                    <img src="/images/metrajlogo1.png" alt="Metraj.az" class="h-10 sm:h-12 w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
+                    <img src="{{ asset('images/metrajlogo1.png') }}" alt="Metraj.az" class="h-10 sm:h-12 w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
                     <span class="text-[11px] font-bold text-gray-500 tracking-wider mt-1.5">Metraj.az</span>
                 </div>
             @endif
@@ -123,7 +123,7 @@
 
                 <!-- Location Line -->
                 <div class="flex items-center max-w-full text-xs sm:text-sm text-[color:var(--grey-text)] mt-auto">
-                    <img class="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1 shrink-0" src="/images/map-pin.svg" alt="map" />
+                    <img class="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1 shrink-0" src="{{ asset('images/map-pin.svg') }}" alt="map" />
                     <span class="truncate group-hover:overflow-visible group-hover:whitespace-normal">
                         {{ $locationFull }}
                     </span>

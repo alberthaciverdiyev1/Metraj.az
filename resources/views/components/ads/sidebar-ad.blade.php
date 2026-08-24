@@ -15,7 +15,7 @@
                 {{-- Sağ: brend loqolu reklam kartı (yerli assetlər) --}}
                 <div class="absolute inset-0 bg-orange-600"></div>
                 <div class="relative h-full flex flex-col items-center justify-center text-center px-5 py-6">
-                    <img src="/images/metrajlogo.png" alt="Metraj.az"
+                    <img src="{{ asset('images/metrajlogo.png') }}" alt="Metraj.az"
                          class="w-28 mb-5 drop-shadow-sm">
                     <p class="text-white font-extrabold text-xl leading-snug">Elanınızı<br>pulsuz yerləşdirin</p>
                     <p class="text-orange-100 text-xs mt-2 leading-relaxed">Minlərlə alıcıya birbaşa çatın</p>
@@ -25,7 +25,7 @@
                 </div>
             @else
                 {{-- Sol: şəkil reklamı (yerli asset) --}}
-                <img src="/images/ads.jpg" alt="Metraj.az — İdeal evinizi tapın"
+                <img src="{{ asset('images/ads.jpg') }}" alt="Metraj.az — İdeal evinizi tapın"
                      class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"/>
                 <div class="absolute inset-0 bg-black/40"></div>
                 <div class="absolute bottom-0 inset-x-0 p-4 pb-5">

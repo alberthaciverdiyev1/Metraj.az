@@ -330,4 +330,4 @@
 }
 </style>
 
-<script src="/js/filament/forms/map-picker.js"></script>
+<script src="{{ asset('js/filament/forms/map-picker.js') }}"></script>

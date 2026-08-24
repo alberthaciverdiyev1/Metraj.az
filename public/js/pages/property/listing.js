@@ -1,6 +1,8 @@
 (function () {
     'use strict';
 
+    const R = window.MetrajRoutes || {};
+
     /* ===== STATE ===== */
     let isLoading = false;
     let activeTab = 'rayonTab';
@@ -694,7 +696,7 @@
             );
 
             if (rayonList && cityId) {
-                fetch('/api/cities')
+                fetch(R.cities || '/api/cities')
                     .then(function (r) { return r.json(); })
                     .then(function (cities) {
                         const cityList = cities.data || cities;

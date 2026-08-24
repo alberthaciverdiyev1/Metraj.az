@@ -105,7 +105,7 @@
       </div>
 
       <div class="flex items-center max-w-full text-xs sm:text-sm text-[color:var(--grey-text)] mt-auto">
-        <img class="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1" src="/images/map-pin.svg" alt="map" />
+        <img class="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1" src="{{ asset('images/map-pin.svg') }}" alt="map" />
         <span class="truncate group-hover:overflow-visible group-hover:whitespace-normal">
           {{ $property->address }}
         </span>

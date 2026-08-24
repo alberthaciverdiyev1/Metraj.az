@@ -1,7 +1,11 @@
 /* Müqayisə səhifəsi — elementlərin silinməsi və siyahının təmizlənməsi (compare.blade.php-dən çıxarılıb) */
+(function () {
+'use strict';
+
+const R = window.MetrajRoutes || {};
 window.removeCompareItem = function (propertyId) {
     const csrf = window.Metraj?.csrfToken() || '';
-    fetch('/api/compares/toggle', {
+    fetch(R.comparesToggle || '/api/compares/toggle', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -22,7 +26,7 @@ window.removeCompareItem = function (propertyId) {
 document.getElementById('clearAllCompareBtn')?.addEventListener('click', function () {
     if (confirm('Bütün müqayisə siyahısını təmizləmək istədiyinizdən əminsiniz?')) {
         const csrf = window.Metraj?.csrfToken() || '';
-        fetch('/api/compares/clear', {
+        fetch(R.comparesClear || '/api/compares/clear', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -39,3 +43,4 @@ document.getElementById('clearAllCompareBtn')?.addEventListener('click', functio
         });
     }
 });
+})();

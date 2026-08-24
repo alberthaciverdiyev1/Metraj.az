@@ -1,7 +1,20 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-<script src="/js/layouts/global.js"></script>
+<script>
+    // Front JS faylları üçün Laravel route() ilə yaradılmış API URL-ləri
+    window.MetrajRoutes = {
+        favoritesToggle: "{{ route('favorites.toggle') }}",
+        favoritesClear: "{{ route('favorites.clear') }}",
+        favoritesIds: "{{ route('favorites.ids') }}",
+        comparesToggle: "{{ route('compares.toggle') }}",
+        comparesClear: "{{ route('compares.clear') }}",
+        comparesIds: "{{ route('compares.ids') }}",
+        cities: "{{ url('/api/cities') }}",
+    };
+</script>
+
+<script src="{{ asset('js/layouts/global.js') }}"></script>
 
 @if(session('success'))
 <script>

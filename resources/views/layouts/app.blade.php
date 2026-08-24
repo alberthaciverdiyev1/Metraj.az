@@ -50,8 +50,8 @@
     </style>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <link rel="stylesheet" href="/css/app.css">
-    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/components.css') }}">
 
     @if(isset($css))
         @foreach($css as $file)

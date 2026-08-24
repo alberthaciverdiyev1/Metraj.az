@@ -9,9 +9,9 @@
         <h2 class="text-center text-4xl text-black">{{ __('Home Loan Process') }}
         </h2>
         <div class="navigator">
-            <a href="/" class="text-[var(--primary)]">{{ __('Home') }}</a>
+            <a href="{{ route('home') }}" class="text-[var(--primary)]">{{ __('Home') }}</a>
             <span>></span>
-            <a href="/about-us" class="text-gray-300">{{ __('About Us') }}</a>
+            <a href="{{ route('about-us') }}" class="text-gray-300">{{ __('About Us') }}</a>
         </div>
 
     </section>

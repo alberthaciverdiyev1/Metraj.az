@@ -316,5 +316,5 @@
         images: @json(collect($property->images ?? [])->map->url->values())
     };
 </script>
-<script src="/js/pages/property/details.js"></script>
+<script src="{{ asset('js/pages/property/details.js') }}"></script>
 @endsection

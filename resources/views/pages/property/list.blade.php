@@ -7,7 +7,7 @@
         <section class="property-listing py-4">
                     <div class="container mx-auto px-4 text-sm">
 
-                        <form method="GET" action="/listing" id="filterForm" class="space-y-4">
+                        <form method="GET" action="{{ route('listing') }}" id="filterForm" class="space-y-4">
                             <section class="pt-4 max-w-full mx-auto">
                                 <div class="flex justify-between items-center mb-3">
                                     @php
@@ -72,7 +72,7 @@
                                         <button id="filterRoomBtn" type="button"
                                                 class="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 bg-gray-50 hover:bg-gray-100/80 border border-gray-200/90 rounded-2xl text-xs sm:text-sm font-bold text-gray-800 transition shadow-2xs cursor-pointer select-none">
                                             <div class="flex items-center gap-2 min-w-0">
-                                                <img src="/images/door.svg" alt="door" class="w-4 h-4 shrink-0">
+                                                <img src="{{ asset('images/door.svg') }}" alt="door" class="w-4 h-4 shrink-0">
                                                 <span class="btn-display-text truncate font-bold text-gray-800">{{ $currentRoomsLabel }}</span>
                                             </div>
                                             <i class="bi bi-chevron-down text-xs text-gray-400 transition-transform duration-200 filter-custom-chevron shrink-0" id="filterRoomChevron"></i>
@@ -104,7 +104,7 @@
                                         <button id="filterBuildingBtn" type="button"
                                                 class="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 bg-gray-50 hover:bg-gray-100/80 border border-gray-200/90 rounded-2xl text-xs sm:text-sm font-bold text-gray-800 transition shadow-2xs cursor-pointer select-none">
                                             <div class="flex items-center gap-2 min-w-0">
-                                                <img src="/images/layers.svg" alt="layers" class="w-4 h-4 shrink-0">
+                                                <img src="{{ asset('images/layers.svg') }}" alt="layers" class="w-4 h-4 shrink-0">
                                                 <span class="btn-display-text truncate font-bold text-gray-800">{{ $currentBuildingLabel }}</span>
                                             </div>
                                             <i class="bi bi-chevron-down text-xs text-gray-400 transition-transform duration-200 filter-custom-chevron shrink-0" id="filterBuildingChevron"></i>
@@ -137,7 +137,7 @@
                                         <button id="openModal" type="button"
                                                 class="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 bg-gray-50 hover:bg-gray-100/80 border border-gray-200/90 rounded-2xl text-xs sm:text-sm font-bold text-gray-800 transition shadow-2xs cursor-pointer select-none">
                                             <div class="flex items-center gap-2 min-w-0">
-                                                <img src="/images/city.svg" alt="city" class="w-4 h-4 shrink-0">
+                                                <img src="{{ asset('images/city.svg') }}" alt="city" class="w-4 h-4 shrink-0">
                                                 <span class="truncate font-bold text-gray-800" data-role="display-value" data-filter="city">
                                                     {{ $cities->firstWhere('id', request('cityId'))?->name['az'] ?? ($cities->firstWhere('id', request('cityId'))?->value ?? __('Bütün Şəhərlər')) }}
                                                 </span>
@@ -225,6 +225,6 @@
 @endsection
 
 @push('scripts')
-    <script src="/js/pages/property/list-filters.js"></script>
-    <script src="/js/pages/property/listing.js?v={{ time() }}"></script>
+    <script src="{{ asset('js/pages/property/list-filters.js') }}"></script>
+    <script src="{{ asset('js/pages/property/listing.js') }}?v={{ time() }}"></script>
 @endpush

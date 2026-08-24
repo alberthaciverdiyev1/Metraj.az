@@ -35,7 +35,7 @@
                     <span>{{ __('Hamısını Təmizlə') }}</span>
                 </button>
                 @if(count($properties) < 4)
-                    <a href="/listing"
+                    <a href="{{ route('listing') }}"
                        class="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-semibold rounded-xl transition duration-200">
                         <i class="bi bi-plus-circle"></i>
                         <span>{{ __('Daha Çox Elan Əlavə Et') }}</span>
@@ -54,7 +54,7 @@
             <p class="text-gray-500 text-sm mb-6 max-w-sm mx-auto leading-relaxed">
                 {{ __('Elanların üzərindəki müqayisə ikonuna klikləyərək eyni anda 4 əmlaka qədər parametri yan-yana müqayisə edə bilərsiniz.') }}
             </p>
-            <a href="/listing"
+            <a href="{{ route('listing') }}"
                class="inline-flex items-center px-6 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm rounded-xl shadow-md transition-all duration-200 hover:shadow-lg">
                 <i class="bi bi-search mr-2"></i>
                 <span>{{ __('Elanları Kəşf Et') }}</span>
@@ -83,7 +83,7 @@
                                     <img src="{{ $property->first_image_url }}" alt="{{ $property->title }}"
                                          class="w-full h-full object-cover"/>
                                 </div>
-                                <a href="/elan/{{ $property->slug }}"
+                                <a href="{{ route('properties.show', $property->slug) }}"
                                    class="font-bold text-xs sm:text-sm text-gray-900 hover:text-orange-500 line-clamp-2 transition mb-1.5 block max-w-[240px] mx-auto min-h-[34px]">
                                     {{ $property->title }}
                                 </a>
@@ -216,7 +216,7 @@
                         @foreach($properties as $property)
                             <td class="p-3 sm:p-4 text-center border-l border-gray-100"
                                 data-comp-col-id="{{ $property->id }}">
-                                <a href="/elan/{{ $property->slug }}"
+                                <a href="{{ route('properties.show', $property->slug) }}"
                                    class="inline-flex items-center justify-center max-w-[200px] w-full py-2 sm:py-2.5 px-3 sm:px-4 bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs rounded-xl shadow-sm transition">
                                     {{ __('Elana Bax') }} <i class="bi bi-arrow-right ml-1.5"></i>
                                 </a>
@@ -231,6 +231,6 @@
     </div>
 
     @push('scripts')
-    <script src="/js/pages/compare/compare.js"></script>
+    <script src="{{ asset('js/pages/compare/compare.js') }}"></script>
 @endpush
 @endsection

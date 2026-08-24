@@ -380,5 +380,5 @@
         quillPlaceholder: "{{ __('Axtardığınız əmlak, tələbləriniz və ya təklif edəcəyiniz şərtlər barədə ətraflı yazın...') }}"
     };
 </script>
-<script src="/js/pages/requests/create.js"></script>
+<script src="{{ asset('js/pages/requests/create.js') }}"></script>
 @endsection

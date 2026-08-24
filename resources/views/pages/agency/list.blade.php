@@ -59,5 +59,5 @@
         url: "{{ route('agencies.list') }}"
     };
 </script>
-<script src="/js/pages/agency/list.js"></script>
+<script src="{{ asset('js/pages/agency/list.js') }}"></script>
 @endpush

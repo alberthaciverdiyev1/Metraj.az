@@ -241,5 +241,5 @@
         }
     };
 </script>
-<script src="/js/pages/static/contact.js"></script>
+<script src="{{ asset('js/pages/static/contact.js') }}"></script>
 @endpush

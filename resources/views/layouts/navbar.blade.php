@@ -2,8 +2,8 @@
   <div class="ml-4 mx-auto h-17.5 flex items-center justify-between gap-4">
 
     <!-- Logo -->
-    <a href="/" class="flex items-center space-x-2 shrink-0">
-      <img class="h-9 w-auto object-contain" src="/images/metrajlogo1.png" alt="Metraj.az" />
+    <a href="{{ route('home') }}" class="flex items-center space-x-2 shrink-0">
+      <img class="h-9 w-auto object-contain" src="{{ asset('images/metrajlogo1.png') }}" alt="Metraj.az" />
       <div class="leading-tight">
         <div class="text-xl font-extrabold text-[#545454] tracking-tight">Metraj.az</div>
         <div class="text-[8px] text-gray-400 uppercase tracking-[0.18em]">sənin əmlakın</div>
@@ -12,22 +12,22 @@
 
     <!-- Desktop Navigation Links (Always visible on md and up) -->
     <nav class="hidden md:flex items-center space-x-5 lg:space-x-7 text-[15px] font-medium">
-      <a href="/listing?deal_type=sale" class="{{ request()->is('listing*') && request('deal_type') === 'sale' ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+      <a href="{{ route('listing', ['deal_type' => 'sale']) }}" class="{{ request()->is('listing*') && request('deal_type') === 'sale' ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
         {{ __('Alqı-satqı') }}
       </a>
-      <a href="/listing?deal_type=rent_monthly" class="{{ request()->is('listing*') && request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+      <a href="{{ route('listing', ['deal_type' => 'rent_monthly']) }}" class="{{ request()->is('listing*') && request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
         {{ __('Kirayə') }}
       </a>
-      <a href="/listing?deal_type=rent_daily" class="{{ request()->is('listing*') && request('deal_type') === 'rent_daily' ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+      <a href="{{ route('listing', ['deal_type' => 'rent_daily']) }}" class="{{ request()->is('listing*') && request('deal_type') === 'rent_daily' ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
         {{ __('Günlük') }}
       </a>
-      <a href="/axtariram" class="{{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+      <a href="{{ route('requests.index') }}" class="{{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
         {{ __('Axtarıram') }}
       </a>
-      <a href="/agencies" class="{{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+      <a href="{{ route('agencies.list') }}" class="{{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
         {{ __('Agencies') }}
       </a>
-      <a href="/contact" class="{{ request()->is('contact*') ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+      <a href="{{ route('contact') }}" class="{{ request()->is('contact*') ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
         {{ __('Contact') }}
       </a>
     </nav>
@@ -36,13 +36,13 @@
     <div class="flex items-center space-x-2.5 sm:space-x-3.5">
 
       <!-- Favorites -->
-      <a href="/favorites" class="relative text-gray-700 hover:text-orange-500 p-2 rounded-xl transition inline-flex items-center justify-center hover:bg-gray-50" title="{{ __('Favorites') }}">
+      <a href="{{ route('favorites') }}" class="relative text-gray-700 hover:text-orange-500 p-2 rounded-xl transition inline-flex items-center justify-center hover:bg-gray-50" title="{{ __('Favorites') }}">
         <i class="fa-regular fa-heart text-xl text-rose-500"></i>
         <span id="favorites-count" class="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] min-w-[16px] h-4 px-1 flex items-center justify-center rounded-full font-bold shadow-sm">0</span>
       </a>
 
       <!-- Compares -->
-      <a href="/compares" class="relative text-gray-700 hover:text-orange-500 p-2 rounded-xl transition inline-flex items-center justify-center hover:bg-gray-50" title="{{ __('Compare') }}">
+      <a href="{{ route('compares') }}" class="relative text-gray-700 hover:text-orange-500 p-2 rounded-xl transition inline-flex items-center justify-center hover:bg-gray-50" title="{{ __('Compare') }}">
         <i class="bi bi-arrow-left-right text-xl text-gray-700"></i>
         <span id="compares-count" class="absolute top-0 -right-1 bg-orange-500 text-white text-[10px] min-w-[16px] h-4 px-1 flex items-center justify-center rounded-full font-bold shadow-sm">0</span>
       </a>
@@ -71,7 +71,7 @@
         <div id="navCurrencyDropdown"
              class="hidden absolute right-0 mt-2 w-36 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden">
           @foreach($currencySymbols as $cCode => $cSym)
-            <a href="/currency/{{ $cCode }}"
+            <a href="{{ route('currency.switch', $cCode) }}"
                class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ $currentCurrency === $cCode ? 'text-[#f1913d] bg-orange-50/60 font-bold' : 'text-gray-700 hover:bg-gray-50' }} transition">
               <span class="flex items-center gap-2">
                 <span class="w-4 text-center font-bold text-gray-400">{{ $cSym }}</span>
@@ -106,7 +106,7 @@
         <div id="navLangDropdown"
              class="hidden absolute right-0 mt-2 w-40 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden">
           @foreach($languages as $lKey => $lData)
-            <a href="/lang/{{ $lKey }}"
+            <a href="{{ route('lang.switch', $lKey) }}"
                class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ $currentLocale === $lKey ? 'text-[#f1913d] bg-orange-50/60 font-bold' : 'text-gray-700 hover:bg-gray-50' }} transition">
               <span class="flex items-center gap-2">
                 <span class="text-base leading-none">{{ $lData['flag'] }}</span>
@@ -121,13 +121,13 @@
       </div>
 
       <!-- Post Request Button (Axtarıram) -->
-      <a href="/axtariram/elan-ver" class="hidden lg:flex items-center px-3.5 py-2 border border-orange-500 text-orange-600 hover:bg-orange-50 rounded-xl font-semibold text-xs sm:text-sm transition shadow-2xs" title="{{ __('Tələb Elanı Yerləşdir') }}">
+      <a href="{{ route('requests.create') }}" class="hidden lg:flex items-center px-3.5 py-2 border border-orange-500 text-orange-600 hover:bg-orange-50 rounded-xl font-semibold text-xs sm:text-sm transition shadow-2xs" title="{{ __('Tələb Elanı Yerləşdir') }}">
         <i class="fa-solid fa-bullhorn mr-1.5 text-xs text-orange-500"></i>
         <span>{{ __('Tələb yerləşdir') }}</span>
       </a>
 
       <!-- Add Property Button -->
-      <a href="/add-property" class="hidden sm:flex items-center px-3.5 py-2 bg-[#f1913d] hover:bg-[#e07f2c] text-white rounded-xl font-semibold text-xs sm:text-sm transition shadow-sm">
+      <a href="{{ route('add-property') }}" class="hidden sm:flex items-center px-3.5 py-2 bg-[#f1913d] hover:bg-[#e07f2c] text-white rounded-xl font-semibold text-xs sm:text-sm transition shadow-sm">
         <i class="bi bi-plus-circle mr-1.5"></i>
         <span>{{ __('Elan yerləşdir') }}</span>
       </a>
@@ -148,16 +148,16 @@
               <p class="text-xs text-gray-500 truncate">{{ auth()->user()->email }}</p>
             </div>
 
-            <a href="/dashboard" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
+            <a href="{{ route('dashboard') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
               <i class="bi bi-grid mr-3 text-gray-400"></i> {{ __('Dashboard') }}
             </a>
-            <a href="/profile" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
+            <a href="{{ route('profile') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
               <i class="bi bi-person mr-3 text-gray-400"></i> {{ __('My profile') }}
             </a>
-            <a href="/my-properties" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
+            <a href="{{ route('my-properties') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
               <i class="bi bi-folder-check mr-3 text-gray-400"></i> {{ __('My properties') }}
             </a>
-            <a href="/favorites" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
+            <a href="{{ route('favorites') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
               <i class="bi bi-heart mr-3 text-gray-400"></i> {{ __('My favorites') }}
             </a>
             <a href="/mysavesearches" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
@@ -166,7 +166,7 @@
 
             @if(auth()->user()->is_admin ?? false)
               <div class="border-t border-gray-100 my-1"></div>
-              <a href="/admin" class="flex items-center px-4 py-2 text-sm text-indigo-600 hover:bg-indigo-50 font-medium">
+              <a href="{{ route('filament.admin.pages.dashboard') }}" class="flex items-center px-4 py-2 text-sm text-indigo-600 hover:bg-indigo-50 font-medium">
                 <i class="bi bi-shield-lock mr-3"></i> Admin Panel
               </a>
             @endif
@@ -181,7 +181,7 @@
             </form>
           </div>
         @else
-          <a href="/login" class="flex items-center px-3.5 py-2 border border-gray-200 rounded-xl text-gray-700 hover:border-[#f1913d] hover:text-[#f1913d] text-sm font-semibold transition bg-white shadow-2xs">
+          <a href="{{ route('login') }}" class="flex items-center px-3.5 py-2 border border-gray-200 rounded-xl text-gray-700 hover:border-[#f1913d] hover:text-[#f1913d] text-sm font-semibold transition bg-white shadow-2xs">
             <i class="bi bi-person mr-1.5 text-base"></i>
             <span>{{ __('Login / Register') }}</span>
           </a>
@@ -196,13 +196,13 @@
 <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200/90 px-2 flex items-center justify-around select-none">
 
   <!-- 1. ƏMLAK -->
-  <a href="/listing" class="flex flex-col items-center justify-center flex-1 py-1 text-center transition {{ request()->is('listing*') || request()->is('/') ? 'text-[#f1913d] font-bold' : 'text-gray-400 hover:text-gray-700' }}">
+  <a href="{{ route('listing') }}" class="flex flex-col items-center justify-center flex-1 py-1 text-center transition {{ request()->is('listing*') || request()->is('/') ? 'text-[#f1913d] font-bold' : 'text-gray-400 hover:text-gray-700' }}">
     <i class="fa-solid fa-house text-lg mb-0.5"></i>
     <span class="text-[10px] font-semibold uppercase tracking-tight">{{ __('ƏMLAK') }}</span>
   </a>
 
   <!-- 2. SEÇİLMİŞLƏR -->
-  <a href="/favorites" class="flex flex-col items-center justify-center flex-1 py-1 text-center relative transition {{ request()->is('favorites*') ? 'text-[#f1913d] font-bold' : 'text-gray-400 hover:text-gray-700' }}">
+  <a href="{{ route('favorites') }}" class="flex flex-col items-center justify-center flex-1 py-1 text-center relative transition {{ request()->is('favorites*') ? 'text-[#f1913d] font-bold' : 'text-gray-400 hover:text-gray-700' }}">
     <div class="relative">
       <i class="fa-solid fa-heart text-lg mb-0.5"></i>
       <span id="mobile-fav-count" class="hidden absolute -top-1 -right-2 bg-orange-500 text-white text-[8px] min-w-[14px] h-3.5 px-0.5 flex items-center justify-center rounded-full font-bold shadow-xs">0</span>
@@ -212,7 +212,7 @@
 
   <!-- 3. YENİ ELAN (Center Elevated Orange Circular Button) -->
   <div class="flex flex-col items-center justify-center flex-1 relative -top-3.5">
-    <a href="/add-property" class="w-13 h-13 bg-[#f1913d] hover:bg-[#e07f2c] text-white rounded-full shadow-lg flex items-center justify-center border-4 border-white transition-all transform hover:scale-105 active:scale-95" title="{{ __('Yeni Elan') }}">
+    <a href="{{ route('add-property') }}" class="w-13 h-13 bg-[#f1913d] hover:bg-[#e07f2c] text-white rounded-full shadow-lg flex items-center justify-center border-4 border-white transition-all transform hover:scale-105 active:scale-95" title="{{ __('Yeni Elan') }}">
       <i class="fa-solid fa-plus text-2xl font-black"></i>
     </a>
     <span class="text-[10px] font-semibold uppercase tracking-tight text-gray-500 mt-0.5">{{ __('YENİ ELAN') }}</span>
@@ -220,12 +220,12 @@
 
   <!-- 4. KABİNET -->
   @auth
-    <a href="/profile" class="flex flex-col items-center justify-center flex-1 py-1 text-center transition {{ request()->is('profile*') || request()->is('dashboard*') || request()->is('my-*') ? 'text-[#f1913d] font-bold' : 'text-gray-400 hover:text-gray-700' }}">
+    <a href="{{ route('profile') }}" class="flex flex-col items-center justify-center flex-1 py-1 text-center transition {{ request()->is('profile*') || request()->is('dashboard*') || request()->is('my-*') ? 'text-[#f1913d] font-bold' : 'text-gray-400 hover:text-gray-700' }}">
       <i class="fa-solid fa-circle-user text-lg mb-0.5"></i>
       <span class="text-[10px] font-semibold uppercase tracking-tight truncate max-w-[65px]">{{ __('KABİNET') }}</span>
     </a>
   @else
-    <a href="/login" class="flex flex-col items-center justify-center flex-1 py-1 text-center transition {{ request()->is('login*') || request()->is('register*') ? 'text-[#f1913d] font-bold' : 'text-gray-400 hover:text-gray-700' }}">
+    <a href="{{ route('login') }}" class="flex flex-col items-center justify-center flex-1 py-1 text-center transition {{ request()->is('login*') || request()->is('register*') ? 'text-[#f1913d] font-bold' : 'text-gray-400 hover:text-gray-700' }}">
       <i class="fa-solid fa-circle-user text-lg mb-0.5"></i>
       <span class="text-[10px] font-semibold uppercase tracking-tight">{{ __('KABİNET') }}</span>
     </a>
@@ -248,7 +248,7 @@
     <!-- Drawer Header -->
     <div class="flex items-center justify-between pb-3 border-b border-gray-100">
       <div class="flex items-center space-x-2">
-        <img class="h-8 w-auto object-contain" src="/images/metrajlogo1.png" alt="Metraj.az" />
+        <img class="h-8 w-auto object-contain" src="{{ asset('images/metrajlogo1.png') }}" alt="Metraj.az" />
         <span class="font-extrabold text-base text-gray-800">Metraj.az</span>
       </div>
       <button type="button" id="closeMobileMoreDrawer" class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 flex items-center justify-center transition">
@@ -258,11 +258,11 @@
 
     <!-- Quick Action Buttons -->
     <div class="grid grid-cols-2 gap-2.5">
-      <a href="/add-property" class="flex items-center justify-center gap-2 py-3 px-4 bg-[#f1913d] hover:bg-[#e07f2c] text-white rounded-2xl font-bold text-xs shadow-sm">
+      <a href="{{ route('add-property') }}" class="flex items-center justify-center gap-2 py-3 px-4 bg-[#f1913d] hover:bg-[#e07f2c] text-white rounded-2xl font-bold text-xs shadow-sm">
         <i class="fa-solid fa-plus text-sm"></i>
         <span>{{ __('Elan yerləşdir') }}</span>
       </a>
-      <a href="/axtariram/elan-ver" class="flex items-center justify-center gap-2 py-3 px-4 bg-orange-500 text-white rounded-2xl font-bold text-xs shadow-sm">
+      <a href="{{ route('requests.create') }}" class="flex items-center justify-center gap-2 py-3 px-4 bg-orange-500 text-white rounded-2xl font-bold text-xs shadow-sm">
         <i class="fa-solid fa-bullhorn text-xs"></i>
         <span>{{ __('Tələb yerləşdir') }}</span>
       </a>
@@ -270,35 +270,35 @@
 
     <!-- Navigation Links List -->
     <div class="space-y-1 py-1">
-      <a href="/" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('/') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('home') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('/') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-house text-gray-400 w-5 text-center"></i> {{ __('Ana Səhifə') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="/listing?deal_type=sale" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'sale' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('listing', ['deal_type' => 'sale']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'sale' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-key text-gray-400 w-5 text-center"></i> {{ __('Alqı-satqı') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="/listing?deal_type=rent_monthly" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('listing', ['deal_type' => 'rent_monthly']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-calendar-days text-gray-400 w-5 text-center"></i> {{ __('Kirayə') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="/listing?deal_type=rent_daily" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'rent_daily' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('listing', ['deal_type' => 'rent_daily']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'rent_daily' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-clock text-gray-400 w-5 text-center"></i> {{ __('Günlük') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="/axtariram" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('requests.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-magnifying-glass text-gray-400 w-5 text-center"></i> {{ __('Axtarıram') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="/agencies" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('agencies.list') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-building text-gray-400 w-5 text-center"></i> {{ __('Agencies') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="/contact" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('contact*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('contact') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('contact*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-envelope text-gray-400 w-5 text-center"></i> {{ __('Contact') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="/compares" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('compares*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('compares') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('compares*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="bi bi-arrow-left-right text-gray-400 w-5 text-center"></i> {{ __('Compare') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
@@ -309,7 +309,7 @@
       <div class="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-2">{{ __('Dil seçimi') }}</div>
       <div class="grid grid-cols-3 gap-2">
         @foreach($languages as $lKey => $lData)
-          <a href="/lang/{{ $lKey }}"
+          <a href="{{ route('lang.switch', $lKey) }}"
              class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-2xl text-xs font-bold border {{ $currentLocale === $lKey ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-2xs' : 'border-gray-200 text-gray-700 hover:bg-gray-50' }}">
             <span class="text-sm">{{ $lData['flag'] }}</span>
             <span>{{ $lData['label'] }}</span>
@@ -323,7 +323,7 @@
       <div class="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-2">{{ __('Valyuta') }}</div>
       <div class="grid grid-cols-4 gap-1.5">
         @foreach($currencySymbols as $cCode => $cSym)
-          <a href="/currency/{{ $cCode }}"
+          <a href="{{ route('currency.switch', $cCode) }}"
              class="flex items-center justify-center py-2 px-2 rounded-xl text-xs font-bold border {{ $currentCurrency === $cCode ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-2xs' : 'border-gray-200 text-gray-700 hover:bg-gray-50' }}">
             <span>{{ $cSym }} {{ $cCode }}</span>
           </a>
@@ -335,17 +335,17 @@
     <div class="pt-3 border-t border-gray-100">
       @auth
         <div class="space-y-1">
-          <a href="/dashboard" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
+          <a href="{{ route('dashboard') }}" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
             <i class="bi bi-grid mr-3 text-gray-400"></i> {{ __('Dashboard') }}
           </a>
-          <a href="/profile" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
+          <a href="{{ route('profile') }}" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
             <i class="bi bi-person mr-3 text-gray-400"></i> {{ __('My profile') }}
           </a>
-          <a href="/my-properties" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
+          <a href="{{ route('my-properties') }}" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
             <i class="bi bi-folder-check mr-3 text-gray-400"></i> {{ __('My properties') }}
           </a>
           @if(auth()->user()->is_admin ?? false)
-            <a href="/admin" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-semibold text-indigo-600 hover:bg-indigo-50">
+            <a href="{{ route('filament.admin.pages.dashboard') }}" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-semibold text-indigo-600 hover:bg-indigo-50">
               <i class="bi bi-shield-lock mr-3"></i> Admin Panel
             </a>
           @endif
@@ -357,7 +357,7 @@
           </form>
         </div>
       @else
-        <a href="/login" class="w-full flex items-center justify-center gap-2 py-3 px-4 bg-gray-900 text-white rounded-2xl font-bold text-xs shadow-sm">
+        <a href="{{ route('login') }}" class="w-full flex items-center justify-center gap-2 py-3 px-4 bg-gray-900 text-white rounded-2xl font-bold text-xs shadow-sm">
           <i class="bi bi-person text-sm"></i>
           <span>{{ __('Login / Register') }}</span>
         </a>
@@ -367,4 +367,4 @@
   </div>
 </div>
 
-<script src="/js/layouts/navbar.js"></script>
+<script src="{{ asset('js/layouts/navbar.js') }}"></script>

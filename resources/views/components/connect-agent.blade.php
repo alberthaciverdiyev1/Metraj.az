@@ -1,5 +1,5 @@
 <div class="connect">
-    <img src="/images/ads.jpg" alt="Elegant studio flat" />
+    <img src="{{ asset('images/ads.jpg') }}" alt="Elegant studio flat" />
     <div class="content">
         <div class="flex items-center space-x-2">
             <div class="bg-orange-400 p-2 rounded-full text-white">

@@ -3,8 +3,8 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
             <!-- Brand Column -->
             <div class="lg:col-span-2 space-y-6">
-                <a href="/" class="flex items-center space-x-2.5">
-                    <img class="h-9 w-auto object-contain brightness-0 invert" src="/images/metrajlogo1.png" alt="Metraj" />
+                <a href="{{ route('home') }}" class="flex items-center space-x-2.5">
+                    <img class="h-9 w-auto object-contain brightness-0 invert" src="{{ asset('images/metrajlogo1.png') }}" alt="Metraj" />
                     <div class="leading-tight">
                         <div class="text-xl font-extrabold text-white tracking-tight">Metraj.az</div>
                         <div class="text-[8px] text-orange-500 underline underline-offset-4 uppercase tracking-[0.15em] font-bold">sənin əmlakın</div>
@@ -33,14 +33,14 @@
             <div class="space-y-4">
                 <h4 class="text-sm font-bold text-white uppercase tracking-wider">{{ __('Keçidlər') }}</h4>
                 <ul class="space-y-2.5 text-sm">
-                    <li><a href="/" class="hover:text-white hover:underline transition">{{ __('Ana Səhifə') }}</a></li>
-                    <li><a href="/listing" class="hover:text-white hover:underline transition">{{ __('Elanlar') }}</a></li>
-                    <li><a href="/axtariram" class="hover:text-white hover:underline transition">{{ __('Axtarıram') }}</a></li>
-                    <li><a href="/agencies" class="hover:text-white hover:underline transition">{{ __('Agentliklər') }}</a></li>
-                    <li><a href="/blog" class="hover:text-white hover:underline transition">{{ __('Bloq') }}</a></li>
-                    <li><a href="/about-us" class="hover:text-white hover:underline transition">{{ __('Haqqımızda') }}</a></li>
-                    <li><a href="/faq" class="hover:text-white hover:underline transition">{{ __('FAQ') }}</a></li>
-                    <li><a href="/contact" class="hover:text-white hover:underline transition">{{ __('Əlaqə') }}</a></li>
+                    <li><a href="{{ route('home') }}" class="hover:text-white hover:underline transition">{{ __('Ana Səhifə') }}</a></li>
+                    <li><a href="{{ route('listing') }}" class="hover:text-white hover:underline transition">{{ __('Elanlar') }}</a></li>
+                    <li><a href="{{ route('requests.index') }}" class="hover:text-white hover:underline transition">{{ __('Axtarıram') }}</a></li>
+                    <li><a href="{{ route('agencies.list') }}" class="hover:text-white hover:underline transition">{{ __('Agentliklər') }}</a></li>
+                    <li><a href="{{ route('blog.list') }}" class="hover:text-white hover:underline transition">{{ __('Bloq') }}</a></li>
+                    <li><a href="{{ route('about-us') }}" class="hover:text-white hover:underline transition">{{ __('Haqqımızda') }}</a></li>
+                    <li><a href="{{ route('faq') }}" class="hover:text-white hover:underline transition">{{ __('FAQ') }}</a></li>
+                    <li><a href="{{ route('contact') }}" class="hover:text-white hover:underline transition">{{ __('Əlaqə') }}</a></li>
                 </ul>
             </div>
 
@@ -48,11 +48,11 @@
             <div class="space-y-4">
                 <h4 class="text-sm font-bold text-white uppercase tracking-wider">{{ __('Populyar Bölgələr') }}</h4>
                 <ul class="space-y-2.5 text-sm">
-                    <li><a href="/listing?cityId=1" class="hover:text-white hover:underline transition">{{ __('Girne') }}</a></li>
-                    <li><a href="/listing?cityId=2" class="hover:text-white hover:underline transition">{{ __('Lefkoşa') }}</a></li>
-                    <li><a href="/listing?cityId=3" class="hover:text-white hover:underline transition">{{ __('Gazimağusa') }}</a></li>
-                    <li><a href="/listing?cityId=4" class="hover:text-white hover:underline transition">{{ __('İskele') }}</a></li>
-                    <li><a href="/listing?cityId=5" class="hover:text-white hover:underline transition">{{ __('Güzelyurt') }}</a></li>
+                    <li><a href="{{ route('listing', ['cityId' => 1]) }}" class="hover:text-white hover:underline transition">{{ __('Girne') }}</a></li>
+                    <li><a href="{{ route('listing', ['cityId' => 2]) }}" class="hover:text-white hover:underline transition">{{ __('Lefkoşa') }}</a></li>
+                    <li><a href="{{ route('listing', ['cityId' => 3]) }}" class="hover:text-white hover:underline transition">{{ __('Gazimağusa') }}</a></li>
+                    <li><a href="{{ route('listing', ['cityId' => 4]) }}" class="hover:text-white hover:underline transition">{{ __('İskele') }}</a></li>
+                    <li><a href="{{ route('listing', ['cityId' => 5]) }}" class="hover:text-white hover:underline transition">{{ __('Güzelyurt') }}</a></li>
                 </ul>
             </div>
 

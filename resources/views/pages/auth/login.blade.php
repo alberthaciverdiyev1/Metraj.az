@@ -11,8 +11,8 @@
             
             {{-- Header & Logo --}}
             <div class="text-center space-y-2">
-                <a href="/" class="inline-block">
-                    <img src="/images/metrajlogo1.png" alt="Metraj.az" class="h-10 mx-auto object-contain">
+                <a href="{{ route('home') }}" class="inline-block">
+                    <img src="{{ asset('images/metrajlogo1.png') }}" alt="Metraj.az" class="h-10 mx-auto object-contain">
                 </a>
                 <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
                     {{ __('Hesaba Daxil Ol') }}
@@ -94,7 +94,7 @@
                     </a>
                 </p>
                 <div>
-                    <a href="/" class="text-xs text-gray-400 hover:text-gray-600 transition inline-flex items-center gap-1">
+                    <a href="{{ route('home') }}" class="text-xs text-gray-400 hover:text-gray-600 transition inline-flex items-center gap-1">
                         <i class="bi bi-house-door"></i> {{ __('Ana səhifəyə qayıt') }}
                     </a>
                 </div>
@@ -117,6 +117,6 @@
         }
     };
 </script>
-<script src="/js/pages/auth/login.js"></script>
+<script src="{{ asset('js/pages/auth/login.js') }}"></script>
 @endpush
 @endsection

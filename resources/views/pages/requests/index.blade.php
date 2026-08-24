@@ -193,6 +193,6 @@
 </div>
 
 @push('scripts')
-    <script src="/js/pages/requests/index.js"></script>
+    <script src="{{ asset('js/pages/requests/index.js') }}"></script>
 @endpush
 @endsection

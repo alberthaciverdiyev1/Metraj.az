@@ -279,6 +279,6 @@
 </div>
 
 @push('scripts')
-    <script src="/js/pages/static/faq.js"></script>
+    <script src="{{ asset('js/pages/static/faq.js') }}"></script>
 @endpush
 @endsection
