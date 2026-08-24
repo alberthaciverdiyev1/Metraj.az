@@ -178,6 +178,30 @@ resources/views/                       (bütün Blade view-lar — merkezi)
 
 ---
 
+## 3.5. Frontend Asset Pipeline
+
+İki ayrı asset pipeline var:
+
+1. **Vite (Tailwind 4)** — `resources/css/app.css` + `resources/js/app.js` giriş nöqtələri ilə `@vite()` direktivi vasitəsilə yüklənir. Yalnız Tailwind/Instrument Sans fontu üçün istifadə olunur.
+
+2. **Legacy front assetlər (esbuild minify)** — əl ilə yazılmış front-end JS/CSS faylları `resources/frontend/` qovluğunda saxlanır və `npm run assets:build` (və ya development üçün `npm run assets:dev` watch) əmri ilə minify edilib `public/`-ə köçürülür:
+
+```
+resources/frontend/
+├── js/     (components/, layouts/, pages/, filament/forms/map-picker.js)
+└── css/    (app.css, components.css, listing.css, ... filament/head-end.css, ...)
+```
+
+- **Source:** `resources/frontend/js/**/*.js` və `resources/frontend/css/**/*.css`
+- **Output:** `public/js/**` və `public/css/**` (qovluq strukturu qorunur, minified)
+- **Blade istinadları dəyişmir:** `asset('js/pages/faq.js')`, `asset('css/app.css')` kimi davam edir
+- **İstisnalar:** `resources/css/app.css`, `resources/js/app.js` (Vite idarə edir); `public/js/filament/`, `public/css/filament/` vendor assetləri (Filament publish — toxunulmur)
+- **Build skripti:** `build.assets.mjs` (esbuild, `bundle: false`, `minify: true`)
+
+> ⚠️ **Diqqət:** `resources/css/app.css` (Vite Tailwind entry) ilə `resources/frontend/css/app.css` (legacy global CSS) **eyni ada malik fərqli fayllardır** — qarışdırmayın. Blade-də `@vite()` Tailwind-in, `asset('css/app.css')` isə legacy faylın yüklənməsidir.
+
+---
+
 ## 4. Panellər və Rollar
 
 ### 4.1. Admin Panel (`/admin`)

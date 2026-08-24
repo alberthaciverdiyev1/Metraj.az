@@ -1,0 +1,1797 @@
+.gallery-grid {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    height: 70vh; 
+}
+@media (max-width:768px) {
+    .gallery-grid{
+        height: auto;
+    }
+}
+
+.gallery-main {
+    flex: 1 1 45%;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    height: 100%;
+}
+
+.gallery-main img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-thumbnails {
+    flex: 1 1 50%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem;
+    height: 100%; 
+}
+
+.gallery-thumbnails figure,
+.more-images-overlay {
+    position: relative;
+    width: 100%;
+    height: calc((70vh - 0.75rem) / 2); 
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.gallery-thumbnails figure,
+.more-images-overlay {
+    position: relative;
+    width: 100%;
+    /* padding-top: 66%;  */
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.gallery-thumbnails img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.more-images-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+}
+.modal {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.96);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 99999 !important;
+    overflow: hidden;
+}
+
+.modal--hidden {
+    display: none !important;
+}
+
+.modal-header {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    z-index: 100002 !important;
+}
+
+.modal-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.modal-actions button {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.modal-actions button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    color: #f1913d;
+    transform: scale(1.05);
+}
+
+.modal-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100000 !important;
+    pointer-events: none;
+}
+
+.modal-navigation button {
+    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.4);
+    border: none;
+    font-size: 32px;
+    color: white;
+    cursor: pointer;
+    padding: 24px 16px;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.modal-navigation button:hover {
+    background-color: rgba(241, 145, 61, 0.8);
+}
+
+#modal-image {
+    pointer-events: auto;
+    max-width: 90vw;
+    max-height: 75vh;
+    border-radius: 12px;
+    object-fit: contain;
+    display: block;
+    margin: auto;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+/* Mobil üçün */
+@media screen and (max-width: 768px) {
+
+    .gallery-main {
+        flex: 1 1 100%;
+        height: 50vh; /* Mobil üçün daha qısa */
+        margin-bottom: 0.5rem;
+    }
+
+    .gallery-thumbnails {
+        flex: 1 1 100%;
+        grid-template-columns: repeat(3, 1fr) !important; /* 3 thumbnail yan-yana */
+        height: auto; 
+        gap: 0.5rem;
+    }
+
+    .gallery-thumbnails figure,
+    .more-images-overlay {
+        height: 80px; /* Thumbnail hündürlüyü mobil üçün kiçik */
+    } 
+
+    #modal-image {
+        max-width: 100vw; /* Mobil ekranın 95%-i */
+        max-height: 60vh; /* Yüksəklik azaldıldı */
+    }
+
+    .modal-navigation button {
+        font-size: 30px; /* Oxlar mobil üçün kiçik */
+        padding: 10px;
+        gap: 1rem;
+    }
+
+    .modal-header {
+        font-size: 16px; /* Mobil üçün kiçik font */
+        padding: 5px 10px;
+        width: 95%;
+    }
+}
+
+
+.thumbnails {
+    margin-top: 20px;
+    display: none; /* Default olaraq gizli olsun, JS ilə açılır */
+    flex-wrap: nowrap; /* Sürüşdürmə üçün */
+    overflow-x: auto; /* Horizontal sürüşdürmə */
+    gap: 10px;
+    padding: 10px 0;
+    width: 90%;
+    max-width: 1200px;
+    position: absolute;
+    bottom: 0; /* Ekranın aşağısına yapışdır */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0,0,0,0.5); /* Thumbnail fonu */
+    z-index: 1001;
+    justify-content: center; /* Thumbnails mərkəzə gətir */
+}
+
+.thumbnails img {
+    width: 70px;
+    height: 70px; /* Thumbnail hündürlüyü */
+    border-radius: 5px;
+    cursor: pointer;
+    object-fit: cover;
+    border: 2px solid transparent; /* Aktiv olmayan üçün şəffaf çərçivə */
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.thumbnails img:hover {
+    border-color: #ffffff;
+    transform: scale(1.05);
+}
+/* Aktiv thumbnail üçün CSS (JavaScript tərəfindən tətbiq olunur) */
+.thumbnails img[data-active="true"] {
+    border-color: orange !important; /* Narıncı rənglə vurğula */
+}
+
+
+/* --- General Layout & Info Box Styles --- */
+@media (min-width: 640px) {
+    #side {
+        padding: 4rem 0;
+    }
+}
+#side {
+    padding: 0 0;
+}
+.side {
+    display: flex;
+    gap: 2rem;
+}
+.side-right {
+    width: 35%;
+    position: relative;
+}
+
+.sticky {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    max-height: 1600px;
+}
+
+@media (min-width: 640px) {
+    .side-left {
+        width: 65%;
+        padding: 20px; /* Yuxarıda təkrar olunurdu */
+    }
+}
+
+.side-left .info-box {
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+}
+.side-left .info-box .info-box-title {
+    display: flex;
+    justify-content: space-between;
+    font-size: 36px;
+    line-height: 44px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+.side-left .info-box .info-box-title h2 span {
+    font-size: 20px;
+    color: var(--grey-text);
+}
+
+@media (min-width: 640px) {
+    .info-box-desc {
+        display: flex;
+        padding: 10px 0px 20px 0px;
+        justify-content: space-between;
+    }
+}
+.info-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.info-box-title {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-box-desc .right i {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    color: var(--grey-text);
+}
+.info-box-desc .right i:hover {
+    background-color: var(--primary);
+    color: var(--white);
+    transition: 0.3s;
+}
+.adress {
+    color: var(--grey-text);
+}
+.connect {
+    margin-top: 40px;
+}
+.contact-form {
+    margin-top: 40px;
+}
+.bed-info {
+    margin-top: 15px;
+}
+.bed-info-desc {
+    display: flex;
+    gap: 6px;
+    font-weight: 500;
+}
+.bed-info-desc span {
+    color: var(--grey-text);
+}
+
+.info-box-title h2 {
+    margin: 5px 0;
+}
+
+/* --- Utility Classes --- */
+.flex {
+    display: flex;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.mb-3 {
+    margin-bottom: 15px;
+}
+
+.mb-4 {
+    margin-bottom: 20px;
+}
+
+.me-2 {
+    margin-right: 10px;
+}
+
+.me-3 {
+    margin-right: 15px;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.gap-4 > * {
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+/* --- Buttons --- */
+.btn-warning {
+    background-color: #ffc107;
+    color: black;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+.button-desc {
+    display: flex;
+    gap: 15px;
+}
+.button-desc i {
+    color: var(--grey-text);
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 22px;
+    border: 1px solid var(--button-border);
+}
+.button-desc > div p:nth-child(1) {
+    color: var(--grey-text);
+    font-size: 14px;
+}
+.button-desc > div p:nth-child(2) {
+    font-weight: 500;
+}
+.buttons-desc {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    gap: 50px;
+    justify-content: space-between;
+}
+.question-btn {
+    border-radius: 20px;
+    color: var(--white);
+    padding: 15px 30px;
+    background-color: var(--primary);
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Video Section --- */
+.video-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#video-frame {
+    width: 100%;
+    height: 450px;
+    display: block;
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 60px;
+    color: white;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.play-button:hover {
+    opacity: 1;
+}
+
+/* --- Property Detail Section --- */
+.property-detail .box {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.box { /* Təkrar təyin idi, birləşdirildi */
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.box ul {
+    width: calc(50% - 3rem); /* Daha düzgün hesablama */
+}
+ul .flex {
+    gap: 1rem;
+}
+.box ul li {
+    margin-bottom: 14px;
+}
+ul .flex p:nth-child(1) {
+    width: 40%;
+    color: var(--icon-grey);
+}
+ul .flex p:nth-child(2) {
+    width: 40%;
+    color: var(--grey-text);
+}
+@media (min-width: 640px) {
+
+#property-detail {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
+    padding: 20px 20px;
+    margin: 30px 0px;
+}
+    #property-detail h3 {
+        font-size: 24px;
+        padding: 20px 0px;
+        font-weight: 600;
+    }
+}
+#property-detail {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
+    padding: 20px 20px;
+    margin: 0px 0px;
+}
+#property-detail h3 {
+    font-size: 24px;
+    padding: 10px 0px;
+    font-weight: 600;
+}
+#property-detail .units {
+    color: var(--grey-text);
+}
+
+.read-more {
+    cursor: pointer;
+    color: var(--primary);
+    padding: 10px 0px;
+    font-weight: 600;
+}
+.read-more i {
+    margin-left: 10px;
+    font-weight: 600;
+}
+
+.units {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5;
+    max-height: 4.5em;
+    transition: max-height 0.3s ease;
+}
+
+.units.expanded {
+    -webkit-line-clamp: unset;
+    max-height: none;
+    display: block;
+}
+
+.boxes-feature {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.amenities-and-features {
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+}
+.amenities-and-features h3 {
+    font-size: 24px;
+    line-height: 33.6px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+.boxes-feature { /* Təkrar təyin idi, birləşdirildi */
+    padding: 24px;
+}
+.boxes-feature ul li {
+    margin-bottom: 14px;
+    list-style: disc; /* Təkrar idi */
+    font-size: 14px; /* Təkrar idi */
+    color: var(--grey-text); /* Təkrar idi */
+}
+.boxes-feature ul li::marker {
+    color: var(--primary);
+}
+
+.nearby-features ul li{
+    display:flex;
+    gap:0.7rem;
+    list-style: none!important;
+}
+
+/* --- Map Detail --- */
+.map-detail {
+    background-color: var(--white);
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
+}
+.map-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    width: 90%;
+    padding-top: 35px;
+    flex-wrap: wrap;
+}
+.map-info-list {
+    width: calc(50% - 3rem);
+}
+.map-info-list li {
+    display: flex;
+    margin-bottom: 14px;
+}
+
+.map-info-list li p:nth-child(1) {
+    color: var(--icon-grey);
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.map-info-list li p:nth-child(2) {
+    font-size: 14px;
+    color: var(--grey-text);
+}
+
+/* --- Accordion --- */
+.accordion-container {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    width: 100%;
+    margin-bottom: 40px;
+    margin: auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.accordion-container h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.accordion-item {
+    background: #f6f6f6;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.accordion-header:hover {
+    background: #eeeeee;
+}
+
+.accordion-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.accordion-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: #666;
+}
+
+.accordion-icons i {
+    margin-right: 5px;
+    color: #7d7d7d;
+}
+
+.accordion-body {
+    display: none;
+    padding: 20px;
+    background: #fff;
+    border-top: 1px solid #ddd;
+}
+
+.accordion-body img {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.accordion-item.active .accordion-body {
+    display: block;
+}
+
+.accordion-item.active .accordion-header i.fa-chevron-down {
+    transform: rotate(180deg);
+    transition: transform 0.3s;
+}
+
+/* --- Attachment Box --- */
+.attachment-box {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    margin: 50px 0px;
+    max-width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+.attachment-box h2 { /* Təkrar təyin idi */
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.file-list {
+    display: flex;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 15px;
+    border-radius: 12px;
+    transition: background 0.3s;
+    min-width: 300px;
+    font-size: 14px;
+    color: var(--grey-text);
+}
+
+.file-name {
+    font-size: 14px; /* Təkrar idi */
+    color: var(--icon-grey);
+}
+.file-name:hover {
+    transition: 0.3s all;
+    color: var(--primary);
+}
+
+.file-icon {
+    width: 50px;
+    height: 60px;
+    background: #eeeeee;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.file-icon span {
+    position: absolute;
+    bottom: 5px;
+    background: #007bff;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.file-name { /* Təkrar idi */
+    flex-grow: 1;
+    color: #333;
+}
+
+.download-icon a {
+    color: #333;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.download-icon a:hover {
+    color: #000;
+}
+
+/* --- Calculator --- */
+.calculator {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.calculator h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+.col .form-group label {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+.col .form-group input,
+.form-group select { /* İkisini birləşdirdik */
+    padding: 15px 20px;
+    border-radius: 20px;
+    width: 100%;
+    border: 1px solid var(--border-color);
+    font-size: 14px; /* Təkrar idi */
+    color: var(--text-color); /* Təkrar idi */
+}
+
+.form-group select option { /* Təkrar idi */
+    padding: 15px 20px;
+    border-radius: 20px;
+    width: 100%;
+    border: 1px solid var(--border-color);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+}
+
+#contact-form input,
+#contact-form select { /* Təkrar idi */
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 16px;
+    margin-top: 30px;
+}
+
+#contact-form input::placeholder {
+    font-size: 14px;
+}
+
+.row {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.col {
+    flex: 1;
+    min-width: 280px;
+}
+
+.calc-button {
+    background-color: var(--primary);
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 16px;
+    padding: 13px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.result {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+/* --- Phone Modal (If different from image gallery modal) --- */
+/*
+  Bu hissəni əgər əlavə bir "telefon modalı" varsa saxlayın.
+  Əgər yoxdursa, aşağıdakı `modal` və `modal-content` təyinləri
+  şəkil qalereyası modalı ilə konflikt yaradır.
+  Mən bu hissəni şərhə aldım, çünki əvvəldəki `.modal` artıq şəkil qalereyası
+  üçün təyin olunub.
+*/
+/*
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+*/
+
+.close-button { /* Bu ehtimal ki, telefon modalının bağlama düyməsidir */
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.phone-option-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color:var(--primary);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.phone-option-btn:hover {
+    background-color:var(--primary-light);
+}
+
+.modal h2 { /* Bu da telefon modalına aid ola bilər, əgər varsa */
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 20px;
+    /* text-align: center; Təkrar olunurdu */
+}
+
+/* --- What is Nearby Section --- */
+.what-is-nearby {
+    background-color: var(--white);
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+    margin-top: 4rem;
+}
+.what-is-nearby h3 {
+    font-size: 24px;
+    line-height: 33.6px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+.what-is-nearby p {
+    font-size: 14px;
+    color: var(--icon-grey);
+}
+.nearby-info {
+    justify-content: space-between;
+}
+.nearby-info ul li {
+    margin-bottom: 10px;
+}
+
+.nearby-info-list .flex p:nth-child(1) {
+    font-weight: 600;
+}
+
+.floor-plan {
+    width: 100%;
+}
+
+/* --- Contact Card --- */
+.contact-card {
+    background: #fff;
+    padding: 30px;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.contact-card h3:nth-child(1) {
+    margin-bottom: 15px;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.contact-card h3 {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.phone {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.email {
+    color: var(--grey-text);
+    text-decoration: none;
+}
+
+form {
+    margin-top: 20px;
+}
+
+#contact-form textarea {
+    margin-top: 20px;
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 16px;
+    height: 200px;
+}
+#contact-form textarea::placeholder {
+    font-size: 14px;
+}
+.send-message-btn {
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+    padding: 12px;
+    width: 100%;
+    margin-top: 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+.avatar-info {
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.avatar-info-text {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.avatar-info-text h4 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* --- Connect Card (Agencies) --- */
+.connect {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    width: 100%;
+    font-family: Arial, sans-serif;
+}
+.agencies-card.list-view {
+    display: flex !important;
+}
+.connect img {
+    width: 100%;
+    display: block;
+    filter: brightness(50%);
+}
+
+.connect .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: var(--white);
+    padding: 31px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.connect .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.connect .logo img {
+    height: 30px;
+}
+
+.connect h2 {
+    font-size: 20px;
+    margin: 10px 0;
+    font-weight: bold;
+    color: var(--white);
+}
+
+.connect p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: var(--white);
+}
+
+.connect button {
+    position: relative;
+    overflow: hidden;
+    background: var(--primary);
+    border: none;
+    color: var(--white);
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 1;
+    transition: color 0.3s ease-in-out;
+}
+
+.connect button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--text-color);
+    z-index: -1;
+    transition: left 0.4s ease-in-out;
+}
+
+.connect button:hover::before {
+    left: 0;
+}
+
+.agencies-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+/* --- Virtual Tour --- */
+.virtual-tour {
+    background-color: var(--white);
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+}
+.virtual-tour h3 {
+    font-size: 24px;
+    line-height: 33.6px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+.virtual-tour .box img {
+    border-radius: 20px;
+}
+
+.virtual-tour .box {
+    position: relative;
+    display: inline-block;
+}
+
+.rotate-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: 50% 50%;
+    transform: translate(-50%, -50%);
+    animation: spin 15s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes spin {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* --- Reviews Section --- */
+.reviews-container {
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 24px;
+    padding: 30px;
+    background: var(--white);
+    box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
+}
+.reviews-container h2 {
+    line-height: 33.6px;
+    margin-bottom: 24px;
+    font-size: 24px;
+    font-weight: 600;
+}
+.review-card {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 2rem;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.review-card img.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    margin-right: 15px;
+}
+
+.user-info > div {
+    margin-left: 10px;
+}
+
+.date {
+    font-size: 0.85rem;
+    color: #888;
+    margin: 2px 0;
+}
+
+.stars {
+    color: var(--primary);
+    font-size: 1.1rem;
+    white-space: nowrap;
+}
+
+.review-text {
+    margin: 15px 0;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+.review-images {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.review-images img {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.feedback {
+    display: flex;
+    gap: 20px;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.feedback i {
+    margin-right: 5px;
+}
+
+.view-btn {
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 12px;
+    border: 1px solid var(--primary);
+    background-color: transparent;
+    color: var(--primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.view-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    z-index: -1;
+    background-color: var(--primary);
+    transition: 0.4s ease;
+}
+
+.view-btn:hover::before {
+    width: 100%;
+}
+
+.view-btn:hover {
+    color: white;
+}
+
+.review-form {
+    max-width: 700px;
+    margin: 0 auto;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.review-form h2 {
+    font-size: 1.5rem;
+    color: var(--dark-grey);
+    margin-bottom: 5px;
+}
+
+.review-form p {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.input-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: var(--dark-grey);
+}
+
+.check-text{
+    color: var(--grey-text)!important;
+    font-size: 14px;
+    margin-top: 5px;
+}
+input[type="text"],
+input[type="email"],
+textarea {
+    padding: 12px 15px;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    font-size: 1rem;
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.checkbox { /* Təkrar idi, birləşdirildi */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.checkbox input { /* Təkrar idi */
+    margin-right: 10px;
+}
+
+.post-comment-btn {
+    background-color:var(--primary);
+    color:var(--white);
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.3s ease;
+}
+
+.submit-btn:hover { /* Bu adda düymə yoxdur, amma nümunə kimi qaldı */
+    background-color: #e65d00;
+}
+
+
+.checkbox input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid orange;
+    border-radius: 4px;
+    margin-right: 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.checkbox input[type="checkbox"]:checked {
+    background-color: orange;
+    border-color: orange;
+}
+
+.checkbox input[type="checkbox"]::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 4px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    display: none;
+}
+
+.checkbox input[type="checkbox"]:checked::after {
+    display: block;
+}
+
+/* --- Settings Icon & Go to Top --- */
+#settings-icon {
+    top: 25%;
+    right: 5px;
+    z-index: 3;
+    position: fixed;
+}
+
+.settings-icon {
+    display: flex;
+    width: 20px;
+    height: 20px;
+    padding: 25px;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary);
+}
+
+.settings-icon i {
+    font-size: 25px;
+    color: var(--white);
+    animation: rotateIcon 5s linear infinite;
+}
+
+@keyframes rotateIcon {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.gotop {
+    position: fixed;
+    bottom: 60px;
+    right: 30px;
+    width: 45px;
+    height: 45px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    border-radius: 50%;
+    background-color: var(--white);
+}
+
+.gotop .up {
+    border-radius: 50%;
+    position: absolute;
+    z-index: 2;
+}
+
+.gotop .up i {
+    color: var(--primary);
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.progress-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(-90deg);
+    z-index: 1;
+}
+
+circle {
+    fill: none;
+    stroke-width: 2;
+}
+
+circle.bg {
+    stroke: #eee;
+}
+
+circle.progress {
+    stroke: var(--primary);
+    stroke-dasharray: 113.1; /* 2 * π * 18 */
+    stroke-dashoffset: 113.1;
+    transition: stroke-dashoffset 0.2s linear;
+}
+
+.hover-effect-button:hover .hover-effect-button-fill {
+    width: 100%;
+}
+
+.hover-effect-button:hover span:not(.hover-effect-button-fill) {
+    color: white;
+}
+
+/* --- Responsive Styles --- */
+@media (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "first first"
+            "second third"
+            "fourth fourth";
+    }
+    .gallery-grid figure:nth-child(1) {
+        grid-area: first;
+    }
+    .gallery-grid figure:nth-child(2) {
+        grid-area: second;
+    }
+    .gallery-grid figure:nth-child(3) {
+        grid-area: third;
+    }
+    .gallery-grid figure:nth-child(4) {
+        grid-area: fourth;
+    }
+}
+
+@media (max-width:992px) {
+    .map-flex {
+        flex-direction: column;
+    }
+    .side {
+        flex-direction: column;
+        width: 100%;
+    }
+    .side-left{
+        width: 100%!important;
+    }
+    .side-right{
+        width: 100%;
+    }
+    .info-box-desc{
+        flex-direction: column;
+        gap: 4rem;
+    }
+    .accordion-icons{
+        flex-direction: column;
+        gap: 10px;
+    }
+    .file-item{
+        flex-direction: column;
+    }
+    .col .form-group input {
+        width: 80%;
+    }
+    .col .form-group select{
+        width: 80%;
+    }
+    .review-card{
+        flex-direction: column;
+    }
+}
+
+.image-upload-section {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.image-upload-wrapper {
+    background: #fff;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
+}
+
+.image-upload-wrapper h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.upload-button {
+    background-color: var(--primary, #007bff);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.upload-button:hover {
+    background-color: var(--primary-dark, #0056b3);
+}
+
+.upload-info {
+    font-size: 14px;
+    color: var(--grey-text, #666);
+    margin-bottom: 20px;
+}
+
+.loading-indicator {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    color: var(--grey-text, #666);
+}
+
+.loading-indicator .spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left: 4px solid var(--primary, #007bff);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.image-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.image-preview-item {
+    position: relative;
+    width: 100%;
+    padding-top: 75%;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.image-preview-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.delete-image-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(255, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.image-preview-item:hover .delete-image-button {
+    opacity: 1;
+}
+
+.save-button {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.save-button:hover {
+    background-color: #218838;
+}
+
+@media (max-width: 1200px) {
+    .image-preview-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+}
+
+@media (max-width: 992px) {
+    .image-preview-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .image-preview-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+    .image-upload-wrapper {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .image-preview-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+}
+/* Gallery thumbnail satırı — scrollbar gizlətmə və aktiv şəkil vurğusu
+   (property/details.blade.php və requests/show.blade.php-dən çıxarılıb) */
+.thumbnails-row::-webkit-scrollbar {
+    display: none;
+}
+.thumbnails-row {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.thumbnails-row img {
+    opacity: 0.65;
+    transition: all 0.2s ease-in-out;
+}
+.thumbnails-row img.active,
+.thumbnails-row img:hover {
+    opacity: 1;
+}
+.thumbnails-row img.active {
+    border-color: #f1913d !important;
+}

@@ -1,0 +1,16 @@
+/* Agency detail - mostly Tailwind, minimal extras */
+.filter-btn {
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.filter-btn.active {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.filter-btn:not(.active):hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}

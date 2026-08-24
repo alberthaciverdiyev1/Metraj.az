@@ -1,14 +1,1 @@
-/* Agencies list - mostly Tailwind, minimal extras */
-.filter-btn.active {
-    background-color: var(--primary);
-    color: white;
-    border-color: var(--primary);
-}
-
-#agencyCards > div {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-#agencyCards > div:hover {
-    transform: translateY(-2px);
-}
+.filter-btn.active{background-color:var(--primary);color:#fff;border-color:var(--primary)}#agencyCards>div{transition:transform .2s ease,box-shadow .2s ease}#agencyCards>div:hover{transform:translateY(-2px)}
