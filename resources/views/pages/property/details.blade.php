@@ -13,6 +13,8 @@
 
     $agentName = $property->agent->user->name ?? ($property->agency->name ?? ($property->user->name ?? 'Mülkiyyətçi'));
     $agentPhone = $property->agent->phone ?? ($property->agency->phone ?? ($property->user->phone ?? ($property->phone ?? '+994 50 123 45 67')));
+    $agentWhatsapp = $property->agent->whatsapp ?? ($property->agency->whatsapp ?? null);
+    $cleanWhatsapp = $agentWhatsapp ? preg_replace('/[^0-9]/', '', $agentWhatsapp) : null;
     $agentAvatar = $property->agent->avatar_url ?? ($property->agency->logo_url ?? ($property->agent->user->avatar ?? 'https://themesflat.co/html/proty/images/avatar/seller.jpg'));
     $agentRole = $property->agency ? 'Rəsmi Agentlik' : ($property->agent ? 'Rieltor / Satış Mütəxəssisi' : 'Mülkiyyətçi');
 @endphp
@@ -174,19 +176,39 @@
                             </div>
                         </div>
 
-                        @if(!empty($agentPhone))
+                        @if(!empty($agentPhone) || !empty($cleanWhatsapp))
                         <div class="pt-4 border-t border-gray-100 space-y-3">
+                            @if(!empty($agentPhone))
                             <div class="flex items-center justify-between text-sm">
                                 <span class="text-gray-500">{{ __('Telefon') }}:</span>
                                 <a href="tel:{{ $agentPhone }}" class="font-bold text-gray-900 hover:text-orange-500 transition duration-200">{{ $agentPhone }}</a>
                             </div>
+                            @endif
+                            @if(!empty($agentWhatsapp))
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-500">WhatsApp:</span>
+                                <a href="https://wa.me/{{ $cleanWhatsapp }}" target="_blank" rel="noopener noreferrer" class="font-bold text-emerald-600 hover:text-emerald-700 transition duration-200">{{ $agentWhatsapp }}</a>
+                            </div>
+                            @endif
                         </div>
 
-                        <a href="tel:{{ $agentPhone }}"
-                           class="w-full flex items-center justify-center gap-2 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-md transition duration-200 transform active:scale-98">
-                            <i class="bi bi-telephone-fill text-sm"></i>
-                            <span>{{ __('Zəng et') }}</span>
-                        </a>
+                        <div class="grid {{ (!empty($agentPhone) && !empty($cleanWhatsapp)) ? 'grid-cols-2' : 'grid-cols-1' }} gap-2.5">
+                            @if(!empty($agentPhone))
+                            <a href="tel:{{ $agentPhone }}"
+                               class="w-full flex items-center justify-center gap-2 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
+                                <i class="bi bi-telephone-fill text-xs"></i>
+                                <span>{{ __('Zəng et') }}</span>
+                            </a>
+                            @endif
+
+                            @if(!empty($cleanWhatsapp))
+                            <a href="https://wa.me/{{ $cleanWhatsapp }}" target="_blank" rel="noopener noreferrer"
+                               class="w-full flex items-center justify-center gap-2 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
+                                <i class="bi bi-whatsapp text-sm"></i>
+                                <span>WhatsApp</span>
+                            </a>
+                            @endif
+                        </div>
                         @endif
 
                         <!-- Müraciət Et Formu (Rieltor və ya Agentlik elanlarında) -->
@@ -254,12 +276,26 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
 
-                            <a href="tel:{{ $agentPhone }}"
-                               class="w-full flex items-center justify-center gap-2 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-md transition duration-200 transform active:scale-98">
-                                <i class="bi bi-telephone-fill text-sm"></i>
-                                <span>{{ __('Zəng et') }}</span>
-                            </a>
+                            @if(!empty($agentPhone) || !empty($cleanWhatsapp))
+                            <div class="grid {{ (!empty($agentPhone) && !empty($cleanWhatsapp)) ? 'grid-cols-2' : 'grid-cols-1' }} gap-2.5">
+                                @if(!empty($agentPhone))
+                                <a href="tel:{{ $agentPhone }}"
+                                   class="w-full flex items-center justify-center gap-2 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
+                                    <i class="bi bi-telephone-fill text-sm"></i>
+                                    <span>{{ __('Zəng et') }}</span>
+                                </a>
+                                @endif
+
+                                @if(!empty($cleanWhatsapp))
+                                <a href="https://wa.me/{{ $cleanWhatsapp }}" target="_blank" rel="noopener noreferrer"
+                                   class="w-full flex items-center justify-center gap-2 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
+                                    <i class="bi bi-whatsapp text-sm"></i>
+                                    <span>WhatsApp</span>
+                                </a>
+                                @endif
+                            </div>
                             @endif
                         </div>
                     @endif

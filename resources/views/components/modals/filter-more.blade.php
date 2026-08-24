@@ -258,7 +258,7 @@
             <button type="button" id="closeMoreFiltersBtn"
                     class="px-5 py-2.5 bg-white border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-100 hover:text-gray-900 font-bold text-xs transition duration-200 shadow-sm">{{ __('Ləğv et') }}</button>
             <button type="submit"
-                    class="px-8 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white rounded-xl font-bold text-xs shadow-md transition duration-200 transform active:scale-95">{{ __('Nəticələri Göstər') }}</button>
+                    class="px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-bold text-xs shadow-md transition duration-200 transform active:scale-95">{{ __('Nəticələri Göstər') }}</button>
         </div>
     </div>
 </div>

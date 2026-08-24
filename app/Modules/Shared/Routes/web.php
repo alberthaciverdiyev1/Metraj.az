@@ -13,11 +13,14 @@ Route::get('/faq', [StaticPageController::class, 'faq'])->name('faq');
 
 // Favoritlər & Müqayisə
 Route::get('/favorites', [StaticPageController::class, 'favorites'])->name('favorites');
+Route::post('/favorites/items', [StaticPageController::class, 'favoritesItems'])->name('favorites.items');
 Route::get('/compares', [StaticPageController::class, 'compares'])->name('compares');
 
 // Autentifikasiya & İstifadəçi Paneli
-Route::get('/login', [StaticPageController::class, 'login'])->name('login');
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');

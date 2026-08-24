@@ -37,9 +37,7 @@
                 gravity: 'top',
                 position: 'right',
                 style: {
-                    background: type === 'success'
-                        ? 'linear-gradient(135deg, #059669, #10b981)'
-                        : 'linear-gradient(135deg, #e11d48, #f43f5e)',
+                    background: type === 'success' ? '#059669' : '#e11d48',
                     borderRadius: '14px',
                     fontSize: '14px',
                     fontWeight: '600',
@@ -73,6 +71,48 @@
             }
         }
     });
+
+    // Qlobal Property Card Şəkil Dəyişdiricisi (Yalnız ox düymələrinə kliklədikdə)
+    window.showPropertyCardImage = function (container, images, index) {
+        if (!container || !images || !images.length) return;
+        const img = container.querySelector('.card-image');
+        if (img) img.src = images[index];
+        container.setAttribute('data-current', index);
+
+        const dots = container.querySelectorAll('.absolute.bottom-2 > span');
+        dots.forEach(function (dot, i) {
+            dot.classList.toggle('bg-white', i === index);
+            dot.classList.toggle('bg-white/50', i !== index);
+        });
+    };
+
+    window.nextImage = function (btn) {
+        const container = btn.closest('[data-images]');
+        if (!container) return;
+        try {
+            const images = JSON.parse(container.getAttribute('data-images') || '[]');
+            if (!images.length) return;
+            const current = parseInt(container.getAttribute('data-current'), 10) || 0;
+            const next = (current + 1) % images.length;
+            window.showPropertyCardImage(container, images, next);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    window.prevImage = function (btn) {
+        const container = btn.closest('[data-images]');
+        if (!container) return;
+        try {
+            const images = JSON.parse(container.getAttribute('data-images') || '[]');
+            if (!images.length) return;
+            const current = parseInt(container.getAttribute('data-current'), 10) || 0;
+            const prev = (current - 1 + images.length) % images.length;
+            window.showPropertyCardImage(container, images, prev);
+        } catch (e) {
+            console.error(e);
+        }
+    };
 </script>
 
 @if(session('success'))
@@ -84,7 +124,7 @@
         gravity: "top",
         position: "right",
         style: {
-            background: "linear-gradient(135deg, #059669, #10b981)",
+            background: "#059669",
             borderRadius: "14px",
             fontSize: "14px",
             fontWeight: "600",
@@ -104,7 +144,7 @@
         gravity: "top",
         position: "right",
         style: {
-            background: "linear-gradient(135deg, #e11d48, #f43f5e)",
+            background: "#e11d48",
             borderRadius: "14px",
             fontSize: "14px",
             fontWeight: "600",

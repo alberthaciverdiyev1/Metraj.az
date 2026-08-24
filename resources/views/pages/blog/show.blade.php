@@ -3,7 +3,7 @@
 @section('title', ($blog->title ?? '') . ' - Bloq - Metraj.az')
 
 @section('content')
-<div class="w-full pt-4 pb-16">
+<div class="w-full pb-16">
     @include('components.breadcrumb', ['items' => $breadcrumbs ?? []])
 
     {{-- ==================== BLOG HEADER ==================== --}}
@@ -18,7 +18,7 @@
                 @endif
             </div>
         @else
-            <div class="relative h-40 sm:h-56 bg-gradient-to-r from-[var(--primary)] via-orange-400 to-orange-300 flex items-center justify-center">
+            <div class="relative h-40 sm:h-56 bg-[var(--primary)] flex items-center justify-center">
                 @if($blog->category)
                     <span class="bg-white/20 backdrop-blur text-white text-xs font-bold px-3 py-1.5 rounded-full">
                         {{ $blog->category }}
@@ -79,14 +79,6 @@
             </div>
         </div>
     </article>
-
-    {{-- ==================== BACK TO BLOG ==================== --}}
-    <div class="mt-8">
-        <a href="/blog" class="inline-flex items-center gap-2 text-sm font-semibold text-[var(--primary)] hover:underline">
-            <i class="bi bi-arrow-left"></i>
-            {{ __('Bütün bloqlar') }}
-        </a>
-    </div>
 
     {{-- ==================== RELATED POSTS ==================== --}}
     @if($related->isNotEmpty())

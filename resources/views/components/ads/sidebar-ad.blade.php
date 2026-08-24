@@ -13,9 +13,7 @@
            class="group relative block w-full h-full rounded-2xl overflow-hidden border border-gray-200/90 shadow-sm hover:shadow-lg transition duration-300">
             @if($isRight)
                 {{-- Sağ: brend loqolu reklam kartı (yerli assetlər) --}}
-                <div class="absolute inset-0 bg-gradient-to-b from-orange-500 via-orange-600 to-orange-800"></div>
-                <div class="absolute inset-0 opacity-15"
-                     style="background-image: radial-gradient(circle at 20% 50%, white 1.5px, transparent 1.5px); background-size: 20px 20px;"></div>
+                <div class="absolute inset-0 bg-orange-600"></div>
                 <div class="relative h-full flex flex-col items-center justify-center text-center px-5 py-6">
                     <img src="/images/metrajlogo.png" alt="Metraj.az"
                          class="w-28 mb-5 drop-shadow-sm">
@@ -29,7 +27,7 @@
                 {{-- Sol: şəkil reklamı (yerli asset) --}}
                 <img src="/images/ads.jpg" alt="Metraj.az — İdeal evinizi tapın"
                      class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+                <div class="absolute inset-0 bg-black/40"></div>
                 <div class="absolute bottom-0 inset-x-0 p-4 pb-5">
                     <p class="text-white font-extrabold text-lg leading-snug drop-shadow">İdeal evinizi<br>tapın</p>
                     <p class="text-orange-100 text-[11px] mt-1">Yüzlərlə elan arasından seçim edin</p>

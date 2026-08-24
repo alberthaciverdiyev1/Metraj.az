@@ -87,4 +87,35 @@ class CurrencyService
 
         return $converted;
     }
+
+    /**
+     * Get equivalent amount in GBP from any source currency
+     */
+    public function getBaseGbp(float $amount, string $fromCurrency = 'GBP'): float
+    {
+        $fromCurrency = strtoupper(trim($fromCurrency));
+        if ($fromCurrency === 'GBP' || $amount <= 0) {
+            return $amount;
+        }
+
+        $rates = $this->getRatesFromGbp();
+        $rate = (float) ($rates[$fromCurrency] ?? 1.0);
+
+        return $rate > 0 ? round($amount / $rate, 2) : $amount;
+    }
+
+    /**
+     * Convert an amount from any currency to all target currencies
+     */
+    public function convertFromCurrency(float $amount, string $fromCurrency = 'GBP'): array
+    {
+        $fromCurrency = strtoupper(trim($fromCurrency));
+        $baseGbp = $this->getBaseGbp($amount, $fromCurrency);
+        $converted = $this->convertFromGbp($baseGbp);
+
+        // Ensure the source currency has the exact entered amount
+        $converted[$fromCurrency] = $amount;
+
+        return $converted;
+    }
 }

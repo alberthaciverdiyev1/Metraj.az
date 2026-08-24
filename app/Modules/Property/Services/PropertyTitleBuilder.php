@@ -7,6 +7,7 @@ use App\Modules\Location\Models\FilterOption;
 
 /**
  * Elan başlığını seçilmiş filtr seçimləri və ölçü parametrləri əsasında qurur.
+ * Format: [Əməliyyat (Məs: Satılır / Kirayə)], [Otaq sayı (Məs: 3+1) / Sahə], [Məkan (Location)]
  * Həm veb forması, həm də Filament paneli üçün tək qaynaqdır.
  */
 class PropertyTitleBuilder
@@ -33,50 +34,41 @@ class PropertyTitleBuilder
 
         $propertyType = $options->first(fn ($opt) => $opt->filter?->key === FilterKey::PropertyType)?->name['az'] ?? '';
         $dealType = $options->first(fn ($opt) => $opt->filter?->key === FilterKey::DealType)?->name['az'] ?? '';
-        $buildingType = $options->first(fn ($opt) => $opt->filter?->key === FilterKey::BuildingType)?->name['az'] ?? '';
 
         $titleParts = [];
+        $isLand = str_contains(mb_strtolower($propertyType), 'torpaq');
 
-        // E.g. "Yasamal"
-        if ($location) {
-            $titleParts[] = $location;
-        }
-
-        // E.g. "3 otaqlı"
-        if ($rooms && strtolower($propertyType) !== 'torpaq') {
-            $titleParts[] = $rooms . ' otaqlı';
-        }
-
-        // E.g. "yeni tikili"
-        if ($buildingType) {
-            $titleParts[] = mb_strtolower($buildingType);
-        }
-
-        // E.g. "mənzil" or "torpaq"
-        if ($propertyType) {
-            $titleParts[] = mb_strtolower($propertyType);
-        }
-
-        // Area: "120 m²" or "10 sot"
-        if (strtolower($propertyType) === 'torpaq' && $landArea) {
-            $titleParts[] = $landArea . ' sot';
-        } elseif ($area) {
-            $titleParts[] = $area . ' m²';
-        }
-
-        // Deal type: "satılır" or "kirayə verilir"
+        // 1) Əməliyyat növü (Öncə: Satılır / Kirayə)
         if ($dealType) {
             $dealLower = mb_strtolower($dealType);
-            if (str_contains($dealLower, 'satış') || str_contains($dealLower, 'satılır') || $dealLower === 'alış') {
-                $titleParts[] = 'satılır';
+            if (str_contains($dealLower, 'satış') || str_contains($dealLower, 'satılır') || str_contains($dealLower, 'satılıq') || $dealLower === 'alış') {
+                $titleParts[] = 'Satılır';
             } elseif (str_contains($dealLower, 'kirayə') || str_contains($dealLower, 'icarə')) {
-                $titleParts[] = 'kirayə verilir';
+                $titleParts[] = 'Kirayə';
             } else {
-                $titleParts[] = $dealLower;
+                $titleParts[] = mb_convert_case($dealType, MB_CASE_TITLE, 'UTF-8');
             }
+        } else {
+            $titleParts[] = 'Satılır';
         }
 
-        $title = implode(' ', array_filter($titleParts));
+        // 2) Otaq sayı (Məs: 3+1) və ya Torpaq/Sahə
+        if ($rooms && ! $isLand) {
+            $titleParts[] = $rooms . '+1';
+        } elseif ($isLand && $landArea) {
+            $titleParts[] = $landArea . ' sot';
+        } elseif ($area) {
+            $titleParts[] = round($area) . ' m²';
+        } elseif ($propertyType) {
+            $titleParts[] = mb_convert_case($propertyType, MB_CASE_TITLE, 'UTF-8');
+        }
+
+        // 3) Yerləşmə (Location - Məs: Yasamal r., Bakı)
+        if ($location) {
+            $titleParts[] = trim($location);
+        }
+
+        $title = implode(', ', array_filter($titleParts));
 
         return $title ?: self::FALLBACK_TITLE;
     }

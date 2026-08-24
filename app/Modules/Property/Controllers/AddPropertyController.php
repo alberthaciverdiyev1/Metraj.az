@@ -11,6 +11,8 @@ use App\Modules\Property\Enums\PropertyStatus;
 use App\Modules\Property\Enums\SellerType;
 use App\Http\Controllers\Controller;
 use App\Modules\Property\Requests\StorePropertyRequest;
+use App\Modules\Shared\Models\User;
+use App\Modules\Agency\Models\Agent;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -38,7 +40,8 @@ class AddPropertyController extends Controller
         $repairTypes = $filters['repair_type']?->options ?? collect();
         $heatingSystems = $filters['heating_system']?->options ?? collect();
         $windowViews = $filters['window_view']?->options ?? collect();
-        $amenities = $this->locationService->amenities();
+        $amenities = $this->locationService->paginateAmenities(20);
+        $currencies = $this->currencyService->getCurrencies();
         $dailyRates = $this->currencyService->getRatesFromGbp();
 
         return view('pages.property.add', compact(
@@ -50,6 +53,7 @@ class AddPropertyController extends Controller
             'heatingSystems',
             'windowViews',
             'amenities',
+            'currencies',
             'dailyRates'
         ));
     }
@@ -59,12 +63,15 @@ class AddPropertyController extends Controller
         $validated = $request->validated();
 
         $result = DB::transaction(function () use ($request, $validated) {
-            $baseGbp = (float) $validated['price_gbp'];
-            $prices = $request->input('prices', []);
+            $mainCurrency = strtoupper($request->input('currency', 'GBP'));
+            $enteredPrice = (float) ($validated['price'] ?? $validated['price_gbp'] ?? 0);
+            $baseGbp = $this->currencyService->getBaseGbp($enteredPrice, $mainCurrency);
 
+            $prices = $request->input('prices', []);
             if (empty($prices) || count($prices) < 2) {
-                $prices = $this->currencyService->convertFromGbp($baseGbp);
+                $prices = $this->currencyService->convertFromCurrency($enteredPrice, $mainCurrency);
             }
+            $prices[$mainCurrency] = $enteredPrice;
             $prices['GBP'] = $baseGbp;
 
             $code = $this->propertyService->generateCode();
@@ -97,6 +104,38 @@ class AddPropertyController extends Controller
 
             $sellerType = ($validated['advertiser'] === 'agent') ? SellerType::Agent : SellerType::Owner;
 
+            $user = auth()->user();
+            if (!$user && !empty($validated['email'])) {
+                $user = User::firstOrCreate(
+                    ['email' => $validated['email']],
+                    [
+                        'name' => $validated['advertiser_name'],
+                        'password' => bcrypt(Str::random(16)),
+                    ]
+                );
+            }
+
+            $agentId = null;
+            if ($user) {
+                $agent = $user->agent;
+                if (!$agent) {
+                    $agent = Agent::create([
+                        'user_id' => $user->id,
+                        'position' => $validated['advertiser'] === 'agent' ? 'Rieltor' : 'Mülkiyyətçi',
+                        'phone' => $validated['phone'],
+                        'whatsapp' => $validated['whatsapp'] ?? null,
+                        'is_active' => true,
+                    ]);
+                } else {
+                    $updateData = ['phone' => $validated['phone']];
+                    if (!empty($validated['whatsapp'])) {
+                        $updateData['whatsapp'] = $validated['whatsapp'];
+                    }
+                    $agent->update($updateData);
+                }
+                $agentId = $agent->id;
+            }
+
             // Tək qaynaq: PropertyService::create → CreatePropertyDTO
             // Repo property, filterOptions və amenities sync-lərini özü idarə edir.
             $property = $this->propertyService->create(new CreatePropertyDTO(
@@ -108,7 +147,7 @@ class AddPropertyController extends Controller
                 hasMortgage: $request->boolean('has_mortgage'),
                 hasInternalCredit: $request->boolean('has_internal_credit'),
                 price: $baseGbp,
-                currency: 'GBP',
+                currency: $mainCurrency,
                 prices: $prices,
                 viewsCount: 0,
                 area: $isLand ? null : (isset($validated['area']) ? (int) $validated['area'] : null),
@@ -121,7 +160,9 @@ class AddPropertyController extends Controller
                 address: $validated['address'],
                 latitude: isset($validated['latitude']) ? (float) $validated['latitude'] : null,
                 longitude: isset($validated['longitude']) ? (float) $validated['longitude'] : null,
-                userId: auth()->id(),
+                agencyId: $user?->tenantAgency()?->id,
+                agentId: $agentId,
+                userId: $user?->id,
                 sellerType: $sellerType,
                 status: PropertyStatus::PendingApproval,
                 filterOptionIds: array_values($filterOptionIds),
@@ -153,5 +194,18 @@ class AddPropertyController extends Controller
         }
 
         return redirect()->route('home')->with('success', $message);
+    }
+
+    public function amenities(\Illuminate\Http\Request $request): JsonResponse
+    {
+        $perPage = (int) $request->input('per_page', 20);
+        $paginated = $this->locationService->paginateAmenities($perPage);
+
+        return response()->json([
+            'data' => $paginated->items(),
+            'current_page' => $paginated->currentPage(),
+            'has_more' => $paginated->hasMorePages(),
+            'total' => $paginated->total(),
+        ]);
     }
 }

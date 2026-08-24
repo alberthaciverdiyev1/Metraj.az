@@ -1,6 +1,9 @@
+@php
+    $navItems = $items ?? $breadcrumbs ?? [];
+@endphp
 <section id="navigation" class="py-3">
-    <div class="mx-auto px-4 text-[12px] lg:text-[20px] flex flex-row flex-nowrap items-center gap-2 mt-8 lg:pt-0 pt-0 sm:mt-10 xl:mt-10">
-        @foreach($items as $item)
+    <div class="mx-auto px-4 text-[12px] lg:text-[20px] flex flex-row flex-nowrap items-center gap-2 mt-2 lg:pt-0 pt-0 sm:mt-4">
+        @foreach($navItems as $item)
             @if(!$loop->first)
                 <span class="text-gray-400">›</span>
             @endif

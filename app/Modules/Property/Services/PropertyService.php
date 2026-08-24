@@ -21,7 +21,7 @@ class PropertyService
         protected PropertyRepository $propertyRepository,
     ) {}
 
-    public function paginate(PropertyFilterDTO $filter, int $perPage = 15): LengthAwarePaginator
+    public function paginate(PropertyFilterDTO $filter, int $perPage = 30): LengthAwarePaginator
     {
         return $this->propertyRepository->paginate($filter, $perPage);
     }

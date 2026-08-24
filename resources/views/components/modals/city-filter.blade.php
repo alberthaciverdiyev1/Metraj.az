@@ -95,7 +95,7 @@
                 {{ __('Sıfırla') }}
             </button>
             <button type="button" id="applyCityFilters"
-                    class="px-8 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white rounded-xl font-bold text-xs shadow-md transition duration-200 transform active:scale-95 flex items-center gap-2">
+                    class="px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-bold text-xs shadow-md transition duration-200 transform active:scale-95 flex items-center gap-2">
                 <span id="applyCount" class="bg-white/20 px-2 py-0.5 rounded-md text-[10px]">0</span>
                 <span>{{ __('elan göstər') }}</span>
             </button>

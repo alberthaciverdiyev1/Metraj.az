@@ -46,12 +46,12 @@
         <div class="mb-6 sm:mb-8 overflow-x-auto pb-2 -mx-2 px-2 scrollbar-none">
             <div class="flex items-center gap-2 flex-nowrap">
                 <a href="{{ route('blog.list', array_filter(['search' => $search, 'category' => 'all'])) }}"
-                   class="px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap {{ ($category ?? 'all') === 'all' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-sm' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200' }}">
+                   class="px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap {{ ($category ?? 'all') === 'all' ? 'bg-orange-500 text-white shadow-sm' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200' }}">
                     {{ __('Hamısı') }}
                 </a>
                 @foreach($categories as $cat)
                     <a href="{{ route('blog.list', array_filter(['search' => $search, 'category' => $cat])) }}"
-                       class="px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap {{ ($category ?? '') === $cat ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-sm' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200' }}">
+                       class="px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap {{ ($category ?? '') === $cat ? 'bg-orange-500 text-white shadow-sm' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200' }}">
                         {{ $cat }}
                     </a>
                 @endforeach
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 card.classList.add('sm:flex-row');
                 const imgWrap = card.querySelector('.blog-card-image');
                 if (imgWrap) {
-                    imgWrap.className = 'blog-card-image relative overflow-hidden aspect-[16/10] sm:aspect-auto sm:w-72 sm:min-w-[280px] bg-gradient-to-br from-orange-100 to-gray-100 shrink-0';
+                    imgWrap.className = 'blog-card-image relative overflow-hidden aspect-[16/10] sm:aspect-auto sm:w-72 sm:min-w-[280px] bg-orange-50 shrink-0';
                 }
             });
 
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 card.classList.remove('sm:flex-row');
                 const imgWrap = card.querySelector('.blog-card-image');
                 if (imgWrap) {
-                    imgWrap.className = 'blog-card-image relative overflow-hidden aspect-[16/10] bg-gradient-to-br from-orange-100 to-gray-100 shrink-0';
+                    imgWrap.className = 'blog-card-image relative overflow-hidden aspect-[16/10] bg-orange-50 shrink-0';
                 }
             });
 

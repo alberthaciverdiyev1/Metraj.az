@@ -34,9 +34,11 @@
                 <h4 class="text-sm font-bold text-white uppercase tracking-wider">{{ __('Keçidlər') }}</h4>
                 <ul class="space-y-2.5 text-sm">
                     <li><a href="/" class="hover:text-white hover:underline transition">{{ __('Ana Səhifə') }}</a></li>
+                    <li><a href="/listing" class="hover:text-white hover:underline transition">{{ __('Elanlar') }}</a></li>
                     <li><a href="/agencies" class="hover:text-white hover:underline transition">{{ __('Agentliklər') }}</a></li>
                     <li><a href="/blog" class="hover:text-white hover:underline transition">{{ __('Bloq') }}</a></li>
                     <li><a href="/about-us" class="hover:text-white hover:underline transition">{{ __('Haqqımızda') }}</a></li>
+                    <li><a href="/faq" class="hover:text-white hover:underline transition">{{ __('FAQ') }}</a></li>
                     <li><a href="/contact" class="hover:text-white hover:underline transition">{{ __('Əlaqə') }}</a></li>
                 </ul>
             </div>

@@ -82,6 +82,16 @@ class LocationService
     }
 
     /**
+     * Təchizatlar (amenities) səhifələmə ilə (Load More üçün).
+     */
+    public function paginateAmenities(int $perPage = 20): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        return Amenity::where('is_active', true)->orWhereNull('is_active')
+            ->orderBy('name')
+            ->paginate($perPage);
+    }
+
+    /**
      * Bir filtr seçimini ID ilə qaytarır.
      */
     public function filterOptionById(int $id): ?\App\Modules\Location\Models\FilterOption

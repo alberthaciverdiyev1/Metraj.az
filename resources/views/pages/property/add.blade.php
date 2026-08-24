@@ -90,12 +90,12 @@
                 </div>
             </div>
 
-            <!-- Qiymət Bölməsi (Primary GBP + Auto Convert) -->
+            <!-- Qiymət və Əsas Valyuta Bölməsi (Main Currency + Auto Convert) -->
             <div class="p-5 bg-gray-50/80 rounded-2xl border border-gray-200/80 space-y-4">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
-                        <span class="text-sm font-bold text-gray-900">{{ __('Qiymət') }}</span>
-                        <p class="text-xs text-gray-500">{{ __('Baza qiymət Pound (£ GBP) olaraq daxil edilir və digər valyutalar avtomatik hesablanır') }}</p>
+                        <span class="text-sm font-bold text-gray-900">{{ __('Qiymət və Əsas Valyuta') }}</span>
+                        <p class="text-xs text-gray-500">{{ __('Əsas valyutanı seçib qiyməti daxil edin. Digər valyutalar avtomatik hesablanacaq.') }}</p>
                     </div>
 
                     <!-- Auto-convert toggle -->
@@ -106,15 +106,44 @@
                     </label>
                 </div>
 
-                <!-- Primary GBP Input -->
-                <div class="relative">
-                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-orange-600 font-extrabold text-base">£</span>
-                    <input type="number" step="any" name="price_gbp" id="price_gbp" value="{{ old('price_gbp') }}" required min="1" placeholder="Məs: 150000"
-                        class="w-full bg-white border border-gray-300 rounded-xl pl-9 pr-4 py-3 text-base font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 transition shadow-inner">
+                <!-- Primary Price & Currency Select Row -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div class="sm:col-span-1">
+                        <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Əsas Valyuta') }}</label>
+                        <select name="currency" id="main_currency" class="w-full bg-white border border-gray-300 rounded-xl px-3.5 py-3 text-sm font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 transition">
+                            <option value="GBP" {{ old('currency', 'GBP') === 'GBP' ? 'selected' : '' }}>GBP (£ - Funt Sterlinq)</option>
+                            <option value="AZN" {{ old('currency') === 'AZN' ? 'selected' : '' }}>AZN (₼ - Manat)</option>
+                            <option value="USD" {{ old('currency') === 'USD' ? 'selected' : '' }}>USD ($ - Dollar)</option>
+                            <option value="EUR" {{ old('currency') === 'EUR' ? 'selected' : '' }}>EUR (€ - Avro)</option>
+                            <option value="TRY" {{ old('currency') === 'TRY' ? 'selected' : '' }}>TRY (₺ - Türk Lirəsi)</option>
+                            <option value="RUB" {{ old('currency') === 'RUB' ? 'selected' : '' }}>RUB (₽ - Rubl)</option>
+                            <option value="AED" {{ old('currency') === 'AED' ? 'selected' : '' }}>AED (د.إ - Dirhəm)</option>
+                        </select>
+                    </div>
+
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Əsas Qiymət') }} <span class="text-rose-500">*</span></label>
+                        <div class="relative">
+                            <span id="main_currency_symbol" class="absolute left-4 top-1/2 -translate-y-1/2 text-orange-600 font-extrabold text-base">£</span>
+                            <input type="number" step="any" name="price" id="main_price_input" value="{{ old('price', old('price_gbp')) }}" required min="1" placeholder="Məs: 150000"
+                                class="w-full bg-white border border-gray-300 rounded-xl pl-9 pr-4 py-3 text-base font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 transition shadow-inner">
+                            <input type="hidden" name="price_gbp" id="price_gbp" value="{{ old('price_gbp') }}">
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Other Currencies Grid (Disabled/Readonly when auto-convert is ON) -->
-                <div id="other_currencies_grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 pt-2 border-t border-gray-200">
+                <!-- All Target Currencies Grid -->
+                <div id="other_currencies_grid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2.5 pt-3 border-t border-gray-200">
+                    <div>
+                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">GBP (£)</label>
+                        <input type="number" step="any" name="prices[GBP]" id="price_gbp_val" value="{{ old('prices.GBP') }}" min="1"
+                            class="currency-converted-input w-full bg-gray-100/90 text-gray-500 cursor-not-allowed border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:ring-2 focus:ring-orange-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">AZN (₼)</label>
+                        <input type="number" step="any" name="prices[AZN]" id="price_azn" value="{{ old('prices.AZN') }}" min="1"
+                            class="currency-converted-input w-full bg-gray-100/90 text-gray-500 cursor-not-allowed border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:ring-2 focus:ring-orange-500 transition">
+                    </div>
                     <div>
                         <label class="block text-[11px] font-semibold text-gray-600 mb-1">USD ($)</label>
                         <input type="number" step="any" name="prices[USD]" id="price_usd" value="{{ old('prices.USD') }}" min="1"
@@ -123,11 +152,6 @@
                     <div>
                         <label class="block text-[11px] font-semibold text-gray-600 mb-1">EUR (€)</label>
                         <input type="number" step="any" name="prices[EUR]" id="price_eur" value="{{ old('prices.EUR') }}" min="1"
-                            class="currency-converted-input w-full bg-gray-100/90 text-gray-500 cursor-not-allowed border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:ring-2 focus:ring-orange-500 transition">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">AZN (₼)</label>
-                        <input type="number" step="any" name="prices[AZN]" id="price_azn" value="{{ old('prices.AZN') }}" min="1"
                             class="currency-converted-input w-full bg-gray-100/90 text-gray-500 cursor-not-allowed border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:ring-2 focus:ring-orange-500 transition">
                     </div>
                     <div>
@@ -141,7 +165,7 @@
                             class="currency-converted-input w-full bg-gray-100/90 text-gray-500 cursor-not-allowed border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:ring-2 focus:ring-orange-500 transition">
                     </div>
                     <div>
-                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">AED</label>
+                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">AED (د.إ)</label>
                         <input type="number" step="any" name="prices[AED]" id="price_aed" value="{{ old('prices.AED') }}" min="1"
                             class="currency-converted-input w-full bg-gray-100/90 text-gray-500 cursor-not-allowed border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:ring-2 focus:ring-orange-500 transition">
                     </div>
@@ -411,16 +435,28 @@
 
             <!-- Təchizatlar (Amenities) -->
             <div id="section_amenities" class="pt-4 border-t border-gray-100">
-                <label class="block text-xs font-bold text-gray-700 mb-3">{{ __('Təchizatlar və İmkanlar') }}</label>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <div class="flex items-center justify-between mb-3">
+                    <label class="block text-xs font-bold text-gray-700">{{ __('Təchizatlar və İmkanlar') }}</label>
+                </div>
+                <div id="amenities_grid" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                     @foreach($amenities as $amenity)
                         <label class="flex items-center gap-2 p-2.5 bg-gray-50/70 border border-gray-100 rounded-xl cursor-pointer hover:border-orange-200 transition">
                             <input type="checkbox" name="amenities[]" value="{{ $amenity->id }}" {{ in_array($amenity->id, old('amenities', [])) ? 'checked' : '' }}
                                 class="w-4 h-4 text-orange-500 rounded border-gray-300 focus:ring-orange-500">
-                            <span class="text-xs font-medium text-gray-800">{{ $amenity->name['az'] ?? $amenity->name }}</span>
+                            <span class="text-xs font-medium text-gray-800">{{ is_array($amenity->name) ? ($amenity->name['az'] ?? reset($amenity->name)) : $amenity->name }}</span>
                         </label>
                     @endforeach
                 </div>
+
+                @if($amenities instanceof \Illuminate\Contracts\Pagination\LengthAwarePaginator && $amenities->hasMorePages())
+                <div id="load_more_amenities_wrapper" class="mt-4 flex justify-center">
+                    <button type="button" id="load_more_amenities_btn" data-next-page="2"
+                            class="px-5 py-2.5 bg-white border border-gray-200 hover:border-orange-500 hover:text-orange-600 text-gray-700 text-xs font-bold rounded-xl shadow-sm transition flex items-center gap-2">
+                        <i class="bi bi-arrow-clockwise"></i>
+                        <span>{{ __('Daha çox göstər') }}</span>
+                    </button>
+                </div>
+                @endif
             </div>
 
             <!-- Əlaqə Məlumatları -->
@@ -453,14 +489,26 @@
 
                     <div>
                         <label class="block text-[11px] font-semibold text-gray-600 mb-1">{{ __('Telefon') }} <span class="text-rose-500">*</span></label>
-                        <input type="text" name="phone" id="phone" value="{{ old('phone', auth()->user()?->phone) }}" required placeholder="Məs: +994 50 123 45 67"
+                        <input type="text" name="phone" id="phone" value="{{ old('phone', auth()->user()?->agent?->phone ?? auth()->user()?->phone) }}" required placeholder="Məs: +994 50 123 45 67"
                             class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-3 py-2 text-xs sm:text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
                     </div>
 
                     <div>
+                        <label class="block text-[11px] font-semibold text-gray-600 mb-1">{{ __('WhatsApp Nömrəsi') }}</label>
+                        <input type="text" name="whatsapp" id="whatsapp" value="{{ old('whatsapp', auth()->user()?->agent?->whatsapp) }}" placeholder="Məs: +994 50 123 45 67"
+                            class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-3 py-2 text-xs sm:text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                    <div class="sm:col-span-2">
                         <label class="block text-[11px] font-semibold text-gray-600 mb-1">{{ __('Email') }} <span class="text-rose-500">*</span></label>
                         <input type="email" name="email" id="email" value="{{ old('email', auth()->user()?->email) }}" required placeholder="elan@metraj.az"
                             class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-3 py-2 text-xs sm:text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        <p class="text-[11px] text-gray-500 mt-1.5 flex items-center gap-1.5">
+                            <i class="bi bi-info-circle text-orange-500 shrink-0 text-xs"></i>
+                            <span>{{ __('Biz bunu yalnız elan statusunuzu sizə bildirmək üçün istifadə edirik.') }}</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -576,28 +624,54 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 1) Rates & Multi-Currency Converter
     const rates = @json($dailyRates);
+    const currencySymbols = {
+        'GBP': '£',
+        'AZN': '₼',
+        'USD': '$',
+        'EUR': '€',
+        'TRY': '₺',
+        'RUB': '₽',
+        'AED': 'د.إ'
+    };
     const autoConvertToggle = document.getElementById('auto_convert_toggle');
-    const otherCurrenciesGrid = document.getElementById('other_currencies_grid');
+    const mainCurrencySelect = document.getElementById('main_currency');
+    const mainCurrencySymbol = document.getElementById('main_currency_symbol');
+    const mainPriceInput = document.getElementById('main_price_input');
     const priceGbpInput = document.getElementById('price_gbp');
 
     function calculateCurrencies() {
-        if (!autoConvertToggle.checked) return;
-        const gbp = parseFloat(priceGbpInput.value) || 0;
-        if (gbp <= 0) return;
+        const cur = mainCurrencySelect ? mainCurrencySelect.value : 'GBP';
+        const symbol = currencySymbols[cur] || cur;
+        if (mainCurrencySymbol) mainCurrencySymbol.textContent = symbol;
 
-        for (const [cur, rate] of Object.entries(rates)) {
-            if (cur === 'GBP') continue;
-            const input = document.getElementById('price_' + cur.toLowerCase());
-            if (input) {
-                const val = gbp * rate;
-                input.value = val >= 1000 ? Math.round(val) : val.toFixed(2);
+        const val = parseFloat(mainPriceInput ? mainPriceInput.value : 0) || 0;
+        if (val <= 0) return;
+
+        // Calculate base GBP from selected currency
+        const fromRate = rates[cur] || 1.0;
+        const gbp = cur === 'GBP' ? val : (fromRate > 0 ? (val / fromRate) : val);
+        if (priceGbpInput) priceGbpInput.value = gbp >= 1000 ? Math.round(gbp) : gbp.toFixed(2);
+
+        if (!autoConvertToggle || !autoConvertToggle.checked) return;
+
+        // Calculate all 7 currencies
+        for (const [targetCur, rate] of Object.entries(rates)) {
+            const inputId = targetCur === 'GBP' ? 'price_gbp_val' : ('price_' + targetCur.toLowerCase());
+            const targetInput = document.getElementById(inputId);
+            if (targetInput) {
+                if (targetCur === cur) {
+                    targetInput.value = val;
+                } else {
+                    const converted = gbp * rate;
+                    targetInput.value = converted >= 1000 ? Math.round(converted) : converted.toFixed(2);
+                }
             }
         }
     }
 
     function toggleCurrencyInputs() {
         const currencyInputs = document.querySelectorAll('.currency-converted-input');
-        if (autoConvertToggle.checked) {
+        if (autoConvertToggle && autoConvertToggle.checked) {
             currencyInputs.forEach(input => {
                 input.readOnly = true;
                 input.classList.add('bg-gray-100/90', 'text-gray-500', 'cursor-not-allowed');
@@ -613,8 +687,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    priceGbpInput.addEventListener('input', calculateCurrencies);
-    autoConvertToggle.addEventListener('change', toggleCurrencyInputs);
+    if (mainPriceInput) mainPriceInput.addEventListener('input', calculateCurrencies);
+    if (mainCurrencySelect) mainCurrencySelect.addEventListener('change', calculateCurrencies);
+    if (autoConvertToggle) autoConvertToggle.addEventListener('change', toggleCurrencyInputs);
     toggleCurrencyInputs();
 
     // 2) Torpaq (Land) Dynamic Conditional Visibility
@@ -999,6 +1074,70 @@ document.addEventListener('DOMContentLoaded', function() {
                 previewGrid.appendChild(card);
             };
             reader.readAsDataURL(file);
+        });
+    }
+
+    // Amenities Load More
+    const loadMoreAmenitiesBtn = document.getElementById('load_more_amenities_btn');
+    const amenitiesGrid = document.getElementById('amenities_grid');
+    const loadMoreWrapper = document.getElementById('load_more_amenities_wrapper');
+
+    if (loadMoreAmenitiesBtn && amenitiesGrid) {
+        loadMoreAmenitiesBtn.addEventListener('click', async function () {
+            const nextPage = parseInt(this.dataset.nextPage, 10) || 2;
+            const originalHtml = this.innerHTML;
+
+            this.disabled = true;
+            this.innerHTML = '<span class="inline-block w-3.5 h-3.5 border-2 border-orange-500 border-t-transparent rounded-full animate-spin"></span> <span>' + '{{ __("Yüklənir...") }}' + '</span>';
+
+            try {
+                const res = await fetch('{{ route("add-property.amenities") }}?page=' + nextPage, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    const items = data.data || [];
+
+                    items.forEach(amenity => {
+                        if (!amenitiesGrid.querySelector('input[value="' + amenity.id + '"]')) {
+                            const label = document.createElement('label');
+                            label.className = 'flex items-center gap-2 p-2.5 bg-gray-50/70 border border-gray-100 rounded-xl cursor-pointer hover:border-orange-200 transition';
+                            
+                            const name = typeof amenity.name === 'object' && amenity.name !== null
+                                ? (amenity.name.az || Object.values(amenity.name)[0] || '')
+                                : (amenity.name || '');
+
+                            label.innerHTML = `
+                                <input type="checkbox" name="amenities[]" value="${amenity.id}"
+                                    class="w-4 h-4 text-orange-500 rounded border-gray-300 focus:ring-orange-500">
+                                <span class="text-xs font-medium text-gray-800">${name}</span>
+                            `;
+                            amenitiesGrid.appendChild(label);
+                        }
+                    });
+
+                    if (data.has_more) {
+                        loadMoreAmenitiesBtn.dataset.nextPage = nextPage + 1;
+                        loadMoreAmenitiesBtn.disabled = false;
+                        loadMoreAmenitiesBtn.innerHTML = originalHtml;
+                    } else {
+                        if (loadMoreWrapper) {
+                            loadMoreWrapper.remove();
+                        }
+                    }
+                } else {
+                    loadMoreAmenitiesBtn.disabled = false;
+                    loadMoreAmenitiesBtn.innerHTML = originalHtml;
+                }
+            } catch (err) {
+                console.error(err);
+                loadMoreAmenitiesBtn.disabled = false;
+                loadMoreAmenitiesBtn.innerHTML = originalHtml;
+            }
         });
     }
 });

@@ -9,7 +9,7 @@
     <div data-entity-card="true" data-type="{{ $item->type }}" onclick="window.location.href='{{ $item->url }}'"
          class="cursor-pointer bg-white rounded-2xl overflow-hidden flex flex-col group transition-all duration-300 hover:shadow-xl border border-gray-100">
 
-        <div class="relative overflow-hidden aspect-[16/9] sm:aspect-[5/3] bg-gradient-to-br from-orange-100 via-orange-50 to-gray-50">
+        <div class="relative overflow-hidden aspect-[16/9] sm:aspect-[5/3] bg-orange-50">
             <img src="{{ $item->banner }}"
                  alt="{{ $item->name }}"
                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />

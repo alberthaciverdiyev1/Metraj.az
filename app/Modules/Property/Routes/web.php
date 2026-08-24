@@ -16,5 +16,6 @@ Route::get('/property/{slug}', PropertyDetailController::class);
 Route::get('/properties/{slug}', PropertyDetailController::class);
 
 // Elan Əlavə Et
+Route::get('/add-property/amenities', [AddPropertyController::class, 'amenities'])->name('add-property.amenities');
 Route::get('/add-property', [AddPropertyController::class, 'create'])->name('add-property');
 Route::post('/add-property', [AddPropertyController::class, 'store'])->name('add-property.store');

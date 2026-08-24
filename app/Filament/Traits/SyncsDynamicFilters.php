@@ -100,23 +100,27 @@ trait SyncsDynamicFilters
         }
 
         // Multi-currency price packaging
-        if (isset($data['price_gbp']) || isset($data['price'])) {
-            $basePrice = (float) ($data['price_gbp'] ?? $data['price'] ?? 0);
-            $data['price'] = $basePrice;
-            $data['currency'] = 'GBP';
+        $mainCurrency = strtoupper($data['currency'] ?? 'GBP');
+        $data['currency'] = $mainCurrency;
+        $currencyService = app(\App\Modules\Shared\Services\CurrencyService::class);
 
-            $prices = app(\App\Modules\Shared\Services\CurrencyService::class)->convertFromGbp($basePrice);
-            if (empty($data['auto_convert_currency'])) {
-                if (!empty($data['price_usd'])) $prices['USD'] = (float) $data['price_usd'];
-                if (!empty($data['price_eur'])) $prices['EUR'] = (float) $data['price_eur'];
-                if (!empty($data['price_azn'])) $prices['AZN'] = (float) $data['price_azn'];
-                if (!empty($data['price_try'])) $prices['TRY'] = (float) $data['price_try'];
-                if (!empty($data['price_rub'])) $prices['RUB'] = (float) $data['price_rub'];
-                if (!empty($data['price_aed'])) $prices['AED'] = (float) $data['price_aed'];
-            }
-            $prices['GBP'] = $basePrice;
-            $data['prices'] = $prices;
+        $enteredPrice = (float) ($data['price_input'] ?? $data['price_gbp'] ?? $data['price'] ?? 0);
+        $basePrice = $currencyService->getBaseGbp($enteredPrice, $mainCurrency);
+        $data['price'] = $basePrice;
+
+        $prices = $currencyService->convertFromCurrency($enteredPrice, $mainCurrency);
+        if (empty($data['auto_convert_currency'])) {
+            if (!empty($data['price_gbp'])) $prices['GBP'] = (float) $data['price_gbp'];
+            if (!empty($data['price_usd'])) $prices['USD'] = (float) $data['price_usd'];
+            if (!empty($data['price_eur'])) $prices['EUR'] = (float) $data['price_eur'];
+            if (!empty($data['price_azn'])) $prices['AZN'] = (float) $data['price_azn'];
+            if (!empty($data['price_try'])) $prices['TRY'] = (float) $data['price_try'];
+            if (!empty($data['price_rub'])) $prices['RUB'] = (float) $data['price_rub'];
+            if (!empty($data['price_aed'])) $prices['AED'] = (float) $data['price_aed'];
         }
+        $prices[$mainCurrency] = $enteredPrice;
+        $prices['GBP'] = $basePrice;
+        $data['prices'] = $prices;
 
         // Əgər "Draft" düyməsi sıxılıbsa status Qaralama (Draft) olaraq qeyd edilir
         if ($this->isDraft ?? false) {
@@ -129,23 +133,27 @@ trait SyncsDynamicFilters
     protected function mutateFormDataBeforeSave(array $data): array
     {
         // Multi-currency price packaging
-        if (isset($data['price_gbp']) || isset($data['price'])) {
-            $basePrice = (float) ($data['price_gbp'] ?? $data['price'] ?? 0);
-            $data['price'] = $basePrice;
-            $data['currency'] = 'GBP';
+        $mainCurrency = strtoupper($data['currency'] ?? 'GBP');
+        $data['currency'] = $mainCurrency;
+        $currencyService = app(\App\Modules\Shared\Services\CurrencyService::class);
 
-            $prices = app(\App\Modules\Shared\Services\CurrencyService::class)->convertFromGbp($basePrice);
-            if (empty($data['auto_convert_currency'])) {
-                if (!empty($data['price_usd'])) $prices['USD'] = (float) $data['price_usd'];
-                if (!empty($data['price_eur'])) $prices['EUR'] = (float) $data['price_eur'];
-                if (!empty($data['price_azn'])) $prices['AZN'] = (float) $data['price_azn'];
-                if (!empty($data['price_try'])) $prices['TRY'] = (float) $data['price_try'];
-                if (!empty($data['price_rub'])) $prices['RUB'] = (float) $data['price_rub'];
-                if (!empty($data['price_aed'])) $prices['AED'] = (float) $data['price_aed'];
-            }
-            $prices['GBP'] = $basePrice;
-            $data['prices'] = $prices;
+        $enteredPrice = (float) ($data['price_input'] ?? $data['price_gbp'] ?? $data['price'] ?? 0);
+        $basePrice = $currencyService->getBaseGbp($enteredPrice, $mainCurrency);
+        $data['price'] = $basePrice;
+
+        $prices = $currencyService->convertFromCurrency($enteredPrice, $mainCurrency);
+        if (empty($data['auto_convert_currency'])) {
+            if (!empty($data['price_gbp'])) $prices['GBP'] = (float) $data['price_gbp'];
+            if (!empty($data['price_usd'])) $prices['USD'] = (float) $data['price_usd'];
+            if (!empty($data['price_eur'])) $prices['EUR'] = (float) $data['price_eur'];
+            if (!empty($data['price_azn'])) $prices['AZN'] = (float) $data['price_azn'];
+            if (!empty($data['price_try'])) $prices['TRY'] = (float) $data['price_try'];
+            if (!empty($data['price_rub'])) $prices['RUB'] = (float) $data['price_rub'];
+            if (!empty($data['price_aed'])) $prices['AED'] = (float) $data['price_aed'];
         }
+        $prices[$mainCurrency] = $enteredPrice;
+        $prices['GBP'] = $basePrice;
+        $data['prices'] = $prices;
 
         return $data;
     }

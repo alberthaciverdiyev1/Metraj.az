@@ -21,13 +21,13 @@
          class="blog-card bg-white rounded-2xl sm:rounded-3xl border border-gray-100/90 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group cursor-pointer h-full">
     
     {{-- Image & Badge --}}
-    <div class="blog-card-image relative overflow-hidden aspect-[16/10] bg-gradient-to-br from-orange-100 to-gray-100 shrink-0">
+    <div class="blog-card-image relative overflow-hidden aspect-[16/10] bg-orange-50 shrink-0">
         <img src="{{ $blogImage }}"
              alt="{{ $blogTitle }}"
              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
         
         @if(!empty($blogCategory))
-            <span class="absolute top-3 left-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md backdrop-blur-sm">
+            <span class="absolute top-3 left-3 bg-orange-500 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md backdrop-blur-sm">
                 {{ $blogCategory }}
             </span>
         @endif

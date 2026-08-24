@@ -13,7 +13,7 @@
 @endpush
 
 @section('content')
-<div class="w-full pt-4 pb-16">
+<div class="w-full pb-16">
     @include('components.breadcrumb', ['items' => $breadcrumbs ?? []])
     @include('components.scroll-top')
 
@@ -159,7 +159,7 @@
 
                     <div class="pt-2 flex items-center justify-between flex-wrap gap-4">
                         <button type="submit" id="contactSubmitBtn"
-                                class="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-sm rounded-2xl shadow-md hover:shadow-lg transition duration-200 flex items-center justify-center gap-2">
+                                class="w-full sm:w-auto px-8 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm rounded-2xl shadow-md hover:shadow-lg transition duration-200 flex items-center justify-center gap-2">
                             <span>{{ __('Mesajı Göndər') }}</span>
                             <i class="bi bi-send-fill text-xs"></i>
                         </button>
@@ -208,7 +208,7 @@
         </div>
 
         {{-- ==================== FAQ BANNER CTA ==================== --}}
-        <div class="mt-10 sm:mt-12 bg-gradient-to-r from-orange-500 via-orange-600 to-amber-500 rounded-3xl p-8 sm:p-10 text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="mt-10 sm:mt-12 bg-orange-500 rounded-3xl p-8 sm:p-10 text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="max-w-xl">
                 <span class="text-xs font-bold uppercase tracking-wider bg-white/20 px-3 py-1 rounded-full inline-block mb-2 backdrop-blur-sm">
                     {{ __('Kömək Lazımdır?') }}
@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Custom Marker
         const customIcon = L.divIcon({
             className: 'custom-map-pin',
-            html: '<div style="background: linear-gradient(135deg, #f97316, #ea580c); width: 36px; height: 36px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(234,88,12,0.4); border: 2px solid white;"><i class="bi bi-geo-alt-fill" style="transform: rotate(45deg); color: white; font-size: 16px;"></i></div>',
+            html: '<div style="background: #f97316; width: 36px; height: 36px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(234,88,12,0.4); border: 2px solid white;"><i class="bi bi-geo-alt-fill" style="transform: rotate(45deg); color: white; font-size: 16px;"></i></div>',
             iconSize: [36, 36],
             iconAnchor: [18, 36]
         });

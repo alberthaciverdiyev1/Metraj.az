@@ -31,7 +31,7 @@ class AgencyPanelProvider extends PanelProvider
             ->login()
             ->profile(EditProfile::class, isSimple: false)
             ->colors([
-                'primary' => Color::Emerald,
+                'primary' => Color::Orange,
             ])
             ->discoverResources(in: app_path('Filament/Agency/Resources'), for: 'App\\Filament\\Agency\\Resources')
             ->discoverPages(in: app_path('Filament/Agency/Pages'), for: 'App\\Filament\\Agency\\Pages')

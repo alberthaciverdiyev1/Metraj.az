@@ -10,9 +10,7 @@
     {{-- ==================== AGENT PROFILE CARD ==================== --}}
     <div class="bg-white rounded-3xl shadow-sm border border-gray-100 mt-4 sm:mt-6 overflow-hidden">
         {{-- Banner strip --}}
-        <div class="h-28 sm:h-36 relative overflow-hidden bg-gradient-to-r from-[var(--primary)] via-orange-400 to-orange-300">
-            <div class="absolute inset-0 opacity-20"
-                 style="background-image: radial-gradient(circle at 20% 50%, white 1.5px, transparent 1.5px); background-size: 22px 22px;"></div>
+        <div class="h-28 sm:h-36 relative overflow-hidden bg-[var(--primary)]">
         </div>
 
         <div class="px-6 sm:px-8 pb-6 sm:pb-8">
@@ -22,7 +20,7 @@
                     @if($agent->avatar_url)
                         <img src="{{ $agent->avatar_url }}" alt="{{ $agent->user?->name }}" class="w-full h-full object-cover">
                     @else
-                        <div class="w-full h-full bg-gradient-to-br from-orange-500 to-orange-600 text-white font-black text-3xl sm:text-4xl flex items-center justify-center">
+                        <div class="w-full h-full bg-orange-500 text-white font-black text-3xl sm:text-4xl flex items-center justify-center">
                             {{ strtoupper(substr($agent->user?->name ?? 'R', 0, 1)) }}
                         </div>
                     @endif
@@ -58,7 +56,7 @@
                 <div class="flex flex-wrap items-center gap-2 sm:gap-3 pb-1">
                     @if($agent->phone)
                         <a href="tel:{{ $agent->phone }}"
-                           class="flex items-center gap-2 px-5 py-2.5 sm:py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-2xl shadow-md transition duration-200 text-sm sm:text-base">
+                           class="flex items-center gap-2 px-5 py-2.5 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-md transition duration-200 text-sm sm:text-base">
                             <i class="bi bi-telephone-fill text-sm"></i>
                             {{ $agent->phone }}
                         </a>

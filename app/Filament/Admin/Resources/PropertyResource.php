@@ -212,50 +212,92 @@ class PropertyResource extends Resource
      */
     protected static function sectionPricing(): Forms\Components\Section
     {
+        $recalculateCurrencies = function (Forms\Get $get, Forms\Set $set) {
+            $cur = $get('currency') ?? 'GBP';
+            $entered = (float) ($get('price_input') ?? $get('price_gbp') ?? 0);
+            if ($entered <= 0) return;
+
+            $currencyService = app(\App\Modules\Shared\Services\CurrencyService::class);
+            $baseGbp = $currencyService->getBaseGbp($entered, $cur);
+            $set('price', $baseGbp);
+
+            if ($get('auto_convert_currency')) {
+                $converted = $currencyService->convertFromCurrency($entered, $cur);
+                $set('price_gbp', $converted['GBP'] ?? null);
+                $set('price_usd', $converted['USD'] ?? null);
+                $set('price_eur', $converted['EUR'] ?? null);
+                $set('price_azn', $converted['AZN'] ?? null);
+                $set('price_try', $converted['TRY'] ?? null);
+                $set('price_rub', $converted['RUB'] ?? null);
+                $set('price_aed', $converted['AED'] ?? null);
+            }
+        };
+
         return Forms\Components\Section::make('Qiymət və Valyutalar')
-            ->description('Bütün valyutalarda qiymətlər və avtomatik məzənnə konvertasiyası')
+            ->description('Əsas valyuta seçimi, qiymət və avtomatik məzənnə konvertasiyası')
             ->icon('heroicon-o-banknotes')
             ->columnSpan(2)
             ->columns(4)
             ->schema([
                 Forms\Components\Toggle::make('auto_convert_currency')
                     ->label('Məzənnəyə uyğun avtomatik konvertasiya')
-                    ->helperText('Aktiv olduqda, Pound (£) daxil etdikdə digər bütün valyutalar günlük məzənnəyə əsasən avtomatik doldurulur.')
+                    ->helperText('Aktiv olduqda, əsas qiymət daxil edildikdə digər bütün valyutalar günlük məzənnəyə əsasən avtomatik doldurulur.')
                     ->default(true)
                     ->live()
-                    ->afterStateUpdated(function (bool $state, Forms\Get $get, Forms\Set $set) {
-                        if ($state && $get('price_gbp')) {
-                            $converted = app(\App\Modules\Shared\Services\CurrencyService::class)->convertFromGbp((float) $get('price_gbp'));
-                            $set('price_usd', $converted['USD'] ?? null);
-                            $set('price_eur', $converted['EUR'] ?? null);
-                            $set('price_azn', $converted['AZN'] ?? null);
-                            $set('price_try', $converted['TRY'] ?? null);
-                            $set('price_rub', $converted['RUB'] ?? null);
-                            $set('price_aed', $converted['AED'] ?? null);
-                        }
-                    })
+                    ->afterStateUpdated(fn (bool $state, Forms\Get $get, Forms\Set $set) => $recalculateCurrencies($get, $set))
                     ->columnSpanFull(),
 
-                // 1) POUND (GBP £) - İlk və Əsas Valyuta
-                Forms\Components\TextInput::make('price_gbp')
-                    ->label('Pound (£ GBP) — Əsas')
+                // Əsas Valyuta Seçimi (Default: GBP)
+                Forms\Components\Select::make('currency')
+                    ->label('Əsas Valyuta')
+                    ->options([
+                        'GBP' => 'Pound (£ GBP)',
+                        'AZN' => 'Manat (₼ AZN)',
+                        'USD' => 'Dollar ($ USD)',
+                        'EUR' => 'Avro (€ EUR)',
+                        'TRY' => 'Türk Lirəsi (₺ TRY)',
+                        'RUB' => 'Rusiya Rublu (₽ RUB)',
+                        'AED' => 'BƏƏ Dirhəmi (AED)',
+                    ])
+                    ->default('GBP')
+                    ->required()
+                    ->live()
+                    ->afterStateUpdated(fn ($state, Forms\Get $get, Forms\Set $set) => $recalculateCurrencies($get, $set))
+                    ->columnSpan(2),
+
+                // Əsas Qiymət Daxil Edilməsi
+                Forms\Components\TextInput::make('price_input')
+                    ->label(fn (Forms\Get $get) => 'Əsas Qiymət (' . ($get('currency') ?? 'GBP') . ')')
                     ->numeric()
-                    ->prefix('£')
+                    ->prefix(fn (Forms\Get $get) => match ($get('currency') ?? 'GBP') {
+                        'GBP' => '£',
+                        'AZN' => '₼',
+                        'USD' => '$',
+                        'EUR' => '€',
+                        'TRY' => '₺',
+                        'RUB' => '₽',
+                        'AED' => 'د.إ',
+                        default => '£'
+                    })
                     ->required()
                     ->placeholder('Məs: 150000')
-                    ->live(debounce: 300)
-                    ->afterStateUpdated(function ($state, Forms\Get $get, Forms\Set $set) {
-                        $set('price', $state);
-                        if ($get('auto_convert_currency') && !empty($state)) {
-                            $converted = app(\App\Modules\Shared\Services\CurrencyService::class)->convertFromGbp((float) $state);
-                            $set('price_usd', $converted['USD'] ?? null);
-                            $set('price_eur', $converted['EUR'] ?? null);
-                            $set('price_azn', $converted['AZN'] ?? null);
-                            $set('price_try', $converted['TRY'] ?? null);
-                            $set('price_rub', $converted['RUB'] ?? null);
-                            $set('price_aed', $converted['AED'] ?? null);
-                        }
+                    ->live(debounce: 350)
+                    ->afterStateUpdated(fn ($state, Forms\Get $get, Forms\Set $set) => $recalculateCurrencies($get, $set))
+                    ->afterStateHydrated(function ($component, $record) {
+                        if (! $record) return;
+                        $cur = $record->currency ?? 'GBP';
+                        $component->state($record->prices[$cur] ?? $record->price ?? null);
                     })
+                    ->columnSpan(2),
+
+                // 1) POUND (GBP £)
+                Forms\Components\TextInput::make('price_gbp')
+                    ->label('Pound (£ GBP)')
+                    ->numeric()
+                    ->prefix('£')
+                    ->disabled(fn (Forms\Get $get) => (bool) $get('auto_convert_currency'))
+                    ->dehydrated()
+                    ->placeholder('Məs: 150000')
                     ->afterStateHydrated(function ($component, $record) {
                         if (! $record) return;
                         $component->state($record->prices['GBP'] ?? $record->price ?? null);
@@ -348,9 +390,6 @@ class PropertyResource extends Resource
 
                 Forms\Components\Hidden::make('price')
                     ->default(0),
-
-                Forms\Components\Hidden::make('currency')
-                    ->default('GBP'),
             ]);
     }
 

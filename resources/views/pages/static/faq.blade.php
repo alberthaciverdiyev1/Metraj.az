@@ -1,332 +1,373 @@
 @extends('layouts.app')
 
+@section('title', __('Tez-tez Verilən Suallar (FAQ) - Metraj.az'))
+
 @section('content')
-<div>
+<div class="w-full pb-16">
+    @include('components.breadcrumb', ['items' => $breadcrumbs ?? []])
     @include('components.scroll-top')
 
-    <section id="navigation" class="py-3">
-        <div class="container mx-auto px-4 flex items-center gap-2">
-            <a href="/"
-               class="text-gray-400 font-bold flex items-center hover:text-black">
-                Home
-            </a>
-            <span class="text-[color:var(--primary)]">></span>
-            <a href="/property" class="text-[color:var(--primary)]">
-                Faqs
-            </a>
+    {{-- ==================== HERO / HEADER SECTION ==================== --}}
+    <section class="mt-4 sm:mt-6 bg-white rounded-3xl p-6 sm:p-10 border border-gray-100/90 shadow-sm text-center">
+        <div class="max-w-2xl mx-auto space-y-3">
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-900 tracking-tight">
+                {{ __('Tez-tez Verilən Suallar') }}
+            </h1>
+
+            {{-- Live Search Box --}}
+            <div class="pt-3 max-w-lg mx-auto">
+                <div class="relative">
+                    <i class="bi bi-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                    <input type="text" id="faqSearchInput" placeholder="{{ __('Sual və ya açar söz axtarın...') }}"
+                           class="w-full pl-11 pr-4 py-3 bg-gray-50/80 border border-gray-200 rounded-2xl text-xs sm:text-sm text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition shadow-inner">
+                </div>
+            </div>
         </div>
     </section>
 
+    {{-- ==================== MAIN CONTENT SECTION ==================== --}}
+    <section class="mt-6 sm:mt-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
+
+            {{-- Left Side: Categories & Accordions (8 cols) --}}
+            <div class="lg:col-span-8 space-y-6">
+
+                {{-- Category Pills --}}
+                <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+                    <button type="button" class="faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap bg-orange-500 text-white shadow-sm" data-category="all">
+                        {{ __('Hamısı') }}
+                    </button>
+                    <button type="button" class="faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap bg-white text-gray-700 hover:bg-gray-50 border border-gray-200" data-category="general">
+                        {{ __('Ümumi & Qeydiyyat') }}
+                    </button>
+                    <button type="button" class="faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap bg-white text-gray-700 hover:bg-gray-50 border border-gray-200" data-category="listings">
+                        {{ __('Elan Yerləşdirmə') }}
+                    </button>
+                    <button type="button" class="faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap bg-white text-gray-700 hover:bg-gray-50 border border-gray-200" data-category="payments">
+                        {{ __('VIP & Ödənişlər') }}
+                    </button>
+                    <button type="button" class="faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap bg-white text-gray-700 hover:bg-gray-50 border border-gray-200" data-category="safety">
+                        {{ __('Təhlükəsizlik') }}
+                    </button>
+                </div>
+
+                {{-- Accordion List Container --}}
+                <div id="faqAccordionContainer" class="space-y-4">
+
+                    {{-- Category 1: Ümumi --}}
+                    <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="general">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Metraj.az nədir və necə işləyir?') }}</span>
+                            <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
+                                <i class="bi bi-chevron-down text-xs"></i>
+                            </span>
+                        </button>
+                        <div class="faq-content hidden px-5 sm:px-6 pb-5 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100">
+                            {{ __('Metraj.az daşınmaz əmlak alqı-satqısı və kirayəsi üzrə müasir və etibarlı elan platformasıdır. Burada həm fərdi mülkiyyətçilər, həm də peşəkar agentliklər və rieltorlar öz elanlarını rahatlıqla yerləşdirə və minlərlə real alıcı ilə əlaqə qura bilərlər.') }}
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="general">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Elanlara baxmaq üçün qeydiyyatdan keçmək məcburidirmi?') }}</span>
+                            <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
+                                <i class="bi bi-chevron-down text-xs"></i>
+                            </span>
+                        </button>
+                        <div class="faq-content hidden px-5 sm:px-6 pb-5 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100">
+                            {{ __('Xeyr, saytdakı bütün aktiv elanlarla tanış olmaq, filtrləmək və satıcılarla əlaqə saxlamaq tamamilə açıqdır. Lakin öz elanlarınızı idarə etmək və sevimlilər siyahısı yaratmaq üçün profil açmağınız tövsiyə olunur.') }}
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="general">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Şəxsi hesabımın məlumatlarını necə dəyişə bilərəm?') }}</span>
+                            <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
+                                <i class="bi bi-chevron-down text-xs"></i>
+                            </span>
+                        </button>
+                        <div class="faq-content hidden px-5 sm:px-6 pb-5 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100">
+                            {{ __('Giriş etdikdən sonra sağ yuxarı küncdə yerləşən istifadəçi menyusundan "Profil" bölməsinə daxil olaraq ad, soyad, əlaqə telefonu, email və şifrənizi istənilən vaxt yeniləyə bilərsiniz.') }}
+                        </div>
+                    </div>
+
+                    {{-- Category 2: Elan Yerləşdirmə --}}
+                    <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="listings">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Saytda necə yeni elan yerləşdirə bilərəm?') }}</span>
+                            <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
+                                <i class="bi bi-chevron-down text-xs"></i>
+                            </span>
+                        </button>
+                        <div class="faq-content hidden px-5 sm:px-6 pb-5 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100">
+                            {{ __('Yuxarı sağ paneldəki "Yeni Elan" düyməsinə klikləyərək formanı açın. Əmlak növünü, qiymətini, yerləşdiyi ünvanı xəritədə qeyd edin, fotoşəkilləri yükləyin və təsdiqə göndərin. Qonaq istifadəçilər də qeydiyyat olmadan birbaşa elan yerləşdirə bilərlər.') }}
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="listings">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Əlavə etdiyim elan nə vaxt saytda görünəcək?') }}</span>
+                            <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
+                                <i class="bi bi-chevron-down text-xs"></i>
+                            </span>
+                        </button>
+                        <div class="faq-content hidden px-5 sm:px-6 pb-5 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100">
+                            {{ __('Elanın dəqiqliyini və keyfiyyətini təmin etmək üçün bütün yeni elanlar moderator yoxlanışından keçir. Moderator yoxlanışı adətən 15-30 dəqiqə ərzində tamamlanır və elanınız dərhal aktiv edilir.') }}
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="listings">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Şəkillərlə bağlı hansı tələblər mövcuddur?') }}</span>
+                            <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
+                                <i class="bi bi-chevron-down text-xs"></i>
+                            </span>
+                        </button>
+                        <div class="faq-content hidden px-5 sm:px-6 pb-5 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100">
+                            {{ __('Elana ən azı 1, maksimum isə 20 ədəd real və aydın fotoşəkil əlavə etmək mümkündür. Formatlar: JPG, PNG, WebP. İlk seçilən şəkil elanın əsas örtük şəkli olur.') }}
+                        </div>
+                    </div>
+
+                    {{-- Category 3: VIP & Ödənişlər --}}
+                    <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="payments">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Standart elan yerləşdirmək ödənişlidirmi?') }}</span>
+                            <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
+                                <i class="bi bi-chevron-down text-xs"></i>
+                            </span>
+                        </button>
+                        <div class="faq-content hidden px-5 sm:px-6 pb-5 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100">
+                            {{ __('Xeyr, Metraj.az platformasında standart daşınmaz əmlak elanı yerləşdirmək tamamilə pulsuzdur. Əlavə xidmətlər (VIP, Premium, İrəli çəkmə) isə könüllü olaraq seçilə bilər.') }}
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="payments">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('VIP və Seçilmiş elan xidmətinin nə kimi üstünlükləri var?') }}</span>
+                            <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
+                                <i class="bi bi-chevron-down text-xs"></i>
+                            </span>
+                        </button>
+                        <div class="faq-content hidden px-5 sm:px-6 pb-5 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100">
+                            {{ __('VIP və Seçilmiş elanlar həm ana səhifədə, həm də axtarış və kateqoriya nəticələrində hər səhifənin ilk 10 sırasında xüsusi nişanla nümayiş olunur. Bu isə elanınızın 5-10 dəfə daha sürətli satılmasına və ya kirayə verilməsinə kömək edir.') }}
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="payments">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Ödənişləri hansı üsullarla həyata keçirə bilərəm?') }}</span>
+                            <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
+                                <i class="bi bi-chevron-down text-xs"></i>
+                            </span>
+                        </button>
+                        <div class="faq-content hidden px-5 sm:px-6 pb-5 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100">
+                            {{ __('Bütün yerli və xarici bank kartları (Visa, Mastercard), həmçinin onlayn bankçılıq tətbiqləri ilə təhlükəsiz şəkildə 3D Secure sistemi ilə ödəniş edə bilərsiniz.') }}
+                        </div>
+                    </div>
+
+                    {{-- Category 4: Təhlükəsizlik --}}
+                    <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="safety">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Şəxsi məlumatlarımın təhlükəsizliyinə necə zəmanət verilir?') }}</span>
+                            <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
+                                <i class="bi bi-chevron-down text-xs"></i>
+                            </span>
+                        </button>
+                        <div class="faq-content hidden px-5 sm:px-6 pb-5 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100">
+                            {{ __('Metraj.az məlumatların məxfiliyinə tam zəmanət verir. Daxil etdiyiniz email və əlaqə vasitələri heç bir üçüncü tərəfə ötürülmür və yalnız elanınızın statusu barədə bildiriş göndərmək üçün istifadə olunur.') }}
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="safety">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                            <span class="font-bold text-sm sm:text-base text-gray-900">{{ __('Şübhəli elan və ya dələduzluqla qarşılaşdıqda nə etməliyəm?') }}</span>
+                            <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
+                                <i class="bi bi-chevron-down text-xs"></i>
+                            </span>
+                        </button>
+                        <div class="faq-content hidden px-5 sm:px-6 pb-5 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100">
+                            {{ __('Hər bir elanın daxilində "Şikayət et" funksiyası mövcuddur. Həmçinin dərhal qaynar xəttimiz və ya dəstək formu vasitəsilə bizə müraciət edə bilərsiniz. Moderator heyətimiz elanı dərhal araşdıracaqdır.') }}
+                        </div>
+                    </div>
+
+                    {{-- No Search Results placeholder --}}
+                    <div id="noFaqResults" class="hidden bg-white rounded-2xl border border-gray-100 p-8 sm:p-12 text-center">
+                        <div class="w-16 h-16 bg-orange-50 text-orange-500 rounded-full flex items-center justify-center mx-auto text-2xl mb-3">
+                            <i class="bi bi-search"></i>
+                        </div>
+                        <h4 class="font-bold text-base text-gray-900">{{ __('Axtarışa uyğun sual tapılmadı') }}</h4>
+                        <p class="text-xs text-gray-500 mt-1 max-w-sm mx-auto">
+                            {{ __('Fərqli açar sözlərlə axtarış edin və ya birbaşa dəstək komandamızla əlaqə saxlayın.') }}
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            {{-- Right Side: Quick Contact Sidebar (4 cols) --}}
+            <div class="lg:col-span-4 space-y-6">
+
+                {{-- Contact Support Card --}}
+                <div class="bg-white rounded-3xl p-6 sm:p-7 border border-gray-100/90 shadow-sm space-y-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-orange-50 text-orange-500 flex items-center justify-center text-xl shrink-0">
+                            <i class="bi bi-headset"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-extrabold text-gray-900 text-base leading-tight">{{ __('Kömək Lazımdır?') }}</h3>
+                            <p class="text-xs text-gray-400 mt-0.5">{{ __('Bizimlə əlaqə saxlayın') }}</p>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        {{ __('Axtardığınız sualın cavabını tapmadınızsa, peşəkar dəstək komandamız sizə kömək etməyə hazırdır.') }}
+                    </p>
+
+                    <div class="space-y-2.5 pt-2 border-t border-gray-100 text-xs">
+                        <a href="tel:+994501234567" class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-orange-50/60 transition group">
+                            <i class="bi bi-telephone-fill text-orange-500 text-sm"></i>
+                            <div class="flex-1 min-w-0">
+                                <span class="block text-[11px] text-gray-400">{{ __('Qaynar Xətt') }}</span>
+                                <span class="font-bold text-gray-900 group-hover:text-orange-600 transition">+994 50 123 45 67</span>
+                            </div>
+                        </a>
+
+                        <a href="https://wa.me/994501234567" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-emerald-50/60 transition group">
+                            <i class="bi bi-whatsapp text-emerald-600 text-sm"></i>
+                            <div class="flex-1 min-w-0">
+                                <span class="block text-[11px] text-gray-400">WhatsApp</span>
+                                <span class="font-bold text-gray-900 group-hover:text-emerald-600 transition">+994 50 123 45 67</span>
+                            </div>
+                        </a>
+
+                        <a href="mailto:info@metraj.az" class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-orange-50/60 transition group">
+                            <i class="bi bi-envelope-fill text-orange-500 text-sm"></i>
+                            <div class="flex-1 min-w-0">
+                                <span class="block text-[11px] text-gray-400">Email</span>
+                                <span class="font-bold text-gray-900 group-hover:text-orange-600 transition">info@metraj.az</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <a href="{{ route('contact') }}" class="w-full flex items-center justify-center gap-2 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl shadow transition duration-200 text-xs">
+                        <span>{{ __('Əlaqə Səhifəsinə Keç') }}</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+
+                {{-- Fast Add Listing Promo --}}
+                <div class="bg-gray-900 rounded-3xl p-6 sm:p-7 text-white shadow-sm space-y-4">
+                    <span class="inline-block bg-orange-500 text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-md">
+                        {{ __('Pulsuz') }}
+                    </span>
+                    <h3 class="text-base sm:text-lg font-bold leading-snug">
+                        {{ __('Öz əmlakınızı dərhal satışa və ya kirayəyə çıxarın') }}
+                    </h3>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        {{ __('Cəmi 2 dəqiqə ərzində elanınızı yerləşdirin və minlərlə potensial müştəriyə çatın.') }}
+                    </p>
+                    <a href="{{ route('add-property') }}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-gray-900 hover:bg-orange-500 hover:text-white font-bold text-xs rounded-xl shadow transition duration-200">
+                        <span>{{ __('Elan Yerləşdir') }}</span>
+                        <i class="bi bi-plus-lg"></i>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
 </div>
-<main>
-    <section>
-        <div class="container mx-auto px-4">
-            <div class="side">
-                <div class="left-side">
-                    <h2>Frequently Asked Questions</h2>
 
-                    <div class="accordions">
-                        <h3>Overview
-                        </h3>
-                        <div class="accordion">
-                            <div class="accordion-item">
-                                <div class="accordion-header">
-                                    <span>Why Should I Use Your Services?</span>
-                                    <span class="arrow"><i class="bi bi-chevron-down"></i></span>
-                                </div>
-                                <div class="accordion-content">
-                                    Once your account is set down and you've familiarized yourself with the platform,
-                                    you are ready to start using our services. Whether it's accessing specific features,
-                                    making transactions, or utilizing our tools, you'll find everything you need at your
-                                    fingertips.
-                                </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <div class="accordion-header">
-                                    <span>Why Should I Use Your Services?</span>
-                                    <span class="arrow"><i class="bi bi-chevron-down"></i></span>
-                                </div>
-                                <div class="accordion-content">
-                                    Our platform offers a unique combination of tools, sdownport, and ease of use that
-                                    helps you get things done efficiently and securely.
-                                </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <div class="accordion-header">
-                                    <span>How Secure Are Your Services?</span>
-                                    <span class="arrow"><i class="bi bi-chevron-down"></i></span>
-                                </div>
-                                <div class="accordion-content">
-                                    We use state-of-the-art encryption and security practices to keep your data and
-                                    transactions safe.
-                                </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <div class="accordion-header">
-                                    <span>Is There Customer Sdownport Available?</span>
-                                    <span class="arrow"><i class="bi bi-chevron-down"></i></span>
-                                </div>
-                                <div class="accordion-content">
-                                    Yes, our sdownport team is available 24/7 to assist with any questions or issues you
-                                    may have.
-                                </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <div class="accordion-header">
-                                    <span>How Can I downdate My Account Information?</span>
-                                    <span class="arrow"><i class="bi bi-chevron-down"></i></span>
-                                </div>
-                                <div class="accordion-content">
-                                    You can downdate your account information anytime from your profile settings page.
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="accordions">
-                        <h3>Costs and Payments
-
-                        </h3>
-                        <div class="accordion">
-                            <div class="accordion-item">
-                                <div class="accordion-header">
-                                    <span>Why Should I Use Your Services?</span>
-                                    <span class="arrow"><i class="bi bi-chevron-down"></i></span>
-                                </div>
-                                <div class="accordion-content">
-                                    Once your account is set down and you've familiarized yourself with the platform,
-                                    you are ready to start using our services. Whether it's accessing specific features,
-                                    making transactions, or utilizing our tools, you'll find everything you need at your
-                                    fingertips.
-                                </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <div class="accordion-header">
-                                    <span>Why Should I Use Your Services?</span>
-                                    <span class="arrow"><i class="bi bi-chevron-down"></i></span>
-                                </div>
-                                <div class="accordion-content">
-                                    Our platform offers a unique combination of tools, sdownport, and ease of use that
-                                    helps you get things done efficiently and securely.
-                                </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <div class="accordion-header">
-                                    <span>How Secure Are Your Services?</span>
-                                    <span class="arrow"><i class="bi bi-chevron-down"></i></span>
-                                </div>
-                                <div class="accordion-content">
-                                    We use state-of-the-art encryption and security practices to keep your data and
-                                    transactions safe.
-                                </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <div class="accordion-header">
-                                    <span>Is There Customer Sdownport Available?</span>
-                                    <span class="arrow"><i class="bi bi-chevron-down"></i></span>
-                                </div>
-                                <div class="accordion-content">
-                                    Yes, our sdownport team is available 24/7 to assist with any questions or issues you
-                                    may have.
-                                </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <div class="accordion-header">
-                                    <span>How Can I downdate My Account Information?</span>
-                                    <span class="arrow"><i class="bi bi-chevron-down"></i></span>
-                                </div>
-                                <div class="accordion-content">
-                                    You can downdate your account information anytime from your profile settings page.
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="accordions">
-                        <h3>Safety and Security
-
-                        </h3>
-                        <div class="accordion">
-                            <div class="accordion-item">
-                                <div class="accordion-header">
-                                    <span>Why Should I Use Your Services?</span>
-                                    <span class="arrow"><i class="bi bi-chevron-down"></i></span>
-                                </div>
-                                <div class="accordion-content">
-                                    Once your account is set down and you've familiarized yourself with the platform,
-                                    you are ready to start using our services. Whether it's accessing specific features,
-                                    making transactions, or utilizing our tools, you'll find everything you need at your
-                                    fingertips.
-                                </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <div class="accordion-header">
-                                    <span>Why Should I Use Your Services?</span>
-                                    <span class="arrow"><i class="bi bi-chevron-down"></i></span>
-                                </div>
-                                <div class="accordion-content">
-                                    Our platform offers a unique combination of tools, sdownport, and ease of use that
-                                    helps you get things done efficiently and securely.
-                                </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <div class="accordion-header">
-                                    <span>How Secure Are Your Services?</span>
-                                    <span class="arrow"><i class="bi bi-chevron-down"></i></span>
-                                </div>
-                                <div class="accordion-content">
-                                    We use state-of-the-art encryption and security practices to keep your data and
-                                    transactions safe.
-                                </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <div class="accordion-header">
-                                    <span>Is There Customer Sdownport Available?</span>
-                                    <span class="arrow"><i class="bi bi-chevron-down"></i></span>
-                                </div>
-                                <div class="accordion-content">
-                                    Yes, our sdownport team is available 24/7 to assist with any questions or issues you
-                                    may have.
-                                </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <div class="accordion-header">
-                                    <span>How Can I downdate My Account Information?</span>
-                                    <span class="arrow"><i class="bi bi-chevron-down"></i></span>
-                                </div>
-                                <div class="accordion-content">
-                                    You can downdate your account information anytime from your profile settings page.
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-                <div class="side-right">
-                    <div class="sticky">
-                        <div class="contact-card">
-                            <h3>Contact Sellers</h3>
-                            <div class="flex avatar-info">
-                                <img src="https://themesflat.co/html/proty/images/avatar/seller.jpg" alt="Shara Conner"
-                                     class="avatar">
-                                <div class="avatar-info-text">
-                                    <h4>Shara Conner</h4>
-                                 @if($setting->phone ?? false)
-                                 <p><a href="tel:{{ $setting->phone }}" class="phone"><i class="bi bi-telephone"></i>
-                                {{ $setting->phone }}</a></p>
-                                @endif
-
-                               @if($setting->email ?? false)
-                                 <p><a href="mailto:{{ $setting->email }}" class="email">
-                                    <i class="bi bi-envelope"></i> {{ $setting->email }}</a></p>
-                               @endif
-
-                                </div>
-
-                            </div>
-
-                            <form id="contact-form" action="{{ route('inquiries.contact') }}" method="post">
-                                @csrf
-                                <input type="text" id="name" name="name" placeholder="Full Name" required>
-                                <textarea id="message" name="message" placeholder="How can an agent help"
-                                          required></textarea>
-                                <button
-                                        class="send-message-btn all-btn button-hover"
-                                        type="submit">Send message
-                                </button>
-                            </form>
-                        </div>
-                        <x-connect-agent/>
-
-                    </div>
-
-                </div>
-            </div>
-            <div class="contact-section">
-                <div class="contact-container">
-                    <img class="contact-background" src="/images/section-contact.jpg" alt="background">
-
-                    <div class="contact-overlay">
-                        <div class="contact-header">
-                            <div class="contact-logo">
-                                <img src="/images/logo-2@2x.png" alt="Logo">
-                            </div>
-                        </div>
-
-                        <div class="contact-content">
-                            <div class="contact-text">
-                                <h2 class="contact-title">Need help? Talk to our expert.</h2>
-                                <p class="contact-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </div>
-
-                            <div class="contact-actions">
-                                <button class="contact-btn call-btn">Contact us</button>
-                                <a class="all-btn button-hover contact-phone" href="tel:+16035550123">
-                                    <i class="bi bi-telephone-outbound-fill"></i>
-                                    (603) 555-0123
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </section>
-
-</main>
-
+@push('scripts')
 <script>
-    // FAQ əlaqə forması — JS fetch ilə göndərilir
-    document.addEventListener('DOMContentLoaded', function () {
-        const contactForm = document.getElementById('contact-form');
-        if (!contactForm) return;
+document.addEventListener('DOMContentLoaded', function () {
+    // 1. Accordion Toggle
+    const triggers = document.querySelectorAll('.faq-trigger');
+    triggers.forEach(trigger => {
+        trigger.addEventListener('click', function () {
+            const item = this.closest('.faq-item');
+            const content = item.querySelector('.faq-content');
+            const icon = item.querySelector('.faq-icon');
+            const isCurrentlyOpen = !content.classList.contains('hidden');
 
-        contactForm.addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            const btn = contactForm.querySelector('button[type="submit"]');
-            if (btn) {
-                btn.disabled = true;
-                btn.style.opacity = '0.6';
-            }
-
-            const { ok, status, data } = await window.Metraj.post(
-                contactForm.action,
-                new FormData(contactForm)
-            );
-
-            if (btn) {
-                btn.disabled = false;
-                btn.style.opacity = '1';
-            }
-
-            if (ok) {
-                window.Metraj.toast(data.message || 'Mesajınız göndərildi ✅');
-                contactForm.reset();
-            } else {
-                let msg = data.message || 'Xəta baş verdi, yenidən cəhd edin';
-                if (status === 422 && data.errors) {
-                    const firstKey = Object.keys(data.errors)[0];
-                    if (firstKey) msg = data.errors[firstKey][0];
+            // Close all items
+            document.querySelectorAll('.faq-item').forEach(otherItem => {
+                const otherContent = otherItem.querySelector('.faq-content');
+                const otherIcon = otherItem.querySelector('.faq-icon');
+                if (otherContent) otherContent.classList.add('hidden');
+                if (otherIcon) {
+                    otherIcon.style.transform = 'rotate(0deg)';
+                    otherIcon.classList.remove('bg-orange-500', 'text-white');
+                    otherIcon.classList.add('bg-orange-50', 'text-orange-500');
                 }
-                window.Metraj.toast(msg, 'error');
+            });
+
+            // Toggle clicked item
+            if (!isCurrentlyOpen) {
+                content.classList.remove('hidden');
+                if (icon) {
+                    icon.style.transform = 'rotate(180deg)';
+                    icon.classList.remove('bg-orange-50', 'text-orange-500');
+                    icon.classList.add('bg-orange-500', 'text-white');
+                }
             }
         });
     });
+
+    // 2. Category Filter Buttons
+    const filterButtons = document.querySelectorAll('.faq-filter-btn');
+    const faqItems = document.querySelectorAll('.faq-item');
+    const noResults = document.getElementById('noFaqResults');
+    let activeCategory = 'all';
+
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', function () {
+            filterButtons.forEach(b => {
+                b.className = 'faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap bg-white text-gray-700 hover:bg-gray-50 border border-gray-200';
+            });
+            this.className = 'faq-filter-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap bg-orange-500 text-white shadow-sm';
+
+            activeCategory = this.dataset.category || 'all';
+            applyFilters();
+        });
+    });
+
+    // 3. Live Search Filter
+    const searchInput = document.getElementById('faqSearchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', function () {
+            applyFilters();
+        });
+    }
+
+    function applyFilters() {
+        const query = (searchInput?.value || '').trim().toLowerCase();
+        let visibleCount = 0;
+
+        faqItems.forEach(item => {
+            const itemCat = item.dataset.category || '';
+            const itemText = item.textContent.toLowerCase();
+
+            const matchesCat = (activeCategory === 'all' || itemCat === activeCategory);
+            const matchesQuery = query === '' || itemText.includes(query);
+
+            if (matchesCat && matchesQuery) {
+                item.classList.remove('hidden');
+                visibleCount++;
+            } else {
+                item.classList.add('hidden');
+            }
+        });
+
+        if (noResults) {
+            if (visibleCount === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        }
+    }
+});
 </script>
+@endpush
 @endsection

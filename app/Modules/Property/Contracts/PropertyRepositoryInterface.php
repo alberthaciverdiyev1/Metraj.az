@@ -24,7 +24,7 @@ interface PropertyRepositoryInterface
 
     public function delete(int $id): bool;
 
-    public function paginate(PropertyFilterDTO $filter, int $perPage = 15): LengthAwarePaginator;
+    public function paginate(PropertyFilterDTO $filter, int $perPage = 30): LengthAwarePaginator;
 
     /**
      * Oxşar elanlar: eyni əmlak növü və ya eyni şəhər/rayon, çatışmayan hissə son elanlarla tamamlanır.

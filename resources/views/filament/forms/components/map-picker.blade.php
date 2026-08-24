@@ -279,7 +279,7 @@
     width: 38px;
     height: 38px;
     margin: 0 auto;
-    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    background: #f97316;
     border-radius: 50% 50% 50% 0;
     transform: rotate(-45deg);
     box-shadow: 0 8px 18px rgba(234, 88, 12, 0.42), 0 2px 6px rgba(0, 0, 0, 0.15);

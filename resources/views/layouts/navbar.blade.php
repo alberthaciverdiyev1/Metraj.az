@@ -18,12 +18,6 @@
       <a href="/agencies" class="{{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
         {{ __('Agencies') }}
       </a>
-      <a href="/blog" class="{{ request()->is('blog*') ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
-        {{ __('Blog') }}
-      </a>
-      <a href="/about-us" class="{{ request()->is('about-us*') ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
-        {{ __('About Us') }}
-      </a>
       <a href="/contact" class="{{ request()->is('contact*') ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
         {{ __('Contact') }}
       </a>
@@ -33,15 +27,15 @@
     <div class="flex items-center space-x-3 sm:space-x-4">
 
       <!-- Favorites -->
-      <a href="/favorites" class="relative text-gray-600 hover:text-[#f1913d] p-2 transition hidden sm:inline-flex" title="{{ __('Favorites') }}">
-        <i class="fa-regular fa-heart text-xl"></i>
-        <span id="favorites-count" class="absolute top-0 right-0 bg-[#f1913d] text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full font-bold">0</span>
+      <a href="/favorites" class="relative text-gray-700 hover:text-orange-500 p-2 rounded-lg transition inline-flex items-center justify-center" title="{{ __('Favorites') }}">
+        <i class="fa-regular fa-heart text-xl text-rose-500"></i>
+        <span id="favorites-count" class="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] min-w-[16px] h-4 px-1 flex items-center justify-center rounded-full font-bold shadow-sm">0</span>
       </a>
 
       <!-- Compares -->
-      <a href="/compares" class="relative text-gray-600 hover:text-[#f1913d] p-2 transition hidden sm:inline-flex" title="{{ __('Compare') }}">
-        <i class="bi bi-arrow-left-right text-xl"></i>
-        <span id="compares-count" class="absolute top-0 right-0 bg-[#f1913d] text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full font-bold">0</span>
+      <a href="/compares" class="relative text-gray-700 hover:text-orange-500 p-2 rounded-lg transition inline-flex items-center justify-center" title="{{ __('Compare') }}">
+        <i class="bi bi-arrow-left-right text-xl text-gray-700"></i>
+        <span id="compares-count" class="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] min-w-[16px] h-4 px-1 flex items-center justify-center rounded-full font-bold shadow-sm">0</span>
       </a>
 
       <!-- Currency Selector -->
@@ -158,12 +152,6 @@
       <a href="/agencies" class="px-3 py-2 rounded-md {{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
         {{ __('Agencies') }}
       </a>
-      <a href="/blog" class="px-3 py-2 rounded-md {{ request()->is('blog*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
-        {{ __('Blog') }}
-      </a>
-      <a href="/about-us" class="px-3 py-2 rounded-md {{ request()->is('about-us*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
-        {{ __('About Us') }}
-      </a>
       <a href="/contact" class="px-3 py-2 rounded-md {{ request()->is('contact*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
         {{ __('Contact') }}
       </a>
@@ -175,12 +163,12 @@
       </a>
 
       <div class="flex items-center justify-between gap-2 pt-1">
-        <a href="/favorites" class="flex-1 flex items-center justify-center gap-1.5 py-2 border border-gray-200 rounded-lg text-gray-700 text-xs font-medium">
-          <i class="fa-regular fa-heart text-[#f1913d]"></i>
+        <a href="/favorites" class="flex-1 flex items-center justify-center gap-1.5 py-2 border border-gray-200 rounded-lg text-gray-700 text-xs font-medium hover:border-orange-500 hover:text-orange-500 transition">
+          <i class="fa-regular fa-heart text-rose-500"></i>
           <span>{{ __('Favorites') }}</span>
         </a>
-        <a href="/compares" class="flex-1 flex items-center justify-center gap-1.5 py-2 border border-gray-200 rounded-lg text-gray-700 text-xs font-medium">
-          <i class="bi bi-arrow-left-right text-[#f1913d]"></i>
+        <a href="/compares" class="flex-1 flex items-center justify-center gap-1.5 py-2 border border-gray-200 rounded-lg text-gray-700 text-xs font-medium hover:border-orange-500 hover:text-orange-500 transition">
+          <i class="bi bi-arrow-left-right text-gray-700"></i>
           <span>{{ __('Compare') }}</span>
         </a>
       </div>
@@ -190,6 +178,26 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    // Nav count badges
+    function updateNavBadges() {
+      const favBadge = document.getElementById('favorites-count');
+      const compBadge = document.getElementById('compares-count');
+      if (favBadge) {
+        try {
+          const favs = JSON.parse(localStorage.getItem('favorites')) || [];
+          favBadge.textContent = favs.length;
+        } catch(e) {}
+      }
+      if (compBadge) {
+        try {
+          const comps = JSON.parse(localStorage.getItem('compareList')) || [];
+          compBadge.textContent = comps.length;
+        } catch(e) {}
+      }
+    }
+    updateNavBadges();
+    window.addEventListener('storage', updateNavBadges);
+
     // User dropdown
     const userBtn = document.getElementById('navUserMenuBtn');
     const userDropdown = document.getElementById('navUserDropdown');

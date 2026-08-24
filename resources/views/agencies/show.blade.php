@@ -3,17 +3,15 @@
 @section('title', ($agency->name ?? '') . ' - Daşınmaz Əmlak Agentliyi - Metraj.az')
 
 @section('content')
-<div class="w-full pt-4 pb-16">
+<div class="w-full pb-16">
     @include('components.breadcrumb', ['items' => $breadcrumbs ?? []])
 
     {{-- ==================== AGENCY PROFILE CARD ==================== --}}
     <div class="bg-white rounded-3xl shadow-sm border border-gray-100 mt-4 sm:mt-6 overflow-hidden">
         {{-- Banner strip --}}
-        <div class="h-28 sm:h-36 relative overflow-hidden @if(!($agency->banner || $agency->banner_url)) bg-gradient-to-r from-[var(--primary)] via-orange-400 to-orange-300 @endif">
+        <div class="h-28 sm:h-36 relative overflow-hidden @if(!($agency->banner || $agency->banner_url)) bg-[var(--primary)] @endif">
             @if($agency->banner || $agency->banner_url)
                 <img src="{{ $agency->banner ? (str_starts_with($agency->banner, 'http') ? $agency->banner : asset('storage/'.$agency->banner)) : $agency->banner_url }}" alt="{{ $agency->name }} banner" class="w-full h-full object-cover">
-            @else
-                <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 50%, white 1.5px, transparent 1.5px); background-size: 22px 22px;"></div>
             @endif
         </div>
 
@@ -53,7 +51,7 @@
                 <div class="flex flex-wrap items-center gap-2 sm:gap-3 pb-1">
                     @if($agency->phone)
                         <a href="tel:{{ $agency->phone }}"
-                           class="flex items-center gap-2 px-5 py-2.5 sm:py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-2xl shadow-md transition duration-200 text-sm sm:text-base">
+                           class="flex items-center gap-2 px-5 py-2.5 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-md transition duration-200 text-sm sm:text-base">
                             <i class="bi bi-telephone-fill text-sm"></i>
                             {{ $agency->phone }}
                         </a>

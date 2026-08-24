@@ -77,11 +77,9 @@
 
     /* ===== UPDATE DOM ===== */
     function updateListings(data) {
-        const premiumCard = document.getElementById('premiumCard');
         const propertyContainer = document.getElementById('propertyContainer');
         const paginationContainer = document.getElementById('paginationContainer');
 
-        if (premiumCard) premiumCard.innerHTML = data.premium;
         if (propertyContainer) propertyContainer.innerHTML = data.properties;
         if (paginationContainer) paginationContainer.innerHTML = data.pagination;
 
@@ -344,7 +342,6 @@
         const gridBtn = document.getElementById('gridViewBtn');
         const listBtn = document.getElementById('listViewBtn');
         const propertyContainer = document.getElementById('propertyContainer');
-        const premiumCard = document.getElementById('premiumCard');
 
         if (!gridBtn || !listBtn) return;
 
@@ -354,16 +351,14 @@
         ];
 
         function setView(view) {
-            [propertyContainer, premiumCard].forEach(function (container) {
-                if (!container) return;
-                if (view === 'list') {
-                    container.classList.remove.apply(container.classList, gridClasses);
-                    container.classList.add('list-view');
-                } else {
-                    container.classList.remove('list-view');
-                    container.classList.add.apply(container.classList, gridClasses);
-                }
-            });
+            if (!propertyContainer) return;
+            if (view === 'list') {
+                propertyContainer.classList.remove.apply(propertyContainer.classList, gridClasses);
+                propertyContainer.classList.add('list-view');
+            } else {
+                propertyContainer.classList.remove('list-view');
+                propertyContainer.classList.add.apply(propertyContainer.classList, gridClasses);
+            }
 
             if (view === 'list') {
                 gridBtn.classList.remove('bg-[var(--primary)]', 'text-white');
@@ -854,31 +849,9 @@
         });
     }
 
-    /* ===== HOVER IMAGE SWITCH ===== */
+    /* ===== HOVER IMAGE SWITCH (Disabled auto-rotation on hover) ===== */
     function initHoverImages() {
-        document.querySelectorAll('[data-images]').forEach(function (container) {
-            const images = JSON.parse(container.getAttribute('data-images'));
-            if (images.length < 2) return;
-
-            let hoverInterval = null;
-
-            container.addEventListener('mouseenter', function () {
-                let current = 0;
-                hoverInterval = setInterval(function () {
-                    current = (current + 1) % images.length;
-                    showImage(container, images, current);
-                }, 1500);
-            });
-
-            container.addEventListener('mouseleave', function () {
-                if (hoverInterval) {
-                    clearInterval(hoverInterval);
-                    hoverInterval = null;
-                }
-                container.setAttribute('data-current', '0');
-                showImage(container, images, 0);
-            });
-        });
+        // Şəkillər hover zamanı avtomatik çevrilmir, yalnız ox düymələrinə basıldıqda dəyişir
     }
 
     /* ===== PAGINATION CLICK DELEGATION ===== */

@@ -1,0 +1,380 @@
+@extends('layouts.app')
+
+@section('title', __('Qeydiyyat - Metraj.az'))
+
+@section('content')
+<div class="min-h-[calc(100vh-140px)] flex items-center justify-center py-8 sm:py-12 px-4">
+    <div class="w-full max-w-xl">
+        
+        {{-- Register Card --}}
+        <div class="bg-white rounded-3xl p-6 sm:p-10 border border-gray-100 shadow-xl space-y-6">
+            
+            {{-- Header & Logo --}}
+            <div class="text-center space-y-2">
+                <a href="/" class="inline-block">
+                    <img src="/images/metrajlogo1.png" alt="Metraj.az" class="h-10 mx-auto object-contain">
+                </a>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+                    {{ __('Yeni Hesab Yarat') }}
+                </h1>
+                <p class="text-xs sm:text-sm text-gray-500">
+                    {{ __('Metraj.az platformasında fəaliyyət növünüzə uyğun profil seçin.') }}
+                </p>
+            </div>
+
+            {{-- Role Switcher Tabs (3 columns) --}}
+            <div class="grid grid-cols-3 gap-2 p-1.5 bg-gray-100/80 rounded-2xl">
+                <button type="button" class="role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-extrabold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 bg-white text-orange-600 shadow-sm" data-role="user">
+                    <i class="bi bi-person text-base"></i>
+                    <span>{{ __('Fərdi İstifadəçi') }}</span>
+                </button>
+                <button type="button" class="role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-extrabold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 text-gray-600 hover:text-gray-900" data-role="agent">
+                    <i class="bi bi-person-badge text-base"></i>
+                    <span>{{ __('Rieltor (Agent)') }}</span>
+                </button>
+                <button type="button" class="role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-extrabold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 text-gray-600 hover:text-gray-900" data-role="agency">
+                    <i class="bi bi-building text-base"></i>
+                    <span>{{ __('Agentlik') }}</span>
+                </button>
+            </div>
+
+            {{-- Dynamic Role Alert Banner --}}
+            <div id="roleInfoBanner" class="p-3.5 rounded-2xl bg-orange-50/80 border border-orange-100/80 flex items-start gap-3 text-xs text-orange-950">
+                <i class="bi bi-info-circle-fill text-orange-500 text-base shrink-0 mt-0.5"></i>
+                <div id="roleInfoText" class="leading-relaxed">
+                    {{ __('Fərdi istifadəçi olaraq elanlar yerləşdirə, axtarışları və bəyəndiyiniz mənzilləri sevimlilər siyahısına əlavə edə bilərsiniz.') }}
+                </div>
+            </div>
+
+            {{-- Registration Form --}}
+            <form id="registerForm" action="{{ route('register.post') }}" method="POST" class="space-y-4">
+                @csrf
+
+                {{-- Hidden Role Input --}}
+                <input type="hidden" name="role_type" id="role_type" value="user">
+
+                {{-- ==================== AGENCY SPECIFIC FIELD ==================== --}}
+                <div id="field_agency_name" class="space-y-1.5 hidden">
+                    <label for="agency_name" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        {{ __('Agentliyin (Şirkətin) Adı') }} <span class="text-rose-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <i class="bi bi-building absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
+                        <input type="text" id="agency_name" name="agency_name" placeholder="{{ __('Məs: Fox Real Estate MMC') }}"
+                               class="w-full pl-11 pr-4 py-3.5 sm:py-4 bg-gray-50/80 border border-gray-200 rounded-2xl text-sm sm:text-base text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-inner">
+                    </div>
+                    <span id="agency_name_error" class="text-rose-500 text-xs font-semibold hidden"></span>
+                </div>
+
+                {{-- Full Name Input (Applies to all) --}}
+                <div class="space-y-1.5">
+                    <label for="reg_name" id="label_name" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        {{ __('Ad və Soyadınız') }} <span class="text-rose-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <i class="bi bi-person absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
+                        <input type="text" id="reg_name" name="name" required placeholder="{{ __('Məs: Əli Əliyev') }}"
+                               class="w-full pl-11 pr-4 py-3.5 sm:py-4 bg-gray-50/80 border border-gray-200 rounded-2xl text-sm sm:text-base text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-inner">
+                    </div>
+                    <span id="name_error" class="text-rose-500 text-xs font-semibold hidden"></span>
+                </div>
+
+                {{-- Email Input --}}
+                <div class="space-y-1.5">
+                    <label for="reg_email" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        {{ __('E-poçt ünvanı') }} <span class="text-rose-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <i class="bi bi-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
+                        <input type="email" id="reg_email" name="email" required placeholder="nümunə@metraj.az"
+                               class="w-full pl-11 pr-4 py-3.5 sm:py-4 bg-gray-50/80 border border-gray-200 rounded-2xl text-sm sm:text-base text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-inner">
+                    </div>
+                    <span id="email_error" class="text-rose-500 text-xs font-semibold hidden"></span>
+                </div>
+
+                {{-- ==================== PHONE & WHATSAPP (Agent & Agency) ==================== --}}
+                <div id="contactFields" class="grid grid-cols-1 sm:grid-cols-2 gap-4 hidden">
+                    <div class="space-y-1.5">
+                        <label for="reg_phone" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                            {{ __('Telefon nömrəsi') }} <span class="text-rose-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <i class="bi bi-telephone absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
+                            <input type="tel" id="reg_phone" name="phone" placeholder="050 123 45 67"
+                                   class="w-full pl-11 pr-4 py-3.5 sm:py-4 bg-gray-50/80 border border-gray-200 rounded-2xl text-sm sm:text-base text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-inner">
+                        </div>
+                        <span id="phone_error" class="text-rose-500 text-xs font-semibold hidden"></span>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label for="reg_whatsapp" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                            {{ __('WhatsApp') }} <span class="text-gray-400 font-normal">({{ __('opsional') }})</span>
+                        </label>
+                        <div class="relative">
+                            <i class="bi bi-whatsapp absolute left-4 top-1/2 -translate-y-1/2 text-emerald-600 text-base"></i>
+                            <input type="tel" id="reg_whatsapp" name="whatsapp" placeholder="050 123 45 67"
+                                   class="w-full pl-11 pr-4 py-3.5 sm:py-4 bg-gray-50/80 border border-gray-200 rounded-2xl text-sm sm:text-base text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-inner">
+                        </div>
+                    </div>
+                </div>
+
+                {{-- ==================== AGENT: AGENCY SELECTION ==================== --}}
+                <div id="field_agency_select" class="space-y-1.5 hidden">
+                    <label for="reg_agency_id" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        {{ __('Aid Olduğunuz Agentlik') }} <span class="text-gray-400 font-normal">({{ __('opsional') }})</span>
+                    </label>
+                    <div class="relative">
+                        <i class="bi bi-diagram-3 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
+                        <select id="reg_agency_id" name="agency_id"
+                                class="w-full pl-11 pr-8 py-3.5 sm:py-4 bg-gray-50/80 border border-gray-200 rounded-2xl text-sm sm:text-base text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-inner appearance-none">
+                            <option value="">{{ __('Müstəqil Rieltor (Heç bir agentliyə bağlı deyil)') }}</option>
+                            @foreach($agencies as $agency)
+                                <option value="{{ $agency->id }}">{{ $agency->name }}</option>
+                            @endforeach
+                        </select>
+                        <i class="bi bi-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                    </div>
+                </div>
+
+                {{-- ==================== AGENCY: ADDRESS ==================== --}}
+                <div id="field_agency_address" class="space-y-1.5 hidden">
+                    <label for="reg_address" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        {{ __('Ofis Ünvanı') }} <span class="text-gray-400 font-normal">({{ __('opsional') }})</span>
+                    </label>
+                    <div class="relative">
+                        <i class="bi bi-geo-alt absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
+                        <input type="text" id="reg_address" name="address" placeholder="{{ __('Məs: Bakı ş., Nizami küç. 45') }}"
+                               class="w-full pl-11 pr-4 py-3.5 sm:py-4 bg-gray-50/80 border border-gray-200 rounded-2xl text-sm sm:text-base text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-inner">
+                    </div>
+                </div>
+
+                {{-- Password & Password Confirmation --}}
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="space-y-1.5">
+                        <label for="reg_password" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                            {{ __('Şifrə') }} <span class="text-rose-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <i class="bi bi-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
+                            <input type="password" id="reg_password" name="password" required placeholder="••••••••"
+                                   class="w-full pl-11 pr-11 py-3.5 sm:py-4 bg-gray-50/80 border border-gray-200 rounded-2xl text-sm sm:text-base text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-inner">
+                            <button type="button" class="toggle-pass-btn absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition" data-target="reg_password">
+                                <i class="bi bi-eye text-base"></i>
+                            </button>
+                        </div>
+                        <span id="password_error" class="text-rose-500 text-xs font-semibold hidden"></span>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label for="reg_password_confirmation" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                            {{ __('Şifrənin Təkrarı') }} <span class="text-rose-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <i class="bi bi-lock-fill absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
+                            <input type="password" id="reg_password_confirmation" name="password_confirmation" required placeholder="••••••••"
+                                   class="w-full pl-11 pr-11 py-3.5 sm:py-4 bg-gray-50/80 border border-gray-200 rounded-2xl text-sm sm:text-base text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-inner">
+                            <button type="button" class="toggle-pass-btn absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition" data-target="reg_password_confirmation">
+                                <i class="bi bi-eye text-base"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Terms & Agreement --}}
+                <p class="text-[11px] text-gray-500 leading-relaxed pt-1">
+                    {{ __('Qeydiyyatdan keçməklə siz Metraj.az') }}
+                    <a href="/about-us" class="text-orange-600 hover:underline font-semibold">{{ __('İstifadəçi Qaydaları') }}</a>
+                    {{ __('və') }}
+                    <a href="/about-us" class="text-orange-600 hover:underline font-semibold">{{ __('Məxfilik Siyasətini') }}</a>
+                    {{ __('qəbul etmiş olursunuz.') }}
+                </p>
+
+                {{-- Submit Button --}}
+                <button type="submit" id="registerSubmitBtn"
+                        class="w-full py-4 bg-orange-500 hover:bg-orange-600 text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-md transition duration-200 transform active:scale-98 flex items-center justify-center gap-2 mt-2">
+                    <span id="registerBtnText">{{ __('Qeydiyyatı Tamamla') }}</span>
+                    <i class="bi bi-arrow-right text-sm"></i>
+                </button>
+            </form>
+
+            {{-- Footer Switch to Login --}}
+            <div class="pt-4 border-t border-gray-100 text-center text-xs sm:text-sm text-gray-600 space-y-2">
+                <p>
+                    {{ __('Artıq hesabınız var?') }}
+                    <a href="{{ route('login') }}" class="font-bold text-orange-600 hover:text-orange-700 hover:underline">
+                        {{ __('Daxil olun') }}
+                    </a>
+                </p>
+                <div>
+                    <a href="/" class="text-xs text-gray-400 hover:text-gray-600 transition inline-flex items-center gap-1">
+                        <i class="bi bi-house-door"></i> {{ __('Ana səhifəyə qayıt') }}
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const roleTabs = document.querySelectorAll('.role-tab-btn');
+    const roleTypeInput = document.getElementById('role_type');
+    const roleInfoText = document.getElementById('roleInfoText');
+    const labelName = document.getElementById('label_name');
+    
+    // Dynamic field wrappers
+    const fieldAgencyName = document.getElementById('field_agency_name');
+    const inputAgencyName = document.getElementById('agency_name');
+    const contactFields = document.getElementById('contactFields');
+    const inputPhone = document.getElementById('reg_phone');
+    const fieldAgencySelect = document.getElementById('field_agency_select');
+    const fieldAgencyAddress = document.getElementById('field_agency_address');
+    const registerBtnText = document.getElementById('registerBtnText');
+
+    const form = document.getElementById('registerForm');
+    const submitBtn = document.getElementById('registerSubmitBtn');
+
+    // Role switcher logic
+    roleTabs.forEach(btn => {
+        btn.addEventListener('click', function () {
+            const role = this.dataset.role;
+            roleTypeInput.value = role;
+
+            // Update Tab UI
+            roleTabs.forEach(b => {
+                b.className = 'role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-extrabold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 text-gray-600 hover:text-gray-900';
+            });
+            this.className = 'role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-extrabold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 bg-white text-orange-600 shadow-sm';
+
+            // Show/Hide Role-specific Fields
+            if (role === 'user') {
+                fieldAgencyName.classList.add('hidden');
+                inputAgencyName.required = false;
+
+                contactFields.classList.add('hidden');
+                inputPhone.required = false;
+
+                fieldAgencySelect.classList.add('hidden');
+                fieldAgencyAddress.classList.add('hidden');
+
+                labelName.innerHTML = '{{ __("Ad və Soyadınız") }} <span class="text-rose-500">*</span>';
+                roleInfoText.innerHTML = '{{ __("Fərdi istifadəçi olaraq elanlar yerləşdirə, axtarışları və bəyəndiyiniz mənzilləri sevimlilər siyahısına əlavə edə bilərsiniz.") }}';
+                registerBtnText.textContent = '{{ __("İstifadəçi Kimi Qeydiyyatdan Keç") }}';
+            } else if (role === 'agent') {
+                fieldAgencyName.classList.add('hidden');
+                inputAgencyName.required = false;
+
+                contactFields.classList.remove('hidden');
+                inputPhone.required = true;
+
+                fieldAgencySelect.classList.remove('hidden');
+                fieldAgencyAddress.classList.add('hidden');
+
+                labelName.innerHTML = '{{ __("Rieltorun Ad və Soyadı") }} <span class="text-rose-500">*</span>';
+                roleInfoText.innerHTML = '<strong>{{ __("Rieltor Hesabı:") }}</strong> {{ __("Qeydiyyatdan dərhal sonra Rieltor İdarəetmə Panelinə yönləndiriləcəksiniz və elanlarınızı vahid paneldən idarə edə biləcəksiniz.") }}';
+                registerBtnText.textContent = '{{ __("Rieltor Kimi Qeydiyyatdan Keç") }}';
+            } else if (role === 'agency') {
+                fieldAgencyName.classList.remove('hidden');
+                inputAgencyName.required = true;
+
+                contactFields.classList.remove('hidden');
+                inputPhone.required = true;
+
+                fieldAgencySelect.classList.add('hidden');
+                fieldAgencyAddress.classList.remove('hidden');
+
+                labelName.innerHTML = '{{ __("Məsul Şəxsin Ad və Soyadı") }} <span class="text-rose-500">*</span>';
+                roleInfoText.innerHTML = '<strong>{{ __("Agentlik Hesabı:") }}</strong> {{ __("Qeydiyyatdan dərhal sonra Agentlik İdarəetmə Panelinə yönləndiriləcəksiniz, şirkət profilinizi və agentlərinizi idarə edə biləcəksiniz.") }}';
+                registerBtnText.textContent = '{{ __("Agentlik Kimi Qeydiyyatdan Keç") }}';
+            }
+        });
+    });
+
+    // Password Visibility Toggle
+    document.querySelectorAll('.toggle-pass-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const targetId = this.dataset.target;
+            const input = document.getElementById(targetId);
+            const icon = this.querySelector('i');
+            if (input) {
+                const isPass = input.type === 'password';
+                input.type = isPass ? 'text' : 'password';
+                icon.className = isPass ? 'bi bi-eye-slash text-base' : 'bi bi-eye text-base';
+            }
+        });
+    });
+
+    // AJAX Form Submission
+    if (form) {
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            // Clear previous errors
+            document.querySelectorAll('[id$="_error"]').forEach(el => {
+                el.textContent = '';
+                el.classList.add('hidden');
+            });
+
+            const originalBtnHtml = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span> <span>' + '{{ __("Qeydiyyat icra edilir...") }}' + '</span>';
+
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    if (window.Metraj && window.Metraj.toast) {
+                        window.Metraj.toast(data.message || '{{ __("Qeydiyyat tamamlandı!") }}', 'success');
+                    }
+                    submitBtn.innerHTML = '<i class="bi bi-check2-circle text-lg"></i> <span>' + '{{ __("Uğurla tamamlandı!") }}' + '</span>';
+                    
+                    setTimeout(() => {
+                        window.location.href = data.redirect || '/';
+                    }, 800);
+                } else {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnHtml;
+
+                    const msg = data.message || '{{ __("Məlumatları düzgün doldurduğunuzdan əmin olun.") }}';
+                    if (window.Metraj && window.Metraj.toast) {
+                        window.Metraj.toast(msg, 'error');
+                    }
+
+                    if (data.errors) {
+                        Object.keys(data.errors).forEach(key => {
+                            const errSpan = document.getElementById(key + '_error');
+                            if (errSpan) {
+                                errSpan.textContent = data.errors[key][0];
+                                errSpan.classList.remove('hidden');
+                            }
+                        });
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnHtml;
+                if (window.Metraj && window.Metraj.toast) {
+                    window.Metraj.toast('{{ __("Şəbəkə xətası baş verdi. Yenidən cəhd edin.") }}', 'error');
+                }
+            }
+        });
+    }
+});
+</script>
+@endpush
+@endsection

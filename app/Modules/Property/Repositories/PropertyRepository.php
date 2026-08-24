@@ -8,7 +8,8 @@ use App\Modules\Location\Enums\FilterKey;
 use App\Modules\Property\Enums\PropertyStatus;
 use App\Modules\Property\Contracts\PropertyRepositoryInterface;
 use App\Modules\Property\Models\Property;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 
 class PropertyRepository implements PropertyRepositoryInterface
@@ -117,10 +118,70 @@ class PropertyRepository implements PropertyRepositoryInterface
         return (bool) $this->model->where('id', $id)->delete();
     }
 
-    public function paginate(PropertyFilterDTO $filter, int $perPage = 15): LengthAwarePaginator
+    public function paginate(PropertyFilterDTO $filter, int $perPage = 30): LengthAwarePaginator
     {
-        $query = $this->model->query()->with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images']);
+        $sortBy = in_array($filter->sortBy, ['price', 'created_at', 'views_count', 'area']) 
+            ? $filter->sortBy 
+            : 'created_at';
 
+        $baseQuery = $this->model->query()->with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images']);
+        $this->applyFilterConditions($baseQuery, $filter);
+
+        $premiumQuery = (clone $baseQuery)->where(function ($q) {
+            $q->where('is_vip', true)
+              ->orWhere('is_featured', true);
+        });
+
+        $regularQuery = (clone $baseQuery)->where(function ($q) {
+            $q->where(function ($sq) {
+                $sq->where('is_vip', false)->orWhereNull('is_vip');
+            })->where(function ($sq) {
+                $sq->where('is_featured', false)->orWhereNull('is_featured');
+            });
+        });
+
+        $totalPremium = (clone $premiumQuery)->count();
+        $totalRegular = (clone $regularQuery)->count();
+        $total = $totalPremium + $totalRegular;
+
+        $currentPage = Paginator::resolveCurrentPage() ?: 1;
+
+        $premPrev = min($totalPremium, ($currentPage - 1) * 10);
+        $regPrev = max(0, min($totalRegular, ($currentPage - 1) * $perPage - $premPrev));
+        $premiumCount = max(0, min(10, $totalPremium - ($currentPage - 1) * 10));
+        $regularCount = max(0, min($perPage - $premiumCount, $totalRegular - $regPrev));
+
+        $premiumItems = $premiumCount > 0
+            ? (clone $premiumQuery)
+                ->orderBy('is_vip', 'desc')
+                ->orderBy('is_featured', 'desc')
+                ->orderBy($sortBy, $filter->sortDirection)
+                ->skip(($currentPage - 1) * 10)
+                ->take($premiumCount)
+                ->get()
+            : collect();
+
+        $regularItems = $regularCount > 0
+            ? (clone $regularQuery)
+                ->orderBy($sortBy, $filter->sortDirection)
+                ->skip($regPrev)
+                ->take($regularCount)
+                ->get()
+            : collect();
+
+        $items = $premiumItems->concat($regularItems);
+
+        return new LengthAwarePaginator(
+            $items,
+            $total,
+            $perPage,
+            $currentPage,
+            ['path' => Paginator::resolveCurrentPath(), 'pageName' => 'page']
+        );
+    }
+
+    protected function applyFilterConditions($query, PropertyFilterDTO $filter): void
+    {
         if ($filter->status) {
             $query->where('status', $filter->status);
         }
@@ -199,6 +260,14 @@ class PropertyRepository implements PropertyRepositoryInterface
             $query->where('area', '<=', $filter->maxArea);
         }
 
+        if ($filter->minLandArea !== null) {
+            $query->where('land_area', '>=', $filter->minLandArea);
+        }
+
+        if ($filter->maxLandArea !== null) {
+            $query->where('land_area', '<=', $filter->maxLandArea);
+        }
+
         if ($filter->rooms !== null) {
             if ($filter->rooms >= 5) {
                 $query->where('rooms', '>=', 5);
@@ -262,14 +331,6 @@ class PropertyRepository implements PropertyRepositoryInterface
         if ($filter->isVip !== null) {
             $query->where('is_vip', $filter->isVip);
         }
-
-        $sortBy = in_array($filter->sortBy, ['price', 'created_at', 'views_count', 'area']) 
-            ? $filter->sortBy 
-            : 'created_at';
-
-        $query->orderBy($sortBy, $filter->sortDirection);
-
-        return $query->paginate($perPage);
     }
 
     public function similar(Property $property, int $limit = 3): Collection
