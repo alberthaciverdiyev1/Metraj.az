@@ -36,73 +36,50 @@
     <div onclick="window.location.href='{{ route('requests.show', $req->slug) }}'"
          class="cursor-pointer border border-[color:var(--border-color)] rounded-2xl overflow-hidden flex flex-col h-full group transition-all duration-300 relative bg-white hover:shadow-md">
 
-        <!-- Top Image Banner ONLY if user uploaded real image -->
-        @if($hasRealImage)
-            <div class="relative overflow-hidden aspect-[4/3] sm:aspect-[5/3] md:aspect-[3/2] lg:aspect-[16/10] bg-gray-100">
+        <!-- Top Image Banner (Real Image or Metraj Logo) -->
+        <div class="relative overflow-hidden aspect-[4/3] sm:aspect-[5/3] md:aspect-[3/2] lg:aspect-[16/10] bg-gray-50 flex items-center justify-center border-b border-gray-100">
+            @if($hasRealImage)
                 <img src="{{ $req->first_image_url }}"
                      alt="{{ $req->title }}"
                      class="card-image w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                      loading="lazy" />
+            @else
+                <div class="flex flex-col items-center justify-center select-none py-6 px-4">
+                    <img src="/images/metrajlogo1.png" alt="Metraj.az" class="h-10 sm:h-12 w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
+                    <span class="text-[11px] font-bold text-gray-500 tracking-wider mt-1.5">Metraj.az</span>
+                </div>
+            @endif
 
-                <!-- Type Badge (Top Left) -->
-                <span class="absolute top-2.5 left-2.5 {{ $typeBadgeColor }} text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-xs flex items-center gap-1 z-10">
-                    @if($isBuy)
-                        <i class="fa-solid fa-house-circle-check text-[11px]"></i>
-                    @elseif($isRent)
-                        <i class="fa-solid fa-house-circle-xmark text-[11px]"></i>
-                    @elseif($isDaily)
-                        <i class="fa-solid fa-calendar-day text-[11px]"></i>
-                    @else
-                        <i class="fa-solid fa-people-roof text-[11px]"></i>
-                    @endif
-                    <span>{{ $typeLabel }}</span>
-                </span>
-
-                <!-- Property Type / Gender Badge (Top Right) -->
-                @if($req->property_type)
-                    <span class="absolute top-2.5 right-2.5 bg-white/95 text-gray-800 text-xs font-semibold px-2.5 py-1 rounded-full shadow-xs z-10">
-                        {{ $req->property_type }}
-                    </span>
-                @elseif($req->gender_preference && $req->gender_preference !== 'any')
-                    <span class="absolute top-2.5 right-2.5 bg-white/95 text-purple-700 text-xs font-bold px-2.5 py-1 rounded-full shadow-xs z-10">
-                        {{ $req->gender_preference === 'female' ? __('Yalnız Xanım') : __('Yalnız Bəy') }}
-                    </span>
+            <!-- Type Badge (Top Left) -->
+            <span class="absolute top-2.5 left-2.5 {{ $typeBadgeColor }} text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-xs flex items-center gap-1 z-10">
+                @if($isBuy)
+                    <i class="fa-solid fa-house-circle-check text-[11px]"></i>
+                @elseif($isRent)
+                    <i class="fa-solid fa-house-circle-xmark text-[11px]"></i>
+                @elseif($isDaily)
+                    <i class="fa-solid fa-calendar-day text-[11px]"></i>
+                @else
+                    <i class="fa-solid fa-people-roof text-[11px]"></i>
                 @endif
-            </div>
-        @endif
+                <span>{{ $typeLabel }}</span>
+            </span>
+
+            <!-- Property Type / Gender Badge (Top Right) -->
+            @if($req->property_type)
+                <span class="absolute top-2.5 right-2.5 bg-white/95 text-gray-800 text-xs font-semibold px-2.5 py-1 rounded-full shadow-xs z-10">
+                    {{ $req->property_type }}
+                </span>
+            @elseif($req->gender_preference && $req->gender_preference !== 'any')
+                <span class="absolute top-2.5 right-2.5 bg-white/95 text-purple-700 text-xs font-bold px-2.5 py-1 rounded-full shadow-xs z-10">
+                    {{ $req->gender_preference === 'female' ? __('Yalnız Xanım') : __('Yalnız Bəy') }}
+                </span>
+            @endif
+        </div>
 
         <!-- Card Body -->
         <div class="p-3 sm:p-4 flex flex-col flex-1">
             <div class="flex flex-col gap-2 min-h-[100px] sm:min-h-[120px]">
                 
-                <!-- If NO image, render top badges directly inside header -->
-                @if(!$hasRealImage)
-                    <div class="flex items-center justify-between gap-2 mb-1">
-                        <span class="{{ $typeBadgeColor }} text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-2xs flex items-center gap-1">
-                            @if($isBuy)
-                                <i class="fa-solid fa-house-circle-check text-[11px]"></i>
-                            @elseif($isRent)
-                                <i class="fa-solid fa-house-circle-xmark text-[11px]"></i>
-                            @elseif($isDaily)
-                                <i class="fa-solid fa-calendar-day text-[11px]"></i>
-                            @else
-                                <i class="fa-solid fa-people-roof text-[11px]"></i>
-                            @endif
-                            <span>{{ $typeLabel }}</span>
-                        </span>
-
-                        @if($req->property_type)
-                            <span class="bg-gray-100 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">
-                                {{ $req->property_type }}
-                            </span>
-                        @elseif($req->gender_preference && $req->gender_preference !== 'any')
-                            <span class="bg-purple-50 text-purple-700 text-xs font-bold px-2.5 py-0.5 rounded-full border border-purple-200">
-                                {{ $req->gender_preference === 'female' ? __('Yalnız Xanım') : __('Yalnız Bəy') }}
-                            </span>
-                        @endif
-                    </div>
-                @endif
-
                 <!-- Title -->
                 <h3 class="font-semibold text-[color:var(--text-color)] text-sm sm:text-base md:text-md hover:text-[color:var(--primary)] line-clamp-1 group-hover:line-clamp-none min-h-[20px] sm:min-h-[28px] overflow-hidden text-ellipsis">
                     <span>{{ $req->title }}</span>
