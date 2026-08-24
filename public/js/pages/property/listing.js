@@ -74,6 +74,7 @@
             showLoading(false);
         });
     }
+    window.fetchListings = fetchListings;
 
     /* ===== UPDATE DOM ===== */
     function updateListings(data) {
