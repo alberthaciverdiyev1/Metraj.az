@@ -1,114 +1,86 @@
-document.addEventListener("DOMContentLoaded", function () {
-    console.log("Login page initialized");
+/* Login səhifəsi — şifrə göstər/gizlə & AJAX giriş (login.blade.php-dən çıxarılıb) */
+document.addEventListener('DOMContentLoaded', function () {
+    const i18n = window.loginConfig?.i18n || {};
 
-    const loginBtn = document.getElementById('login-btn');
-    const loginForm = document.getElementById('login-form');
-    if (!loginForm) return;
+    const loginForm = document.getElementById('loginForm');
+    const submitBtn = document.getElementById('loginSubmitBtn');
+    const passwordInput = document.getElementById('login_password');
+    const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+    const togglePasswordIcon = document.getElementById('togglePasswordIcon');
+    const emailError = document.getElementById('email_error');
+    const passwordError = document.getElementById('password_error');
 
-    const emailInput = loginForm.querySelector('input[name="email"]');
-    const passwordInput = loginForm.querySelector('input[name="password"]');
-
-    // inputların altına error span əlavə edək (əgər yoxdursa)
-    let emailError = document.getElementById("email-error");
-    if (!emailError) {
-        emailError = document.createElement("span");
-        emailError.id = "email-error";
-        emailError.className = "text-red-500 text-sm block mt-1";
-        emailInput.insertAdjacentElement("afterend", emailError);
+    // Toggle Password Visibility
+    if (togglePasswordBtn && passwordInput && togglePasswordIcon) {
+        togglePasswordBtn.addEventListener('click', function () {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            togglePasswordIcon.className = isPassword ? 'bi bi-eye-slash text-lg' : 'bi bi-eye text-lg';
+        });
     }
 
-    let passwordError = document.getElementById("password-error");
-    if (!passwordError) {
-        passwordError = document.createElement("span");
-        passwordError.id = "password-error";
-        passwordError.className = "text-red-500 text-sm block mt-1";
-        passwordInput.insertAdjacentElement("afterend", passwordError);
-    }
-
-    // Toast göstərəcək funksiya
-    function showToast(message, type = "success") {
-        const toast = document.createElement("div");
-        toast.className = `fixed top-5 right-5 px-4 py-2 rounded-xl shadow-lg text-white z-[9999] transition-all
-            ${type === "success" ? "bg-green-500" : "bg-red-500"}`;
-        toast.innerText = message;
-        document.body.appendChild(toast);
-
-        setTimeout(() => {
-            toast.remove();
-        }, 3000);
-    }
-
+    // AJAX Login Handler
     if (loginForm) {
         loginForm.addEventListener('submit', async function (e) {
             e.preventDefault();
 
-            // error mesajlarını sıfırla
-            emailError.textContent = "";
-            passwordError.textContent = "";
+            // Clear errors
+            if (emailError) { emailError.textContent = ''; emailError.classList.add('hidden'); }
+            if (passwordError) { passwordError.textContent = ''; passwordError.classList.add('hidden'); }
 
-            const data = {
-                email: emailInput.value.trim(),
-                password: passwordInput.value
-            };
+            const originalBtnHtml = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span> <span>' + (i18n.checking || 'Yoxlanılır...') + '</span>';
 
-            let valid = true;
-
-            if (!data.email) {
-                emailError.textContent = "Email boş ola bilməz";
-                valid = false;
-            }
-
-            if (!data.password) {
-                passwordError.textContent = "Şifrə boş ola bilməz";
-                valid = false;
-            } else if (data.password.length < 6) {
-                passwordError.textContent = "Şifrə minimum 6 simvol olmalıdır";
-                valid = false;
-            }
-
-            if (!valid) return; // səhv varsa POST getmir
-
-            if (loginBtn) {
-                loginBtn.disabled = true;
-                loginBtn.style.opacity = '0.6';
-            }
+            const formData = new FormData(loginForm);
 
             try {
-                const { ok, status, data: result } = await window.Metraj.post('/login', data);
+                const response = await fetch(loginForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
 
-                if (ok) {
-                    console.log("Login successful:", result);
-                    showToast(result.message || "Uğurla daxil oldunuz ✅", "success");
+                const data = await response.json();
 
-                    // Backenddən gələn rol və token (əgər varsa)
-                    localStorage.setItem("userRole", result.role || "user");
-                    localStorage.setItem("isLoggedIn", "true");
+                if (response.ok && data.success) {
+                    if (window.Metraj && window.Metraj.toast) {
+                        window.Metraj.toast(data.message || i18n.success || 'Uğurla daxil oldunuz!', 'success');
+                    }
+                    submitBtn.innerHTML = '<i class="bi bi-check2-circle text-lg"></i> <span>' + (i18n.loggedIn || 'Daxil olundu!') + '</span>';
 
                     setTimeout(() => {
-                        window.location.href = result.redirect || '/';
-                    }, 1500);
+                        window.location.href = data.redirect || '/';
+                    }, 800);
                 } else {
-                    console.log("Login error:", result);
-                    showToast(result.message || "Email və ya şifrə səhvdir ❌", "error");
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnHtml;
 
-                    // serverdən field errors gəlirsə input altına yaz
-                    if (result.errors) {
-                        if (result.errors.email) {
-                            emailError.textContent = result.errors.email.join(", ");
+                    const msg = data.message || i18n.invalid || 'E-poçt və ya şifrə yanlışdır.';
+                    if (window.Metraj && window.Metraj.toast) {
+                        window.Metraj.toast(msg, 'error');
+                    }
+
+                    if (data.errors) {
+                        if (data.errors.email && emailError) {
+                            emailError.textContent = data.errors.email[0];
+                            emailError.classList.remove('hidden');
                         }
-                        if (result.errors.password) {
-                            passwordError.textContent = result.errors.password.join(", ");
+                        if (data.errors.password && passwordError) {
+                            passwordError.textContent = data.errors.password[0];
+                            passwordError.classList.remove('hidden');
                         }
                     }
                 }
-
-            } catch (error) {
-                console.error('Network error:', error);
-                showToast("Şəbəkə xətası baş verdi. Yenidən cəhd edin ❌", "error");
-            } finally {
-                if (loginBtn) {
-                    loginBtn.disabled = false;
-                    loginBtn.style.opacity = '1';
+            } catch (err) {
+                console.error(err);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnHtml;
+                if (window.Metraj && window.Metraj.toast) {
+                    window.Metraj.toast(i18n.network || 'Şəbəkə xətası baş verdi. Yenidən cəhd edin.', 'error');
                 }
             }
         });

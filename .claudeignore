@@ -42,5 +42,12 @@ Thumbs.db
 *.tar.gz
 *.sql
 *.sqlite
+
+# Claude-specific exclusions (CLAUDE.md is the single source of truth)
+# ARCHITECTURE.md köhnəlib — CLAUDE.md ilə ziddiyyət yaratmamaq üçün oxunmur
 ARCHITECTURE.md
+# Digər AI tool konfiqurasiyası (Gemini) Claude üçün lazım deyil
 .geminiignore
+
+# Git internals
+.git/

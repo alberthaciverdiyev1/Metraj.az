@@ -6,7 +6,7 @@ Bu sənəd layihənin arxitekturasını, qovluq strukturunu, dizayn prinsipləri
 
 ## 1. Texnoloji Stek
 
-- **Backend:** Laravel 13.x (PHP 8.2+)
+- **Backend:** Laravel 13.x (PHP 8.3+)
 - **Admin & Agency Panel:** Filament PHP 3.x (Multi-Panel: `admin` və `agency`)
 - **Frontend:** Laravel Blade + Alpine.js + Tailwind CSS
 - **Verilənlər Bazası:** MySQL / PostgreSQL
@@ -33,11 +33,13 @@ Controllers → Services → Repositories → Eloquent Models → Database
 
 | Modul | Qovluq | Məzmun |
 |-------|--------|--------|
-| **Property** | `app/Modules/Property/` | Elanlar, əmlak card-ları, filtrasiya, axtarış |
+| **Property** | `app/Modules/Property/` | Elanlar, əmlak card-ları, filtrasiya, axtarış, favoritlər, müqayisə |
 | **Agency** | `app/Modules/Agency/` | Agentliklər, agentlər, onların görünüşləri |
 | **Blog** | `app/Modules/Blog/` | Bloq yazıları |
 | **Inquiry** | `app/Modules/Inquiry/` | Müştəri sorğuları |
 | **Location** | `app/Modules/Location/` | Şəhərlər, rayonlar, amenitilər, filtrlər |
+| **PropertyRequest** | `app/Modules/PropertyRequest/` | "Axtarıram" (tələb) elanları — satış, kirayə, gündəlik |
+| **Roommate** | `app/Modules/Roommate/` | Otaq yoldaşı elanları |
 | **Shared** | `app/Modules/Shared/` | Auth, dashboard, statik səhifələr, valyuta/dil |
 
 ### Modul daxili təbəqələr
@@ -48,7 +50,7 @@ Controllers → Services → Repositories → Eloquent Models → Database
 
 **2. Services** — `app/Modules/{Modul}/Services/`
 - Biznes məntiqi burada cəmlənir.
-- `PropertyService`, `AgencyService`, `AgentService`, `BlogService`, `LocationService`, `InquiryService`, `CurrencyService` (Shared).
+- `PropertyService`, `AgencyService`, `AgentService`, `BlogService`, `LocationService`, `InquiryService`, `PropertyRequestService`, `RoommateService`, `CurrencyService` (Shared).
 - Köməkçi servislər: `PropertyTitleBuilder`, `PropertyPricePresenter`.
 - Service-lər repository-ləri çağırır; sadə oxuma sorğularında model-ləri birbaşa da işlədə bilər.
 
@@ -66,9 +68,9 @@ Controllers → Services → Repositories → Eloquent Models → Database
 - Modullar arası modellərə istinad edən `belongsTo`/`hasMany`-lər mütləq `use` ilə import edilir (məs: Property → `use App\Modules\Agency\Models\Agency;`).
 
 **5. Enums, DTOs, Requests, Resources**
-- **Enums:** `app/Modules/{Modul}/Enums/` — `PropertyStatus`, `PropertyType`, `DealType`, `SellerType`, `FilterKey`, `AgencyStatus`...
-- **DTOs:** `app/Modules/{Modul}/DTOs/` — `CreatePropertyDTO`, `PropertyFilterDTO` (təbəqələr arası məlumat daşımaq üçün).
-- **Requests:** `app/Modules/{Modul}/Requests/` — Form Request sinifləri (`StorePropertyRequest`, `StoreInquiryRequest`).
+- **Enums:** `app/Modules/{Modul}/Enums/` — `PropertyStatus`, `PropertyType`, `DealType`, `SellerType`, `FilterKey`, `AgencyStatus`, `RequestStatus`, `RequestType`, `RoommateStatus`, `RoommateListingType`, `GenderPreference`, `OccupationPreference`...
+- **DTOs:** `app/Modules/{Modul}/DTOs/` — `CreatePropertyDTO`, `PropertyFilterDTO`, `PropertyRequestFilterDTO`, `RoommateFilterDTO` (təbəqələr arası məlumat daşımaq üçün).
+- **Requests:** `app/Modules/{Modul}/Requests/` — Form Request sinifləri (`StorePropertyRequest`, `StoreInquiryRequest`, `ContactRequest`, `StorePropertyRequestRequest`, `StoreRoommateListingRequest`).
 - **Resources:** `app/Modules/{Modul}/Resources/` — API Resource sinifləri (`CityResource`, `DistrictResource`).
 
 **6. Views** — `resources/views/` (merkezi)
@@ -87,11 +89,11 @@ Controllers → Services → Repositories → Eloquent Models → Database
 app/
 ├── Modules/
 │   ├── Property/
-│   │   ├── Controllers/ (HomeController, PropertyDetailController, AddPropertyController)
+│   │   ├── Controllers/ (HomeController, PropertyDetailController, AddPropertyController, FavoriteCompareController)
 │   │   ├── Services/ (PropertyService, PropertyTitleBuilder, PropertyPricePresenter)
 │   │   ├── Contracts/ (PropertyRepositoryInterface)
 │   │   ├── Repositories/ (PropertyRepository)
-│   │   ├── Models/ (Property, PropertyImage)
+│   │   ├── Models/ (Property, PropertyImage, Favorite, Compare)
 │   │   ├── DTOs/ (CreatePropertyDTO, PropertyFilterDTO)
 │   │   ├── Requests/ (StorePropertyRequest)
 │   │   ├── Enums/ (PropertyStatus, PropertyType, DealType, SellerType, BuildingType, RepairType)
@@ -117,8 +119,22 @@ app/
 │   │   ├── Contracts/ (InquiryRepositoryInterface)
 │   │   ├── Repositories/ (InquiryRepository)
 │   │   ├── Models/ (Inquiry)
-│   │   ├── Requests/ (StoreInquiryRequest)
+│   │   ├── Requests/ (StoreInquiryRequest, ContactRequest)
 │   │   └── Routes/web.php
+│   ├── PropertyRequest/
+│   │   ├── Controllers/ (PropertyRequestController)
+│   │   ├── Services/ (PropertyRequestService)
+│   │   ├── Models/ (PropertyRequest, PropertyRequestImage)
+│   │   ├── DTOs/ (PropertyRequestFilterDTO)
+│   │   ├── Requests/ (StorePropertyRequestRequest)
+│   │   └── Enums/ (RequestStatus, RequestType)
+│   ├── Roommate/
+│   │   ├── Controllers/ (RoommateController)
+│   │   ├── Services/ (RoommateService)
+│   │   ├── Models/ (RoommateListing, RoommateImage)
+│   │   ├── DTOs/ (RoommateFilterDTO)
+│   │   ├── Requests/ (StoreRoommateListingRequest)
+│   │   └── Enums/ (RoommateListingType, RoommateStatus, GenderPreference, OccupationPreference)
 │   ├── Location/
 │   │   ├── Controllers/ (ApiController)
 │   │   ├── Services/ (LocationService)
@@ -130,10 +146,13 @@ app/
 │       ├── Controllers/ (AuthController, DashboardController, LocaleController, StaticPageController)
 │       ├── Services/ (CurrencyService)
 │       ├── Models/ (User)
-│       └── Routes/web.php
+│       └── Routes/web.php  (həmçinin Roommate və PropertyRequest route-ları burada qeydiyyatdan keçir)
 ├── Filament/
-│   ├── Admin/Resources/           (PropertyResource, AgencyResource, AgentResource, ...)
-│   └── Agency/Resources/          (PropertyResource, AgentResource, ...)
+│   ├── Admin/Resources/           (PropertyResource, AgencyResource, AgentResource, BlogResource,
+│   │                               InquiryResource, AmenityResource, FilterResource, LocationResource,
+│   │                               PropertyRequestResource, RoommateListingResource, UserResource)
+│   ├── Admin/Widgets/             (StatsOverviewWidget)
+│   └── Agency/Resources/          (PropertyResource, AgentResource, AgencyResource)
 └── Providers/
     ├── AppServiceProvider.php
     ├── ModuleServiceProvider.php       (modul routes qeydiyyatı)
@@ -144,15 +163,17 @@ resources/views/                       (bütün Blade view-lar — merkezi)
 ├── pages/
 │   ├── property/ (list, details, add, partials/*)
 │   ├── blog/ (list, show)
-│   ├── agency/ (list)
-│   ├── auth/ (login)
+│   ├── agency/ (list, partials/*)
+│   ├── auth/ (login, register)
 │   ├── static/ (about-us, contact, faq)
-│   ├── favorites/ (favorites)
-│   └── compare/ (compare)
+│   ├── favorites/ (favorites, partials/*)
+│   ├── compare/ (compare)
+│   ├── requests/ (index, show, create, partials/*)      ← PropertyRequest modulu
+│   └── roommates/ (index, show, create, partials/*)      ← Roommate modulu
 ├── agencies/show.blade.php, agents/show.blade.php
 ├── components/ (breadcrumb, reviews, scroll-top, title, connect-agent,
 │   contact-form, property-card, similar-cards, loan-calculator, do-you-need-loan,
-│   property/*, modals/*, cards/*)
+│   property/*, modals/*, cards/*, ads/*)
 └── pagination/metraj, filament/*
 
 ---
@@ -182,7 +203,7 @@ resources/views/                       (bütün Blade view-lar — merkezi)
 5. **Repository-lər concrete istifadə olunur:** Service-lər constructor-də interface yox, birbaşa concrete repository-ni qəbul edir (məs: `PropertyRepository`). Interface faylları yalnız kontrakt sənədi kimi qalır (`implements` üçün) — əlavə bind-provider tələb olunmur.
 6. **Form Request-lər:** Hər POST/PUT üçün ayrıca `FormRequest` sinfi yazılır (`app/Modules/{Modul}/Requests/`). Controller daxilində inline `$request->validate([...])` yazılmır.
 7. **API Resources:** JSON cavablar `app/Modules/{Modul}/Resources/` sinifləri ilə formalaşdırılır (məs: `CityResource`); controller-da əl ilə array map yazılmır.
-8. **Route faylları:** Hər modulun route-ları `app/Modules/{Modul}/Routes/web.php` faylındadır — əsas `routes/web.php`-yə əlavə edilmir.
+8. **Route faylları:** Hər modulun route-ları `app/Modules/{Modul}/Routes/web.php` faylındadır — əsas `routes/web.php`-yə əlavə edilmir. **Yeni modul** əlavə edərkən modulu `ModuleServiceProvider::$modules` siyahısına yazın və öz `Routes/web.php` faylını yaradın. **Qeyd (hazırkı istisna):** `Roommate` və `PropertyRequest` modullarının route-ları hələlik `app/Modules/Shared/Routes/web.php` içində qeydiyyatdan keçir (bu modulların ayrıca `Routes/` qovluğu yoxdur).
 9. **View istinadları (namespace prefixi yoxdur):** Bütün view-lar `resources/views/` altındadır və prefixsiz istinad edilir (`view('pages.property.list')`, `@include('components.property-card')`, `<x-connect-agent/>`).
 10. **Modullar arası model istinadları:** Eloquent model relation-ları başqa moduldakı modelə istinad edərkən mütləq `use` ilə import edilir; `\App\Modules\...` tam yol ilə də yazıla bilər.
 11. **Filament panelləri modellə birbaşa işləyə bilər:** Admin/Agency panelləri Eloquent modelləri ilə birbaşa işləyir — bu normal Filament tərzidir və web-ə aid qaydalara daxil deyil.

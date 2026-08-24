@@ -219,162 +219,28 @@
 
 @push('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const roleTabs = document.querySelectorAll('.role-tab-btn');
-    const roleTypeInput = document.getElementById('role_type');
-    const roleInfoText = document.getElementById('roleInfoText');
-    const labelName = document.getElementById('label_name');
-    
-    // Dynamic field wrappers
-    const fieldAgencyName = document.getElementById('field_agency_name');
-    const inputAgencyName = document.getElementById('agency_name');
-    const contactFields = document.getElementById('contactFields');
-    const inputPhone = document.getElementById('reg_phone');
-    const fieldAgencySelect = document.getElementById('field_agency_select');
-    const fieldAgencyAddress = document.getElementById('field_agency_address');
-    const registerBtnText = document.getElementById('registerBtnText');
+    window.registerConfig = {
+        i18n: {
+            label_user: "{{ __('Ad və Soyadınız') }}",
+            role_info_user: "{{ __('Fərdi istifadəçi olaraq elanlar yerləşdirə, axtarışları və bəyəndiyiniz mənzilləri sevimlilər siyahısına əlavə edə bilərsiniz.') }}",
+            btn_user: "{{ __('İstifadəçi Kimi Qeydiyyatdan Keç') }}",
 
-    const form = document.getElementById('registerForm');
-    const submitBtn = document.getElementById('registerSubmitBtn');
+            label_agent: "{{ __('Rieltorun Ad və Soyadı') }}",
+            role_info_agent: "<strong>{{ __('Rieltor Hesabı:') }}</strong> {{ __('Qeydiyyatdan dərhal sonra Rieltor İdarəetmə Panelinə yönləndiriləcəksiniz və elanlarınızı vahid paneldən idarə edə biləcəksiniz.') }}",
+            btn_agent: "{{ __('Rieltor Kimi Qeydiyyatdan Keç') }}",
 
-    // Role switcher logic
-    roleTabs.forEach(btn => {
-        btn.addEventListener('click', function () {
-            const role = this.dataset.role;
-            roleTypeInput.value = role;
+            label_agency: "{{ __('Məsul Şəxsin Ad və Soyadı') }}",
+            role_info_agency: "<strong>{{ __('Agentlik Hesabı:') }}</strong> {{ __('Qeydiyyatdan dərhal sonra Agentlik İdarəetmə Panelinə yönləndiriləcəksiniz, şirkət profilinizi və agentlərinizi idarə edə biləcəksiniz.') }}",
+            btn_agency: "{{ __('Agentlik Kimi Qeydiyyatdan Keç') }}",
 
-            // Update Tab UI
-            roleTabs.forEach(b => {
-                b.className = 'role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-extrabold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 text-gray-600 hover:text-gray-900';
-            });
-            this.className = 'role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-extrabold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 bg-white text-orange-600 shadow-sm';
-
-            // Show/Hide Role-specific Fields
-            if (role === 'user') {
-                fieldAgencyName.classList.add('hidden');
-                inputAgencyName.required = false;
-
-                contactFields.classList.add('hidden');
-                inputPhone.required = false;
-
-                fieldAgencySelect.classList.add('hidden');
-                fieldAgencyAddress.classList.add('hidden');
-
-                labelName.innerHTML = '{{ __("Ad və Soyadınız") }} <span class="text-rose-500">*</span>';
-                roleInfoText.innerHTML = '{{ __("Fərdi istifadəçi olaraq elanlar yerləşdirə, axtarışları və bəyəndiyiniz mənzilləri sevimlilər siyahısına əlavə edə bilərsiniz.") }}';
-                registerBtnText.textContent = '{{ __("İstifadəçi Kimi Qeydiyyatdan Keç") }}';
-            } else if (role === 'agent') {
-                fieldAgencyName.classList.add('hidden');
-                inputAgencyName.required = false;
-
-                contactFields.classList.remove('hidden');
-                inputPhone.required = true;
-
-                fieldAgencySelect.classList.remove('hidden');
-                fieldAgencyAddress.classList.add('hidden');
-
-                labelName.innerHTML = '{{ __("Rieltorun Ad və Soyadı") }} <span class="text-rose-500">*</span>';
-                roleInfoText.innerHTML = '<strong>{{ __("Rieltor Hesabı:") }}</strong> {{ __("Qeydiyyatdan dərhal sonra Rieltor İdarəetmə Panelinə yönləndiriləcəksiniz və elanlarınızı vahid paneldən idarə edə biləcəksiniz.") }}';
-                registerBtnText.textContent = '{{ __("Rieltor Kimi Qeydiyyatdan Keç") }}';
-            } else if (role === 'agency') {
-                fieldAgencyName.classList.remove('hidden');
-                inputAgencyName.required = true;
-
-                contactFields.classList.remove('hidden');
-                inputPhone.required = true;
-
-                fieldAgencySelect.classList.add('hidden');
-                fieldAgencyAddress.classList.remove('hidden');
-
-                labelName.innerHTML = '{{ __("Məsul Şəxsin Ad və Soyadı") }} <span class="text-rose-500">*</span>';
-                roleInfoText.innerHTML = '<strong>{{ __("Agentlik Hesabı:") }}</strong> {{ __("Qeydiyyatdan dərhal sonra Agentlik İdarəetmə Panelinə yönləndiriləcəksiniz, şirkət profilinizi və agentlərinizi idarə edə biləcəksiniz.") }}';
-                registerBtnText.textContent = '{{ __("Agentlik Kimi Qeydiyyatdan Keç") }}';
-            }
-        });
-    });
-
-    // Password Visibility Toggle
-    document.querySelectorAll('.toggle-pass-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
-            const targetId = this.dataset.target;
-            const input = document.getElementById(targetId);
-            const icon = this.querySelector('i');
-            if (input) {
-                const isPass = input.type === 'password';
-                input.type = isPass ? 'text' : 'password';
-                icon.className = isPass ? 'bi bi-eye-slash text-base' : 'bi bi-eye text-base';
-            }
-        });
-    });
-
-    // AJAX Form Submission
-    if (form) {
-        form.addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            // Clear previous errors
-            document.querySelectorAll('[id$="_error"]').forEach(el => {
-                el.textContent = '';
-                el.classList.add('hidden');
-            });
-
-            const originalBtnHtml = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span> <span>' + '{{ __("Qeydiyyat icra edilir...") }}' + '</span>';
-
-            const formData = new FormData(form);
-
-            try {
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.success) {
-                    if (window.Metraj && window.Metraj.toast) {
-                        window.Metraj.toast(data.message || '{{ __("Qeydiyyat tamamlandı!") }}', 'success');
-                    }
-                    submitBtn.innerHTML = '<i class="bi bi-check2-circle text-lg"></i> <span>' + '{{ __("Uğurla tamamlandı!") }}' + '</span>';
-                    
-                    setTimeout(() => {
-                        window.location.href = data.redirect || '/';
-                    }, 800);
-                } else {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalBtnHtml;
-
-                    const msg = data.message || '{{ __("Məlumatları düzgün doldurduğunuzdan əmin olun.") }}';
-                    if (window.Metraj && window.Metraj.toast) {
-                        window.Metraj.toast(msg, 'error');
-                    }
-
-                    if (data.errors) {
-                        Object.keys(data.errors).forEach(key => {
-                            const errSpan = document.getElementById(key + '_error');
-                            if (errSpan) {
-                                errSpan.textContent = data.errors[key][0];
-                                errSpan.classList.remove('hidden');
-                            }
-                        });
-                    }
-                }
-            } catch (err) {
-                console.error(err);
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnHtml;
-                if (window.Metraj && window.Metraj.toast) {
-                    window.Metraj.toast('{{ __("Şəbəkə xətası baş verdi. Yenidən cəhd edin.") }}', 'error');
-                }
-            }
-        });
-    }
-});
+            checking: "{{ __('Qeydiyyat icra edilir...') }}",
+            success: "{{ __('Qeydiyyat tamamlandı!') }}",
+            completed: "{{ __('Uğurla tamamlandı!') }}",
+            invalid: "{{ __('Məlumatları düzgün doldurduğunuzdan əmin olun.') }}",
+            network: "{{ __('Şəbəkə xətası baş verdi. Yenidən cəhd edin.') }}"
+        }
+    };
 </script>
+<script src="/js/pages/auth/register.js"></script>
 @endpush
 @endsection
