@@ -1,132 +1,179 @@
 @forelse($requests as $req)
     @php
         $typeVal = $req->request_type->value;
+        $isBuy = $typeVal === 'buy';
+        $isRent = $typeVal === 'rent_monthly';
+        $isDaily = $typeVal === 'rent_daily';
+        $isRoommate = str_starts_with($typeVal, 'roommate');
+
         $typeLabel = match($typeVal) {
-            'buy' => 'Almaq istəyir',
-            'rent_monthly' => 'Kirayə axtarır',
-            'rent_daily' => 'Günlük axtarır',
-            'roommate_have' => 'Otaq verir',
-            'roommate_need' => 'Otaq axtarır',
-            default => 'Axtarır',
+            'buy' => __('Almaq istəyir'),
+            'rent_monthly' => __('Kirayə axtarır'),
+            'rent_daily' => __('Günlük axtarır'),
+            'roommate_have' => __('Otaq verir'),
+            'roommate_need' => __('Otaq axtarır'),
+            default => __('Axtarır'),
         };
-        $typeBadgeBg = match($typeVal) {
-            'buy' => 'bg-emerald-600 text-white',
-            'rent_monthly' => 'bg-blue-600 text-white',
-            'rent_daily' => 'bg-amber-600 text-white',
-            default => 'bg-purple-600 text-white',
+
+        $typeBadgeColor = match($typeVal) {
+            'buy' => 'bg-emerald-600',
+            'rent_monthly' => 'bg-[color:var(--primary)]',
+            'rent_daily' => 'bg-amber-600',
+            default => 'bg-purple-600',
         };
 
         $cityName = is_array($req->city?->name) ? ($req->city->name[app()->getLocale()] ?? $req->city->name['az'] ?? reset($req->city->name)) : ($req->city?->name ?? 'Bakı');
         $districtName = $req->district ? (is_array($req->district->name) ? ($req->district->name[app()->getLocale()] ?? $req->district->name['az'] ?? reset($req->district->name)) : $req->district->name) : null;
         $locationFull = $cityName . ($districtName ? ', ' . $districtName : '') . ($req->location_note ? ' (' . $req->location_note . ')' : '');
 
-        $dateStr = $req->created_at ? ($req->created_at->isToday() ? 'Bugün ' . $req->created_at->format('H:i') : $req->created_at->format('d.m.Y')) : '';
+        $dateStr = $req->created_at
+            ? ($req->created_at->isToday() ? 'Bugün ' . $req->created_at->format('H:i') : $req->created_at->format('d.m.Y'))
+            : '';
+
+        $firstImg = $req->first_image_url ?? (
+            $isBuy
+                ? 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80'
+                : ($isRent
+                    ? 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80'
+                    : ($isDaily
+                        ? 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80'
+                        : 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80'))
+        );
     @endphp
 
-    <div class="bg-white rounded-2xl border border-gray-200 hover:border-gray-300 p-5 flex flex-col justify-between h-full transition shadow-xs hover:shadow-sm">
-        
-        <div>
-            <!-- Top meta row -->
-            <div class="flex items-center justify-between gap-2 mb-3">
-                <div class="flex items-center gap-2">
-                    <span class="text-xs font-semibold px-2.5 py-1 rounded-full {{ $typeBadgeBg }}">
-                        {{ $typeLabel }}
-                    </span>
-                    @if($req->property_type)
-                        <span class="text-xs font-medium px-2 py-0.5 rounded-md bg-gray-100 text-gray-700">
-                            {{ $req->property_type }}
+    <div onclick="window.location.href='{{ route('requests.show', $req->slug) }}'"
+         class="cursor-pointer border border-[color:var(--border-color)] rounded-2xl overflow-hidden flex flex-col h-full group transition-all duration-300 relative bg-white hover:shadow-md">
+
+        <!-- Top Image Banner & Demand Badge -->
+        <div class="relative overflow-hidden aspect-[4/3] sm:aspect-[5/3] md:aspect-[3/2] lg:aspect-[16/10] bg-gray-100">
+            <img src="{{ $firstImg }}"
+                 alt="{{ $req->title }}"
+                 class="card-image w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                 loading="lazy" />
+
+            <!-- Type Badge (Top Left) -->
+            <span class="absolute top-2.5 left-2.5 {{ $typeBadgeColor }} text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-xs flex items-center gap-1 z-10">
+                @if($isBuy)
+                    <i class="fa-solid fa-house-circle-check text-[11px]"></i>
+                @elseif($isRent)
+                    <i class="fa-solid fa-house-circle-xmark text-[11px]"></i>
+                @elseif($isDaily)
+                    <i class="fa-solid fa-calendar-day text-[11px]"></i>
+                @else
+                    <i class="fa-solid fa-people-roof text-[11px]"></i>
+                @endif
+                <span>{{ $typeLabel }}</span>
+            </span>
+
+            <!-- Property Type / Gender Badge (Top Right) -->
+            @if($req->property_type)
+                <span class="absolute top-2.5 right-2.5 bg-white/95 text-gray-800 text-xs font-semibold px-2.5 py-1 rounded-full shadow-xs z-10">
+                    {{ $req->property_type }}
+                </span>
+            @elseif($req->gender_preference && $req->gender_preference !== 'any')
+                <span class="absolute top-2.5 right-2.5 bg-white/95 text-purple-700 text-xs font-bold px-2.5 py-1 rounded-full shadow-xs z-10">
+                    {{ $req->gender_preference === 'female' ? __('Yalnız Xanım') : __('Yalnız Bəy') }}
+                </span>
+            @endif
+        </div>
+
+        <!-- Card Body (Matched to property-card layout) -->
+        <div class="p-3 sm:p-4 flex flex-col flex-1">
+            <div class="flex flex-col gap-2 min-h-[100px] sm:min-h-[120px]">
+                
+                <!-- Title -->
+                <h3 class="font-semibold text-[color:var(--text-color)] text-sm sm:text-base md:text-md hover:text-[color:var(--primary)] line-clamp-1 group-hover:line-clamp-none min-h-[20px] sm:min-h-[28px] overflow-hidden text-ellipsis">
+                    <span>{{ $req->title }}</span>
+                </h3>
+
+                <!-- Chips Row -->
+                <div class="min-h-[24px] sm:min-h-[28px] flex flex-wrap items-center gap-1">
+                    @if($req->rooms)
+                        <span class="bg-[#80807F] text-white flex items-center justify-center rounded-full px-2 py-0.5 text-xs font-semibold">
+                            <i class="fa-solid fa-door-open text-[11px] mr-1"></i>
+                            <span>{{ $req->rooms }} {{ __('otaqlı') }}</span>
+                        </span>
+                    @endif
+
+                    @if($req->has_deed)
+                        <span class="bg-emerald-600 text-white flex items-center justify-center rounded-full px-2 py-0.5 text-xs font-semibold">
+                            <i class="fa-solid fa-certificate text-[11px] mr-1"></i>
+                            <span>{{ __('Kupçalı') }}</span>
+                        </span>
+                    @endif
+
+                    @if($req->mortgage_eligible)
+                        <span class="bg-blue-600 text-white flex items-center justify-center rounded-full px-2 py-0.5 text-xs font-semibold">
+                            <i class="fa-solid fa-building-columns text-[11px] mr-1"></i>
+                            <span>{{ __('İpoteka') }}</span>
+                        </span>
+                    @endif
+
+                    @if($req->occupancy_type)
+                        <span class="bg-gray-200 text-gray-700 flex items-center justify-center rounded-full px-2 py-0.5 text-xs font-semibold">
+                            {{ $req->occupancy_type }}
+                        </span>
+                    @endif
+
+                    @if($req->bills_included)
+                        <span class="bg-emerald-100 text-emerald-800 flex items-center justify-center rounded-full px-2 py-0.5 text-xs font-semibold">
+                            {{ __('Kommunal daxil') }}
                         </span>
                     @endif
                 </div>
-                <span class="text-xs text-gray-400 font-medium">{{ $dateStr }}</span>
-            </div>
 
-            <!-- Price & Title -->
-            <div class="mb-3">
-                <div class="text-xl font-bold text-gray-900 mb-1">
-                    <span class="text-[#f1913d]">{{ $req->formatted_budget }}</span>
-                    @if($req->bills_included)
-                        <span class="text-xs font-normal text-emerald-600 ml-1.5 font-medium">({{ __('Kommunal daxil') }})</span>
-                    @endif
+                <!-- Location Line -->
+                <div class="flex items-center max-w-full text-xs sm:text-sm text-[color:var(--grey-text)] mt-auto">
+                    <img class="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1 shrink-0" src="/images/map-pin.svg" alt="map" />
+                    <span class="truncate group-hover:overflow-visible group-hover:whitespace-normal">
+                        {{ $locationFull }}
+                    </span>
                 </div>
-                <a href="{{ route('requests.show', $req->slug) }}" class="block">
-                    <h3 class="font-semibold text-gray-900 hover:text-[#f1913d] text-base leading-snug line-clamp-2 transition">
-                        {{ $req->title }}
-                    </h3>
-                </a>
-            </div>
 
-            <!-- Specs / Parameters line -->
-            <div class="flex flex-wrap items-center gap-1.5 text-xs text-gray-600 mb-3">
-                @if($req->rooms)
-                    <span class="bg-gray-50 border border-gray-200 px-2 py-0.5 rounded-md font-medium">{{ $req->rooms }} {{ __('otaqlı') }}</span>
-                @endif
-                @if($req->has_deed)
-                    <span class="bg-emerald-50 border border-emerald-200 text-emerald-700 px-2 py-0.5 rounded-md font-medium">{{ __('Kupçalı') }}</span>
-                @endif
-                @if($req->mortgage_eligible)
-                    <span class="bg-blue-50 border border-blue-200 text-blue-700 px-2 py-0.5 rounded-md font-medium">{{ __('İpotekaya yararlı') }}</span>
-                @endif
-                @if($req->occupancy_type)
-                    <span class="bg-gray-50 border border-gray-200 px-2 py-0.5 rounded-md font-medium">{{ $req->occupancy_type }}</span>
-                @endif
-                @if($req->gender_preference && $req->gender_preference !== 'any')
-                    <span class="bg-purple-50 border border-purple-200 text-purple-700 px-2 py-0.5 rounded-md font-medium">{{ $req->gender_preference === 'female' ? __('Yalnız Xanım') : __('Yalnız Bəy') }}</span>
-                @endif
-            </div>
-
-            <!-- Description -->
-            <p class="text-xs text-gray-500 line-clamp-2 leading-relaxed mb-4">
-                {{ $req->description }}
-            </p>
-
-            <!-- Location -->
-            <div class="flex items-center text-xs text-gray-500 gap-1.5 mb-4">
-                <i class="fa-solid fa-location-dot text-gray-400"></i>
-                <span class="truncate">{{ $locationFull }}</span>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
-            <div class="flex items-center gap-2 min-w-0">
-                <div class="w-7 h-7 rounded-full bg-gray-100 text-gray-700 flex items-center justify-center font-bold text-xs shrink-0">
-                    {{ mb_strtoupper(mb_substr($req->contact_name, 0, 1)) }}
+                <!-- Author & Date Line -->
+                <div class="flex justify-between items-center text-xs sm:text-sm text-[color:var(--grey-text)] mt-auto mb-2">
+                    <div class="flex items-center max-w-[70%] text-xs sm:text-sm text-[color:var(--grey-text)] truncate">
+                        <i class="fa-regular fa-user mr-1 text-xs shrink-0"></i>
+                        <span class="truncate group-hover:overflow-visible group-hover:whitespace-normal">
+                            {{ $req->contact_name }}
+                        </span>
+                    </div>
+                    <span class="ml-1 flex-shrink-0 text-xs text-gray-400">{{ $dateStr }}</span>
                 </div>
-                <span class="text-xs font-medium text-gray-800 truncate">{{ $req->contact_name }}</span>
             </div>
 
-            <div class="flex items-center gap-2 shrink-0">
+            <!-- Bottom Price & WhatsApp Offer Action -->
+            <div class="flex justify-between items-center mt-auto border-t border-[color:var(--border-color)] pt-3">
+                <span class="text-[color:var(--primary)] font-bold text-sm sm:text-base md:text-lg truncate">
+                    {{ $req->formatted_budget }}
+                </span>
+
                 @if($req->contact_whatsapp)
                     @php
                         $wa = preg_replace('/[^0-9]/', '', $req->contact_whatsapp);
                     @endphp
-                    <a href="https://wa.me/{{ $wa }}?text={{ urlencode('Salam, Metraj.az saytında yerləşdirdiyiniz tələb elanınızla bağlı yazıram: ' . $req->title) }}"
+                    <a href="https://wa.me/{{ $wa }}?text={{ urlencode('Salam, Metraj.az saytındakı tələb elanınızla bağlı yazıram: ' . $req->title) }}"
+                       onclick="event.stopPropagation()"
                        target="_blank" rel="noopener noreferrer"
-                       class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-600 text-emerald-700 hover:text-white border border-emerald-200 hover:border-emerald-600 text-xs font-semibold transition"
+                       class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 hover:bg-emerald-600 text-emerald-700 hover:text-white border border-emerald-200 hover:border-emerald-600 rounded-lg text-xs font-semibold transition"
                        title="WhatsApp ilə təklif göndər">
-                        <i class="bi bi-whatsapp"></i>
+                        <i class="bi bi-whatsapp text-sm"></i>
                         <span>{{ __('Təklif et') }}</span>
                     </a>
+                @else
+                    <a href="tel:{{ $req->contact_phone }}"
+                       onclick="event.stopPropagation()"
+                       class="inline-flex items-center gap-1 px-3 py-1 bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200 rounded-lg text-xs font-semibold transition">
+                        <i class="bi bi-telephone text-xs"></i>
+                        <span>{{ __('Zəng et') }}</span>
+                    </a>
                 @endif
-
-                <a href="tel:{{ $req->contact_phone }}"
-                   class="w-8 h-8 rounded-lg bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200 flex items-center justify-center transition"
-                   title="Zəng et">
-                    <i class="bi bi-telephone text-xs"></i>
-                </a>
-
-                <a href="{{ route('requests.show', $req->slug) }}"
-                   class="w-8 h-8 rounded-lg bg-gray-900 hover:bg-[#f1913d] text-white flex items-center justify-center transition"
-                   title="Ətraflı bax">
-                    <i class="bi bi-arrow-right text-xs"></i>
-                </a>
             </div>
         </div>
 
     </div>
 @empty
-    <div class="col-span-full py-16 text-center bg-white rounded-2xl border border-gray-200 p-8 max-w-md mx-auto">
+    <div class="col-span-full py-16 text-center bg-white rounded-2xl border border-[color:var(--border-color)] p-8 max-w-md mx-auto">
         <div class="w-12 h-12 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center mx-auto mb-3 text-lg">
             <i class="fa-solid fa-bullhorn"></i>
         </div>
