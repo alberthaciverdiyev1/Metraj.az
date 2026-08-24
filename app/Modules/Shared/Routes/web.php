@@ -45,3 +45,10 @@ Route::get('/otaq-yoldasi/elan-ver', [\App\Modules\Roommate\Controllers\Roommate
 Route::post('/otaq-yoldasi/elan-ver', [\App\Modules\Roommate\Controllers\RoommateController::class, 'store'])->name('roommates.store');
 Route::get('/otaq-yoldasi/{slug}', [\App\Modules\Roommate\Controllers\RoommateController::class, 'show'])->name('roommates.show');
 
+// Axtarıram (Əmlak və Yoldaş Tələbləri - Buy/Rent/Daily/Roommate Requests)
+Route::get('/axtariram', [\App\Modules\PropertyRequest\Controllers\PropertyRequestController::class, 'index'])->name('requests.index');
+Route::get('/axtariram/elan-ver', [\App\Modules\PropertyRequest\Controllers\PropertyRequestController::class, 'create'])->name('requests.create');
+Route::post('/axtariram/elan-ver', [\App\Modules\PropertyRequest\Controllers\PropertyRequestController::class, 'store'])->name('requests.store');
+Route::get('/axtariram/{slug}', [\App\Modules\PropertyRequest\Controllers\PropertyRequestController::class, 'show'])->name('requests.show');
+
+

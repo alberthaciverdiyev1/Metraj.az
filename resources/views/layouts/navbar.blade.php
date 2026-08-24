@@ -24,6 +24,9 @@
       <a href="/otaq-yoldasi" class="{{ request()->is('otaq-yoldasi*') ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
         {{ __('Otaq Yoldaşı') }}
       </a>
+      <a href="/axtariram" class="{{ request()->is('axtariram*') ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+        {{ __('Axtarıram') }}
+      </a>
       <a href="/agencies" class="{{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
         {{ __('Agencies') }}
       </a>
@@ -166,6 +169,9 @@
       </a>
       <a href="/otaq-yoldasi" class="px-3 py-2 rounded-md {{ request()->is('otaq-yoldasi*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
         {{ __('Otaq Yoldaşı') }}
+      </a>
+      <a href="/axtariram" class="px-3 py-2 rounded-md {{ request()->is('axtariram*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
+        {{ __('Axtarıram') }}
       </a>
       <a href="/agencies" class="px-3 py-2 rounded-md {{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
         {{ __('Agencies') }}
