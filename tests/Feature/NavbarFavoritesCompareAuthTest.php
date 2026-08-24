@@ -43,8 +43,10 @@ class NavbarFavoritesCompareAuthTest extends TestCase
         $response->assertSee('href="/listing?deal_type=sale"', false);
         $response->assertSee('href="/listing?deal_type=rent_monthly"', false);
         $response->assertSee('href="/listing?deal_type=rent_daily"', false);
+        $response->assertSee('href="/axtariram"', false);
         $response->assertSee('Alqı-satqı');
         $response->assertSee('Kirayə');
         $response->assertSee('Günlük');
+        $response->assertSee('Axtarıram');
     }
 }

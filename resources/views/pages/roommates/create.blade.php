@@ -3,26 +3,13 @@
 @section('title', __('Otaq Yoldaşı Elanı Yerləşdir') . ' - Metraj.az')
 
 @section('content')
-<div class="max-w-[900px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
     @if(isset($breadcrumbs))
         <div class="mb-6">
             @include('components.breadcrumb', ['breadcrumbs' => $breadcrumbs])
         </div>
     @endif
-
-    <!-- Header Card -->
-    <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 mb-8 shadow-xs text-center relative overflow-hidden">
-        <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-orange-50 text-orange-500 mb-4 text-2xl shadow-xs">
-            <i class="fa-solid fa-people-roof"></i>
-        </div>
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight mb-2">
-            {{ __('Otaq / Ev Yoldaşı Elanı Yerləşdir') }}
-        </h1>
-        <p class="text-xs sm:text-sm text-gray-500 max-w-lg mx-auto leading-relaxed">
-            {{ __('Boş otağınız üçün yoldaş tapın və ya birgə ev kirayələmək üçün tələblərinizi qeyd edin.') }}
-        </p>
-    </div>
 
     @if ($errors->any())
         <div class="bg-rose-50 border border-rose-200 text-rose-700 px-5 py-4 rounded-2xl mb-8 text-xs sm:text-sm space-y-1">
@@ -51,7 +38,7 @@
             <p class="text-xs text-gray-500 mb-5 ml-8">{{ __('Elanınız hansı məqsədlə verilir?') }}</p>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                
+
                 <!-- Option 1: Have Room -->
                 <label class="cursor-pointer">
                     <input type="radio" name="listing_type" value="have_room" class="peer sr-only" {{ old('listing_type', 'have_room') === 'have_room' ? 'checked' : '' }}>
