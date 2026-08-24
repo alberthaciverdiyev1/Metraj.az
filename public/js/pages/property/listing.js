@@ -605,7 +605,6 @@
                 cityModalChanged = true;
                 dataLoaded = false;
                 if (document.getElementById('rayonList')) document.getElementById('rayonList').innerHTML = '';
-                if (document.getElementById('nishangahList')) document.getElementById('nishangahList').innerHTML = '';
                 loadCityData();
             });
         });
@@ -623,7 +622,6 @@
                 setActiveCity(curCityId);
             }
 
-            showTab(activeTab);
             loadCityData();
             updateApplyCount();
         }
@@ -682,38 +680,11 @@
             if (e.target === modal) closeAndApply();
         });
 
-        const tabBtns = modal.querySelectorAll('.tabBtn');
-        tabBtns.forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                activeTab = this.getAttribute('data-tab');
-                showTab(activeTab);
-                loadCityData();
-            });
-        });
-
-        function showTab(tabId) {
-            const contents = modal.querySelectorAll('.tabContent');
-            contents.forEach(function (c) { c.classList.add('hidden'); });
-            const target = document.getElementById(tabId);
-            if (target) target.classList.remove('hidden');
-
-            tabBtns.forEach(function (b) {
-                b.classList.remove('border-orange-600', 'text-orange-600', 'bg-orange-50');
-                b.classList.add('text-gray-600', 'hover:bg-gray-100');
-            });
-            const activeBtn = modal.querySelector('[data-tab="' + tabId + '"]');
-            if (activeBtn) {
-                activeBtn.classList.remove('text-gray-600', 'hover:bg-gray-100');
-                activeBtn.classList.add('border-orange-600', 'text-orange-600', 'bg-orange-50');
-            }
-        }
-
         function loadCityData() {
             if (dataLoaded) return;
             const cityId = citySelect ? citySelect.value : '';
 
             const rayonList = document.getElementById('rayonList');
-            const nishangahList = document.getElementById('nishangahList');
 
             // Read currently checked districts from form or URL params
             const form = document.getElementById('filterForm');
@@ -738,20 +709,6 @@
                             toggleEmpty(rayonList, document.getElementById('rayonEmpty'));
                             updateApplyCount();
                         }
-                    }).catch(function () {});
-            }
-
-            if (nishangahList) {
-                fetch('/api/nearby')
-                    .then(function (r) { return r.json(); })
-                    .then(function (items) {
-                        nishangahList.innerHTML = '';
-                        const list = items.data || items;
-                        list.forEach(function (i) {
-                            nishangahList.appendChild(createCheckbox(i.id, i.name, 'nearby', false));
-                        });
-                        toggleEmpty(nishangahList, document.getElementById('nishangahEmpty'));
-                        updateApplyCount();
                     }).catch(function () {});
             }
 
@@ -814,7 +771,6 @@
         }
 
         wireSearch('rayonSearch', 'rayonList', 'rayonEmpty');
-        wireSearch('nishangahSearch', 'nishangahList', 'nishangahEmpty');
 
         if (resetBtn) {
             resetBtn.addEventListener('click', function () {
@@ -825,16 +781,11 @@
                     ch.checked = false;
                 });
                 updateApplyCount();
-                ['rayonSearch', 'nishangahSearch'].forEach(function (id) {
-                    const el = document.getElementById(id);
-                    if (el) el.value = '';
-                });
-                ['rayonList', 'nishangahList'].forEach(function (id) {
-                    const list = document.getElementById(id);
-                    if (list) list.innerHTML = '';
-                });
+                const el = document.getElementById('rayonSearch');
+                if (el) el.value = '';
+                const list = document.getElementById('rayonList');
+                if (list) list.innerHTML = '';
                 toggleEmpty(document.getElementById('rayonList'), document.getElementById('rayonEmpty'));
-                toggleEmpty(document.getElementById('nishangahList'), document.getElementById('nishangahEmpty'));
             });
         }
 

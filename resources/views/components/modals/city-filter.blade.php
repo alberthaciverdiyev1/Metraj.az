@@ -6,7 +6,7 @@
         <div class="flex items-center justify-between px-8 py-5 border-b border-gray-100 shrink-0 bg-gray-50/50">
             <span class="font-bold text-xl text-gray-900 flex items-center gap-2">
                 <i class="bi bi-geo-alt text-orange-500 text-lg"></i>
-                {{ __('Şəhər, Bölqə və Nişangah') }}
+                {{ __('Şəhər və Bölqə') }}
             </span>
             <button id="closeCityModal" class="p-2 hover:bg-gray-200/70 rounded-full text-gray-400 hover:text-gray-700 transition duration-200 flex items-center justify-center">
                 <i class="bi bi-x-lg text-sm leading-none"></i>
@@ -38,53 +38,28 @@
                 </select>
             </div>
 
-            <!-- Right Panel: Region & Landmark Tabs + Content -->
+            <!-- Right Panel: Region Content -->
             <div class="w-2/3 flex flex-col overflow-hidden relative">
                 <!-- Placeholder when no city is selected -->
                 <div id="rightPanelPlaceholder" class="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-white z-10">
                     <div class="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mb-4">
                         <i class="bi bi-geo text-orange-500 text-2xl animate-bounce"></i>
                     </div>
-                    <h5 class="text-base font-bold text-gray-800 mb-1">{{ __('Bölqə və Nişangah axtarışı') }}</h5>
-                    <p class="text-xs text-gray-500 max-w-xs">{{ __('Əlaqəli bölqə və nişangahları görmək üçün soldan şəhər seçin.') }}</p>
-                </div>
-
-                <!-- Tabs (only visible when city is selected) -->
-                <div class="flex gap-2 px-8 py-4 bg-gray-50/50 border-b border-gray-100 shrink-0">
-                    <button class="tabBtn px-6 py-2.5 rounded-xl border border-orange-500 text-orange-500 font-bold text-xs bg-orange-50 shadow-sm transition duration-200"
-                            data-tab="rayonTab">{{ __('Bölqə') }}</button>
-                    <button class="tabBtn px-6 py-2.5 rounded-xl border border-transparent text-gray-600 hover:bg-gray-200/50 font-bold text-xs transition duration-200"
-                            data-tab="nishangahTab">{{ __('Nişangah') }}</button>
+                    <h5 class="text-base font-bold text-gray-800 mb-1">{{ __('Bölqə axtarışı') }}</h5>
+                    <p class="text-xs text-gray-500 max-w-xs">{{ __('Əlaqəli bölqələri görmək üçün soldan şəhər seçin.') }}</p>
                 </div>
 
                 <!-- Content Area -->
-                <div class="flex-1 overflow-y-auto px-8 py-6 space-y-6">
-                    
-                    <!-- Bölqə Section -->
-                    <section id="rayonTab" class="tabContent space-y-4">
-                        <div class="relative">
-                            <input type="text" id="rayonSearch" placeholder="{{ __('Bölqə axtar...') }}"
-                                   class="w-full px-4 py-3 border border-gray-200 bg-gray-50/50 focus:bg-white rounded-2xl text-sm outline-none focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 transition duration-200 shadow-sm placeholder:text-gray-400">
-                            <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
-                                <i class="bi bi-search text-sm"></i>
-                            </div>
+                <div class="flex-1 overflow-y-auto px-8 py-6 space-y-4">
+                    <div class="relative">
+                        <input type="text" id="rayonSearch" placeholder="{{ __('Bölqə axtar...') }}"
+                               class="w-full px-4 py-3 border border-gray-200 bg-gray-50/50 focus:bg-white rounded-2xl text-sm outline-none focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 transition duration-200 shadow-sm placeholder:text-gray-400">
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+                            <i class="bi bi-search text-sm"></i>
                         </div>
-                        <div id="rayonList" class="grid grid-cols-2 lg:grid-cols-3 gap-3 pt-2"></div>
-                        <div id="rayonEmpty" class="text-gray-500 text-sm hidden py-6 text-center">{{ __('Bölqə tapılmadı') }}</div>
-                    </section>
-
-                    <!-- Nişangah Section -->
-                    <section id="nishangahTab" class="tabContent hidden space-y-4">
-                        <div class="relative">
-                            <input id="nishangahSearch" type="text" placeholder="{{ __('Nişangah axtar...') }}"
-                                   class="w-full px-4 py-3 border border-gray-200 bg-gray-50/50 focus:bg-white rounded-2xl text-sm outline-none focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 transition duration-200 shadow-sm placeholder:text-gray-400">
-                            <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
-                                <i class="bi bi-search text-sm"></i>
-                            </div>
-                        </div>
-                        <div id="nishangahList" class="grid grid-cols-2 lg:grid-cols-3 gap-3 pt-2"></div>
-                        <p id="nishangahEmpty" class="text-gray-500 text-sm hidden py-6 text-center">{{ __('Heç nə tapılmadı.') }}</p>
-                    </section>
+                    </div>
+                    <div id="rayonList" class="grid grid-cols-2 lg:grid-cols-3 gap-3 pt-2"></div>
+                    <div id="rayonEmpty" class="text-gray-500 text-sm hidden py-6 text-center">{{ __('Bölqə tapılmadı') }}</div>
                 </div>
             </div>
         </div>
