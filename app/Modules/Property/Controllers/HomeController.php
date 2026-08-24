@@ -2,8 +2,10 @@
 
 namespace App\Modules\Property\Controllers;
 
+use App\Modules\Location\Models\City;
 use App\Modules\Location\Services\LocationService;
 use App\Modules\Property\DTOs\PropertyFilterDTO;
+use App\Modules\Property\Enums\DealType;
 use App\Modules\Property\Services\PropertyService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,8 +18,12 @@ class HomeController extends Controller
         protected LocationService $locationService,
     ) {}
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, ?string $first = null, ?string $second = null, ?string $third = null)
     {
+        if ($first !== null) {
+            $this->applyPathFilters($request, $first, $second, $third);
+        }
+
         $filter = PropertyFilterDTO::fromArray($request->all());
         $properties = $this->propertyService->paginate($filter, 30);
 
@@ -50,5 +56,73 @@ class HomeController extends Controller
             'dynamicFilters',
             'breadcrumbs'
         ))->with('css', ['listing.css']);
+    }
+
+    /**
+     * SEO dostu URL segmentlərini filtrə çevirir.
+     *
+     * Mümkün URL formaları:
+     *   /girne                → şəhər
+     *   /satilik              → satış
+     *   /kira                 → bütün kirayə (aylıq + günlük)
+     *   /kira/ayliq           → aylıq kirayə
+     *   /kira/gunluk          → günlük kirayə
+     *   /girne/satilik        → şəhər + satış
+     *   /girne/kira/gunluk    → şəhər + günlük kirayə
+     */
+    protected function applyPathFilters(Request $request, string $first, ?string $second, ?string $third): void
+    {
+        $city = City::where('slug', $first)->where('is_active', true)->first();
+
+        if ($city) {
+            $request->merge(['cityId' => $city->id]);
+
+            if ($second !== null) {
+                $this->applyDealSegment($request, $second, $third);
+            } elseif ($third !== null) {
+                abort(404);
+            }
+
+            return;
+        }
+
+        $this->applyDealSegment($request, $first, $second);
+    }
+
+    protected function applyDealSegment(Request $request, string $deal, ?string $rent): void
+    {
+        $saleMap = ['satilik', 'satis', 'satiq', 'sale'];
+        $rentMap = ['kira', 'kiralik', 'kiraye', 'kiraya', 'rent'];
+        $rentMonthlyMap = ['ayliq', 'aylik', 'monthly'];
+        $rentDailyMap = ['gunluk', 'gundelik', 'daily'];
+
+        if (in_array($deal, $saleMap, true)) {
+            if ($rent !== null) {
+                abort(404);
+            }
+            $request->merge(['deal_type' => DealType::Sale->value]);
+
+            return;
+        }
+
+        if (in_array($deal, $rentMap, true)) {
+            if ($rent !== null) {
+                if (in_array($rent, $rentMonthlyMap, true)) {
+                    $request->merge(['deal_type' => DealType::RentMonthly->value]);
+                } elseif (in_array($rent, $rentDailyMap, true)) {
+                    $request->merge(['deal_type' => DealType::RentDaily->value]);
+                } else {
+                    abort(404);
+                }
+            } else {
+                $request->merge([
+                    'deal_types' => [DealType::RentMonthly->value, DealType::RentDaily->value],
+                ]);
+            }
+
+            return;
+        }
+
+        abort(404);
     }
 }

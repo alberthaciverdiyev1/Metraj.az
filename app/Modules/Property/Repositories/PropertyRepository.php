@@ -206,10 +206,21 @@ class PropertyRepository implements PropertyRepositoryInterface
             });
         }
 
-        if ($filter->dealType) {
-            $query->whereHas('filterOptions', function ($q) use ($filter) {
-                $q->where('value', $filter->dealType->value);
-            });
+        if ($filter->dealType || !empty($filter->dealTypes)) {
+            $dealValues = [];
+            if ($filter->dealType) {
+                $dealValues[] = $filter->dealType->value;
+            }
+            foreach ($filter->dealTypes as $dt) {
+                $dealValues[] = $dt->value;
+            }
+            $dealValues = array_values(array_unique(array_filter($dealValues)));
+
+            if ($dealValues) {
+                $query->whereHas('filterOptions', function ($q) use ($dealValues) {
+                    $q->whereIn('value', $dealValues);
+                });
+            }
         }
 
         if ($filter->buildingType) {

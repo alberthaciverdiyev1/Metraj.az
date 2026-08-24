@@ -51,4 +51,18 @@ Route::get('/axtariram/elan-ver', [\App\Modules\PropertyRequest\Controllers\Prop
 Route::post('/axtariram/elan-ver', [\App\Modules\PropertyRequest\Controllers\PropertyRequestController::class, 'store'])->name('requests.store');
 Route::get('/axtariram/{slug}', [\App\Modules\PropertyRequest\Controllers\PropertyRequestController::class, 'show'])->name('requests.show');
 
+// ===================================================================
+// SEO dostu filtr URL-ləri — ƏN SONDA yüklənir ki, mövcud statik
+// route-lar (blog, elan, axtariram, otaq-yoldasi və s.) ilə çakışmasın.
+// Controller segmentləri parse edib şəhər / deal / kira tipinə çevirir.
+//
+// Nümunələr:
+//   /girne               /satilik
+//   /kira/ayliq          /kira/gunluk
+//   /girne/satilik       /girne/kira/gunluk
+// ===================================================================
+Route::get('/{first}/{second}/{third}', \App\Modules\Property\Controllers\HomeController::class)->name('listing.path3');
+Route::get('/{first}/{second}', \App\Modules\Property\Controllers\HomeController::class)->name('listing.path2');
+Route::get('/{first}', \App\Modules\Property\Controllers\HomeController::class)->name('listing.path1');
+
 

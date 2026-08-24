@@ -14,6 +14,8 @@ readonly class PropertyFilterDTO
     public function __construct(
         public ?PropertyType $propertyType = null,
         public ?DealType $dealType = null,
+        /** @var array<int, DealType> */
+        public array $dealTypes = [],
         public ?BuildingType $buildingType = null,
         public ?RepairType $repairType = null,
         public ?SellerType $sellerType = null,
@@ -53,6 +55,7 @@ readonly class PropertyFilterDTO
     {
         return $this->propertyType !== null
             || $this->dealType !== null
+            || !empty($this->dealTypes)
             || $this->buildingType !== null
             || $this->repairType !== null
             || $this->sellerType !== null
@@ -104,6 +107,16 @@ readonly class PropertyFilterDTO
                 $dealType = DealType::Sale;
             } else {
                 $dealType = DealType::tryFrom($adType);
+            }
+        }
+
+        $dealTypes = [];
+        if (!empty($data['deal_types']) && is_array($data['deal_types'])) {
+            foreach ($data['deal_types'] as $dtValue) {
+                $dtEnum = DealType::tryFrom($dtValue);
+                if ($dtEnum !== null) {
+                    $dealTypes[] = $dtEnum;
+                }
             }
         }
 
@@ -165,6 +178,7 @@ readonly class PropertyFilterDTO
         return new self(
             propertyType: $propertyType,
             dealType: $dealType,
+            dealTypes: $dealTypes,
             buildingType: !empty($data['building_type']) ? BuildingType::tryFrom($data['building_type']) : null,
             repairType: !empty($data['repair_type']) ? RepairType::tryFrom($data['repair_type']) : (!empty($data['propertyCondition']) ? RepairType::tryFrom($data['propertyCondition']) : null),
             sellerType: $sellerType,

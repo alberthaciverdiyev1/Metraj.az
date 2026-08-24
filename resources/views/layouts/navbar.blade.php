@@ -12,13 +12,13 @@
 
     <!-- Desktop Navigation Links (Always visible on md and up) -->
     <nav class="hidden md:flex items-center space-x-5 lg:space-x-7 text-[15px] font-medium">
-      <a href="{{ route('listing', ['deal_type' => 'sale']) }}" class="{{ request()->is('listing*') && request('deal_type') === 'sale' ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+      <a href="{{ route('listing.path1', ['first' => 'satilik']) }}" class="{{ request('deal_type') === 'sale' ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
         {{ __('Alqı-satqı') }}
       </a>
-      <a href="{{ route('listing', ['deal_type' => 'rent_monthly']) }}" class="{{ request()->is('listing*') && request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+      <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'ayliq']) }}" class="{{ request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
         {{ __('Kirayə') }}
       </a>
-      <a href="{{ route('listing', ['deal_type' => 'rent_daily']) }}" class="{{ request()->is('listing*') && request('deal_type') === 'rent_daily' ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+      <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'gunluk']) }}" class="{{ request('deal_type') === 'rent_daily' ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
         {{ __('Günlük') }}
       </a>
       <a href="{{ route('requests.index') }}" class="{{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-[#f1913d] font-bold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
@@ -196,7 +196,7 @@
 <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200/90 px-2 flex items-center justify-around select-none">
 
   <!-- 1. ƏMLAK -->
-  <a href="{{ route('listing') }}" class="flex flex-col items-center justify-center flex-1 py-1 text-center transition {{ request()->is('listing*') || request()->is('/') ? 'text-[#f1913d] font-bold' : 'text-gray-400 hover:text-gray-700' }}">
+  <a href="{{ route('listing') }}" class="flex flex-col items-center justify-center flex-1 py-1 text-center transition {{ request()->routeIs('listing*') || request()->routeIs('home') ? 'text-[#f1913d] font-bold' : 'text-gray-400 hover:text-gray-700' }}">
     <i class="fa-solid fa-house text-lg mb-0.5"></i>
     <span class="text-[10px] font-semibold uppercase tracking-tight">{{ __('ƏMLAK') }}</span>
   </a>
@@ -274,15 +274,15 @@
         <span class="flex items-center gap-3"><i class="fa-solid fa-house text-gray-400 w-5 text-center"></i> {{ __('Ana Səhifə') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="{{ route('listing', ['deal_type' => 'sale']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'sale' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('listing.path1', ['first' => 'satilik']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request('deal_type') === 'sale' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-key text-gray-400 w-5 text-center"></i> {{ __('Alqı-satqı') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="{{ route('listing', ['deal_type' => 'rent_monthly']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'ayliq']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-calendar-days text-gray-400 w-5 text-center"></i> {{ __('Kirayə') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="{{ route('listing', ['deal_type' => 'rent_daily']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'rent_daily' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'gunluk']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request('deal_type') === 'rent_daily' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-clock text-gray-400 w-5 text-center"></i> {{ __('Günlük') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>

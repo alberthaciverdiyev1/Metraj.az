@@ -54,6 +54,73 @@
         return params;
     }
 
+    /* ===== SEO URL PATH ===== */
+    function buildSeoPath(params) {
+        const citySlugs = (R && R.citySlugs) || {};
+        const adType = params.get('adType') || '';
+        const cityId = params.get('cityId') || '';
+
+        let path = '';
+
+        if (adType === 'sale') {
+            path = 'satilik';
+        } else if (adType === 'rent_monthly') {
+            path = 'kira/ayliq';
+        } else if (adType === 'rent_daily') {
+            path = 'kira/gunluk';
+        } else if (adType === 'rent') {
+            path = 'kira';
+        }
+
+        if (cityId && citySlugs[cityId]) {
+            path = path ? citySlugs[cityId] + '/' + path : citySlugs[cityId];
+        }
+
+        return path ? '/' + path : '/listing';
+    }
+
+    /* ===== RESTORE PATH SEGMENTS BACK TO FORM (popstate) ===== */
+    function restorePathToForm(pathname, form) {
+        const citySlugs = (R && R.citySlugs) || {};
+        const segments = pathname.split('/').filter(Boolean);
+        if (!segments.length) return;
+
+        const slugToCity = {};
+        Object.keys(citySlugs).forEach(function (id) {
+            slugToCity[citySlugs[id]] = id;
+        });
+
+        /* Şəhər: ilk və ya ikinci segment şəhər slug'ı ola bilər */
+        const cityInput = form ? form.querySelector('input[name="cityId"]') : null;
+        let foundCity = false;
+        for (let i = 0; i < segments.length; i++) {
+            if (slugToCity[segments[i]]) {
+                if (cityInput) cityInput.value = slugToCity[segments[i]];
+                foundCity = true;
+                break;
+            }
+        }
+
+        /* Deal tipi: satilik / kira + alt tip */
+        const adTypeInput = document.getElementById('adTypeInput');
+        if (adTypeInput) {
+            let adType = '';
+            const idx = foundCity ? 1 : 0;
+            const dealSeg = segments[idx] || '';
+            const rentSeg = segments[idx + 1] || '';
+
+            if (dealSeg === 'satilik') {
+                adType = 'sale';
+            } else if (dealSeg === 'kira' || dealSeg === 'kiralik') {
+                if (rentSeg === 'gunluk') adType = 'rent_daily';
+                else if (rentSeg === 'ayliq') adType = 'rent_monthly';
+                else adType = 'rent';
+            }
+
+            if (adType) adTypeInput.value = adType;
+        }
+    }
+
     /* ===== FETCH LISTINGS VIA AJAX ===== */
     function fetchListings() {
         if (isLoading) return;
@@ -61,8 +128,14 @@
         showLoading(true);
 
         const params = buildFilterParams();
+        const seoPath = buildSeoPath(params);
         params.set('json', '1');
-        const url = '/listing?' + params.toString();
+
+        /* Şəhər və deal tipi artıq path-də olduğu üçün query-dən çıxarılır */
+        params.delete('adType');
+        params.delete('cityId');
+
+        const url = seoPath + '?' + params.toString();
 
         window.history.pushState({}, '', url);
 
@@ -863,8 +936,12 @@
             params.set('page', url.searchParams.get('page') || '1');
             params.set('json', '1');
 
-            const fetchUrl = '/listing?' + params.toString();
-            window.history.pushState({}, '', '/listing?' + params.toString());
+            const seoPath = buildSeoPath(params);
+            params.delete('adType');
+            params.delete('cityId');
+
+            const fetchUrl = seoPath + '?' + params.toString();
+            window.history.pushState({}, '', fetchUrl);
 
             if (isLoading) return;
             isLoading = true;
@@ -905,6 +982,9 @@
                     input.value = params.get(name) || '';
                 }
             });
+
+            /* SEO path-dən şəhər və deal tipini bərpa et (query-də deyillər) */
+            restorePathToForm(window.location.pathname, form);
 
             fetchListings();
         });

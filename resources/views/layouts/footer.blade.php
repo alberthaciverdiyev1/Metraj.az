@@ -48,11 +48,11 @@
             <div class="space-y-4">
                 <h4 class="text-sm font-bold text-white uppercase tracking-wider">{{ __('Populyar Bölgələr') }}</h4>
                 <ul class="space-y-2.5 text-sm">
-                    <li><a href="{{ route('listing', ['cityId' => 1]) }}" class="hover:text-white hover:underline transition">{{ __('Girne') }}</a></li>
-                    <li><a href="{{ route('listing', ['cityId' => 2]) }}" class="hover:text-white hover:underline transition">{{ __('Lefkoşa') }}</a></li>
-                    <li><a href="{{ route('listing', ['cityId' => 3]) }}" class="hover:text-white hover:underline transition">{{ __('Gazimağusa') }}</a></li>
-                    <li><a href="{{ route('listing', ['cityId' => 4]) }}" class="hover:text-white hover:underline transition">{{ __('İskele') }}</a></li>
-                    <li><a href="{{ route('listing', ['cityId' => 5]) }}" class="hover:text-white hover:underline transition">{{ __('Güzelyurt') }}</a></li>
+                    <li><a href="{{ route('listing.path1', ['first' => 'girne']) }}" class="hover:text-white hover:underline transition">{{ __('Girne') }}</a></li>
+                    <li><a href="{{ route('listing.path1', ['first' => 'lefkosa']) }}" class="hover:text-white hover:underline transition">{{ __('Lefkoşa') }}</a></li>
+                    <li><a href="{{ route('listing.path1', ['first' => 'gazimagusa']) }}" class="hover:text-white hover:underline transition">{{ __('Gazimağusa') }}</a></li>
+                    <li><a href="{{ route('listing.path1', ['first' => 'iskele']) }}" class="hover:text-white hover:underline transition">{{ __('İskele') }}</a></li>
+                    <li><a href="{{ route('listing.path1', ['first' => 'guzelyurt']) }}" class="hover:text-white hover:underline transition">{{ __('Güzelyurt') }}</a></li>
                 </ul>
             </div>
 

@@ -225,6 +225,12 @@
 @endsection
 
 @push('scripts')
+    <script>
+        // SEO URL-ləri üçün şəhər id → slug map (listing.js tərəfindən istifadə olunur)
+        window.MetrajRoutes = Object.assign({}, window.MetrajRoutes || {}, {
+            citySlugs: @json($cities->pluck('slug', 'id'))
+        });
+    </script>
     <script src="{{ asset('js/pages/property/list-filters.js') }}"></script>
     <script src="{{ asset('js/pages/property/listing.js') }}?v={{ time() }}"></script>
 @endpush
