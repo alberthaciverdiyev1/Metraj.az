@@ -3,11 +3,82 @@
 @section('title', $propertyRequest->title . ' - Metraj.az')
 
 @section('content')
+@php
+    $galleryImages = $propertyRequest->images->sortBy('sort_order')->values();
+    $totalImages = count($galleryImages);
+@endphp
+
 <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
     @if(isset($breadcrumbs))
         <div class="mb-5">
             @include('components.breadcrumb', ['breadcrumbs' => $breadcrumbs])
+        </div>
+    @endif
+
+    @if($totalImages > 0)
+        <style>
+            .thumbnails-row::-webkit-scrollbar {
+                display: none;
+            }
+            .thumbnails-row {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .thumbnails-row img {
+                opacity: 0.6;
+                transition: all 0.2s ease-in-out;
+            }
+            .thumbnails-row img.active {
+                opacity: 1;
+                border-color: #f97316;
+            }
+        </style>
+
+        <!-- Gallery Section (Identical to Property Details) -->
+        <div class="w-full mb-8">
+            <!-- Main Image -->
+            <div class="relative w-full h-[45vh] md:h-[55vh] lg:h-[65vh] min-h-[350px] rounded-2xl overflow-hidden cursor-pointer shadow-sm bg-gray-100" onclick="openModal(0)">
+                <img src="{{ $galleryImages->first()?->url }}" alt="{{ $propertyRequest->title }}" class="w-full h-full object-cover">
+                <span class="absolute bottom-4 left-4 bg-black/60 text-white text-xs px-3.5 py-2 rounded-xl font-bold backdrop-blur-md flex items-center gap-1.5 shadow">
+                    <i class="bi bi-camera"></i>
+                    <span>{{ $totalImages }} {{ __('şəkil') }}</span>
+                </span>
+            </div>
+
+            <!-- Thumbnail Gallery (horizontal, single row) -->
+            @if($totalImages > 1)
+            <div class="mt-4 flex gap-3 overflow-x-auto thumbnails-row">
+                @foreach($galleryImages as $index => $image)
+                    <img src="{{ $image->url }}"
+                         onclick="openModal({{ $index }})"
+                         alt="{{ $propertyRequest->title }}"
+                         class="shrink-0 w-24 h-20 sm:w-28 sm:h-24 md:w-32 md:h-24 object-cover rounded-xl border-2 cursor-pointer {{ $index === 0 ? 'active border-orange-500' : 'border-transparent' }}">
+                @endforeach
+            </div>
+            @endif
+        </div>
+
+        <!-- Modal Fullscreen Slider -->
+        <div id="modal" class="modal">
+            <div class="modal-header">
+                <span id="counter" class="text-sm font-semibold">1/{{ $totalImages }}</span>
+                <div class="modal-actions">
+                    <button onclick="toggleFullscreen()"><i class="bi bi-fullscreen"></i></button>
+                    <button onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
+                </div>
+            </div>
+            <div class="modal-navigation">
+                <button onclick="prevImage()"><i class="bi bi-arrow-left"></i></button>
+                <img id="modal-image" src="" alt="Modal Image">
+                <button onclick="nextImage()"><i class="bi bi-arrow-right"></i></button>
+            </div>
+            <div class="thumbnails mt-4 flex space-x-2 overflow-x-auto" id="thumbnails">
+                @foreach($galleryImages as $index => $image)
+                    <img src="{{ $image->url }}" onclick="openModal({{ $index }})" alt=""
+                         class="w-20 h-20 object-cover rounded-xl border-2 border-transparent cursor-pointer hover:border-orange-500">
+                @endforeach
+            </div>
         </div>
     @endif
 
@@ -70,30 +141,6 @@
                 </div>
 
             </div>
-
-            <!-- Image Gallery (If images exist) -->
-            @php
-                $requestImages = $propertyRequest->images;
-            @endphp
-            @if($requestImages->isNotEmpty())
-                <div class="bg-white border border-gray-200/90 rounded-3xl p-4 sm:p-6 shadow-xs space-y-3">
-                    <div class="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-gray-100 shadow-xs">
-                        <img id="mainRequestImage" src="{{ $requestImages->first()->url }}" alt="{{ $propertyRequest->title }}"
-                             class="w-full h-full object-cover transition duration-300" />
-                    </div>
-
-                    @if($requestImages->count() > 1)
-                        <div class="flex items-center gap-2 overflow-x-auto pb-1">
-                            @foreach($requestImages as $index => $img)
-                                <button type="button" onclick="document.getElementById('mainRequestImage').src = '{{ $img->url }}'"
-                                        class="shrink-0 w-20 h-14 rounded-xl overflow-hidden border-2 border-transparent hover:border-orange-500 focus:border-orange-500 transition cursor-pointer">
-                                    <img src="{{ $img->url }}" class="w-full h-full object-cover" />
-                                </button>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
-            @endif
 
             <!-- Key Parameters Grid -->
             <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs">
@@ -267,4 +314,17 @@
     @endif
 
 </div>
+
+@if($totalImages > 0)
+    @push('scripts')
+    <script>
+        const imagesData = [
+            @foreach($galleryImages as $image)
+                "{{ $image->url }}",
+            @endforeach
+        ];
+    </script>
+    <script src="/js/pages/property/detail/image-gallery.js"></script>
+    @endpush
+@endif
 @endsection
