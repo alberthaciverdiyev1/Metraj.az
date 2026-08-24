@@ -93,61 +93,73 @@
         if (loader) loader.classList.toggle('hidden', !show);
     }
 
-    /* ===== DROPDOWN SELECTS ===== */
+    /* ===== DROPDOWN SELECTS (NAVBAR STYLE) ===== */
     function initDropdowns() {
-        const dropdowns = document.querySelectorAll('.dropdown-select');
+        function setupFilterDropdown(btnId, menuId, chevronId, hiddenInputId) {
+            const btn = document.getElementById(btnId);
+            const menu = document.getElementById(menuId);
+            const chevron = document.getElementById(chevronId);
+            const hiddenInput = document.getElementById(hiddenInputId);
+            if (!btn || !menu) return;
 
-        function closeAll(exclude) {
-            dropdowns.forEach(function (d) {
-                if (d === exclude) return;
-                const menu = d.querySelector('.dropdown-menu');
-                let icon = d.querySelector('.bi-chevron-down');
-                if (menu) menu.classList.add('hidden');
-                if (icon) icon.classList.remove('rotate-180');
-                d.classList.remove('z-30');
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                // Close other filter dropdowns
+                document.querySelectorAll('.filter-custom-menu').forEach(function (m) {
+                    if (m !== menu) m.classList.add('hidden');
+                });
+                document.querySelectorAll('.filter-custom-chevron').forEach(function (c) {
+                    if (c !== chevron) c.classList.remove('rotate-180');
+                });
+
+                const isHidden = menu.classList.contains('hidden');
+                menu.classList.toggle('hidden', !isHidden);
+                if (chevron) chevron.classList.toggle('rotate-180', isHidden);
+            });
+
+            menu.querySelectorAll('[data-val]').forEach(function (item) {
+                item.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const val = this.getAttribute('data-val') || '';
+                    const labelElem = this.querySelector('.item-label');
+                    const text = labelElem ? labelElem.textContent.trim() : this.textContent.trim();
+
+                    const prev = hiddenInput ? hiddenInput.value : '';
+                    if (hiddenInput) hiddenInput.value = val;
+
+                    const displaySpan = btn.querySelector('.btn-display-text');
+                    if (displaySpan) displaySpan.textContent = text;
+
+                    // Update active checkmarks and colors
+                    menu.querySelectorAll('[data-val]').forEach(function (i) {
+                        const isActive = (i.getAttribute('data-val') || '') === val;
+                        i.classList.toggle('text-[#f1913d]', isActive);
+                        i.classList.toggle('bg-orange-50/60', isActive);
+                        i.classList.toggle('font-bold', isActive);
+                        i.classList.toggle('text-gray-700', !isActive);
+                        const check = i.querySelector('.item-check');
+                        if (check) check.classList.toggle('hidden', !isActive);
+                    });
+
+                    menu.classList.add('hidden');
+                    if (chevron) chevron.classList.remove('rotate-180');
+
+                    if (prev !== val) fetchListings();
+                });
             });
         }
 
-        dropdowns.forEach(function (dropdown) {
-            const menu = dropdown.querySelector('.dropdown-menu');
-            let icon = dropdown.querySelector('.bi-chevron-down');
-            const hiddenInput = dropdown.querySelector('input[type=hidden]');
-            const display = dropdown.querySelector('[data-role="display-value"]');
+        setupFilterDropdown('filterRoomBtn', 'filterRoomDropdown', 'filterRoomChevron', 'roomCountInput');
+        setupFilterDropdown('filterBuildingBtn', 'filterBuildingDropdown', 'filterBuildingChevron', 'buildingTypeInput');
 
-            dropdown.addEventListener('click', function (e) {
-                if (e.target.closest('.dropdown-menu')) return;
-                e.stopPropagation();
-                const isHidden = menu ? menu.classList.contains('hidden') : true;
-                closeAll(dropdown);
-                if (menu) {
-                    menu.classList.toggle('hidden', !isHidden);
-                    dropdown.classList.toggle('z-30', isHidden);
-                }
-                if (icon) icon.classList.toggle('rotate-180', isHidden);
+        document.addEventListener('click', function () {
+            document.querySelectorAll('.filter-custom-menu').forEach(function (m) {
+                m.classList.add('hidden');
             });
-
-            if (menu) {
-                menu.querySelectorAll('li').forEach(function (item) {
-                    item.addEventListener('click', function (e) {
-                        e.stopPropagation();
-                        const val = this.getAttribute('data-value') || '';
-                        const label = this.textContent.trim();
-
-                        const prev = hiddenInput ? hiddenInput.value : '';
-                        if (hiddenInput) hiddenInput.value = val;
-                        if (display) display.textContent = label;
-                        if (menu) menu.classList.add('hidden');
-                        dropdown.classList.remove('z-30');
-                        if (icon) icon.classList.remove('rotate-180');
-
-                        /* Main page filters: apply immediately on change */
-                        if (prev !== val) fetchListings();
-                    });
-                });
-            }
+            document.querySelectorAll('.filter-custom-chevron').forEach(function (c) {
+                c.classList.remove('rotate-180');
+            });
         });
-
-        document.addEventListener('click', function () { closeAll(null); });
     }
 
     /* ===== ADD-TYPE TOGGLE ===== */

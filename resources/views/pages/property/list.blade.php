@@ -54,45 +54,96 @@
                                 </div>
 
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-20">
-                                    <!-- Room Count Select -->
-                                    <div class="relative bg-gray-50 hover:bg-white border border-gray-200 rounded-xl p-3 transition focus-within:border-[#f1913d] focus-within:bg-white shadow-2xs flex items-center gap-2.5">
-                                        <img src="/images/door.svg" alt="door" class="w-4 h-4 shrink-0">
-                                        <select name="roomCount" id="roomCountSelect" class="w-full bg-transparent text-gray-800 font-semibold text-xs sm:text-sm focus:outline-none cursor-pointer appearance-none pr-6">
-                                            <option value="">{{ __('Otaq sayı (Hamısı)') }}</option>
-                                            <option value="1" {{ request('roomCount') == '1' ? 'selected' : '' }}>1 {{ __('otaqlı') }}</option>
-                                            <option value="2" {{ request('roomCount') == '2' ? 'selected' : '' }}>2 {{ __('otaqlı') }}</option>
-                                            <option value="3" {{ request('roomCount') == '3' ? 'selected' : '' }}>3 {{ __('otaqlı') }}</option>
-                                            <option value="4" {{ request('roomCount') == '4' ? 'selected' : '' }}>4 {{ __('otaqlı') }}</option>
-                                            <option value="5" {{ request('roomCount') == '5' ? 'selected' : '' }}>5 {{ __('otaqlı') }}</option>
-                                            <option value="6" {{ request('roomCount') == '6' ? 'selected' : '' }}>6+ {{ __('otaqlı') }}</option>
-                                        </select>
-                                        <i class="bi bi-chevron-down text-orange-500 text-xs absolute right-3 pointer-events-none"></i>
-                                    </div>
+                                    <!-- Room Count Custom Dropdown (Navbar Style) -->
+                                    @php
+                                        $currentRooms = request('roomCount', '');
+                                        $roomOptions = [
+                                            '' => __('Otaq sayı (Hamısı)'),
+                                            '1' => '1 ' . __('otaqlı'),
+                                            '2' => '2 ' . __('otaqlı'),
+                                            '3' => '3 ' . __('otaqlı'),
+                                            '4' => '4 ' . __('otaqlı'),
+                                            '5' => '5 ' . __('otaqlı'),
+                                            '6' => '6+ ' . __('otaqlı'),
+                                        ];
+                                        $currentRoomsLabel = $roomOptions[$currentRooms] ?? __('Otaq sayı (Hamısı)');
+                                    @endphp
+                                    <div class="relative">
+                                        <button id="filterRoomBtn" type="button"
+                                                class="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 bg-gray-50 hover:bg-gray-100/80 border border-gray-200/90 rounded-2xl text-xs sm:text-sm font-bold text-gray-800 transition shadow-2xs cursor-pointer select-none">
+                                            <div class="flex items-center gap-2 min-w-0">
+                                                <img src="/images/door.svg" alt="door" class="w-4 h-4 shrink-0">
+                                                <span class="btn-display-text truncate font-bold text-gray-800">{{ $currentRoomsLabel }}</span>
+                                            </div>
+                                            <i class="bi bi-chevron-down text-xs text-gray-400 transition-transform duration-200 filter-custom-chevron shrink-0" id="filterRoomChevron"></i>
+                                        </button>
 
-                                    <!-- Building Type Select -->
-                                    <div class="relative bg-gray-50 hover:bg-white border border-gray-200 rounded-xl p-3 transition focus-within:border-[#f1913d] focus-within:bg-white shadow-2xs flex items-center gap-2.5">
-                                        <img src="/images/layers.svg" alt="layers" class="w-4 h-4 shrink-0">
-                                        <select name="buildingType" id="buildingTypeSelect" class="w-full bg-transparent text-gray-800 font-semibold text-xs sm:text-sm focus:outline-none cursor-pointer appearance-none pr-6">
-                                            <option value="">{{ __('Bütün Kateqoriyalar') }}</option>
-                                            @foreach($buildingTypes ?? [] as $buildingType)
-                                                <option value="{{ $buildingType->value }}" {{ request('buildingType') == $buildingType->value ? 'selected' : '' }}>
-                                                    {{ $buildingType->name['az'] ?? $buildingType->value }}
-                                                </option>
+                                        <div id="filterRoomDropdown"
+                                             class="hidden absolute left-0 top-full mt-2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden filter-custom-menu max-h-60 overflow-y-auto">
+                                            @foreach($roomOptions as $rVal => $rLabel)
+                                                <div data-val="{{ $rVal }}"
+                                                     class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ (string)$currentRooms === (string)$rVal ? 'text-[#f1913d] bg-orange-50/60 font-bold' : 'text-gray-700 hover:bg-gray-50' }} transition cursor-pointer">
+                                                    <span class="item-label">{{ $rLabel }}</span>
+                                                    <i class="bi bi-check2 text-sm text-[#f1913d] item-check {{ (string)$currentRooms === (string)$rVal ? '' : 'hidden' }}"></i>
+                                                </div>
                                             @endforeach
-                                        </select>
-                                        <i class="bi bi-chevron-down text-orange-500 text-xs absolute right-3 pointer-events-none"></i>
+                                        </div>
+                                        <input type="hidden" name="roomCount" id="roomCountInput" value="{{ $currentRooms }}">
                                     </div>
 
-                                    <!-- City Filter Trigger -->
-                                    <div class="relative bg-gray-50 hover:bg-white border border-gray-200 rounded-xl p-3 transition cursor-pointer select-none shadow-2xs flex items-center justify-between hover:border-orange-400"
-                                         id="openModal">
-                                        <div class="flex items-center gap-2.5 min-w-0">
-                                            <img src="/images/city.svg" alt="city" class="w-4 h-4 shrink-0">
-                                            <span class="text-gray-800 font-semibold text-xs sm:text-sm truncate" data-role="display-value" data-filter="city">
-                                                {{ $cities->firstWhere('id', request('cityId'))?->name['az'] ?? ($cities->firstWhere('id', request('cityId'))?->value ?? __('Bütün Şəhərlər')) }}
-                                            </span>
+                                    <!-- Building Type Custom Dropdown (Navbar Style) -->
+                                    @php
+                                        $currentBuildingType = request('buildingType', '');
+                                        $currentBuildingLabel = __('Bütün Kateqoriyalar');
+                                        if ($currentBuildingType) {
+                                            $matching = collect($buildingTypes)->firstWhere('value', $currentBuildingType);
+                                            if ($matching) $currentBuildingLabel = $matching->name['az'] ?? $matching->value;
+                                        }
+                                    @endphp
+                                    <div class="relative">
+                                        <button id="filterBuildingBtn" type="button"
+                                                class="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 bg-gray-50 hover:bg-gray-100/80 border border-gray-200/90 rounded-2xl text-xs sm:text-sm font-bold text-gray-800 transition shadow-2xs cursor-pointer select-none">
+                                            <div class="flex items-center gap-2 min-w-0">
+                                                <img src="/images/layers.svg" alt="layers" class="w-4 h-4 shrink-0">
+                                                <span class="btn-display-text truncate font-bold text-gray-800">{{ $currentBuildingLabel }}</span>
+                                            </div>
+                                            <i class="bi bi-chevron-down text-xs text-gray-400 transition-transform duration-200 filter-custom-chevron shrink-0" id="filterBuildingChevron"></i>
+                                        </button>
+
+                                        <div id="filterBuildingDropdown"
+                                             class="hidden absolute left-0 top-full mt-2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden filter-custom-menu max-h-60 overflow-y-auto">
+                                            <div data-val=""
+                                                 class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ empty($currentBuildingType) ? 'text-[#f1913d] bg-orange-50/60 font-bold' : 'text-gray-700 hover:bg-gray-50' }} transition cursor-pointer">
+                                                <span class="item-label">{{ __('Bütün Kateqoriyalar') }}</span>
+                                                <i class="bi bi-check2 text-sm text-[#f1913d] item-check {{ empty($currentBuildingType) ? '' : 'hidden' }}"></i>
+                                            </div>
+                                            @foreach($buildingTypes ?? [] as $bType)
+                                                @php
+                                                    $bLabel = $bType->name['az'] ?? $bType->value;
+                                                    $isSel = $currentBuildingType === $bType->value;
+                                                @endphp
+                                                <div data-val="{{ $bType->value }}"
+                                                     class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ $isSel ? 'text-[#f1913d] bg-orange-50/60 font-bold' : 'text-gray-700 hover:bg-gray-50' }} transition cursor-pointer">
+                                                    <span class="item-label">{{ $bLabel }}</span>
+                                                    <i class="bi bi-check2 text-sm text-[#f1913d] item-check {{ $isSel ? '' : 'hidden' }}"></i>
+                                                </div>
+                                            @endforeach
                                         </div>
-                                        <i class="bi bi-chevron-down text-orange-500 text-xs shrink-0"></i>
+                                        <input type="hidden" name="buildingType" id="buildingTypeInput" value="{{ $currentBuildingType }}">
+                                    </div>
+
+                                    <!-- City Filter Trigger Button (Navbar Style) -->
+                                    <div class="relative">
+                                        <button id="openModal" type="button"
+                                                class="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 bg-gray-50 hover:bg-gray-100/80 border border-gray-200/90 rounded-2xl text-xs sm:text-sm font-bold text-gray-800 transition shadow-2xs cursor-pointer select-none">
+                                            <div class="flex items-center gap-2 min-w-0">
+                                                <img src="/images/city.svg" alt="city" class="w-4 h-4 shrink-0">
+                                                <span class="truncate font-bold text-gray-800" data-role="display-value" data-filter="city">
+                                                    {{ $cities->firstWhere('id', request('cityId'))?->name['az'] ?? ($cities->firstWhere('id', request('cityId'))?->value ?? __('Bütün Şəhərlər')) }}
+                                                </span>
+                                            </div>
+                                            <i class="bi bi-chevron-down text-xs text-gray-400 shrink-0"></i>
+                                        </button>
                                     </div>
 
                                 </div>
