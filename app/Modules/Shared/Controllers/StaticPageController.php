@@ -9,17 +9,32 @@ class StaticPageController extends Controller
 {
     public function about(): View
     {
-        return view('pages.static.about-us');
+        $breadcrumbs = [
+            ['label' => __('Ana səhifə'), 'url' => '/'],
+            ['label' => __('Haqqımızda'), 'url' => null],
+        ];
+
+        return view('pages.static.about-us', compact('breadcrumbs'));
     }
 
     public function contact(): View
     {
-        return view('pages.static.contact');
+        $breadcrumbs = [
+            ['label' => __('Ana səhifə'), 'url' => '/'],
+            ['label' => __('Əlaqə'), 'url' => null],
+        ];
+
+        return view('pages.static.contact', compact('breadcrumbs'));
     }
 
     public function faq(): View
     {
-        return view('pages.static.faq');
+        $breadcrumbs = [
+            ['label' => __('Ana səhifə'), 'url' => '/'],
+            ['label' => __('FAQ'), 'url' => null],
+        ];
+
+        return view('pages.static.faq', compact('breadcrumbs'));
     }
 
     public function favorites(): View

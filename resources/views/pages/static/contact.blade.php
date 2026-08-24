@@ -1,176 +1,324 @@
 @extends('layouts.app')
 
+@section('title', __('Bizimlə Əlaqə') . ' - Metraj.az')
+
+@push('styles')
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+    .leaflet-container {
+        font-family: inherit;
+        z-index: 1;
+    }
+</style>
+@endpush
+
 @section('content')
-<div>
+<div class="w-full pt-4 pb-16">
+    @include('components.breadcrumb', ['items' => $breadcrumbs ?? []])
     @include('components.scroll-top')
-    <div class="contact-header">
-        <div id="map"></div>
 
-        <section id="contact-form-section" class="">
-            <div class="contact-form-container mx-auto py-3">
-                <div class="contact-form-box">
-                    <h2 class="contact-form-title">We Would Love to Hear From You</h2>
-                    <p class="contact-form-subtitle">We'll get to know you to understand your selling goals, explain the selling process so you know what to expect.</p>
+    {{-- ==================== PAGE HEADER ==================== --}}
+    <div class="py-4 sm:py-6">
+        <div class="max-w-3xl mb-8 sm:mb-10">
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[color:var(--text-color)] leading-tight">
+                {{ __('Bizimlə Əlaqə') }}
+            </h1>
+            <p class="text-sm sm:text-base text-[color:var(--grey-text)] mt-2 leading-relaxed">
+                {{ __('Daşınmaz əmlak alqı-satqısı, kirayəsi, qiymətləndirmə və ya əməkdaşlıqla bağlı suallarınız üçün bizə müraciət edin. Peşəkar heyətimiz sizə yardım etməyə hazırdır.') }}
+            </p>
+        </div>
 
-                    <form action="{{ route('inquiries.contact') }}" method="post" id="contact-form" class="contact-form">
-                        @csrf
-                        <div class="contact-form-grid">
-                            <div class="contact-form-group">
-                                <label for="name" class="contact-label">Name:</label>
-                                <input type="text" id="name" name="name" class="contact-input" placeholder="Your name">
-                            </div>
-                            <div class="contact-form-group">
-                                <label for="email" class="contact-label">Email:</label>
-                                <input type="email" id="email" name="email" class="contact-input" placeholder="Email">
-                            </div>
-                            <div class="contact-form-group">
-                                <label for="phone" class="contact-label">Phone number:</label>
-                                <input type="text" id="phone" name="phone" class="contact-input" placeholder="Your phone number">
-                            </div>
-                            <div class="contact-form-group">
-                                <label for="interest" class="contact-label">What are you interested in?</label>
-                                <select id="interest" name="interest" class="contact-select">
-                                    <option value="">Select</option>
-                                    <option value="buy">Buying</option>
-                                    <option value="sell">Selling</option>
-                                </select>
-                            </div>
+        {{-- ==================== CONTACT INFO CARDS ==================== --}}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-8 sm:mb-12">
+            {{-- Phone --}}
+            <div class="bg-white rounded-3xl p-6 border border-gray-100/90 shadow-sm hover:shadow-md transition flex flex-col">
+                <div class="w-12 h-12 rounded-2xl bg-orange-50 text-[var(--primary)] flex items-center justify-center text-xl mb-4 shrink-0">
+                    <i class="bi bi-telephone-fill"></i>
+                </div>
+                <h3 class="font-bold text-gray-900 text-base mb-1">{{ __('Telefon') }}</h3>
+                <p class="text-xs text-gray-500 mb-3">{{ __('İş saatlarında zəng edin') }}</p>
+                <a href="tel:+994501234567" class="text-sm font-bold text-[var(--primary)] hover:underline mt-auto">
+                    +994 50 123 45 67
+                </a>
+                <a href="tel:+994124000000" class="text-xs text-gray-600 hover:text-[var(--primary)] mt-1">
+                    +994 12 400 00 00
+                </a>
+            </div>
+
+            {{-- WhatsApp --}}
+            <div class="bg-white rounded-3xl p-6 border border-gray-100/90 shadow-sm hover:shadow-md transition flex flex-col">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl mb-4 shrink-0">
+                    <i class="bi bi-whatsapp"></i>
+                </div>
+                <h3 class="font-bold text-gray-900 text-base mb-1">{{ __('WhatsApp') }}</h3>
+                <p class="text-xs text-gray-500 mb-3">{{ __('24/7 onlayn mesaj dəstəyi') }}</p>
+                <a href="https://wa.me/994501234567" target="_blank" class="text-sm font-bold text-emerald-600 hover:underline mt-auto flex items-center gap-1.5">
+                    {{ __('Çata Başla') }} <i class="bi bi-arrow-right text-xs"></i>
+                </a>
+            </div>
+
+            {{-- Email --}}
+            <div class="bg-white rounded-3xl p-6 border border-gray-100/90 shadow-sm hover:shadow-md transition flex flex-col">
+                <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-4 shrink-0">
+                    <i class="bi bi-envelope-fill"></i>
+                </div>
+                <h3 class="font-bold text-gray-900 text-base mb-1">{{ __('E-poçt') }}</h3>
+                <p class="text-xs text-gray-500 mb-3">{{ __('Rəsmi müraciətlər üçün') }}</p>
+                <a href="mailto:info@metraj.az" class="text-sm font-bold text-blue-600 hover:underline mt-auto break-all">
+                    info@metraj.az
+                </a>
+            </div>
+
+            {{-- Address --}}
+            <div class="bg-white rounded-3xl p-6 border border-gray-100/90 shadow-sm hover:shadow-md transition flex flex-col">
+                <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl mb-4 shrink-0">
+                    <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <h3 class="font-bold text-gray-900 text-base mb-1">{{ __('Baş Ofis') }}</h3>
+                <p class="text-xs text-gray-500 mb-2">{{ __('Bakı & Şimali Kipr') }}</p>
+                <span class="text-xs text-gray-700 leading-relaxed mt-auto">
+                    Bakı ş., Nəsimi r., Nizami küç. 45
+                </span>
+            </div>
+        </div>
+
+        {{-- ==================== MAIN 2-COLUMN SECTION: FORM + MAP ==================== --}}
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
+            {{-- Left: Contact Form (7 cols) --}}
+            <div class="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-gray-100/90 shadow-sm">
+                <div class="mb-6 sm:mb-8">
+                    <span class="bg-orange-50 text-[var(--primary)] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-2">
+                        {{ __('Bizə Yazın') }}
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-bold text-[color:var(--text-color)]">
+                        {{ __('Müraciət Formu') }}
+                    </h2>
+                    <p class="text-xs sm:text-sm text-[color:var(--grey-text)] mt-1">
+                        {{ __('Formu doldurun, mütəxəssislərimiz ən qısa zamanda sizinlə əlaqə saxlasın.') }}
+                    </p>
+                </div>
+
+                <form action="{{ route('inquiries.contact') }}" method="POST" id="contactForm" class="space-y-4 sm:space-y-5">
+                    @csrf
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {{-- Name --}}
+                        <div>
+                            <label for="contact_name" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                                {{ __('Adınız və Soyadınız') }} <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="contact_name" name="name" required placeholder="{{ __('Məs: Samir Əliyev') }}"
+                                   class="w-full px-4 py-3 text-sm bg-gray-50/60 border border-gray-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/40 focus:border-orange-500 transition">
                         </div>
-                        <div class="contact-form-group contact-form-fullwidth">
-                            <label for="message" class="contact-label">Your Message:</label>
-                            <textarea id="message" name="message" class="contact-textarea" placeholder="Message"></textarea>
+
+                        {{-- Phone --}}
+                        <div>
+                            <label for="contact_phone" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                                {{ __('Əlaqə Nömrəniz') }} <span class="text-red-500">*</span>
+                            </label>
+                            <input type="tel" id="contact_phone" name="phone" required placeholder="{{ __('+994 50 000 00 00') }}"
+                                   class="w-full px-4 py-3 text-sm bg-gray-50/60 border border-gray-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/40 focus:border-orange-500 transition">
                         </div>
-                        <button type="submit" class="button-hover all-btn contact-submit-btn">Contact our experts</button>
-                    </form>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {{-- Email --}}
+                        <div>
+                            <label for="contact_email" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                                {{ __('E-poçt Ünvanı') }}
+                            </label>
+                            <input type="email" id="contact_email" name="email" placeholder="{{ __('email@example.com') }}"
+                                   class="w-full px-4 py-3 text-sm bg-gray-50/60 border border-gray-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/40 focus:border-orange-500 transition">
+                        </div>
+
+                        {{-- Service Interest --}}
+                        <div>
+                            <label for="contact_subject" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                                {{ __('Mövzu / Xidmət növü') }}
+                            </label>
+                            <select id="contact_subject" name="interest"
+                                    class="w-full px-4 py-3 text-sm bg-gray-50/60 border border-gray-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/40 focus:border-orange-500 transition cursor-pointer">
+                                <option value="">{{ __('Seçin...') }}</option>
+                                <option value="buy">{{ __('Əmlak Alışı') }}</option>
+                                <option value="sell">{{ __('Əmlak Satışı') }}</option>
+                                <option value="rent">{{ __('Kirayə Əmlak') }}</option>
+                                <option value="agency">{{ __('Agentlik / Rieltor Əməkdaşlığı') }}</option>
+                                <option value="other">{{ __('Digər Məsələlər') }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {{-- Message --}}
+                    <div>
+                        <label for="contact_message" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                            {{ __('Mesajınız') }}
+                        </label>
+                        <textarea id="contact_message" name="message" rows="4" placeholder="{{ __('Sualınızı və ya təklifinizi ətraflı qeyd edin...') }}"
+                                  class="w-full px-4 py-3 text-sm bg-gray-50/60 border border-gray-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/40 focus:border-orange-500 transition resize-none"></textarea>
+                    </div>
+
+                    <div class="pt-2 flex items-center justify-between flex-wrap gap-4">
+                        <button type="submit" id="contactSubmitBtn"
+                                class="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-sm rounded-2xl shadow-md hover:shadow-lg transition duration-200 flex items-center justify-center gap-2">
+                            <span>{{ __('Mesajı Göndər') }}</span>
+                            <i class="bi bi-send-fill text-xs"></i>
+                        </button>
+                        <span class="text-[11px] text-gray-400">
+                            <i class="bi bi-shield-check text-green-500 mr-1"></i>{{ __('Məlumatlarınızın təhlükəsizliyi qorunur') }}
+                        </span>
+                    </div>
+                </form>
+            </div>
+
+            {{-- Right: Interactive Map & Working Hours (5 cols) --}}
+            <div class="lg:col-span-5 space-y-6">
+                {{-- Map Card --}}
+                <div class="bg-white rounded-3xl overflow-hidden border border-gray-100/90 shadow-sm p-2">
+                    <div id="contactMap" class="w-full h-[260px] sm:h-[300px] rounded-2xl z-0"></div>
+                </div>
+
+                {{-- Working Hours Card --}}
+                <div class="bg-white rounded-3xl p-6 sm:p-7 border border-gray-100/90 shadow-sm">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-orange-50 text-[var(--primary)] flex items-center justify-center text-lg">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 text-sm sm:text-base">{{ __('İş Qrafiki') }}</h3>
+                            <p class="text-xs text-gray-400">{{ __('Müştəri xidmətləri') }}</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2.5 text-xs sm:text-sm text-gray-600">
+                        <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                            <span class="font-medium text-gray-800">{{ __('Bazar ertəsi – Cümə:') }}</span>
+                            <span class="font-bold text-gray-900">09:00 – 19:00</span>
+                        </div>
+                        <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                            <span class="font-medium text-gray-800">{{ __('Şənbə:') }}</span>
+                            <span class="font-bold text-gray-900">10:00 – 18:00</span>
+                        </div>
+                        <div class="flex items-center justify-between py-1.5 text-gray-500">
+                            <span class="font-medium">{{ __('Bazar:') }}</span>
+                            <span class="text-orange-500 font-semibold">{{ __('Onlayn müraciət 24/7') }}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+
+        {{-- ==================== FAQ BANNER CTA ==================== --}}
+        <div class="mt-10 sm:mt-12 bg-gradient-to-r from-orange-500 via-orange-600 to-amber-500 rounded-3xl p-8 sm:p-10 text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="max-w-xl">
+                <span class="text-xs font-bold uppercase tracking-wider bg-white/20 px-3 py-1 rounded-full inline-block mb-2 backdrop-blur-sm">
+                    {{ __('Kömək Lazımdır?') }}
+                </span>
+                <h3 class="text-xl sm:text-2xl font-black">{{ __('Tez-tez verilən suallarınız var?') }}</h3>
+                <p class="text-xs sm:text-sm text-orange-100 mt-1.5 leading-relaxed">
+                    {{ __('Elan yerləşdirmə, qiymətləndirmə, sənədləşmə və agentliklərlə bağlı ən çox soruşulan sualların cavablarını dərhal FAQ bölməsində tapın.') }}
+                </p>
+            </div>
+            <a href="{{ route('faq') }}"
+               class="px-6 sm:px-8 py-3.5 bg-white text-orange-600 hover:bg-orange-50 font-extrabold text-sm rounded-2xl shadow-md transition duration-200 whitespace-nowrap flex items-center gap-2 shrink-0">
+                <span>{{ __('FAQ Səhifəsinə Keç') }}</span>
+                <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
     </div>
-    <main>
-        <div class="re-container px-4">
-            <div class="re-content">
-                <h1 class="re-title">We provide the most suitable and quality real estate.</h1>
-                <p class="re-description">Estimate your payment with our easy-to-use loan calculator. Then get pre-qualified to buy by a local lender.</p>
-
-                <div class="re-contact-info">
-
-                    <div class="re-contact-item">
-                        <div class="re-icon-box">
-                            <svg class="re-icon" viewBox="0 0 24 24">
-                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                            </svg>
-                        </div>
-                        <div class="re-contact-text">
-                            <span class="re-contact-label">Office phone</span>
-
-                            @if($setting->phone ?? false)
-                            <span class="re-contact-phone">{{ $setting->phone }}</span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="re-contact-item">
-                        <div class="re-icon-box">
-                            <svg class="re-icon" viewBox="0 0 24 24">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                <polyline points="22,6 12,13 2,6"></polyline>
-                            </svg>
-                        </div>
-                        <div class="re-contact-text">
-                            <span class="re-contact-label">Office email</span>
-                            @if($setting->email ?? false)
-                            <span class="re-contact-email">{{ $setting->email }}</span>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="re-image">
-                <img src="https://themesflat.co/html/proty/images/section/section-contact-2.jpg" alt="">
-            </div>
-        </div>
-        <div class="work-together">
-
-            <div class="mx-auto py-3 container">
-                <div class="title">
-                    <h2>Let's Work Together</h2>
-                    <p>Thousands of luxury home enthusiasts just like you visit our website.</p>
-                </div>
-                <div class="carousels">
-                    <div class="carousel">
-                        <div class="carousel-track">
-                            <div class="partner-item"><img src="/images/spark.svg" alt="Normal"></div>
-                            <div class="partner-item"><img src="/images/quora.svg" alt="Hover"></div>
-                            <div class="partner-item"><img src="/images/spark.svg" alt="Normal"></div>
-                            <div class="partner-item"><img src="/images/quora.svg" alt="Hover"></div>
-                            <div class="partner-item"><img src="/images/spark.svg" alt="Normal"></div>
-                            <div class="partner-item"><img src="/images/quora.svg" alt="Hover"></div>
-                            <div class="partner-item"><img src="/images/spark.svg" alt="Normal"></div>
-                            <div class="partner-item"><img src="/images/quora.svg" alt="Hover"></div>
-                        </div>
-
-                    </div>
-
-                    <div class="carousel">
-                        <div class="carousel-track reverse">
-                            <div class="partner-item"><img src="/images/quora.svg" alt="Normal"></div>
-                            <div class="partner-item"><img src="/images/spark.svg" alt="Hover"></div>
-                            <div class="partner-item"><img src="/images/quora.svg" alt="Normal"></div>
-                            <div class="partner-item"><img src="/images/spark.svg" alt="Hover"></div>
-                            <div class="partner-item"><img src="/images/quora.svg" alt="Normal"></div>
-                            <div class="partner-item"><img src="/images/spark.svg" alt="Hover"></div>
-                            <div class="partner-item"><img src="/images/quora.svg" alt="Normal"></div>
-                            <div class="partner-item"><img src="/images/spark.svg" alt="Hover"></div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </main>
-
 </div>
+@endsection
 
+@push('scripts')
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-    // Əlaqə forması — JS fetch ilə göndərilir
-    document.addEventListener('DOMContentLoaded', function () {
-        const contactForm = document.getElementById('contact-form');
-        if (!contactForm) return;
+document.addEventListener('DOMContentLoaded', function () {
+    // 1. Initialize Leaflet Map
+    const mapEl = document.getElementById('contactMap');
+    if (mapEl) {
+        // Baku / KKTC location
+        const defaultLat = 40.4093;
+        const defaultLng = 49.8671;
 
+        const map = L.map('contactMap', {
+            center: [defaultLat, defaultLng],
+            zoom: 14,
+            scrollWheelZoom: false
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Custom Marker
+        const customIcon = L.divIcon({
+            className: 'custom-map-pin',
+            html: '<div style="background: linear-gradient(135deg, #f97316, #ea580c); width: 36px; height: 36px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(234,88,12,0.4); border: 2px solid white;"><i class="bi bi-geo-alt-fill" style="transform: rotate(45deg); color: white; font-size: 16px;"></i></div>',
+            iconSize: [36, 36],
+            iconAnchor: [18, 36]
+        });
+
+        L.marker([defaultLat, defaultLng], { icon: customIcon })
+            .addTo(map)
+            .bindPopup('<b>Metraj.az Baş Ofisi</b><br>Bakı ş., Nizami küç. 45')
+            .openPopup();
+    }
+
+    // 2. Contact Form AJAX Submission
+    const contactForm = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('contactSubmitBtn');
+
+    if (contactForm) {
         contactForm.addEventListener('submit', async function (e) {
             e.preventDefault();
 
-            const btn = contactForm.querySelector('button[type="submit"]');
-            if (btn) {
-                btn.disabled = true;
-                btn.style.opacity = '0.6';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> {{ __("Göndərilir...") }}';
             }
 
-            const { ok, status, data } = await window.Metraj.post(
-                contactForm.action,
-                new FormData(contactForm)
-            );
+            try {
+                const formData = new FormData(contactForm);
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    }
+                });
 
-            if (btn) {
-                btn.disabled = false;
-                btn.style.opacity = '1';
-            }
+                const data = await response.json();
 
-            if (ok) {
-                window.Metraj.toast(data.message || 'Mesajınız göndərildi ✅');
-                contactForm.reset();
-            } else {
-                let msg = data.message || 'Xəta baş verdi, yenidən cəhd edin';
-                if (status === 422 && data.errors) {
-                    const firstKey = Object.keys(data.errors)[0];
-                    if (firstKey) msg = data.errors[firstKey][0];
+                if (response.ok) {
+                    if (window.Metraj && window.Metraj.toast) {
+                        window.Metraj.toast(data.message || '{{ __("Mesajınız uğurla göndərildi!") }}');
+                    } else {
+                        alert(data.message || '{{ __("Mesajınız uğurla göndərildi!") }}');
+                    }
+                    contactForm.reset();
+                } else {
+                    let errMsg = data.message || '{{ __("Xəta baş verdi, zəhmət olmasa yenidən cəhd edin.") }}';
+                    if (data.errors) {
+                        const first = Object.values(data.errors)[0];
+                        if (first && first[0]) errMsg = first[0];
+                    }
+                    if (window.Metraj && window.Metraj.toast) {
+                        window.Metraj.toast(errMsg, 'error');
+                    } else {
+                        alert(errMsg);
+                    }
                 }
-                window.Metraj.toast(msg, 'error');
+            } catch (err) {
+                console.error('Contact submit error:', err);
+                alert('{{ __("Şəbəkə xətası baş verdi.") }}');
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>{{ __("Mesajı Göndər") }}</span> <i class="bi bi-send-fill text-xs"></i>';
+                }
             }
         });
-    });
+    }
+});
 </script>
-@endsection
+@endpush

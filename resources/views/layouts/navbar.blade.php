@@ -1,5 +1,5 @@
-<header class="bg-white border-b border-gray-200 sticky top-0 z-[100]">
-  <div class="container mx-auto px-4 h-[70px] flex items-center justify-between gap-4">
+<header class="bg-white border-b border-gray-200 sticky top-0 z-100">
+  <div class="ml-4 mx-auto h-17.5 flex items-center justify-between gap-4">
 
     <!-- Logo -->
     <a href="/" class="flex items-center space-x-2 shrink-0">

@@ -1,19 +1,70 @@
-<div onclick="window.location.href='/blog/{{ $slug }}'" class="blog-card cursor-pointer">
-    <div class="blog-card-image">
-        <img src="{{ $images[0] ?? '' }}" alt="blog-card-image">
-        <span>{{ $category->name ?? '' }}</span>
+@props([
+    'blog' => null,
+    'slug' => null,
+    'images' => [],
+    'category' => null,
+    'date' => '',
+    'name' => '',
+    'excerpt' => '',
+])
+
+@php
+    $blogSlug = $blog ? $blog->slug : $slug;
+    $blogTitle = $blog ? $blog->title : $name;
+    $blogDate = $blog ? $blog->formatted_date : $date;
+    $blogCategory = $blog ? $blog->category : (is_object($category) ? ($category->name ?? '') : $category);
+    $blogImage = $blog ? ($blog->cover_image ?: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80') : (!empty($images[0]) ? $images[0] : 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80');
+    $blogExcerpt = $blog ? $blog->excerpt : $excerpt;
+@endphp
+
+<article onclick="window.location.href='/blog/{{ $blogSlug }}'"
+         class="blog-card bg-white rounded-2xl sm:rounded-3xl border border-gray-100/90 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group cursor-pointer h-full">
+    
+    {{-- Image & Badge --}}
+    <div class="blog-card-image relative overflow-hidden aspect-[16/10] bg-gradient-to-br from-orange-100 to-gray-100 shrink-0">
+        <img src="{{ $blogImage }}"
+             alt="{{ $blogTitle }}"
+             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+        
+        @if(!empty($blogCategory))
+            <span class="absolute top-3 left-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md backdrop-blur-sm">
+                {{ $blogCategory }}
+            </span>
+        @endif
     </div>
-    <div class="blog-card-info">
-        <div class="blog-time">
-            <i class="bi bi-clock-history"></i>
-            <p>{{ $date }}</p>
-        </div>
-        <div class="blog-title">
-            <h3>{{ Str::limit($name, 50) }}</h3>
+
+    {{-- Info & Content --}}
+    <div class="blog-card-info p-5 sm:p-6 flex flex-col flex-1">
+        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2.5">
+            <span class="flex items-center gap-1.5 font-medium">
+                <i class="bi bi-calendar3 text-[var(--primary)]"></i>
+                {{ $blogDate }}
+            </span>
+            <span class="text-gray-300">•</span>
+            <span class="flex items-center gap-1 text-gray-400">
+                <i class="bi bi-clock"></i> 3 dəq
+            </span>
         </div>
 
-        <a href="/blog/{{ $slug }}" onclick="event.stopPropagation()" class="blog-button">
-            Read More <i class="bi bi-arrow-right-circle"></i>
-        </a>
+        <h3 class="font-bold text-gray-900 text-base sm:text-lg group-hover:text-[var(--primary)] transition-colors line-clamp-2 leading-snug">
+            {{ $blogTitle }}
+        </h3>
+
+        @if(!empty($blogExcerpt))
+            <p class="blog-card-excerpt text-xs sm:text-sm text-gray-500 line-clamp-2 mt-2 leading-relaxed">
+                {{ $blogExcerpt }}
+            </p>
+        @endif
+
+        <div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-100/70">
+            <a href="/blog/{{ $blogSlug }}" onclick="event.stopPropagation()"
+               class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[var(--primary)] group-hover:text-orange-700 transition">
+                {{ __('Ətraflı oxu') }}
+                <i class="bi bi-arrow-right group-hover:translate-x-1 transition-transform"></i>
+            </a>
+            <span class="w-8 h-8 rounded-full bg-orange-50 text-[var(--primary)] group-hover:bg-[var(--primary)] group-hover:text-white flex items-center justify-center transition">
+                <i class="bi bi-chevron-right text-xs"></i>
+            </span>
+        </div>
     </div>
-</div>
+</article>

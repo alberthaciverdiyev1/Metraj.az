@@ -1,7 +1,7 @@
 @props(['property'])
 
 @php
-    $firstImage = $property->images->sortBy('sort_order')->first()?->url 
+    $firstImage = $property->images->sortBy('sort_order')->first()?->url
         ?? 'https://static.vecteezy.com/system/resources/previews/004/640/986/non_2x/tower-building-illustration-isolated-on-white-background-vector.jpg';
     $allImagePaths = $property->images->sortBy('sort_order')->pluck('url')->toArray();
     if (empty($allImagePaths)) {
@@ -11,11 +11,11 @@
 
     $title = $property->title;
     $fullTitle = $property->title;
-    
-    $date = $property->created_at 
+
+    $date = $property->created_at
         ? ($property->created_at->isToday() ? 'Bugün ' . $property->created_at->format('H:i') : $property->created_at->format('d.m.Y'))
         : '';
-        
+
     $formattedPrice = number_format($property->price, 0, '', ' ');
 
     // Dinamik olaraq deal_type və property_type filtrlərini əldə edirik
@@ -27,7 +27,7 @@
     $isRent = $dealTypeOpt ? (str_contains($dealTypeOpt->value, 'rent')) : false;
 
     $buildingTypeLabel = $propertyTypeOpt ? ($propertyTypeOpt->name['az'] ?? $propertyTypeOpt->value) : '';
-    
+
     // Təmir növü yoxlanışı (Əgər təmirli seçilibsə)
     $repairOpt = $selectedOptions->firstWhere('filter_id', 5);
     $isRepaired = $repairOpt ? (str_contains(strtolower($repairOpt->name['az'] ?? ''), 'təmirli') || strtolower($repairOpt->value) === 'repaired') : false;
@@ -70,15 +70,11 @@
         <i class="fa-regular fa-heart text-red-500"></i>
     </span>
 
-    <button onclick="event.stopPropagation()"
-            class="absolute right-2 top-2 bg-[#494949] bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-      <img src="/images/icon.svg" class="w-4 h-4 sm:w-5 sm:h-5" />
-    </button>
   </div>
 
   <div class="p-3 sm:p-4 flex flex-col flex-1">
     <div class="flex flex-col gap-2 min-h-[100px] sm:min-h-[120px]">
-
+ 
       <h3 class="font-semibold sm:font-semibold text-[color:var(--text-color)] text-sm sm:text-base md:text-md
           hover:text-[color:var(--primary)]
           line-clamp-1 group-hover:line-clamp-none

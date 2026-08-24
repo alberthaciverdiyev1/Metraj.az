@@ -9,20 +9,20 @@
     {{-- ==================== AGENCY PROFILE CARD ==================== --}}
     <div class="bg-white rounded-3xl shadow-sm border border-gray-100 mt-4 sm:mt-6 overflow-hidden">
         {{-- Banner strip --}}
-        <div class="h-28 sm:h-36 relative overflow-hidden @if(!$agency->banner_url) bg-gradient-to-r from-[var(--primary)] via-orange-400 to-orange-300 @endif">
-            @if($agency->banner_url)
-                <img src="{{ $agency->banner_url }}" alt="{{ $agency->name }} banner" class="w-full h-full object-cover">
+        <div class="h-28 sm:h-36 relative overflow-hidden @if(!($agency->banner || $agency->banner_url)) bg-gradient-to-r from-[var(--primary)] via-orange-400 to-orange-300 @endif">
+            @if($agency->banner || $agency->banner_url)
+                <img src="{{ $agency->banner ? (str_starts_with($agency->banner, 'http') ? $agency->banner : asset('storage/'.$agency->banner)) : $agency->banner_url }}" alt="{{ $agency->name }} banner" class="w-full h-full object-cover">
             @else
                 <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 50%, white 1.5px, transparent 1.5px); background-size: 22px 22px;"></div>
             @endif
         </div>
 
-        <div class="px-6 sm:px-8 pb-6 sm:pb-8">
+        <div class="px-6 sm:px-8 pb-6 sm:pb-8 relative z-10">
             {{-- Logo + Name --}}
-            <div class="flex flex-col sm:flex-row sm:items-end gap-4 -mt-10 sm:-mt-12">
-                <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-4 border-white shadow-lg overflow-hidden bg-white flex-shrink-0">
-                    @if($agency->logo_url)
-                        <img src="{{ $agency->logo_url }}" alt="{{ $agency->name }}" class="w-full h-full object-cover">
+            <div class="flex flex-col sm:flex-row sm:items-end gap-4 -mt-10 sm:-mt-12 relative z-10">
+                <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-4 border-white shadow-lg overflow-hidden bg-white flex-shrink-0 relative z-20">
+                    @if($agency->logo || $agency->logo_url)
+                        <img src="{{ $agency->logo ? (str_starts_with($agency->logo, 'http') ? $agency->logo : asset('storage/'.$agency->logo)) : $agency->logo_url }}" alt="{{ $agency->name }}" class="w-full h-full object-cover">
                     @else
                         <div class="w-full h-full bg-[var(--primary)] text-white font-black text-3xl sm:text-4xl flex items-center justify-center">
                             {{ strtoupper(substr($agency->name ?? 'A', 0, 1)) }}

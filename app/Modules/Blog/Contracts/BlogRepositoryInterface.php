@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface BlogRepositoryInterface
 {
-    public function paginatePublished(int $perPage = 12): LengthAwarePaginator;
+    public function paginatePublished(int $perPage = 12, ?string $category = null, ?string $search = null): LengthAwarePaginator;
 
     /**
      * Eyni kateqoriyadan oxşar bloqlar (bu bloq xaric).

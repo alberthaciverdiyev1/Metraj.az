@@ -16,9 +16,9 @@ class BlogService
         protected BlogRepository $blogRepository,
     ) {}
 
-    public function index(int $perPage = 12): LengthAwarePaginator
+    public function index(int $perPage = 12, ?string $category = null, ?string $search = null): LengthAwarePaginator
     {
-        return $this->blogRepository->paginatePublished($perPage);
+        return $this->blogRepository->paginatePublished($perPage, $category, $search);
     }
 
     /**

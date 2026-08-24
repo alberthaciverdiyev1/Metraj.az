@@ -1,71 +1,143 @@
 @extends('layouts.app')
 
+@section('title', __('Bloq və Xəbərlər') . ' - Metraj.az')
+
 @section('content')
-@include('components.breadcrumb', ['items' => $breadcrumbs ?? []])
+<div class="w-full pt-4 pb-16">
+    @include('components.breadcrumb', ['items' => $breadcrumbs ?? []])
+    @include('components.scroll-top')
 
-@include('components.scroll-top')
-
-<header>
-    <div class="w-full pt-4">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-start gap-4 md:gap-6">
-            <h2 class="text-2xl lg:text-4xl font-bold py-4 text-[color:var(--text-color)]">
-                {{ __('Blog grid') }}
-            </h2>
-
-            <div class="flex flex-wrap items-center gap-2">
-
-                <button id="gridViewBtn" class="px-3 grid-btn py-2 rounded-md active-filter" data-view="grid">
-                    <i class="bi bi-grid-3x3-gap"></i>
-                </button>
-
-                <button id="listViewBtn" class="px-3 py-2 list border border-[var(--border-color)] rounded-md" data-view="list">
-                    <i class="fas fa-list text-[color:var(--icon-grey)]"></i>
-                </button>
-
-            </div>
-        </div>
-    </div>
-</header>
-<main>
-    <section id="blog-cards">
-        <div class="container mx-auto px-3">
-            <div class="blog-cards">
-
-                @forelse($blogs as $blog)
-                    @include('components.cards.blog', [
-                        'slug' => $blog->slug,
-                        'images' => $blog->cover_image ? [$blog->cover_image] : [],
-                        'category' => (object) ['name' => $blog->category ?? 'Bloq'],
-                        'date' => $blog->formatted_date ?? '',
-                        'name' => $blog->title ?? '',
-                    ])
-                @empty
-                    <div class="text-center py-16 sm:py-20 col-span-full">
-                        <div class="text-5xl sm:text-6xl mb-4 text-gray-300"><i class="bi bi-journal-richtext"></i></div>
-                        <h3 class="text-lg sm:text-xl font-semibold text-gray-500">{{ __('Hələ heç bir bloq dərc edilməyib') }}</h3>
-                        <p class="text-sm sm:text-base text-gray-400 mt-2">{{ __('Tezliklə yeni məqalələr yayımlanacaq') }}</p>
-                    </div>
-                @endforelse
-
+    <section class="py-4 sm:py-6">
+        {{-- Header + Search & View Switcher --}}
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 sm:gap-6 mb-6 sm:mb-8">
+            <div>
+                <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[color:var(--text-color)] leading-tight">
+                    {{ __('Bloq və Xəbərlər') }}
+                </h1>
+                <p class="text-sm sm:text-base text-[color:var(--grey-text)] mt-1">
+                    {{ __('Daşınmaz əmlak bazarı, faydalı məsləhətlər və ən son yeniliklər') }}
+                </p>
             </div>
 
+            <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                <form method="GET" action="{{ route('blog.list') }}" class="relative flex-1 sm:w-72 lg:w-80">
+                    <input type="hidden" name="category" value="{{ $category ?? 'all' }}">
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                    <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="{{ __('Məqalə axtar...') }}"
+                           class="w-full pl-10 pr-4 py-2.5 sm:py-3 text-sm bg-white border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-400/40 focus:border-orange-500 shadow-sm transition">
+                </form>
+
+                {{-- Grid / List View Toggle --}}
+                <div class="flex items-center bg-gray-100 p-1 rounded-2xl border border-gray-200/50 shadow-sm">
+                    <button type="button" id="gridViewBtn" title="Qrid görünüşü"
+                            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition duration-200 bg-white text-orange-500 shadow-sm">
+                        <i class="bi bi-grid-3x3-gap-fill text-base"></i>
+                    </button>
+                    <button type="button" id="listViewBtn" title="Siyahı görünüşü"
+                            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition duration-200 text-gray-600 hover:text-gray-900 hover:bg-white/50">
+                        <i class="bi bi-list-ul text-lg"></i>
+                    </button>
+                </div>
+            </div>
         </div>
 
+        {{-- Categories Pills --}}
+        @if(!empty($categories) && $categories->isNotEmpty())
+        <div class="mb-6 sm:mb-8 overflow-x-auto pb-2 -mx-2 px-2 scrollbar-none">
+            <div class="flex items-center gap-2 flex-nowrap">
+                <a href="{{ route('blog.list', array_filter(['search' => $search, 'category' => 'all'])) }}"
+                   class="px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap {{ ($category ?? 'all') === 'all' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-sm' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200' }}">
+                    {{ __('Hamısı') }}
+                </a>
+                @foreach($categories as $cat)
+                    <a href="{{ route('blog.list', array_filter(['search' => $search, 'category' => $cat])) }}"
+                       class="px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition duration-200 whitespace-nowrap {{ ($category ?? '') === $cat ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-sm' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200' }}">
+                        {{ $cat }}
+                    </a>
+                @endforeach
+            </div>
+        </div>
+        @endif
+
+        {{-- Blog Grid / List Container --}}
+        @if($blogs->isEmpty())
+            <div class="bg-white rounded-3xl p-12 sm:p-16 text-center border border-gray-100 shadow-sm col-span-full">
+                <div class="w-20 h-20 bg-orange-50 text-[var(--primary)] rounded-full flex items-center justify-center mx-auto text-3xl mb-4">
+                    <i class="bi bi-journal-richtext"></i>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900">{{ __('Məqalə tapılmadı') }}</h3>
+                <p class="text-xs sm:text-sm text-gray-500 mt-1.5 max-w-sm mx-auto">
+                    {{ __('Axtarışınıza uyğun heç bir bloq məqaləsi tapılmadı. Zəhmət olmasa axtarış sözünü dəyişin.') }}
+                </p>
+                <a href="{{ route('blog.list') }}" class="inline-flex items-center gap-2 mt-5 px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold rounded-xl transition">
+                    <i class="bi bi-arrow-left"></i> {{ __('Bütün məqalələrə qayıt') }}
+                </a>
+            </div>
+        @else
+            <div id="blogContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+                @foreach($blogs as $blog)
+                    <x-cards.blog :blog="$blog" />
+                @endforeach
+            </div>
+
+            @if($blogs->hasPages())
+                <div class="mt-10 flex justify-center">
+                    {{ $blogs->links() }}
+                </div>
+            @endif
+        @endif
     </section>
-    <div class="mt-10">
-        {{ $blogs->onEachSide(2)->links() }}
-    </div>
-
-</main>
-
-@push('styles')
-<link rel="stylesheet" href="/css/blog.css">
-<link rel="stylesheet" href="/css/listing-details.css">
-<link rel="stylesheet" href="/css/agencies.css">
-<link rel="stylesheet" href="/css/app.css">
-@endpush
+</div>
+@endsection
 
 @push('scripts')
-<script src="/js/pages/blog/list.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const gridBtn = document.getElementById('gridViewBtn');
+    const listBtn = document.getElementById('listViewBtn');
+    const container = document.getElementById('blogContainer');
+
+    if (!container || !gridBtn || !listBtn) return;
+
+    function applyView(mode) {
+        if (mode === 'list') {
+            container.className = 'grid grid-cols-1 gap-5';
+            
+            // Adjust card classes for list mode
+            container.querySelectorAll('.blog-card').forEach(card => {
+                card.classList.add('sm:flex-row');
+                const imgWrap = card.querySelector('.blog-card-image');
+                if (imgWrap) {
+                    imgWrap.className = 'blog-card-image relative overflow-hidden aspect-[16/10] sm:aspect-auto sm:w-72 sm:min-w-[280px] bg-gradient-to-br from-orange-100 to-gray-100 shrink-0';
+                }
+            });
+
+            listBtn.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition duration-200 bg-white text-orange-500 shadow-sm';
+            gridBtn.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition duration-200 text-gray-600 hover:text-gray-900 hover:bg-white/50';
+        } else {
+            container.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6';
+            
+            container.querySelectorAll('.blog-card').forEach(card => {
+                card.classList.remove('sm:flex-row');
+                const imgWrap = card.querySelector('.blog-card-image');
+                if (imgWrap) {
+                    imgWrap.className = 'blog-card-image relative overflow-hidden aspect-[16/10] bg-gradient-to-br from-orange-100 to-gray-100 shrink-0';
+                }
+            });
+
+            gridBtn.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition duration-200 bg-white text-orange-500 shadow-sm';
+            listBtn.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition duration-200 text-gray-600 hover:text-gray-900 hover:bg-white/50';
+        }
+        localStorage.setItem('metraj_blog_view', mode);
+    }
+
+    gridBtn.addEventListener('click', () => applyView('grid'));
+    listBtn.addEventListener('click', () => applyView('list'));
+
+    const savedView = localStorage.getItem('metraj_blog_view') || 'grid';
+    if (savedView === 'list') {
+        applyView('list');
+    }
+});
+</script>
 @endpush
-@endsection

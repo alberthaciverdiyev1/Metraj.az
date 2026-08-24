@@ -13,16 +13,20 @@ class BlogController extends Controller
         protected BlogService $blogService,
     ) {}
 
-    public function index(): View
+    public function index(\Illuminate\Http\Request $request): View
     {
-        $blogs = $this->blogService->index(12);
+        $category = $request->get('category', 'all');
+        $search = $request->get('search');
+
+        $blogs = $this->blogService->index(12, $category, $search);
+        $categories = Blog::published()->whereNotNull('category')->distinct()->pluck('category');
 
         $breadcrumbs = [
             ['label' => __('Home'), 'url' => '/'],
             ['label' => __('Blog'), 'url' => '/blog'],
         ];
 
-        return view('pages.blog.list', compact('blogs', 'breadcrumbs'));
+        return view('pages.blog.list', compact('blogs', 'categories', 'category', 'search', 'breadcrumbs'));
     }
 
     public function show(Blog $blog): View
