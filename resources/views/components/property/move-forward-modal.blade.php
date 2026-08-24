@@ -1,5 +1,5 @@
 <div id="modal-advance"
-     class="fixed inset-0 flex items-center justify-center z-[1000] bg-black bg-opacity-50" style="display: none;">
+     class="fixed inset-0 flex items-center justify-center z-[1000] bg-black/50" style="display: none;">
     <div class="bg-white rounded-lg shadow-lg max-w-sm w-full mx-4 min-h-[50vh] max-h-[80vh] relative p-4 flex flex-col space-y-4">
         <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold gap-2 m-0 flex items-center">

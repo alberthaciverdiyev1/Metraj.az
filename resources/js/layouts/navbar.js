@@ -84,4 +84,31 @@ document.addEventListener('DOMContentLoaded', function () {
     if (mobileMoreBtn) mobileMoreBtn.addEventListener('click', openDrawer);
     if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
     if (backdrop) backdrop.addEventListener('click', closeDrawer);
+
+    // Responsive guard: hide the mobile bottom nav & close the drawer on
+    // desktop. Uses an inline style because the `hidden` class can be
+    // overridden by the @tailwindcss/browser runtime-generated `.flex` rule;
+    // an inline style wins over every class, so the mobile UI can never leak
+    // onto desktop regardless of Tailwind utility ordering or media-query
+    // support.
+    var mobileNav = document.getElementById('mobileBottomNav');
+    var desktopQuery = window.matchMedia('(min-width: 768px)');
+
+    function applyResponsiveMobileUI() {
+      var isDesktop = desktopQuery.matches;
+      if (mobileNav) {
+        mobileNav.style.display = isDesktop ? 'none' : '';
+      }
+      if (isDesktop && mobileDrawer) {
+        mobileDrawer.classList.add('hidden');
+      }
+    }
+
+    applyResponsiveMobileUI();
+    if (desktopQuery.addEventListener) {
+      desktopQuery.addEventListener('change', function (e) {
+        if (e.matches && typeof closeDrawer === 'function') closeDrawer();
+        applyResponsiveMobileUI();
+      });
+    }
 });

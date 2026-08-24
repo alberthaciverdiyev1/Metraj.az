@@ -193,7 +193,7 @@
 </header>
 
 <!-- Mobile Instagram-style Bottom Navigation Bar -->
-<nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200/90 px-2 flex items-center justify-around select-none">
+<nav id="mobileBottomNav" class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200/90 px-2 flex items-center justify-around select-none">
 
   <!-- 1. ƏMLAK -->
   <a href="{{ route('listing') }}" class="flex flex-col items-center justify-center flex-1 py-1 text-center transition {{ request()->routeIs('listing*') || request()->routeIs('home') ? 'text-[#f1913d] font-semibold' : 'text-gray-400 hover:text-gray-700' }}">
@@ -240,7 +240,8 @@
 </nav>
 
 <!-- Mobile "Daha Çox" Drawer / Sheet -->
-<div id="mobileMoreDrawer" class="hidden md:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex flex-col justify-end transition-opacity duration-300">
+<div id="mobileMoreDrawer" class="hidden md:hidden fixed inset-0 z-50">
+  <div class="w-full h-full flex flex-col justify-end bg-black/60 backdrop-blur-xs transition-opacity duration-300">
   <div class="flex-1" id="mobileMoreDrawerBackdrop"></div>
 
   <div class="bg-white rounded-t-3xl max-h-[95vh] overflow-y-auto shadow-2xl p-5 space-y-4 border-t border-gray-100 transform transition-transform duration-300">
@@ -364,6 +365,7 @@
       @endauth
     </div>
 
+    </div>
   </div>
 </div>
 
