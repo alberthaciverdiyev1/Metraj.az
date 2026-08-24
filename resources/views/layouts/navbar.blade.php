@@ -239,105 +239,128 @@
 
 </nav>
 
-<!-- Mobile "Daha Çox" Fullscreen Screen -->
-<div id="mobileMoreDrawer" class="hidden md:hidden fixed inset-0 z-50 bg-white flex flex-col overflow-y-auto select-none">
-  
-  <!-- Header with Back Arrow and Title -->
-  <div class="h-14 border-b border-gray-100 flex items-center justify-between px-4 sticky top-0 bg-white z-10 shrink-0">
-    <button type="button" id="closeMobileMoreDrawer" class="w-10 h-10 flex items-center justify-start text-gray-500 hover:text-gray-900 text-xl cursor-pointer">
-      <i class="bi bi-chevron-left text-lg"></i>
-    </button>
-    <h1 class="text-base font-medium text-gray-900">{{ __('Daha çox') }}</h1>
-    <div class="w-10"></div>
-  </div>
+<!-- Mobile "Daha Çox" Drawer / Sheet -->
+<div id="mobileMoreDrawer" class="hidden md:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex flex-col justify-end transition-opacity duration-300">
+  <div class="flex-1" id="mobileMoreDrawerBackdrop"></div>
 
-  <!-- Content Sections -->
-  <div class="flex-1 pb-24 divide-y divide-gray-100">
+  <div class="bg-white rounded-t-3xl max-h-[85vh] overflow-y-auto shadow-2xl p-5 space-y-4 border-t border-gray-100 transform transition-transform duration-300">
     
-    <!-- Language Row -->
-    <div class="px-5 py-4 flex items-center justify-between bg-white cursor-pointer hover:bg-gray-50 transition" id="mobileLangDrawerBtn">
-      <div class="flex items-center gap-3.5">
-        <i class="bi bi-globe text-xl text-gray-500"></i>
-        <span class="text-[15px] font-normal text-gray-900">
-          @if($currentLocale === 'az')
-            Русский язык
-          @elseif($currentLocale === 'ru')
-            Azərbaycan dili
-          @else
-            English
-          @endif
-        </span>
+    <!-- Drawer Header -->
+    <div class="flex items-center justify-between pb-3 border-b border-gray-100">
+      <div class="flex items-center space-x-2">
+        <img class="h-8 w-auto object-contain" src="/images/metrajlogo1.png" alt="Metraj.az" />
+        <span class="font-extrabold text-base text-gray-800">Metraj.az</span>
       </div>
-      <div class="flex items-center gap-1.5 text-xs text-gray-400 font-bold uppercase">
-        <span>{{ $currentLocale }}</span>
-        <i class="bi bi-chevron-down text-xs text-gray-400 transition-transform duration-200" id="mobileLangChevron"></i>
+      <button type="button" id="closeMobileMoreDrawer" class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 flex items-center justify-center transition">
+        <i class="bi bi-x-lg text-sm"></i>
+      </button>
+    </div>
+
+    <!-- Quick Action Buttons -->
+    <div class="grid grid-cols-2 gap-2.5">
+      <a href="/add-property" class="flex items-center justify-center gap-2 py-3 px-4 bg-[#22c55e] text-white rounded-2xl font-bold text-xs shadow-sm">
+        <i class="fa-solid fa-plus text-sm"></i>
+        <span>{{ __('Elan yerləşdir') }}</span>
+      </a>
+      <a href="/axtariram/elan-ver" class="flex items-center justify-center gap-2 py-3 px-4 bg-orange-500 text-white rounded-2xl font-bold text-xs shadow-sm">
+        <i class="fa-solid fa-bullhorn text-xs"></i>
+        <span>{{ __('Tələb yerləşdir') }}</span>
+      </a>
+    </div>
+
+    <!-- Navigation Links List -->
+    <div class="space-y-1 py-1">
+      <a href="/" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('/') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+        <span class="flex items-center gap-3"><i class="fa-solid fa-house text-gray-400 w-5 text-center"></i> {{ __('Ana Səhifə') }}</span>
+        <i class="bi bi-chevron-right text-xs text-gray-300"></i>
+      </a>
+      <a href="/listing?deal_type=sale" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'sale' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+        <span class="flex items-center gap-3"><i class="fa-solid fa-key text-gray-400 w-5 text-center"></i> {{ __('Alqı-satqı') }}</span>
+        <i class="bi bi-chevron-right text-xs text-gray-300"></i>
+      </a>
+      <a href="/listing?deal_type=rent_monthly" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+        <span class="flex items-center gap-3"><i class="fa-solid fa-calendar-days text-gray-400 w-5 text-center"></i> {{ __('Kirayə') }}</span>
+        <i class="bi bi-chevron-right text-xs text-gray-300"></i>
+      </a>
+      <a href="/listing?deal_type=rent_daily" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'rent_daily' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+        <span class="flex items-center gap-3"><i class="fa-solid fa-clock text-gray-400 w-5 text-center"></i> {{ __('Günlük') }}</span>
+        <i class="bi bi-chevron-right text-xs text-gray-300"></i>
+      </a>
+      <a href="/axtariram" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+        <span class="flex items-center gap-3"><i class="fa-solid fa-magnifying-glass text-gray-400 w-5 text-center"></i> {{ __('Axtarıram') }}</span>
+        <i class="bi bi-chevron-right text-xs text-gray-300"></i>
+      </a>
+      <a href="/agencies" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+        <span class="flex items-center gap-3"><i class="fa-solid fa-building text-gray-400 w-5 text-center"></i> {{ __('Agencies') }}</span>
+        <i class="bi bi-chevron-right text-xs text-gray-300"></i>
+      </a>
+      <a href="/contact" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('contact*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+        <span class="flex items-center gap-3"><i class="fa-solid fa-envelope text-gray-400 w-5 text-center"></i> {{ __('Contact') }}</span>
+        <i class="bi bi-chevron-right text-xs text-gray-300"></i>
+      </a>
+      <a href="/compares" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('compares*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+        <span class="flex items-center gap-3"><i class="bi bi-arrow-left-right text-gray-400 w-5 text-center"></i> {{ __('Compare') }}</span>
+        <i class="bi bi-chevron-right text-xs text-gray-300"></i>
+      </a>
+    </div>
+
+    <!-- Language Selector with Flags -->
+    <div class="pt-3 border-t border-gray-100">
+      <div class="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-2">{{ __('Dil seçimi') }}</div>
+      <div class="grid grid-cols-3 gap-2">
+        @foreach($languages as $lKey => $lData)
+          <a href="/lang/{{ $lKey }}"
+             class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-2xl text-xs font-bold border {{ $currentLocale === $lKey ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-2xs' : 'border-gray-200 text-gray-700 hover:bg-gray-50' }}">
+            <span class="text-sm">{{ $lData['flag'] }}</span>
+            <span>{{ $lData['label'] }}</span>
+          </a>
+        @endforeach
       </div>
     </div>
 
-    <!-- Hidden / Expandable Language Selection Panel -->
-    <div id="mobileLangDrawerList" class="hidden bg-gray-50/80 px-5 py-3 space-y-2 border-t border-b border-gray-100">
-      @foreach($languages as $lKey => $lData)
-        <a href="/lang/{{ $lKey }}" class="flex items-center justify-between py-2 px-3 rounded-xl {{ $currentLocale === $lKey ? 'bg-orange-50 text-orange-600 font-bold' : 'text-gray-700 bg-white hover:bg-gray-100' }} text-sm transition">
-          <span class="flex items-center gap-2.5">
-            <span class="text-base">{{ $lData['flag'] }}</span>
-            <span>{{ $lData['name'] }}</span>
-          </span>
-          @if($currentLocale === $lKey)
-            <i class="bi bi-check2 text-orange-600 font-bold"></i>
-          @endif
-        </a>
-      @endforeach
+    <!-- Currency Selector -->
+    <div class="pt-3 border-t border-gray-100">
+      <div class="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-2">{{ __('Valyuta') }}</div>
+      <div class="grid grid-cols-4 gap-1.5">
+        @foreach($currencySymbols as $cCode => $cSym)
+          <a href="/currency/{{ $cCode }}"
+             class="flex items-center justify-center py-2 px-2 rounded-xl text-xs font-bold border {{ $currentCurrency === $cCode ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-2xs' : 'border-gray-200 text-gray-700 hover:bg-gray-50' }}">
+            <span>{{ $cSym }} {{ $cCode }}</span>
+          </a>
+        @endforeach
+      </div>
     </div>
 
-    <!-- Section 1: Complex, Agency, Partner -->
-    <div class="py-1">
-      <a href="/listing?building_type=complex" class="block px-5 py-3.5 text-[15px] text-gray-900 hover:bg-gray-50 transition">
-        {{ __('Yaşayış kompleksləri') }}
-      </a>
-      <a href="/agencies" class="block px-5 py-3.5 text-[15px] text-gray-900 hover:bg-gray-50 transition">
-        {{ __('Agentliklər') }}
-      </a>
-      <a href="/agencies" class="flex items-center gap-2.5 px-5 py-3.5 text-[15px] font-bold text-gray-900 hover:bg-gray-50 transition">
-        <i class="fa-solid fa-certificate text-neutral-800 text-base"></i>
-        <span>PASHA Real Estate</span>
-      </a>
-    </div>
-
-    <!-- Section 2: Info & Legal Pages -->
-    <div class="py-1">
-      <a href="/about-us" class="block px-5 py-3.5 text-[15px] text-gray-900 hover:bg-gray-50 transition">
-        {{ __('Layihə haqda') }}
-      </a>
-      <a href="/user-agreement" class="block px-5 py-3.5 text-[15px] text-gray-900 hover:bg-gray-50 transition">
-        {{ __('İstifadəçi razılaşması') }}
-      </a>
-      <a href="/faq" class="block px-5 py-3.5 text-[15px] text-gray-900 hover:bg-gray-50 transition">
-        {{ __('Qaydalar') }}
-      </a>
-      <a href="/privacy-policy" class="block px-5 py-3.5 text-[15px] text-gray-900 hover:bg-gray-50 transition">
-        {{ __('Məxfilik siyasəti') }}
-      </a>
-      <a href="/contact" class="flex items-center justify-between px-5 py-3.5 text-[15px] text-gray-900 hover:bg-gray-50 transition">
-        <span>{{ __('Reklam yerləşdirin') }}</span>
-        <span class="bg-[#70B345] text-white text-[11px] font-semibold px-2 py-0.5 rounded-full lowercase tracking-tight leading-none">{{ __('yeni') }}</span>
-      </a>
-      <a href="/contact" class="block px-5 py-3.5 text-[15px] text-gray-900 hover:bg-gray-50 transition">
-        {{ __('Bizimlə əlaqə') }}
-      </a>
-    </div>
-
-    <!-- Section 3: Full Desktop Version & Account -->
-    <div class="py-1">
-      <a href="/?desktop=1" class="block px-5 py-3.5 text-[15px] text-gray-900 hover:bg-gray-50 transition">
-        {{ __('Tam versiya') }}
-      </a>
+    <!-- Auth / Account Actions -->
+    <div class="pt-3 border-t border-gray-100">
       @auth
-        <form method="POST" action="{{ route('logout') }}" class="m-0 js-logout">
-          @csrf
-          <button type="submit" class="w-full text-left px-5 py-3.5 text-[15px] text-red-600 hover:bg-red-50 transition font-medium">
-            <i class="bi bi-box-arrow-right mr-2"></i> {{ __('Çıxış') }}
-          </button>
-        </form>
+        <div class="space-y-1">
+          <a href="/dashboard" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
+            <i class="bi bi-grid mr-3 text-gray-400"></i> {{ __('Dashboard') }}
+          </a>
+          <a href="/profile" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
+            <i class="bi bi-person mr-3 text-gray-400"></i> {{ __('My profile') }}
+          </a>
+          <a href="/my-properties" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
+            <i class="bi bi-folder-check mr-3 text-gray-400"></i> {{ __('My properties') }}
+          </a>
+          @if(auth()->user()->is_admin ?? false)
+            <a href="/admin" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-semibold text-indigo-600 hover:bg-indigo-50">
+              <i class="bi bi-shield-lock mr-3"></i> Admin Panel
+            </a>
+          @endif
+          <form method="POST" action="{{ route('logout') }}" class="m-0 js-logout pt-1">
+            @csrf
+            <button type="submit" class="w-full flex items-center px-3.5 py-2.5 text-sm text-red-600 hover:bg-red-50 text-left font-medium rounded-xl">
+              <i class="bi bi-box-arrow-right mr-3"></i> {{ __('Logout') }}
+            </button>
+          </form>
+        </div>
+      @else
+        <a href="/login" class="w-full flex items-center justify-center gap-2 py-3 px-4 bg-gray-900 text-white rounded-2xl font-bold text-xs shadow-sm">
+          <i class="bi bi-person text-sm"></i>
+          <span>{{ __('Login / Register') }}</span>
+        </a>
       @endauth
     </div>
 
@@ -414,13 +437,11 @@
       });
     });
 
-    // Mobile "Daha Çox" Fullscreen toggle
+    // Mobile "Daha Çox" Drawer toggle
     const mobileMoreBtn = document.getElementById('mobileMoreDrawerBtn');
     const mobileDrawer = document.getElementById('mobileMoreDrawer');
     const closeDrawerBtn = document.getElementById('closeMobileMoreDrawer');
-    const langDrawerBtn = document.getElementById('mobileLangDrawerBtn');
-    const langDrawerList = document.getElementById('mobileLangDrawerList');
-    const langChevron = document.getElementById('mobileLangChevron');
+    const backdrop = document.getElementById('mobileMoreDrawerBackdrop');
 
     function openDrawer() {
       if (mobileDrawer) mobileDrawer.classList.remove('hidden');
@@ -431,13 +452,6 @@
 
     if (mobileMoreBtn) mobileMoreBtn.addEventListener('click', openDrawer);
     if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
-
-    if (langDrawerBtn && langDrawerList) {
-      langDrawerBtn.addEventListener('click', function () {
-        const isHidden = langDrawerList.classList.contains('hidden');
-        langDrawerList.classList.toggle('hidden', !isHidden);
-        if (langChevron) langChevron.classList.toggle('rotate-180', isHidden);
-      });
-    }
+    if (backdrop) backdrop.addEventListener('click', closeDrawer);
   });
 </script>
