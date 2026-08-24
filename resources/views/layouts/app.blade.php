@@ -58,6 +58,8 @@
             <link rel="stylesheet" href="{{ str_starts_with($file, '/') ? $file : '/css/' . $file }}">
         @endforeach
     @endif
+
+    @stack('styles')
 </head>
 <body class="bg-[#F7F7F7]">
     @if(!isset($useLayout) || $useLayout !== false)
@@ -84,5 +86,6 @@
     @endif
 
     @include('layouts.js')
+    @stack('scripts')
 </body>
 </html>

@@ -2,8 +2,11 @@
 
 @section('title', __('Tələb Elanı Yerləşdir') . ' - Metraj.az')
 
-@push('styles')
+@section('content')
+<!-- Quill Rich Text Editor Assets -->
 <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+
 <style>
     .ql-toolbar.ql-snow {
         border: none !important;
@@ -18,19 +21,22 @@
         font-family: inherit !important;
         font-size: 0.875rem !important;
         min-height: 160px !important;
+        background: #ffffff !important;
+        border-bottom-left-radius: 1rem !important;
+        border-bottom-right-radius: 1rem !important;
     }
     .ql-editor {
         min-height: 160px !important;
-        padding: 12px 16px !important;
+        padding: 14px 16px !important;
+        line-height: 1.6 !important;
     }
     .ql-editor.ql-blank::before {
         color: #9ca3af !important;
         font-style: normal !important;
+        left: 16px !important;
     }
 </style>
-@endpush
 
-@section('content')
 <div class="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
     @if(isset($breadcrumbs))
@@ -109,9 +115,9 @@
                     </div>
                 </label>
 
-                <!-- 4: Otaq Yoldaşı -->
+                <!-- 4: Otaq Yoldaşı Axtarıram -->
                 <label class="cursor-pointer">
-                    <input type="radio" name="request_type" value="roommate_have" class="peer sr-only request-type-radio" {{ old('request_type', request('type')) === 'roommate_have' || old('request_type', request('type')) === 'roommate' || old('request_type') === 'roommate_need' ? 'checked' : '' }}>
+                    <input type="radio" name="request_type" value="roommate_have" class="peer sr-only request-type-radio" {{ old('request_type', request('type')) === 'roommate_have' || old('request_type', request('type')) === 'roommate' ? 'checked' : '' }}>
                     <div class="h-full p-4 rounded-2xl border-2 border-gray-200 peer-checked:border-purple-500 peer-checked:bg-purple-50/40 hover:border-gray-300 transition-all flex flex-col justify-between">
                         <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-lg mb-3">
                             <i class="fa-solid fa-people-roof"></i>
@@ -126,32 +132,31 @@
             </div>
         </div>
 
-        <!-- SECTION 2: ƏSAS PARAMETRLƏR VƏ BÜDCƏ -->
+        <!-- SECTION 2: ƏSAS MƏLUMATLAR -->
         <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
             <div>
                 <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
                     <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-extrabold flex items-center justify-center">2</span>
-                    <span>{{ __('Tələbin Başlığı və Büdcəniz') }}</span>
+                    <span>{{ __('Əsas Məlumatlar') }}</span>
                 </h2>
-                <p class="text-xs text-gray-500 ml-8">{{ __('Nəzərdə tutulan məbləğ və əsas parametrlər') }}</p>
+                <p class="text-xs text-gray-500 ml-8">{{ __('Elanınızın başlığı və əsas parametrləri') }}</p>
             </div>
 
             <!-- Title -->
             <div>
                 <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Elanın Başlığı') }} <span class="text-rose-500">*</span></label>
-                <input type="text" name="title" id="titleInput" value="{{ old('title') }}" required
-                       placeholder="{{ __('Məs: Nərimanovda 2-3 otaqlı kupçalı mənzil almaq istəyirəm') }}"
+                <input type="text" name="title" value="{{ old('title') }}" required
+                       placeholder="{{ __('Məs: Nərimanovda 2-3 otaqlı kupçalı mənzil axtarıram') }}"
                        class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-
-                <!-- Property Type (for buy/rent) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                
+                <!-- Property Type (for Buy/Rent/Daily) -->
                 <div id="propertyTypeField">
                     <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Əmlak Növü') }}</label>
-                    <select name="property_type"
-                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
-                        <option value="Mənzil" {{ old('property_type') === 'Mənzil' ? 'selected' : '' }}>{{ __('Mənzil (Bina evi)') }}</option>
+                    <select name="property_type" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
+                        <option value="Mənzil" {{ old('property_type') === 'Mənzil' ? 'selected' : '' }}>{{ __('Mənzil') }}</option>
                         <option value="Həyət evi" {{ old('property_type') === 'Həyət evi' ? 'selected' : '' }}>{{ __('Həyət evi / Bağ') }}</option>
                         <option value="Villa" {{ old('property_type') === 'Villa' ? 'selected' : '' }}>{{ __('Villa') }}</option>
                         <option value="Torpaq" {{ old('property_type') === 'Torpaq' ? 'selected' : '' }}>{{ __('Torpaq') }}</option>
@@ -160,117 +165,45 @@
                     </select>
                 </div>
 
-                <!-- Budget Max -->
-                <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Maksimum Büdcə (₼)') }} <span class="text-rose-500">*</span></label>
-                    <div class="relative">
-                        <input type="number" name="budget_max" value="{{ old('budget_max') }}" required min="1" step="any"
-                               placeholder="150000"
-                               class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl pl-4 pr-10 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
-                        <span class="absolute right-3 top-1/2 -translate-y-1/2 font-bold text-gray-500 text-xs">₼</span>
-                    </div>
-                </div>
-
                 <!-- Rooms -->
                 <div id="roomsField">
                     <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Otaq Sayı') }}</label>
-                    <select name="rooms"
-                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
+                    <select name="rooms" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
                         <option value="">{{ __('Fərqi yoxdur') }}</option>
-                        <option value="1" {{ old('rooms') === '1' ? 'selected' : '' }}>1 {{ __('otaqlı') }}</option>
-                        <option value="2" {{ old('rooms') === '2' ? 'selected' : '' }}>2 {{ __('otaqlı') }}</option>
-                        <option value="3" {{ old('rooms') === '3' ? 'selected' : '' }}>3 {{ __('otaqlı') }}</option>
-                        <option value="4+" {{ old('rooms') === '4+' ? 'selected' : '' }}>4+ {{ __('otaqlı') }}</option>
+                        <option value="1" {{ old('rooms') === '1' ? 'selected' : '' }}>{{ __('1 otaqlı') }}</option>
+                        <option value="2" {{ old('rooms') === '2' ? 'selected' : '' }}>{{ __('2 otaqlı') }}</option>
+                        <option value="3" {{ old('rooms') === '3' ? 'selected' : '' }}>{{ __('3 otaqlı') }}</option>
+                        <option value="4+" {{ old('rooms') === '4+' ? 'selected' : '' }}>{{ __('4+ otaqlı') }}</option>
                     </select>
                 </div>
 
-            </div>
-
-            <!-- Dynamic Specific Requirements (Buy vs Rent vs Roommate) -->
-            <div id="buyFields" class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <label class="inline-flex items-center gap-2.5 cursor-pointer select-none p-3 rounded-xl bg-gray-50 border border-gray-200 hover:bg-gray-100/70 transition">
-                    <input type="checkbox" name="has_deed" value="1" {{ old('has_deed') ? 'checked' : '' }}
-                           class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
-                    <span class="text-xs sm:text-sm font-semibold text-gray-800">{{ __('Yalnız Kupçalı (Çıxarışlı) olsun') }}</span>
-                </label>
-
-                <label class="inline-flex items-center gap-2.5 cursor-pointer select-none p-3 rounded-xl bg-gray-50 border border-gray-200 hover:bg-gray-100/70 transition">
-                    <input type="checkbox" name="mortgage_eligible" value="1" {{ old('mortgage_eligible') ? 'checked' : '' }}
-                           class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
-                    <span class="text-xs sm:text-sm font-semibold text-gray-800">{{ __('İpotekaya yararlı olsun') }}</span>
-                </label>
-            </div>
-
-            <div id="rentFields" class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 hidden">
+                <!-- Max Budget -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Kimlər qalacaq?') }}</label>
-                    <select name="occupancy_type"
-                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
-                        <option value="Ailə" {{ old('occupancy_type') === 'Ailə' ? 'selected' : '' }}>{{ __('Ailə') }}</option>
-                        <option value="Tələbələr" {{ old('occupancy_type') === 'Tələbələr' ? 'selected' : '' }}>{{ __('Tələbələr') }}</option>
-                        <option value="İşləyən şəxs" {{ old('occupancy_type') === 'İşləyən şəxs' ? 'selected' : '' }}>{{ __('İşləyən şəxs') }}</option>
-                        <option value="Xarici vətəndaş" {{ old('occupancy_type') === 'Xarici vətəndaş' ? 'selected' : '' }}>{{ __('Xarici vətəndaş') }}</option>
-                    </select>
+                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Maksimum Büdcə (₼)') }} <span class="text-rose-500">*</span></label>
+                    <input type="number" name="budget_max" value="{{ old('budget_max') }}" required placeholder="Məs: 800" min="1"
+                           class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
                 </div>
 
-                <div class="flex items-center sm:pt-6">
-                    <label class="inline-flex items-center gap-2 cursor-pointer select-none">
-                        <input type="checkbox" name="bills_included" value="1" {{ old('bills_included') ? 'checked' : '' }}
-                               class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
-                        <span class="text-xs sm:text-sm font-semibold text-gray-700">{{ __('Kommunal xərclər daxil olsun') }}</span>
-                    </label>
-                </div>
-            </div>
-
-            <div id="roommateFields" class="space-y-4 pt-2 hidden">
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Cinsiyyət Tələbi') }}</label>
-                        <select name="gender_preference"
-                                class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
-                            <option value="any">{{ __('Fərqi yoxdur (Hamı)') }}</option>
-                            <option value="female">{{ __('Yalnız Xanım') }}</option>
-                            <option value="male">{{ __('Yalnız Bəy') }}</option>
-                        </select>
-                    </div>
-
-                    <div class="flex items-center sm:pt-6">
-                        <label class="inline-flex items-center gap-2 cursor-pointer select-none">
-                            <input type="checkbox" name="smoker_allowed" value="1" {{ old('smoker_allowed') ? 'checked' : '' }}
-                                   class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
-                            <span class="text-xs sm:text-sm font-semibold text-gray-700">{{ __('Siqaret olar') }}</span>
-                        </label>
-                    </div>
-
-                    <div class="flex items-center sm:pt-6">
-                        <label class="inline-flex items-center gap-2 cursor-pointer select-none">
-                            <input type="checkbox" name="pet_allowed" value="1" {{ old('pet_allowed') ? 'checked' : '' }}
-                                   class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
-                            <span class="text-xs sm:text-sm font-semibold text-gray-700">{{ __('Ev heyvanı olar') }}</span>
-                        </label>
-                    </div>
-                </div>
             </div>
 
         </div>
 
-        <!-- SECTION 3: MƏKAN -->
+        <!-- SECTION 3: YERLƏŞMƏ VƏ XÜSUSİ TƏLƏBLƏR -->
         <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
             <div>
                 <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
                     <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-extrabold flex items-center justify-center">3</span>
-                    <span>{{ __('İstədiyiniz Ərazi') }}</span>
+                    <span>{{ __('Yerləşmə və Şərtlər') }}</span>
                 </h2>
-                <p class="text-xs text-gray-500 ml-8">{{ __('Axtardığınız şəhər, rayon və ya metro') }}</p>
+                <p class="text-xs text-gray-500 ml-8">{{ __('Ərazi və xüsusi şərtləriniz') }}</p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
                 <!-- City -->
                 <div>
                     <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Şəhər') }} <span class="text-rose-500">*</span></label>
-                    <select name="city_id" required
-                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
-                        <option value="">{{ __('Şəhər seçin') }}</option>
+                    <select name="city_id" required class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
                         @foreach($cities as $city)
                             @php
                                 $cName = is_array($city->name) ? ($city->name[app()->getLocale()] ?? $city->name['az'] ?? reset($city->name)) : $city->name;
@@ -284,15 +217,67 @@
 
                 <!-- Location Note -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Metro, Qəsəbə və ya Nişangah') }}</label>
+                    <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Metro / Rayon / Ünvan Qeydi') }}</label>
                     <input type="text" name="location_note" value="{{ old('location_note') }}"
-                           placeholder="{{ __('Məs: Nərimanov, Elmlər, 28 May m/s yaxınlığı') }}"
+                           placeholder="{{ __('Məs: Elmlər m/s yaxınlığı, 28 May') }}"
                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
                 </div>
+
             </div>
+
+            <!-- Dynamic Category Specific Checkboxes/Fields -->
+            <div id="buyFields" class="pt-2 border-t border-gray-100 flex flex-wrap gap-6">
+                <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+                    <input type="checkbox" name="has_deed" value="1" {{ old('has_deed') ? 'checked' : '' }}
+                           class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
+                    <span class="text-xs sm:text-sm font-semibold text-gray-700">{{ __('Yalnız Kupçalı (Çıxarışlı) olsun') }}</span>
+                </label>
+
+                <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+                    <input type="checkbox" name="mortgage_eligible" value="1" {{ old('mortgage_eligible') ? 'checked' : '' }}
+                           class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
+                    <span class="text-xs sm:text-sm font-semibold text-gray-700">{{ __('Dövlət ipotekasına yararlı olsun') }}</span>
+                </label>
+            </div>
+
+            <div id="rentFields" class="hidden pt-2 border-t border-gray-100 space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Kimlər qalacaq?') }}</label>
+                        <select name="occupancy_type" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
+                            <option value="Ailə">{{ __('Ailə üçün') }}</option>
+                            <option value="Tələbələr">{{ __('Tələbələr üçün') }}</option>
+                            <option value="İşləyən şəxs">{{ __('Tək işləyən şəxs') }}</option>
+                            <option value="Xarici vətəndaş">{{ __('Xarici vətəndaş') }}</option>
+                        </select>
+                    </div>
+
+                    <div class="flex items-center pt-6">
+                        <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+                            <input type="checkbox" name="bills_included" value="1" {{ old('bills_included') ? 'checked' : '' }}
+                                   class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
+                            <span class="text-xs sm:text-sm font-semibold text-gray-700">{{ __('Kommunal xərclər qiymətə daxil olsun') }}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="roommateFields" class="hidden pt-2 border-t border-gray-100 space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Cinsiyyət Tələbi') }}</label>
+                        <select name="gender_preference" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
+                            <option value="any">{{ __('Fərqi yoxdur (Hamı)') }}</option>
+                            <option value="female">{{ __('Yalnız Xanım') }}</option>
+                            <option value="male">{{ __('Yalnız Bəy') }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <!-- SECTION 4: ƏTRAFLI TƏSVİR VƏ İSTƏYƏ GÖRƏ ŞƏKİLLƏR -->
+        <!-- SECTION 4: ƏTRAFLI TƏSVİR (QUİLL RİCH TEXT EDİTOR) -->
         <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
             <div>
                 <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
@@ -302,7 +287,7 @@
                 <p class="text-xs text-gray-500 ml-8">{{ __('İstədiyiniz xüsusiyyətləri aydın şəkildə izah edin') }}</p>
             </div>
 
-            <!-- Description -->
+            <!-- Description via Quill Rich Text Editor -->
             <div>
                 <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Ətraflı Təsvir') }} <span class="text-rose-500">*</span></label>
                 <div id="editor_wrapper" class="bg-white border border-gray-200 rounded-2xl overflow-hidden focus-within:border-[#f1913d] transition shadow-2xs">
@@ -344,7 +329,7 @@
         <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
             <div>
                 <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
-                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-extrabold flex items-center justify-center">6</span>
+                    <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-extrabold flex items-center justify-center">5</span>
                     <span>{{ __('Əlaqə Məlumatları') }}</span>
                 </h2>
                 <p class="text-xs text-gray-500 ml-8">{{ __('Təkliflərin sizə çatması üçün əlaqə vasitələri') }}</p>
@@ -390,36 +375,47 @@
 
 </div>
 
-@push('scripts')
-<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     // 1) Initialize Quill Editor
-    const quill = new Quill('#editor_container', {
-        theme: 'snow',
-        placeholder: '{{ __('Axtardığınız əmlak, tələbləriniz və ya təklif edəcəyiniz şərtlər barədə ətraflı yazın...') }}',
-        modules: {
-            toolbar: [
-                [{ 'header': [2, 3, false] }],
-                ['bold', 'italic', 'underline'],
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                ['clean']
-            ]
+    function initQuill() {
+        if (typeof Quill === 'undefined') {
+            setTimeout(initQuill, 100);
+            return;
         }
-    });
 
-    const form = document.getElementById('propertyRequestForm');
-    const descriptionInput = document.getElementById('description_input');
+        const editorElem = document.getElementById('editor_container');
+        if (!editorElem || editorElem.__quill) return;
 
-    if (form) {
-        form.addEventListener('submit', function (e) {
-            if (quill.getText().trim().length === 0) {
-                descriptionInput.value = '';
-            } else {
-                descriptionInput.value = quill.root.innerHTML;
+        const quill = new Quill('#editor_container', {
+            theme: 'snow',
+            placeholder: '{{ __('Axtardığınız əmlak, tələbləriniz və ya təklif edəcəyiniz şərtlər barədə ətraflı yazın...') }}',
+            modules: {
+                toolbar: [
+                    [{ 'header': [2, 3, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    ['clean']
+                ]
             }
         });
+        editorElem.__quill = quill;
+
+        const form = document.getElementById('propertyRequestForm');
+        const descriptionInput = document.getElementById('description_input');
+
+        if (form) {
+            form.addEventListener('submit', function (e) {
+                if (quill.getText().trim().length === 0) {
+                    descriptionInput.value = '';
+                } else {
+                    descriptionInput.value = quill.root.innerHTML;
+                }
+            });
+        }
     }
+
+    initQuill();
 
     // 2) Category Sections Switcher
     const radios = document.querySelectorAll('.request-type-radio');
@@ -487,5 +483,4 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 </script>
-@endpush
 @endsection
