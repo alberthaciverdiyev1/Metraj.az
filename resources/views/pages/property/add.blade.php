@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/add-property.css') }}">
+@endpush
+
 @section('content')
 <div class="w-full pt-4">
     @include('components.breadcrumb', ['items' => [
@@ -547,35 +551,4 @@
     };
 </script>
 <script src="{{ asset('js/pages/property/add-form.js') }}"></script>
-
-
-<style>
-.ql-container.ql-snow {
-    border: none !important;
-    font-family: inherit;
-    font-size: 0.875rem;
-}
-.ql-toolbar.ql-snow {
-    border: none !important;
-    border-bottom: 1px solid #f3f4f6 !important;
-    background-color: #fafafa;
-}
-.ql-editor {
-    min-height: 160px;
-    height: 100%;
-    cursor: text !important;
-    padding: 14px 16px !important;
-}
-.ql-editor.ql-blank::before {
-    color: #9ca3af;
-    font-style: normal;
-    left: 16px;
-    right: 16px;
-}
-@keyframes leaflet-pulse {
-    0% { transform: scale(0.6); opacity: 0.8; }
-    50% { transform: scale(1.3); opacity: 0; }
-    100% { transform: scale(0.6); opacity: 0; }
-}
-</style>
 @endsection

@@ -148,3 +148,28 @@ circle.progress {
 .hover-effect-button:hover span:not(.hover-effect-button-fill) {
     color: white;
 }
+
+/* Toastify bildirişləri — layout üçün qlobal stillər (layouts/app.blade.php-dən çıxarılıb) */
+.toastify {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+}
+.toastify .toast-close {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-left: 12px !important;
+    padding: 0 !important;
+    opacity: 0.7 !important;
+    font-size: 14px !important;
+    line-height: 1 !important;
+    color: #94a3b8 !important;
+    cursor: pointer !important;
+    transition: opacity 0.2s, color 0.2s !important;
+}
+.toastify .toast-close:hover {
+    opacity: 1 !important;
+    color: #ffffff !important;
+}

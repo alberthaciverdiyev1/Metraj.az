@@ -73,12 +73,5 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+<link rel="stylesheet" href="{{ asset('css/components/property-map.css') }}" />
 <script src="{{ asset('js/components/property-map.js') }}"></script>
-
-<style>
-@keyframes leaflet-pulse {
-    0% { transform: scale(0.6); opacity: 0.8; }
-    50% { transform: scale(1.3); opacity: 0; }
-    100% { transform: scale(0.6); opacity: 0; }
-}
-</style>

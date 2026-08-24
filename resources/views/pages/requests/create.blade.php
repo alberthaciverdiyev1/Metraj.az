@@ -2,40 +2,14 @@
 
 @section('title', __('Tələb Elanı Yerləşdir') . ' - Metraj.az')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/requests-create.css') }}">
+@endpush
+
 @section('content')
 <!-- Quill Rich Text Editor Assets -->
 <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
 <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
-
-<style>
-    .ql-toolbar.ql-snow {
-        border: none !important;
-        border-bottom: 1px solid #e5e7eb !important;
-        background: #f9fafb !important;
-        border-top-left-radius: 1rem !important;
-        border-top-right-radius: 1rem !important;
-        padding: 8px 12px !important;
-    }
-    .ql-container.ql-snow {
-        border: none !important;
-        font-family: inherit !important;
-        font-size: 0.875rem !important;
-        min-height: 160px !important;
-        background: #ffffff !important;
-        border-bottom-left-radius: 1rem !important;
-        border-bottom-right-radius: 1rem !important;
-    }
-    .ql-editor {
-        min-height: 160px !important;
-        padding: 14px 16px !important;
-        line-height: 1.6 !important;
-    }
-    .ql-editor.ql-blank::before {
-        color: #9ca3af !important;
-        font-style: normal !important;
-        left: 16px !important;
-    }
-</style>
 
 <div class="mx-auto px-4 sm:px-6 lg:px-8 py-8">
 

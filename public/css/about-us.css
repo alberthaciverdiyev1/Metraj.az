@@ -1,0 +1,4 @@
+/* Haqqımızda səhifəsi (about-us.blade.php-dən çıxarılıb) */
+.hover\:rotate-x-180:hover {
+    transform: rotateY(180deg);
+}

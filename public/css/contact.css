@@ -367,3 +367,8 @@ font-weight: 600;
     }
     
 }
+/* Əlaqə səhifəsi — Leaflet map (contact.blade.php-dən çıxarılıb) */
+.leaflet-container {
+    font-family: inherit;
+    z-index: 1;
+}

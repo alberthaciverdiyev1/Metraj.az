@@ -19,26 +19,6 @@
     @if($totalImages > 0)
         <!-- Listing Details CSS for Fullscreen Modal and Gallery -->
         <link rel="stylesheet" href="{{ asset('css/listing-details.css') }}">
-        <style>
-            .thumbnails-row::-webkit-scrollbar {
-                display: none;
-            }
-            .thumbnails-row {
-                -ms-overflow-style: none;
-                scrollbar-width: none;
-            }
-            .thumbnails-row img {
-                opacity: 0.65;
-                transition: all 0.2s ease-in-out;
-            }
-            .thumbnails-row img.active,
-            .thumbnails-row img:hover {
-                opacity: 1;
-            }
-            .thumbnails-row img.active {
-                border-color: #f1913d !important;
-            }
-        </style>
 
         <!-- Gallery Section (Identical to Property Details) -->
         <div class="w-full mb-8">

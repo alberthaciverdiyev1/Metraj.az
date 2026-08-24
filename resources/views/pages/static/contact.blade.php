@@ -4,12 +4,7 @@
 
 @push('styles')
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<style>
-    .leaflet-container {
-        font-family: inherit;
-        z-index: 1;
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('css/contact.css') }}">
 @endpush
 
 @section('content')

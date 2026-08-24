@@ -25,23 +25,6 @@
 
 @include('components.scroll-top')
 
-<style>
-    .thumbnails-row::-webkit-scrollbar {
-        display: none;
-    }
-    .thumbnails-row {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-    .thumbnails-row img {
-        opacity: 0.6;
-        transition: all 0.2s ease-in-out;
-    }
-    .thumbnails-row img.active {
-        opacity: 1;
-        border-color: #f97316;
-    }
-</style>
 
 <!-- Gallery Section -->
 <div class="w-full mt-6">
