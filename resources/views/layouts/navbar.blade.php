@@ -79,10 +79,16 @@
         </select>
       </div>
 
+      <!-- Post Request Button (Axtarıram) -->
+      <a href="/axtariram/elan-ver" class="hidden lg:flex items-center px-3.5 py-2 border border-orange-500 text-orange-600 hover:bg-orange-50 rounded-lg font-medium text-sm transition shadow-2xs" title="{{ __('Tələb Elanı Yerləşdir') }}">
+        <i class="fa-solid fa-bullhorn mr-1.5 text-xs text-orange-500"></i>
+        <span>{{ __('Tələb yerləşdir') }}</span>
+      </a>
+
       <!-- Add Property Button -->
-      <a href="/add-property" class="hidden sm:flex items-center px-4 py-2 bg-[#f1913d] hover:bg-[#e07f2c] text-white rounded-lg font-medium text-sm transition shadow-sm">
-        <i class="bi bi-plus-circle mr-2"></i>
-        <span>{{ __('Add property') }}</span>
+      <a href="/add-property" class="hidden sm:flex items-center px-3.5 py-2 bg-[#f1913d] hover:bg-[#e07f2c] text-white rounded-lg font-medium text-sm transition shadow-sm">
+        <i class="bi bi-plus-circle mr-1.5"></i>
+        <span>{{ __('Elan yerləşdir') }}</span>
       </a>
 
       <!-- Auth User / Login -->
@@ -176,9 +182,14 @@
     </div>
 
     <div class="pt-3 border-t border-gray-100 flex flex-col space-y-2">
-      <a href="/add-property" class="w-full flex items-center justify-center py-2.5 bg-[#f1913d] text-white rounded-lg font-medium text-sm">
-        <i class="bi bi-plus-circle mr-2"></i> {{ __('Add property') }}
-      </a>
+      <div class="grid grid-cols-2 gap-2">
+        <a href="/axtariram/elan-ver" class="w-full flex items-center justify-center py-2.5 border border-orange-500 text-orange-600 rounded-lg font-semibold text-xs text-center">
+          <i class="fa-solid fa-bullhorn mr-1.5 text-xs"></i> {{ __('Tələb yerləşdir') }}
+        </a>
+        <a href="/add-property" class="w-full flex items-center justify-center py-2.5 bg-[#f1913d] text-white rounded-lg font-semibold text-xs text-center">
+          <i class="bi bi-plus-circle mr-1.5"></i> {{ __('Elan yerləşdir') }}
+        </a>
+      </div>
 
       <div class="flex items-center justify-between gap-2 pt-1">
         <a href="/favorites" class="flex-1 flex items-center justify-center gap-1.5 py-2 border border-gray-200 rounded-lg text-gray-700 text-xs font-medium hover:border-orange-500 hover:text-orange-500 transition">

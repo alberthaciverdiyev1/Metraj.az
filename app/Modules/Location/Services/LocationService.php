@@ -7,6 +7,7 @@ use App\Modules\Location\Models\Amenity;
 use App\Modules\Location\Models\City;
 use App\Modules\Location\Models\District;
 use App\Modules\Location\Models\Filter;
+use App\Modules\Location\Models\FilterOption;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -41,7 +42,7 @@ class LocationService
     /**
      * Əsas axtarışda göstərilən əmlak növü seçimləri.
      *
-     * @return Collection<int, \App\Modules\Location\Models\FilterOption>
+     * @return Collection<int, FilterOption>
      */
     public function propertyTypeOptions(): Collection
     {
@@ -51,7 +52,7 @@ class LocationService
             return new Collection();
         }
 
-        return \App\Modules\Location\Models\FilterOption::where('filter_id', $filterId)->get();
+        return FilterOption::where('filter_id', $filterId)->get();
     }
 
     /**
@@ -94,9 +95,9 @@ class LocationService
     /**
      * Bir filtr seçimini ID ilə qaytarır.
      */
-    public function filterOptionById(int $id): ?\App\Modules\Location\Models\FilterOption
+    public function filterOptionById(int $id): ?FilterOption
     {
-        return \App\Modules\Location\Models\FilterOption::find($id);
+        return FilterOption::find($id);
     }
 
     /**
