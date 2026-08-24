@@ -11,10 +11,19 @@ Route::get('/about-us', [StaticPageController::class, 'about'])->name('about-us'
 Route::get('/contact', [StaticPageController::class, 'contact'])->name('contact');
 Route::get('/faq', [StaticPageController::class, 'faq'])->name('faq');
 
-// Favoritlər & Müqayisə
+// Favoritlər & Müqayisə Səhifələri
 Route::get('/favorites', [StaticPageController::class, 'favorites'])->name('favorites');
 Route::post('/favorites/items', [StaticPageController::class, 'favoritesItems'])->name('favorites.items');
 Route::get('/compares', [StaticPageController::class, 'compares'])->name('compares');
+
+// Favoritlər & Müqayisə Backend Əməliyyatları
+Route::post('/api/favorites/toggle', [\App\Modules\Property\Controllers\FavoriteCompareController::class, 'toggleFavorite'])->name('favorites.toggle');
+Route::get('/api/favorites/ids', [\App\Modules\Property\Controllers\FavoriteCompareController::class, 'getFavorites'])->name('favorites.ids');
+Route::post('/api/favorites/clear', [\App\Modules\Property\Controllers\FavoriteCompareController::class, 'clearFavorites'])->name('favorites.clear');
+
+Route::post('/api/compares/toggle', [\App\Modules\Property\Controllers\FavoriteCompareController::class, 'toggleCompare'])->name('compares.toggle');
+Route::get('/api/compares/ids', [\App\Modules\Property\Controllers\FavoriteCompareController::class, 'getCompares'])->name('compares.ids');
+Route::post('/api/compares/clear', [\App\Modules\Property\Controllers\FavoriteCompareController::class, 'clearCompares'])->name('compares.clear');
 
 // Autentifikasiya & İstifadəçi Paneli
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');

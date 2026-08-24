@@ -84,6 +84,7 @@
         if (paginationContainer) paginationContainer.innerHTML = data.pagination;
 
         initHoverImages();
+        if (typeof window.syncCardStates === 'function') window.syncCardStates();
     }
 
     /* ===== LOADING ===== */
@@ -746,76 +747,11 @@
         }
     }
 
-    /* ===== FAVORITE TOGGLE ===== */
-    window.toggleFavorite = function (element, propertyId) {
-        let icon = element.tagName === 'I' ? element : element.querySelector('i');
-        if (!icon) icon = element;
-        const isFav = icon.classList.contains('fa-solid');
 
-        let favorites = [];
-        try { favorites = JSON.parse(localStorage.getItem('favorites')) || []; } catch (e) {}
-
-        if (isFav) {
-            icon.classList.remove('fa-solid');
-            icon.classList.add('fa-regular');
-            favorites = favorites.filter(function (f) { return f.id !== propertyId; });
-        } else {
-            icon.classList.remove('fa-regular');
-            icon.classList.add('fa-solid');
-            favorites.push({ id: propertyId });
-        }
-        try { localStorage.setItem('favorites', JSON.stringify(favorites)); } catch (e) {}
-
-        const token = getCookie('session');
-        if (token) {
-            fetch('/api/favorite', {
-                method: isFav ? 'DELETE' : 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-                body: JSON.stringify({ property_id: propertyId })
-            }).catch(function () {});
-        }
-    };
-
-    window.toggleCompare = function (element, propertyId) {
-        let compareList = [];
-        try { compareList = JSON.parse(localStorage.getItem('compareList')) || []; } catch (e) {}
-        const maxItems = 3;
-
-        const isInList = compareList.some(function (c) { return c.id === propertyId; });
-
-        if (isInList) {
-            compareList = compareList.filter(function (c) { return c.id !== propertyId; });
-            showCompareToast('Müqayisə siyahısından çıxarıldı.');
-        } else {
-            if (compareList.length < maxItems) {
-                compareList.push({ id: propertyId });
-                showCompareToast('Müqayisə siyahısına əlavə edildi.');
-            } else {
-                showCompareToast('Ən çox ' + maxItems + ' mülk müqayisə edilə bilər.');
-                return;
-            }
-        }
-        try { localStorage.setItem('compareList', JSON.stringify(compareList)); } catch (e) {}
-    };
 
     function getCookie(name) {
         const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
         return match ? decodeURIComponent(match[2]) : null;
-    }
-
-    function showCompareToast(message) {
-        let container = document.getElementById('toastContainer');
-        if (!container) {
-            container = document.createElement('div');
-            container.id = 'toastContainer';
-            container.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9999';
-            document.body.appendChild(container);
-        }
-        const toast = document.createElement('div');
-        toast.style.cssText = 'background:#2C2E33;color:#fff;padding:12px 16px;margin-top:8px;border-radius:8px;font-size:14px;box-shadow:0 2px 6px rgba(0,0,0,0.2)';
-        toast.innerHTML = message + ' <a href="/compares" style="color:#4f9ef7;margin-left:10px;text-decoration:underline;">Müqayisə səhifəsinə bax</a>';
-        container.appendChild(toast);
-        setTimeout(function () { toast.remove(); }, 4000);
     }
 
     /* ===== IMAGE NAVIGATION ===== */

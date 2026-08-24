@@ -1,19 +1,39 @@
 @php
     $navItems = $items ?? $breadcrumbs ?? [];
 @endphp
-<section id="navigation" class="py-3">
-    <div class="mx-auto px-4 text-[12px] lg:text-[20px] flex flex-row flex-nowrap items-center gap-2 mt-2 lg:pt-0 pt-0 sm:mt-4">
+
+@if(!empty($navItems))
+<nav aria-label="Breadcrumb" class="py-2">
+    <ol class="inline-flex items-center flex-wrap gap-1 sm:gap-1.5 bg-white border border-gray-200 rounded-2xl py-1.5 px-3 sm:px-4 shadow-sm">
         @foreach($navItems as $item)
-            @if(!$loop->first)
-                <span class="text-gray-400">›</span>
-            @endif
-            @if(!empty($item['url']))
-                <a href="{{ $item['url'] }}" class="{{ $loop->last ? 'text-[color:var(--primary)]' : 'text-gray-600 font-bold flex items-center hover:text-black' }}">
-                    {{ $item['label'] }}
-                </a>
-            @else
-                <span class="text-[color:var(--primary)]">{{ $item['label'] }}</span>
-            @endif
+            <li class="inline-flex items-center gap-1 sm:gap-1.5">
+                @if(!$loop->first)
+                    <span class="text-gray-300 text-xs font-light select-none px-0.5" aria-hidden="true">/</span>
+                @endif
+
+                @if(!empty($item['url']) && !$loop->last)
+                    <a href="{{ $item['url'] }}"
+                       class="group inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-gray-600 hover:text-orange-600 transition-colors duration-150 py-1 px-2 rounded-xl hover:bg-orange-50">
+                        @if($loop->first)
+                            <span class="w-6 h-6 rounded-lg bg-orange-50 text-orange-500 group-hover:bg-orange-500 group-hover:text-white flex items-center justify-center transition-colors duration-150">
+                                <i class="fa-solid fa-house text-[11px]"></i>
+                            </span>
+                        @endif
+                        <span>{{ $item['label'] }}</span>
+                    </a>
+                @else
+                    <span class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-gray-900 py-1 px-2.5 rounded-xl bg-gray-50 border border-gray-200/80 max-w-[200px] sm:max-w-[380px] md:max-w-none truncate"
+                          aria-current="page">
+                        @if($loop->first)
+                            <span class="w-6 h-6 rounded-lg bg-orange-500 text-white flex items-center justify-center">
+                                <i class="fa-solid fa-house text-[11px]"></i>
+                            </span>
+                        @endif
+                        <span class="truncate">{{ $item['label'] }}</span>
+                    </span>
+                @endif
+            </li>
         @endforeach
-    </div>
-</section>
+    </ol>
+</nav>
+@endif

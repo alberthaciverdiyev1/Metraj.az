@@ -23,6 +23,31 @@
     @endif
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <style>
+        .toastify {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 12px !important;
+        }
+        .toastify .toast-close {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin-left: 12px !important;
+            padding: 0 !important;
+            opacity: 0.7 !important;
+            font-size: 14px !important;
+            line-height: 1 !important;
+            color: #94a3b8 !important;
+            cursor: pointer !important;
+            transition: opacity 0.2s, color 0.2s !important;
+        }
+        .toastify .toast-close:hover {
+            opacity: 1 !important;
+            color: #ffffff !important;
+        }
+    </style>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <link rel="stylesheet" href="/css/app.css">

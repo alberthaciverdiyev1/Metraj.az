@@ -66,7 +66,8 @@
     @endif
 
     <span onclick="event.stopPropagation(); toggleFavorite(this, {{ $property->id }})"
-          class="absolute bottom-1 sm:bottom-3 right-2 sm:right-4 text-white font-semibold text-md bg-white px-2 py-1 rounded-full cursor-pointer">
+          data-fav-btn="{{ $property->id }}"
+          class="favorite-btn absolute bottom-1 sm:bottom-3 right-2 sm:right-4 font-semibold text-md bg-white shadow-sm hover:scale-110 transition-transform px-2 py-1 rounded-full cursor-pointer">
         <i class="fa-regular fa-heart text-red-500"></i>
     </span>
 
@@ -88,7 +89,7 @@
                 <i class="fa-solid fa-house-circle-xmark text-[12px]"></i>
                 <span class="hidden sm:block text-xs font-semibold ml-1">{{ __('Kirayə') }}</span>
             </span>
-        @elseif($isSale)
+        @else
             <span class="bg-[#80807F] text-white flex items-center justify-center rounded-full w-7 h-7 sm:w-auto sm:h-auto px-2 py-1 sm:flex-row sm:rounded-full">
                 <i class="fa-solid fa-house-circle-check text-[12px]"></i>
                 <span class="hidden sm:block text-xs font-semibold ml-1">{{ __('Satış') }}</span>
@@ -96,7 +97,7 @@
         @endif
 
         @if($isRepaired)
-            <span class="bg-green-600 text-white flex items-center justify-center rounded-full w-7 h-7 sm:w-auto sm:h-auto px-2 py-1 sm:flex-row sm:rounded-full">
+            <span class="bg-[#80807F] text-white flex items-center justify-center rounded-full w-7 h-7 sm:w-auto sm:h-auto px-2 py-1 sm:flex-row sm:rounded-full">
                 <i class="fa-solid fa-hammer text-[12px]"></i>
                 <span class="hidden sm:block text-xs font-semibold ml-1">{{ __('Təmirli') }}</span>
             </span>
@@ -128,10 +129,11 @@
       <span class="text-[color:var(--primary)] font-bold text-sm sm:text-base md:text-lg">
         {{ $displayPrice['symbol'] }} {{ $displayPrice['formatted'] }}
       </span>
-      <button onclick="event.stopPropagation(); toggleCompare(this, {{ $property->id }})"
-              class="flex items-center gap-1 text-xs sm:text-sm text-[#2C2E33] hover:text-[color:var(--primary)] transition-colors">
-        <img class="w-4 h-4 sm:w-5 sm:h-5" src="/images/compare.svg" />
-        <span class="hidden xs:inline">{{ __('Müqayisə') }}</span>
+      <button type="button" onclick="event.stopPropagation(); toggleCompare(this, {{ $property->id }})"
+              data-compare-btn="{{ $property->id }}"
+              class="compare-btn flex items-center gap-1.5 text-xs sm:text-sm font-medium text-gray-700 hover:text-[color:var(--primary)] transition-colors py-1 px-2 rounded-lg hover:bg-orange-50 cursor-pointer">
+        <i class="bi bi-arrow-left-right text-sm sm:text-base"></i>
+        <span class="compare-btn-text hidden xs:inline">{{ __('Müqayisə') }}</span>
       </button>
     </div>
   </div>

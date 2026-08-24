@@ -35,7 +35,7 @@
       <!-- Compares -->
       <a href="/compares" class="relative text-gray-700 hover:text-orange-500 p-2 rounded-lg transition inline-flex items-center justify-center" title="{{ __('Compare') }}">
         <i class="bi bi-arrow-left-right text-xl text-gray-700"></i>
-        <span id="compares-count" class="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] min-w-[16px] h-4 px-1 flex items-center justify-center rounded-full font-bold shadow-sm">0</span>
+        <span id="compares-count" class="absolute top-0 -right-1 bg-orange-500 text-white text-[10px] min-w-[16px] h-4 px-1 flex items-center justify-center rounded-full font-bold shadow-sm">0</span>
       </a>
 
       <!-- Currency Selector -->

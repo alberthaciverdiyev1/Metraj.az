@@ -262,4 +262,14 @@ class Property extends Model
     {
         return $this->filterOptions->first(fn ($option) => $option->filter?->key?->value === $key);
     }
+
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function compares(): HasMany
+    {
+        return $this->hasMany(Compare::class);
+    }
 }

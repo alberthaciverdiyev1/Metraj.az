@@ -90,6 +90,7 @@ class AuthController extends Controller
         ]);
 
         $remember = $request->boolean('remember');
+        $oldSessionId = $request->hasSession() ? $request->session()->getId() : null;
 
         if (Auth::attempt($credentials, $remember)) {
             if ($request->hasSession()) {
@@ -98,6 +99,7 @@ class AuthController extends Controller
 
             /** @var User $user */
             $user = Auth::user();
+            $this->migrateSessionFavoritesAndCompares($user, $oldSessionId);
             $redirectUrl = self::getRedirectUrlForUser($user);
 
             $role = 'user';
@@ -213,10 +215,12 @@ class AuthController extends Controller
         });
 
         // İstifadəçini sistemə daxil edirik
+        $oldSessionId = $request->hasSession() ? $request->session()->getId() : null;
         Auth::login($user);
         if ($request->hasSession()) {
             $request->session()->regenerate();
         }
+        $this->migrateSessionFavoritesAndCompares($user, $oldSessionId);
 
         $redirectUrl = self::getRedirectUrlForUser($user);
 
@@ -253,5 +257,21 @@ class AuthController extends Controller
         }
 
         return redirect('/');
+    }
+
+    /**
+     * Qonaq sessiyasında toplanmış favorit və müqayisələri daxil olan istifadəçiyə bağlayır.
+     */
+    protected function migrateSessionFavoritesAndCompares(User $user, ?string $oldSessionId): void
+    {
+        if (! $oldSessionId) return;
+
+        \App\Modules\Property\Models\Favorite::where('session_id', $oldSessionId)
+            ->whereNull('user_id')
+            ->update(['user_id' => $user->id, 'session_id' => null]);
+
+        \App\Modules\Property\Models\Compare::where('session_id', $oldSessionId)
+            ->whereNull('user_id')
+            ->update(['user_id' => $user->id, 'session_id' => null]);
     }
 }

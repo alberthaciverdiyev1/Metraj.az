@@ -144,4 +144,24 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(Property::class, 'user_id');
     }
+
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(\App\Modules\Property\Models\Favorite::class);
+    }
+
+    public function favoriteProperties(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Property::class, 'favorites');
+    }
+
+    public function compares(): HasMany
+    {
+        return $this->hasMany(\App\Modules\Property\Models\Compare::class);
+    }
+
+    public function compareProperties(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Property::class, 'compares');
+    }
 }
