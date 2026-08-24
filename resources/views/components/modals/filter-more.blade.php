@@ -1,5 +1,6 @@
 <div id="moreFiltersModal"
-     class="fixed inset-0 bg-black/50 backdrop-blur-md hidden z-[110] flex items-center justify-center p-4 transition-all duration-300">
+     class="fixed inset-0 bg-black/60 backdrop-blur-md hidden z-[99999] flex items-center justify-center p-4 transition-all duration-300"
+     style="z-index: 99999;">
     <div class="bg-white rounded-3xl w-full max-w-5xl relative flex flex-col max-h-[85vh] shadow-2xl border border-gray-100 overflow-hidden transform scale-100 transition-all">
         <!-- Header -->
         <div class="flex justify-between items-center px-8 py-5 border-b border-gray-100 shrink-0 bg-gray-50/50">

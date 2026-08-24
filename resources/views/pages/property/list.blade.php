@@ -8,7 +8,7 @@
                     <div class="container mx-auto px-4 text-sm">
 
                         <form method="GET" action="/listing" id="filterForm" class="space-y-4">
-                            <section class="pt-4 max-w-full mx-auto relative z-10">
+                            <section class="pt-4 max-w-full mx-auto">
                                 <div class="flex justify-between items-center mb-3">
                                     @php
                                         $selectedAdType = request('adType', 'all');

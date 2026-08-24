@@ -1,5 +1,6 @@
 <div id="cityFilterModal"
-     class="fixed inset-0 bg-black/50 backdrop-blur-md hidden z-[120] flex items-center justify-center p-4 transition-all duration-300">
+     class="fixed inset-0 bg-black/60 backdrop-blur-md hidden z-[99999] flex items-center justify-center p-4 transition-all duration-300"
+     style="z-index: 99999;">
     <div class="bg-white w-[95%] max-w-5xl h-[85vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-gray-100 transform scale-100 transition-all">
         <!-- Header -->
         <div class="flex items-center justify-between px-8 py-5 border-b border-gray-100 shrink-0 bg-gray-50/50">
