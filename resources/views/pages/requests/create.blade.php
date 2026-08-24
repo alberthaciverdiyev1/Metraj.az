@@ -2,8 +2,36 @@
 
 @section('title', __('Tələb Elanı Yerləşdir') . ' - Metraj.az')
 
+@push('styles')
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+<style>
+    .ql-toolbar.ql-snow {
+        border: none !important;
+        border-bottom: 1px solid #e5e7eb !important;
+        background: #f9fafb !important;
+        border-top-left-radius: 1rem !important;
+        border-top-right-radius: 1rem !important;
+        padding: 8px 12px !important;
+    }
+    .ql-container.ql-snow {
+        border: none !important;
+        font-family: inherit !important;
+        font-size: 0.875rem !important;
+        min-height: 160px !important;
+    }
+    .ql-editor {
+        min-height: 160px !important;
+        padding: 12px 16px !important;
+    }
+    .ql-editor.ql-blank::before {
+        color: #9ca3af !important;
+        font-style: normal !important;
+    }
+</style>
+@endpush
+
 @section('content')
-<div class="mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
     @if(isset($breadcrumbs))
         <div class="mb-6">
@@ -62,7 +90,7 @@
                         </div>
                         <div>
                             <h3 class="font-bold text-xs sm:text-sm text-gray-900 mb-0.5">{{ __('Kirayə Axtarıram') }}</h3>
-                            <p class="text-[11px] text-gray-500 leading-tight">{{ __('Aylıq kirayə mənzil və ya ev tutmaq üçün') }}</p>
+                            <p class="text-[11px] text-gray-500 leading-tight">{{ __('Aylıq uzunmüddətli kirayə mənzil/ev tapmaq üçün') }}</p>
                         </div>
                     </div>
                 </label>
@@ -75,8 +103,8 @@
                             <i class="fa-solid fa-calendar-day"></i>
                         </div>
                         <div>
-                            <h3 class="font-bold text-xs sm:text-sm text-gray-900 mb-0.5">{{ __('Günlük Kirayə') }}</h3>
-                            <p class="text-[11px] text-gray-500 leading-tight">{{ __('İstirahət və ya qısamüddətli günlük ev') }}</p>
+                            <h3 class="font-bold text-xs sm:text-sm text-gray-900 mb-0.5">{{ __('Günlük Qalmaq') }}</h3>
+                            <p class="text-[11px] text-gray-500 leading-tight">{{ __('Qısamüddətli və ya istirahət üçün günlük ev') }}</p>
                         </div>
                     </div>
                 </label>
@@ -90,7 +118,7 @@
                         </div>
                         <div>
                             <h3 class="font-bold text-xs sm:text-sm text-gray-900 mb-0.5">{{ __('Otaq Yoldaşı') }}</h3>
-                            <p class="text-[11px] text-gray-500 leading-tight">{{ __('Otaq verirəm və ya birgə ev tuturam') }}</p>
+                            <p class="text-[11px] text-gray-500 leading-tight">{{ __('Evim var yoldaş axtarıram və ya ev axtarıram') }}</p>
                         </div>
                     </div>
                 </label>
@@ -277,9 +305,12 @@
             <!-- Description -->
             <div>
                 <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Ətraflı Təsvir') }} <span class="text-rose-500">*</span></label>
-                <textarea name="description" rows="5" required
-                          placeholder="{{ __('Axtardığınız əmlak, tələbləriniz və ya təklif edəcəyiniz şərtlər barədə ətraflı yazın...') }}"
-                          class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-2xl p-4 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">{{ old('description') }}</textarea>
+                <div id="editor_wrapper" class="bg-white border border-gray-200 rounded-2xl overflow-hidden focus-within:border-[#f1913d] transition shadow-2xs">
+                    <div id="editor_container" class="min-h-[160px] text-xs sm:text-sm font-normal">
+                        {!! old('description') !!}
+                    </div>
+                </div>
+                <input type="hidden" name="description" id="description_input" value="{{ old('description') }}" required>
             </div>
         </div>
 
@@ -360,8 +391,37 @@
 </div>
 
 @push('scripts')
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    // 1) Initialize Quill Editor
+    const quill = new Quill('#editor_container', {
+        theme: 'snow',
+        placeholder: '{{ __('Axtardığınız əmlak, tələbləriniz və ya təklif edəcəyiniz şərtlər barədə ətraflı yazın...') }}',
+        modules: {
+            toolbar: [
+                [{ 'header': [2, 3, false] }],
+                ['bold', 'italic', 'underline'],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                ['clean']
+            ]
+        }
+    });
+
+    const form = document.getElementById('propertyRequestForm');
+    const descriptionInput = document.getElementById('description_input');
+
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            if (quill.getText().trim().length === 0) {
+                descriptionInput.value = '';
+            } else {
+                descriptionInput.value = quill.root.innerHTML;
+            }
+        });
+    }
+
+    // 2) Category Sections Switcher
     const radios = document.querySelectorAll('.request-type-radio');
     const buyFields = document.getElementById('buyFields');
     const rentFields = document.getElementById('rentFields');
@@ -404,7 +464,7 @@ document.addEventListener('DOMContentLoaded', function () {
     radios.forEach(r => r.addEventListener('change', updateSections));
     updateSections();
 
-    // Image preview
+    // 3) Image preview
     if (imageInput && previewGrid) {
         imageInput.addEventListener('change', function () {
             previewGrid.innerHTML = '';

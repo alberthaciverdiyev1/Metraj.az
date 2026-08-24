@@ -178,8 +178,8 @@
             <!-- Description -->
             <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs">
                 <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-3">{{ __('Ətraflı Təsvir və Şərtlər') }}</h2>
-                <div class="text-xs sm:text-sm text-gray-700 leading-relaxed whitespace-pre-line">
-                    {{ $propertyRequest->description }}
+                <div class="text-xs sm:text-sm text-gray-700 leading-relaxed prose prose-sm max-w-none">
+                    {!! $propertyRequest->description !!}
                 </div>
             </div>
 

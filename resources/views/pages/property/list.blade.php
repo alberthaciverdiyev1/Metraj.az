@@ -191,9 +191,6 @@
                         </form>
 
                         <hr class="text-gray-300 mt-7">
-                        <h2 class="text-xl text-gray-700 mt-6">
-                            {{ __('Butun elanlar') }}
-                        </h2>
 
                         <div class="relative min-h-[400px]">
                             <!-- Loading overlay -->
