@@ -71,6 +71,30 @@
 
             </div>
 
+            <!-- Image Gallery (If images exist) -->
+            @php
+                $requestImages = $propertyRequest->images;
+            @endphp
+            @if($requestImages->isNotEmpty())
+                <div class="bg-white border border-gray-200/90 rounded-3xl p-4 sm:p-6 shadow-xs space-y-3">
+                    <div class="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-gray-100 shadow-xs">
+                        <img id="mainRequestImage" src="{{ $requestImages->first()->url }}" alt="{{ $propertyRequest->title }}"
+                             class="w-full h-full object-cover transition duration-300" />
+                    </div>
+
+                    @if($requestImages->count() > 1)
+                        <div class="flex items-center gap-2 overflow-x-auto pb-1">
+                            @foreach($requestImages as $index => $img)
+                                <button type="button" onclick="document.getElementById('mainRequestImage').src = '{{ $img->url }}'"
+                                        class="shrink-0 w-20 h-14 rounded-xl overflow-hidden border-2 border-transparent hover:border-orange-500 focus:border-orange-500 transition cursor-pointer">
+                                    <img src="{{ $img->url }}" class="w-full h-full object-cover" />
+                                </button>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+            @endif
+
             <!-- Key Parameters Grid -->
             <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs">
                 <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-4">{{ __('Tələbin Təfərrüatları') }}</h2>
