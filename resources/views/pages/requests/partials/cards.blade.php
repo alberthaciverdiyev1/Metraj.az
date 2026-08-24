@@ -142,32 +142,16 @@
                 </div>
             </div>
 
-            <!-- Bottom Price & WhatsApp Offer Action -->
+            <!-- Bottom Price & Details Indicator (No contact buttons on card) -->
             <div class="flex justify-between items-center mt-auto border-t border-[color:var(--border-color)] pt-3">
                 <span class="text-[color:var(--primary)] font-bold text-sm sm:text-base md:text-lg truncate">
                     {{ $req->formatted_budget }}
                 </span>
 
-                @if($req->contact_whatsapp)
-                    @php
-                        $wa = preg_replace('/[^0-9]/', '', $req->contact_whatsapp);
-                    @endphp
-                    <a href="https://wa.me/{{ $wa }}?text={{ urlencode('Salam, Metraj.az saytındakı tələb elanınızla bağlı yazıram: ' . $req->title) }}"
-                       onclick="event.stopPropagation()"
-                       target="_blank" rel="noopener noreferrer"
-                       class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 hover:bg-emerald-600 text-emerald-700 hover:text-white border border-emerald-200 hover:border-emerald-600 rounded-lg text-xs font-semibold transition"
-                       title="WhatsApp ilə təklif göndər">
-                        <i class="bi bi-whatsapp text-sm"></i>
-                        <span>{{ __('Təklif et') }}</span>
-                    </a>
-                @else
-                    <a href="tel:{{ $req->contact_phone }}"
-                       onclick="event.stopPropagation()"
-                       class="inline-flex items-center gap-1 px-3 py-1 bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200 rounded-lg text-xs font-semibold transition">
-                        <i class="bi bi-telephone text-xs"></i>
-                        <span>{{ __('Zəng et') }}</span>
-                    </a>
-                @endif
+                <span class="flex items-center gap-1 text-xs text-[color:var(--grey-text)] font-medium group-hover:text-[color:var(--primary)] transition-colors">
+                    <span>{{ __('Ətraflı') }}</span>
+                    <i class="bi bi-chevron-right text-[11px]"></i>
+                </span>
             </div>
         </div>
 
