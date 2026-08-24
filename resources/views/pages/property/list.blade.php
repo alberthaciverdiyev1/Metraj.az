@@ -53,34 +53,31 @@
                                     </div>
                                 </div>
 
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-20">
                                     <div
-                                        class="relative p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer dropdown-select"
+                                        class="relative p-3 bg-gray-50 rounded-xl border border-gray-200 cursor-pointer dropdown-select select-none transition hover:bg-gray-100/70"
                                         data-filter="roomCount">
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center gap-2">
-                                                <img src="/images/door.svg" alt="door">
-                                                <span class="text-gray-700" data-role="display-value"
+                                                <img src="/images/door.svg" alt="door" class="w-4 h-4">
+                                                <span class="text-gray-700 font-medium" data-role="display-value"
                                                       data-filter="roomCount">
-                                                {{ request('roomCount') ? request('roomCount').' otaqli' : __('Otaq sayi') }}
+                                                {{ request('roomCount') ? request('roomCount').' otaqlı' : __('Otaq sayı') }}
                                             </span>
                                             </div>
-                                            <i class="bi bi-chevron-down text-orange-500 transition-transform"></i>
+                                            <i class="bi bi-chevron-down text-orange-500 transition-transform duration-200"></i>
                                         </div>
                                         <div
-                                            class="absolute left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-10 hidden dropdown-menu">
-                                            <ul class="divide-y divide-gray-100">
-                                                <li class="p-2 hover:bg-gray-100 cursor-pointer"
-                                                    data-value="">{{ __('Hamisi') }}</li>
+                                            class="absolute left-0 top-full mt-1.5 w-full bg-white shadow-xl border border-gray-200 rounded-xl z-50 hidden dropdown-menu max-h-64 overflow-y-auto">
+                                            <ul class="divide-y divide-gray-100 py-1 text-xs sm:text-sm">
+                                                <li class="px-3 py-2 hover:bg-orange-50 hover:text-orange-600 cursor-pointer font-medium"
+                                                    data-value="">{{ __('Hamısı') }}</li>
                                                 @for($i=1; $i<6; $i++)
-
-                                                    <li class="p-2 hover:bg-gray-100 cursor-pointer"
-                                                        data-value="{{$i}}">{{$i}}
-                                                        otaqli
+                                                    <li class="px-3 py-2 hover:bg-orange-50 hover:text-orange-600 cursor-pointer font-medium"
+                                                        data-value="{{$i}}">{{$i}} {{ __('otaqlı') }}
                                                     </li>
                                                 @endfor
-                                                <li class="p-2 hover:bg-gray-100 cursor-pointer" data-value="6">6+
-                                                    otaqli
+                                                <li class="px-3 py-2 hover:bg-orange-50 hover:text-orange-600 cursor-pointer font-medium" data-value="6">6+ {{ __('otaqlı') }}
                                                 </li>
                                             </ul>
                                         </div>
@@ -88,16 +85,16 @@
                                     </div>
 
                                     <div
-                                        class="relative p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer dropdown-select"
+                                        class="relative p-3 bg-gray-50 rounded-xl border border-gray-200 cursor-pointer dropdown-select select-none transition hover:bg-gray-100/70"
                                         data-filter="buildingType">
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center gap-2">
-                                                <img src="/images/layers.svg" alt="layers">
-                                                <span class="text-gray-700" data-role="display-value"
+                                                <img src="/images/layers.svg" alt="layers" class="w-4 h-4">
+                                                <span class="text-gray-700 font-medium" data-role="display-value"
                                                       data-filter="buildingType">
                                                 @php
                                                     $selectedType = request('buildingType');
-                                                    $selectedTypeLabel = __('Butun Kateqoriyalar');
+                                                    $selectedTypeLabel = __('Bütün Kateqoriyalar');
                                                     if ($selectedType) {
                                                         $matchingType = collect($buildingTypes)->firstWhere('value', $selectedType);
                                                         if ($matchingType) $selectedTypeLabel = $matchingType->name['az'] ?? $matchingType->value;
@@ -106,15 +103,15 @@
                                                     {{ $selectedTypeLabel }}
                                             </span>
                                             </div>
-                                            <i class="bi bi-chevron-down text-orange-500 transition-transform"></i>
+                                            <i class="bi bi-chevron-down text-orange-500 transition-transform duration-200"></i>
                                         </div>
                                         <div
-                                            class="absolute dropdown-menu left-0 mt-2 w-full bg-white shadow-lg border border-gray-200 rounded-lg z-10 hidden">
-                                            <ul class="divide-y divide-gray-100">
-                                                <li class="p-2 hover:bg-gray-100 cursor-pointer"
-                                                    data-value="">{{ __('Butun Kateqoriyalar') }}</li>
+                                            class="absolute dropdown-menu left-0 top-full mt-1.5 w-full bg-white shadow-xl border border-gray-200 rounded-xl z-50 hidden max-h-64 overflow-y-auto">
+                                            <ul class="divide-y divide-gray-100 py-1 text-xs sm:text-sm">
+                                                <li class="px-3 py-2 hover:bg-orange-50 hover:text-orange-600 cursor-pointer font-medium"
+                                                    data-value="">{{ __('Bütün Kateqoriyalar') }}</li>
                                                 @foreach($buildingTypes ?? [] as $buildingType)
-                                                    <li class="p-2 hover:bg-gray-100 cursor-pointer"
+                                                    <li class="px-3 py-2 hover:bg-orange-50 hover:text-orange-600 cursor-pointer font-medium"
                                                         data-value="{{ $buildingType->value }}">
                                                         {{ $buildingType->name['az'] ?? $buildingType->value }}
                                                     </li>
@@ -125,17 +122,17 @@
                                     </div>
 
                                     <div
-                                        class="relative p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer w-full"
+                                        class="relative p-3 bg-gray-50 rounded-xl border border-gray-200 cursor-pointer w-full select-none transition hover:bg-gray-100/70"
                                         id="openModal">
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center gap-2">
-                                                <img src="/images/city.svg" alt="city">
-                                                <span class="text-gray-700" data-role="display-value"
+                                                <img src="/images/city.svg" alt="city" class="w-4 h-4">
+                                                <span class="text-gray-700 font-medium" data-role="display-value"
                                                       data-filter="city">
-                                                {{ $cities->firstWhere('id', request('cityId'))?->name['az'] ?? ($cities->firstWhere('id', request('cityId'))?->value ?? __('Butun Seherler')) }}
+                                                {{ $cities->firstWhere('id', request('cityId'))?->name['az'] ?? ($cities->firstWhere('id', request('cityId'))?->value ?? __('Bütün Şəhərlər')) }}
                                             </span>
                                             </div>
-                                            <i class="bi bi-chevron-down text-orange-500 transition-transform"></i>
+                                            <i class="bi bi-chevron-down text-orange-500 transition-transform duration-200"></i>
                                         </div>
                                     </div>
 

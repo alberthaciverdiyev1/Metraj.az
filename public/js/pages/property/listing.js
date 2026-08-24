@@ -104,34 +104,40 @@
                 let icon = d.querySelector('.bi-chevron-down');
                 if (menu) menu.classList.add('hidden');
                 if (icon) icon.classList.remove('rotate-180');
+                d.classList.remove('z-30');
             });
         }
 
         dropdowns.forEach(function (dropdown) {
-            const header = dropdown.querySelector('.flex.items-center.justify-between');
             const menu = dropdown.querySelector('.dropdown-menu');
             let icon = dropdown.querySelector('.bi-chevron-down');
             const hiddenInput = dropdown.querySelector('input[type=hidden]');
             const display = dropdown.querySelector('[data-role="display-value"]');
 
-            header.addEventListener('click', function (e) {
+            dropdown.addEventListener('click', function (e) {
+                if (e.target.closest('.dropdown-menu')) return;
                 e.stopPropagation();
+                const isHidden = menu ? menu.classList.contains('hidden') : true;
                 closeAll(dropdown);
-                if (menu) menu.classList.toggle('hidden');
-                if (icon) icon.classList.toggle('rotate-180');
+                if (menu) {
+                    menu.classList.toggle('hidden', !isHidden);
+                    dropdown.classList.toggle('z-30', isHidden);
+                }
+                if (icon) icon.classList.toggle('rotate-180', isHidden);
             });
 
             if (menu) {
                 menu.querySelectorAll('li').forEach(function (item) {
                     item.addEventListener('click', function (e) {
                         e.stopPropagation();
-                        const val = this.getAttribute('data-value');
+                        const val = this.getAttribute('data-value') || '';
                         const label = this.textContent.trim();
 
                         const prev = hiddenInput ? hiddenInput.value : '';
                         if (hiddenInput) hiddenInput.value = val;
                         if (display) display.textContent = label;
                         if (menu) menu.classList.add('hidden');
+                        dropdown.classList.remove('z-30');
                         if (icon) icon.classList.remove('rotate-180');
 
                         /* Main page filters: apply immediately on change */
@@ -858,7 +864,7 @@
     }
 
     /* ===== INIT ===== */
-    document.addEventListener('DOMContentLoaded', function () {
+    function initAll() {
         initDropdowns();
         initAddTypeToggle();
         initFormSubmit();
@@ -870,6 +876,12 @@
         initHoverImages();
         initPagination();
         initPopState();
-    });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initAll);
+    } else {
+        initAll();
+    }
 
 })();
