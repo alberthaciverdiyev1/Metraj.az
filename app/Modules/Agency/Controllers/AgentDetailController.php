@@ -44,6 +44,6 @@ class AgentDetailController extends Controller
             'url' => null,
         ];
 
-        return view('agents.show', compact('agent', 'properties', 'breadcrumbs'));
+        return view('pages.agent.show', compact('agent', 'properties', 'breadcrumbs'));
     }
 }

@@ -34,6 +34,6 @@ class AgencyDetailController extends Controller
             ['label' => $agency->name],
         ];
 
-        return view('agencies.show', compact('agency', 'properties', 'breadcrumbs'));
+        return view('pages.agency.show', compact('agency', 'properties', 'breadcrumbs'));
     }
 }
