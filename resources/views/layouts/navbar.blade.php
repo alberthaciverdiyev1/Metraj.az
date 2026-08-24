@@ -33,60 +33,101 @@
     </nav>
 
     <!-- Right Actions -->
-    <div class="flex items-center space-x-3 sm:space-x-4">
+    <div class="flex items-center space-x-2.5 sm:space-x-3.5">
 
       <!-- Favorites -->
-      <a href="/favorites" class="relative text-gray-700 hover:text-orange-500 p-2 rounded-lg transition inline-flex items-center justify-center" title="{{ __('Favorites') }}">
+      <a href="/favorites" class="relative text-gray-700 hover:text-orange-500 p-2 rounded-xl transition inline-flex items-center justify-center hover:bg-gray-50" title="{{ __('Favorites') }}">
         <i class="fa-regular fa-heart text-xl text-rose-500"></i>
         <span id="favorites-count" class="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] min-w-[16px] h-4 px-1 flex items-center justify-center rounded-full font-bold shadow-sm">0</span>
       </a>
 
       <!-- Compares -->
-      <a href="/compares" class="relative text-gray-700 hover:text-orange-500 p-2 rounded-lg transition inline-flex items-center justify-center" title="{{ __('Compare') }}">
+      <a href="/compares" class="relative text-gray-700 hover:text-orange-500 p-2 rounded-xl transition inline-flex items-center justify-center hover:bg-gray-50" title="{{ __('Compare') }}">
         <i class="bi bi-arrow-left-right text-xl text-gray-700"></i>
         <span id="compares-count" class="absolute top-0 -right-1 bg-orange-500 text-white text-[10px] min-w-[16px] h-4 px-1 flex items-center justify-center rounded-full font-bold shadow-sm">0</span>
       </a>
 
-      <!-- Currency Selector -->
+      <!-- Currency Custom Dropdown -->
       @php
         $currentCurrency = session('currency', 'AZN');
+        $currencySymbols = [
+          'AZN' => '₼',
+          'USD' => '$',
+          'EUR' => '€',
+          'GBP' => '£',
+          'TRY' => '₺',
+          'RUB' => '₽',
+          'AED' => 'د.إ',
+        ];
       @endphp
       <div class="relative">
-        <select onchange="window.location.href='/currency/'+this.value"
-                class="bg-gray-50 border border-gray-200 text-gray-800 text-xs font-bold rounded-lg px-2 py-2 focus:outline-none focus:border-[#f1913d] cursor-pointer shadow-sm"
-                title="Valyuta seçimi">
-          <option value="AZN" {{ $currentCurrency == 'AZN' ? 'selected' : '' }}>₼ AZN</option>
-          <option value="USD" {{ $currentCurrency == 'USD' ? 'selected' : '' }}>$ USD</option>
-          <option value="EUR" {{ $currentCurrency == 'EUR' ? 'selected' : '' }}>€ EUR</option>
-          <option value="GBP" {{ $currentCurrency == 'GBP' ? 'selected' : '' }}>£ GBP</option>
-          <option value="TRY" {{ $currentCurrency == 'TRY' ? 'selected' : '' }}>₺ TRY</option>
-          <option value="RUB" {{ $currentCurrency == 'RUB' ? 'selected' : '' }}>₽ RUB</option>
-          <option value="AED" {{ $currentCurrency == 'AED' ? 'selected' : '' }}>AED</option>
-        </select>
+        <button id="navCurrencyBtn" type="button"
+                class="flex items-center gap-1.5 px-2.5 py-1.5 bg-gray-50 hover:bg-gray-100/80 border border-gray-200/90 rounded-xl text-xs font-bold text-gray-800 transition shadow-2xs cursor-pointer select-none">
+          <span class="text-gray-500 font-extrabold">{{ $currencySymbols[$currentCurrency] ?? '₼' }}</span>
+          <span>{{ $currentCurrency }}</span>
+          <i class="bi bi-chevron-down text-[10px] text-gray-400 transition-transform duration-200" id="navCurrencyChevron"></i>
+        </button>
+
+        <div id="navCurrencyDropdown"
+             class="hidden absolute right-0 mt-2 w-36 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden">
+          @foreach($currencySymbols as $cCode => $cSym)
+            <a href="/currency/{{ $cCode }}"
+               class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ $currentCurrency === $cCode ? 'text-[#f1913d] bg-orange-50/60 font-bold' : 'text-gray-700 hover:bg-gray-50' }} transition">
+              <span class="flex items-center gap-2">
+                <span class="w-4 text-center font-bold text-gray-400">{{ $cSym }}</span>
+                <span>{{ $cCode }}</span>
+              </span>
+              @if($currentCurrency === $cCode)
+                <i class="bi bi-check2 text-sm text-[#f1913d]"></i>
+              @endif
+            </a>
+          @endforeach
+        </div>
       </div>
 
-      <!-- Language Selector -->
+      <!-- Language Custom Dropdown with Flags -->
       @php
         $currentLocale = session('lang', app()->getLocale() ?? 'az');
+        $languages = [
+          'az' => ['name' => 'Azərbaycan', 'flag' => '🇦🇿', 'label' => 'AZ'],
+          'en' => ['name' => 'English', 'flag' => '🇬🇧', 'label' => 'EN'],
+          'ru' => ['name' => 'Русский', 'flag' => '🇷🇺', 'label' => 'RU'],
+        ];
+        $activeLang = $languages[$currentLocale] ?? $languages['az'];
       @endphp
       <div class="relative">
-        <select onchange="window.location.href='/lang/'+this.value"
-                class="bg-gray-50 border border-gray-200 text-gray-700 text-xs font-semibold rounded-lg px-2.5 py-2 focus:outline-none focus:border-[#f1913d] cursor-pointer"
-                title="Dil seçimi">
-          <option value="az" {{ $currentLocale == 'az' ? 'selected' : '' }}>AZ</option>
-          <option value="en" {{ $currentLocale == 'en' ? 'selected' : '' }}>EN</option>
-          <option value="ru" {{ $currentLocale == 'ru' ? 'selected' : '' }}>RU</option>
-        </select>
+        <button id="navLangBtn" type="button"
+                class="flex items-center gap-1.5 px-2.5 py-1.5 bg-gray-50 hover:bg-gray-100/80 border border-gray-200/90 rounded-xl text-xs font-bold text-gray-800 transition shadow-2xs cursor-pointer select-none">
+          <span class="text-sm leading-none">{{ $activeLang['flag'] }}</span>
+          <span>{{ $activeLang['label'] }}</span>
+          <i class="bi bi-chevron-down text-[10px] text-gray-400 transition-transform duration-200" id="navLangChevron"></i>
+        </button>
+
+        <div id="navLangDropdown"
+             class="hidden absolute right-0 mt-2 w-40 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden">
+          @foreach($languages as $lKey => $lData)
+            <a href="/lang/{{ $lKey }}"
+               class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ $currentLocale === $lKey ? 'text-[#f1913d] bg-orange-50/60 font-bold' : 'text-gray-700 hover:bg-gray-50' }} transition">
+              <span class="flex items-center gap-2">
+                <span class="text-base leading-none">{{ $lData['flag'] }}</span>
+                <span>{{ $lData['name'] }}</span>
+              </span>
+              @if($currentLocale === $lKey)
+                <i class="bi bi-check2 text-sm text-[#f1913d]"></i>
+              @endif
+            </a>
+          @endforeach
+        </div>
       </div>
 
       <!-- Post Request Button (Axtarıram) -->
-      <a href="/axtariram/elan-ver" class="hidden lg:flex items-center px-3.5 py-2 border border-orange-500 text-orange-600 hover:bg-orange-50 rounded-lg font-medium text-sm transition shadow-2xs" title="{{ __('Tələb Elanı Yerləşdir') }}">
+      <a href="/axtariram/elan-ver" class="hidden lg:flex items-center px-3.5 py-2 border border-orange-500 text-orange-600 hover:bg-orange-50 rounded-xl font-semibold text-xs sm:text-sm transition shadow-2xs" title="{{ __('Tələb Elanı Yerləşdir') }}">
         <i class="fa-solid fa-bullhorn mr-1.5 text-xs text-orange-500"></i>
         <span>{{ __('Tələb yerləşdir') }}</span>
       </a>
 
       <!-- Add Property Button -->
-      <a href="/add-property" class="hidden sm:flex items-center px-3.5 py-2 bg-[#f1913d] hover:bg-[#e07f2c] text-white rounded-lg font-medium text-sm transition shadow-sm">
+      <a href="/add-property" class="hidden sm:flex items-center px-3.5 py-2 bg-[#f1913d] hover:bg-[#e07f2c] text-white rounded-xl font-semibold text-xs sm:text-sm transition shadow-sm">
         <i class="bi bi-plus-circle mr-1.5"></i>
         <span>{{ __('Elan yerləşdir') }}</span>
       </a>
@@ -94,14 +135,14 @@
       <!-- Auth User / Login -->
       <div class="relative">
         @auth
-          <button id="navUserMenuBtn" type="button" class="flex items-center space-x-2 px-3 py-1.5 border border-gray-200 rounded-lg text-gray-700 bg-white hover:bg-gray-50 text-sm font-medium">
+          <button id="navUserMenuBtn" type="button" class="flex items-center space-x-2 px-3 py-1.5 border border-gray-200 rounded-xl text-gray-700 bg-white hover:bg-gray-50 text-sm font-medium cursor-pointer">
             <i class="fas fa-user text-gray-400"></i>
             <span class="max-w-[110px] truncate">{{ auth()->user()->name }}</span>
-            <i class="bi bi-chevron-down text-xs text-gray-400" id="navUserChevron"></i>
+            <i class="bi bi-chevron-down text-xs text-gray-400 transition-transform duration-200" id="navUserChevron"></i>
           </button>
 
           <!-- User Dropdown Menu -->
-          <div id="navUserDropdown" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
+          <div id="navUserDropdown" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50">
             <div class="px-4 py-2 border-b border-gray-100">
               <p class="text-sm font-semibold text-gray-900 truncate">{{ auth()->user()->name }}</p>
               <p class="text-xs text-gray-500 truncate">{{ auth()->user()->email }}</p>
@@ -140,7 +181,7 @@
             </form>
           </div>
         @else
-          <a href="/login" class="flex items-center px-3.5 py-2 border border-gray-200 rounded-lg text-gray-700 hover:border-[#f1913d] hover:text-[#f1913d] text-sm font-medium transition bg-white">
+          <a href="/login" class="flex items-center px-3.5 py-2 border border-gray-200 rounded-xl text-gray-700 hover:border-[#f1913d] hover:text-[#f1913d] text-sm font-semibold transition bg-white shadow-2xs">
             <i class="bi bi-person mr-1.5 text-base"></i>
             <span>{{ __('Login / Register') }}</span>
           </a>
@@ -148,7 +189,7 @@
       </div>
 
       <!-- Mobile Hamburger Button -->
-      <button type="button" id="mobileNavToggle" class="md:hidden p-2 text-gray-700 hover:text-[#f1913d] focus:outline-none">
+      <button type="button" id="mobileNavToggle" class="md:hidden p-2 text-gray-700 hover:text-[#f1913d] focus:outline-none cursor-pointer">
         <i class="bi bi-list text-2xl" id="mobileNavIcon"></i>
       </button>
 
@@ -156,47 +197,74 @@
   </div>
 
   <!-- Mobile Dropdown Menu -->
-  <div id="mobileNavMenu" class="hidden md:hidden border-t border-gray-100 bg-white px-4 py-4 space-y-3 shadow-md">
-    <div class="flex flex-col space-y-1.5 text-sm font-medium">
-      <a href="/" class="px-3 py-2 rounded-md {{ request()->is('/') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
+  <div id="mobileNavMenu" class="hidden md:hidden border-t border-gray-100 bg-white px-4 py-4 space-y-4 shadow-lg">
+    <div class="flex flex-col space-y-1 text-sm font-medium">
+      <a href="/" class="px-3 py-2 rounded-xl {{ request()->is('/') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
         {{ __('Home') }}
       </a>
-      <a href="/listing?deal_type=sale" class="px-3 py-2 rounded-md {{ request()->is('listing*') && request('deal_type') === 'sale' ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
+      <a href="/listing?deal_type=sale" class="px-3 py-2 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'sale' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
         {{ __('Alqı-satqı') }}
       </a>
-      <a href="/listing?deal_type=rent_monthly" class="px-3 py-2 rounded-md {{ request()->is('listing*') && request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
+      <a href="/listing?deal_type=rent_monthly" class="px-3 py-2 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
         {{ __('Kirayə') }}
       </a>
-      <a href="/listing?deal_type=rent_daily" class="px-3 py-2 rounded-md {{ request()->is('listing*') && request('deal_type') === 'rent_daily' ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
+      <a href="/listing?deal_type=rent_daily" class="px-3 py-2 rounded-xl {{ request()->is('listing*') && request('deal_type') === 'rent_daily' ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
         {{ __('Günlük') }}
       </a>
-      <a href="/axtariram" class="px-3 py-2 rounded-md {{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
+      <a href="/axtariram" class="px-3 py-2 rounded-xl {{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
         {{ __('Axtarıram') }}
       </a>
-      <a href="/agencies" class="px-3 py-2 rounded-md {{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
+      <a href="/agencies" class="px-3 py-2 rounded-xl {{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
         {{ __('Agencies') }}
       </a>
-      <a href="/contact" class="px-3 py-2 rounded-md {{ request()->is('contact*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
+      <a href="/contact" class="px-3 py-2 rounded-xl {{ request()->is('contact*') ? 'text-[#f1913d] bg-orange-50 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
         {{ __('Contact') }}
       </a>
     </div>
 
+    <!-- Mobile Language Selector -->
+    <div class="pt-2 border-t border-gray-100">
+      <div class="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-2">{{ __('Dil seçimi') }}</div>
+      <div class="grid grid-cols-3 gap-2">
+        @foreach($languages as $lKey => $lData)
+          <a href="/lang/{{ $lKey }}"
+             class="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-bold border {{ $currentLocale === $lKey ? 'border-orange-500 bg-orange-50 text-orange-600' : 'border-gray-200 text-gray-700 hover:bg-gray-50' }}">
+            <span>{{ $lData['flag'] }}</span>
+            <span>{{ $lData['label'] }}</span>
+          </a>
+        @endforeach
+      </div>
+    </div>
+
+    <!-- Mobile Currency Selector -->
+    <div class="pt-2 border-t border-gray-100">
+      <div class="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-2">{{ __('Valyuta') }}</div>
+      <div class="grid grid-cols-4 gap-1.5">
+        @foreach($currencySymbols as $cCode => $cSym)
+          <a href="/currency/{{ $cCode }}"
+             class="flex items-center justify-center py-1.5 px-2 rounded-lg text-xs font-bold border {{ $currentCurrency === $cCode ? 'border-orange-500 bg-orange-50 text-orange-600' : 'border-gray-200 text-gray-700 hover:bg-gray-50' }}">
+            <span>{{ $cCode }}</span>
+          </a>
+        @endforeach
+      </div>
+    </div>
+
     <div class="pt-3 border-t border-gray-100 flex flex-col space-y-2">
       <div class="grid grid-cols-2 gap-2">
-        <a href="/axtariram/elan-ver" class="w-full flex items-center justify-center py-2.5 border border-orange-500 text-orange-600 rounded-lg font-semibold text-xs text-center">
+        <a href="/axtariram/elan-ver" class="w-full flex items-center justify-center py-2.5 border border-orange-500 text-orange-600 rounded-xl font-semibold text-xs text-center">
           <i class="fa-solid fa-bullhorn mr-1.5 text-xs"></i> {{ __('Tələb yerləşdir') }}
         </a>
-        <a href="/add-property" class="w-full flex items-center justify-center py-2.5 bg-[#f1913d] text-white rounded-lg font-semibold text-xs text-center">
+        <a href="/add-property" class="w-full flex items-center justify-center py-2.5 bg-[#f1913d] text-white rounded-xl font-semibold text-xs text-center">
           <i class="bi bi-plus-circle mr-1.5"></i> {{ __('Elan yerləşdir') }}
         </a>
       </div>
 
       <div class="flex items-center justify-between gap-2 pt-1">
-        <a href="/favorites" class="flex-1 flex items-center justify-center gap-1.5 py-2 border border-gray-200 rounded-lg text-gray-700 text-xs font-medium hover:border-orange-500 hover:text-orange-500 transition">
+        <a href="/favorites" class="flex-1 flex items-center justify-center gap-1.5 py-2 border border-gray-200 rounded-xl text-gray-700 text-xs font-medium hover:border-orange-500 hover:text-orange-500 transition">
           <i class="fa-regular fa-heart text-rose-500"></i>
           <span>{{ __('Favorites') }}</span>
         </a>
-        <a href="/compares" class="flex-1 flex items-center justify-center gap-1.5 py-2 border border-gray-200 rounded-lg text-gray-700 text-xs font-medium hover:border-orange-500 hover:text-orange-500 transition">
+        <a href="/compares" class="flex-1 flex items-center justify-center gap-1.5 py-2 border border-gray-200 rounded-xl text-gray-700 text-xs font-medium hover:border-orange-500 hover:text-orange-500 transition">
           <i class="bi bi-arrow-left-right text-gray-700"></i>
           <span>{{ __('Compare') }}</span>
         </a>
@@ -227,26 +295,49 @@
     updateNavBadges();
     window.addEventListener('storage', updateNavBadges);
 
-    // User dropdown
-    const userBtn = document.getElementById('navUserMenuBtn');
-    const userDropdown = document.getElementById('navUserDropdown');
-    const userChevron = document.getElementById('navUserChevron');
+    // Generic Dropdown Helper
+    function setupDropdown(btnId, menuId, chevronId) {
+      const btn = document.getElementById(btnId);
+      const menu = document.getElementById(menuId);
+      const chevron = chevronId ? document.getElementById(chevronId) : null;
+      if (!btn || !menu) return;
 
-    if (userBtn && userDropdown) {
-      userBtn.addEventListener('click', function (e) {
+      btn.addEventListener('click', function (e) {
         e.stopPropagation();
-        const isHidden = userDropdown.classList.contains('hidden');
-        userDropdown.classList.toggle('hidden', !isHidden);
-        if (userChevron) userChevron.classList.toggle('rotate-180', isHidden);
-      });
+        // Close other dropdowns
+        ['navCurrencyDropdown', 'navLangDropdown', 'navUserDropdown'].forEach(id => {
+          if (id !== menuId) {
+            const el = document.getElementById(id);
+            if (el) el.classList.add('hidden');
+          }
+        });
+        ['navCurrencyChevron', 'navLangChevron', 'navUserChevron'].forEach(id => {
+          if (id !== chevronId) {
+            const el = document.getElementById(id);
+            if (el) el.classList.remove('rotate-180');
+          }
+        });
 
-      document.addEventListener('click', function (e) {
-        if (!userBtn.contains(e.target) && !userDropdown.contains(e.target)) {
-          userDropdown.classList.add('hidden');
-          if (userChevron) userChevron.classList.remove('rotate-180');
-        }
+        const isHidden = menu.classList.contains('hidden');
+        menu.classList.toggle('hidden', !isHidden);
+        if (chevron) chevron.classList.toggle('rotate-180', isHidden);
       });
     }
+
+    setupDropdown('navCurrencyBtn', 'navCurrencyDropdown', 'navCurrencyChevron');
+    setupDropdown('navLangBtn', 'navLangDropdown', 'navLangChevron');
+    setupDropdown('navUserMenuBtn', 'navUserDropdown', 'navUserChevron');
+
+    document.addEventListener('click', function () {
+      ['navCurrencyDropdown', 'navLangDropdown', 'navUserDropdown'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
+      ['navCurrencyChevron', 'navLangChevron', 'navUserChevron'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('rotate-180');
+      });
+    });
 
     // Mobile navigation toggle
     const mobileBtn = document.getElementById('mobileNavToggle');
