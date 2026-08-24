@@ -17,6 +17,8 @@
     @endif
 
     @if($totalImages > 0)
+        <!-- Listing Details CSS for Fullscreen Modal and Gallery -->
+        <link rel="stylesheet" href="/css/listing-details.css">
         <style>
             .thumbnails-row::-webkit-scrollbar {
                 display: none;
@@ -26,34 +28,44 @@
                 scrollbar-width: none;
             }
             .thumbnails-row img {
-                opacity: 0.6;
+                opacity: 0.65;
                 transition: all 0.2s ease-in-out;
             }
-            .thumbnails-row img.active {
+            .thumbnails-row img.active,
+            .thumbnails-row img:hover {
                 opacity: 1;
-                border-color: #f97316;
+            }
+            .thumbnails-row img.active {
+                border-color: #f1913d !important;
             }
         </style>
 
         <!-- Gallery Section (Identical to Property Details) -->
         <div class="w-full mb-8">
             <!-- Main Image -->
-            <div class="relative w-full h-[45vh] md:h-[55vh] lg:h-[65vh] min-h-[350px] rounded-2xl overflow-hidden cursor-pointer shadow-sm bg-gray-100" onclick="openModal(0)">
-                <img src="{{ $galleryImages->first()?->url }}" alt="{{ $propertyRequest->title }}" class="w-full h-full object-cover">
-                <span class="absolute bottom-4 left-4 bg-black/60 text-white text-xs px-3.5 py-2 rounded-xl font-bold backdrop-blur-md flex items-center gap-1.5 shadow">
+            <div class="relative w-full h-[45vh] md:h-[55vh] lg:h-[65vh] min-h-[350px] rounded-2xl overflow-hidden cursor-pointer shadow-sm bg-gray-100 group"
+                 id="mainImageContainer"
+                 onclick="openModal(window.currentMainImageIndex || 0)">
+                <img id="mainRequestDisplayImg"
+                     src="{{ $galleryImages->first()?->url }}"
+                     alt="{{ $propertyRequest->title }}"
+                     class="w-full h-full object-cover transition duration-300 group-hover:scale-[1.01]">
+                
+                <span class="absolute bottom-4 left-4 bg-black/60 text-white text-xs px-3.5 py-2 rounded-xl font-bold backdrop-blur-md flex items-center gap-1.5 shadow select-none">
                     <i class="bi bi-camera"></i>
                     <span>{{ $totalImages }} {{ __('şəkil') }}</span>
+                    <span class="text-white/60 ml-1">({{ __('Böyütmək üçün klikləyin') }})</span>
                 </span>
             </div>
 
             <!-- Thumbnail Gallery (horizontal, single row) -->
             @if($totalImages > 1)
-            <div class="mt-4 flex gap-3 overflow-x-auto thumbnails-row">
+            <div class="mt-4 flex gap-3 overflow-x-auto thumbnails-row" id="pageThumbnails">
                 @foreach($galleryImages as $index => $image)
                     <img src="{{ $image->url }}"
-                         onclick="openModal({{ $index }})"
+                         onclick="selectPageImage({{ $index }})"
                          alt="{{ $propertyRequest->title }}"
-                         class="shrink-0 w-24 h-20 sm:w-28 sm:h-24 md:w-32 md:h-24 object-cover rounded-xl border-2 cursor-pointer {{ $index === 0 ? 'active border-orange-500' : 'border-transparent' }}">
+                         class="page-thumb shrink-0 w-24 h-20 sm:w-28 sm:h-24 md:w-32 md:h-24 object-cover rounded-xl border-2 cursor-pointer transition {{ $index === 0 ? 'active border-[#f1913d]' : 'border-transparent' }}">
                 @endforeach
             </div>
             @endif
@@ -64,14 +76,14 @@
             <div class="modal-header">
                 <span id="counter" class="text-sm font-semibold">1/{{ $totalImages }}</span>
                 <div class="modal-actions">
-                    <button onclick="toggleFullscreen()"><i class="bi bi-fullscreen"></i></button>
-                    <button onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
+                    <button type="button" onclick="toggleFullscreen()"><i class="bi bi-fullscreen"></i></button>
+                    <button type="button" onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
                 </div>
             </div>
             <div class="modal-navigation">
-                <button onclick="prevImage()"><i class="bi bi-arrow-left"></i></button>
+                <button type="button" onclick="prevImage()"><i class="bi bi-arrow-left"></i></button>
                 <img id="modal-image" src="" alt="Modal Image">
-                <button onclick="nextImage()"><i class="bi bi-arrow-right"></i></button>
+                <button type="button" onclick="nextImage()"><i class="bi bi-arrow-right"></i></button>
             </div>
             <div class="thumbnails mt-4 flex space-x-2 overflow-x-auto" id="thumbnails">
                 @foreach($galleryImages as $index => $image)
@@ -316,15 +328,33 @@
 </div>
 
 @if($totalImages > 0)
-    @push('scripts')
     <script>
         const imagesData = [
             @foreach($galleryImages as $image)
                 "{{ $image->url }}",
             @endforeach
         ];
+        window.currentMainImageIndex = 0;
+
+        function selectPageImage(index) {
+            window.currentMainImageIndex = index;
+            const mainImg = document.getElementById('mainRequestDisplayImg');
+            if (mainImg && imagesData[index]) {
+                mainImg.src = imagesData[index];
+            }
+
+            const thumbs = document.querySelectorAll('.page-thumb');
+            thumbs.forEach((thumb, i) => {
+                if (i === index) {
+                    thumb.classList.add('active', 'border-[#f1913d]');
+                    thumb.classList.remove('border-transparent');
+                } else {
+                    thumb.classList.remove('active', 'border-[#f1913d]');
+                    thumb.classList.add('border-transparent');
+                }
+            });
+        }
     </script>
     <script src="/js/pages/property/detail/image-gallery.js"></script>
-    @endpush
 @endif
 @endsection

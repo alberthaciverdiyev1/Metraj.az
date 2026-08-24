@@ -37,7 +37,7 @@
     }
 </style>
 
-<div class="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
     @if(isset($breadcrumbs))
         <div class="mb-6">
@@ -151,7 +151,7 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                
+
                 <!-- Property Type (for Buy/Rent/Daily) -->
                 <div id="propertyTypeField">
                     <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Əmlak Növü') }}</label>
@@ -199,7 +199,7 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                
+
                 <!-- City -->
                 <div>
                     <label class="block text-xs font-bold text-gray-700 mb-1.5">{{ __('Şəhər') }} <span class="text-rose-500">*</span></label>
