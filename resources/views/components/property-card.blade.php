@@ -126,13 +126,13 @@
       @php
           $displayPrice = app(\App\Modules\Property\Services\PropertyPricePresenter::class)->display($property);
       @endphp
-      <span class="text-[color:var(--primary)] font-semibold text-sm sm:text-base md:text-lg">
+      <span class="text-orange-500 font-semibold text-sm sm:text-base md:text-lg">
         {{ $displayPrice['symbol'] }} {{ $displayPrice['formatted'] }}
       </span>
       <button type="button" onclick="event.stopPropagation(); toggleCompare(this, {{ $property->id }})"
               data-compare-btn="{{ $property->id }}"
-              class="compare-btn flex items-center gap-1.5 text-xs sm:text-sm font-medium text-gray-700 hover:text-[color:var(--primary)] transition-colors py-1 px-2 rounded-lg hover:bg-orange-50 cursor-pointer">
-        <i class="bi bi-arrow-left-right text-sm sm:text-base text-(--primary)"></i>
+              class="compare-btn flex items-center gap-1.5 text-xs sm:text-sm font-medium text-gray-700 hover:text-orange-500 transition-colors py-1 px-2 rounded-lg hover:bg-orange-50 cursor-pointer">
+        <i class="bi bi-arrow-left-right text-sm sm:text-base text-orange-500"></i>
         <span class="compare-btn-text hidden xs:inline">{{ __('listing.compare') }}</span>
       </button>
     </div>
