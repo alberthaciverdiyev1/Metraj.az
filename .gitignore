@@ -17,3 +17,15 @@ yarn-error.log
 /.vscode
 .DS_Store
 Thumbs.db
+
+# AI Assistant Files & Configurations
+CLAUDE.md
+.claude/
+.claudeignore
+.gemini/
+.geminiignore
+.junie/
+.cursor/
+.cursorrules
+.copilot/
+.antigravity/
