@@ -63,9 +63,10 @@ class SeoSetting extends Model
             return static::$memoized = $cached;
         }
 
-        $setting = self::firstOrCreate(
-            ['id' => 1],
-            [
+        $setting = self::find(1);
+        if (!$setting) {
+            $setting = self::create([
+                'id' => 1,
                 'head_scripts' => null,
                 'body_scripts' => null,
                 'footer_scripts' => null,
@@ -88,8 +89,8 @@ class SeoSetting extends Model
                     'ru' => 'недвижимость северный кипр, купить дом кирения, снять квартиру никосия',
                 ],
                 'og_image' => null,
-            ]
-        );
+            ]);
+        }
 
         Cache::put(self::CACHE_KEY, $setting, 86400);
 

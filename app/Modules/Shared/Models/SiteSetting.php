@@ -96,9 +96,10 @@ class SiteSetting extends Model
             return static::$memoized = $cached;
         }
 
-        $setting = self::firstOrCreate(
-            ['id' => 1],
-            [
+        $setting = self::find(1);
+        if (!$setting) {
+            $setting = self::create([
+                'id' => 1,
                 'phone' => '+90 (548) 888-8888',
                 'phone_secondary' => '+90 (392) 815 00 00',
                 'whatsapp' => '+905488888888',
@@ -135,8 +136,8 @@ class SiteSetting extends Model
                     'ru' => 'Откройте для себя тысячи объявлений о продаже и аренде недвижимости по всему Северному Кипру на единой платформе.',
                 ],
                 'copyright_text' => 'KibrisKare.com',
-            ]
-        );
+            ]);
+        }
 
         Cache::put(self::CACHE_KEY, $setting, 86400);
 
