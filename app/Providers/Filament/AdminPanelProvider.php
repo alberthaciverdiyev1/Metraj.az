@@ -64,7 +64,6 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
-            ->topNavigation()
             ->breadcrumbs(false)
             ->maxContentWidth(\Filament\Support\Enums\MaxWidth::Full)
             ->renderHook(
