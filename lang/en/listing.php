@@ -51,4 +51,5 @@ return [
     'rent_badge' => 'Rent',
     'compare' => 'Compare',
     'today' => 'Today',
+    'popular_searches' => 'Popular searches',
 ];

@@ -221,5 +221,10 @@ class DatabaseSeeder extends Seeder
         // 7. Bloqlar (30 qısa məqalə)
         // ==========================================
         $this->call(BlogSeeder::class);
+
+        // ==========================================
+        // 8. Populyar Axtarışlar (SEO Teqləri)
+        // ==========================================
+        $this->call(QuickSearchSeeder::class);
     }
 }

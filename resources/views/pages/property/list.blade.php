@@ -1,28 +1,47 @@
 @extends('layouts.app')
 
+@if(isset($pageTitle) && $pageTitle)
+    @section('title', $pageTitle . ' - Metraj.az')
+@endif
+
+@if(isset($metaDescription) && $metaDescription)
+    @section('meta_description', $metaDescription)
+@endif
+
 @section('content')
     <div class="w-full pt-4">
+        @if(!empty($breadcrumbs))
+            @include('components.breadcrumb', ['items' => $breadcrumbs])
+        @endif
+
         @include('components.scroll-top')
 
-        <section class="property-listing py-4">
-                    <div class="container mx-auto px-4 text-sm">
+        <section class="property-listing py-2">
+            <div class="container mx-auto px-4 text-sm">
+                @if(isset($pageTitle) && $pageTitle)
+                    <div class="mb-4">
+                        <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 tracking-tight">{{ $pageTitle }}</h1>
+                    </div>
+                @endif
 
-                        <form method="GET" action="{{ route('listing') }}" id="filterForm" class="space-y-4">
-                            <section class="pt-4 max-w-full mx-auto">
-                                <div class="flex justify-between items-center mb-3">
-                                    @php
-                                        $selectedAdType = request('adType', 'all');
-                                        $dealTypes = \App\Modules\Location\Models\FilterOption::where('filter_id', 2)->get();
-                                    @endphp
-                                    <div
-                                        class="flex gap-1 bg-gray-100 p-1 rounded-2xl border border-gray-200/50 max-w-max shadow-sm"
-                                        data-role="add-type-toggle">
-                                        <button type="button" data-value="all"
-                                                class="px-5 py-2.5 rounded-xl font-semibold text-xs tracking-wide uppercase transition duration-200 {{ $selectedAdType === 'all' || !$selectedAdType ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}"
-                                                data-add-type="all">
-                                            {{ __("listing.all") }}
-                                        </button>
-                                        @foreach($dealTypes as $dt)
+                @include('components.quick-searches', ['searches' => $popularSearches ?? null, 'currentSlug' => $currentQuickSearch?->slug ?? null])
+
+                <form method="GET" action="{{ route('listing') }}" id="filterForm" class="space-y-4 mt-2">
+                    <section class="pt-2 max-w-full mx-auto">
+                        <div class="flex justify-between items-center mb-3">
+                            @php
+                                $selectedAdType = request('adType', 'all');
+                                $dealTypes = \App\Modules\Location\Models\FilterOption::where('filter_id', 2)->get();
+                            @endphp
+                            <div
+                                class="flex gap-1 bg-gray-100 p-1 rounded-2xl border border-gray-200/50 max-w-max shadow-sm"
+                                data-role="add-type-toggle">
+                                <button type="button" data-value="all"
+                                        class="px-5 py-2.5 rounded-xl font-semibold text-xs tracking-wide uppercase transition duration-200 {{ $selectedAdType === 'all' || !$selectedAdType ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}"
+                                        data-add-type="all">
+                                    {{ __("listing.all") }}
+                                </button>
+                                @foreach($dealTypes as $dt)
                                             <button type="button" data-value="{{ $dt->value }}"
                                                     class="px-5 py-2.5 rounded-xl font-semibold text-xs tracking-wide uppercase transition duration-200 {{ $selectedAdType === $dt->value ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}"
                                                     data-add-type="{{ $dt->value }}">

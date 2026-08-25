@@ -51,4 +51,5 @@ return [
     'rent_badge' => 'Аренда',
     'compare' => 'Сравнить',
     'today' => 'Сегодня',
+    'popular_searches' => 'Популярные поиски',
 ];

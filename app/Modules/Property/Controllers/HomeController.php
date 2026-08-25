@@ -6,6 +6,7 @@ use App\Modules\Location\Models\City;
 use App\Modules\Location\Services\LocationService;
 use App\Modules\Property\DTOs\PropertyFilterDTO;
 use App\Modules\Property\Enums\DealType;
+use App\Modules\Property\Models\QuickSearch;
 use App\Modules\Property\Services\PropertyService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -70,8 +71,9 @@ class HomeController extends Controller
      */
     protected function renderListingPage(Request $request, ?string $first, ?string $second, ?string $third): string
     {
+        $currentQuickSearch = null;
         if ($first !== null) {
-            $this->applyPathFilters($request, $first, $second, $third);
+            $currentQuickSearch = $this->applyPathFilters($request, $first, $second, $third);
         }
 
         $filter = PropertyFilterDTO::fromArray($request->all());
@@ -86,34 +88,54 @@ class HomeController extends Controller
         // (əsas axtarışda olan deal_type və property_type istisna olunur)
         $dynamicFilters = $this->locationService->dynamicFilters();
 
+        $popularSearches = QuickSearch::popular()->limit(15)->get();
+
         $breadcrumbs = [
             ['label' => __('navbar.home'), 'url' => '/'],
-            ['label' => __('listing.all')],
+            ['label' => $currentQuickSearch ? $currentQuickSearch->localized_title : __('listing.all')],
         ];
+
+        $pageTitle = $currentQuickSearch ? $currentQuickSearch->localized_title : null;
+        $metaDescription = $currentQuickSearch ? $currentQuickSearch->localized_meta_description : null;
 
         return view('pages.property.list', compact(
             'properties',
             'cities',
             'buildingTypes',
             'dynamicFilters',
-            'breadcrumbs'
+            'popularSearches',
+            'currentQuickSearch',
+            'breadcrumbs',
+            'pageTitle',
+            'metaDescription'
         ))->with('css', ['listing.css'])->render();
     }
 
     /**
-     * SEO dostu URL segmentlərini filtrə çevirir.
-     *
-     * Mümkün URL formaları:
-     *   /girne                → şəhər
-     *   /satilik              → satış
-     *   /kira                 → bütün kirayə (aylıq + günlük)
-     *   /kira/ayliq           → aylıq kirayə
-     *   /kira/gunluk          → günlük kirayə
-     *   /girne/satilik        → şəhər + satış
-     *   /girne/kira/gunluk    → şəhər + günlük kirayə
+     * SEO dostu URL segmentlərini və ya QuickSearch presetini filtrə çevirir.
      */
-    protected function applyPathFilters(Request $request, string $first, ?string $second, ?string $third): void
+    protected function applyPathFilters(Request $request, string $first, ?string $second, ?string $third): ?QuickSearch
     {
+        // 1. Populyar axtarış / SEO Teqi yoxlanışı (/axtaris/{slug} və ya /search/{slug})
+        if (in_array($first, ['axtaris', 'search'], true) && $second !== null) {
+            $quickSearch = QuickSearch::where('slug', $second)->where('is_active', true)->first();
+            if ($quickSearch) {
+                QuickSearch::withoutTimestamps(fn () => $quickSearch->increment('view_count'));
+                $request->merge($quickSearch->toQueryParams());
+                return $quickSearch;
+            }
+            abort(404);
+        }
+
+        // 2. Birbaşa slug yoxlanışı (məs: /{slug})
+        $quickSearch = QuickSearch::where('slug', $first)->where('is_active', true)->first();
+        if ($quickSearch && $second === null) {
+            QuickSearch::withoutTimestamps(fn () => $quickSearch->increment('view_count'));
+            $request->merge($quickSearch->toQueryParams());
+            return $quickSearch;
+        }
+
+        // 3. Şəhər və Əməliyyat URL-ləri
         $city = City::where('slug', $first)->where('is_active', true)->first();
 
         if ($city) {
@@ -125,10 +147,11 @@ class HomeController extends Controller
                 abort(404);
             }
 
-            return;
+            return null;
         }
 
         $this->applyDealSegment($request, $first, $second);
+        return null;
     }
 
     protected function applyDealSegment(Request $request, string $deal, ?string $rent): void
@@ -168,3 +191,4 @@ class HomeController extends Controller
         abort(404);
     }
 }
+

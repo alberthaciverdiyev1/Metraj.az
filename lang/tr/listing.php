@@ -51,4 +51,5 @@ return [
     'rent_badge' => 'Kiralık',
     'compare' => 'Karşılaştır',
     'today' => 'Bugün',
+    'popular_searches' => 'Popüler aramalar',
 ];
