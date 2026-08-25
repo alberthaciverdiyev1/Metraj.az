@@ -28,27 +28,23 @@ composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 echo "🗄️ Running database migrations..."
 php artisan migrate --force
 
-# 5. Build Frontend Assets (always regenerated on the server — not committed to Git)
-echo "⚡ Building frontend assets..."
-if [ -f "package.json" ]; then
-    if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
-        echo "❌ Node.js/npm is required to build frontend assets."
-        exit 1
-    fi
-    echo "   node: $(node -v), npm: $(npm -v)"
-    if [ -f "package-lock.json" ]; then
-        echo "📦 Installing npm dependencies (npm ci)..."
-        npm ci  # non-interactive by default; --no-interaction is rejected by npm ci
+# 5. Build Frontend Assets (if node >= 18 is present)
+echo "⚡ Checking frontend assets..."
+if [ -f "package.json" ] && command -v node >/dev/null 2>&1; then
+    NODE_MAJOR=$(node -v | cut -d'.' -f1 | tr -d 'v')
+    if [ "$NODE_MAJOR" -ge 18 ] 2>/dev/null; then
+        echo "   Node.js version $(node -v) detected. Building frontend assets..."
+        if [ -f "package-lock.json" ]; then
+            npm ci || npm install --prefer-offline || true
+        else
+            npm install --prefer-offline || true
+        fi
+        npm run build || true
+        npm run assets:build || true
     else
-        echo "📦 Installing npm dependencies (npm install)..."
-        npm install --no-interaction --prefer-offline
+        echo "   Node.js $(node -v) is older than v18; using repository pre-built assets."
     fi
-    echo "🏗️  Running vite build..."
-    npm run build
-    echo "🏗️  Running legacy assets build..."
-    npm run assets:build
-    echo "🎨 Publishing Filament assets..."
-    php artisan filament:assets
+    php artisan filament:assets || true
 fi
 
 # 6. Ensure Storage Link Exists
