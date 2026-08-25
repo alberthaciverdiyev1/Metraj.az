@@ -58,14 +58,18 @@ class FilterOptionsRelationManager extends RelationManager
                             ->label('Ad (AZ)')
                             ->required(),
 
-                        Forms\Components\TextInput::make('name.ru')
-                            ->label('Ad (RU)')
+                        Forms\Components\TextInput::make('name.tr')
+                            ->label('Ad (TR)')
                             ->nullable(),
 
                         Forms\Components\TextInput::make('name.en')
                             ->label('Ad (EN)')
                             ->nullable(),
-                    ])->columns(3),
+
+                        Forms\Components\TextInput::make('name.ru')
+                            ->label('Ad (RU)')
+                            ->nullable(),
+                    ])->columns(4),
 
                 Forms\Components\TextInput::make('icon')
                     ->label('İkon (FontAwesome)')
@@ -89,10 +93,15 @@ class FilterOptionsRelationManager extends RelationManager
                     ->label('Seçim / İyerarxiya')
                     ->searchable(query: function ($query, $search) {
                         return $query->where('name->az', 'like', "%{$search}%")
+                            ->orWhere('name->tr', 'like', "%{$search}%")
                             ->orWhere('value', 'like', "%{$search}%");
                     })
                     ->sortable()
                     ->weight('bold'),
+
+                Tables\Columns\TextColumn::make('name.tr')
+                    ->label('Ad (TR)')
+                    ->placeholder('—'),
 
                 Tables\Columns\TextColumn::make('value')
                     ->label('Dəyər (Value)')

@@ -63,6 +63,7 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                \App\Modules\Shared\Middleware\SetLocale::class,
             ])
             ->breadcrumbs(false)
             ->maxContentWidth(\Filament\Support\Enums\MaxWidth::Full)

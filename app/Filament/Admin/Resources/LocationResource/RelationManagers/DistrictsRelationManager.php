@@ -34,14 +34,19 @@ class DistrictsRelationManager extends RelationManager
                         }
                     }),
 
-                Forms\Components\TextInput::make('name.ru')
-                    ->label('Rayon / Bölqə Adı (RU)')
-                    ->placeholder('Məs: Ясамал')
+                Forms\Components\TextInput::make('name.tr')
+                    ->label('Rayon / Bölqə Adı (TR)')
+                    ->placeholder('Məs: Alsancak, Lapta')
                     ->nullable(),
 
                 Forms\Components\TextInput::make('name.en')
                     ->label('Rayon / Bölqə Adı (EN)')
-                    ->placeholder('Məs: Yasamal')
+                    ->placeholder('Məs: Alsancak')
+                    ->nullable(),
+
+                Forms\Components\TextInput::make('name.ru')
+                    ->label('Rayon / Bölqə Adı (RU)')
+                    ->placeholder('Məs: Алсанджак')
                     ->nullable(),
 
                 Forms\Components\TextInput::make('slug')
@@ -57,7 +62,7 @@ class DistrictsRelationManager extends RelationManager
                 Forms\Components\Toggle::make('is_active')
                     ->label('Aktivdir')
                     ->default(true),
-            ])->columns(3);
+            ])->columns(4);
     }
 
     public function table(Table $table): Table
@@ -72,12 +77,17 @@ class DistrictsRelationManager extends RelationManager
                     ->sortable()
                     ->weight('bold'),
 
-                Tables\Columns\TextColumn::make('name.ru')
-                    ->label('Ad (RU)')
+                Tables\Columns\TextColumn::make('name.tr')
+                    ->label('Ad (TR)')
+                    ->searchable()
                     ->placeholder('—'),
 
                 Tables\Columns\TextColumn::make('name.en')
                     ->label('Ad (EN)')
+                    ->placeholder('—'),
+
+                Tables\Columns\TextColumn::make('name.ru')
+                    ->label('Ad (RU)')
                     ->placeholder('—'),
 
                 Tables\Columns\TextColumn::make('slug')

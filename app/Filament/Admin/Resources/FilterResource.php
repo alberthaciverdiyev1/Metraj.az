@@ -63,16 +63,21 @@ class FilterResource extends Resource
                             ->placeholder('Məs: Yerləşmə, Əmlakın növü')
                             ->required(),
 
-                        Forms\Components\TextInput::make('name.ru')
-                            ->label('Filtr Adı (RU)')
-                            ->placeholder('Məs: Расположение')
+                        Forms\Components\TextInput::make('name.tr')
+                            ->label('Filtr Adı (TR)')
+                            ->placeholder('Məs: Emlak Türü')
                             ->nullable(),
 
                         Forms\Components\TextInput::make('name.en')
                             ->label('Filtr Adı (EN)')
-                            ->placeholder('Məs: Location')
+                            ->placeholder('Məs: Property Type')
                             ->nullable(),
-                    ])->columns(3),
+
+                        Forms\Components\TextInput::make('name.ru')
+                            ->label('Filtr Adı (RU)')
+                            ->placeholder('Məs: Тип недвижимости')
+                            ->nullable(),
+                    ])->columns(4),
             ]);
     }
 
@@ -90,6 +95,11 @@ class FilterResource extends Resource
                 Tables\Columns\TextColumn::make('name.az')
                     ->label('Filtr Adı (AZ)')
                     ->searchable(),
+
+                Tables\Columns\TextColumn::make('name.tr')
+                    ->label('Filtr Adı (TR)')
+                    ->searchable()
+                    ->placeholder('—'),
 
                 Tables\Columns\TextColumn::make('options_count')
                     ->counts('options')

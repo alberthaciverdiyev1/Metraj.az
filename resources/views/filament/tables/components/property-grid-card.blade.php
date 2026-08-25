@@ -13,7 +13,7 @@
         default => 'pgc-status-draft',
     };
 
-    $locationName = $record->district?->name['az'] ?? ($record->city?->name['az'] ?? 'Bakı');
+    $locationName = $record->district?->localized_name ?? ($record->city?->localized_name ?? 'Bakı');
     $currencySymbol = ($record->currency === 'GBP' || empty($record->currency)) ? '£' : $record->currency;
     
     // Panel detection

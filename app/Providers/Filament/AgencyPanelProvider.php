@@ -52,6 +52,7 @@ class AgencyPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                \App\Modules\Shared\Middleware\SetLocale::class,
             ])
             ->topNavigation()
             ->breadcrumbs(false)

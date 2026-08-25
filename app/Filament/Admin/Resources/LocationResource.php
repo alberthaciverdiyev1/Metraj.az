@@ -46,14 +46,19 @@ class LocationResource extends Resource
                                 }
                             }),
 
-                        Forms\Components\TextInput::make('name.ru')
-                            ->label('Şəhər Adı (RU)')
-                            ->placeholder('Məs: Баку, Кирения')
+                        Forms\Components\TextInput::make('name.tr')
+                            ->label('Şəhər Adı (TR)')
+                            ->placeholder('Məs: Girne, Lefkoşa')
                             ->nullable(),
 
                         Forms\Components\TextInput::make('name.en')
                             ->label('Şəhər Adı (EN)')
                             ->placeholder('Məs: Baku, Kyrenia')
+                            ->nullable(),
+
+                        Forms\Components\TextInput::make('name.ru')
+                            ->label('Şəhər Adı (RU)')
+                            ->placeholder('Məs: Баку, Кирения')
                             ->nullable(),
 
                         Forms\Components\TextInput::make('slug')
@@ -69,7 +74,7 @@ class LocationResource extends Resource
                         Forms\Components\Toggle::make('is_active')
                             ->label('Aktivdir')
                             ->default(true),
-                    ])->columns(3),
+                    ])->columns(4),
             ]);
     }
 
@@ -84,12 +89,17 @@ class LocationResource extends Resource
                     ->sortable()
                     ->weight('bold'),
 
-                Tables\Columns\TextColumn::make('name.ru')
-                    ->label('Şəhər (RU)')
+                Tables\Columns\TextColumn::make('name.tr')
+                    ->label('Şəhər (TR)')
+                    ->searchable()
                     ->placeholder('—'),
 
                 Tables\Columns\TextColumn::make('name.en')
                     ->label('Şəhər (EN)')
+                    ->placeholder('—'),
+
+                Tables\Columns\TextColumn::make('name.ru')
+                    ->label('Şəhər (RU)')
                     ->placeholder('—'),
 
                 Tables\Columns\TextColumn::make('slug')
