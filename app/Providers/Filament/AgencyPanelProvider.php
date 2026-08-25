@@ -30,6 +30,10 @@ class AgencyPanelProvider extends PanelProvider
             ->path('agency')
             ->login()
             ->profile(EditProfile::class, isSimple: false)
+            ->darkMode(false)
+            ->brandName('KibrisKare.com')
+            ->brandLogo(asset('images/kibriskarelogo1.png'))
+            ->brandLogoHeight('2.2rem')
             ->colors([
                 'primary' => Color::Orange,
             ])

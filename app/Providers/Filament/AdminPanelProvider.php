@@ -31,8 +31,12 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->profile(EditProfile::class, isSimple: false)
+            ->darkMode(false)
+            ->brandName('KibrisKare.com')
+            ->brandLogo(asset('images/kibriskarelogo1.png'))
+            ->brandLogoHeight('2.2rem')
             ->colors([
-                'primary' => Color::Indigo,
+                'primary' => Color::Orange,
             ])
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
