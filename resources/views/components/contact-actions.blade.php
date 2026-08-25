@@ -15,7 +15,7 @@
 
     @if($phone)
         <a href="tel:{{ $phone }}"
-           class="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-gray-900 hover:bg-[#f1913d] text-white font-semibold text-sm rounded-2xl shadow-xs transition hover:shadow-md">
+           class="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-gray-900 hover:bg-orange-500 text-white font-semibold text-sm rounded-2xl shadow-xs transition hover:shadow-md">
             <i class="bi bi-telephone-fill text-base"></i>
             <span>{{ $phone }}</span>
         </a>

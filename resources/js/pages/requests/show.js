@@ -12,10 +12,10 @@ window.selectPageImage = function (index) {
     const thumbs = document.querySelectorAll('.page-thumb');
     thumbs.forEach((thumb, i) => {
         if (i === index) {
-            thumb.classList.add('active', 'border-[#f1913d]');
+            thumb.classList.add('active', 'border-orange-500');
             thumb.classList.remove('border-transparent');
         } else {
-            thumb.classList.remove('active', 'border-[#f1913d]');
+            thumb.classList.remove('active', 'border-orange-500');
             thumb.classList.add('border-transparent');
         }
     });

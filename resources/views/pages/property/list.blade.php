@@ -99,9 +99,9 @@
                                              class="hidden absolute left-0 top-full mt-2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden filter-custom-menu max-h-60 overflow-y-auto">
                                             @foreach($roomOptions as $rVal => $rLabel)
                                                 <div data-val="{{ $rVal }}"
-                                                     class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ (string)$currentRooms === (string)$rVal ? 'text-[#f1913d] bg-orange-50/60 font-semibold' : 'text-gray-700 hover:bg-gray-50' }} transition cursor-pointer">
+                                                     class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ (string)$currentRooms === (string)$rVal ? 'text-orange-500 bg-orange-50/60 font-semibold' : 'text-gray-700 hover:bg-gray-50' }} transition cursor-pointer">
                                                     <span class="item-label">{{ $rLabel }}</span>
-                                                    <i class="bi bi-check2 text-sm text-[#f1913d] item-check {{ (string)$currentRooms === (string)$rVal ? '' : 'hidden' }}"></i>
+                                                    <i class="bi bi-check2 text-sm text-orange-500 item-check {{ (string)$currentRooms === (string)$rVal ? '' : 'hidden' }}"></i>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -130,9 +130,9 @@
                                         <div id="filterBuildingDropdown"
                                              class="hidden absolute left-0 top-full mt-2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden filter-custom-menu max-h-60 overflow-y-auto">
                                             <div data-val=""
-                                                 class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ empty($currentBuildingType) ? 'text-[#f1913d] bg-orange-50/60 font-semibold' : 'text-gray-700 hover:bg-gray-50' }} transition cursor-pointer">
+                                                 class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ empty($currentBuildingType) ? 'text-orange-500 bg-orange-50/60 font-semibold' : 'text-gray-700 hover:bg-gray-50' }} transition cursor-pointer">
                                                 <span class="item-label">{{ __('listing.all_categories') }}</span>
-                                                <i class="bi bi-check2 text-sm text-[#f1913d] item-check {{ empty($currentBuildingType) ? '' : 'hidden' }}"></i>
+                                                <i class="bi bi-check2 text-sm text-orange-500 item-check {{ empty($currentBuildingType) ? '' : 'hidden' }}"></i>
                                             </div>
                                             @foreach($buildingTypes ?? [] as $bType)
                                                 @php
@@ -140,9 +140,9 @@
                                                     $isSel = $currentBuildingType === $bType->value;
                                                 @endphp
                                                 <div data-val="{{ $bType->value }}"
-                                                     class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ $isSel ? 'text-[#f1913d] bg-orange-50/60 font-semibold' : 'text-gray-700 hover:bg-gray-50' }} transition cursor-pointer">
+                                                     class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ $isSel ? 'text-orange-500 bg-orange-50/60 font-semibold' : 'text-gray-700 hover:bg-gray-50' }} transition cursor-pointer">
                                                     <span class="item-label">{{ $bLabel }}</span>
-                                                    <i class="bi bi-check2 text-sm text-[#f1913d] item-check {{ $isSel ? '' : 'hidden' }}"></i>
+                                                    <i class="bi bi-check2 text-sm text-orange-500 item-check {{ $isSel ? '' : 'hidden' }}"></i>
                                                 </div>
                                             @endforeach
                                         </div>

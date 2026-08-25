@@ -141,7 +141,7 @@ class AgencyResource extends Resource
                 Tables\Columns\ImageColumn::make('logo')
                     ->label('Loqo')
                     ->circular()
-                    ->defaultImageUrl(fn () => 'https://ui-avatars.com/api/?name=' . urlencode('A') . '&background=F1913D&color=fff&size=80'),
+                    ->defaultImageUrl(fn () => 'https://ui-avatars.com/api/?name=' . urlencode('A') . '&background=F97316&color=fff&size=80'),
 
                 Tables\Columns\TextColumn::make('name')
                     ->label('Agentliyin Adı')

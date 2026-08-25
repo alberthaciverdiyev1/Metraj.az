@@ -13,22 +13,22 @@
 
     <!-- Desktop Navigation Links (Always visible on md and up) -->
     <nav class="hidden md:flex items-center space-x-5 lg:space-x-7 text-[15px] font-medium">
-      <a href="{{ route('listing.path1', ['first' => 'satilik']) }}" class="{{ request('deal_type') === 'sale' ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+      <a href="{{ route('listing.path1', ['first' => 'satilik']) }}" class="{{ request('deal_type') === 'sale' ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
         {{ __('navbar.sale') }}
       </a>
-      <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'ayliq']) }}" class="{{ request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+      <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'ayliq']) }}" class="{{ request('deal_type') === 'rent_monthly' ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
         {{ __('navbar.rent') }}
       </a>
-      <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'gunluk']) }}" class="{{ request('deal_type') === 'rent_daily' ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+      <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'gunluk']) }}" class="{{ request('deal_type') === 'rent_daily' ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
         {{ __('navbar.daily_rent') }}
       </a>
-      <a href="{{ route('requests.index') }}" class="{{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+      <a href="{{ route('requests.index') }}" class="{{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
         {{ __('navbar.requests') }}
       </a>
-      <a href="{{ route('agencies.list') }}" class="{{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+      <a href="{{ route('agencies.list') }}" class="{{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
         {{ __('navbar.agencies') }}
       </a>
-      <a href="{{ route('contact') }}" class="{{ request()->is('contact*') ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
+      <a href="{{ route('contact') }}" class="{{ request()->is('contact*') ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
         {{ __('navbar.contact') }}
       </a>
     </nav>
@@ -61,13 +61,13 @@
              class="hidden absolute right-0 mt-2 w-36 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden">
           @foreach($currencySymbols as $cCode => $cSym)
             <a href="{{ route('currency.switch', $cCode) }}"
-               class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ $currentCurrency === $cCode ? 'text-[#f1913d] bg-orange-50/60 font-semibold' : 'text-gray-700 hover:bg-gray-50' }} transition">
+               class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ $currentCurrency === $cCode ? 'text-orange-500 bg-orange-50/60 font-semibold' : 'text-gray-700 hover:bg-gray-50' }} transition">
               <span class="flex items-center gap-2">
                 <span class="w-4 text-center font-semibold text-gray-400">{{ $cSym }}</span>
                 <span>{{ $cCode }}</span>
               </span>
               @if($currentCurrency === $cCode)
-                <i class="bi bi-check2 text-sm text-[#f1913d]"></i>
+                <i class="bi bi-check2 text-sm text-orange-500"></i>
               @endif
             </a>
           @endforeach
@@ -87,13 +87,13 @@
              class="hidden absolute right-0 mt-2 w-40 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden">
           @foreach($languages as $lKey => $lData)
             <a href="{{ route('lang.switch', $lKey) }}"
-               class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ $currentLocale === $lKey ? 'text-[#f1913d] bg-orange-50/60 font-semibold' : 'text-gray-700 hover:bg-gray-50' }} transition">
+               class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ $currentLocale === $lKey ? 'text-orange-500 bg-orange-50/60 font-semibold' : 'text-gray-700 hover:bg-gray-50' }} transition">
               <span class="flex items-center gap-2">
                 <span class="text-base leading-none">{{ $lData['flag'] }}</span>
                 <span>{{ $lData['name'] }}</span>
               </span>
               @if($currentLocale === $lKey)
-                <i class="bi bi-check2 text-sm text-[#f1913d]"></i>
+                <i class="bi bi-check2 text-sm text-orange-500"></i>
               @endif
             </a>
           @endforeach
@@ -107,7 +107,7 @@
       </a>
 
       <!-- Add Property Button -->
-      <a href="{{ route('add-property') }}" class="hidden sm:flex items-center px-3.5 py-2 bg-[#f1913d] hover:bg-[#e07f2c] text-white rounded-xl font-semibold text-xs sm:text-sm transition shadow-sm">
+      <a href="{{ route('add-property') }}" class="hidden sm:flex items-center px-3.5 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-semibold text-xs sm:text-sm transition shadow-sm">
         <i class="bi bi-plus-circle mr-1.5"></i>
         <span>{{ __('navbar.post_property') }}</span>
       </a>
@@ -128,19 +128,19 @@
               <p class="text-xs text-gray-500 truncate">{{ auth()->user()->email }}</p>
             </div>
 
-            <a href="{{ route('dashboard') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
+            <a href="{{ route('dashboard') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500">
               <i class="bi bi-grid mr-3 text-gray-400"></i> {{ __('navbar.dashboard') }}
             </a>
-            <a href="{{ route('profile') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
+            <a href="{{ route('profile') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500">
               <i class="bi bi-person mr-3 text-gray-400"></i> {{ __('navbar.my_profile') }}
             </a>
-            <a href="{{ route('my-properties') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
+            <a href="{{ route('my-properties') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500">
               <i class="bi bi-folder-check mr-3 text-gray-400"></i> {{ __('navbar.my_properties') }}
             </a>
-            <a href="{{ route('favorites') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
+            <a href="{{ route('favorites') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500">
               <i class="bi bi-heart mr-3 text-gray-400"></i> {{ __('navbar.my_favorites') }}
             </a>
-            <a href="/mysavesearches" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
+            <a href="/mysavesearches" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500">
               <i class="bi bi-bookmark mr-3 text-gray-400"></i> {{ __('navbar.my_saved_searches') }}
             </a>
 
@@ -161,7 +161,7 @@
             </form>
           </div>
         @else
-          <a href="{{ route('login') }}" class="flex items-center px-3.5 py-2 border border-gray-200 rounded-xl text-gray-700 hover:border-[#f1913d] hover:text-[#f1913d] text-sm font-semibold transition bg-white shadow-2xs">
+          <a href="{{ route('login') }}" class="flex items-center px-3.5 py-2 border border-gray-200 rounded-xl text-gray-700 hover:border-orange-500 hover:text-orange-500 text-sm font-semibold transition bg-white shadow-2xs">
             <i class="bi bi-person mr-1.5 text-base"></i>
             <span>{{ __('navbar.login_register') }}</span>
           </a>

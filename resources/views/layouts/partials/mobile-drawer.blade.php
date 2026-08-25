@@ -18,7 +18,7 @@
 
     <!-- Quick Action Buttons -->
     <div class="grid grid-cols-2 gap-2.5">
-      <a href="{{ route('add-property') }}" class="flex items-center justify-center gap-2 py-3 px-4 bg-[#f1913d] hover:bg-[#e07f2c] text-white rounded-2xl font-semibold text-xs shadow-sm">
+      <a href="{{ route('add-property') }}" class="flex items-center justify-center gap-2 py-3 px-text-orange-500 hover:bg-orange-600 text-white rounded-2xl font-semibold text-xs shadow-sm">
         <i class="fa-solid fa-plus text-sm"></i>
         <span>{{ __('navbar.post_property') }}</span>
       </a>
@@ -30,35 +30,35 @@
 
     <!-- Navigation Links List -->
     <div class="space-y-1 py-1">
-      <a href="{{ route('home') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('/') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('home') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('/') ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-house text-gray-400 w-5 text-center"></i> {{ __('navbar.home') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="{{ route('listing.path1', ['first' => 'satilik']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request('deal_type') === 'sale' ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('listing.path1', ['first' => 'satilik']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request('deal_type') === 'sale' ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-key text-gray-400 w-5 text-center"></i> {{ __('navbar.sale') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'ayliq']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'ayliq']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request('deal_type') === 'rent_monthly' ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-calendar-days text-gray-400 w-5 text-center"></i> {{ __('navbar.rent') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'gunluk']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request('deal_type') === 'rent_daily' ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'gunluk']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request('deal_type') === 'rent_daily' ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-clock text-gray-400 w-5 text-center"></i> {{ __('navbar.daily_rent') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="{{ route('requests.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('requests.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-magnifying-glass text-gray-400 w-5 text-center"></i> {{ __('navbar.requests') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="{{ route('agencies.list') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('agencies.list') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-building text-gray-400 w-5 text-center"></i> {{ __('navbar.agencies') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="{{ route('contact') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('contact*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('contact') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('contact*') ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-envelope text-gray-400 w-5 text-center"></i> {{ __('navbar.contact') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="{{ route('compares') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('compares*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('compares') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('compares*') ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="bi bi-arrow-left-right text-gray-400 w-5 text-center"></i> {{ __('navbar.compare') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>

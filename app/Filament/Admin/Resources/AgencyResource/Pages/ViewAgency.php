@@ -28,7 +28,7 @@ class ViewAgency extends ViewRecord
                             ->label('Loqo')
                             ->circular()
                             ->height(96)
-                            ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode(substr($record->name ?? 'A', 0, 1)) . '&background=F1913D&color=fff&size=96')
+                            ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode(substr($record->name ?? 'A', 0, 1)) . '&background=F97316&color=fff&size=96')
                             ->extraImgAttributes(['class' => 'rounded-2xl']),
 
                         ImageEntry::make('banner')

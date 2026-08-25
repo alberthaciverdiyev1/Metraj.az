@@ -111,7 +111,7 @@
                     
                     <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
                         <span class="text-xs text-gray-500 font-medium">{{ __('roommates.monthly_payment') }}</span>
-                        <div class="text-lg font-bold text-[#f1913d] mt-1">
+                        <div class="text-lg font-bold text-orange-500 mt-1">
                             {{ $listing->formatted_price }}
                         </div>
                         <span class="text-[11px] font-semibold {{ $listing->bills_included ? 'text-emerald-600' : 'text-gray-400' }} mt-0.5">
@@ -229,7 +229,7 @@
                 <!-- Price Box -->
                 <div class="pb-5 border-b border-gray-100">
                     <span class="text-xs text-gray-500 font-medium">{{ __('roommates.monthly_payment') }}</span>
-                    <div class="text-3xl font-bold text-[#f1913d] mt-0.5">
+                    <div class="text-3xl font-bold text-orange-500 mt-0.5">
                         {{ $listing->formatted_price }}
                     </div>
                     @if($listing->bills_included)

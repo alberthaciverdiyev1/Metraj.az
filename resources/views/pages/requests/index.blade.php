@@ -53,7 +53,7 @@
                         <input type="text" name="search" id="filterSearchInput" value="{{ request('search') }}"
                                placeholder="{{ __('requests.search_placeholder') }}"
                                autocomplete="off"
-                               class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl pl-9 pr-3 py-2.5 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
+                               class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl pl-9 pr-3 py-2.5 focus:bg-white focus:outline-none focus:border-orange-500 transition">
                         <i class="bi bi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                 <div>
                     <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('requests.city') }}</label>
                     <select name="city_id" id="filterCitySelect"
-                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
+                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:bg-white focus:outline-none focus:border-orange-500 transition cursor-pointer">
                         <option value="">{{ __('requests.all_cities') }}</option>
                         @foreach($cities as $city)
                             @php
@@ -79,7 +79,7 @@
                 <div id="filterPropertyTypeCol">
                     <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('requests.property_type') }}</label>
                     <select name="property_type" id="filterPropertyTypeSelect"
-                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
+                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:bg-white focus:outline-none focus:border-orange-500 transition cursor-pointer">
                         <option value="">{{ __('requests.all_types') }}</option>
                         <option value="Mənzil" {{ request('property_type') === 'Mənzil' ? 'selected' : '' }}>{{ __('requests.apartment') }}</option>
                         <option value="Həyət evi" {{ request('property_type') === 'Həyət evi' ? 'selected' : '' }}>{{ __('requests.house') }}</option>
@@ -94,7 +94,7 @@
                 <div id="filterRoommateGenderCol" class="hidden">
                     <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('requests.gender_requirement') }}</label>
                     <select name="gender_preference" id="filterGenderSelect"
-                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
+                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:bg-white focus:outline-none focus:border-orange-500 transition cursor-pointer">
                         <option value="">{{ __('requests.no_preference') }}</option>
                         <option value="female" {{ request('gender_preference') === 'female' ? 'selected' : '' }}>{{ __('requests.female_only') }}</option>
                         <option value="male" {{ request('gender_preference') === 'male' ? 'selected' : '' }}>{{ __('requests.male_only') }}</option>
@@ -105,7 +105,7 @@
                 <div>
                     <label class="block text-xs font-semibold text-gray-700 mb-1.5" id="budgetLabel">{{ __('requests.budget_azn') }}</label>
                     <input type="number" name="max_budget" id="filterMaxBudgetInput" value="{{ request('max_budget') }}" placeholder="0" min="0"
-                           class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
+                           class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:bg-white focus:outline-none focus:border-orange-500 transition">
                 </div>
 
             </div>
@@ -118,13 +118,13 @@
                     <div id="buyCheckboxes" class="flex items-center gap-4">
                         <label class="inline-flex items-center gap-2 cursor-pointer select-none">
                             <input type="checkbox" name="has_deed" id="filterHasDeed" value="1" {{ request('has_deed') ? 'checked' : '' }}
-                                   class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
+                                   class="rounded border-gray-300 text-orange-500 focus:ring-orange-500 h-4 w-4">
                             <span>{{ __('requests.only_with_deed') }}</span>
                         </label>
 
                         <label class="inline-flex items-center gap-2 cursor-pointer select-none">
                             <input type="checkbox" name="mortgage_eligible" id="filterMortgage" value="1" {{ request('mortgage_eligible') ? 'checked' : '' }}
-                                   class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
+                                   class="rounded border-gray-300 text-orange-500 focus:ring-orange-500 h-4 w-4">
                             <span>{{ __('requests.mortgage_eligible') }}</span>
                         </label>
                     </div>
@@ -133,7 +133,7 @@
                     <div id="rentCheckboxes" class="hidden items-center gap-4">
                         <label class="inline-flex items-center gap-2 cursor-pointer select-none">
                             <input type="checkbox" name="bills_included" id="filterBillsIncluded" value="1" {{ request('bills_included') ? 'checked' : '' }}
-                                   class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
+                                   class="rounded border-gray-300 text-orange-500 focus:ring-orange-500 h-4 w-4">
                             <span>{{ __('requests.bills_included') }}</span>
                         </label>
                     </div>
@@ -142,12 +142,12 @@
                     <div id="roommateCheckboxes" class="hidden items-center gap-4">
                         <label class="inline-flex items-center gap-2 cursor-pointer select-none">
                             <input type="checkbox" name="smoker_allowed" id="filterSmokerAllowed" value="1" {{ request('smoker_allowed') ? 'checked' : '' }}
-                                   class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
+                                   class="rounded border-gray-300 text-orange-500 focus:ring-orange-500 h-4 w-4">
                             <span>{{ __('requests.smoker_allowed') }}</span>
                         </label>
                         <label class="inline-flex items-center gap-2 cursor-pointer select-none">
                             <input type="checkbox" name="pet_allowed" id="filterPetAllowed" value="1" {{ request('pet_allowed') ? 'checked' : '' }}
-                                   class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
+                                   class="rounded border-gray-300 text-orange-500 focus:ring-orange-500 h-4 w-4">
                             <span>{{ __('requests.pet_allowed') }}</span>
                         </label>
                     </div>
@@ -160,7 +160,7 @@
                         {{ __('requests.reset') }}
                     </button>
                     <button type="button" id="submitFilterBtn"
-                            class="px-5 py-2 text-xs sm:text-sm font-semibold text-white bg-gray-900 hover:bg-[#f1913d] rounded-xl transition shadow-xs cursor-pointer">
+                            class="px-5 py-2 text-xs sm:text-sm font-semibold text-white bg-gray-900 hover:bg-orange-500 rounded-xl transition shadow-xs cursor-pointer">
                         <i class="bi bi-funnel mr-1"></i> {{ __('requests.filter_search') }}
                     </button>
                 </div>
@@ -171,7 +171,7 @@
 
     <!-- Live Listings Container -->
     <div class="relative min-h-[250px]">
-        
+
         <!-- Loading overlay -->
         <div id="requestLoadingIndicator" class="hidden absolute inset-0 bg-white/70 backdrop-blur-[1px] z-20 flex items-center justify-center rounded-2xl transition-opacity duration-200">
             <div class="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-xl shadow-md text-xs font-semibold">

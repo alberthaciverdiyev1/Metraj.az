@@ -35,7 +35,7 @@ function setupFilterDropdown(btnId, menuId, chevronId, hiddenInputId) {
 
             menu.querySelectorAll('[data-val]').forEach(function (i) {
                 const isActive = (i.getAttribute('data-val') || '') === val;
-                i.classList.toggle('text-[#f1913d]', isActive);
+                i.classList.toggle('text-orange-500', isActive);
                 i.classList.toggle('bg-orange-50/60', isActive);
                 i.classList.toggle('font-semibold', isActive);
                 i.classList.toggle('text-gray-700', !isActive);

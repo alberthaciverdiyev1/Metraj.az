@@ -1,6 +1,6 @@
 @forelse($listings as $listing)
     <div class="bg-white rounded-2xl border border-gray-200/90 overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 flex flex-col h-full group">
-        
+
         <!-- Image & Top Badges -->
         <div class="relative aspect-[4/3] w-full bg-gray-100 overflow-hidden">
             <a href="{{ route('roommates.show', $listing->slug) }}" class="block w-full h-full">
@@ -45,7 +45,7 @@
             <!-- Price Tag (Bottom Left) -->
             <div class="absolute bottom-3 left-3 z-10">
                 <div class="bg-gray-900/85 backdrop-blur-xs text-white px-3 py-1.5 rounded-xl flex items-baseline gap-1 shadow-sm">
-                    <span class="text-base font-bold text-[#f1913d]">{{ $listing->formatted_price }}</span>
+                    <span class="text-base font-bold text-orange-500">{{ $listing->formatted_price }}</span>
                     <span class="text-[11px] text-gray-300 font-normal">/ {{ __('roommates.per_month') }}</span>
                 </div>
             </div>
@@ -63,7 +63,7 @@
 
         <!-- Content -->
         <div class="p-4 flex flex-col flex-1">
-            
+
             <!-- Location -->
             <div class="flex items-center text-xs text-gray-500 mb-1.5 gap-1.5">
                 <i class="fa-solid fa-location-dot text-orange-500 text-xs"></i>
@@ -148,7 +148,7 @@
         <p class="text-xs sm:text-sm text-gray-500 mb-6 max-w-sm mx-auto">
             {{ __('roommates.no_roommates_found_desc') }}
         </p>
-        <a href="{{ route('roommates.create') }}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#f1913d] hover:bg-[#e07f2c] text-white font-semibold text-xs sm:text-sm rounded-xl shadow-xs transition">
+        <a href="{{ route('roommates.create') }}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-xs sm:text-sm rounded-xl shadow-xs transition">
             <i class="bi bi-plus-circle"></i>
             <span>{{ __('roommates.post_roommate_ad') }}</span>
         </a>

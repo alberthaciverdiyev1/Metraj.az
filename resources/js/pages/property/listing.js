@@ -217,7 +217,7 @@
                     // Update active checkmarks and colors
                     menu.querySelectorAll('[data-val]').forEach(function (i) {
                         const isActive = (i.getAttribute('data-val') || '') === val;
-                        i.classList.toggle('text-[#f1913d]', isActive);
+                        i.classList.toggle('text-orange-500', isActive);
                         i.classList.toggle('bg-orange-50/60', isActive);
                         i.classList.toggle('font-semibold', isActive);
                         i.classList.toggle('text-gray-700', !isActive);
@@ -367,7 +367,7 @@
                     const labelElem = item.querySelector('.item-label');
                     defaultLabel = labelElem ? labelElem.textContent.trim() : item.textContent.trim();
                 }
-                item.classList.toggle('text-[#f1913d]', isActive);
+                item.classList.toggle('text-orange-500', isActive);
                 item.classList.toggle('bg-orange-50/60', isActive);
                 item.classList.toggle('font-semibold', isActive);
                 item.classList.toggle('text-gray-700', !isActive);

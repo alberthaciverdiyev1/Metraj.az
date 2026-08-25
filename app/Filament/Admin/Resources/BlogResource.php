@@ -101,7 +101,7 @@ class BlogResource extends Resource
                 Tables\Columns\ImageColumn::make('cover_image')
                     ->label('Şəkil')
                     ->circular()
-                    ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode(substr($record->title ?? 'B', 0, 1)) . '&background=F1913D&color=fff&size=64'),
+                    ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode(substr($record->title ?? 'B', 0, 1)) . '&background=F97316&color=fff&size=64'),
 
                 Tables\Columns\TextColumn::make('title')
                     ->label('Başlıq')

@@ -121,7 +121,7 @@
                 <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('requests.title_required') }} <span class="text-rose-500">*</span></label>
                 <input type="text" name="title" value="{{ old('title') }}" required
                        placeholder="{{ __('requests.title_placeholder_example') }}"
-                       class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
+                       class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-orange-500 transition">
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -129,7 +129,7 @@
                 <!-- Property Type (for Buy/Rent/Daily) -->
                 <div id="propertyTypeField">
                     <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('requests.property_type') }}</label>
-                    <select name="property_type" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
+                    <select name="property_type" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-orange-500 transition cursor-pointer">
                         <option value="Mənzil" {{ old('property_type') === 'Mənzil' ? 'selected' : '' }}>{{ __('requests.apartment') }}</option>
                         <option value="Həyət evi" {{ old('property_type') === 'Həyət evi' ? 'selected' : '' }}>{{ __('requests.house') }}</option>
                         <option value="Villa" {{ old('property_type') === 'Villa' ? 'selected' : '' }}>{{ __('requests.villa') }}</option>
@@ -142,7 +142,7 @@
                 <!-- Rooms -->
                 <div id="roomsField">
                     <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('requests.rooms_count') }}</label>
-                    <select name="rooms" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
+                    <select name="rooms" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-orange-500 transition cursor-pointer">
                         <option value="">{{ __('requests.no_preference') }}</option>
                         <option value="1" {{ old('rooms') === '1' ? 'selected' : '' }}>{{ __('requests.rooms_1') }}</option>
                         <option value="2" {{ old('rooms') === '2' ? 'selected' : '' }}>{{ __('requests.rooms_2') }}</option>
@@ -155,7 +155,7 @@
                 <div>
                     <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('requests.budget_azn') }} <span class="text-rose-500">*</span></label>
                     <input type="number" name="budget_max" value="{{ old('budget_max') }}" required placeholder="{{ __('requests.budget_placeholder_example') }}" min="1"
-                           class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
+                           class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-orange-500 transition">
                 </div>
 
             </div>
@@ -177,7 +177,7 @@
                 <!-- City -->
                 <div>
                     <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('requests.city') }} <span class="text-rose-500">*</span></label>
-                    <select name="city_id" required class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
+                    <select name="city_id" required class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-orange-500 transition cursor-pointer">
                         @foreach($cities as $city)
                             @php
                                 $cName = is_array($city->name) ? ($city->name[app()->getLocale()] ?? $city->name['az'] ?? reset($city->name)) : $city->name;
@@ -194,7 +194,7 @@
                     <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('requests.location_note_label') }}</label>
                     <input type="text" name="location_note" value="{{ old('location_note') }}"
                            placeholder="{{ __('requests.location_note_placeholder') }}"
-                           class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
+                           class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-orange-500 transition">
                 </div>
 
             </div>
@@ -203,13 +203,13 @@
             <div id="buyFields" class="pt-2 border-t border-gray-100 flex flex-wrap gap-6">
                 <label class="inline-flex items-center gap-2 cursor-pointer select-none">
                     <input type="checkbox" name="has_deed" value="1" {{ old('has_deed') ? 'checked' : '' }}
-                           class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
+                           class="rounded border-gray-300 text-orange-500 focus:ring-orange-500 h-4 w-4">
                     <span class="text-xs sm:text-sm font-semibold text-gray-700">{{ __('requests.only_deed_checkbox') }}</span>
                 </label>
 
                 <label class="inline-flex items-center gap-2 cursor-pointer select-none">
                     <input type="checkbox" name="mortgage_eligible" value="1" {{ old('mortgage_eligible') ? 'checked' : '' }}
-                           class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
+                           class="rounded border-gray-300 text-orange-500 focus:ring-orange-500 h-4 w-4">
                     <span class="text-xs sm:text-sm font-semibold text-gray-700">{{ __('requests.mortgage_eligible_checkbox') }}</span>
                 </label>
             </div>
@@ -218,7 +218,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('requests.who_will_stay_label') }}</label>
-                        <select name="occupancy_type" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
+                        <select name="occupancy_type" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-orange-500 transition cursor-pointer">
                             <option value="Ailə">{{ __('requests.occupancy_family') }}</option>
                             <option value="Tələbələr">{{ __('requests.occupancy_students') }}</option>
                             <option value="İşləyən şəxs">{{ __('requests.occupancy_single') }}</option>
@@ -229,7 +229,7 @@
                     <div class="flex items-center pt-6">
                         <label class="inline-flex items-center gap-2 cursor-pointer select-none">
                             <input type="checkbox" name="bills_included" value="1" {{ old('bills_included') ? 'checked' : '' }}
-                                   class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
+                                   class="rounded border-gray-300 text-orange-500 focus:ring-orange-500 h-4 w-4">
                             <span class="text-xs sm:text-sm font-semibold text-gray-700">{{ __('requests.bills_included_checkbox') }}</span>
                         </label>
                     </div>
@@ -240,7 +240,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('requests.gender_requirement') }}</label>
-                        <select name="gender_preference" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
+                        <select name="gender_preference" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-orange-500 transition cursor-pointer">
                             <option value="any">{{ __('requests.no_preference') }}</option>
                             <option value="female">{{ __('requests.female_only') }}</option>
                             <option value="male">{{ __('requests.male_only') }}</option>
@@ -264,7 +264,7 @@
             <!-- Description via Quill Rich Text Editor -->
             <div>
                 <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('requests.detailed_description') }} <span class="text-rose-500">*</span></label>
-                <div id="editor_wrapper" class="bg-white border border-gray-200 rounded-2xl overflow-hidden focus-within:border-[#f1913d] transition shadow-2xs">
+                <div id="editor_wrapper" class="bg-white border border-gray-200 rounded-2xl overflow-hidden focus-within:border-orange-500 transition shadow-2xs">
                     <div id="editor_container" class="min-h-[160px] text-xs sm:text-sm font-normal">
                         {!! old('description') !!}
                     </div>
@@ -285,7 +285,7 @@
                 <p class="text-xs text-gray-500 ml-8">{{ __('requests.photos_section_desc') }}</p>
             </div>
 
-            <div class="border-2 border-dashed border-gray-200 hover:border-[#f1913d] rounded-2xl p-6 text-center cursor-pointer transition bg-gray-50/50 hover:bg-orange-50/30"
+            <div class="border-2 border-dashed border-gray-200 hover:border-orange-500 rounded-2xl p-6 text-center cursor-pointer transition bg-gray-50/50 hover:bg-orange-50/30"
                  onclick="document.getElementById('requestImagesInput').click()">
                 <input type="file" name="images[]" id="requestImagesInput" multiple accept="image/jpeg,image/png,image/jpg,image/webp" class="hidden">
                 <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mx-auto mb-3 text-xl">
@@ -315,7 +315,7 @@
         <!-- Submit Button -->
         <div class="text-center pt-2">
             <button type="submit"
-                    class="inline-flex items-center justify-center gap-2 px-10 py-4 bg-[#f1913d] hover:bg-[#e07f2c] text-white font-semibold text-base rounded-2xl shadow-md transition hover:shadow-lg w-full sm:w-auto cursor-pointer">
+                    class="inline-flex items-center justify-center gap-2 px-10 py-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-base rounded-2xl shadow-md transition hover:shadow-lg w-full sm:w-auto cursor-pointer">
                 <i class="bi bi-check2-circle text-lg"></i>
                 <span>{{ __('requests.publish_request_btn') }}</span>
             </button>

@@ -25,7 +25,7 @@ class ViewAgent extends ViewRecord
                             ->label('')
                             ->circular()
                             ->height(96)
-                            ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->user?->name ?? 'R') . '&background=F1913D&color=fff&size=160')
+                            ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->user?->name ?? 'R') . '&background=F97316&color=fff&size=160')
                             ->columnSpan(1),
 
                         TextEntry::make('user.name')

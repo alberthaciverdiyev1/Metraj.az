@@ -45,7 +45,7 @@
                     <img src="{{ $image->url }}"
                          onclick="selectPageImage({{ $index }})"
                          alt="{{ $propertyRequest->title }}"
-                         class="page-thumb shrink-0 w-24 h-20 sm:w-28 sm:h-24 md:w-32 md:h-24 object-cover rounded-xl border-2 cursor-pointer transition {{ $index === 0 ? 'active border-[#f1913d]' : 'border-transparent' }}">
+                         class="page-thumb shrink-0 w-24 h-20 sm:w-28 sm:h-24 md:w-32 md:h-24 object-cover rounded-xl border-2 cursor-pointer transition {{ $index === 0 ? 'active border-orange-500' : 'border-transparent' }}">
                 @endforeach
             </div>
             @endif
@@ -143,7 +143,7 @@
                     <!-- Budget Box -->
                     <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
                         <span class="text-xs text-gray-500 font-medium">{{ __('requests.budget') }}</span>
-                        <div class="text-lg font-bold text-[#f1913d] mt-1">
+                        <div class="text-lg font-bold text-orange-500 mt-1">
                             {{ $propertyRequest->formatted_budget }}
                         </div>
                         <span class="text-[11px] font-semibold {{ $propertyRequest->bills_included ? 'text-emerald-600' : 'text-gray-400' }} mt-0.5">
@@ -233,7 +233,7 @@
                 <!-- Budget Header -->
                 <div class="pb-5 border-b border-gray-100">
                     <span class="text-xs text-gray-500 font-medium">{{ __('requests.target_budget') }}</span>
-                    <div class="text-2xl sm:text-3xl font-bold text-[#f1913d] mt-0.5">
+                    <div class="text-2xl sm:text-3xl font-bold text-orange-500 mt-0.5">
                         {{ $propertyRequest->formatted_budget }}
                     </div>
                 </div>

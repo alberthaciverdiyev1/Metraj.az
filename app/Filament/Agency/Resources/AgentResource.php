@@ -148,7 +148,7 @@ class AgentResource extends Resource
                 Tables\Columns\ImageColumn::make('avatar')
                     ->label('Şəkil')
                     ->circular()
-                    ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->user?->name ?? 'R') . '&background=F1913D&color=fff&size=80'),
+                    ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->user?->name ?? 'R') . '&background=F97316&color=fff&size=80'),
 
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Ad Soyad')

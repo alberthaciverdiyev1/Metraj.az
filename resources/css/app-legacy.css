@@ -5,7 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
 
 :root {
-    --primary: #f1913d;
+    --primary: #f97316;
     --primary-light: #edb27e;
     
     --text-color:#2C2E33;
@@ -18,7 +18,7 @@
     --font-sm:14px;
     --shadow: box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     --light-grey:rgba(44, 46, 51, 0.6);
-    --primary-rgb: 241, 145, 61;
+    --primary-rgb: 249, 115, 22;
 
 }
 body{
@@ -292,7 +292,7 @@ a{
 
 .toggle-group {
   display: flex;
-  border: 1px solid #f1913d;
+  border: 1px solid #f97316;
   border-radius: 6px;
   overflow: hidden;
 }
@@ -312,7 +312,7 @@ a{
 }
 
 .toggle.active {
-  background: #f1913d;
+  background: #f97316;
   color: #fff;
   font-weight: 600;
 }
@@ -343,7 +343,7 @@ a{
 
 .pill {
   padding: .4rem .5rem;
-  border: 1px solid #f1913d;
+  border: 1px solid #f97316;
   border-radius: 50px;
   background: #fff;
   cursor: pointer;
@@ -402,7 +402,7 @@ a{
   display: inline-flex;
   align-items: center;
   gap: .3rem;
-  background: #f1913d;
+  background: #f97316;
   color: #fff;
   padding: .35rem .65rem;
   border-radius: 50px;
@@ -450,7 +450,7 @@ a{
 }
 
 .btn.primary {
-  background: #f1913d;
+  background: #f97316;
   color: #fff;
 }
 
@@ -460,8 +460,8 @@ a{
 
 .btn.ghost {
   background: #fff;
-  color: #f1913d;
-  border-color: #f1913d;
+  color: #f97316;
+  border-color: #f97316;
 }
 
 .btn.ghost:hover {
@@ -647,8 +647,8 @@ a{
 }
 
 :root {
-  --primary: #f1913d;
-  --primary-rgb: 241, 145, 61;
+  --primary: #f97316;
+  --primary-rgb: 249, 115, 22;
 }
 
 .loader {

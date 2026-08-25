@@ -72,7 +72,7 @@
         <!-- Card Body -->
         <div class="p-3 sm:p-4 flex flex-col flex-1">
             <div class="flex flex-col gap-2 min-h-[100px] sm:min-h-[120px]">
-                
+
                 <!-- Title -->
                 <h3 class="font-semibold text-[color:var(--text-color)] text-sm sm:text-base md:text-md hover:text-[color:var(--primary)] line-clamp-1 group-hover:line-clamp-none min-h-[20px] sm:min-h-[28px] overflow-hidden text-ellipsis">
                     <span>{{ $req->title }}</span>
@@ -157,7 +157,7 @@
         <p class="text-xs text-gray-500 mb-5">
             {{ __('requests.no_requests_desc') }}
         </p>
-        <a href="{{ route('requests.create') }}" class="inline-flex items-center gap-1.5 px-4 py-2 bg-[#f1913d] hover:bg-[#e07f2c] text-white font-semibold text-xs rounded-lg transition">
+        <a href="{{ route('requests.create') }}" class="inline-flex items-center gap-1.5 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-xs rounded-lg transition">
             <i class="bi bi-plus-circle"></i>
             <span>{{ __('requests.post_request_btn') }}</span>
         </a>

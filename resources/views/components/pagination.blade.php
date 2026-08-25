@@ -56,7 +56,7 @@
                     @foreach ($paginator->getUrlRange(1, $paginator->lastPage()) as $page => $url)
                         @if ($page == $paginator->currentPage())
                             <span aria-current="page">
-                                <span class="relative inline-flex items-center px-3.5 py-2 text-sm font-semibold text-white bg-[#f1913d] border border-[#f1913d] rounded-lg cursor-default">
+                                <span class="relative inline-flex items-center px-3.5 py-2 text-sm font-semibold text-white bg-orange-500 border border-orange-500 rounded-lg cursor-default">
                                     {{ $page }}
                                 </span>
                             </span>

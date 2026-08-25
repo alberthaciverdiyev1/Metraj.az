@@ -241,14 +241,14 @@ circle.progress {
     background: var(--primary);
     border-color: var(--primary);
     color: #ffffff;
-    box-shadow: 0 4px 12px rgba(241, 145, 61, 0.25);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
 }
 
 .pagination-kibriskare .pm-item.active .pm-link {
     background: var(--primary);
     border-color: var(--primary);
     color: #ffffff;
-    box-shadow: 0 4px 12px rgba(241, 145, 61, 0.3);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
 
 .pagination-kibriskare .pm-item.disabled .pm-link {
