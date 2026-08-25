@@ -45,5 +45,5 @@ return [
     'message_sent_success' => 'Mesajınız uğurla göndərildi!',
     'error_occurred' => 'Xəta baş verdi, zəhmət olmasa yenidən cəhd edin.',
     'network_error' => 'Şəbəkə xətası baş verdi.',
-    'map_office_popup' => 'Metraj.az Baş Ofisi',
+    'map_office_popup' => 'KibrisKare.com Baş Ofisi',
 ];

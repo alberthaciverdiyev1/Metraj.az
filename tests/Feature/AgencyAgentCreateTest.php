@@ -12,7 +12,7 @@ class AgencyAgentCreateTest extends TestCase
 {
     private function owner(): User
     {
-        return User::where('email', 'agency@metraj.az')->firstOrFail();
+        return User::where('email', 'agency@kibriskare.com')->firstOrFail();
     }
 
     private function setUpAgencyPanel(): void
@@ -43,7 +43,7 @@ class AgencyAgentCreateTest extends TestCase
         $this->actingAs($this->owner());
 
         $tenantAgencyId = $this->owner()->tenantAgency()->id;
-        $email = 'yeni.rieltor.' . time() . '@metraj.az';
+        $email = 'yeni.rieltor.' . time() . '@kibriskare.com';
 
         Livewire::test(\App\Filament\Agency\Resources\AgentResource\Pages\CreateAgent::class)
             ->fillForm([
@@ -84,7 +84,7 @@ class AgencyAgentCreateTest extends TestCase
         Livewire::test(\App\Filament\Agency\Resources\AgentResource\Pages\CreateAgent::class)
             ->fillForm([
                 'new_user_name' => 'Duplikat',
-                'new_user_email' => 'agency@metraj.az',
+                'new_user_email' => 'agency@kibriskare.com',
                 'new_user_password' => 'password123',
                 'position' => 'Test',
                 'phone' => '+994 50 555 66 77',

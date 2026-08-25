@@ -32,7 +32,7 @@ return [
     'currently_managing_listings' => 'В настоящее время на платформе',
     'active_listings_managed' => 'активных объявлений управляются этим риелтором',
     'contact_direct_call_or_wa' => 'Для связи можете позвонить напрямую или написать в WhatsApp',
-    'joined_platform' => 'Присоединился к платформе Metraj.az',
+    'joined_platform' => 'Присоединился к платформе KibrisKare.com',
     'agent_listings' => 'Объявления риелтора',
     'all_listings_posted_by' => 'все активные объявления, опубликованные',
     'total_label' => 'Всего:',

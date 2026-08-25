@@ -4,9 +4,9 @@
             <!-- Brand Column -->
             <div class="lg:col-span-2 space-y-6">
                 <a href="{{ route('home') }}" class="flex items-center space-x-2.5">
-                    <img class="h-9 w-auto object-contain brightness-0 invert" src="{{ asset('images/metrajlogo1.png') }}" alt="Metraj" />
+                    <img class="h-9 w-auto object-contain brightness-0 invert" src="{{ asset('images/kibriskarelogo1.png') }}" alt="KibrisKare" />
                     <div class="leading-tight">
-                        <div class="text-xl font-bold text-white tracking-tight">Metraj.az</div>
+                        <div class="text-xl font-bold text-white tracking-tight">KibrisKare.com</div>
                         <div class="text-[8px] text-orange-500 underline underline-offset-4 uppercase tracking-[0.15em] font-semibold">{{ __('footer.tagline') }}</div>
                     </div>
                 </a>
@@ -66,7 +66,7 @@
                     </li>
                     <li class="flex items-start space-x-3">
                         <i class="bi bi-envelope text-orange-500 mt-0.5 text-base"></i>
-                        <a href="mailto:info@metraj.az" class="hover:text-white transition">info@metraj.az</a>
+                        <a href="mailto:info@kibriskare.com" class="hover:text-white transition">info@kibriskare.com</a>
                     </li>
                     <li class="flex items-start space-x-3">
                         <i class="bi bi-geo-alt text-orange-500 mt-0.5 text-base"></i>
@@ -81,7 +81,7 @@
         <!-- Bottom Bar -->
         <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
             <div>
-                &copy; {{ date('Y') }} <span class="text-white font-semibold">Metraj.az</span> — {{ __('footer.all_rights_reserved') }}
+                &copy; {{ date('Y') }} <span class="text-white font-semibold">KibrisKare.com</span> — {{ __('footer.all_rights_reserved') }}
             </div>
             <div class="flex items-center space-x-6">
                 <a href="#" class="hover:text-white transition">{{ __('footer.user_agreement') }}</a>

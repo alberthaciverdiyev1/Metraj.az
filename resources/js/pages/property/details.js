@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
         btn.disabled = true;
         btn.innerHTML = '<span class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>';
 
-        const { ok, data } = await window.Metraj.post(
+        const { ok, data } = await window.KibrisKare.post(
             inquiryForm.action,
             new FormData(inquiryForm)
         );
@@ -25,10 +25,10 @@ document.addEventListener('DOMContentLoaded', function () {
         btn.innerHTML = originalHtml;
 
         if (ok) {
-            window.Metraj.toast(data.message || 'Müraciətiniz qəbul edildi ✅');
+            window.KibrisKare.toast(data.message || 'Müraciətiniz qəbul edildi ✅');
             inquiryForm.reset();
         } else {
-            window.Metraj.toast(data.message || 'Xəta baş verdi, yenidən cəhd edin', 'error');
+            window.KibrisKare.toast(data.message || 'Xəta baş verdi, yenidən cəhd edin', 'error');
         }
     });
 });

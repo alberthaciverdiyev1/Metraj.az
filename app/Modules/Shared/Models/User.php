@@ -34,7 +34,7 @@ class User extends Authenticatable implements FilamentUser
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    public const ADMIN_EMAIL = 'admin@metraj.az';
+    public const ADMIN_EMAIL = 'admin@kibriskare.com';
 
     /**
      * Kütləvi doldurula bilən sütunlar

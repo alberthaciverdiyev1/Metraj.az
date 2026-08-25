@@ -32,7 +32,7 @@ return [
     'currently_managing_listings' => 'Currently on the platform',
     'active_listings_managed' => 'active listings are managed by this agent',
     'contact_direct_call_or_wa' => 'You can call directly or contact via WhatsApp',
-    'joined_platform' => 'Joined Metraj.az platform',
+    'joined_platform' => 'Joined KibrisKare.com platform',
     'agent_listings' => 'Agent Listings',
     'all_listings_posted_by' => 'all active listings published by',
     'total_label' => 'Total:',

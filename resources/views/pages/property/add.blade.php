@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('add_property.page_title') . ' - Metraj.az')
+@section('title', __('add_property.page_title') . ' - KibrisKare.com')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/add-property.css') }}">

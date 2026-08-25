@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('agency.page_title') . ' - Metraj.az')
+@section('title', __('agency.page_title') . ' - KibrisKare.com')
 
 @section('content')
 <div class="w-full pt-4">

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('about.page_title') . ' - Metraj.az')
+@section('title', __('about.page_title') . ' - KibrisKare.com')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/about-us.css') }}">
@@ -66,7 +66,7 @@
 
             <div class="w-full lg:w-1/2 relative flex justify-center items-center">
                 <div class="w-full max-w-md aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-orange-50">
-                    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80" alt="Metraj Team"
+                    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80" alt="KibrisKare Team"
                          class="w-full h-full object-cover">
                 </div>
             </div>

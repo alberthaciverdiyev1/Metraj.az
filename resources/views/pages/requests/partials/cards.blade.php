@@ -29,7 +29,7 @@
     <div onclick="window.location.href='{{ route('requests.show', $req->slug) }}'"
          class="cursor-pointer border border-[color:var(--border-color)] rounded-2xl overflow-hidden flex flex-col h-full group transition-all duration-300 relative bg-white hover:shadow-md">
 
-        <!-- Top Image Banner (Real Image or Metraj Logo) -->
+        <!-- Top Image Banner (Real Image or KibrisKare Logo) -->
         <div class="relative overflow-hidden aspect-[4/3] sm:aspect-[5/3] md:aspect-[3/2] lg:aspect-[16/10] bg-gray-50 flex items-center justify-center border-b border-gray-100">
             @if($hasRealImage)
                 <img src="{{ $req->first_image_url }}"
@@ -38,8 +38,8 @@
                      loading="lazy" />
             @else
                 <div class="flex flex-col items-center justify-center select-none py-6 px-4">
-                    <img src="{{ asset('images/metrajlogo1.png') }}" alt="Metraj.az" class="h-10 sm:h-12 w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
-                    <span class="text-[11px] font-semibold text-gray-500 tracking-wider mt-1.5">Metraj.az</span>
+                    <img src="{{ asset('images/kibriskarelogo1.png') }}" alt="KibrisKare.com" class="h-10 sm:h-12 w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
+                    <span class="text-[11px] font-semibold text-gray-500 tracking-wider mt-1.5">KibrisKare.com</span>
                 </div>
             @endif
 

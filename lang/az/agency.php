@@ -32,7 +32,7 @@ return [
     'currently_managing_listings' => 'Hazırda platformada',
     'active_listings_managed' => 'aktiv elan onun tərəfindən idarə olunur',
     'contact_direct_call_or_wa' => 'Əlaqə üçün birbaşa zəng edə və ya WhatsApp üzərindən yaza bilərsiniz',
-    'joined_platform' => 'Metraj.az platformasına qoşulub',
+    'joined_platform' => 'KibrisKare.com platformasına qoşulub',
     'agent_listings' => 'Rieltorun Elanları',
     'all_listings_posted_by' => 'tərəfindən yerləşdirilmiş bütün aktiv elanlar',
     'total_label' => 'Ümumi:',

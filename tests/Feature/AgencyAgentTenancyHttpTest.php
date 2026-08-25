@@ -10,7 +10,7 @@ class AgencyAgentTenancyHttpTest extends TestCase
 {
     private function owner(): User
     {
-        return User::where('email', 'agency@metraj.az')->firstOrFail();
+        return User::where('email', 'agency@kibriskare.com')->firstOrFail();
     }
 
     public function test_agency_agents_list_over_http(): void
@@ -56,7 +56,7 @@ class AgencyAgentTenancyHttpTest extends TestCase
     {
         // A realtor (not owner) must NOT manage other realtors
         $realtor = User::whereHas('agent', fn ($q) => $q->whereNotNull('agency_id'))
-            ->where('email', '!=', 'agency@metraj.az')
+            ->where('email', '!=', 'agency@kibriskare.com')
             ->first();
         $this->assertNotNull($realtor);
 

@@ -2,9 +2,9 @@
 (function () {
 'use strict';
 
-const R = window.MetrajRoutes || {};
+const R = window.KibrisKareRoutes || {};
 window.removeCompareItem = function (propertyId) {
-    const csrf = window.Metraj?.csrfToken() || '';
+    const csrf = window.KibrisKare?.csrfToken() || '';
     fetch(R.comparesToggle || '/api/compares/toggle', {
         method: 'POST',
         headers: {
@@ -27,7 +27,7 @@ document.getElementById('clearAllCompareBtn')?.addEventListener('click', functio
     const btn = document.getElementById('clearAllCompareBtn');
     const confirmMsg = btn?.getAttribute('data-confirm') || 'Bütün müqayisə siyahısını təmizləmək istədiyinizdən əminsiniz?';
     if (confirm(confirmMsg)) {
-        const csrf = window.Metraj?.csrfToken() || '';
+        const csrf = window.KibrisKare?.csrfToken() || '';
         fetch(R.comparesClear || '/api/compares/clear', {
             method: 'POST',
             headers: {

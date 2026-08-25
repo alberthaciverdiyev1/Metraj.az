@@ -8,8 +8,8 @@
     <!-- Drawer Header -->
     <div class="flex items-center justify-between pb-3 border-b border-gray-100">
       <div class="flex items-center space-x-2">
-        <img class="h-8 w-auto object-contain" src="{{ asset('images/metrajlogo1.png') }}" alt="Metraj.az" />
-        <span class="font-bold text-base text-gray-800">Metraj.az</span>
+        <img class="h-8 w-auto object-contain" src="{{ asset('images/kibriskarelogo1.png') }}" alt="KibrisKare.com" />
+        <span class="font-bold text-base text-gray-800">KibrisKare.com</span>
       </div>
       <button type="button" id="closeMobileMoreDrawer" class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 flex items-center justify-center transition">
         <i class="bi bi-x-lg text-sm"></i>

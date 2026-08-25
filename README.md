@@ -1,6 +1,6 @@
-# Metraj - Müasir Emlak Platforması (Real Estate Platform)
+# KibrisKare - Müasir Emlak Platforması (Real Estate Platform)
 
-Metraj — Clean Architecture prinsipləri əsasında qurulmuş, çoxpanelli (Admin & Agency) və yüksək performanslı bir emlak platformasıdır.
+KibrisKare — Clean Architecture prinsipləri əsasında qurulmuş, çoxpanelli (Admin & Agency) və yüksək performanslı bir emlak platformasıdır.
 
 ---
 
@@ -28,7 +28,7 @@ Layihə təmiz memarlıq standartlarına uyğun olaraq aşağıdakı laylardan i
 4. **Presentation Layer (`app/Filament`, `app/Http`):**
    - Filament Admin Paneli, Filament Agency Paneli və Blade Web Controller / Görünüşləri.
 
-Ətraflı arxitektura sənədi: [ARCHITECTURE.md](file:///home/albert/Workspace/FoxSoft/Metraj/ARCHITECTURE.md)
+Ətraflı arxitektura sənədi: [ARCHITECTURE.md](file:///home/albert/Workspace/FoxSoft/KibrisKare/ARCHITECTURE.md)
 
 ---
 
@@ -93,5 +93,5 @@ php artisan serve
 ---
 
 ## 📁 Sənədlər
-- [ARCHITECTURE.md](file:///home/albert/Workspace/FoxSoft/Metraj/ARCHITECTURE.md) - Clean Architecture strukturu və qaydalar
-- [ROADMAP.md](file:///home/albert/Workspace/FoxSoft/Metraj/ROADMAP.md) - Layihənin inkişaf mərhələləri və tapşırıqlar
+- [ARCHITECTURE.md](file:///home/albert/Workspace/FoxSoft/KibrisKare/ARCHITECTURE.md) - Clean Architecture strukturu və qaydalar
+- [ROADMAP.md](file:///home/albert/Workspace/FoxSoft/KibrisKare/ROADMAP.md) - Layihənin inkişaf mərhələləri və tapşırıqlar

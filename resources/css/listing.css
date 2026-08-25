@@ -202,8 +202,8 @@ circle.progress {
     font-size: 1.1em;
 }
 
-/* ===== Custom Metraj Pagination ===== */
-.pagination-metraj {
+/* ===== Custom KibrisKare Pagination ===== */
+.pagination-kibriskare {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -213,7 +213,7 @@ circle.progress {
     list-style: none;
 }
 
-.pagination-metraj .pm-item .pm-link {
+.pagination-kibriskare .pm-item .pm-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -232,26 +232,26 @@ circle.progress {
     user-select: none;
 }
 
-.pagination-metraj .pm-item .pm-link i {
+.pagination-kibriskare .pm-item .pm-link i {
     font-size: 15px;
     line-height: 1;
 }
 
-.pagination-metraj .pm-item .pm-link:hover {
+.pagination-kibriskare .pm-item .pm-link:hover {
     background: var(--primary);
     border-color: var(--primary);
     color: #ffffff;
     box-shadow: 0 4px 12px rgba(241, 145, 61, 0.25);
 }
 
-.pagination-metraj .pm-item.active .pm-link {
+.pagination-kibriskare .pm-item.active .pm-link {
     background: var(--primary);
     border-color: var(--primary);
     color: #ffffff;
     box-shadow: 0 4px 12px rgba(241, 145, 61, 0.3);
 }
 
-.pagination-metraj .pm-item.disabled .pm-link {
+.pagination-kibriskare .pm-item.disabled .pm-link {
     background: #f9fafb;
     border-color: #eef0f2;
     color: #c0c4cc;
@@ -260,7 +260,7 @@ circle.progress {
     box-shadow: none;
 }
 
-.pagination-metraj .pm-item.disabled .pm-link.dots {
+.pagination-kibriskare .pm-item.disabled .pm-link.dots {
     min-width: 34px;
     border-color: transparent;
     background: transparent;

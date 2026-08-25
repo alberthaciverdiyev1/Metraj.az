@@ -9,7 +9,7 @@ class AgencyNavVisibilityTest extends TestCase
 {
     public function test_owner_sees_realtors_nav_item(): void
     {
-        $owner = User::where('email', 'agency@metraj.az')->firstOrFail();
+        $owner = User::where('email', 'agency@kibriskare.com')->firstOrFail();
         $this->actingAs($owner);
         $this->get('/agency')
             ->assertOk()
@@ -19,7 +19,7 @@ class AgencyNavVisibilityTest extends TestCase
     public function test_realtor_does_not_see_realtors_nav_item(): void
     {
         $realtor = User::whereHas('agent', fn ($q) => $q->whereNotNull('agency_id'))
-            ->where('email', '!=', 'agency@metraj.az')
+            ->where('email', '!=', 'agency@kibriskare.com')
             ->firstOrFail();
 
         $this->actingAs($realtor);
@@ -30,7 +30,7 @@ class AgencyNavVisibilityTest extends TestCase
     public function test_realtor_still_sees_own_properties_nav(): void
     {
         $realtor = User::whereHas('agent', fn ($q) => $q->whereNotNull('agency_id'))
-            ->where('email', '!=', 'agency@metraj.az')
+            ->where('email', '!=', 'agency@kibriskare.com')
             ->firstOrFail();
 
         $this->actingAs($realtor);

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ($agency->name ?? '') . ' - ' . __('agency.agency_default_subtitle') . ' - Metraj.az')
+@section('title', ($agency->name ?? '') . ' - ' . __('agency.agency_default_subtitle') . ' - KibrisKare.com')
 
 @section('content')
 <div class="w-full pb-16">
@@ -163,7 +163,7 @@
             </div>
 
             <div class="mt-10">
-                {{ $properties->onEachSide(2)->appends(request()->query())->links('pagination.metraj') }}
+                {{ $properties->onEachSide(2)->appends(request()->query())->links('pagination.kibriskare') }}
             </div>
         @endif
     </div>

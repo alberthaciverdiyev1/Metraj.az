@@ -27,7 +27,7 @@ class GuestPropertyAddWhatsappTest extends TestCase
         $propertyType = FilterOption::whereHas('filter', fn($q) => $q->where('key', 'property_type'))->first();
         $dealType = FilterOption::whereHas('filter', fn($q) => $q->where('key', 'deal_type'))->first();
 
-        $email = 'kamil_test_guest_' . time() . '@metraj.az';
+        $email = 'kamil_test_guest_' . time() . '@kibriskare.com';
         $postData = [
             'property_type_id' => $propertyType->id,
             'deal_type_id' => $dealType->id,

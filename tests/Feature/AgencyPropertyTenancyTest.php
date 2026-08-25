@@ -12,7 +12,7 @@ class AgencyPropertyTenancyTest extends TestCase
 {
     private function owner(): User
     {
-        return User::where('email', 'agency@metraj.az')->firstOrFail();
+        return User::where('email', 'agency@kibriskare.com')->firstOrFail();
     }
 
     private function setUpAgencyPanel(): void
@@ -71,7 +71,7 @@ class AgencyPropertyTenancyTest extends TestCase
         $this->setUpAgencyPanel();
 
         $realtor = User::whereHas('agent', fn ($q) => $q->whereNotNull('agency_id'))
-            ->where('email', '!=', 'agency@metraj.az')
+            ->where('email', '!=', 'agency@kibriskare.com')
             ->firstOrFail();
         $this->actingAs($realtor);
 

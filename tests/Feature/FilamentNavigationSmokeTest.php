@@ -22,7 +22,7 @@ class FilamentNavigationSmokeTest extends TestCase
 
     public function test_agency_navbar_shows_profile_in_settings_group(): void
     {
-        $user = User::where('email', 'agency@metraj.az')->first();
+        $user = User::where('email', 'agency@kibriskare.com')->first();
         $this->actingAs($user);
 
         $response = $this->get('/agency');
@@ -41,7 +41,7 @@ class FilamentNavigationSmokeTest extends TestCase
 
     public function test_agency_profile_url_resolves(): void
     {
-        $agencyUser = User::where('email', 'agency@metraj.az')->first();
+        $agencyUser = User::where('email', 'agency@kibriskare.com')->first();
         $this->actingAs($agencyUser);
         $this->get('/agency/profile')->assertOk();
     }

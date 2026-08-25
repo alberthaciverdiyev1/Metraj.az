@@ -66,7 +66,7 @@ class UserResource extends Resource
                         Forms\Components\Placeholder::make('role_summary')
                             ->label('Rol / Vəzifə')
                             ->content(fn (?User $record): string => $record ? match (true) {
-                                $record->email === 'admin@metraj.az' => 'Admin (Super Administrator)',
+                                $record->email === 'admin@kibriskare.com' => 'Admin (Super Administrator)',
                                 $record->agent && $record->agent->agency_id !== null => 'Rieltor — ' . ($record->agent->agency?->name ?? 'Agentlik'),
                                 $record->agent !== null => 'Müstəqil Rieltor',
                                 $record->agencies()->exists() => 'Agentlik Sahibi',
@@ -102,7 +102,7 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('type')
                     ->label('Tip')
                     ->getStateUsing(fn (User $record): string => match (true) {
-                        $record->email === 'admin@metraj.az' => 'Admin',
+                        $record->email === 'admin@kibriskare.com' => 'Admin',
                         $record->agent && $record->agent->agency_id !== null => 'Rieltor',
                         $record->agent !== null => 'Müstəqil Rieltor',
                         $record->agencies()->exists() => 'Agentlik Sahibi',
@@ -154,7 +154,7 @@ class UserResource extends Resource
                         if (blank($value)) return;
 
                         if ($value === 'admin') {
-                            $query->where('email', 'admin@metraj.az');
+                            $query->where('email', 'admin@kibriskare.com');
                         } elseif ($value === 'agency_owner') {
                             $query->whereHas('agencies');
                         } elseif ($value === 'realtor') {
@@ -162,7 +162,7 @@ class UserResource extends Resource
                         } elseif ($value === 'independent') {
                             $query->whereHas('agent', fn ($q) => $q->whereNull('agency_id'));
                         } elseif ($value === 'normal') {
-                            $query->where('email', '!=', 'admin@metraj.az')
+                            $query->where('email', '!=', 'admin@kibriskare.com')
                                 ->whereDoesntHave('agent')
                                 ->whereDoesntHave('agencies');
                         }

@@ -1,13 +1,13 @@
-/* Metraj global helpers (layouts/js.blade.php-dən çıxarılıb) — window.Metraj, favorite/compare toggle, toast, logout, card image switcher */
+/* KibrisKare global helpers (layouts/js.blade.php-dən çıxarılıb) — window.KibrisKare, favorite/compare toggle, toast, logout, card image switcher */
 (function () {
 'use strict';
 
 AOS.init();
 
-const R = window.MetrajRoutes || {};
+const R = window.KibrisKareRoutes || {};
 
     // Qlobal AJAX köməkçisi — bütün POST-lar JS fetch ilə gedir
-    window.Metraj = {
+    window.KibrisKare = {
         csrfToken() {
             const meta = document.querySelector('meta[name="csrf-token"]');
             return meta ? meta.content : '';
@@ -62,12 +62,12 @@ const R = window.MetrajRoutes || {};
             btn.style.opacity = '0.6';
         }
 
-        const { ok, data } = await window.Metraj.post(form.action, new FormData(form));
+        const { ok, data } = await window.KibrisKare.post(form.action, new FormData(form));
 
         if (ok) {
             window.location.href = data.redirect || '/';
         } else {
-            window.Metraj.toast(data.message || 'Çıxış zamanı xəta baş verdi', 'error');
+            window.KibrisKare.toast(data.message || 'Çıxış zamanı xəta baş verdi', 'error');
             if (btn) {
                 btn.disabled = false;
                 btn.style.opacity = '1';
@@ -118,7 +118,7 @@ const R = window.MetrajRoutes || {};
     };
 
     /* ===== QLOBAL TOP-RIGHT TOAST BİLDİRİŞ SİSTEMİ ===== */
-    window.showMetrajToast = function (opts) {
+    window.showKibrisKareToast = function (opts) {
         if (typeof Toastify === 'undefined') return;
         const isFav = opts.type === 'favorite';
         const isComp = opts.type === 'compare';
@@ -233,7 +233,7 @@ const R = window.MetrajRoutes || {};
     /* ===== QLOBAL FAVORITE & COMPARE (ANLIQ OPTIMISTIC UPDATE & BACKEND SİNXRONİZASİYASI) ===== */
     window.toggleFavorite = function (element, propertyId) {
         propertyId = parseInt(propertyId, 10);
-        const csrf = window.Metraj.csrfToken();
+        const csrf = window.KibrisKare.csrfToken();
 
         let favIds = [];
         try {
@@ -278,7 +278,7 @@ const R = window.MetrajRoutes || {};
                 window.updateCardFavoriteButton(propertyId, data.is_favorite);
 
                 if (data.is_favorite) {
-                    window.showMetrajToast({
+                    window.showKibrisKareToast({
                         type: 'favorite',
                         active: true,
                         message: 'Elan seçilmişlərə əlavə edildi',
@@ -286,7 +286,7 @@ const R = window.MetrajRoutes || {};
                         linkUrl: '/favorites'
                     });
                 } else {
-                    window.showMetrajToast({
+                    window.showKibrisKareToast({
                         type: 'favorite',
                         active: false,
                         message: 'Elan seçilmişlərdən çıxarıldı'
@@ -302,7 +302,7 @@ const R = window.MetrajRoutes || {};
 
     window.toggleCompare = function (element, propertyId) {
         propertyId = parseInt(propertyId, 10);
-        const csrf = window.Metraj.csrfToken();
+        const csrf = window.KibrisKare.csrfToken();
 
         let compIds = [];
         try {
@@ -314,7 +314,7 @@ const R = window.MetrajRoutes || {};
         const willBeInCompare = !currentlyInCompare;
 
         if (willBeInCompare && compIds.length >= 4) {
-            window.showMetrajToast({
+            window.showKibrisKareToast({
                 type: 'error',
                 message: 'Ən çox 4 elan müqayisə edilə bilər.'
             });
@@ -353,7 +353,7 @@ const R = window.MetrajRoutes || {};
                 window.updateCardCompareButton(propertyId, data.is_compared);
 
                 if (data.is_compared) {
-                    window.showMetrajToast({
+                    window.showKibrisKareToast({
                         type: 'compare',
                         active: true,
                         message: 'Elan müqayisə siyahısına əlavə edildi',
@@ -361,7 +361,7 @@ const R = window.MetrajRoutes || {};
                         linkUrl: '/compares'
                     });
                 } else {
-                    window.showMetrajToast({
+                    window.showKibrisKareToast({
                         type: 'compare',
                         active: false,
                         message: 'Elan müqayisə siyahısından çıxarıldı'
@@ -369,7 +369,7 @@ const R = window.MetrajRoutes || {};
                 }
             } else if (data.limit_reached) {
                 window.updateCardCompareButton(propertyId, false);
-                window.showMetrajToast({
+                window.showKibrisKareToast({
                     type: 'error',
                     message: data.message || 'Ən çox 4 elan müqayisə edilə bilər.'
                 });

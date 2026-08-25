@@ -26,7 +26,7 @@ return [
 
     'register_title' => 'Register',
     'register_heading' => 'Create New Account',
-    'register_subheading' => 'Choose the profile type that fits your activity on Metraj.',
+    'register_subheading' => 'Choose the profile type that fits your activity on KibrisKare.',
     'role_individual' => 'Individual User',
     'role_agent' => 'Realtor (Agent)',
     'role_agency' => 'Agency / Company',
@@ -46,7 +46,7 @@ return [
     'independent_realtor' => 'Independent Realtor (Not affiliated with any agency)',
     'office_address' => 'Office Address',
     'office_address_placeholder' => 'e.g. 45 Main Street, City',
-    'terms_prefix' => 'By signing up, you agree to Metraj\'s',
+    'terms_prefix' => 'By signing up, you agree to KibrisKare\'s',
     'terms_of_use' => 'Terms of Service',
     'and' => 'and',
     'privacy_policy' => 'Privacy Policy',

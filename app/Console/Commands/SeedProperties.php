@@ -29,8 +29,8 @@ class SeedProperties extends Command
         $agencies = Agency::where('status', 'active')->get();
         $agencyAgents = Agent::with('user')->whereNotNull('agency_id')->where('is_active', true)->get();
         $independentAgents = Agent::with('user')->whereNull('agency_id')->where('is_active', true)->get();
-        $adminUser = User::where('email', 'admin@metraj.az')->first();
-        $agencyOwner = User::where('email', 'agency@metraj.az')->first();
+        $adminUser = User::where('email', 'admin@kibriskare.com')->first();
+        $agencyOwner = User::where('email', 'agency@kibriskare.com')->first();
 
         if (!$adminUser || !$agencyOwner) {
             $this->error('Admin and Agency Owner users must exist. Please run DatabaseSeeder first.');

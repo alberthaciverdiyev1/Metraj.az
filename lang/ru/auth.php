@@ -26,7 +26,7 @@ return [
 
     'register_title' => 'Регистрация',
     'register_heading' => 'Создать новый аккаунт',
-    'register_subheading' => 'Выберите тип профиля, соответствующий вашей деятельности на Metraj.',
+    'register_subheading' => 'Выберите тип профиля, соответствующий вашей деятельности на KibrisKare.',
     'role_individual' => 'Частное лицо',
     'role_agent' => 'Риелтор (Агент)',
     'role_agency' => 'Агентство недвижимости',
@@ -50,7 +50,7 @@ return [
     'terms_of_use' => 'Пользовательское соглашение',
     'and' => 'и',
     'privacy_policy' => 'Политику конфиденциальности',
-    'terms_suffix' => 'Metraj.',
+    'terms_suffix' => 'KibrisKare.',
     'complete_registration' => 'Завершить регистрацию',
     'register_as_user' => 'Зарегистрироваться как пользователь',
     'register_as_agent' => 'Зарегистрироваться как риелтор',

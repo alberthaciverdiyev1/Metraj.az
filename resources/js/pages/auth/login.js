@@ -47,8 +47,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 const data = await response.json();
 
                 if (response.ok && data.success) {
-                    if (window.Metraj && window.Metraj.toast) {
-                        window.Metraj.toast(data.message || i18n.success || 'Uğurla daxil oldunuz!', 'success');
+                    if (window.KibrisKare && window.KibrisKare.toast) {
+                        window.KibrisKare.toast(data.message || i18n.success || 'Uğurla daxil oldunuz!', 'success');
                     }
                     submitBtn.innerHTML = '<i class="bi bi-check2-circle text-lg"></i> <span>' + (i18n.loggedIn || 'Daxil olundu!') + '</span>';
 
@@ -60,8 +60,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     submitBtn.innerHTML = originalBtnHtml;
 
                     const msg = data.message || i18n.invalid || 'E-poçt və ya şifrə yanlışdır.';
-                    if (window.Metraj && window.Metraj.toast) {
-                        window.Metraj.toast(msg, 'error');
+                    if (window.KibrisKare && window.KibrisKare.toast) {
+                        window.KibrisKare.toast(msg, 'error');
                     }
 
                     if (data.errors) {
@@ -79,8 +79,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error(err);
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalBtnHtml;
-                if (window.Metraj && window.Metraj.toast) {
-                    window.Metraj.toast(i18n.network || 'Şəbəkə xətası baş verdi. Yenidən cəhd edin.', 'error');
+                if (window.KibrisKare && window.KibrisKare.toast) {
+                    window.KibrisKare.toast(i18n.network || 'Şəbəkə xətası baş verdi. Yenidən cəhd edin.', 'error');
                 }
             }
         });

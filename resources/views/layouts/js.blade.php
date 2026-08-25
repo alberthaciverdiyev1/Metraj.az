@@ -3,7 +3,7 @@
 
 <script>
     // Front JS faylları üçün Laravel route() ilə yaradılmış API URL-ləri
-    window.MetrajRoutes = {
+    window.KibrisKareRoutes = {
         favoritesToggle: "{{ route('favorites.toggle') }}",
         favoritesClear: "{{ route('favorites.clear') }}",
         favoritesIds: "{{ route('favorites.ids') }}",

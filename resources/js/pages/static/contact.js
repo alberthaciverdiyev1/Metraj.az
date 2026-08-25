@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
             iconAnchor: [18, 36]
         });
 
-        const popupTitle = i18n.mapPopupTitle || 'Metraj.az';
+        const popupTitle = i18n.mapPopupTitle || 'KibrisKare.com';
         const popupAddr = i18n.mapPopupAddress || '';
         L.marker([defaultLat, defaultLng], { icon: customIcon })
             .addTo(map)
@@ -62,8 +62,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 const data = await response.json();
 
                 if (response.ok) {
-                    if (window.Metraj && window.Metraj.toast) {
-                        window.Metraj.toast(data.message || i18n.sent || 'Mesajınız uğurla göndərildi!');
+                    if (window.KibrisKare && window.KibrisKare.toast) {
+                        window.KibrisKare.toast(data.message || i18n.sent || 'Mesajınız uğurla göndərildi!');
                     } else {
                         alert(data.message || i18n.sent || 'Mesajınız uğurla göndərildi!');
                     }
@@ -74,8 +74,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         const first = Object.values(data.errors)[0];
                         if (first && first[0]) errMsg = first[0];
                     }
-                    if (window.Metraj && window.Metraj.toast) {
-                        window.Metraj.toast(errMsg, 'error');
+                    if (window.KibrisKare && window.KibrisKare.toast) {
+                        window.KibrisKare.toast(errMsg, 'error');
                     } else {
                         alert(errMsg);
                     }

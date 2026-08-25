@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('compare.page_title') . ' - Metraj.az')
+@section('title', __('compare.page_title') . ' - KibrisKare.com')
 
 @section('content')
     <div class="max-w-[1400px] mx-auto sm:px-6 lg:px-8 py-8">

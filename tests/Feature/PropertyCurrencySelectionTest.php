@@ -28,7 +28,7 @@ class PropertyCurrencySelectionTest extends TestCase
         $propertyType = FilterOption::whereHas('filter', fn($q) => $q->where('key', 'property_type'))->first();
         $dealType = FilterOption::whereHas('filter', fn($q) => $q->where('key', 'deal_type'))->first();
 
-        $email = 'currency_test_' . time() . '@metraj.az';
+        $email = 'currency_test_' . time() . '@kibriskare.com';
         $postData = [
             'property_type_id' => $propertyType->id,
             'deal_type_id' => $dealType->id,
@@ -67,7 +67,7 @@ class PropertyCurrencySelectionTest extends TestCase
         $propertyType = FilterOption::whereHas('filter', fn($q) => $q->where('key', 'property_type'))->first();
         $dealType = FilterOption::whereHas('filter', fn($q) => $q->where('key', 'deal_type'))->first();
 
-        $email = 'currency_gbp_test_' . time() . '@metraj.az';
+        $email = 'currency_gbp_test_' . time() . '@kibriskare.com';
         $postData = [
             'property_type_id' => $propertyType->id,
             'deal_type_id' => $dealType->id,

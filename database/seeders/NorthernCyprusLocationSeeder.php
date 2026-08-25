@@ -312,7 +312,7 @@ class NorthernCyprusLocationSeeder extends Seeder
         ];
 
         $amenityIds = Amenity::pluck('id')->toArray();
-        $adminUserId = User::where('email', 'admin@metraj.az')->first()?->id ?? 1;
+        $adminUserId = User::where('email', 'admin@kibriskare.com')->first()?->id ?? 1;
 
         foreach ($propertyTemplates as $idx => $tpl) {
             $city = City::where('slug', $tpl['city_slug'])->first() ?? $createdCities[0];

@@ -12,7 +12,7 @@ class PropertyCascadeFormTest extends TestCase
 {
     private function owner(): User
     {
-        return User::where('email', 'agency@metraj.az')->firstOrFail();
+        return User::where('email', 'agency@kibriskare.com')->firstOrFail();
     }
 
     private function setUpAgencyPanel(): void

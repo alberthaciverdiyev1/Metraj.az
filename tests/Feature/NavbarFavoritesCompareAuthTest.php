@@ -22,7 +22,7 @@ class NavbarFavoritesCompareAuthTest extends TestCase
     {
         $user = new User([
             'name' => 'Nav User Test',
-            'email' => 'nav_user@metraj.az',
+            'email' => 'nav_user@kibriskare.com',
         ]);
         $user->id = 9999;
 

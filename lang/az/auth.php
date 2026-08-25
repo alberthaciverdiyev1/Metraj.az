@@ -26,7 +26,7 @@ return [
 
     'register_title' => 'Qeydiyyat',
     'register_heading' => 'Yeni Hesab Yarat',
-    'register_subheading' => 'Metraj.az platformasında fəaliyyət növünüzə uyğun profil seçin.',
+    'register_subheading' => 'KibrisKare.com platformasında fəaliyyət növünüzə uyğun profil seçin.',
     'role_individual' => 'Fərdi İstifadəçi',
     'role_agent' => 'Rieltor (Agent)',
     'role_agency' => 'Agentlik',
@@ -46,7 +46,7 @@ return [
     'independent_realtor' => 'Müstəqil Rieltor (Heç bir agentliyə bağlı deyil)',
     'office_address' => 'Ofis Ünvanı',
     'office_address_placeholder' => 'Məs: Bakı ş., Nizami küç. 45',
-    'terms_prefix' => 'Qeydiyyatdan keçməklə siz Metraj.az',
+    'terms_prefix' => 'Qeydiyyatdan keçməklə siz KibrisKare.com',
     'terms_of_use' => 'İstifadəçi Qaydaları',
     'and' => 'və',
     'privacy_policy' => 'Məxfilik Siyasətini',

@@ -26,7 +26,7 @@ return [
 
     'register_title' => 'Kayıt Ol',
     'register_heading' => 'Yeni Hesap Oluştur',
-    'register_subheading' => 'Metraj platformunda profilinize uygun hesap türünü seçiniz.',
+    'register_subheading' => 'KibrisKare platformunda profilinize uygun hesap türünü seçiniz.',
     'role_individual' => 'Bireysel Kullanıcı',
     'role_agent' => 'Emlak Danışmanı (Agent)',
     'role_agency' => 'Emlak Ofisi / Şirket',
@@ -46,7 +46,7 @@ return [
     'independent_realtor' => 'Bağımsız Danışman (Herhangi bir ofise bağlı değil)',
     'office_address' => 'Ofis Adresi',
     'office_address_placeholder' => 'Örn: Girne, Atatürk Cad. No: 45',
-    'terms_prefix' => 'Kayıt olarak Metraj',
+    'terms_prefix' => 'Kayıt olarak KibrisKare',
     'terms_of_use' => 'Kullanım Koşulları',
     'and' => 've',
     'privacy_policy' => 'Gizlilik Politikasını',

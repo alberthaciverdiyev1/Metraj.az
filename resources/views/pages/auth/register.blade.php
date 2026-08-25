@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('auth.register_title') . ' - Metraj.az')
+@section('title', __('auth.register_title') . ' - KibrisKare.com')
 
 @section('content')
 <div class="min-h-[calc(100vh-140px)] flex items-center justify-center py-8 sm:py-12 px-4">
@@ -12,7 +12,7 @@
             {{-- Header & Logo --}}
             <div class="text-center space-y-2">
                 <a href="{{ route('home') }}" class="inline-block">
-                    <img src="{{ asset('images/metrajlogo1.png') }}" alt="Metraj.az" class="h-10 mx-auto object-contain">
+                    <img src="{{ asset('images/kibriskarelogo1.png') }}" alt="KibrisKare.com" class="h-10 mx-auto object-contain">
                 </a>
                 <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
                     {{ __('auth.register_heading') }}
@@ -86,7 +86,7 @@
                     </label>
                     <div class="relative">
                         <i class="bi bi-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
-                        <input type="email" id="reg_email" name="email" required placeholder="nümunə@metraj.az"
+                        <input type="email" id="reg_email" name="email" required placeholder="nümunə@kibriskare.com"
                                class="w-full pl-11 pr-4 py-3.5 sm:py-4 bg-gray-50/80 border border-gray-200 rounded-2xl text-sm sm:text-base text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-inner">
                     </div>
                     <span id="email_error" class="text-rose-500 text-xs font-semibold hidden"></span>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('requests.post_request_title') . ' - Metraj.az')
+@section('title', __('requests.post_request_title') . ' - KibrisKare.com')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/requests-create.css') }}">

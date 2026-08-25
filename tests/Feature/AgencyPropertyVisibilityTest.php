@@ -11,7 +11,7 @@ class AgencyPropertyVisibilityTest extends TestCase
     public function test_realtor_sees_only_own_properties(): void
     {
         $realtor = User::whereHas('agent', fn ($q) => $q->whereNotNull('agency_id'))
-            ->where('email', '!=', 'agency@metraj.az')
+            ->where('email', '!=', 'agency@kibriskare.com')
             ->firstOrFail();
 
         $this->actingAs($realtor);
@@ -35,7 +35,7 @@ class AgencyPropertyVisibilityTest extends TestCase
 
     public function test_owner_sees_all_agency_properties(): void
     {
-        $owner = User::where('email', 'agency@metraj.az')->firstOrFail();
+        $owner = User::where('email', 'agency@kibriskare.com')->firstOrFail();
         $this->actingAs($owner);
 
         $tenantAgencyId = $owner->tenantAgency()->id;

@@ -16,8 +16,8 @@ class RealtorLoginRegressionTest extends TestCase
      */
     public function test_agency_created_realtor_can_login(): void
     {
-        $owner = User::where('email', 'agency@metraj.az')->firstOrFail();
-        $email = 'regression.' . time() . '@metraj.az';
+        $owner = User::where('email', 'agency@kibriskare.com')->firstOrFail();
+        $email = 'regression.' . time() . '@kibriskare.com';
         $password = 'sifre12345';
 
         // Create realtor exactly like CreateAgent::mutateFormDataBeforeCreate

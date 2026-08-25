@@ -131,7 +131,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4">
             <div class="sm:col-span-2">
                 <label class="block text-[11px] font-semibold text-gray-600 mb-1">{{ __('add_property.email') }} <span class="text-rose-500">*</span></label>
-                <input type="email" name="email" id="email" value="{{ old('email', auth()->user()?->email) }}" required placeholder="elan@metraj.az"
+                <input type="email" name="email" id="email" value="{{ old('email', auth()->user()?->email) }}" required placeholder="elan@kibriskare.com"
                     class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-3 py-2 text-xs sm:text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
                 <p class="text-[11px] text-gray-500 mt-1.5 flex items-center gap-1.5">
                     <i class="bi bi-info-circle text-orange-500 shrink-0 text-xs"></i>

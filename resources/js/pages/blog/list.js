@@ -35,13 +35,13 @@ document.addEventListener('DOMContentLoaded', function() {
             gridBtn.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition duration-200 bg-white text-orange-500 shadow-sm';
             listBtn.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition duration-200 text-gray-600 hover:text-gray-900 hover:bg-white/50';
         }
-        localStorage.setItem('metraj_blog_view', mode);
+        localStorage.setItem('kibriskare_blog_view', mode);
     }
 
     gridBtn.addEventListener('click', () => applyView('grid'));
     listBtn.addEventListener('click', () => applyView('list'));
 
-    const savedView = localStorage.getItem('metraj_blog_view') || 'grid';
+    const savedView = localStorage.getItem('kibriskare_blog_view') || 'grid';
     if (savedView === 'list') {
         applyView('list');
     }

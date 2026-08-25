@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $propertyRequest->title . ' - Metraj.az')
+@section('title', $propertyRequest->title . ' - KibrisKare.com')
 
 @section('content')
 @php
@@ -241,7 +241,7 @@
                 <x-contact-profile :name="$propertyRequest->contact_name" :role="__('requests.client_seeker')" />
 
                 <x-contact-actions :whatsapp="$propertyRequest->contact_whatsapp" :phone="$propertyRequest->contact_phone"
-                    :message="'Salam, Metraj.az saytında yerləşdirdiyiniz tələb elanınızla bağlı sizə uyğun təklifim var: ' . $propertyRequest->title"
+                    :message="'Salam, KibrisKare.com saytında yerləşdirdiyiniz tələb elanınızla bağlı sizə uyğun təklifim var: ' . $propertyRequest->title"
                     :whatsapp-label="__('requests.whatsapp_offer_label')" />
 
                 <x-safety-note icon="bi-info-circle" :title="__('requests.for_agents_and_owners')"

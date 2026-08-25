@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('roommates.page_title') . ' - Metraj.az')
+@section('title', __('roommates.page_title') . ' - KibrisKare.com')
 
 @section('content')
 <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6">

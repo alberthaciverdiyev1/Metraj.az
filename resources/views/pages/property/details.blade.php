@@ -387,7 +387,7 @@
                                     <span class="text-xs font-semibold text-gray-500">{{ __('property.owner') }}</span>
                                 </div>
 
-                                @if(!empty($agentName) && $agentName !== 'Metraj Təmsilçisi')
+                                @if(!empty($agentName) && $agentName !== 'KibrisKare Təmsilçisi')
                                     <div class="text-base font-bold text-gray-900">
                                         {{ $agentName }}
                                     </div>

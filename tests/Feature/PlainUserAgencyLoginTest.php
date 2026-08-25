@@ -12,7 +12,7 @@ class PlainUserAgencyLoginTest extends TestCase
 {
     public function test_plain_new_user_can_login_to_agency_panel(): void
     {
-        $email = 'plain.user.' . time() . '@metraj.az';
+        $email = 'plain.user.' . time() . '@kibriskare.com';
 
         // A user with NO agent record and NO owned agency (e.g. created via admin UserResource)
         $user = User::create([
@@ -50,7 +50,7 @@ class PlainUserAgencyLoginTest extends TestCase
 
     public function test_plain_user_cannot_access_admin_panel(): void
     {
-        $email = 'plain.user.admin.' . time() . '@metraj.az';
+        $email = 'plain.user.admin.' . time() . '@kibriskare.com';
         $user = User::create([
             'name' => 'Plain User Admin',
             'email' => $email,

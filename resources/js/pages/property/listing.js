@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    const R = window.MetrajRoutes || {};
+    const R = window.KibrisKareRoutes || {};
 
     /* ===== STATE ===== */
     let isLoading = false;

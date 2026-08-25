@@ -1,6 +1,6 @@
 /* Favoritlər səhifəsi — seçilmiş elanların idarəsi (favorites.blade.php-dən çıxarılıb) */
 document.addEventListener('DOMContentLoaded', function () {
-    const R = window.MetrajRoutes || {};
+    const R = window.KibrisKareRoutes || {};
     const favsEmptyState = document.getElementById('favsEmptyState');
     const favoritesContainer = document.getElementById('favoritesContainer');
     const favsActions = document.getElementById('favsActions');
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const propertyId = card ? parseInt(card.getAttribute('data-property-id')) : null;
 
                 if (propertyId) {
-                    const csrf = window.Metraj?.csrfToken() || '';
+                    const csrf = window.KibrisKare?.csrfToken() || '';
                     fetch(R.favoritesToggle || '/api/favorites/toggle', {
                         method: 'POST',
                         headers: {
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
         clearAllBtn.addEventListener('click', function () {
             const confirmMsg = clearAllBtn.getAttribute('data-confirm') || 'Bütün seçilmiş elanları silmək istədiyinizdən əminsiniz?';
             if (confirm(confirmMsg)) {
-                const csrf = window.Metraj?.csrfToken() || '';
+                const csrf = window.KibrisKare?.csrfToken() || '';
                 fetch(R.favoritesClear || '/api/favorites/clear', {
                     method: 'POST',
                     headers: {

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @if(isset($pageTitle) && $pageTitle)
-    @section('title', $pageTitle . ' - Metraj.az')
+    @section('title', $pageTitle . ' - KibrisKare.com')
 @endif
 
 @if(isset($metaDescription) && $metaDescription)
@@ -246,7 +246,7 @@
 @push('scripts')
     <script>
         // SEO URL-ləri üçün şəhər id → slug map (listing.js tərəfindən istifadə olunur)
-        window.MetrajRoutes = Object.assign({}, window.MetrajRoutes || {}, {
+        window.KibrisKareRoutes = Object.assign({}, window.KibrisKareRoutes || {}, {
             citySlugs: @json($cities->pluck('slug', 'id'))
         });
     </script>

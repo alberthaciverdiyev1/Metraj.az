@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('contact.page_title') . ' - Metraj.az')
+@section('title', __('contact.page_title') . ' - KibrisKare.com')
 
 @push('styles')
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -59,8 +59,8 @@
                 </div>
                 <h3 class="font-semibold text-gray-900 text-base mb-1">{{ __('contact.email') }}</h3>
                 <p class="text-xs text-gray-500 mb-3">{{ __('contact.email_desc') }}</p>
-                <a href="mailto:info@metraj.az" class="text-sm font-semibold text-blue-600 hover:underline mt-auto break-all">
-                    info@metraj.az
+                <a href="mailto:info@kibriskare.com" class="text-sm font-semibold text-blue-600 hover:underline mt-auto break-all">
+                    info@kibriskare.com
                 </a>
             </div>
 

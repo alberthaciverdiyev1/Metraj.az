@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $listing->title . ' - Metraj.az')
+@section('title', $listing->title . ' - KibrisKare.com')
 
 @section('content')
 <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -242,7 +242,7 @@
                 <x-contact-profile :name="$listing->contact_name" :role="__('roommates.listing_owner')" />
 
                 <x-contact-actions :whatsapp="$listing->contact_whatsapp" :phone="$listing->contact_phone"
-                    :message="'Salam, Metraj.az saytındakı otaq yoldaşı elanınızla bağlı yazıram: ' . $listing->title"
+                    :message="'Salam, KibrisKare.com saytındakı otaq yoldaşı elanınızla bağlı yazıram: ' . $listing->title"
                     :whatsapp-label="__('roommates.write_whatsapp')" />
 
                 <x-safety-note />

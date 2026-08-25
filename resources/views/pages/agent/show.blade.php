@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ($agent->user?->name ?? __('agency.agent_default_title')) . ' - ' . __('agency.agent_profile') . ' - Metraj.az')
+@section('title', ($agent->user?->name ?? __('agency.agent_default_title')) . ' - ' . __('agency.agent_profile') . ' - KibrisKare.com')
 
 @section('content')
 <div class="w-full pt-4 pb-16">

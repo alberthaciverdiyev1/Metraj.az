@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 submitBtn.dataset.originalHtml = original;
             }
 
-            const { ok, status, data } = await window.Metraj.post(
+            const { ok, status, data } = await window.KibrisKare.post(
                 propertyForm.action,
                 new FormData(propertyForm)
             );
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             if (ok) {
-                window.Metraj.toast(data.message || 'Elanınız uğurla qəbul edildi ✅');
+                window.KibrisKare.toast(data.message || 'Elanınız uğurla qəbul edildi ✅');
                 setTimeout(() => {
                     window.location.href = data.redirect || '/';
                 }, 2000);
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         errInput.classList.add('ring-2', 'ring-red-400');
                     }
                 }
-                window.Metraj.toast(msg, 'error');
+                window.KibrisKare.toast(msg, 'error');
             }
         });
     }
@@ -575,7 +575,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     videoInput.files = e.dataTransfer.files;
                     renderVideoPreview(file);
                 } else {
-                    window.Metraj.toast('Zəhmət olmasa düzgün video formatı seçin (MP4, WebM, MOV)', 'error');
+                    window.KibrisKare.toast('Zəhmət olmasa düzgün video formatı seçin (MP4, WebM, MOV)', 'error');
                 }
             }
         });
@@ -584,7 +584,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (this.files && this.files[0]) {
                 const file = this.files[0];
                 if (file.size > 52428800) { // 50MB
-                    window.Metraj.toast('Video həcmi maksimum 50MB ola bilər', 'error');
+                    window.KibrisKare.toast('Video həcmi maksimum 50MB ola bilər', 'error');
                     this.value = '';
                     if (videoPreviewContainer) videoPreviewContainer.classList.add('hidden');
                     return;

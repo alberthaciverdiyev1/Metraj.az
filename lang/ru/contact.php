@@ -45,5 +45,5 @@ return [
     'message_sent_success' => 'Ваше сообщение успешно отправлено!',
     'error_occurred' => 'Произошла ошибка, пожалуйста, попробуйте еще раз.',
     'network_error' => 'Произошла сетевая ошибка.',
-    'map_office_popup' => 'Главный офис Metraj.az',
+    'map_office_popup' => 'Главный офис KibrisKare.com',
 ];

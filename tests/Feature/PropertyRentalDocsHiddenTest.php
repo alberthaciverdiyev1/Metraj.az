@@ -12,7 +12,7 @@ class PropertyRentalDocsHiddenTest extends TestCase
     private function setUpAgencyPanel(): void
     {
         Filament::setCurrentPanel(Filament::getPanel('agency'));
-        $this->actingAs(User::where('email', 'agency@metraj.az')->firstOrFail());
+        $this->actingAs(User::where('email', 'agency@kibriskare.com')->firstOrFail());
     }
 
     public function test_documents_section_hidden_when_deal_type_is_rental(): void

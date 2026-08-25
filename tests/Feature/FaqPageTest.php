@@ -12,7 +12,7 @@ class FaqPageTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Tez-tez Verilən Suallar');
-        $response->assertSee('Metraj.az nədir və necə işləyir?');
+        $response->assertSee('KibrisKare.com nədir və necə işləyir?');
         $response->assertSee('Kömək Lazımdır?');
     }
 }

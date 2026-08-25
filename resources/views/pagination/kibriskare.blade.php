@@ -1,6 +1,6 @@
 @if ($paginator->hasPages())
     <nav role="navigation" aria-label="{{ __('pagination.navigation') }}" class="mt-10">
-        <ul class="pagination-metraj">
+        <ul class="pagination-kibriskare">
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
                 <li class="pm-item disabled" aria-disabled="true" aria-label="{{ __('pagination.previous') }}">

@@ -32,7 +32,7 @@ return [
     'currently_managing_listings' => 'Şu anda platformda',
     'active_listings_managed' => 'aktif ilan kendisi tarafından yönetilmektedir',
     'contact_direct_call_or_wa' => 'İletişim için doğrudan arayabilir veya WhatsApp üzerinden yazabilirsiniz',
-    'joined_platform' => 'Metraj.az platformuna katıldı',
+    'joined_platform' => 'KibrisKare.com platformuna katıldı',
     'agent_listings' => 'Danışmanın İlanları',
     'all_listings_posted_by' => 'tarafından yayınlanan tüm aktif ilanlar',
     'total_label' => 'Toplam:',
