@@ -15,6 +15,7 @@ fi
 
 # 2. Fetch Latest Changes
 echo "📥 Pulling latest code from Git..."
+git config --global --add safe.directory "$(pwd)" 2>/dev/null || true
 git pull origin main
 
 # 3. Install/Update PHP Dependencies
