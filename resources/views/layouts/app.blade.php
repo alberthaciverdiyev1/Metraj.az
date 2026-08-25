@@ -7,10 +7,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @php
-        $resolvedTitle = View::hasSection('title') ? View::getSection('title') : ($title ?? ($currentPageSeo?->getTrans('title') ?: ($seoSetting?->getTrans('default_meta_title') ?: 'KibrisKare.com')));
-        $resolvedDescription = $metaDescription ?? ($currentPageSeo?->getTrans('description') ?: ($seoSetting?->getTrans('default_meta_description') ?: ''));
-        $resolvedKeywords = $metaKeywords ?? ($currentPageSeo?->getTrans('keywords') ?: ($seoSetting?->getTrans('default_meta_keywords') ?: ''));
-        $resolvedOgImage = $ogImage ?? ($currentPageSeo?->og_image ?: ($seoSetting?->og_image ?: asset('images/kibriskarelogo1.png')));
+        $curPageSeo = $currentPageSeo ?? \App\Modules\Shared\Models\PageSeo::findForCurrentRoute();
+        $seoConf = $seoSetting ?? \App\Modules\Shared\Models\SeoSetting::current();
+
+        $resolvedTitle = View::hasSection('title') ? View::getSection('title') : ($title ?? ($curPageSeo?->getTrans('title') ?: ($seoConf?->getTrans('default_meta_title') ?: 'KibrisKare.com')));
+        $resolvedDescription = ($metaDescription ?? null) ?? ($curPageSeo?->getTrans('description') ?: ($seoConf?->getTrans('default_meta_description') ?: ''));
+        $resolvedKeywords = ($metaKeywords ?? null) ?? ($curPageSeo?->getTrans('keywords') ?: ($seoConf?->getTrans('default_meta_keywords') ?: ''));
+        $resolvedOgImage = ($ogImage ?? null) ?? ($curPageSeo?->og_image ?: ($seoConf?->og_image ?: asset('images/kibriskarelogo1.png')));
     @endphp
 
     <title>{{ $resolvedTitle }}</title>
@@ -57,14 +60,14 @@
     @stack('styles')
 
     {{-- Global <head> Scripts (Raw HTML/JS from Admin) --}}
-    @if(!empty($seoSetting?->head_scripts))
-        {!! $seoSetting->head_scripts !!}
+    @if(!empty($seoConf?->head_scripts))
+        {!! $seoConf->head_scripts !!}
     @endif
 </head>
 <body class="bg-[#F7F7F7] pb-20 md:pb-0">
     {{-- Global <body> Opening Scripts (Raw HTML/JS from Admin, e.g. GTM noscript) --}}
-    @if(!empty($seoSetting?->body_scripts))
-        {!! $seoSetting->body_scripts !!}
+    @if(!empty($seoConf?->body_scripts))
+        {!! $seoConf->body_scripts !!}
     @endif
 
     @if(!isset($useLayout) || $useLayout !== false)
@@ -98,8 +101,8 @@
     @stack('scripts')
 
     {{-- Global Footer / </body> Scripts (Raw HTML/JS from Admin, e.g. Live chat, widgets) --}}
-    @if(!empty($seoSetting?->footer_scripts))
-        {!! $seoSetting->footer_scripts !!}
+    @if(!empty($seoConf?->footer_scripts))
+        {!! $seoConf->footer_scripts !!}
     @endif
 </body>
 </html>

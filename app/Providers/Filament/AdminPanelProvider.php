@@ -44,8 +44,7 @@ class AdminPanelProvider extends PanelProvider
                 Pages\Dashboard::class,
             ])
             ->navigationGroups([
-                NavigationGroup::make('Parametrlər')
-                    ->icon('heroicon-o-cog-6-tooth'),
+                NavigationGroup::make('Parametrlər'),
             ])
             ->navigationItems([
                 NavigationItem::make('Profilim')
