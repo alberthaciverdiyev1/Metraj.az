@@ -10,10 +10,6 @@
 
 @section('content')
     <div class="w-full pt-4">
-        @if(!empty($breadcrumbs))
-            @include('components.breadcrumb', ['items' => $breadcrumbs])
-        @endif
-
         @include('components.scroll-top')
 
         <section class="property-listing py-2">
