@@ -77,4 +77,5 @@ return [
     'select_phone_to_call' => 'Aramak için numara seçin',
     'inquiry_success' => 'Talebiniz başarıyla alındı! En kısa sürede sizinle iletişime geçilecektir.',
     'contact_success' => 'Mesajınız başarıyla gönderildi! En kısa sürede sizinle iletişime geçilecektir.',
+    'today' => 'Bugün',
 ];

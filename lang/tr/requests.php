@@ -41,6 +41,7 @@ return [
     'no_requests_found' => 'Herhangi bir talep ilanı bulunamadı',
     'no_requests_desc' => 'Arama filtrelerini değiştirebilir veya ilk talep ilanını siz bırakabilirsiniz.',
     'post_request_btn' => 'Talep İlanı Ver',
+    'today' => 'Bugün',
     'details' => 'Detaylar',
     'rooms_suffix' => 'odalı',
     'deed_badge' => 'Tapulu',

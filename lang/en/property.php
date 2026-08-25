@@ -75,6 +75,7 @@ return [
     'payment_terms_notice' => 'By clicking "Pay", you confirm acceptance of the User Agreement and Offer.',
     'pay' => 'Pay',
     'select_phone_to_call' => 'Select a phone number to call',
-    'inquiry_success' => 'Your inquiry has been successfully received! We will contact you as soon as possible.',
-    'contact_success' => 'Your message has been sent successfully! We will contact you as soon as possible.',
+    'inquiry_success' => 'Your inquiry has been received successfully! We will contact you shortly.',
+    'contact_success' => 'Your message has been sent successfully! We will contact you shortly.',
+    'today' => 'Today',
 ];

@@ -41,6 +41,7 @@ return [
     'no_requests_found' => 'No request listings found',
     'no_requests_desc' => 'You can change the filter parameters or be the first to post a request.',
     'post_request_btn' => 'Post a Request',
+    'today' => 'Today',
     'details' => 'Details',
     'rooms_suffix' => 'rooms',
     'deed_badge' => 'With Deed',

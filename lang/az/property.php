@@ -77,4 +77,5 @@ return [
     'select_phone_to_call' => 'Zəng etmək üçün nömrəni seçin',
     'inquiry_success' => 'Müraciətiniz uğurla qəbul edildi! Ən qısa zamanda sizinlə əlaqə saxlanılacaq.',
     'contact_success' => 'Mesajınız uğurla göndərildi! Ən qısa zamanda sizinlə əlaqə saxlanılacaq.',
+    'today' => 'Bugün',
 ];

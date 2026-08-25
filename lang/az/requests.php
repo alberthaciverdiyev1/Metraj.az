@@ -41,6 +41,7 @@ return [
     'no_requests_found' => 'Heç bir tələb elanı tapılmadı',
     'no_requests_desc' => 'Axtarış parametrlərini dəyişdirə və ya ilk tələb elanını siz yerləşdirə bilərsiniz.',
     'post_request_btn' => 'Tələb Elanı Yerləşdir',
+    'today' => 'Bugün',
     'details' => 'Ətraflı',
     'rooms_suffix' => 'otaqlı',
     'deed_badge' => 'Kupçalı',

@@ -20,7 +20,7 @@
         $locationFull = $cityName . ($districtName ? ', ' . $districtName : '') . ($req->location_note ? ' (' . $req->location_note . ')' : '');
 
         $dateStr = $req->created_at
-            ? ($req->created_at->isToday() ? __('property.today') . ' ' . $req->created_at->format('H:i') : $req->created_at->format('d.m.Y'))
+            ? ($req->created_at->isToday() ? __('requests.today') . ' ' . $req->created_at->format('H:i') : $req->created_at->format('d.m.Y'))
             : '';
 
         $hasRealImage = !empty($req->first_image_url);
