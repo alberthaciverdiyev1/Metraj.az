@@ -238,7 +238,9 @@ class PropertyRepository implements PropertyRepositoryInterface
             });
         }
 
-        if ($filter->sellerType) {
+        if (!empty($filter->sellerTypes)) {
+            $query->whereIn('seller_type', collect($filter->sellerTypes)->map->value->all());
+        } elseif ($filter->sellerType) {
             $query->where('seller_type', $filter->sellerType->value);
         }
 

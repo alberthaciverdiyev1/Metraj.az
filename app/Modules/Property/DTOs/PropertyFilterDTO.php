@@ -19,6 +19,8 @@ readonly class PropertyFilterDTO
         public ?BuildingType $buildingType = null,
         public ?RepairType $repairType = null,
         public ?SellerType $sellerType = null,
+        /** @var array<int, SellerType> */
+        public array $sellerTypes = [],
         public ?PropertyStatus $status = PropertyStatus::Published,
         public ?bool $hasDocument = null,
         public ?bool $hasMortgage = null,
@@ -59,6 +61,7 @@ readonly class PropertyFilterDTO
             || $this->buildingType !== null
             || $this->repairType !== null
             || $this->sellerType !== null
+            || !empty($this->sellerTypes)
             || $this->hasDocument !== null
             || $this->hasMortgage !== null
             || $this->hasInternalCredit !== null
@@ -121,17 +124,38 @@ readonly class PropertyFilterDTO
         }
 
         $sellerType = null;
+        $sellerTypes = [];
         $rawSeller = $data['seller_type'] ?? ($data['advertiserType'] ?? null);
         if (!empty($rawSeller)) {
-            if ($rawSeller === 'user' || $rawSeller === 'owner') {
-                $sellerType = SellerType::Owner;
-            } elseif ($rawSeller === 'realtor' || $rawSeller === 'agency') {
-                $sellerType = SellerType::Agency;
-            } elseif ($rawSeller === 'complex') {
-                $sellerType = SellerType::Complex;
-            } else {
-                $sellerType = SellerType::tryFrom($rawSeller);
+            // advertiserType checkboxes share the same name → PHP submits an array
+            // when more than one is checked; seller_type comes as a plain string.
+            $rawSellers = is_array($rawSeller) ? $rawSeller : [$rawSeller];
+            foreach ($rawSellers as $rs) {
+                if (!is_string($rs) && !is_int($rs)) {
+                    continue;
+                }
+                $st = match (true) {
+                    in_array($rs, ['user', 'owner'], true) => SellerType::Owner,
+                    in_array($rs, ['realtor', 'agency'], true) => SellerType::Agency,
+                    $rs === 'complex' => SellerType::Complex,
+                    default => SellerType::tryFrom($rs),
+                };
+                if ($st !== null) {
+                    $sellerTypes[] = $st;
+                }
             }
+            // Enums are objects → dedupe by value instead of array_unique()
+            $seen = [];
+            $uniqueTypes = [];
+            foreach ($sellerTypes as $st) {
+                $key = $st->value;
+                if (!isset($seen[$key])) {
+                    $seen[$key] = true;
+                    $uniqueTypes[] = $st;
+                }
+            }
+            $sellerTypes = $uniqueTypes;
+            $sellerType = $sellerTypes[0] ?? null;
         }
 
         $hasDocument = null;
@@ -182,6 +206,7 @@ readonly class PropertyFilterDTO
             buildingType: !empty($data['building_type']) ? BuildingType::tryFrom($data['building_type']) : null,
             repairType: !empty($data['repair_type']) ? RepairType::tryFrom($data['repair_type']) : (!empty($data['propertyCondition']) ? RepairType::tryFrom($data['propertyCondition']) : null),
             sellerType: $sellerType,
+            sellerTypes: $sellerTypes,
             status: !empty($data['status']) ? PropertyStatus::tryFrom($data['status']) : PropertyStatus::Published,
             hasDocument: $hasDocument,
             hasMortgage: $hasMortgage,
