@@ -20,13 +20,13 @@
                                         <button type="button" data-value="all"
                                                 class="px-5 py-2.5 rounded-xl font-semibold text-xs tracking-wide uppercase transition duration-200 {{ $selectedAdType === 'all' || !$selectedAdType ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}"
                                                 data-add-type="all">
-                                            {{ __("Hamısı") }}
+                                            {{ __("listing.all") }}
                                         </button>
                                         @foreach($dealTypes as $dt)
                                             <button type="button" data-value="{{ $dt->value }}"
                                                     class="px-5 py-2.5 rounded-xl font-semibold text-xs tracking-wide uppercase transition duration-200 {{ $selectedAdType === $dt->value ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}"
                                                     data-add-type="{{ $dt->value }}">
-                                                {{ $dt->name['az'] ?? $dt->value }}
+                                                {{ $dt->localized_name }}
                                             </button>
                                         @endforeach
                                         <input type="hidden" name="adType" id="adTypeInput"
@@ -58,15 +58,15 @@
                                     @php
                                         $currentRooms = request('roomCount', '');
                                         $roomOptions = [
-                                            '' => __('Otaq sayı (Hamısı)'),
-                                            '1' => '1 ' . __('otaqlı'),
-                                            '2' => '2 ' . __('otaqlı'),
-                                            '3' => '3 ' . __('otaqlı'),
-                                            '4' => '4 ' . __('otaqlı'),
-                                            '5' => '5 ' . __('otaqlı'),
-                                            '6' => '6+ ' . __('otaqlı'),
+                                            '' => __('listing.room_count_all'),
+                                            '1' => '1 ' . __('listing.rooms_suffix'),
+                                            '2' => '2 ' . __('listing.rooms_suffix'),
+                                            '3' => '3 ' . __('listing.rooms_suffix'),
+                                            '4' => '4 ' . __('listing.rooms_suffix'),
+                                            '5' => '5 ' . __('listing.rooms_suffix'),
+                                            '6' => '6+ ' . __('listing.rooms_suffix'),
                                         ];
-                                        $currentRoomsLabel = $roomOptions[$currentRooms] ?? __('Otaq sayı (Hamısı)');
+                                        $currentRoomsLabel = $roomOptions[$currentRooms] ?? __('listing.room_count_all');
                                     @endphp
                                     <div class="relative">
                                         <button id="filterRoomBtn" type="button"
@@ -94,10 +94,10 @@
                                     <!-- Building Type Custom Dropdown (Navbar Style) -->
                                     @php
                                         $currentBuildingType = request('buildingType', '');
-                                        $currentBuildingLabel = __('Bütün Kateqoriyalar');
+                                        $currentBuildingLabel = __('listing.all_categories');
                                         if ($currentBuildingType) {
                                             $matching = collect($buildingTypes)->firstWhere('value', $currentBuildingType);
-                                            if ($matching) $currentBuildingLabel = $matching->name['az'] ?? $matching->value;
+                                            if ($matching) $currentBuildingLabel = $matching->localized_name;
                                         }
                                     @endphp
                                     <div class="relative">
@@ -114,12 +114,12 @@
                                              class="hidden absolute left-0 top-full mt-2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden filter-custom-menu max-h-60 overflow-y-auto">
                                             <div data-val=""
                                                  class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ empty($currentBuildingType) ? 'text-[#f1913d] bg-orange-50/60 font-semibold' : 'text-gray-700 hover:bg-gray-50' }} transition cursor-pointer">
-                                                <span class="item-label">{{ __('Bütün Kateqoriyalar') }}</span>
+                                                <span class="item-label">{{ __('listing.all_categories') }}</span>
                                                 <i class="bi bi-check2 text-sm text-[#f1913d] item-check {{ empty($currentBuildingType) ? '' : 'hidden' }}"></i>
                                             </div>
                                             @foreach($buildingTypes ?? [] as $bType)
                                                 @php
-                                                    $bLabel = $bType->name['az'] ?? $bType->value;
+                                                    $bLabel = $bType->localized_name;
                                                     $isSel = $currentBuildingType === $bType->value;
                                                 @endphp
                                                 <div data-val="{{ $bType->value }}"
@@ -138,8 +138,8 @@
                                                 class="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 bg-gray-50 hover:bg-gray-100/80 border border-gray-200/90 rounded-2xl text-xs sm:text-sm font-semibold text-gray-800 transition shadow-2xs cursor-pointer select-none">
                                             <div class="flex items-center gap-2 min-w-0">
                                                 <img src="{{ asset('images/city.svg') }}" alt="city" class="w-4 h-4 shrink-0">
-                                                <span class="truncate font-semibold text-gray-800" data-role="display-value" data-filter="city">
-                                                    {{ $cities->firstWhere('id', request('cityId'))?->name['az'] ?? ($cities->firstWhere('id', request('cityId'))?->value ?? __('Bütün Şəhərlər')) }}
+                                                <span class="truncate font-semibold text-gray-800" data-role="display-value" data-filter="city" data-default-label="{{ __('listing.all_cities') }}">
+                                                    {{ $cities->firstWhere('id', request('cityId'))?->localized_name ?? __('listing.all_cities') }}
                                                 </span>
                                             </div>
                                             <i class="bi bi-chevron-down text-xs text-gray-400 shrink-0"></i>
@@ -153,13 +153,13 @@
                                 <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
                                     <label class="block text-gray-700 font-semibold mb-2 flex items-center gap-2">
                                         <i class="bi bi-currency-dollar text-orange-500 text-xl"></i>
-                                        {{ __('Price (AZN)') }}
+                                        {{ __('listing.price') }}
                                     </label>
                                     <div class="flex gap-2">
-                                        <input type="text" name="minPrice" placeholder="{{ __('Min qiymet') }}"
+                                        <input type="text" name="minPrice" placeholder="{{ __('listing.min_price') }}"
                                                value="{{ request('minPrice') }}"
                                                class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none"/>
-                                        <input type="text" name="maxPrice" placeholder="{{ __('Max qiymet') }}"
+                                        <input type="text" name="maxPrice" placeholder="{{ __('listing.max_price') }}"
                                                value="{{ request('maxPrice') }}"
                                                class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none"/>
                                     </div>
@@ -168,13 +168,13 @@
                                 <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
                                     <label class="block text-gray-700 font-semibold mb-2 flex items-center gap-2">
                                         <i class="bi bi-fullscreen text-orange-500 text-xl"></i>
-                                        {{ __('Area (m²)') }}
+                                        {{ __('listing.area') }}
                                     </label>
                                     <div class="flex gap-2">
-                                        <input type="text" name="minArea" placeholder="{{ __('Min olcu') }}"
+                                        <input type="text" name="minArea" placeholder="{{ __('listing.min_area') }}"
                                                value="{{ request('minArea') }}"
                                                class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none"/>
-                                        <input type="text" name="maxArea" placeholder="{{ __('Max olcu') }}"
+                                        <input type="text" name="maxArea" placeholder="{{ __('listing.max_area') }}"
                                                value="{{ request('maxArea') }}"
                                                class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none"/>
                                     </div>
@@ -183,12 +183,12 @@
                                 <div class="flex flex-col gap-2 w-full md:w-64">
                                     <button type="button" id="moreFiltersBtn"
                                             class="w-full flex items-center justify-center text-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-[var(--primary)] transition">
-                                        + {{ __("More") }}
+                                        + {{ __("listing.more") }}
                                     </button>
 
                                     <button type="submit"
                                             class="w-full px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition">
-                                        {{ __('Search') }}
+                                        {{ __('listing.search') }}
                                     </button>
                                 </div>
                             </div>
@@ -202,11 +202,11 @@
                         <div class="relative min-h-[400px]">
                             <!-- Loading overlay -->
                             <div id="listingLoader"
-                                 class="hidden absolute inset-0 z-30 flex items-center justify-center bg-white/60 backdrop-blur-xs rounded-3xl transition duration-200">
+                                  class="hidden absolute inset-0 z-30 flex items-center justify-center bg-white/60 backdrop-blur-xs rounded-3xl transition duration-200">
                                 <div class="bg-white/95 border border-gray-150 rounded-2xl p-6 shadow-xl flex items-center gap-3">
                                     <div
                                         class="w-7 h-7 border-3 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
-                                    <span class="text-gray-700 font-semibold text-sm">{{ __('Yüklənir...') }}</span>
+                                    <span class="text-gray-700 font-semibold text-sm">{{ __('listing.loading') }}</span>
                                 </div>
                             </div>
 

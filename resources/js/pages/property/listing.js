@@ -427,13 +427,10 @@
 
             /* Reset display values on main page */
             form.querySelectorAll('[data-role="display-value"]').forEach(function (el) {
-                let filter = el.getAttribute('data-filter');
-                const defaults = {
-                    roomCount: 'Otaq sayı (Hamısı)',
-                    buildingType: 'Bütün Kateqoriyalar',
-                    city: 'Bütün Şəhərlər'
-                };
-                if (defaults[filter]) el.textContent = defaults[filter];
+                const defaultLabel = el.getAttribute('data-default-label');
+                if (defaultLabel) {
+                    el.textContent = defaultLabel;
+                }
             });
             /* Reset add-type toggle */
             const allBtn = document.querySelector('[data-add-type="all"]');

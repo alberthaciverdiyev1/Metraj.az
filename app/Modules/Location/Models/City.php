@@ -20,9 +20,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Location\Models\District> $districts
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Property\Models\Property> $properties
  */
+use App\Modules\Shared\Concerns\HasLocalizedName;
+
 class City extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasLocalizedName;
 
     protected $fillable = [
         'name',

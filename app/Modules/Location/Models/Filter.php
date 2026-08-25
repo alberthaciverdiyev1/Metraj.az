@@ -20,9 +20,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Location\Models\FilterOption> $options
  */
+use App\Modules\Shared\Concerns\HasLocalizedName;
+
 class Filter extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasLocalizedName;
 
     /**
      * Kütləvi doldurula bilən sütunlar (Mass Assignable)

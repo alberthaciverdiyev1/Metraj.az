@@ -27,9 +27,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Location\Models\FilterOption> $children
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Property\Models\Property> $properties
  */
+use App\Modules\Shared\Concerns\HasLocalizedName;
+
 class FilterOption extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasLocalizedName;
 
     /**
      * Kütləvi doldurula bilən sütunlar (Mass Assignable)

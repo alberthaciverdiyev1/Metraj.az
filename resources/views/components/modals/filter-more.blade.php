@@ -6,7 +6,7 @@
         <div class="flex justify-between items-center px-8 py-5 border-b border-gray-100 shrink-0 bg-gray-50/50">
             <h3 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
                 <i class="bi bi-sliders text-orange-500 text-lg"></i>
-                {{ __('Ətraflı axtarış') }}
+                {{ __('listing.advanced_search') }}
             </h3>
             <button type="button" id="closeMoreFilters"
                     class="p-2 hover:bg-gray-200/70 rounded-full text-gray-400 hover:text-gray-700 transition duration-200 flex items-center justify-center">
@@ -17,25 +17,23 @@
         <!-- Body -->
         <div class="overflow-y-auto px-8 py-4 divide-y divide-gray-100">
 
-
-
             <!-- Alqı-satqı növü Row -->
             <div class="grid grid-cols-1 md:grid-cols-4 items-center gap-4 py-4">
                 <div class="md:col-span-1 text-sm font-semibold text-gray-700">
-                    {{ __('Alqı-satqı növü') }}
+                    {{ __('listing.deal_type') }}
                 </div>
                 <div class="md:col-span-3">
                     <div class="flex gap-2 bg-gray-100 p-1 rounded-2xl max-w-xs border border-gray-200/50">
                         <label class="flex-1 cursor-pointer select-none">
                             <input type="radio" name="adType" value="sale" class="hidden peer" {{ request('adType') === 'sale' ? 'checked' : '' }}>
                             <span class="block text-center py-2 text-xs font-semibold rounded-xl transition duration-200 peer-checked:bg-white peer-checked:text-orange-500 peer-checked:shadow-md text-gray-600 hover:text-gray-900">
-                                {{ __('Alış') }}
+                                {{ __('listing.buy') }}
                             </span>
                         </label>
                         <label class="flex-1 cursor-pointer select-none">
                             <input type="radio" name="adType" value="rent" class="hidden peer" {{ request('adType') === 'rent' ? 'checked' : '' }}>
                             <span class="block text-center py-2 text-xs font-semibold rounded-xl transition duration-200 peer-checked:bg-white peer-checked:text-orange-500 peer-checked:shadow-md text-gray-600 hover:text-gray-900">
-                                {{ __('Kirayə') }}
+                                {{ __('listing.rent') }}
                             </span>
                         </label>
                     </div>
@@ -45,11 +43,11 @@
             <!-- Otaq sayı Row -->
             <div class="grid grid-cols-1 md:grid-cols-4 items-center gap-4 py-4">
                 <div class="md:col-span-1 text-sm font-semibold text-gray-700">
-                    {{ __('Otaq sayı') }}
+                    {{ __('listing.room_count') }}
                 </div>
                 <div class="md:col-span-3">
                     <div class="flex flex-wrap gap-2">
-                        @foreach(['' => __('Fərqi yoxdur'), '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6+'] as $val => $label)
+                        @foreach(['' => __('listing.no_matter'), '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6+'] as $val => $label)
                             <label class="cursor-pointer select-none">
                                 <input type="radio" name="roomCount" value="{{ $val }}" class="hidden peer" {{ request('roomCount') == $val ? 'checked' : '' }}>
                                 <span class="inline-flex items-center justify-center min-w-[2.5rem] h-9 px-3.5 border border-gray-200 rounded-xl text-xs font-semibold bg-gray-50 text-gray-600 hover:bg-gray-100 hover:border-gray-300 peer-checked:bg-orange-500 peer-checked:text-white peer-checked:border-orange-500 transition duration-200 shadow-sm">
@@ -64,7 +62,7 @@
             <!-- Qiymət & Checkboxes Row -->
             <div class="grid grid-cols-1 md:grid-cols-4 items-center gap-4 py-4">
                 <div class="md:col-span-1 text-sm font-semibold text-gray-700">
-                    {{ __('Qiymət, ₼') }}
+                    {{ __('listing.price') }}
                 </div>
                 <div class="md:col-span-3 flex flex-wrap items-center gap-4">
                     <div class="flex items-center gap-2">
@@ -78,19 +76,19 @@
                         <label class="cursor-pointer select-none">
                             <input type="checkbox" name="hasDeed" value="1" {{ request('hasDeed') ? 'checked' : '' }} class="hidden peer" style="display: none;">
                             <span class="inline-block px-4 py-2.5 border border-gray-200 rounded-xl text-xs font-semibold bg-gray-50 text-gray-600 hover:bg-gray-100 peer-checked:bg-orange-500 peer-checked:text-white peer-checked:border-orange-500 transition duration-200 shadow-sm">
-                                {{ __('Çıxarış var') }}
+                                {{ __('listing.has_deed') }}
                             </span>
                         </label>
                         <label class="cursor-pointer select-none">
                             <input type="checkbox" name="inCredit" value="1" {{ request('inCredit') ? 'checked' : '' }} class="hidden peer" style="display: none;">
                             <span class="inline-block px-4 py-2.5 border border-gray-200 rounded-xl text-xs font-semibold bg-gray-50 text-gray-600 hover:bg-gray-100 peer-checked:bg-orange-500 peer-checked:text-white peer-checked:border-orange-500 transition duration-200 shadow-sm">
-                                {{ __('İpoteka var') }}
+                                {{ __('listing.in_credit') }}
                             </span>
                         </label>
                         <label class="cursor-pointer select-none">
                             <input type="checkbox" name="hasVideo" value="1" {{ request('hasVideo') ? 'checked' : '' }} class="hidden peer" style="display: none;">
                             <span class="inline-block px-4 py-2.5 border border-gray-200 rounded-xl text-xs font-semibold bg-gray-50 text-gray-600 hover:bg-gray-100 peer-checked:bg-orange-500 peer-checked:text-white peer-checked:border-orange-500 transition duration-200 shadow-sm">
-                                {{ __('Videolu elan') }}
+                                {{ __('listing.has_video') }}
                             </span>
                         </label>
                     </div>
@@ -100,7 +98,7 @@
             <!-- Sahə Row -->
             <div class="grid grid-cols-1 md:grid-cols-4 items-center gap-4 py-4">
                 <div class="md:col-span-1 text-sm font-semibold text-gray-700">
-                    {{ __('Sahə (m²)') }}
+                    {{ __('listing.area') }}
                 </div>
                 <div class="md:col-span-3">
                     <div class="flex items-center gap-2">
@@ -116,7 +114,7 @@
             <!-- Mərtəbə Row -->
             <div class="grid grid-cols-1 md:grid-cols-4 items-center gap-4 py-4">
                 <div class="md:col-span-1 text-sm font-semibold text-gray-700">
-                    {{ __('Mərtəbə') }}
+                    {{ __('listing.floor') }}
                 </div>
                 <div class="md:col-span-3">
                     <div class="flex items-center gap-2">
@@ -132,7 +130,7 @@
             <!-- Torpaq Sahəsi Row -->
             <div class="grid grid-cols-1 md:grid-cols-4 items-center gap-4 py-4">
                 <div class="md:col-span-1 text-sm font-semibold text-gray-700">
-                    {{ __('Torpaq Sahəsi (sot)') }}
+                    {{ __('listing.land_area') }}
                 </div>
                 <div class="md:col-span-3">
                     <div class="flex items-center gap-2">
@@ -149,7 +147,7 @@
             @foreach($dynamicFilters ?? [] as $dFilter)
                 @php
                     $options = $dFilter->options;
-                    $filterName = $dFilter->name['az'] ?? $dFilter->key;
+                    $filterName = $dFilter->localized_name ?: ($dFilter->name['az'] ?? $dFilter->key);
                 @endphp
                 <div class="grid grid-cols-1 md:grid-cols-4 items-center gap-4 py-4">
                     <div class="md:col-span-1 text-sm font-semibold text-gray-700">
@@ -159,10 +157,10 @@
                         @if($options->count() > 3)
                             <div class="relative max-w-md">
                                 <select name="filter_options[]" class="w-full px-4 py-3 border border-gray-200 bg-gray-50/40 hover:bg-white hover:border-gray-300 focus:bg-white rounded-2xl text-xs outline-none focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 transition duration-200 shadow-sm appearance-none cursor-pointer font-semibold text-gray-700">
-                                    <option value="">{{ __('Fərqi yoxdur') }}</option>
+                                    <option value="">{{ __('listing.no_matter') }}</option>
                                     @foreach($options as $opt)
                                         <option value="{{ $opt->id }}" {{ in_array($opt->id, (array)request('filter_options', [])) ? 'selected' : '' }}>
-                                            {{ $opt->name['az'] ?? $opt->value }}
+                                            {{ $opt->localized_name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -179,7 +177,7 @@
                                     <label class="cursor-pointer select-none">
                                         <input type="checkbox" name="filter_options[]" value="{{ $opt->id }}" class="hidden peer" style="display: none;" {{ $isChecked ? 'checked' : '' }}>
                                         <span class="inline-block px-4 py-2 border border-gray-200 rounded-xl text-xs font-semibold bg-gray-50 text-gray-600 hover:bg-gray-100 hover:border-gray-300 peer-checked:bg-orange-500 peer-checked:text-white peer-checked:border-orange-500 transition duration-200 select-none shadow-sm">
-                                            {{ $opt->name['az'] ?? $opt->value }}
+                                            {{ $opt->localized_name }}
                                         </span>
                                     </label>
                                 @endforeach
@@ -192,20 +190,20 @@
             <!-- Satıcı Row -->
             <div class="grid grid-cols-1 md:grid-cols-4 items-center gap-4 py-4">
                 <div class="md:col-span-1 text-sm font-semibold text-gray-700">
-                    {{ __('Satıcı') }}
+                    {{ __('listing.seller') }}
                 </div>
                 <div class="md:col-span-3">
                     <div class="flex flex-wrap gap-2">
                         <label class="cursor-pointer select-none">
                             <input type="checkbox" name="advertiserType" value="user" {{ request('advertiserType') === 'user' ? 'checked' : '' }} class="hidden peer" style="display: none;">
                             <span class="inline-block px-4 py-2 border border-gray-200 rounded-xl text-xs font-semibold bg-gray-50 text-gray-600 hover:bg-gray-100 peer-checked:bg-orange-500 peer-checked:text-white peer-checked:border-orange-500 transition duration-200 shadow-sm">
-                                {{ __('Mülkiyyətçi') }}
+                                {{ __('listing.owner') }}
                             </span>
                         </label>
                         <label class="cursor-pointer select-none">
                             <input type="checkbox" name="advertiserType" value="realtor" {{ request('advertiserType') === 'realtor' ? 'checked' : '' }} class="hidden peer" style="display: none;">
                             <span class="inline-block px-4 py-2 border border-gray-200 rounded-xl text-xs font-semibold bg-gray-50 text-gray-600 hover:bg-gray-100 peer-checked:bg-orange-500 peer-checked:text-white peer-checked:border-orange-500 transition duration-200 shadow-sm">
-                                {{ __('Agent') }}
+                                {{ __('listing.agent') }}
                             </span>
                         </label>
                     </div>
@@ -215,26 +213,26 @@
             <!-- Kirayə müddəti Row -->
             <div id="rentTypeWrapper" class="grid grid-cols-1 md:grid-cols-4 items-center gap-4 py-4 {{ request('adType') === 'rent' ? '' : 'hidden' }}">
                 <div class="md:col-span-1 text-sm font-semibold text-gray-700">
-                    {{ __('Kirayə müddəti') }}
+                    {{ __('listing.rent_period') }}
                 </div>
                 <div class="md:col-span-3">
                     <div class="flex flex-wrap gap-2">
                         <label class="cursor-pointer select-none">
                             <input type="radio" name="rentType" value="" {{ !request('rentType') ? 'checked' : '' }} class="hidden peer" style="display: none;">
                             <span class="inline-block px-4 py-2 border border-gray-200 rounded-xl text-xs font-semibold bg-gray-50 text-gray-600 hover:bg-gray-100 peer-checked:bg-orange-500 peer-checked:text-white peer-checked:border-orange-500 transition duration-200 shadow-sm">
-                                {{ __('Fərqi yoxdur') }}
+                                {{ __('listing.no_matter') }}
                             </span>
                         </label>
                         <label class="cursor-pointer select-none">
                             <input type="radio" name="rentType" value="daily" {{ request('rentType') === 'daily' ? 'checked' : '' }} class="hidden peer" style="display: none;">
                             <span class="inline-block px-4 py-2 border border-gray-200 rounded-xl text-xs font-semibold bg-gray-50 text-gray-600 hover:bg-gray-100 peer-checked:bg-orange-500 peer-checked:text-white peer-checked:border-orange-500 transition duration-200 shadow-sm">
-                                {{ __('Günlük') }}
+                                {{ __('listing.daily') }}
                             </span>
                         </label>
                         <label class="cursor-pointer select-none">
                             <input type="radio" name="rentType" value="monthly" {{ request('rentType') === 'monthly' ? 'checked' : '' }} class="hidden peer" style="display: none;">
                             <span class="inline-block px-4 py-2 border border-gray-200 rounded-xl text-xs font-semibold bg-gray-50 text-gray-600 hover:bg-gray-100 peer-checked:bg-orange-500 peer-checked:text-white peer-checked:border-orange-500 transition duration-200 shadow-sm">
-                                {{ __('Aylıq') }}
+                                {{ __('listing.monthly') }}
                             </span>
                         </label>
                     </div>
@@ -244,7 +242,7 @@
             <!-- Elanın nömrəsi Row (Ən aşağıda və kiçik) -->
             <div class="grid grid-cols-1 md:grid-cols-4 items-center gap-4 py-4">
                 <div class="md:col-span-1 text-sm font-semibold text-gray-700">
-                    {{ __('Elanın nömrəsi') }}
+                    {{ __('listing.ad_number') }}
                 </div>
                 <div class="md:col-span-3">
                     <input type="text" name="adNo" placeholder="123456" value="{{ request('adNo') }}"
@@ -257,9 +255,9 @@
         <!-- Footer -->
         <div class="flex items-center justify-between px-8 py-5 border-t border-gray-100 bg-gray-50 shrink-0">
             <button type="button" id="closeMoreFiltersBtn"
-                    class="px-5 py-2.5 bg-white border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-100 hover:text-gray-900 font-semibold text-xs transition duration-200 shadow-sm">{{ __('Ləğv et') }}</button>
+                    class="px-5 py-2.5 bg-white border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-100 hover:text-gray-900 font-semibold text-xs transition duration-200 shadow-sm">{{ __('listing.cancel') }}</button>
             <button type="submit"
-                    class="px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-semibold text-xs shadow-md transition duration-200 transform active:scale-95">{{ __('Nəticələri Göstər') }}</button>
+                    class="px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-semibold text-xs shadow-md transition duration-200 transform active:scale-95">{{ __('listing.show_results') }}</button>
         </div>
     </div>
 </div>

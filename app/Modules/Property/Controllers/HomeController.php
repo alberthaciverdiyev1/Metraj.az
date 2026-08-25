@@ -87,8 +87,8 @@ class HomeController extends Controller
         $dynamicFilters = $this->locationService->dynamicFilters();
 
         $breadcrumbs = [
-            ['label' => __('Home'), 'url' => '/'],
-            ['label' => __('Property Listing')],
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => __('listing.all')],
         ];
 
         return view('pages.property.list', compact(

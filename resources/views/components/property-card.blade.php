@@ -13,7 +13,7 @@
     $fullTitle = $property->title;
 
     $date = $property->created_at
-        ? ($property->created_at->isToday() ? 'Bugün ' . $property->created_at->format('H:i') : $property->created_at->format('d.m.Y'))
+        ? ($property->created_at->isToday() ? __('listing.today') . ' ' . $property->created_at->format('H:i') : $property->created_at->format('d.m.Y'))
         : '';
 
     $formattedPrice = number_format($property->price, 0, '', ' ');
@@ -26,11 +26,11 @@
     $isSale = $dealTypeOpt ? ($dealTypeOpt->value === 'sale') : false;
     $isRent = $dealTypeOpt ? (str_contains($dealTypeOpt->value, 'rent')) : false;
 
-    $buildingTypeLabel = $propertyTypeOpt ? ($propertyTypeOpt->name['az'] ?? $propertyTypeOpt->value) : '';
+    $buildingTypeLabel = $propertyTypeOpt ? $propertyTypeOpt->localized_name : '';
 
     // Təmir növü yoxlanışı (Əgər təmirli seçilibsə)
     $repairOpt = $selectedOptions->firstWhere('filter_id', 5);
-    $isRepaired = $repairOpt ? (str_contains(strtolower($repairOpt->name['az'] ?? ''), 'təmirli') || strtolower($repairOpt->value) === 'repaired') : false;
+    $isRepaired = $repairOpt ? (str_contains(strtolower($repairOpt->name['az'] ?? $repairOpt->name['tr'] ?? ''), 'təmirli') || strtolower($repairOpt->value) === 'repaired' || strtolower($repairOpt->value) === 'tadilatli') : false;
 @endphp
 
 <div onclick="window.location.href='/elan/{{ $property->slug }}'"
@@ -87,19 +87,19 @@
         @if($isRent)
             <span class="bg-[color:var(--primary)] text-white flex items-center justify-center rounded-full w-7 h-7 sm:w-auto sm:h-auto px-2 py-1 sm:flex-row sm:rounded-full">
                 <i class="fa-solid fa-house-circle-xmark text-[12px]"></i>
-                <span class="hidden sm:block text-xs font-semibold ml-1">{{ __('Kirayə') }}</span>
+                <span class="hidden sm:block text-xs font-semibold ml-1">{{ __('listing.rent_badge') }}</span>
             </span>
         @else
             <span class="bg-[#80807F] text-white flex items-center justify-center rounded-full w-7 h-7 sm:w-auto sm:h-auto px-2 py-1 sm:flex-row sm:rounded-full">
                 <i class="fa-solid fa-house-circle-check text-[12px]"></i>
-                <span class="hidden sm:block text-xs font-semibold ml-1">{{ __('Satış') }}</span>
+                <span class="hidden sm:block text-xs font-semibold ml-1">{{ __('listing.sale_badge') }}</span>
             </span>
         @endif
 
         @if($isRepaired)
             <span class="bg-[#80807F] text-white flex items-center justify-center rounded-full w-7 h-7 sm:w-auto sm:h-auto px-2 py-1 sm:flex-row sm:rounded-full">
                 <i class="fa-solid fa-hammer text-[12px]"></i>
-                <span class="hidden sm:block text-xs font-semibold ml-1">{{ __('Təmirli') }}</span>
+                <span class="hidden sm:block text-xs font-semibold ml-1">{{ __('listing.repaired') }}</span>
             </span>
         @endif
       </div>
@@ -133,7 +133,7 @@
               data-compare-btn="{{ $property->id }}"
               class="compare-btn flex items-center gap-1.5 text-xs sm:text-sm font-medium text-gray-700 hover:text-[color:var(--primary)] transition-colors py-1 px-2 rounded-lg hover:bg-orange-50 cursor-pointer">
         <i class="bi bi-arrow-left-right text-sm sm:text-base"></i>
-        <span class="compare-btn-text hidden xs:inline">{{ __('Müqayisə') }}</span>
+        <span class="compare-btn-text hidden xs:inline">{{ __('listing.compare') }}</span>
       </button>
     </div>
   </div>
