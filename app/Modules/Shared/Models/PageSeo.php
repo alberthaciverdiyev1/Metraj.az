@@ -57,10 +57,16 @@ class PageSeo extends Model
      */
     public static function allCached(): array
     {
-        return Cache::remember(self::CACHE_KEY_ALL, 86400, function () {
-            self::ensureDefaults();
-            return self::orderBy('sort_order')->get()->keyBy('page_key')->all();
-        });
+        $cached = Cache::get(self::CACHE_KEY_ALL);
+        if (is_array($cached) && !empty($cached) && reset($cached) instanceof self) {
+            return $cached;
+        }
+
+        self::ensureDefaults();
+        $all = self::orderBy('sort_order')->get()->keyBy('page_key')->all();
+        Cache::put(self::CACHE_KEY_ALL, $all, 86400);
+
+        return $all;
     }
 
     /**

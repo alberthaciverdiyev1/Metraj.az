@@ -83,49 +83,56 @@ class SiteSetting extends Model
      */
     public static function current(): self
     {
-        return Cache::remember(self::CACHE_KEY, 86400, function () {
-            return self::firstOrCreate(
-                ['id' => 1],
-                [
-                    'phone' => '+90 (548) 888-8888',
-                    'phone_secondary' => '+90 (392) 815 00 00',
-                    'whatsapp' => '+905488888888',
-                    'email' => 'info@kibriskare.com',
-                    'support_email' => 'support@kibriskare.com',
-                    'address' => [
-                        'tr' => 'Girne, Kuzey Kıbrıs Türk Cumhuriyeti',
-                        'az' => 'Girnə, Şimali Kipr',
-                        'en' => 'Kyrenia, Northern Cyprus',
-                        'ru' => 'Кирения, Северный Кипр',
-                    ],
-                    'working_hours_mon_fri' => '09:00 – 19:00',
-                    'working_hours_sat' => '10:00 – 18:00',
-                    'working_hours_sun' => 'Online 7/24',
-                    'map_latitude' => 35.3382440,
-                    'map_longitude' => 33.3186270,
-                    'facebook_url' => 'https://facebook.com',
-                    'instagram_url' => 'https://instagram.com',
-                    'linkedin_url' => 'https://linkedin.com',
-                    'youtube_url' => 'https://youtube.com',
-                    'telegram_url' => 'https://t.me',
-                    'tiktok_url' => 'https://tiktok.com',
-                    'twitter_url' => 'https://x.com',
-                    'tagline' => [
-                        'tr' => 'Kuzey Kıbrıs Emlak İlanları Platformu',
-                        'az' => 'Şimali Kipr Əmlak Elanları Platforması',
-                        'en' => 'Northern Cyprus Real Estate Platform',
-                        'ru' => 'Платформа недвижимости Северного Кипра',
-                    ],
-                    'footer_description' => [
-                        'tr' => 'Kuzey Kıbrıs genelinde binlerce satılık ve kiralık emlak ilanını tek platformda keşfedin. Güvenilir emlak acenteleri ve sahibinden ilanlar.',
-                        'az' => 'Şimali Kipr üzrə minlərlə satılıq və kirayə əmlak elanını vahid platformada kəşf edin. Etibarlı agentliklər və birbaşa sahibindən elanlar.',
-                        'en' => 'Discover thousands of properties for sale and rent across Northern Cyprus on a single platform. Trusted agencies and owner listings.',
-                        'ru' => 'Откройте для себя тысячи объявлений о продаже и аренде недвижимости по всему Северному Кипру на единой платформе.',
-                    ],
-                    'copyright_text' => 'KibrisKare.com',
-                ]
-            );
-        });
+        $cached = Cache::get(self::CACHE_KEY);
+        if ($cached instanceof self) {
+            return $cached;
+        }
+
+        $setting = self::firstOrCreate(
+            ['id' => 1],
+            [
+                'phone' => '+90 (548) 888-8888',
+                'phone_secondary' => '+90 (392) 815 00 00',
+                'whatsapp' => '+905488888888',
+                'email' => 'info@kibriskare.com',
+                'support_email' => 'support@kibriskare.com',
+                'address' => [
+                    'tr' => 'Girne, Kuzey Kıbrıs Türk Cumhuriyeti',
+                    'az' => 'Girnə, Şimali Kipr',
+                    'en' => 'Kyrenia, Northern Cyprus',
+                    'ru' => 'Кирения, Северный Кипр',
+                ],
+                'working_hours_mon_fri' => '09:00 – 19:00',
+                'working_hours_sat' => '10:00 – 18:00',
+                'working_hours_sun' => 'Online 7/24',
+                'map_latitude' => 35.3382440,
+                'map_longitude' => 33.3186270,
+                'facebook_url' => 'https://facebook.com',
+                'instagram_url' => 'https://instagram.com',
+                'linkedin_url' => 'https://linkedin.com',
+                'youtube_url' => 'https://youtube.com',
+                'telegram_url' => 'https://t.me',
+                'tiktok_url' => 'https://tiktok.com',
+                'twitter_url' => 'https://x.com',
+                'tagline' => [
+                    'tr' => 'Kuzey Kıbrıs Emlak İlanları Platformu',
+                    'az' => 'Şimali Kipr Əmlak Elanları Platforması',
+                    'en' => 'Northern Cyprus Real Estate Platform',
+                    'ru' => 'Платформа недвижимости Северного Кипра',
+                ],
+                'footer_description' => [
+                    'tr' => 'Kuzey Kıbrıs genelinde binlerce satılık ve kiralık emlak ilanını tek platformda keşfedin. Güvenilir emlak acenteleri ve sahibinden ilanlar.',
+                    'az' => 'Şimali Kipr üzrə minlərlə satılıq və kirayə əmlak elanını vahid platformada kəşf edin. Etibarlı agentliklər və birbaşa sahibindən elanlar.',
+                    'en' => 'Discover thousands of properties for sale and rent across Northern Cyprus on a single platform. Trusted agencies and owner listings.',
+                    'ru' => 'Откройте для себя тысячи объявлений о продаже и аренде недвижимости по всему Северному Кипру на единой платформе.',
+                ],
+                'copyright_text' => 'KibrisKare.com',
+            ]
+        );
+
+        Cache::put(self::CACHE_KEY, $setting, 86400);
+
+        return $setting;
     }
 
     /**
