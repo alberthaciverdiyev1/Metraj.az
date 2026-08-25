@@ -38,7 +38,7 @@ if [ -f "package.json" ]; then
     echo "   node: $(node -v), npm: $(npm -v)"
     if [ -f "package-lock.json" ]; then
         echo "📦 Installing npm dependencies (npm ci)..."
-        npm ci --no-interaction
+        npm ci  # non-interactive by default; --no-interaction is rejected by npm ci
     else
         echo "📦 Installing npm dependencies (npm install)..."
         npm install --no-interaction --prefer-offline
