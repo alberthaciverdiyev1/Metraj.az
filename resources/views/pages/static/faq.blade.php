@@ -3,6 +3,9 @@
 @section('title', __('faq.page_title') . ' - KibrisKare.com')
 
 @section('content')
+@php
+    $siteSetting = $siteSetting ?? \App\Modules\Shared\Models\SiteSetting::current();
+@endphp
 <div class="w-full pb-16">
     @include('components.breadcrumb', ['items' => $breadcrumbs ?? []])
     @include('components.scroll-top')
