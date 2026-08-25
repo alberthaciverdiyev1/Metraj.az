@@ -31,8 +31,8 @@ class StaticPageController extends Controller
     public function contact(): View
     {
         $breadcrumbs = [
-            ['label' => __('Ana səhifə'), 'url' => '/'],
-            ['label' => __('Əlaqə'), 'url' => null],
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => __('contact.page_title'), 'url' => null],
         ];
 
         return view('pages.static.contact', compact('breadcrumbs'));

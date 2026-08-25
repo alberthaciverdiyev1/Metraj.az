@@ -27,9 +27,11 @@ document.addEventListener('DOMContentLoaded', function () {
             iconAnchor: [18, 36]
         });
 
+        const popupTitle = i18n.mapPopupTitle || 'Metraj.az';
+        const popupAddr = i18n.mapPopupAddress || '';
         L.marker([defaultLat, defaultLng], { icon: customIcon })
             .addTo(map)
-            .bindPopup('<b>Metraj.az Baş Ofisi</b><br>Bakı ş., Nizami küç. 45')
+            .bindPopup('<b>' + popupTitle + '</b>' + (popupAddr ? '<br>' + popupAddr : ''))
             .openPopup();
     }
 
