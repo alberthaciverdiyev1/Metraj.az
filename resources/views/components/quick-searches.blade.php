@@ -1,7 +1,9 @@
 @props(['searches' => null, 'currentSlug' => null])
 
 @php
-    $items = $searches ?? \App\Modules\Property\Models\QuickSearch::popular()->limit(24)->get();
+    $items = $searches ?? \Illuminate\Support\Facades\Cache::remember('popular_quick_searches_24', 86400, function () {
+        return \App\Modules\Property\Models\QuickSearch::popular()->limit(24)->get();
+    });
 @endphp
 
 @if($items->isNotEmpty())

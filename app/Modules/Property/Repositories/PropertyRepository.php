@@ -126,8 +126,7 @@ class PropertyRepository implements PropertyRepositoryInterface
             : 'created_at';
 
         // Kart görünümü yalnızca görsellər və filtr seçimlərini istifadə edir;
-        // agency/agent/amenities/filter əlaqələri burada lazım deyil → əhəmiyyətli sürət qazancı.
-        $baseQuery = $this->model->query()->with(['filterOptions', 'images']);
+        $baseQuery = $this->model->query()->with(['filterOptions.filter', 'images']);
         $this->applyFilterConditions($baseQuery, $filter);
 
         $premiumQuery = (clone $baseQuery)->where(function ($q) {

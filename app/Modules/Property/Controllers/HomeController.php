@@ -88,7 +88,9 @@ class HomeController extends Controller
         // (əsas axtarışda olan deal_type və property_type istisna olunur)
         $dynamicFilters = $this->locationService->dynamicFilters();
 
-        $popularSearches = QuickSearch::popular()->limit(15)->get();
+        $popularSearches = \Illuminate\Support\Facades\Cache::remember('popular_quick_searches_15', 86400, function () {
+            return QuickSearch::popular()->limit(15)->get();
+        });
 
         $breadcrumbs = [
             ['label' => __('navbar.home'), 'url' => '/'],

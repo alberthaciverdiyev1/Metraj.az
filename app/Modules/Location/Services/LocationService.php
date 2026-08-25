@@ -16,6 +16,10 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class LocationService
 {
+    protected static ?Collection $memoizedCities = null;
+    protected static ?Collection $memoizedPropertyTypes = null;
+    protected static ?Collection $memoizedDynamicFilters = null;
+
     /**
      * Aktiv şəhərləri aktiv rayonları ilə birlikdə qaytarır.
      *
@@ -23,10 +27,16 @@ class LocationService
      */
     public function activeCities(): Collection
     {
-        return City::with('activeDistricts')
-            ->where('is_active', true)
-            ->orderBy('sort_order')
-            ->get();
+        if (static::$memoizedCities !== null) {
+            return static::$memoizedCities;
+        }
+
+        return static::$memoizedCities = \Illuminate\Support\Facades\Cache::remember('location_active_cities', 86400, function () {
+            return City::with('activeDistricts')
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->get();
+        });
     }
 
     /**
@@ -36,7 +46,9 @@ class LocationService
      */
     public function allFiltersKeyed(): Collection
     {
-        return Filter::with('options')->get()->keyBy(fn (Filter $filter) => $filter->key->value ?? (string) $filter->key);
+        return \Illuminate\Support\Facades\Cache::remember('location_all_filters_keyed', 86400, function () {
+            return Filter::with('options')->get()->keyBy(fn (Filter $filter) => $filter->key->value ?? (string) $filter->key);
+        });
     }
 
     /**
@@ -46,13 +58,19 @@ class LocationService
      */
     public function propertyTypeOptions(): Collection
     {
-        $filterId = Filter::where('key', FilterKey::PropertyType->value)->value('id');
-
-        if (!$filterId) {
-            return new Collection();
+        if (static::$memoizedPropertyTypes !== null) {
+            return static::$memoizedPropertyTypes;
         }
 
-        return FilterOption::where('filter_id', $filterId)->get();
+        return static::$memoizedPropertyTypes = \Illuminate\Support\Facades\Cache::remember('location_property_type_options', 86400, function () {
+            $filterId = Filter::where('key', FilterKey::PropertyType->value)->value('id');
+
+            if (!$filterId) {
+                return new Collection();
+            }
+
+            return FilterOption::where('filter_id', $filterId)->orderBy('sort_order')->get();
+        });
     }
 
     /**
@@ -63,13 +81,20 @@ class LocationService
      */
     public function dynamicFilters(): Collection
     {
-        return Filter::with('options')
-            ->where('is_active', true)
-            ->whereNotIn('key', [
-                FilterKey::DealType->value,
-                FilterKey::PropertyType->value,
-            ])
-            ->get();
+        if (static::$memoizedDynamicFilters !== null) {
+            return static::$memoizedDynamicFilters;
+        }
+
+        return static::$memoizedDynamicFilters = \Illuminate\Support\Facades\Cache::remember('location_dynamic_filters', 86400, function () {
+            return Filter::with('options')
+                ->where('is_active', true)
+                ->whereNotIn('key', [
+                    FilterKey::DealType->value,
+                    FilterKey::PropertyType->value,
+                ])
+                ->orderBy('sort_order')
+                ->get();
+        });
     }
 
     /**
