@@ -210,11 +210,11 @@
                             </div>
 
                             <!-- Gelişmiş Seçenekler Full-Width Bottom Bar -->
-                            <div class="w-full pt-1">
+                            <div class="w-full pt-0.5">
                                 <button type="button" id="moreFiltersBtn"
-                                        class="w-full py-3.5 px-4 bg-[#f8f8f8] hover:bg-[#f2f2f2] border border-gray-200/90 rounded-2xl text-[#b46d2f] hover:text-[#93521d] font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition duration-200 shadow-2xs group cursor-pointer">
+                                        class="w-full py-2.5 px-4 bg-[#fafafa] hover:bg-orange-50/60 border border-gray-200/90 hover:border-orange-200 rounded-2xl text-orange-500 hover:text-orange-600 font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition duration-200 shadow-2xs group cursor-pointer">
                                     <span>{{ __('listing.advanced_options') }}</span>
-                                    <i class="bi bi-sliders text-sm text-[#b46d2f] group-hover:scale-110 transition-transform duration-200"></i>
+                                    <i class="bi bi-sliders text-xs sm:text-sm text-orange-500 group-hover:scale-110 transition-transform duration-200"></i>
                                 </button>
                             </div>
 
