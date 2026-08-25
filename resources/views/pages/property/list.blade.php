@@ -24,8 +24,6 @@
                     </div>
                 @endif
 
-                @include('components.quick-searches', ['searches' => $popularSearches ?? null, 'currentSlug' => $currentQuickSearch?->slug ?? null])
-
                 <form method="GET" action="{{ route('listing') }}" id="filterForm" class="space-y-4 mt-2">
                     <section class="pt-2 max-w-full mx-auto">
                         <div class="flex justify-between items-center mb-3">

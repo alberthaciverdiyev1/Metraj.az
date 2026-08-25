@@ -54,6 +54,10 @@
             </div>
         </div>
 
+        <div class="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 mt-14 mb-6">
+            @include('components.quick-searches')
+        </div>
+
         @include('layouts.footer')
     @else
         @yield('content')

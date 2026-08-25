@@ -52,4 +52,5 @@ return [
     'compare' => 'Compare',
     'today' => 'Today',
     'popular_searches' => 'Popular searches',
+    'popular_searches_desc' => 'Most searched property categories and listings in Northern Cyprus',
 ];

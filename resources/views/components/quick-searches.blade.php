@@ -1,28 +1,32 @@
 @props(['searches' => null, 'currentSlug' => null])
 
 @php
-    $items = $searches ?? \App\Modules\Property\Models\QuickSearch::popular()->limit(15)->get();
+    $items = $searches ?? \App\Modules\Property\Models\QuickSearch::popular()->limit(24)->get();
 @endphp
 
 @if($items->isNotEmpty())
-<div class="w-full py-2.5">
-    <div class="flex items-center gap-2 flex-wrap">
-        <div class="flex items-center gap-1.5 text-xs font-semibold text-gray-500 shrink-0 mr-1">
-            <i class="bi bi-fire text-orange-500 text-sm"></i>
-            <span>{{ __('listing.popular_searches') }}:</span>
+<div class="w-full bg-white rounded-3xl p-5 sm:p-6 border border-gray-200/80 shadow-xs">
+    <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-100">
+        <div class="w-9 h-9 rounded-2xl bg-orange-50 text-orange-500 flex items-center justify-center shrink-0">
+            <i class="bi bi-fire text-lg"></i>
         </div>
-        <div class="flex items-center gap-2 flex-wrap">
-            @foreach($items as $item)
-                @php
-                    $isActive = ($currentSlug === $item->slug) || request()->is('axtaris/' . $item->slug) || request()->is('search/' . $item->slug);
-                @endphp
-                <a href="{{ $item->url }}"
-                   class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-medium transition duration-200 shadow-2xs select-none
-                          {{ $isActive ? 'bg-orange-500 text-white font-semibold shadow-sm' : 'bg-gray-100/90 text-gray-700 hover:bg-orange-50 hover:text-orange-600 hover:border-orange-200 border border-transparent' }}">
-                    <span>{{ $item->localized_title }}</span>
-                </a>
-            @endforeach
+        <div>
+            <h3 class="text-sm sm:text-base font-bold text-gray-900 leading-tight">{{ __('listing.popular_searches') }}</h3>
+            <p class="text-xs text-gray-400 mt-0.5">{{ __('listing.popular_searches_desc') }}</p>
         </div>
+    </div>
+    <div class="flex items-center gap-2 sm:gap-2.5 flex-wrap">
+        @foreach($items as $item)
+            @php
+                $isActive = ($currentSlug === $item->slug) || request()->is('axtaris/' . $item->slug) || request()->is('search/' . $item->slug);
+            @endphp
+            <a href="{{ $item->url }}"
+               class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition duration-200 select-none
+                      {{ $isActive ? 'bg-orange-500 text-white font-semibold shadow-sm' : 'bg-gray-50 text-gray-700 hover:bg-orange-50 hover:text-orange-600 hover:border-orange-200 border border-gray-200/70' }}">
+                <span>{{ $item->localized_title }}</span>
+                <i class="bi bi-arrow-up-right text-[10px] opacity-60"></i>
+            </a>
+        @endforeach
     </div>
 </div>
 @endif

@@ -52,4 +52,5 @@ return [
     'compare' => 'Karşılaştır',
     'today' => 'Bugün',
     'popular_searches' => 'Popüler aramalar',
+    'popular_searches_desc' => 'Kuzey Kıbrıs’ta en çok aranan emlak kategorileri ve aramalar',
 ];
