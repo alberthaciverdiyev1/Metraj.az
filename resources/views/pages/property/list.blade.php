@@ -29,7 +29,10 @@
                         <div class="flex justify-between items-center mb-3">
                             @php
                                 $selectedAdType = request('adType', 'all');
-                                $dealTypes = \App\Modules\Location\Models\FilterOption::where('filter_id', 2)->get();
+                                $dealTypes = \App\Modules\Location\Models\FilterOption::whereHas('filter', fn($q) => $q->where('key', \App\Modules\Location\Enums\FilterKey::DealType->value))->orderBy('sort_order')->get();
+                                if ($dealTypes->isEmpty()) {
+                                    $dealTypes = \App\Modules\Location\Models\FilterOption::whereIn('value', ['sale', 'rent_monthly', 'rent_daily'])->orderBy('id')->get();
+                                }
                             @endphp
                             <div
                                 class="flex gap-1 bg-gray-100 p-1 rounded-2xl border border-gray-200/50 max-w-max shadow-sm"

@@ -1,19 +1,19 @@
 @php
     $selectedOptions = $item->filterOptions ?? collect();
-    $propertyTypeOpt = $selectedOptions->firstWhere('filter_id', 3);
-    $buildingTypeOpt = $selectedOptions->firstWhere('filter_id', 4);
-    $repairTypeOpt = $selectedOptions->firstWhere('filter_id', 5);
-    $heatingOpt = $selectedOptions->firstWhere('filter_id', 6);
-    $viewOpt = $selectedOptions->firstWhere('filter_id', 7);
+    $dealTypeOpt = $selectedOptions->first(fn($o) => in_array($o->value, ['sale', 'rent_monthly', 'rent_daily']) || ($o->filter && $o->filter->key === 'deal_type'));
+    $propertyTypeOpt = $selectedOptions->first(fn($o) => in_array($o->value, ['apartment', 'house', 'office', 'garage', 'land', 'commercial']) || ($o->filter && $o->filter->key === 'property_type'));
+    $buildingTypeOpt = $selectedOptions->first(fn($o) => in_array($o->value, ['new_building', 'old_building']) || ($o->filter && $o->filter->key === 'building_type'));
+    $repairTypeOpt = $selectedOptions->first(fn($o) => in_array($o->value, ['repaired', 'unrepaired', 'tadilatli']) || ($o->filter && $o->filter->key === 'repair'));
+    $heatingOpt = $selectedOptions->first(fn($o) => in_array($o->value, ['kombi', 'central', 'floor_heating']) || ($o->filter && $o->filter->key === 'heating'));
+    $viewOpt = $selectedOptions->first(fn($o) => in_array($o->value, ['sea_view', 'city_view', 'yard_view']) || ($o->filter && $o->filter->key === 'view'));
 
-    $dealTypeOpt = $selectedOptions->firstWhere('filter_id', 2);
     $isRent = false;
     if ($dealTypeOpt && (str_contains(mb_strtolower($dealTypeOpt->name['az'] ?? $dealTypeOpt->value), 'kirayə') || str_contains(mb_strtolower($dealTypeOpt->name['az'] ?? $dealTypeOpt->value), 'kira') || str_contains($dealTypeOpt->value, 'rent'))) {
         $isRent = true;
     }
 
     $isLand = false;
-    if ($propertyTypeOpt && str_contains(mb_strtolower($propertyTypeOpt->name['az'] ?? $propertyTypeOpt->value), 'torpaq')) {
+    if ($propertyTypeOpt && (str_contains(mb_strtolower($propertyTypeOpt->name['az'] ?? $propertyTypeOpt->value), 'torpaq') || $propertyTypeOpt->value === 'land' || str_contains(mb_strtolower($propertyTypeOpt->name['tr'] ?? ''), 'arsa'))) {
         $isLand = true;
     }
 @endphp

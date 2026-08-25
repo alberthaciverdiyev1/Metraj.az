@@ -19,9 +19,9 @@
     $formattedPrice = number_format($property->price, 0, '', ' ');
 
     // Dinamik olaraq deal_type və property_type filtrlərini əldə edirik
-    $selectedOptions = $property->filterOptions;
-    $dealTypeOpt = $selectedOptions->firstWhere('filter_id', 2);
-    $propertyTypeOpt = $selectedOptions->firstWhere('filter_id', 3);
+    $selectedOptions = $property->filterOptions ?? collect();
+    $dealTypeOpt = $selectedOptions->first(fn($o) => in_array($o->value, ['sale', 'rent_monthly', 'rent_daily']) || ($o->filter && $o->filter->key === 'deal_type'));
+    $propertyTypeOpt = $selectedOptions->first(fn($o) => in_array($o->value, ['apartment', 'house', 'office', 'garage', 'land', 'commercial']) || ($o->filter && $o->filter->key === 'property_type'));
 
     $isSale = $dealTypeOpt ? ($dealTypeOpt->value === 'sale') : false;
     $isRent = $dealTypeOpt ? (str_contains($dealTypeOpt->value, 'rent')) : false;
@@ -29,7 +29,7 @@
     $buildingTypeLabel = $propertyTypeOpt ? $propertyTypeOpt->localized_name : '';
 
     // Təmir növü yoxlanışı (Əgər təmirli seçilibsə)
-    $repairOpt = $selectedOptions->firstWhere('filter_id', 5);
+    $repairOpt = $selectedOptions->first(fn($o) => in_array($o->value, ['repaired', 'unrepaired', 'tadilatli']) || ($o->filter && $o->filter->key === 'repair'));
     $isRepaired = $repairOpt ? (str_contains(strtolower($repairOpt->name['az'] ?? $repairOpt->name['tr'] ?? ''), 'təmirli') || strtolower($repairOpt->value) === 'repaired' || strtolower($repairOpt->value) === 'tadilatli') : false;
 @endphp
 

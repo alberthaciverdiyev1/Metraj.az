@@ -3,12 +3,13 @@
 @section('content')
     @php
         $selectedOptions = $property->filterOptions ?? collect();
-        $propertyTypeOpt = $selectedOptions->firstWhere('filter_id', 3);
-        $buildingTypeOpt = $selectedOptions->firstWhere('filter_id', 4);
-        $repairTypeOpt = $selectedOptions->firstWhere('filter_id', 5);
-        $dealTypeOpt = $selectedOptions->firstWhere('filter_id', 2);
+        $dealTypeOpt = $selectedOptions->first(fn($o) => in_array($o->value, ['sale', 'rent_monthly', 'rent_daily']) || ($o->filter && $o->filter->key === 'deal_type'));
+        $propertyTypeOpt = $selectedOptions->first(fn($o) => in_array($o->value, ['apartment', 'house', 'office', 'garage', 'land', 'commercial']) || ($o->filter && $o->filter->key === 'property_type'));
+        $buildingTypeOpt = $selectedOptions->first(fn($o) => in_array($o->value, ['new_building', 'old_building']) || ($o->filter && $o->filter->key === 'building_type'));
+        $repairTypeOpt = $selectedOptions->first(fn($o) => in_array($o->value, ['repaired', 'unrepaired', 'tadilatli']) || ($o->filter && $o->filter->key === 'repair'));
+
         $isRent = $dealTypeOpt ? (str_contains(mb_strtolower($dealTypeOpt->name['az'] ?? $dealTypeOpt->value), 'rent') || str_contains(mb_strtolower($dealTypeOpt->name['az'] ?? $dealTypeOpt->value), 'kirayə') || str_contains(mb_strtolower($dealTypeOpt->name['az'] ?? $dealTypeOpt->value), 'kira')) : false;
-        $isLand = $propertyTypeOpt ? str_contains(mb_strtolower($propertyTypeOpt->name['az'] ?? $propertyTypeOpt->value), 'torpaq') : false;
+        $isLand = $propertyTypeOpt ? (str_contains(mb_strtolower($propertyTypeOpt->name['az'] ?? $propertyTypeOpt->value), 'torpaq') || $propertyTypeOpt->value === 'land' || str_contains(mb_strtolower($propertyTypeOpt->name['tr'] ?? ''), 'arsa')) : false;
 
         $isAgentOrAgency = !empty($property->agent_id)
             || !empty($property->agency_id)
