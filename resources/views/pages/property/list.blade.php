@@ -202,7 +202,7 @@
 
                                 <div class="flex items-end">
                                     <button type="submit"
-                                            class="w-full h-[58px] bg-gray-900 hover:bg-black text-white font-semibold text-sm rounded-2xl transition duration-200 shadow-sm flex items-center justify-center gap-2 cursor-pointer">
+                                            class="w-full h-[58px] bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white font-bold text-sm rounded-2xl transition duration-200 shadow-sm hover:shadow flex items-center justify-center gap-2 cursor-pointer">
                                         <i class="bi bi-search text-sm"></i>
                                         <span>{{ __('listing.search') }}</span>
                                     </button>
