@@ -13,7 +13,7 @@
            class="group relative block w-full h-full rounded-2xl overflow-hidden border border-gray-200/90 shadow-sm hover:shadow-lg transition duration-300">
             @if($isRight)
                 {{-- Sağ: brend loqolu reklam kartı (yerli assetlər) --}}
-                <div class="absolute inset-0 bg-orange-600"></div>
+                <div class="absolute inset-0 bg-orange-400"></div>
                 <div class="relative h-full flex flex-col items-center justify-center text-center px-5 py-6">
                     <img src="{{ asset('images/kibriskarelogo.png') }}" alt="KibrisKare.com"
                          class="w-28 mb-5 drop-shadow-sm">

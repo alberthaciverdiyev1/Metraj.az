@@ -12,7 +12,7 @@ return [
     'compare' => 'Müqayisə',
     'post_request' => 'Tələb yerləşdir',
     'post_property' => 'Elan yerləşdir',
-    'login_register' => 'Daxil ol / Qeydiyyat',
+    'login_register' => 'Daxil ol',
     'dashboard' => 'Şəxsi kabinet',
     'my_profile' => 'Profilim',
     'my_properties' => 'Elanlarım',

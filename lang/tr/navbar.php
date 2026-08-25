@@ -12,7 +12,7 @@ return [
     'compare' => 'Karşılaştır',
     'post_request' => 'Talep Bırak',
     'post_property' => 'İlan Ver',
-    'login_register' => 'Giriş / Kayıt',
+    'login_register' => 'Giriş',
     'dashboard' => 'Kontrol Paneli',
     'my_profile' => 'Profilim',
     'my_properties' => 'İlanlarım',

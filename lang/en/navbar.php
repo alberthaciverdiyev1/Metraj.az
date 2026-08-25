@@ -12,7 +12,7 @@ return [
     'compare' => 'Compare',
     'post_request' => 'Post Request',
     'post_property' => 'Post Ad',
-    'login_register' => 'Login / Register',
+    'login_register' => 'Login',
     'dashboard' => 'Dashboard',
     'my_profile' => 'My Profile',
     'my_properties' => 'My Properties',

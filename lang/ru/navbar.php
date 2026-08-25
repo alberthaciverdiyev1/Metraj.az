@@ -12,7 +12,7 @@ return [
     'compare' => 'Сравнение',
     'post_request' => 'Подать заявку',
     'post_property' => 'Подать объявление',
-    'login_register' => 'Вход / Регистрация',
+    'login_register' => 'Вход',
     'dashboard' => 'Личный кабинет',
     'my_profile' => 'Мой профиль',
     'my_properties' => 'Мои объявления',
