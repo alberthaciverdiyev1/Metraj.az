@@ -31,9 +31,17 @@ php artisan migrate --force
 # 5. Build Frontend Assets (regenerated here, not committed to Git)
 echo "⚡ Building frontend assets..."
 if [ -f "package.json" ]; then
+    if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
+        echo "❌ Node.js/npm is required to build frontend assets."
+        exit 1
+    fi
     if [ ! -d "node_modules" ]; then
         echo "📦 Installing npm dependencies..."
-        npm install --no-interaction --prefer-offline
+        if [ -f "package-lock.json" ]; then
+            npm ci --no-interaction
+        else
+            npm install --no-interaction --prefer-offline
+        fi
     fi
     npm run build
     npm run assets:build
