@@ -45,6 +45,9 @@ if [ -f "package.json" ] && command -v node >/dev/null 2>&1; then
         echo "   Node.js $(node -v) is older than v18; using repository pre-built assets."
     fi
     php artisan filament:assets || true
+    php artisan livewire:publish --assets || true
+    mkdir -p public/livewire
+    cp -rn vendor/livewire/livewire/dist/* public/livewire/ 2>/dev/null || true
 fi
 
 # 6. Ensure Storage Link Exists
