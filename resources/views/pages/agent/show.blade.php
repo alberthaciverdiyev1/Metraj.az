@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ($agent->user?->name ?? __('Rieltor')) . ' - ' . __('Rieltor Profili') . ' - Metraj.az')
+@section('title', ($agent->user?->name ?? __('agency.agent_default_title')) . ' - ' . __('agency.agent_profile') . ' - Metraj.az')
 
 @section('content')
 <div class="w-full pt-4 pb-16">
@@ -29,17 +29,17 @@
                 <div class="flex-1 min-w-0 pb-1">
                     <div class="flex flex-wrap items-center gap-2">
                         <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-[color:var(--text-color)] leading-tight">
-                            {{ $agent->user?->name ?? __('Rieltor') }}
+                            {{ $agent->user?->name ?? __('agency.agent_default_title') }}
                         </h1>
                         @if($agent->is_active)
                             <span class="bg-orange-50 text-orange-600 text-[11px] sm:text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1.5 border border-orange-100">
                                 <i class="bi bi-patch-check-fill"></i>
-                                {{ __('Təsdiqlənmiş Rieltor') }}
+                                {{ __('agency.verified_agent') }}
                             </span>
                         @endif
                     </div>
                     <p class="text-sm text-[color:var(--grey-text)] mt-1 flex flex-wrap items-center">
-                        <span class="font-medium text-[color:var(--text-color)]">{{ $agent->position ?? __('Müstəqil Rieltor') }}</span>
+                        <span class="font-medium text-[color:var(--text-color)]">{{ $agent->position ?? __('agency.agent_independent_subtitle') }}</span>
                         @if($agent->agency)
                             <span class="mx-1 text-gray-300">•</span>
                             <a href="{{ route('agencies.show.byId', $agent->agency->id) }}" class="text-[color:var(--primary)] font-semibold hover:underline">
@@ -48,7 +48,7 @@
                         @endif
                         <span class="mx-1 text-gray-300">•</span>
                         <span class="text-[color:var(--primary)] font-semibold">{{ $properties->total() }}</span>
-                        {{ __('aktiv elan') }}
+                        {{ __('agency.active_listings_suffix') }}
                     </p>
                 </div>
 
@@ -77,31 +77,31 @@
                 <div class="md:col-span-2">
                     <h3 class="font-semibold text-[color:var(--text-color)] mb-3 flex items-center gap-2">
                         <i class="bi bi-person-lines-fill text-[var(--primary)]"></i>
-                        {{ __('Rieltor Haqqında') }}
+                        {{ __('agency.about_agent') }}
                     </h3>
                     <div class="space-y-2.5 text-[color:var(--grey-text)] leading-relaxed">
                         <p>
-                            {{ $agent->user?->name ?? __('Rieltor') }}
-                            {{ $agent->position ? __('vəzifəsində çalışır') : __('müstəqil rieltor kimi fəaliyyət göstərir') }}
+                            {{ $agent->user?->name ?? __('agency.agent_default_title') }}
+                            {{ $agent->position ? __('agency.works_as_position') : __('agency.works_as_independent') }}
                             @if($agent->agency)
                                 — <a href="{{ route('agencies.show.byId', $agent->agency->id) }}" class="text-[color:var(--primary)] font-semibold hover:underline">{{ $agent->agency->name }}</a>
-                                {{ __('agentliyinin üzvüdür') }}.
+                                {{ __('agency.agency_member') }}.
                             @else
                                 .
                             @endif
                         </p>
                         <p>
-                            {{ __('Hazırda platformada') }}
+                            {{ __('agency.currently_managing_listings') }}
                             <strong class="text-[color:var(--text-color)]">{{ $properties->total() }}</strong>
-                            {{ __('aktiv elan onun tərəfindən idarə olunur') }}.
+                            {{ __('agency.active_listings_managed') }}.
                             @if($agent->phone)
-                                {{ __('Əlaqə üçün birbaşa zəng edə və ya WhatsApp üzərindən yaza bilərsiniz') }}.
+                                {{ __('agency.contact_direct_call_or_wa') }}.
                             @endif
                         </p>
                         @if($agent->created_at)
                             <p class="text-xs text-gray-400 flex items-center gap-1.5 pt-1">
                                 <i class="bi bi-calendar3"></i>
-                                {{ __('Metraj.az platformasına qoşulub') }}:
+                                {{ __('agency.joined_platform') }}:
                                 {{ $agent->created_at->format('d.m.Y') }}
                             </p>
                         @endif
@@ -142,14 +142,14 @@
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
             <div>
                 <h2 class="text-xl sm:text-2xl font-semibold text-[color:var(--text-color)]">
-                    {{ __('Rieltorun Elanları') }}
+                    {{ __('agency.agent_listings') }}
                 </h2>
                 <p class="text-xs sm:text-sm text-[color:var(--grey-text)] mt-0.5">
-                    {{ $agent->user?->name }} {{ __('tərəfindən yerləşdirilmiş bütün aktiv elanlar') }}
+                    {{ $agent->user?->name }} {{ __('agency.all_listings_posted_by') }}
                 </p>
             </div>
             <span class="text-xs sm:text-sm font-semibold bg-gray-100 text-gray-700 px-3 py-1.5 rounded-xl self-start sm:self-auto">
-                {{ __('Ümumi:') }} <strong class="text-[color:var(--primary)]">{{ $properties->total() }}</strong> {{ __('elan') }}
+                {{ __('agency.total_label') }} <strong class="text-[color:var(--primary)]">{{ $properties->total() }}</strong> {{ __('agency.listings_count_suffix') }}
             </span>
         </div>
 
@@ -158,12 +158,12 @@
                 <div class="w-16 h-16 bg-orange-50 text-[var(--primary)] rounded-full flex items-center justify-center mx-auto text-2xl mb-4">
                     <i class="bi bi-house-door"></i>
                 </div>
-                <h3 class="text-base font-semibold text-gray-800">{{ __('Hələlik aktiv elan yoxdur') }}</h3>
+                <h3 class="text-base font-semibold text-gray-800">{{ __('agency.no_agent_listings_title') }}</h3>
                 <p class="text-xs text-gray-500 mt-1 max-w-sm mx-auto">
-                    {{ __('Bu rieltor tərəfindən hələ heç bir elan yerləşdirilməyib və ya elanlar moderasiyadadır.') }}
+                    {{ __('agency.no_agent_listings_desc') }}
                 </p>
                 <a href="{{ route('agencies.list') }}" class="inline-flex items-center gap-2 mt-5 px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-xl transition">
-                    <i class="bi bi-arrow-left"></i> {{ __('Digər rieltor və agentliklərə baxın') }}
+                    <i class="bi bi-arrow-left"></i> {{ __('agency.browse_other_agencies_agents') }}
                 </a>
             </div>
         @else

@@ -29,8 +29,8 @@ class AgencyDetailController extends Controller
         );
 
         $breadcrumbs = [
-            ['label' => __('Home'), 'url' => '/'],
-            ['label' => __('Agencies'), 'url' => '/agencies'],
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => __('agency.agencies'), 'url' => route('agencies.list')],
             ['label' => $agency->name],
         ];
 

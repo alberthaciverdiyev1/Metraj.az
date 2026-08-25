@@ -1,8 +1,8 @@
 @if($items->isEmpty())
     <div id="noResults" class="text-center py-16 sm:py-20 col-span-full">
         <div class="text-5xl mb-4 text-gray-300"><i class="fas fa-search"></i></div>
-        <h3 class="text-lg font-semibold text-gray-500">{{ __('Nəticə tapılmadı') }}</h3>
-        <p class="text-sm text-gray-400 mt-2">{{ __('Axtarış və ya filtr meyarlarını dəyişin') }}</p>
+        <h3 class="text-lg font-semibold text-gray-500">{{ __('agency.no_results_title') }}</h3>
+        <p class="text-sm text-gray-400 mt-2">{{ __('agency.no_results_desc') }}</p>
     </div>
 @else
     @foreach($items as $item)
@@ -45,7 +45,7 @@
             <div class="flex items-center gap-2 sm:gap-4 mt-2 sm:mt-3 text-xs sm:text-sm text-[color:var(--grey-text)]">
                 <span class="flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
                     <i class="fas fa-home text-[color:var(--primary)]"></i>
-                    {{ $item->properties_count }} {{ __('elan') }}
+                    {{ $item->properties_count }} {{ __('agency.listings_count_suffix') }}
                 </span>
                 @if($item->phone)
                 <span class="flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
@@ -58,7 +58,7 @@
             <div class="mt-auto pt-3 sm:pt-4">
                 <a href="{{ $item->url }}" onclick="event.stopPropagation()"
                    class="block w-full text-center px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl border border-[color:var(--primary)] text-[color:var(--primary)] text-xs sm:text-sm font-medium hover:bg-[color:var(--primary)] hover:text-white transition-all">
-                    {{ __('View Profile') }}
+                    {{ __('agency.view_profile') }}
                     <i class="fas fa-arrow-right ml-1 text-xs"></i>
                 </a>
             </div>

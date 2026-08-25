@@ -69,7 +69,7 @@ class AgencyListController extends Controller
                 'id' => $agency->id,
                 'url' => '/agency/' . $agency->id,
                 'name' => $agency->name,
-                'subtitle' => $agency->address ?? __('Daşınmaz Əmlak Agentliyi'),
+                'subtitle' => $agency->address ?? __('agency.agency_default_subtitle'),
                 'is_address' => !empty($agency->address),
                 'banner' => $agency->banner_url ?: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&q=80',
                 'avatar' => $agency->logo_url,
@@ -80,13 +80,13 @@ class AgencyListController extends Controller
         });
 
         $agentItems = $independentAgents->map(function ($agent) {
-            $name = $agent->user?->name ?? __('Rieltor');
+            $name = $agent->user?->name ?? __('agency.agent_default_title');
             return (object) [
                 'type' => 'agent',
                 'id' => $agent->id,
                 'url' => '/agent/' . $agent->id,
                 'name' => $name,
-                'subtitle' => $agent->position ?? __('Müstəqil Rieltor'),
+                'subtitle' => $agent->position ?? __('agency.agent_independent_subtitle'),
                 'is_address' => false,
                 'banner' => 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80',
                 'avatar' => $agent->avatar_url,

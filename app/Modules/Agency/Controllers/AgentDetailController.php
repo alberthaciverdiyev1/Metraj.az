@@ -28,19 +28,19 @@ class AgentDetailController extends Controller
         );
 
         $breadcrumbs = [
-            ['label' => __('Ana səhifə'), 'url' => '/'],
-            ['label' => __('Agencies'), 'url' => '/agencies'],
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => __('agency.agencies'), 'url' => route('agencies.list')],
         ];
 
         if ($agent->agency) {
             $breadcrumbs[] = [
                 'label' => $agent->agency->name,
-                'url' => '/agency/' . $agent->agency->id,
+                'url' => route('agencies.show.byId', $agent->agency->id),
             ];
         }
 
         $breadcrumbs[] = [
-            'label' => $agent->user?->name ?? __('Rieltor Profili'),
+            'label' => $agent->user?->name ?? __('agency.agent_profile'),
             'url' => null,
         ];
 
