@@ -15,13 +15,12 @@
             || in_array($property->seller_type, ['agent', 'agency'])
             || !empty($property->agent)
             || !empty($property->agency);
-
-        $agentName = $property->agent->user->name ?? ($property->agency->name ?? ($property->user->name ?? 'Mülkiyyətçi'));
+        $agentName = $property->agent->user->name ?? ($property->agency->name ?? ($property->user->name ?? __('property.owner')));
         $agentPhone = $property->agent->phone ?? ($property->agency->phone ?? ($property->user->phone ?? ($property->phone ?? '+994 50 123 45 67')));
         $agentWhatsapp = $property->agent->whatsapp ?? ($property->agency->whatsapp ?? null);
         $cleanWhatsapp = $agentWhatsapp ? preg_replace('/[^0-9]/', '', $agentWhatsapp) : null;
         $agentAvatar = $property->agent->avatar_url ?? ($property->agency->logo_url ?? ($property->agent->user->avatar ?? ''));
-        $agentRole = $property->agency ? 'Rəsmi Agentlik' : ($property->agent ? 'Vasitəçi (agent)' : 'Mülkiyyətçi');
+        $agentRole = $property->agency ? __('property.official_agency') : ($property->agent ? __('property.agent') : __('property.owner'));
 
         $galleryImages = $property->images->sortBy('sort_order')->values();
         $hasVideo = !empty($property->video_url);
@@ -98,7 +97,7 @@
                         <button type="button"
                                 onclick="openModal(currentHeroIndex)"
                                 class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/45 hover:bg-black/65 text-white flex items-center justify-center backdrop-blur-md transition z-10 cursor-pointer shadow-sm"
-                                title="{{ __('Böyüt') }}">
+                                title="{{ __('property.expand') }}">
                             <i class="bi bi-arrows-fullscreen text-sm"></i>
                         </button>
 
@@ -107,14 +106,14 @@
                             <button type="button"
                                     onclick="prevHeroImage(event)"
                                     class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black/45 hover:bg-black/65 text-white flex items-center justify-center backdrop-blur-md transition z-10 cursor-pointer shadow-sm"
-                                    aria-label="Əvvəlki">
+                                    aria-label="{{ __('property.previous') }}">
                                 <i class="bi bi-chevron-left text-base sm:text-lg"></i>
                             </button>
 
                             <button type="button"
                                     onclick="nextHeroImage(event)"
                                     class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black/45 hover:bg-black/65 text-white flex items-center justify-center backdrop-blur-md transition z-10 cursor-pointer shadow-sm"
-                                    aria-label="Növbəti">
+                                    aria-label="{{ __('property.next') }}">
                                 <i class="bi bi-chevron-right text-base sm:text-lg"></i>
                             </button>
                         @endif
@@ -138,7 +137,7 @@
                         <button type="button"
                                 onclick="openModal(0)"
                                 class="absolute bottom-4 right-4 bg-white/85 hover:bg-white text-gray-900 text-xs font-semibold px-3.5 py-1.5 rounded-xl backdrop-blur-md transition shadow-sm flex items-center gap-1.5 z-10 cursor-pointer">
-                            <span>{{ __('Bütün media') }}</span>
+                            <span>{{ __('property.all_media') }}</span>
                         </button>
                     </div>
 
@@ -202,16 +201,16 @@
                         <div class="flex items-center gap-3 text-gray-400 text-lg shrink-0">
                             <button
                                 class="w-9 h-9 rounded-xl bg-gray-50 hover:bg-red-50 hover:text-red-500 flex items-center justify-center transition"
-                                title="{{ __('Seçilmişlərə əlavə et') }}"><i class="bi bi-heart"></i></button>
+                                title="{{ __('property.add_to_favorites') }}"><i class="bi bi-heart"></i></button>
                             <button
                                 class="w-9 h-9 rounded-xl bg-gray-50 hover:bg-orange-50 hover:text-orange-500 flex items-center justify-center transition"
-                                title="{{ __('Müqayisə et') }}"><i class="bi bi-arrow-left-right"></i></button>
+                                title="{{ __('property.compare') }}"><i class="bi bi-arrow-left-right"></i></button>
                             <button
                                 class="w-9 h-9 rounded-xl bg-gray-50 hover:bg-gray-100 hover:text-gray-900 flex items-center justify-center transition"
-                                id="printBtn" title="{{ __('Çap et') }}"><i class="bi bi-printer"></i></button>
+                                id="printBtn" title="{{ __('property.print') }}"><i class="bi bi-printer"></i></button>
                             <button
                                 class="w-9 h-9 rounded-xl bg-gray-50 hover:bg-blue-50 hover:text-blue-500 flex items-center justify-center transition"
-                                title="{{ __('Paylaş') }}"><i class="bi bi-share"></i></button>
+                                title="{{ __('property.share') }}"><i class="bi bi-share"></i></button>
                         </div>
                     </div>
 
@@ -247,7 +246,7 @@
                                 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight flex items-baseline gap-1.5">
                                 <span>{{ $displayPrice['formatted'] }} {{ $displayPrice['currency'] }}</span>
                                 @if($isRent)
-                                    <span class="text-sm font-medium text-gray-500">/ay</span>
+                                    <span class="text-sm font-medium text-gray-500">{{ __('property.per_month') }}</span>
                                 @endif
                             </div>
                             @if($pricePerM2)
@@ -269,7 +268,7 @@
                                     <span
                                         class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-orange-50 text-orange-600 border border-orange-200">
                                     <i class="bi bi-patch-check-fill text-orange-500"></i>
-                                    {{ __('Təsdiqlənmiş') }}
+                                    {{ __('property.verified') }}
                                 </span>
                                 </div>
 
@@ -293,7 +292,7 @@
                                     <div class="pt-3 border-t border-gray-100 space-y-2.5">
                                         @if(!empty($agentPhone))
                                             <div class="flex items-center justify-between text-sm">
-                                                <span class="text-gray-500">{{ __('Telefon') }}:</span>
+                                                <span class="text-gray-500">{{ __('property.phone') }}:</span>
                                                 <a href="tel:{{ $agentPhone }}"
                                                    class="font-semibold text-gray-900 hover:text-orange-500 transition duration-200">{{ $agentPhone }}</a>
                                             </div>
@@ -312,9 +311,9 @@
                                         class="grid {{ (!empty($agentPhone) && !empty($cleanWhatsapp)) ? 'grid-cols-2' : 'grid-cols-1' }} gap-2.5 pt-1">
                                         @if(!empty($agentPhone))
                                             <a href="tel:{{ $agentPhone }}"
-                                               class="w-full flex items-center justify-center gap-2 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
+                                                class="w-full flex items-center justify-center gap-2 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
                                                 <i class="bi bi-telephone-fill text-xs"></i>
-                                                <span>{{ __('Zəng et') }}</span>
+                                                <span>{{ __('property.call') }}</span>
                                             </a>
                                         @endif
 
@@ -334,10 +333,10 @@
                                     <div class="flex items-center justify-between">
                                         <h4 class="text-sm font-semibold text-gray-900 flex items-center gap-2">
                                             <i class="bi bi-chat-left-dots-fill text-orange-500"></i>
-                                            <span>{{ __('Müraciət Göndər') }}</span>
+                                            <span>{{ __('property.send_inquiry') }}</span>
                                         </h4>
                                         <span
-                                            class="text-[11px] text-gray-400 font-medium">{{ __('Onlayn sorğu') }}</span>
+                                            class="text-[11px] text-gray-400 font-medium">{{ __('property.online_inquiry') }}</span>
                                     </div>
 
                                     <form method="POST" action="{{ route('inquiries.store') }}" id="inquiry-form"
@@ -347,16 +346,16 @@
 
                                         <div>
                                             <label
-                                                class="block text-xs font-semibold text-gray-600 mb-1">{{ __('Adınız və Soyadınız') }}
+                                                class="block text-xs font-semibold text-gray-600 mb-1">{{ __('property.full_name') }}
                                                 <span class="text-rose-500">*</span></label>
                                             <input type="text" name="name" required value="{{ auth()->user()?->name }}"
-                                                   placeholder="Məs: Əli Əliyev"
+                                                   placeholder="{{ __('property.full_name_placeholder') }}"
                                                    class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition">
                                         </div>
 
                                         <div>
                                             <label
-                                                class="block text-xs font-semibold text-gray-600 mb-1">{{ __('Əlaqə Nömrəniz') }}
+                                                class="block text-xs font-semibold text-gray-600 mb-1">{{ __('property.phone_number') }}
                                                 <span class="text-rose-500">*</span></label>
                                             <input type="text" name="phone" required
                                                    value="{{ auth()->user()?->phone }}"
@@ -366,16 +365,16 @@
 
                                         <div>
                                             <label
-                                                class="block text-xs font-semibold text-gray-600 mb-1">{{ __('Mesajınız / Qeyd') }}</label>
+                                                class="block text-xs font-semibold text-gray-600 mb-1">{{ __('property.message_note') }}</label>
                                             <textarea name="message" rows="3"
-                                                      placeholder="Salam, bu əmlakla bağlı ətraflı məlumat almaq istərdim..."
+                                                      placeholder="{{ __('property.message_placeholder') }}"
                                                       class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition"></textarea>
                                         </div>
 
                                         <button type="submit"
                                                 class="w-full py-3 bg-gray-900 hover:bg-black text-white font-semibold text-xs rounded-xl shadow transition duration-200 flex items-center justify-center gap-2 transform active:scale-98">
                                             <i class="bi bi-send-fill text-xs text-orange-400"></i>
-                                            <span>{{ __('Müraciəti Göndər') }}</span>
+                                            <span>{{ __('property.submit_inquiry') }}</span>
                                         </button>
                                     </form>
                                 </div>
@@ -384,8 +383,8 @@
                             <!-- Guest / Owner Layout (Sadəcə Telefon və Zəng et) -->
                             <div class="space-y-4">
                                 <div class="flex items-center justify-between">
-                                    <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-widest">{{ __('Əlaqədar Şəxs') }}</h3>
-                                    <span class="text-xs font-semibold text-gray-500">{{ __('Mülkiyyətçi') }}</span>
+                                    <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-widest">{{ __('property.contact_person') }}</h3>
+                                    <span class="text-xs font-semibold text-gray-500">{{ __('property.owner') }}</span>
                                 </div>
 
                                 @if(!empty($agentName) && $agentName !== 'Metraj Təmsilçisi')
@@ -404,7 +403,7 @@
                                             </div>
                                             <div>
                                                 <span
-                                                    class="block text-[11px] text-gray-500 font-medium">{{ __('Əlaqə nömrəsi') }}</span>
+                                                    class="block text-[11px] text-gray-500 font-medium">{{ __('property.contact_number') }}</span>
                                                 <a href="tel:{{ $agentPhone }}"
                                                    class="text-base font-black text-gray-900 hover:text-orange-600 transition">{{ $agentPhone }}</a>
                                             </div>
@@ -419,7 +418,7 @@
                                             <a href="tel:{{ $agentPhone }}"
                                                class="w-full flex items-center justify-center gap-2 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
                                                 <i class="bi bi-telephone-fill text-sm"></i>
-                                                <span>{{ __('Zəng et') }}</span>
+                                                <span>{{ __('property.call') }}</span>
                                             </a>
                                         @endif
 
@@ -443,10 +442,10 @@
                         <div id="btn-advance"
                              class="bg-white hover:bg-gray-50 border border-gray-200/90 rounded-2xl p-3 flex flex-col justify-between cursor-pointer transition shadow-2xs">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs sm:text-sm font-bold text-gray-800">{{ __('İrəli çək') }}</span>
+                                <span class="text-xs sm:text-sm font-bold text-gray-800">{{ __('property.advance_ad') }}</span>
                                 <span class="text-emerald-500 font-bold text-base"><i class="fa-solid fa-arrow-up"></i></span>
                             </div>
-                            <span class="text-[11px] font-semibold text-blue-600 mt-1">3 AZN-dən</span>
+                            <span class="text-[11px] font-semibold text-blue-600 mt-1">{{ __('property.from_azn', ['amount' => 3]) }}</span>
                         </div>
 
 
@@ -454,10 +453,10 @@
                         <div id="btn-premium"
                              class="bg-white hover:bg-gray-50 border border-gray-200/90 rounded-2xl p-3 flex flex-col justify-between cursor-pointer transition shadow-2xs">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs sm:text-sm font-bold text-gray-800">{{ __('Premium') }}</span>
+                                <span class="text-xs sm:text-sm font-bold text-gray-800">{{ __('property.premium_ad') }}</span>
                                 <span class="text-amber-500 text-base"><i class="fa-solid fa-crown"></i></span>
                             </div>
-                            <span class="text-[11px] font-semibold text-blue-600 mt-1">7 AZN-dən</span>
+                            <span class="text-[11px] font-semibold text-blue-600 mt-1">{{ __('property.from_azn', ['amount' => 7]) }}</span>
                         </div>
                     </div>
 
@@ -481,16 +480,16 @@
             <div class="flex items-center gap-3">
                 <button type="button" onclick="toggleFullscreen()"
                         class="w-10 h-10 rounded-full bg-white/15 hover:bg-white/30 text-white flex items-center justify-center transition cursor-pointer"
-                        title="{{ __('Tam ekran') }}"><i class="bi bi-fullscreen text-sm"></i></button>
+                        title="{{ __('property.fullscreen') }}"><i class="bi bi-fullscreen text-sm"></i></button>
                 <button type="button" onclick="closeModal()"
                         class="w-10 h-10 rounded-full bg-white/15 hover:bg-white/30 text-white flex items-center justify-center transition cursor-pointer"
-                        title="{{ __('Bağla') }}"><i class="bi bi-x-lg text-sm"></i></button>
+                        title="{{ __('property.close') }}"><i class="bi bi-x-lg text-sm"></i></button>
             </div>
         </div>
         <div class="absolute inset-0 flex items-center justify-between pointer-events-none z-[100000] px-2 sm:px-6">
             <button type="button" onclick="prevModalImage(event)"
                     class="pointer-events-auto w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-black/50 hover:bg-orange-500 text-white flex items-center justify-center text-xl sm:text-2xl transition cursor-pointer backdrop-blur-sm shadow-md"
-                    aria-label="Əvvəlki"><i class="bi bi-chevron-left"></i></button>
+                    aria-label="{{ __('property.previous') }}"><i class="bi bi-chevron-left"></i></button>
 
             <div class="pointer-events-auto max-w-[90vw] max-h-[75vh] flex items-center justify-center">
                 <img id="modal-image" src="" alt="Modal Image"
@@ -505,7 +504,7 @@
 
             <button type="button" onclick="nextModalImage(event)"
                     class="pointer-events-auto w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-black/50 hover:bg-orange-500 text-white flex items-center justify-center text-xl sm:text-2xl transition cursor-pointer backdrop-blur-sm shadow-md"
-                    aria-label="Növbəti"><i class="bi bi-chevron-right"></i></button>
+                    aria-label="{{ __('property.next') }}"><i class="bi bi-chevron-right"></i></button>
         </div>
         <div
             class="absolute bottom-4 left-1/2 -translate-x-1/2 w-11/12 max-w-4xl flex space-x-2 overflow-x-auto p-2 bg-black/60 backdrop-blur-md rounded-2xl z-[100001] justify-center"
@@ -593,7 +592,7 @@
             const btn = document.getElementById('btn-show-phone');
             if (window.fullPhoneNumber) {
                 if (numElem) numElem.textContent = window.fullPhoneNumber;
-                if (titleElem) titleElem.textContent = "{{ __('Zəng edin') }}";
+                if (titleElem) titleElem.textContent = "{{ __('property.call_now') }}";
                 if (btn && !btn.dataset.revealed) {
                     btn.dataset.revealed = "true";
                 } else if (btn && btn.dataset.revealed === "true") {

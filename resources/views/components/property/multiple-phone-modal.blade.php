@@ -1,7 +1,7 @@
 <div id="phone-modal" class="modal mt-10 pt-[170px] p-4 mx-auto space-y-2">
     <div class="modal-content justify-center text-center items-center py-4 w-full max-w-[400px]">
         <span class="close-button">&times;</span>
-        <h2>{{ __('Zəng etmək üçün nömrəni seçin') }}</h2>
+        <h2>{{ __('property.select_phone_to_call') }}</h2>
         <div id="phone-options-container" class="w-full p-4 mx-auto space-y-2"></div>
     </div>
 </div>

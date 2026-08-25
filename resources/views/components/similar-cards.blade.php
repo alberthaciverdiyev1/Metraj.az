@@ -1,9 +1,9 @@
 @if(isset($similarProperties) && $similarProperties->count() > 0)
 <div class="pt-8 relative">
     <div class="flex items-center justify-between mb-6">
-        <h3 class="text-xl sm:text-2xl font-semibold text-gray-900">{{ __('Oxşar Elanlar') }}</h3>
+        <h3 class="text-xl sm:text-2xl font-semibold text-gray-900">{{ __('property.similar_properties') }}</h3>
         <a href="{{ route('listing') }}" class="text-sm font-semibold text-orange-500 hover:text-orange-600 inline-flex items-center gap-1 transition">
-            <span>{{ __('Hamısına bax') }}</span>
+            <span>{{ __('property.view_all') }}</span>
             <i class="bi bi-arrow-right text-xs"></i>
         </a>
     </div>

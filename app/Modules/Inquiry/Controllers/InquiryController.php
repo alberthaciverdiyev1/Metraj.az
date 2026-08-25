@@ -31,11 +31,11 @@ class InquiryController extends Controller
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Müraciətiniz uğurla qəbul edildi! Ən qısa zamanda sizinlə əlaqə saxlanılacaq.',
+                'message' => __('property.inquiry_success'),
             ]);
         }
 
-        return back()->with('success', 'Müraciətiniz uğurla qəbul edildi! Ən qısa zamanda sizinlə əlaqə saxlanılacaq.');
+        return back()->with('success', __('property.inquiry_success'));
     }
 
     /**
@@ -54,7 +54,7 @@ class InquiryController extends Controller
             'status' => 'new',
         ]);
 
-        $message = 'Mesajınız uğurla göndərildi! Ən qısa zamanda sizinlə əlaqə saxlanılacaq.';
+        $message = __('property.contact_success');
 
         if ($request->wantsJson()) {
             return response()->json([

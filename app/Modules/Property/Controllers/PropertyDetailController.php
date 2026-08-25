@@ -50,8 +50,8 @@ class PropertyDetailController extends Controller
         $similarProperties = $this->propertyService->similar($property, 3);
 
         $breadcrumbs = [
-            ['label' => __('Home'), 'url' => '/'],
-            ['label' => __('Property Details')],
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => __('property.property_details')],
         ];
 
         return view('pages.property.details', compact('property', 'similarProperties', 'breadcrumbs'))
