@@ -3,6 +3,7 @@
 namespace App\Modules\Agency\Controllers;
 
 use App\Modules\Agency\Services\AgencyService;
+use App\Modules\Shared\Concerns\CachesGuestPage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -10,19 +11,55 @@ use Illuminate\Http\JsonResponse;
 
 class AgencyListController extends Controller
 {
+    use CachesGuestPage;
+
     public function __construct(
         protected AgencyService $agencyService,
     ) {}
 
-    public function __invoke(Request $request): View|JsonResponse
+    public function __invoke(Request $request): \Illuminate\Http\Response|View|JsonResponse
     {
         $type = $request->get('type', 'all'); // 'all', 'agency', 'agent'
         $search = $request->get('search');
 
-        // Total counts for badges
+        if ($request->ajax() || $request->wantsJson()) {
+            $items = $this->buildItems($type, $search);
+
+            return response()->json([
+                'html' => view('pages.agency.partials.grid', compact('items'))->render(),
+                'total' => $items->count(),
+                'type' => in_array($type, ['agency', 'agent']) ? $type : 'all',
+            ]);
+        }
+
+        // Tam səhifə keşi (qonaqlar üçün)
+        if (! $request->has('_cache_bust')) {
+            return $this->cacheGuestPage($request, 'agencies_list', 60, function () use ($type, $search) {
+                return $this->renderList($type, $search);
+            });
+        }
+
+        return response($this->renderList($type, $search));
+    }
+
+    protected function renderList(string $type, ?string $search): string
+    {
+        $items = $this->buildItems($type, $search);
         $totalAgenciesCount = $this->agencyService->activeAgencies()->count();
         $totalAgentsCount = $this->agencyService->independentAgents()->count();
 
+        $agenciesCount = $totalAgenciesCount;
+        $agentsCount = $totalAgentsCount;
+        $activeType = in_array($type, ['agency', 'agent']) ? $type : 'all';
+
+        $agencies = ($type === 'agent') ? collect() : $this->agencyService->activeAgencies($search);
+        $independentAgents = ($type === 'agency') ? collect() : $this->agencyService->independentAgents($search);
+
+        return view('pages.agency.list', compact('items', 'agenciesCount', 'agentsCount', 'activeType', 'search', 'agencies', 'independentAgents'))->render();
+    }
+
+    protected function buildItems(string $type, ?string $search): \Illuminate\Support\Collection
+    {
         $agencies = ($type === 'agent') ? collect() : $this->agencyService->activeAgencies($search);
         $independentAgents = ($type === 'agency') ? collect() : $this->agencyService->independentAgents($search);
 
@@ -59,7 +96,6 @@ class AgencyListController extends Controller
             ];
         });
 
-        // Interleave / mix agencies and independent agents together
         $items = collect();
         if ($type === 'agency') {
             $items = $agencyItems->values();
@@ -80,18 +116,6 @@ class AgencyListController extends Controller
             }
         }
 
-        $agenciesCount = $totalAgenciesCount;
-        $agentsCount = $totalAgentsCount;
-        $activeType = in_array($type, ['agency', 'agent']) ? $type : 'all';
-
-        if ($request->ajax() || $request->wantsJson()) {
-            return response()->json([
-                'html' => view('pages.agency.partials.grid', compact('items'))->render(),
-                'total' => $items->count(),
-                'type' => $activeType,
-            ]);
-        }
-
-        return view('pages.agency.list', compact('items', 'agenciesCount', 'agentsCount', 'activeType', 'search', 'agencies', 'independentAgents'));
+        return $items;
     }
 }

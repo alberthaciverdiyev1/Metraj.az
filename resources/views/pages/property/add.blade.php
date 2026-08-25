@@ -437,6 +437,44 @@
                 <div id="photos_preview_grid" class="grid grid-cols-3 sm:grid-cols-6 gap-2.5 pt-3"></div>
             </div>
 
+            <!-- Video Çarx (İstəyə görə - 1 ədəd) -->
+            <div class="pt-4 border-t border-gray-100">
+                <div class="flex items-center justify-between mb-2">
+                    <label class="block text-xs font-semibold text-gray-700">{{ __('Video Çarx') }} <span class="text-gray-400 font-normal">({{ __('istəyə görə, 1 ədəd') }})</span></label>
+                    <span class="text-[11px] text-gray-400">MP4, WebM, MOV (Maks. 50MB)</span>
+                </div>
+                
+                <div id="video_dropzone_box" class="border-2 border-dashed border-gray-300 hover:border-orange-500 rounded-2xl p-5 text-center cursor-pointer bg-gray-50/50 hover:bg-orange-50/20 transition-all">
+                    <input type="file" name="video" id="video_input" accept="video/mp4,video/webm,video/quicktime,video/x-msvideo,video/ogg" class="hidden">
+                    <div id="video_empty_state" class="flex flex-col items-center justify-center gap-1.5 pointer-events-none">
+                        <i class="bi bi-camera-video text-orange-500 text-2xl"></i>
+                        <p class="text-xs font-semibold text-gray-800">{{ __('Video faylı bura atın və ya klikləyib seçin') }}</p>
+                        <p class="text-[10px] text-gray-400">{{ __('Əmlakın daxili və ya xarici video görüntüsü') }}</p>
+                    </div>
+                </div>
+
+                <!-- Video Preview Container -->
+                <div id="video_preview_container" class="hidden pt-3">
+                    <div class="relative rounded-2xl overflow-hidden border border-gray-200 bg-gray-900 p-3 flex items-center justify-between gap-4 shadow-sm">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-11 h-11 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center text-xl shrink-0">
+                                <i class="bi bi-file-earmark-play-fill"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <p id="video_preview_name" class="text-xs font-bold text-white truncate"></p>
+                                <p id="video_preview_size" class="text-[10px] text-gray-400 font-medium"></p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <button type="button" id="btn_remove_video" class="px-3 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-600 text-rose-300 hover:text-white text-xs font-semibold transition flex items-center gap-1 cursor-pointer">
+                                <i class="bi bi-trash3 text-xs"></i>
+                                <span>{{ __('Sil') }}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Təchizatlar (Amenities) -->
             <div id="section_amenities" class="pt-4 border-t border-gray-100">
                 <div class="flex items-center justify-between mb-3">

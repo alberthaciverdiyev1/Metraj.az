@@ -20,6 +20,37 @@ class HomeController extends Controller
 
     public function __invoke(Request $request, ?string $first = null, ?string $second = null, ?string $third = null)
     {
+        // AJAX istekleri her zaman canlı veri döndürür (keşlenmez)
+        if ($request->ajax() || $request->wantsJson()) {
+            return $this->ajaxListing($request, $first, $second, $third);
+        }
+
+        // Tam səhifə keşi: qonaq ziyarətçilər üçün qısa TTL.
+        // Giriş etmiş istifadəçilər her zaman canlı render edilir (öz navbar məlumatları/CSRF üçün).
+        // Flash mesajlar varsa keşlənir ki, istifadəçiyə göstərilsin.
+        if (auth()->guest()
+            && ! session()->has('success')
+            && ! session()->has('error')
+            && ! $request->has('_cache_bust')) {
+            $cacheKey = 'listing_page:'.md5($request->fullUrl().'|'.session('currency').'|'.app()->getLocale());
+
+            $html = \Illuminate\Support\Facades\Cache::remember(
+                $cacheKey,
+                60,
+                fn () => $this->renderListingPage($request, $first, $second, $third)
+            );
+
+            return response($html);
+        }
+
+        return $this->renderListingPage($request, $first, $second, $third);
+    }
+
+    /**
+     * AJAX (filtr/paginator) sorğuları — canlı məlumat qaytarır.
+     */
+    protected function ajaxListing(Request $request, ?string $first, ?string $second, ?string $third)
+    {
         if ($first !== null) {
             $this->applyPathFilters($request, $first, $second, $third);
         }
@@ -27,13 +58,24 @@ class HomeController extends Controller
         $filter = PropertyFilterDTO::fromArray($request->all());
         $properties = $this->propertyService->paginate($filter, 30);
 
-        if ($request->ajax() || $request->wantsJson()) {
-            return response()->json([
-                'properties' => view('pages.property.partials.cards', compact('properties'))->render(),
-                'pagination' => view('pages.property.partials.pagination', compact('properties'))->render(),
-                'total' => $properties->total(),
-            ]);
+        return response()->json([
+            'properties' => view('pages.property.partials.cards', compact('properties'))->render(),
+            'pagination' => view('pages.property.partials.pagination', compact('properties'))->render(),
+            'total' => $properties->total(),
+        ]);
+    }
+
+    /**
+     * Listing səhifəsini render edib HTML qaytarır.
+     */
+    protected function renderListingPage(Request $request, ?string $first, ?string $second, ?string $third): string
+    {
+        if ($first !== null) {
+            $this->applyPathFilters($request, $first, $second, $third);
         }
+
+        $filter = PropertyFilterDTO::fromArray($request->all());
+        $properties = $this->propertyService->paginate($filter, 30);
 
         $cities = $this->locationService->activeCities();
 
@@ -55,7 +97,7 @@ class HomeController extends Controller
             'buildingTypes',
             'dynamicFilters',
             'breadcrumbs'
-        ))->with('css', ['listing.css']);
+        ))->with('css', ['listing.css'])->render();
     }
 
     /**

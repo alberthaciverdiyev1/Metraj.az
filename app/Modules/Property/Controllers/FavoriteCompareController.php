@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Modules\Property\Models\Compare;
 use App\Modules\Property\Models\Favorite;
 use App\Modules\Property\Models\Property;
+use App\Modules\Shared\Controllers\StaticPageController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class FavoriteCompareController extends Controller
 {
@@ -44,6 +46,9 @@ class FavoriteCompareController extends Controller
             ]);
             $isFavorite = true;
         }
+
+        // Seçilmişlər səhifəsinin keşini təmizlə ki, dəyişiklik dərhal görünsün
+        Cache::forget(StaticPageController::favoritesCacheKey($userId, $sessionId));
 
         $countQuery = Favorite::query();
         if ($userId) {
@@ -159,6 +164,9 @@ class FavoriteCompareController extends Controller
             ]);
             $isCompared = true;
         }
+
+        // Müqayisə səhifəsinin keşini təmizlə
+        Cache::forget(StaticPageController::comparesCacheKey($userId, $sessionId));
 
         $countQuery = Compare::query();
         if ($userId) {

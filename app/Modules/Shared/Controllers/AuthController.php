@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Agency\Enums\AgencyStatus;
 use App\Modules\Agency\Models\Agency;
 use App\Modules\Agency\Models\Agent;
+use App\Modules\Shared\Concerns\CachesGuestPage;
 use App\Modules\Shared\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -18,6 +19,8 @@ use Illuminate\View\View;
 
 class AuthController extends Controller
 {
+    use CachesGuestPage;
+
     /**
      * İstifadəçinin roluna uyğun yönləndirmə ünvanını təyin edir:
      * - Admin -> /admin
@@ -57,12 +60,29 @@ class AuthController extends Controller
     /**
      * Qeydiyyat (Register) səhifəsini göstərir.
      */
-    public function showRegister(): View|RedirectResponse
+    public function showRegister(): \Illuminate\Http\Response|View|RedirectResponse
     {
         if (Auth::check()) {
             return redirect(self::getRedirectUrlForUser(Auth::user()));
         }
 
+        // Qonaqlar üçün tam səhifə keşi. Validasiya xətaları/old() girişi varsa keşlənir
+        // (form səhv göndərimindən sonra geri qayıdanda xətalar görünsün).
+        if (auth()->guest()
+            && ! session()->has('errors')
+            && ! request()->has('_cache_bust')) {
+            $key = 'page_cache:register:'.md5(app()->getLocale());
+
+            $html = \Illuminate\Support\Facades\Cache::remember($key, 60, fn () => $this->renderRegister());
+
+            return response($this->refreshCsrfToken($html));
+        }
+
+        return response($this->renderRegister());
+    }
+
+    protected function renderRegister(): string
+    {
         $agencies = Agency::where('status', AgencyStatus::Active)
             ->orderBy('name')
             ->get(['id', 'name']);
@@ -72,7 +92,7 @@ class AuthController extends Controller
             ['label' => __('Qeydiyyat'), 'url' => null],
         ];
 
-        return view('pages.auth.register', compact('agencies', 'breadcrumbs'));
+        return view('pages.auth.register', compact('agencies', 'breadcrumbs'))->render();
     }
 
     /**

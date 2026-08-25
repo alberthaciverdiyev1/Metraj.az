@@ -543,6 +543,73 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // 6) Video Upload Preview & Handling
+    const videoDropzoneBox = document.getElementById('video_dropzone_box');
+    const videoInput = document.getElementById('video_input');
+    const videoPreviewContainer = document.getElementById('video_preview_container');
+    const videoPreviewName = document.getElementById('video_preview_name');
+    const videoPreviewSize = document.getElementById('video_preview_size');
+    const btnRemoveVideo = document.getElementById('btn_remove_video');
+
+    if (videoDropzoneBox && videoInput) {
+        videoDropzoneBox.addEventListener('click', (e) => {
+            if (e.target.closest('#btn_remove_video')) return;
+            videoInput.click();
+        });
+
+        videoDropzoneBox.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            videoDropzoneBox.classList.add('border-orange-500', 'bg-orange-50/40');
+        });
+
+        videoDropzoneBox.addEventListener('dragleave', () => {
+            videoDropzoneBox.classList.remove('border-orange-500', 'bg-orange-50/40');
+        });
+
+        videoDropzoneBox.addEventListener('drop', (e) => {
+            e.preventDefault();
+            videoDropzoneBox.classList.remove('border-orange-500', 'bg-orange-50/40');
+            if (e.dataTransfer.files.length > 0) {
+                const file = e.dataTransfer.files[0];
+                if (file.type.startsWith('video/')) {
+                    videoInput.files = e.dataTransfer.files;
+                    renderVideoPreview(file);
+                } else {
+                    window.Metraj.toast('Zəhmət olmasa düzgün video formatı seçin (MP4, WebM, MOV)', 'error');
+                }
+            }
+        });
+
+        videoInput.addEventListener('change', function () {
+            if (this.files && this.files[0]) {
+                const file = this.files[0];
+                if (file.size > 52428800) { // 50MB
+                    window.Metraj.toast('Video həcmi maksimum 50MB ola bilər', 'error');
+                    this.value = '';
+                    if (videoPreviewContainer) videoPreviewContainer.classList.add('hidden');
+                    return;
+                }
+                renderVideoPreview(file);
+            }
+        });
+
+        if (btnRemoveVideo) {
+            btnRemoveVideo.addEventListener('click', (e) => {
+                e.stopPropagation();
+                videoInput.value = '';
+                if (videoPreviewContainer) videoPreviewContainer.classList.add('hidden');
+            });
+        }
+
+        function renderVideoPreview(file) {
+            if (!videoPreviewContainer || !videoPreviewName) return;
+            videoPreviewName.textContent = file.name;
+            const sizeInMb = (file.size / (1024 * 1024)).toFixed(2);
+            if (videoPreviewSize) videoPreviewSize.textContent = sizeInMb + ' MB';
+            videoPreviewContainer.classList.remove('hidden');
+        }
+    }
+
     // Amenities Load More
     const loadMoreAmenitiesBtn = document.getElementById('load_more_amenities_btn');
     const amenitiesGrid = document.getElementById('amenities_grid');

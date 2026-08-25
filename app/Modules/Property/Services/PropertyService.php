@@ -100,4 +100,12 @@ class PropertyService
             ]);
         }
     }
+
+    /**
+     * Yüklənən video faylını yaddaşa yazır və yolunu qaytarır.
+     */
+    public function storeVideo(UploadedFile $video): string
+    {
+        return $video->store('properties/videos', 'public');
+    }
 }

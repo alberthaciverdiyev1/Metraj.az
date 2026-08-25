@@ -97,6 +97,9 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => env('DB_SSLMODE', 'prefer'),
+            // Hər istekdə yeni bağlantı qurmağı önləyir (PHP daxili server tək prosesdir,
+            // beləliklə bağlantı proseslər arasında yenidən istifadə olunur) → ~10-14ms qazanc.
+            'persistent' => true,
         ],
 
         'sqlsrv' => [

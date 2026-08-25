@@ -234,3 +234,15 @@ resources/
 12. **User modeli:** `app/Modules/Shared/Models/User.php` — Shared modulunda saxlanılır; digər modullar ona istinad edə bilər.
 
 TEST YAZMA HIC BIR ZAMAN
+
+---
+
+## 6. Cavab Davranışı (Token Effektivliyi)
+
+Bu qaydalar hər oturumda xatırlanmalıdır:
+
+1. **Qısa cavab ver:** Sadə tapşırıqlarda yalnız icra et — uzun izahat, plan və ya xülasə yazma.
+2. **Artıq düşünmə:** Sadə task-lar üçün minimal yoxlama apar; yalnız zəruri tool çağırışını et.
+3. **Lazımsız tool çağırışını azalt:** Faylı tam oxumaq lazım deyilsə, yalnız lazım olan hissəni oxu (`offset`/`limit`).
+4. **Birbaşa nəticə:** Dəyişiklikdən sonra "hazırdır" kimi qısa təsdiq ver; sınaqdan keçirmək üçün əlavə addımlar təklif etmə (istisna: mürəkkəb dəyişikliklər).
+5. **Xülasə çıxarma:** Hər cavabın sonunda avtomatik xülasə yazma.

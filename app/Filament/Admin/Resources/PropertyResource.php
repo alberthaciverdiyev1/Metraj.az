@@ -545,17 +545,17 @@ class PropertyResource extends Resource
     }
 
     /**
-     * 8) Şəkillər (Multi-select və Drag-and-Drop sıralama)
+     * 8) Media: Şəkillər və Video (Multi-select və Drag-and-Drop sıralama)
      */
     protected static function sectionImages(): Forms\Components\Section
     {
-        return Forms\Components\Section::make('Şəkillər')
-            ->description('Elanın şəkillərini yükləyin — ilk şəkil əsas üz qabığı kimi göstərilir. Sıranı dəyişmək üçün şəkilləri sürükləyib yerini dəyişin (Drag & Drop).')
+        return Forms\Components\Section::make('Media (Şəkillər və Video)')
+            ->description('Elanın şəkillərini və video çarxını yükləyin — ilk şəkil əsas üz qabığı kimi göstərilir. Sıranı dəyişmək üçün şəkilləri sürükləyib yerini dəyişin (Drag & Drop).')
             ->icon('heroicon-o-photo')
             ->columnSpan(2)
             ->schema([
                 Forms\Components\FileUpload::make('uploaded_images')
-                    ->label('')
+                    ->label('Fotoşəkillər')
                     ->multiple()
                     ->reorderable()
                     ->image()
@@ -572,6 +572,19 @@ class PropertyResource extends Resource
                         $component->state($record->images()->orderBy('sort_order', 'asc')->get()->map(fn ($img) => $img->getRawOriginal('url'))->toArray());
                     })
                     ->dehydrated(false),
+
+                Forms\Components\FileUpload::make('video')
+                    ->label('Video (İstəyə görə - 1 ədəd)')
+                    ->helperText('Əmlakın video görüntüsünü yükləyin (MP4, WebM, MOV — maksimum 50MB)')
+                    ->acceptedFileTypes(['video/mp4', 'video/webm', 'video/quicktime', 'video/x-msvideo', 'video/ogg'])
+                    ->maxSize(51200)
+                    ->disk('public')
+                    ->directory('properties/videos')
+                    ->visibility('public')
+                    ->openable()
+                    ->downloadable()
+                    ->nullable()
+                    ->columnSpanFull(),
             ]);
     }
 

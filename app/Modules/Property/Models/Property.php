@@ -25,6 +25,7 @@ use Illuminate\Support\Str;
  * @property string $title
  * @property string $slug
  * @property string|null $description
+ * @property string|null $video
  * @property string $price
  * @property string $currency
  * @property array<string, int|float>|null $prices
@@ -54,6 +55,7 @@ use Illuminate\Support\Str;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read string $first_image_url
+ * @property-read string|null $video_url
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Property\Models\PropertyImage> $images
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Inquiry\Models\Inquiry> $inquiries
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Location\Models\FilterOption> $filterOptions
@@ -77,6 +79,7 @@ class Property extends Model
         'title',               // Elanın başlığı
         'slug',                // URL üçün unikal slug (Məs: nasimide-3-otaqli-menzil)
         'description',         // Əmlak haqqında ətraflı təsvir/mətn
+        'video',               // Əmlakın video faylının yolu (Məs: properties/videos/xyz.mp4)
 
         // Satıcı növü (Enum: owner, agency, complex)
         'seller_type',         // Satıcı növü (Mülkiyyətçi / Agentlik / Kompleks)
@@ -253,6 +256,22 @@ class Property extends Model
             return $firstImage->url;
         }
         return \App\Modules\Property\Models\PropertyImage::FALLBACK_IMAGE;
+    }
+
+    /**
+     * Əmlakın video URL-i (yerli storage və ya xarici link)
+     */
+    public function getVideoUrlAttribute(): ?string
+    {
+        if (empty($this->video)) {
+            return null;
+        }
+
+        if (str_starts_with($this->video, 'http://') || str_starts_with($this->video, 'https://') || str_starts_with($this->video, '/')) {
+            return $this->video;
+        }
+
+        return asset('storage/' . $this->video);
     }
 
     /**

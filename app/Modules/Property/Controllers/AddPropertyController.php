@@ -136,6 +136,11 @@ class AddPropertyController extends Controller
                 $agentId = $agent->id;
             }
 
+            $videoPath = null;
+            if ($request->hasFile('video')) {
+                $videoPath = $this->propertyService->storeVideo($request->file('video'));
+            }
+
             // Tək qaynaq: PropertyService::create → CreatePropertyDTO
             // Repo property, filterOptions və amenities sync-lərini özü idarə edir.
             $property = $this->propertyService->create(new CreatePropertyDTO(
@@ -165,6 +170,7 @@ class AddPropertyController extends Controller
                 userId: $user?->id,
                 sellerType: $sellerType,
                 status: PropertyStatus::PendingApproval,
+                video: $videoPath,
                 filterOptionIds: array_values($filterOptionIds),
                 amenityIds: (!empty($validated['amenities']) && !$isLand)
                     ? array_map('intval', $validated['amenities'])

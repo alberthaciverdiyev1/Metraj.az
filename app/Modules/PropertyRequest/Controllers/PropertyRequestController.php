@@ -8,6 +8,7 @@ use App\Modules\PropertyRequest\DTOs\PropertyRequestFilterDTO;
 use App\Modules\PropertyRequest\Models\PropertyRequest;
 use App\Modules\PropertyRequest\Requests\StorePropertyRequestRequest;
 use App\Modules\PropertyRequest\Services\PropertyRequestService;
+use App\Modules\Shared\Concerns\CachesGuestPage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,17 +16,20 @@ use Illuminate\View\View;
 
 class PropertyRequestController extends Controller
 {
+    use CachesGuestPage;
+
     public function __construct(
         protected PropertyRequestService $requestService,
         protected LocationService $locationService,
     ) {}
 
-    public function index(Request $request): View|JsonResponse
+    public function index(Request $request): \Illuminate\Http\Response|View|JsonResponse
     {
         $filter = PropertyRequestFilterDTO::fromArray($request->all());
-        $requests = $this->requestService->paginate($filter, 18);
 
         if ($request->ajax() || $request->wantsJson()) {
+            $requests = $this->requestService->paginate($filter, 18);
+
             return response()->json([
                 'success' => true,
                 'html' => view('pages.requests.partials.cards', compact('requests'))->render(),
@@ -34,6 +38,17 @@ class PropertyRequestController extends Controller
             ]);
         }
 
+        // Tam səhifə keşi (qonaqlar üçün) — filtrsiz standart siyahı sürətli qaytarılır
+        if (! $request->has('_cache_bust')) {
+            return $this->cacheGuestPage($request, 'requests_index', 60, fn () => $this->renderIndex($request, $filter));
+        }
+
+        return response($this->renderIndex($request, $filter));
+    }
+
+    protected function renderIndex(Request $request, PropertyRequestFilterDTO $filter): string
+    {
+        $requests = $this->requestService->paginate($filter, 18);
         $cities = $this->locationService->activeCities();
         $buildingTypes = $this->locationService->propertyTypeOptions();
 
@@ -42,7 +57,7 @@ class PropertyRequestController extends Controller
             ['label' => __('Axtarıram (Tələblər)'), 'url' => null],
         ];
 
-        return view('pages.requests.index', compact('requests', 'cities', 'buildingTypes', 'breadcrumbs', 'filter'));
+        return view('pages.requests.index', compact('requests', 'cities', 'buildingTypes', 'breadcrumbs', 'filter'))->render();
     }
 
     public function create(): View

@@ -78,6 +78,7 @@ class PropertyRepository implements PropertyRepositoryInterface
             'status' => $dto->status,
             'is_featured' => $dto->isFeatured,
             'is_vip' => $dto->isVip,
+            'video' => $dto->video,
         ]);
 
         if (!empty($dto->filterOptionIds)) {
@@ -124,7 +125,9 @@ class PropertyRepository implements PropertyRepositoryInterface
             ? $filter->sortBy 
             : 'created_at';
 
-        $baseQuery = $this->model->query()->with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images']);
+        // Kart görünümü yalnızca görsellər və filtr seçimlərini istifadə edir;
+        // agency/agent/amenities/filter əlaqələri burada lazım deyil → əhəmiyyətli sürət qazancı.
+        $baseQuery = $this->model->query()->with(['filterOptions', 'images']);
         $this->applyFilterConditions($baseQuery, $filter);
 
         $premiumQuery = (clone $baseQuery)->where(function ($q) {

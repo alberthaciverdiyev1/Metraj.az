@@ -55,6 +55,7 @@ class StorePropertyRequest extends FormRequest
             'email' => 'required|email|max:100',
             'photos' => 'nullable|array',
             'photos.*' => 'image|mimes:jpeg,png,jpg,webp|max:8192',
+            'video' => 'nullable|file|mimes:mp4,webm,mov,avi,mkv,flv,ogv|max:51200',
         ];
     }
 }

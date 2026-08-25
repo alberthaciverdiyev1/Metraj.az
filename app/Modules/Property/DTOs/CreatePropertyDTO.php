@@ -37,6 +37,7 @@ readonly class CreatePropertyDTO
         public PropertyStatus $status = PropertyStatus::PendingApproval,
         public bool $isFeatured = false,
         public bool $isVip = false,
+        public ?string $video = null,
         public array $filterOptionIds = [],
         public array $amenityIds = [],
     ) {}
@@ -77,6 +78,7 @@ readonly class CreatePropertyDTO
                 : PropertyStatus::PendingApproval,
             isFeatured: (bool) ($data['is_featured'] ?? false),
             isVip: (bool) ($data['is_vip'] ?? false),
+            video: $data['video'] ?? null,
             filterOptionIds: $data['filter_option_ids'] ?? [],
             amenityIds: $data['amenity_ids'] ?? [],
         );
