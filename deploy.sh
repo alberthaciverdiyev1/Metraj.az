@@ -28,11 +28,16 @@ composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 echo "🗄️ Running database migrations..."
 php artisan migrate --force
 
-# 5. Build Frontend Assets (if local node_modules exist)
-if [ -f "node_modules/.bin/vite" ]; then
-    echo "⚡ Building frontend assets..."
-    npm run build 2>/dev/null || true
-    npm run assets:build 2>/dev/null || true
+# 5. Build Frontend Assets (regenerated here, not committed to Git)
+echo "⚡ Building frontend assets..."
+if [ -f "package.json" ]; then
+    if [ ! -d "node_modules" ]; then
+        echo "📦 Installing npm dependencies..."
+        npm install --no-interaction --prefer-offline
+    fi
+    npm run build
+    npm run assets:build
+    php artisan filament:assets
 fi
 
 # 6. Ensure Storage Link Exists
