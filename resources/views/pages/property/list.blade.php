@@ -170,47 +170,52 @@
                             </section>
 
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                                    <label class="block text-gray-700 font-semibold mb-2 flex items-center gap-2">
-                                        <i class="bi bi-currency-dollar text-orange-500 text-xl"></i>
+                                <div class="p-3 bg-gray-50 rounded-2xl border border-gray-200/90">
+                                    <label class="block text-gray-700 font-semibold mb-2 flex items-center gap-2 text-xs sm:text-sm">
+                                        <i class="bi bi-currency-dollar text-orange-500 text-base"></i>
                                         {{ __('listing.price') }}
                                     </label>
                                     <div class="flex gap-2">
                                         <input type="text" name="minPrice" placeholder="{{ __('listing.min_price') }}"
                                                value="{{ request('minPrice') }}"
-                                               class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none"/>
+                                               class="w-1/2 px-3 py-2 bg-white border border-gray-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-orange-500"/>
                                         <input type="text" name="maxPrice" placeholder="{{ __('listing.max_price') }}"
                                                value="{{ request('maxPrice') }}"
-                                               class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none"/>
+                                               class="w-1/2 px-3 py-2 bg-white border border-gray-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-orange-500"/>
                                     </div>
                                 </div>
 
-                                <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                                    <label class="block text-gray-700 font-semibold mb-2 flex items-center gap-2">
-                                        <i class="bi bi-fullscreen text-orange-500 text-xl"></i>
+                                <div class="p-3 bg-gray-50 rounded-2xl border border-gray-200/90">
+                                    <label class="block text-gray-700 font-semibold mb-2 flex items-center gap-2 text-xs sm:text-sm">
+                                        <i class="bi bi-fullscreen text-orange-500 text-base"></i>
                                         {{ __('listing.area') }}
                                     </label>
                                     <div class="flex gap-2">
                                         <input type="text" name="minArea" placeholder="{{ __('listing.min_area') }}"
                                                value="{{ request('minArea') }}"
-                                               class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none"/>
+                                               class="w-1/2 px-3 py-2 bg-white border border-gray-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-orange-500"/>
                                         <input type="text" name="maxArea" placeholder="{{ __('listing.max_area') }}"
                                                value="{{ request('maxArea') }}"
-                                               class="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none"/>
+                                               class="w-1/2 px-3 py-2 bg-white border border-gray-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-orange-500"/>
                                     </div>
                                 </div>
 
-                                <div class="flex flex-col gap-2 w-full md:w-64">
-                                    <button type="button" id="moreFiltersBtn"
-                                            class="w-full flex items-center justify-center text-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-[var(--primary)] transition">
-                                        + {{ __("listing.more") }}
-                                    </button>
-
+                                <div class="flex items-end">
                                     <button type="submit"
-                                            class="w-full px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition">
-                                        {{ __('listing.search') }}
+                                            class="w-full h-[58px] bg-gray-900 hover:bg-black text-white font-semibold text-sm rounded-2xl transition duration-200 shadow-sm flex items-center justify-center gap-2 cursor-pointer">
+                                        <i class="bi bi-search text-sm"></i>
+                                        <span>{{ __('listing.search') }}</span>
                                     </button>
                                 </div>
+                            </div>
+
+                            <!-- Gelişmiş Seçenekler Full-Width Bottom Bar -->
+                            <div class="w-full pt-1">
+                                <button type="button" id="moreFiltersBtn"
+                                        class="w-full py-3.5 px-4 bg-[#f8f8f8] hover:bg-[#f2f2f2] border border-gray-200/90 rounded-2xl text-[#b46d2f] hover:text-[#93521d] font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition duration-200 shadow-2xs group cursor-pointer">
+                                    <span>{{ __('listing.advanced_options') }}</span>
+                                    <i class="bi bi-sliders text-sm text-[#b46d2f] group-hover:scale-110 transition-transform duration-200"></i>
+                                </button>
                             </div>
 
                             @include('components.modals.city-filter')
