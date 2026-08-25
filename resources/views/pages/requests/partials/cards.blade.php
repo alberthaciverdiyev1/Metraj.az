@@ -6,14 +6,7 @@
         $isDaily = $typeVal === 'rent_daily';
         $isRoommate = str_starts_with($typeVal, 'roommate');
 
-        $typeLabel = match($typeVal) {
-            'buy' => __('Almaq istəyir'),
-            'rent_monthly' => __('Kirayə axtarır'),
-            'rent_daily' => __('Günlük axtarır'),
-            'roommate_have' => __('Otaq verir'),
-            'roommate_need' => __('Otaq axtarır'),
-            default => __('Axtarır'),
-        };
+        $typeLabel = $req->request_type->badgeLabel();
 
         $typeBadgeColor = match($typeVal) {
             'buy' => 'bg-emerald-600',
@@ -27,7 +20,7 @@
         $locationFull = $cityName . ($districtName ? ', ' . $districtName : '') . ($req->location_note ? ' (' . $req->location_note . ')' : '');
 
         $dateStr = $req->created_at
-            ? ($req->created_at->isToday() ? 'Bugün ' . $req->created_at->format('H:i') : $req->created_at->format('d.m.Y'))
+            ? ($req->created_at->isToday() ? __('property.today') . ' ' . $req->created_at->format('H:i') : $req->created_at->format('d.m.Y'))
             : '';
 
         $hasRealImage = !empty($req->first_image_url);
@@ -71,7 +64,7 @@
                 </span>
             @elseif($req->gender_preference && $req->gender_preference !== 'any')
                 <span class="absolute top-2.5 right-2.5 bg-white/95 text-purple-700 text-xs font-semibold px-2.5 py-1 rounded-full shadow-xs z-10">
-                    {{ $req->gender_preference === 'female' ? __('Yalnız Xanım') : __('Yalnız Bəy') }}
+                    {{ $req->gender_preference === 'female' ? __('requests.female_only') : __('requests.male_only') }}
                 </span>
             @endif
         </div>
@@ -90,21 +83,21 @@
                     @if($req->rooms)
                         <span class="bg-[#80807F] text-white flex items-center justify-center rounded-full px-2 py-0.5 text-xs font-semibold">
                             <i class="fa-solid fa-door-open text-[11px] mr-1"></i>
-                            <span>{{ $req->rooms }} {{ __('otaqlı') }}</span>
+                            <span>{{ $req->rooms }} {{ __('requests.rooms_suffix') }}</span>
                         </span>
                     @endif
 
                     @if($req->has_deed)
                         <span class="bg-emerald-600 text-white flex items-center justify-center rounded-full px-2 py-0.5 text-xs font-semibold">
                             <i class="fa-solid fa-certificate text-[11px] mr-1"></i>
-                            <span>{{ __('Kupçalı') }}</span>
+                            <span>{{ __('requests.deed_badge') }}</span>
                         </span>
                     @endif
 
                     @if($req->mortgage_eligible)
                         <span class="bg-blue-600 text-white flex items-center justify-center rounded-full px-2 py-0.5 text-xs font-semibold">
                             <i class="fa-solid fa-building-columns text-[11px] mr-1"></i>
-                            <span>{{ __('İpoteka') }}</span>
+                            <span>{{ __('requests.mortgage_badge') }}</span>
                         </span>
                     @endif
 
@@ -116,7 +109,7 @@
 
                     @if($req->bills_included)
                         <span class="bg-emerald-100 text-emerald-800 flex items-center justify-center rounded-full px-2 py-0.5 text-xs font-semibold">
-                            {{ __('Kommunal daxil') }}
+                            {{ __('requests.bills_badge') }}
                         </span>
                     @endif
                 </div>
@@ -148,7 +141,7 @@
                 </span>
 
                 <span class="flex items-center gap-1 text-xs text-[color:var(--grey-text)] font-medium group-hover:text-[color:var(--primary)] transition-colors">
-                    <span>{{ __('Ətraflı') }}</span>
+                    <span>{{ __('requests.details') }}</span>
                     <i class="bi bi-chevron-right text-[11px]"></i>
                 </span>
             </div>
@@ -160,13 +153,13 @@
         <div class="w-12 h-12 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center mx-auto mb-3 text-lg">
             <i class="fa-solid fa-bullhorn"></i>
         </div>
-        <h3 class="text-base font-semibold text-gray-900 mb-1">{{ __('Heç bir tələb elanı tapılmadı') }}</h3>
+        <h3 class="text-base font-semibold text-gray-900 mb-1">{{ __('requests.no_requests_found') }}</h3>
         <p class="text-xs text-gray-500 mb-5">
-            {{ __('Axtarış parametrlərini dəyişdirə və ya ilk tələb elanını siz yerləşdirə bilərsiniz.') }}
+            {{ __('requests.no_requests_desc') }}
         </p>
         <a href="{{ route('requests.create') }}" class="inline-flex items-center gap-1.5 px-4 py-2 bg-[#f1913d] hover:bg-[#e07f2c] text-white font-semibold text-xs rounded-lg transition">
             <i class="bi bi-plus-circle"></i>
-            <span>{{ __('Tələb Elanı Yerləşdir') }}</span>
+            <span>{{ __('requests.post_request_btn') }}</span>
         </a>
     </div>
 @endforelse

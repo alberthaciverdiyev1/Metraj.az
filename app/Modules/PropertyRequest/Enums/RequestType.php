@@ -13,22 +13,22 @@ enum RequestType: string
     public function label(): string
     {
         return match ($this) {
-            self::Buy => 'Ev / Əmlak Almaq İstəyirəm',
-            self::RentMonthly => 'Kirayə Ev Axtarıram',
-            self::RentDaily => 'Günlük Ev Axtarıram',
-            self::RoommateHave => 'Evim var, otaq yoldaşı axtarıram',
-            self::RoommateNeed => 'Ev axtarıram, birgə qalmağa yoldaş axtarıram',
+            self::Buy => __('requests.type_buy_label'),
+            self::RentMonthly => __('requests.type_rent_label'),
+            self::RentDaily => __('requests.type_daily_label'),
+            self::RoommateHave => __('requests.type_roommate_have_label'),
+            self::RoommateNeed => __('requests.type_roommate_need_label'),
         };
     }
 
     public function badgeLabel(): string
     {
         return match ($this) {
-            self::Buy => 'Almaq istəyir',
-            self::RentMonthly => 'Kirayə axtarır',
-            self::RentDaily => 'Günlük axtarır',
-            self::RoommateHave => 'Otaq verir',
-            self::RoommateNeed => 'Otaq axtarır',
+            self::Buy => __('requests.badge_buy'),
+            self::RentMonthly => __('requests.badge_rent'),
+            self::RentDaily => __('requests.badge_daily'),
+            self::RoommateHave => __('requests.badge_roommate_have'),
+            self::RoommateNeed => __('requests.badge_roommate_need'),
         };
     }
 

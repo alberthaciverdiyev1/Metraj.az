@@ -33,8 +33,8 @@
                 
                 <span class="absolute bottom-4 left-4 bg-black/60 text-white text-xs px-3.5 py-2 rounded-xl font-semibold backdrop-blur-md flex items-center gap-1.5 shadow select-none">
                     <i class="bi bi-camera"></i>
-                    <span>{{ $totalImages }} {{ __('şəkil') }}</span>
-                    <span class="text-white/60 ml-1">({{ __('Böyütmək üçün klikləyin') }})</span>
+                    <span>{{ $totalImages }} {{ __('requests.photos') }}</span>
+                    <span class="text-white/60 ml-1">({{ __('requests.click_to_enlarge') }})</span>
                 </span>
             </div>
 
@@ -105,7 +105,7 @@
                     @endif
 
                     <span class="text-xs text-gray-400 ml-auto flex items-center gap-1">
-                        <i class="bi bi-eye"></i> {{ $propertyRequest->views_count }} {{ __('baxış') }}
+                        <i class="bi bi-eye"></i> {{ $propertyRequest->views_count }} {{ __('requests.views') }}
                     </span>
                     <span class="text-xs text-gray-400">•</span>
                     <span class="text-xs text-gray-400">
@@ -136,78 +136,78 @@
 
             <!-- Key Parameters Grid -->
             <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs">
-                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-4">{{ __('Tələbin Təfərrüatları') }}</h2>
+                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-4">{{ __('requests.request_details') }}</h2>
                 
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     
                     <!-- Budget Box -->
                     <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
-                        <span class="text-xs text-gray-500 font-medium">{{ __('Büdcə') }}</span>
+                        <span class="text-xs text-gray-500 font-medium">{{ __('requests.budget') }}</span>
                         <div class="text-lg font-bold text-[#f1913d] mt-1">
                             {{ $propertyRequest->formatted_budget }}
                         </div>
                         <span class="text-[11px] font-semibold {{ $propertyRequest->bills_included ? 'text-emerald-600' : 'text-gray-400' }} mt-0.5">
-                            {{ $propertyRequest->bills_included ? __('Kommunal daxildir') : '' }}
+                            {{ $propertyRequest->bills_included ? __('requests.bills_included_note') : '' }}
                         </span>
                     </div>
 
                     @if($propertyRequest->property_type)
                         <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
-                            <span class="text-xs text-gray-500 font-medium">{{ __('Əmlak Növü') }}</span>
+                            <span class="text-xs text-gray-500 font-medium">{{ __('requests.property_type') }}</span>
                             <div class="text-base font-semibold text-gray-900 mt-1">
                                 {{ $propertyRequest->property_type }}
                             </div>
-                            <span class="text-[11px] text-gray-400 mt-0.5">{{ __('Axtarılan kateqoriya') }}</span>
+                            <span class="text-[11px] text-gray-400 mt-0.5">{{ __('requests.target_category') }}</span>
                         </div>
                     @endif
 
                     @if($propertyRequest->rooms)
                         <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
-                            <span class="text-xs text-gray-500 font-medium">{{ __('Otaq Sayı') }}</span>
+                            <span class="text-xs text-gray-500 font-medium">{{ __('requests.rooms_count') }}</span>
                             <div class="text-base font-semibold text-gray-900 mt-1">
-                                {{ $propertyRequest->rooms }} {{ __('otaqlı') }}
+                                {{ $propertyRequest->rooms }} {{ __('requests.rooms_suffix') }}
                             </div>
-                            <span class="text-[11px] text-gray-400 mt-0.5">{{ __('Planlaşdırma') }}</span>
+                            <span class="text-[11px] text-gray-400 mt-0.5">{{ __('requests.layout') }}</span>
                         </div>
                     @endif
 
                     @if($propertyRequest->has_deed !== null)
                         <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
-                            <span class="text-xs text-gray-500 font-medium">{{ __('Sənəd Tələbi') }}</span>
+                            <span class="text-xs text-gray-500 font-medium">{{ __('requests.deed_requirement') }}</span>
                             <div class="text-base font-semibold {{ $propertyRequest->has_deed ? 'text-emerald-600' : 'text-gray-800' }} mt-1">
-                                {{ $propertyRequest->has_deed ? __('Kupçalı (Çıxarış)') : __('Fərqi yoxdur') }}
+                                {{ $propertyRequest->has_deed ? __('requests.deed_with_doc') : __('requests.no_preference') }}
                             </div>
-                            <span class="text-[11px] text-gray-400 mt-0.5">{{ __('Mülkiyyət sənədi') }}</span>
+                            <span class="text-[11px] text-gray-400 mt-0.5">{{ __('requests.property_document') }}</span>
                         </div>
                     @endif
 
                     @if($propertyRequest->mortgage_eligible !== null)
                         <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
-                            <span class="text-xs text-gray-500 font-medium">{{ __('İpoteka') }}</span>
+                            <span class="text-xs text-gray-500 font-medium">{{ __('requests.mortgage_badge') }}</span>
                             <div class="text-base font-semibold {{ $propertyRequest->mortgage_eligible ? 'text-blue-600' : 'text-gray-800' }} mt-1">
-                                {{ $propertyRequest->mortgage_eligible ? __('İpotekaya yararlı') : __('Fərqi yoxdur') }}
+                                {{ $propertyRequest->mortgage_eligible ? __('requests.mortgage_eligible') : __('requests.no_preference') }}
                             </div>
-                            <span class="text-[11px] text-gray-400 mt-0.5">{{ __('Bank ipotekası') }}</span>
+                            <span class="text-[11px] text-gray-400 mt-0.5">{{ __('requests.bank_mortgage') }}</span>
                         </div>
                     @endif
 
                     @if($propertyRequest->occupancy_type)
                         <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
-                            <span class="text-xs text-gray-500 font-medium">{{ __('Kimlər qalacaq') }}</span>
+                            <span class="text-xs text-gray-500 font-medium">{{ __('requests.who_will_stay') }}</span>
                             <div class="text-base font-semibold text-gray-900 mt-1">
                                 {{ $propertyRequest->occupancy_type }}
                             </div>
-                            <span class="text-[11px] text-gray-400 mt-0.5">{{ __('Sakin növü') }}</span>
+                            <span class="text-[11px] text-gray-400 mt-0.5">{{ __('requests.resident_type') }}</span>
                         </div>
                     @endif
 
                     @if($propertyRequest->gender_preference)
                         <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
-                            <span class="text-xs text-gray-500 font-medium">{{ __('Cinsiyyət Tələbi') }}</span>
+                            <span class="text-xs text-gray-500 font-medium">{{ __('requests.gender_requirement') }}</span>
                             <div class="text-base font-semibold text-gray-900 mt-1">
-                                {{ $propertyRequest->gender_preference === 'female' ? __('Yalnız Xanım') : ($propertyRequest->gender_preference === 'male' ? __('Yalnız Bəy') : __('Fərqi yoxdur')) }}
+                                {{ $propertyRequest->gender_preference === 'female' ? __('requests.female_only') : ($propertyRequest->gender_preference === 'male' ? __('requests.male_only') : __('requests.no_preference')) }}
                             </div>
-                            <span class="text-[11px] text-gray-400 mt-0.5">{{ __('Otaq yoldaşı üçün') }}</span>
+                            <span class="text-[11px] text-gray-400 mt-0.5">{{ __('requests.for_roommate') }}</span>
                         </div>
                     @endif
 
@@ -216,7 +216,7 @@
 
             <!-- Description -->
             <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs">
-                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-3">{{ __('Ətraflı Təsvir və Şərtlər') }}</h2>
+                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-3">{{ __('requests.description_and_terms') }}</h2>
                 <div class="text-xs sm:text-sm text-gray-700 leading-relaxed prose prose-sm max-w-none">
                     {!! $propertyRequest->description !!}
                 </div>
@@ -232,20 +232,20 @@
                 
                 <!-- Budget Header -->
                 <div class="pb-5 border-b border-gray-100">
-                    <span class="text-xs text-gray-500 font-medium">{{ __('Axtarılan Büdcə') }}</span>
+                    <span class="text-xs text-gray-500 font-medium">{{ __('requests.target_budget') }}</span>
                     <div class="text-2xl sm:text-3xl font-bold text-[#f1913d] mt-0.5">
                         {{ $propertyRequest->formatted_budget }}
                     </div>
                 </div>
 
-                <x-contact-profile :name="$propertyRequest->contact_name" :role="__('Müştəri / Axtaran şəxs')" />
+                <x-contact-profile :name="$propertyRequest->contact_name" :role="__('requests.client_seeker')" />
 
                 <x-contact-actions :whatsapp="$propertyRequest->contact_whatsapp" :phone="$propertyRequest->contact_phone"
                     :message="'Salam, Metraj.az saytında yerləşdirdiyiniz tələb elanınızla bağlı sizə uyğun təklifim var: ' . $propertyRequest->title"
-                    :whatsapp-label="__('WhatsApp ilə Təklif Göndər')" />
+                    :whatsapp-label="__('requests.whatsapp_offer_label')" />
 
-                <x-safety-note icon="bi-info-circle" :title="__('Agentlər və Ev Sahibləri üçün')"
-                    :text="__('Əgər bu müştərinin tələblərinə uyğun əmlakınız varsa, birbaşa zəng edərək və ya WhatsApp ilə əlaqə saxlayaraq təklifinizi təqdim edə bilərsiniz.')" />
+                <x-safety-note icon="bi-info-circle" :title="__('requests.for_agents_and_owners')"
+                    :text="__('requests.safety_text')" />
 
             </div>
 
@@ -258,10 +258,10 @@
         <div class="mt-12 pt-8 border-t border-gray-200">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">
-                    {{ __('Oxşar Tələb Elanları') }}
+                    {{ __('requests.similar_requests') }}
                 </h2>
                 <a href="{{ route('requests.index') }}" class="text-xs sm:text-sm font-semibold text-orange-600 hover:underline">
-                    {{ __('Hamısına Bax') }} <i class="bi bi-arrow-right ml-1"></i>
+                    {{ __('requests.view_all') }} <i class="bi bi-arrow-right ml-1"></i>
                 </a>
             </div>
 

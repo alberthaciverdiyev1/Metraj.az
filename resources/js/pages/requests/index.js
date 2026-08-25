@@ -18,6 +18,16 @@ document.addEventListener('DOMContentLoaded', function () {
     let debounceTimer = null;
     let currentAbortController = null;
 
+    const config = window.requestsIndexConfig || {};
+    const labels = config.labels || {
+        roommateBudget: 'Aylıq Pay Büdcəsi (₼)',
+        rentBudget: 'Aylıq Kirayə Büdcəsi (₼)',
+        dailyBudget: 'Günlük Büdcə (₼)',
+        buyBudget: 'Alış Büdcəsi (₼)',
+        maxBudget: 'Maksimum Büdcə (₼)'
+    };
+    const indexRoute = config.routes?.index || window.location.pathname;
+
     function updateFilterUI(type) {
         tabBtns.forEach(btn => {
             const btnType = btn.getAttribute('data-type');
@@ -35,35 +45,35 @@ document.addEventListener('DOMContentLoaded', function () {
         if (type === 'roommate') {
             propTypeCol.classList.add('hidden');
             roommateGenderCol.classList.remove('hidden');
-            budgetLabel.textContent = 'Aylıq Pay Büdcəsi (₼)';
+            budgetLabel.textContent = labels.roommateBudget;
             buyCheckboxes.classList.add('hidden');
             rentCheckboxes.classList.remove('hidden');
             roommateCheckboxes.classList.remove('hidden');
         } else if (type === 'rent') {
             propTypeCol.classList.remove('hidden');
             roommateGenderCol.classList.add('hidden');
-            budgetLabel.textContent = 'Aylıq Kirayə Büdcəsi (₼)';
+            budgetLabel.textContent = labels.rentBudget;
             buyCheckboxes.classList.add('hidden');
             rentCheckboxes.classList.remove('hidden');
             roommateCheckboxes.classList.add('hidden');
         } else if (type === 'daily') {
             propTypeCol.classList.remove('hidden');
             roommateGenderCol.classList.add('hidden');
-            budgetLabel.textContent = 'Günlük Büdcə (₼)';
+            budgetLabel.textContent = labels.dailyBudget;
             buyCheckboxes.classList.add('hidden');
             rentCheckboxes.classList.add('hidden');
             roommateCheckboxes.classList.add('hidden');
         } else if (type === 'buy') {
             propTypeCol.classList.remove('hidden');
             roommateGenderCol.classList.add('hidden');
-            budgetLabel.textContent = 'Alış Büdcəsi (₼)';
+            budgetLabel.textContent = labels.buyBudget;
             buyCheckboxes.classList.remove('hidden');
             rentCheckboxes.classList.add('hidden');
             roommateCheckboxes.classList.add('hidden');
         } else {
             propTypeCol.classList.remove('hidden');
             roommateGenderCol.classList.add('hidden');
-            budgetLabel.textContent = 'Maksimum Büdcə (₼)';
+            budgetLabel.textContent = labels.maxBudget;
             buyCheckboxes.classList.remove('hidden');
             rentCheckboxes.classList.remove('hidden');
             roommateCheckboxes.classList.add('hidden');
@@ -94,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
         currentAbortController = new AbortController();
 
         const queryString = buildQueryString(page);
-        const url = `/axtariram${queryString ? '?' + queryString : ''}`;
+        const url = `${indexRoute}${queryString ? '?' + queryString : ''}`;
 
         if (updateUrl) {
             window.history.pushState({ path: url }, '', url);

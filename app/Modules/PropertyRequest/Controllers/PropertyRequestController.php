@@ -53,8 +53,8 @@ class PropertyRequestController extends Controller
         $buildingTypes = $this->locationService->propertyTypeOptions();
 
         $breadcrumbs = [
-            ['label' => __('Ana səhifə'), 'url' => '/'],
-            ['label' => __('Axtarıram (Tələblər)'), 'url' => null],
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => __('requests.page_title'), 'url' => null],
         ];
 
         return view('pages.requests.index', compact('requests', 'cities', 'buildingTypes', 'breadcrumbs', 'filter'))->render();
@@ -66,9 +66,9 @@ class PropertyRequestController extends Controller
         $buildingTypes = $this->locationService->propertyTypeOptions();
 
         $breadcrumbs = [
-            ['label' => __('Ana səhifə'), 'url' => '/'],
-            ['label' => __('Axtarıram'), 'url' => route('requests.index')],
-            ['label' => __('Tələb Elanı Yerləşdir'), 'url' => null],
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => __('requests.requests'), 'url' => route('requests.index')],
+            ['label' => __('requests.post_request_title'), 'url' => null],
         ];
 
         return view('pages.requests.create', compact('cities', 'buildingTypes', 'breadcrumbs'));
@@ -81,15 +81,17 @@ class PropertyRequestController extends Controller
 
         $propertyRequest = $this->requestService->store($validated, $images);
 
+        $successMsg = __('requests.request_success');
+
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Tələb elanınız uğurla yerləşdirildi!',
+                'message' => $successMsg,
                 'redirect' => route('requests.show', $propertyRequest->slug),
             ]);
         }
 
-        return redirect()->route('requests.show', $propertyRequest->slug)->with('success', 'Tələb elanınız uğurla yerləşdirildi!');
+        return redirect()->route('requests.show', $propertyRequest->slug)->with('success', $successMsg);
     }
 
     public function show(string $slug): View
@@ -111,8 +113,8 @@ class PropertyRequestController extends Controller
             ->get();
 
         $breadcrumbs = [
-            ['label' => __('Ana səhifə'), 'url' => '/'],
-            ['label' => __('Axtarıram'), 'url' => route('requests.index')],
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => __('requests.requests'), 'url' => route('requests.index')],
             ['label' => $propertyRequest->title, 'url' => null],
         ];
 
