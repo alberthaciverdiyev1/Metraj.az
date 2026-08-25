@@ -28,23 +28,26 @@ composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 echo "🗄️ Running database migrations..."
 php artisan migrate --force
 
-# 5. Build Frontend Assets (regenerated here, not committed to Git)
+# 5. Build Frontend Assets (always regenerated on the server — not committed to Git)
 echo "⚡ Building frontend assets..."
 if [ -f "package.json" ]; then
     if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
         echo "❌ Node.js/npm is required to build frontend assets."
         exit 1
     fi
-    if [ ! -d "node_modules" ]; then
-        echo "📦 Installing npm dependencies..."
-        if [ -f "package-lock.json" ]; then
-            npm ci --no-interaction
-        else
-            npm install --no-interaction --prefer-offline
-        fi
+    echo "   node: $(node -v), npm: $(npm -v)"
+    if [ -f "package-lock.json" ]; then
+        echo "📦 Installing npm dependencies (npm ci)..."
+        npm ci --no-interaction
+    else
+        echo "📦 Installing npm dependencies (npm install)..."
+        npm install --no-interaction --prefer-offline
     fi
+    echo "🏗️  Running vite build..."
     npm run build
+    echo "🏗️  Running legacy assets build..."
     npm run assets:build
+    echo "🎨 Publishing Filament assets..."
     php artisan filament:assets
 fi
 
