@@ -32,12 +32,16 @@
                 </div>
                 <h3 class="font-semibold text-gray-900 text-base mb-1">{{ __('contact.phone') }}</h3>
                 <p class="text-xs text-gray-500 mb-3">{{ __('contact.phone_desc') }}</p>
-                <a href="tel:+994501234567" class="text-sm font-semibold text-[var(--primary)] hover:underline mt-auto">
-                    +994 50 123 45 67
-                </a>
-                <a href="tel:+994124000000" class="text-xs text-gray-600 hover:text-[var(--primary)] mt-1">
-                    +994 12 400 00 00
-                </a>
+                @if($siteSetting?->phone)
+                    <a href="tel:{{ preg_replace('/[^\d\+]/', '', $siteSetting->phone) }}" class="text-sm font-semibold text-[var(--primary)] hover:underline mt-auto">
+                        {{ $siteSetting->phone }}
+                    </a>
+                @endif
+                @if($siteSetting?->phone_secondary)
+                    <a href="tel:{{ preg_replace('/[^\d\+]/', '', $siteSetting->phone_secondary) }}" class="text-xs text-gray-600 hover:text-[var(--primary)] mt-1">
+                        {{ $siteSetting->phone_secondary }}
+                    </a>
+                @endif
             </div>
 
             {{-- WhatsApp --}}
@@ -47,7 +51,10 @@
                 </div>
                 <h3 class="font-semibold text-gray-900 text-base mb-1">{{ __('contact.whatsapp_title') }}</h3>
                 <p class="text-xs text-gray-500 mb-3">{{ __('contact.whatsapp_desc') }}</p>
-                <a href="https://wa.me/994501234567" target="_blank" class="text-sm font-semibold text-emerald-600 hover:underline mt-auto flex items-center gap-1.5">
+                @php
+                    $waClean = preg_replace('/[^\d]/', '', $siteSetting?->whatsapp ?: '905488888888');
+                @endphp
+                <a href="https://wa.me/{{ $waClean }}" target="_blank" class="text-sm font-semibold text-emerald-600 hover:underline mt-auto flex items-center gap-1.5">
                     {{ __('contact.start_chat') }} <i class="bi bi-arrow-right text-xs"></i>
                 </a>
             </div>
@@ -59,9 +66,14 @@
                 </div>
                 <h3 class="font-semibold text-gray-900 text-base mb-1">{{ __('contact.email') }}</h3>
                 <p class="text-xs text-gray-500 mb-3">{{ __('contact.email_desc') }}</p>
-                <a href="mailto:info@kibriskare.com" class="text-sm font-semibold text-blue-600 hover:underline mt-auto break-all">
-                    info@kibriskare.com
+                <a href="mailto:{{ $siteSetting?->email ?: 'info@kibriskare.com' }}" class="text-sm font-semibold text-blue-600 hover:underline mt-auto break-all">
+                    {{ $siteSetting?->email ?: 'info@kibriskare.com' }}
                 </a>
+                @if($siteSetting?->support_email && $siteSetting->support_email !== $siteSetting->email)
+                    <a href="mailto:{{ $siteSetting->support_email }}" class="text-xs text-gray-500 hover:text-blue-600 mt-1 break-all">
+                        {{ $siteSetting->support_email }}
+                    </a>
+                @endif
             </div>
 
             {{-- Address --}}
@@ -72,7 +84,7 @@
                 <h3 class="font-semibold text-gray-900 text-base mb-1">{{ __('contact.head_office') }}</h3>
                 <p class="text-xs text-gray-500 mb-2">{{ __('contact.office_location_desc') }}</p>
                 <span class="text-xs text-gray-700 leading-relaxed mt-auto">
-                    {{ __('contact.office_address') }}
+                    {{ $siteSetting?->getTrans('address') ?: __('contact.office_address') }}
                 </span>
             </div>
         </div>
@@ -111,7 +123,7 @@
                             <label for="contact_phone" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">
                                 {{ __('contact.contact_phone') }} <span class="text-red-500">*</span>
                             </label>
-                            <input type="tel" id="contact_phone" name="phone" required placeholder="{{ __('+994 50 000 00 00') }}"
+                            <input type="tel" id="contact_phone" name="phone" required placeholder="{{ __('+90 548 000 00 00') }}"
                                    class="w-full px-4 py-3 text-sm bg-gray-50/60 border border-gray-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/40 focus:border-orange-500 transition">
                         </div>
                     </div>
@@ -187,15 +199,15 @@
                     <div class="space-y-2.5 text-xs sm:text-sm text-gray-600">
                         <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
                             <span class="font-medium text-gray-800">{{ __('contact.mon_fri') }}</span>
-                            <span class="font-semibold text-gray-900">09:00 – 19:00</span>
+                            <span class="font-semibold text-gray-900">{{ $siteSetting?->working_hours_mon_fri ?: '09:00 – 19:00' }}</span>
                         </div>
                         <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
                             <span class="font-medium text-gray-800">{{ __('contact.saturday') }}</span>
-                            <span class="font-semibold text-gray-900">10:00 – 18:00</span>
+                            <span class="font-semibold text-gray-900">{{ $siteSetting?->working_hours_sat ?: '10:00 – 18:00' }}</span>
                         </div>
                         <div class="flex items-center justify-between py-1.5 text-gray-500">
                             <span class="font-medium">{{ __('contact.sunday') }}</span>
-                            <span class="text-orange-500 font-semibold">{{ __('contact.online_24_7') }}</span>
+                            <span class="text-orange-500 font-semibold">{{ $siteSetting?->working_hours_sun ?: __('contact.online_24_7') }}</span>
                         </div>
                     </div>
                 </div>
@@ -227,14 +239,16 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
     window.contactConfig = {
+        lat: {{ $siteSetting?->map_latitude ?: 35.3382440 }},
+        lng: {{ $siteSetting?->map_longitude ?: 33.3186270 }},
         i18n: {
             sending: "{{ __('contact.sending') }}",
             sent: "{{ __('contact.message_sent_success') }}",
             error: "{{ __('contact.error_occurred') }}",
             network: "{{ __('contact.network_error') }}",
             send: "{{ __('contact.send_message') }}",
-            mapPopupTitle: "{{ __('contact.map_office_popup') }}",
-            mapPopupAddress: "{{ __('contact.office_address') }}"
+            mapPopupTitle: "{{ $siteSetting?->copyright_text ?: 'KibrisKare.com' }}",
+            mapPopupAddress: "{{ addslashes($siteSetting?->getTrans('address') ?: __('contact.office_address')) }}"
         }
     };
 </script>

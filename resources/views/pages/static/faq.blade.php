@@ -224,27 +224,32 @@
                     </p>
 
                     <div class="space-y-2.5 pt-2 border-t border-gray-100 text-xs">
-                        <a href="tel:+994501234567" class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-orange-50/60 transition group">
-                            <i class="bi bi-telephone-fill text-orange-500 text-sm"></i>
-                            <div class="flex-1 min-w-0">
-                                <span class="block text-[11px] text-gray-400">{{ __('faq.hotline') }}</span>
-                                <span class="font-semibold text-gray-900 group-hover:text-orange-600 transition">+994 50 123 45 67</span>
-                            </div>
-                        </a>
+                        @if($siteSetting?->phone)
+                            <a href="tel:{{ preg_replace('/[^\d\+]/', '', $siteSetting->phone) }}" class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-orange-50/60 transition group">
+                                <i class="bi bi-telephone-fill text-orange-500 text-sm"></i>
+                                <div class="flex-1 min-w-0">
+                                    <span class="block text-[11px] text-gray-400">{{ __('faq.hotline') }}</span>
+                                    <span class="font-semibold text-gray-900 group-hover:text-orange-600 transition">{{ $siteSetting->phone }}</span>
+                                </div>
+                            </a>
+                        @endif
 
-                        <a href="https://wa.me/994501234567" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-emerald-50/60 transition group">
+                        @php
+                            $waClean = preg_replace('/[^\d]/', '', $siteSetting?->whatsapp ?: '905488888888');
+                        @endphp
+                        <a href="https://wa.me/{{ $waClean }}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-emerald-50/60 transition group">
                             <i class="bi bi-whatsapp text-emerald-600 text-sm"></i>
                             <div class="flex-1 min-w-0">
                                 <span class="block text-[11px] text-gray-400">WhatsApp</span>
-                                <span class="font-semibold text-gray-900 group-hover:text-emerald-600 transition">+994 50 123 45 67</span>
+                                <span class="font-semibold text-gray-900 group-hover:text-emerald-600 transition">{{ $siteSetting?->whatsapp ?: '+90 548 888 88 88' }}</span>
                             </div>
                         </a>
 
-                        <a href="mailto:info@kibriskare.com" class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-orange-50/60 transition group">
+                        <a href="mailto:{{ $siteSetting?->email ?: 'info@kibriskare.com' }}" class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-orange-50/60 transition group">
                             <i class="bi bi-envelope-fill text-orange-500 text-sm"></i>
                             <div class="flex-1 min-w-0">
                                 <span class="block text-[11px] text-gray-400">Email</span>
-                                <span class="font-semibold text-gray-900 group-hover:text-orange-600 transition">info@kibriskare.com</span>
+                                <span class="font-semibold text-gray-900 group-hover:text-orange-600 transition">{{ $siteSetting?->email ?: 'info@kibriskare.com' }}</span>
                             </div>
                         </a>
                     </div>

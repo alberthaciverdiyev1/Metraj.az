@@ -6,26 +6,46 @@
                 <a href="{{ route('home') }}" class="flex items-center space-x-2.5">
                     <img class="h-9 w-auto object-contain brightness-0 invert" src="{{ asset('images/kibriskarelogo1.png') }}" alt="KibrisKare" />
                     <div class="leading-tight">
-                        <div class="text-xl font-bold text-white tracking-tight">KibrisKare.com</div>
-                        <div class="text-[8px] text-orange-500 underline underline-offset-4 uppercase tracking-[0.15em] font-semibold">{{ __('footer.tagline') }}</div>
+                        <div class="text-xl font-bold text-white tracking-tight">{{ $siteSetting?->copyright_text ?: 'KibrisKare.com' }}</div>
+                        <div class="text-[8px] text-orange-500 underline underline-offset-4 uppercase tracking-[0.15em] font-semibold">
+                            {{ $siteSetting?->getTrans('tagline') ?: __('footer.tagline') }}
+                        </div>
                     </div>
                 </a>
                 <p class="text-sm text-neutral-400 leading-relaxed max-w-sm">
-                    {{ __('footer.description') }}
+                    {{ $siteSetting?->getTrans('footer_description') ?: __('footer.description') }}
                 </p>
                 <div class="flex items-center space-x-4 pt-2">
-                    <a href="#" class="w-10 h-10 rounded-xl bg-neutral-900 text-neutral-400 hover:text-white hover:bg-orange-500 flex items-center justify-center border border-neutral-800 transition duration-300 shadow-sm">
-                        <i class="bi bi-facebook text-lg"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-xl bg-neutral-900 text-neutral-400 hover:text-white hover:bg-orange-500 flex items-center justify-center border border-neutral-800 transition duration-300 shadow-sm">
-                        <i class="bi bi-instagram text-lg"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-xl bg-neutral-900 text-neutral-400 hover:text-white hover:bg-orange-500 flex items-center justify-center border border-neutral-800 transition duration-300 shadow-sm">
-                        <i class="bi bi-linkedin text-lg"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-xl bg-neutral-900 text-neutral-400 hover:text-white hover:bg-orange-500 flex items-center justify-center border border-neutral-800 transition duration-300 shadow-sm">
-                        <i class="bi bi-youtube text-lg"></i>
-                    </a>
+                    @if($siteSetting?->facebook_url)
+                        <a href="{{ $siteSetting->facebook_url }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-xl bg-neutral-900 text-neutral-400 hover:text-white hover:bg-orange-500 flex items-center justify-center border border-neutral-800 transition duration-300 shadow-sm">
+                            <i class="bi bi-facebook text-lg"></i>
+                        </a>
+                    @endif
+                    @if($siteSetting?->instagram_url)
+                        <a href="{{ $siteSetting->instagram_url }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-xl bg-neutral-900 text-neutral-400 hover:text-white hover:bg-orange-500 flex items-center justify-center border border-neutral-800 transition duration-300 shadow-sm">
+                            <i class="bi bi-instagram text-lg"></i>
+                        </a>
+                    @endif
+                    @if($siteSetting?->linkedin_url)
+                        <a href="{{ $siteSetting->linkedin_url }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-xl bg-neutral-900 text-neutral-400 hover:text-white hover:bg-orange-500 flex items-center justify-center border border-neutral-800 transition duration-300 shadow-sm">
+                            <i class="bi bi-linkedin text-lg"></i>
+                        </a>
+                    @endif
+                    @if($siteSetting?->youtube_url)
+                        <a href="{{ $siteSetting->youtube_url }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-xl bg-neutral-900 text-neutral-400 hover:text-white hover:bg-orange-500 flex items-center justify-center border border-neutral-800 transition duration-300 shadow-sm">
+                            <i class="bi bi-youtube text-lg"></i>
+                        </a>
+                    @endif
+                    @if($siteSetting?->telegram_url)
+                        <a href="{{ $siteSetting->telegram_url }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-xl bg-neutral-900 text-neutral-400 hover:text-white hover:bg-orange-500 flex items-center justify-center border border-neutral-800 transition duration-300 shadow-sm">
+                            <i class="bi bi-telegram text-lg"></i>
+                        </a>
+                    @endif
+                    @if($siteSetting?->tiktok_url)
+                        <a href="{{ $siteSetting->tiktok_url }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-xl bg-neutral-900 text-neutral-400 hover:text-white hover:bg-orange-500 flex items-center justify-center border border-neutral-800 transition duration-300 shadow-sm">
+                            <i class="bi bi-tiktok text-lg"></i>
+                        </a>
+                    @endif
                 </div>
             </div>
 
@@ -60,17 +80,21 @@
             <div class="space-y-4">
                 <h4 class="text-sm font-semibold text-white uppercase tracking-wider">{{ __('footer.contact_support') }}</h4>
                 <ul class="space-y-3.5 text-sm">
-                    <li class="flex items-start space-x-3">
-                        <i class="bi bi-telephone text-orange-500 mt-0.5 text-base"></i>
-                        <span class="text-neutral-300 font-semibold">+90 (548) 888-8888</span>
-                    </li>
-                    <li class="flex items-start space-x-3">
-                        <i class="bi bi-envelope text-orange-500 mt-0.5 text-base"></i>
-                        <a href="mailto:info@kibriskare.com" class="hover:text-white transition">info@kibriskare.com</a>
-                    </li>
+                    @if($siteSetting?->phone)
+                        <li class="flex items-start space-x-3">
+                            <i class="bi bi-telephone text-orange-500 mt-0.5 text-base"></i>
+                            <a href="tel:{{ preg_replace('/[^\d\+]/', '', $siteSetting->phone) }}" class="text-neutral-300 font-semibold hover:text-white transition">{{ $siteSetting->phone }}</a>
+                        </li>
+                    @endif
+                    @if($siteSetting?->email)
+                        <li class="flex items-start space-x-3">
+                            <i class="bi bi-envelope text-orange-500 mt-0.5 text-base"></i>
+                            <a href="mailto:{{ $siteSetting->email }}" class="hover:text-white transition">{{ $siteSetting->email }}</a>
+                        </li>
+                    @endif
                     <li class="flex items-start space-x-3">
                         <i class="bi bi-geo-alt text-orange-500 mt-0.5 text-base"></i>
-                        <span>{{ __('footer.location_address') }}</span>
+                        <span>{{ $siteSetting?->getTrans('address') ?: __('footer.location_address') }}</span>
                     </li>
                 </ul>
             </div>
@@ -81,11 +105,11 @@
         <!-- Bottom Bar -->
         <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
             <div>
-                &copy; {{ date('Y') }} <span class="text-white font-semibold">KibrisKare.com</span> — {{ __('footer.all_rights_reserved') }}
+                &copy; {{ date('Y') }} <span class="text-white font-semibold">{{ $siteSetting?->copyright_text ?: 'KibrisKare.com' }}</span> — {{ __('footer.all_rights_reserved') }}
             </div>
             <div class="flex items-center space-x-6">
-                <a href="#" class="hover:text-white transition">{{ __('footer.user_agreement') }}</a>
-                <a href="#" class="hover:text-white transition">{{ __('footer.privacy_policy') }}</a>
+                <a href="{{ route('about-us') }}" class="hover:text-white transition">{{ __('footer.user_agreement') }}</a>
+                <a href="{{ route('about-us') }}" class="hover:text-white transition">{{ __('footer.privacy_policy') }}</a>
             </div>
         </div>
     </div>

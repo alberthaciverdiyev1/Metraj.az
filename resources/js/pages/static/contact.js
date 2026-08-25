@@ -5,9 +5,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // 1. Initialize Leaflet Map
     const mapEl = document.getElementById('contactMap');
     if (mapEl && typeof L !== 'undefined') {
-        // Baku / KKTC location
-        const defaultLat = 40.4093;
-        const defaultLng = 49.8671;
+        const defaultLat = window.contactConfig?.lat || 35.3382440;
+        const defaultLng = window.contactConfig?.lng || 33.3186270;
 
         const map = L.map('contactMap', {
             center: [defaultLat, defaultLng],

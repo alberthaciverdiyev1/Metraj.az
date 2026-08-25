@@ -24,5 +24,13 @@ class AppServiceProvider extends ServiceProvider
                 ->paginationPageOptions([20])
                 ->defaultPaginationPageOption(20);
         });
+
+        view()->composer('*', function ($view) {
+            try {
+                $view->with('siteSetting', \App\Modules\Shared\Models\SiteSetting::current());
+            } catch (\Throwable $e) {
+                // Fallback
+            }
+        });
     }
 }
