@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
                 ->defaultPaginationPageOption(20);
         });
 
-        view()->composer('*', function ($view) {
+        view()->composer(['layouts.app', 'layouts.footer'], function ($view) {
             try {
                 $view->with('siteSetting', \App\Modules\Shared\Models\SiteSetting::current());
                 $view->with('seoSetting', \App\Modules\Shared\Models\SeoSetting::current());

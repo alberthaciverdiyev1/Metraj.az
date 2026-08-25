@@ -37,22 +37,30 @@ class SeoSetting extends Model
 
     public const CACHE_KEY = 'seo_settings_singleton';
 
+    protected static ?self $memoized = null;
+
     protected static function booted(): void
     {
         static::saved(function () {
+            static::$memoized = null;
             Cache::forget(self::CACHE_KEY);
         });
 
         static::deleted(function () {
+            static::$memoized = null;
             Cache::forget(self::CACHE_KEY);
         });
     }
 
     public static function current(): self
     {
+        if (static::$memoized !== null) {
+            return static::$memoized;
+        }
+
         $cached = Cache::get(self::CACHE_KEY);
         if ($cached instanceof self) {
-            return $cached;
+            return static::$memoized = $cached;
         }
 
         $setting = self::firstOrCreate(
@@ -85,7 +93,7 @@ class SeoSetting extends Model
 
         Cache::put(self::CACHE_KEY, $setting, 86400);
 
-        return $setting;
+        return static::$memoized = $setting;
     }
 
     public function getTrans(string $field, ?string $locale = null, string $default = ''): string

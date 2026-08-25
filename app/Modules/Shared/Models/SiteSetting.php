@@ -67,13 +67,17 @@ class SiteSetting extends Model
 
     public const CACHE_KEY = 'site_settings_singleton';
 
+    protected static ?self $memoized = null;
+
     protected static function booted(): void
     {
         static::saved(function () {
+            static::$memoized = null;
             Cache::forget(self::CACHE_KEY);
         });
 
         static::deleted(function () {
+            static::$memoized = null;
             Cache::forget(self::CACHE_KEY);
         });
     }
@@ -83,9 +87,13 @@ class SiteSetting extends Model
      */
     public static function current(): self
     {
+        if (static::$memoized !== null) {
+            return static::$memoized;
+        }
+
         $cached = Cache::get(self::CACHE_KEY);
         if ($cached instanceof self) {
-            return $cached;
+            return static::$memoized = $cached;
         }
 
         $setting = self::firstOrCreate(
@@ -132,7 +140,7 @@ class SiteSetting extends Model
 
         Cache::put(self::CACHE_KEY, $setting, 86400);
 
-        return $setting;
+        return static::$memoized = $setting;
     }
 
     /**

@@ -41,13 +41,20 @@ class PageSeo extends Model
 
     public const CACHE_KEY_ALL = 'page_seos_all';
 
+    protected static ?array $memoizedAll = null;
+    protected static ?self $memoizedCurrent = null;
+
     protected static function booted(): void
     {
         static::saved(function () {
+            static::$memoizedAll = null;
+            static::$memoizedCurrent = null;
             Cache::forget(self::CACHE_KEY_ALL);
         });
 
         static::deleted(function () {
+            static::$memoizedAll = null;
+            static::$memoizedCurrent = null;
             Cache::forget(self::CACHE_KEY_ALL);
         });
     }
@@ -57,16 +64,23 @@ class PageSeo extends Model
      */
     public static function allCached(): array
     {
-        $cached = Cache::get(self::CACHE_KEY_ALL);
-        if (is_array($cached) && !empty($cached) && reset($cached) instanceof self) {
-            return $cached;
+        if (static::$memoizedAll !== null) {
+            return static::$memoizedAll;
         }
 
-        self::ensureDefaults();
+        $cached = Cache::get(self::CACHE_KEY_ALL);
+        if (is_array($cached) && !empty($cached) && reset($cached) instanceof self) {
+            return static::$memoizedAll = $cached;
+        }
+
         $all = self::orderBy('sort_order')->get()->keyBy('page_key')->all();
+        if (empty($all)) {
+            self::ensureDefaults();
+            $all = self::orderBy('sort_order')->get()->keyBy('page_key')->all();
+        }
         Cache::put(self::CACHE_KEY_ALL, $all, 86400);
 
-        return $all;
+        return static::$memoizedAll = $all;
     }
 
     /**
@@ -74,20 +88,24 @@ class PageSeo extends Model
      */
     public static function findForCurrentRoute(?string $currentRoute = null): ?self
     {
+        if ($currentRoute === null && static::$memoizedCurrent !== null) {
+            return static::$memoizedCurrent;
+        }
+
         $all = self::allCached();
         $routeName = $currentRoute ?: request()->route()?->getName();
 
         if ($routeName) {
             foreach ($all as $pageSeo) {
                 if ($pageSeo->route_name === $routeName || $pageSeo->page_key === $routeName) {
-                    return $pageSeo;
+                    return static::$memoizedCurrent = $pageSeo;
                 }
             }
         }
 
         $path = trim(request()->path(), '/');
         if ($path === '' || $path === '/') {
-            return $all['home'] ?? null;
+            return static::$memoizedCurrent = ($all['home'] ?? null);
         }
 
         return null;
