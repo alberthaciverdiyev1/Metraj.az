@@ -140,6 +140,101 @@ class Property extends Model
     ];
 
     /**
+     * Cari dilə uyğun elan başlığı (Lokallaşdırılmış)
+     */
+    public function getTitleAttribute($value): string
+    {
+        if (is_array($value)) {
+            $locale = app()->getLocale();
+            return $value[$locale] ?? $value['tr'] ?? $value['az'] ?? $value['en'] ?? $value['ru'] ?? (string) reset($value);
+        }
+
+        if (is_string($value) && str_starts_with(trim($value), '{')) {
+            $decoded = json_decode($value, true);
+            if (is_array($decoded)) {
+                $locale = app()->getLocale();
+                return $decoded[$locale] ?? $decoded['tr'] ?? $decoded['az'] ?? $decoded['en'] ?? $decoded['ru'] ?? (string) reset($decoded);
+            }
+        }
+
+        return (string) $value;
+    }
+
+    /**
+     * Elan başlığını çoxdilli JSON kimi saxlayır
+     */
+    public function setTitleAttribute($value): void
+    {
+        if (is_array($value)) {
+            $this->attributes['title'] = json_encode($value, JSON_UNESCAPED_UNICODE);
+        } else {
+            $str = (string) $value;
+            if (str_starts_with(trim($str), '{') && is_array(json_decode($str, true))) {
+                $this->attributes['title'] = $str;
+            } else {
+                $this->attributes['title'] = json_encode([
+                    'az' => $str,
+                    'tr' => $str,
+                    'en' => $str,
+                    'ru' => $str,
+                ], JSON_UNESCAPED_UNICODE);
+            }
+        }
+    }
+
+    /**
+     * Cari dilə uyğun elan təsviri (Lokallaşdırılmış)
+     */
+    public function getDescriptionAttribute($value): ?string
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        if (is_array($value)) {
+            $locale = app()->getLocale();
+            return $value[$locale] ?? $value['tr'] ?? $value['az'] ?? $value['en'] ?? $value['ru'] ?? (string) reset($value);
+        }
+
+        if (is_string($value) && str_starts_with(trim($value), '{')) {
+            $decoded = json_decode($value, true);
+            if (is_array($decoded)) {
+                $locale = app()->getLocale();
+                return $decoded[$locale] ?? $decoded['tr'] ?? $decoded['az'] ?? $decoded['en'] ?? $decoded['ru'] ?? (string) reset($decoded);
+            }
+        }
+
+        return (string) $value;
+    }
+
+    /**
+     * Elan təsvirini çoxdilli JSON kimi saxlayır
+     */
+    public function setDescriptionAttribute($value): void
+    {
+        if ($value === null) {
+            $this->attributes['description'] = null;
+            return;
+        }
+
+        if (is_array($value)) {
+            $this->attributes['description'] = json_encode($value, JSON_UNESCAPED_UNICODE);
+        } else {
+            $str = (string) $value;
+            if (str_starts_with(trim($str), '{') && is_array(json_decode($str, true))) {
+                $this->attributes['description'] = $str;
+            } else {
+                $this->attributes['description'] = json_encode([
+                    'az' => $str,
+                    'tr' => $str,
+                    'en' => $str,
+                    'ru' => $str,
+                ], JSON_UNESCAPED_UNICODE);
+            }
+        }
+    }
+
+    /**
      * Model hadisələrinin qeydiyyatı (Model Boot Lifecycle)
      */
     protected static function boot()

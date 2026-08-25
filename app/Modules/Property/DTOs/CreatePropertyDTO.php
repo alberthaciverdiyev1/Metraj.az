@@ -8,8 +8,8 @@ use App\Modules\Property\Enums\SellerType;
 readonly class CreatePropertyDTO
 {
     public function __construct(
-        public string $title,
-        public string $description,
+        public array|string $title,
+        public array|string $description,
         public string $code = '',
         public string $slug = '',
         public bool $hasDocument = false,

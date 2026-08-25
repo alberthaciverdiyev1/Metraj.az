@@ -165,21 +165,141 @@ class NorthernCyprusLocationSeeder extends Seeder
         ];
 
         $propertyTemplates = [
-            ['title' => 'Girne Alsancakda Dəniz Mənzərəli 2+1 Lüks Mənzil', 'type' => 'apartment', 'deal' => 'sale', 'price' => 125000, 'rooms' => 2, 'area' => 85, 'city_slug' => 'girne', 'dist_slug' => 'alsancak'],
-            ['title' => 'Girne Esentepe - Şəxsi Hovuzlu 3+1 Villa', 'type' => 'house', 'deal' => 'sale', 'price' => 280000, 'rooms' => 3, 'area' => 175, 'city_slug' => 'girne', 'dist_slug' => 'esentepe'],
-            ['title' => 'Lefkoşa Gönyelidə Geniş 3+1 Yeni Tikili Mənzil', 'type' => 'apartment', 'deal' => 'sale', 'price' => 95000, 'rooms' => 3, 'area' => 120, 'city_slug' => 'lefkosa', 'dist_slug' => 'gonyeli'],
-            ['title' => 'Lefkoşa Küçük Kaymaklıda Aylıq Kirayə 2+1 Əşyalı Mənzil', 'type' => 'apartment', 'deal' => 'rent_monthly', 'price' => 450, 'rooms' => 2, 'area' => 75, 'city_slug' => 'lefkosa', 'dist_slug' => 'kucuk-kaymakli'],
-            ['title' => 'İskele Long Beachdə Dənizə 200m Məsafədə 1+1 Studio', 'type' => 'apartment', 'deal' => 'sale', 'price' => 85000, 'rooms' => 1, 'area' => 52, 'city_slug' => 'iskele', 'dist_slug' => 'long-beach'],
-            ['title' => 'İskele Boğazda Möhtəşəm Dəniz Panoramalı 4+1 Villa', 'type' => 'house', 'deal' => 'sale', 'price' => 340000, 'rooms' => 4, 'area' => 240, 'city_slug' => 'iskele', 'dist_slug' => 'bogaz'],
-            ['title' => 'Gazimağusa Salamis Yolunda Tələbələr üçün 2+1 Mənzil', 'type' => 'apartment', 'deal' => 'rent_monthly', 'price' => 400, 'rooms' => 2, 'area' => 70, 'city_slug' => 'gazimagusa', 'dist_slug' => 'karakol'],
-            ['title' => 'Gazimağusa Yeni Boğaziçidə Müstəqil Bağ Evi', 'type' => 'house', 'deal' => 'sale', 'price' => 195000, 'rooms' => 3, 'area' => 160, 'city_slug' => 'gazimagusa', 'dist_slug' => 'yeni-bogazici'],
-            ['title' => 'Güzelyurt Kalkanlıda ODTÜ Yaxınlığı İnvestisiya Mənzili', 'type' => 'apartment', 'deal' => 'sale', 'price' => 68000, 'rooms' => 2, 'area' => 80, 'city_slug' => 'guzelyurt', 'dist_slug' => 'kalkanli'],
-            ['title' => 'Lefke Gemikonağında Dəniz Kənarında 1+1 Rezidensiya', 'type' => 'apartment', 'deal' => 'sale', 'price' => 62000, 'rooms' => 1, 'area' => 50, 'city_slug' => 'lefke', 'dist_slug' => 'gemikonagi'],
-            ['title' => 'Girne Mərkəzdə Premium Yaşayış Kompleksində Penthouse', 'type' => 'apartment', 'deal' => 'sale', 'price' => 210000, 'rooms' => 3, 'area' => 165, 'city_slug' => 'girne', 'dist_slug' => 'girne-merkez'],
-            ['title' => 'Girne Çatalköydə Bağlı Ərazidə 3+1 Müasir Villa', 'type' => 'house', 'deal' => 'sale', 'price' => 315000, 'rooms' => 3, 'area' => 190, 'city_slug' => 'girne', 'dist_slug' => 'catalkoy'],
-            ['title' => 'Lefkoşa Ortaköydə Ofis və ya Yaşayış üçün Əlverişli Mənzil', 'type' => 'office', 'deal' => 'rent_monthly', 'price' => 600, 'rooms' => 3, 'area' => 110, 'city_slug' => 'lefkosa', 'dist_slug' => 'ortakoy'],
-            ['title' => 'İskele Bafra Turizm Bölgəsində Torpaq Sahəsi', 'type' => 'land', 'deal' => 'sale', 'price' => 150000, 'rooms' => null, 'area' => null, 'city_slug' => 'iskele', 'dist_slug' => 'bafra'],
-            ['title' => 'Gazimağusa Sakaryada Ticarət Mərkəzi Yanında Obyekt', 'type' => 'commercial', 'deal' => 'sale', 'price' => 175000, 'rooms' => null, 'area' => 130, 'city_slug' => 'gazimagusa', 'dist_slug' => 'sakarya'],
+            [
+                'title' => [
+                    'az' => 'Girne Alsancakda Dəniz Mənzərəli 2+1 Lüks Mənzil',
+                    'tr' => "Girne Alsancak'ta Deniz Manzaralı 2+1 Lüks Daire",
+                    'en' => '2+1 Luxury Apartment with Sea View in Alsancak, Kyrenia',
+                    'ru' => 'Роскошная 2+1 квартира с видом на море в Алсанджаке, Гирне',
+                ],
+                'type' => 'apartment', 'deal' => 'sale', 'price' => 125000, 'rooms' => 2, 'area' => 85, 'city_slug' => 'girne', 'dist_slug' => 'alsancak'
+            ],
+            [
+                'title' => [
+                    'az' => 'Girne Esentepe - Şəxsi Hovuzlu 3+1 Villa',
+                    'tr' => "Girne Esentepe'de Özel Havuzlu 3+1 Villa",
+                    'en' => '3+1 Luxury Villa with Private Pool in Esentepe, Kyrenia',
+                    'ru' => '3+1 Вилла с частным бассейном в Эсентепе, Гирне',
+                ],
+                'type' => 'house', 'deal' => 'sale', 'price' => 280000, 'rooms' => 3, 'area' => 175, 'city_slug' => 'girne', 'dist_slug' => 'esentepe'
+            ],
+            [
+                'title' => [
+                    'az' => 'Lefkoşa Gönyelidə Geniş 3+1 Yeni Tikili Mənzil',
+                    'tr' => "Lefkoşa Gönyeli'de Geniş 3+1 Sıfır Daire",
+                    'en' => 'Spacious 3+1 New Build Apartment in Gonyeli, Nicosia',
+                    'ru' => 'Просторная 3+1 новостройка в Гёньели, Никосия',
+                ],
+                'type' => 'apartment', 'deal' => 'sale', 'price' => 95000, 'rooms' => 3, 'area' => 120, 'city_slug' => 'lefkosa', 'dist_slug' => 'gonyeli'
+            ],
+            [
+                'title' => [
+                    'az' => 'Lefkoşa Küçük Kaymaklıda Aylıq Kirayə 2+1 Əşyalı Mənzil',
+                    'tr' => "Lefkoşa Küçük Kaymaklı'da Aylık Kiralık 2+1 Mobilyalı Daire",
+                    'en' => '2+1 Furnished Apartment for Monthly Rent in Kucuk Kaymakli, Nicosia',
+                    'ru' => '2+1 Меблированная квартира в помесячную аренду в Кючюк Каймаклы, Никосия',
+                ],
+                'type' => 'apartment', 'deal' => 'rent_monthly', 'price' => 450, 'rooms' => 2, 'area' => 75, 'city_slug' => 'lefkosa', 'dist_slug' => 'kucuk-kaymakli'
+            ],
+            [
+                'title' => [
+                    'az' => 'İskele Long Beachdə Dənizə 200m Məsafədə 1+1 Studio',
+                    'tr' => "İskele Long Beach'te Denize 200m Mesafede 1+1 Stüdyo",
+                    'en' => '1+1 Studio 200m from the Sea in Long Beach, Iskele',
+                    'ru' => '1+1 Студия в 200м от моря на Лонг Бич, Искеле',
+                ],
+                'type' => 'apartment', 'deal' => 'sale', 'price' => 85000, 'rooms' => 1, 'area' => 52, 'city_slug' => 'iskele', 'dist_slug' => 'long-beach'
+            ],
+            [
+                'title' => [
+                    'az' => 'İskele Boğazda Möhtəşəm Dəniz Panoramalı 4+1 Villa',
+                    'tr' => "İskele Boğaz'da Muhteşem Deniz Manzaralı 4+1 Villa",
+                    'en' => 'Stunning 4+1 Sea View Villa in Bogaz, Iskele',
+                    'ru' => 'Великолепная 4+1 вилла с панорамным видом на море в Богазе, Искеле',
+                ],
+                'type' => 'house', 'deal' => 'sale', 'price' => 340000, 'rooms' => 4, 'area' => 240, 'city_slug' => 'iskele', 'dist_slug' => 'bogaz'
+            ],
+            [
+                'title' => [
+                    'az' => 'Gazimağusa Salamis Yolunda Tələbələr üçün 2+1 Mənzil',
+                    'tr' => "Gazimağusa Salamis Yolunda Öğrencilere Uygun 2+1 Daire",
+                    'en' => 'Student-Friendly 2+1 Apartment on Salamis Road, Famagusta',
+                    'ru' => '2+1 Квартира для студентов на улице Саламис, Фамагуста',
+                ],
+                'type' => 'apartment', 'deal' => 'rent_monthly', 'price' => 400, 'rooms' => 2, 'area' => 70, 'city_slug' => 'gazimagusa', 'dist_slug' => 'karakol'
+            ],
+            [
+                'title' => [
+                    'az' => 'Gazimağusa Yeni Boğaziçidə Müstəqil Bağ Evi',
+                    'tr' => "Gazimağusa Yeniboğaziçi'nde Müstakil Bahçeli Ev",
+                    'en' => 'Detached House with Garden in Yeni Bogazici, Famagusta',
+                    'ru' => 'Отдельный дом с садом в Ени Богазичи, Фамагуста',
+                ],
+                'type' => 'house', 'deal' => 'sale', 'price' => 195000, 'rooms' => 3, 'area' => 160, 'city_slug' => 'gazimagusa', 'dist_slug' => 'yeni-bogazici'
+            ],
+            [
+                'title' => [
+                    'az' => 'Güzelyurt Kalkanlıda ODTÜ Yaxınlığı İnvestisiya Mənzili',
+                    'tr' => "Güzelyurt Kalkanlı'da ODTÜ Yakını Yatırımlık Daire",
+                    'en' => 'Investment Apartment near METU in Kalkanli, Guzelyurt',
+                    'ru' => 'Инвестиционная квартира рядом с METU в Калканлы, Гюзельюрт',
+                ],
+                'type' => 'apartment', 'deal' => 'sale', 'price' => 68000, 'rooms' => 2, 'area' => 80, 'city_slug' => 'guzelyurt', 'dist_slug' => 'kalkanli'
+            ],
+            [
+                'title' => [
+                    'az' => 'Lefke Gemikonağında Dəniz Kənarında 1+1 Rezidensiya',
+                    'tr' => "Lefke Gemikonağı'nda Denize Sıfır 1+1 Rezidans",
+                    'en' => 'Seaside 1+1 Residence in Gemikonagi, Lefke',
+                    'ru' => '1+1 Резиденция на первой линии моря в Гемиконагы, Лефке',
+                ],
+                'type' => 'apartment', 'deal' => 'sale', 'price' => 62000, 'rooms' => 1, 'area' => 50, 'city_slug' => 'lefke', 'dist_slug' => 'gemikonagi'
+            ],
+            [
+                'title' => [
+                    'az' => 'Girne Mərkəzdə Premium Yaşayış Kompleksində Penthouse',
+                    'tr' => "Girne Merkezde Premium Sitede Penthouse",
+                    'en' => 'Luxury Penthouse in Prime Central Kyrenia Complex',
+                    'ru' => 'Элитный пентхаус в премиальном жилом комплексе в центре Гирне',
+                ],
+                'type' => 'apartment', 'deal' => 'sale', 'price' => 210000, 'rooms' => 3, 'area' => 165, 'city_slug' => 'girne', 'dist_slug' => 'girne-merkez'
+            ],
+            [
+                'title' => [
+                    'az' => 'Girne Çatalköydə Bağlı Ərazidə 3+1 Müasir Villa',
+                    'tr' => "Girne Çatalköy'de Site İçerisinde 3+1 Modern Villa",
+                    'en' => 'Modern 3+1 Villa in Gated Community in Catalkoy, Kyrenia',
+                    'ru' => 'Современная 3+1 вилла в закрытом комплексе в Чаталкёй, Гирне',
+                ],
+                'type' => 'house', 'deal' => 'sale', 'price' => 315000, 'rooms' => 3, 'area' => 190, 'city_slug' => 'girne', 'dist_slug' => 'catalkoy'
+            ],
+            [
+                'title' => [
+                    'az' => 'Lefkoşa Ortaköydə Ofis və ya Yaşayış üçün Əlverişli Mənzil',
+                    'tr' => "Lefkoşa Ortaköy'de Ofis veya Konut Kullanımına Uygun Daire",
+                    'en' => 'Versatile Office/Residential Apartment in Ortakoy, Nicosia',
+                    'ru' => 'Квартира под офис или жилье в Ортакёй, Никосия',
+                ],
+                'type' => 'office', 'deal' => 'rent_monthly', 'price' => 600, 'rooms' => 3, 'area' => 110, 'city_slug' => 'lefkosa', 'dist_slug' => 'ortakoy'
+            ],
+            [
+                'title' => [
+                    'az' => 'İskele Bafra Turizm Bölgəsində Torpaq Sahəsi',
+                    'tr' => "İskele Bafra Turizm Bölgesinde Satılık Arsa",
+                    'en' => 'Plot of Land in Bafra Tourism Area, Iskele',
+                    'ru' => 'Земельный участок в туристической зоне Бафра, Искеле',
+                ],
+                'type' => 'land', 'deal' => 'sale', 'price' => 150000, 'rooms' => null, 'area' => null, 'city_slug' => 'iskele', 'dist_slug' => 'bafra'
+            ],
+            [
+                'title' => [
+                    'az' => 'Gazimağusa Sakaryada Ticarət Mərkəzi Yanında Obyekt',
+                    'tr' => "Gazimağusa Sakarya'da AVM Yanı Ticari Dükkan / İşyeri",
+                    'en' => 'Commercial Property next to Mall in Sakarya, Famagusta',
+                    'ru' => 'Коммерческое помещение рядом с ТЦ в Сакарья, Фамагуста',
+                ],
+                'type' => 'commercial', 'deal' => 'sale', 'price' => 175000, 'rooms' => null, 'area' => 130, 'city_slug' => 'gazimagusa', 'dist_slug' => 'sakarya'
+            ],
         ];
 
         $cyprusCoords = [
@@ -205,13 +325,25 @@ class NorthernCyprusLocationSeeder extends Seeder
             $prices = app(\App\Modules\Shared\Services\CurrencyService::class)->convertFromGbp((float) $tpl['price']);
             $code = (string) (100500 + $idx);
 
+            $azTitle = $tpl['title']['az'];
+            $trTitle = $tpl['title']['tr'];
+            $enTitle = $tpl['title']['en'];
+            $ruTitle = $tpl['title']['ru'];
+
+            $descriptions = [
+                'az' => "<p><strong>{$azTitle}</strong></p><p>Şimali Kiprin ən prestijli və sürətlə inkişaf edən bölgəsində yerləşir. Bütün zəruri infrastruktur (məktəb, supermarketlər, çimərlik və restoranlar) yaxınlıqdadır. Əla investisiya və daimi yaşayış imkanı təqdim edir.</p><ul><li>Tam təchizatlı və yüksək keyfiyyətli materiallar</li><li>Dəniz və ya dağ panoraması</li><li>Rahat nəqliyyat əlçatanlığı</li></ul>",
+                'tr' => "<p><strong>{$trTitle}</strong></p><p>Kuzey Kıbrıs'ın en prestijli ve hızla gelişen bölgesinde yer almaktadır. Tüm temel altyapı (okul, süpermarketler, plaj ve restoranlar) yürüme mesafesindedir. Harika bir yatırım ve daimi yaşam fırsatı sunmaktadır.</p><ul><li>Tam donanımlı ve yüksek kaliteli malzemeler</li><li>Deniz veya dağ manzarası</li><li>Kolay ulaşım imkanı</li></ul>",
+                'en' => "<p><strong>{$enTitle}</strong></p><p>Located in the most prestigious and rapidly growing area of Northern Cyprus. All essential infrastructure (schools, supermarkets, beach and restaurants) is within close reach. Offers an excellent investment and permanent living opportunity.</p><ul><li>Fully equipped with high quality materials</li><li>Sea or mountain panoramic views</li><li>Easy transport accessibility</li></ul>",
+                'ru' => "<p><strong>{$ruTitle}</strong></p><p>Расположен в самом престижном и быстро развивающемся районе Северного Кипра. Вся необходимая инфраструктура (школы, супермаркеты, пляж и рестораны) находится поблизости. Отличная возможность для инвестиций и постоянного проживания.</p><ul><li>Полная комплектация и высококачественные материалы</li><li>Панорамный вид на море или горы</li><li>Удобная транспортная доступность</li></ul>",
+            ];
+
             $prop = Property::updateOrCreate(
                 ['code' => $code],
                 [
                     'user_id' => $adminUserId,
-                    'slug' => \Illuminate\Support\Str::slug($tpl['title']) . '-' . $code,
+                    'slug' => \Illuminate\Support\Str::slug($azTitle) . '-' . $code,
                     'title' => $tpl['title'],
-                    'description' => "<p><strong>{$tpl['title']}</strong></p><p>Kuzey Kıbrısın ən prestijli və sürətlə inkişaf edən bölgəsində yerləşir. Bütün zəruri infrastruktur (məktəb, supermarketlər, çimərlik və restoranlar) yaxınlıqdadır. Əla investisiya və daimi yaşayış imkanı təqdim edir.</p><ul><li>Tam təchizatlı və yüksək keyfiyyətli materiallar</li><li>Dəniz və ya dağ panoraması</li><li>Rahat nəqliyyat əlçatanlığı</li></ul>",
+                    'description' => $descriptions,
                     'price' => $tpl['price'],
                     'currency' => 'GBP',
                     'prices' => $prices,

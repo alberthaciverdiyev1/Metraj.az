@@ -93,14 +93,14 @@ class AddPropertyController extends Controller
                 $isLand ? null : ($validated['window_view_id'] ?? null),
             ]);
 
-            $generatedTitle = $this->titleBuilder->build(
+            $generatedTitles = $this->titleBuilder->buildAll(
                 array_values($filterOptionIds),
                 $isLand ? null : ($validated['rooms'] ?? null),
                 $isLand ? null : ($validated['area'] ?? null),
                 $validated['land_area'] ?? null,
                 $locationLabel
             );
-            $slug = Str::slug($generatedTitle) . '-' . $code;
+            $slug = Str::slug($generatedTitles['az'] ?? reset($generatedTitles)) . '-' . $code;
 
             $sellerType = ($validated['advertiser'] === 'agent') ? SellerType::Agent : SellerType::Owner;
 
@@ -144,7 +144,7 @@ class AddPropertyController extends Controller
             // Tək qaynaq: PropertyService::create → CreatePropertyDTO
             // Repo property, filterOptions və amenities sync-lərini özü idarə edir.
             $property = $this->propertyService->create(new CreatePropertyDTO(
-                title: $generatedTitle,
+                title: $generatedTitles,
                 description: $validated['description'] ?? '',
                 code: $code,
                 slug: $slug,

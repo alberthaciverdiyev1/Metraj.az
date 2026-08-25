@@ -40,10 +40,12 @@ trait SyncsDynamicFilters
         $location = $record->district?->name['az'] ?? ($record->city?->name['az'] ?? '');
         $landArea = $record->land_area;
 
-        $title = $this->buildTitleFromOptions($filterOptionIds, $rooms, $area, $landArea, $location);
+        $titles = app(\App\Modules\Property\Services\PropertyTitleBuilder::class)
+            ->buildAll($filterOptionIds, $rooms, $area, $landArea, $location);
+
         $record->update([
-            'title' => $title,
-            'slug' => \Illuminate\Support\Str::slug($title) . '-' . $record->id,
+            'title' => $titles,
+            'slug' => \Illuminate\Support\Str::slug($titles['az'] ?? reset($titles)) . '-' . $record->id,
         ]);
     }
 
