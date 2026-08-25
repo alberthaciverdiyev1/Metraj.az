@@ -411,4 +411,112 @@ const R = window.KibrisKareRoutes || {};
                 }
             }).catch(() => {});
     });
+
+    /* ===== QLOBAL ESCAPE TUŞU İLƏ BÜTÜN MODALLARIN VƏ DRAWER-LƏRİN BAĞLANMASI ===== */
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27) {
+            // 1. Şəhər filtri modalı
+            const cityModal = document.getElementById('cityFilterModal');
+            const closeCityBtn = document.getElementById('closeCityFilterModal');
+            if (cityModal && (!cityModal.classList.contains('hidden') && cityModal.style.display !== 'none')) {
+                if (closeCityBtn) {
+                    closeCityBtn.click();
+                } else {
+                    cityModal.classList.add('hidden');
+                }
+            }
+
+            // 2. Ətraflı filtrlər modalı
+            const moreFiltersModal = document.getElementById('moreFiltersModal');
+            const closeMoreBtn = document.getElementById('closeMoreFilters') || document.getElementById('closeMoreFiltersBtn');
+            if (moreFiltersModal && (!moreFiltersModal.classList.contains('hidden') && moreFiltersModal.style.display !== 'none')) {
+                if (closeMoreBtn) {
+                    closeMoreBtn.click();
+                } else {
+                    moreFiltersModal.classList.add('hidden');
+                }
+            }
+
+            // 3. Mobil menyu drawer-i
+            const mobileDrawer = document.getElementById('mobileMoreDrawer');
+            const closeDrawerBtn = document.getElementById('closeMobileMoreDrawer');
+            if (mobileDrawer && (!mobileDrawer.classList.contains('hidden') && mobileDrawer.style.display !== 'none')) {
+                if (closeDrawerBtn) {
+                    closeDrawerBtn.click();
+                } else {
+                    mobileDrawer.classList.add('hidden');
+                }
+            }
+
+            // 4. Detal səhifəsindəki Qalereya / Lightbox modalı
+            const galleryModal = document.getElementById('modal');
+            const closeGalleryBtn = document.getElementById('closeModal') || document.getElementById('close-modal');
+            if (galleryModal && (!galleryModal.classList.contains('hidden') && galleryModal.style.display !== 'none')) {
+                if (closeGalleryBtn) {
+                    closeGalleryBtn.click();
+                } else if (typeof window.closeModal === 'function') {
+                    window.closeModal();
+                } else {
+                    galleryModal.classList.add('hidden');
+                    galleryModal.style.display = 'none';
+                }
+            }
+
+            // 5. Nömrə / Əlaqə modalı
+            const phoneModal = document.getElementById('multiplePhoneModal') || document.getElementById('phoneModal');
+            if (phoneModal && (!phoneModal.classList.contains('hidden') && phoneModal.style.display !== 'none')) {
+                const closePhoneBtn = phoneModal.querySelector('.close-modal') || phoneModal.querySelector('.close-phone-modal') || phoneModal.querySelector('[data-close-modal]');
+                if (closePhoneBtn) {
+                    closePhoneBtn.click();
+                } else {
+                    phoneModal.classList.add('hidden');
+                    phoneModal.style.display = 'none';
+                }
+            }
+
+            // 6. İrəli çək / Premium modalları
+            ['moveForwardModal', 'premiumModal'].forEach(mId => {
+                const el = document.getElementById(mId);
+                if (el && el.style.display !== 'none' && !el.classList.contains('hidden')) {
+                    const cBtn = el.querySelector('[id^="close"]') || el.querySelector('.close-modal') || el.querySelector('button');
+                    if (cBtn) {
+                        cBtn.click();
+                    } else {
+                        el.style.display = 'none';
+                        el.classList.add('hidden');
+                    }
+                }
+            });
+
+            // 7. Açıq olan bütün xüsusi filter menyuları və dropdown-lar
+            document.querySelectorAll('.filter-custom-menu:not(.hidden)').forEach(menu => {
+                menu.classList.add('hidden');
+            });
+            document.querySelectorAll('.filter-custom-chevron.rotate-180').forEach(chev => {
+                chev.classList.remove('rotate-180');
+            });
+
+            // 8. Qlobal digər açıq modallar
+            document.querySelectorAll('.modal:not(.hidden), [data-modal]:not(.hidden), [role="dialog"]:not(.hidden)').forEach(m => {
+                if (m.style.display !== 'none') {
+                    const closeBtn = m.querySelector('[data-close-modal], .close-modal, .btn-close, .modal-close');
+                    if (closeBtn) {
+                        closeBtn.click();
+                    } else {
+                        m.classList.add('hidden');
+                    }
+                }
+            });
+
+            // 9. Navbar dropdown-ları
+            ['navCurrencyDropdown', 'navLangDropdown', 'navUserDropdown'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.add('hidden');
+            });
+            ['navCurrencyChevron', 'navLangChevron', 'navUserChevron'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.remove('rotate-180');
+            });
+        }
+    });
 })();
