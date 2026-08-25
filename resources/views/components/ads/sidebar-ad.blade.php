@@ -17,20 +17,20 @@
                 <div class="relative h-full flex flex-col items-center justify-center text-center px-5 py-6">
                     <img src="{{ asset('images/kibriskarelogo.png') }}" alt="KibrisKare.com"
                          class="w-28 mb-5 drop-shadow-sm">
-                    <p class="text-white font-bold text-xl leading-snug">Elanınızı<br>pulsuz yerləşdirin</p>
-                    <p class="text-orange-100 text-xs mt-2 leading-relaxed">Minlərlə alıcıya birbaşa çatın</p>
+                    <p class="text-white font-bold text-xl leading-snug">{!! __('ads.post_free_title') !!}</p>
+                    <p class="text-orange-100 text-xs mt-2 leading-relaxed">{{ __('ads.post_free_desc') }}</p>
                     <span class="mt-5 inline-flex items-center gap-2 bg-white text-orange-600 font-semibold text-xs px-5 py-2.5 rounded-xl shadow-sm group-hover:bg-orange-50 transition">
-                        Elan əlavə et <i class="bi bi-arrow-right text-sm"></i>
+                        {{ __('ads.post_free_btn') }} <i class="bi bi-arrow-right text-sm"></i>
                     </span>
                 </div>
             @else
                 {{-- Sol: şəkil reklamı (yerli asset) --}}
-                <img src="{{ asset('images/ads.jpg') }}" alt="KibrisKare.com — İdeal evinizi tapın"
+                <img src="{{ asset('images/ads.jpg') }}" alt="{{ __('ads.find_home_alt') }}"
                      class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"/>
                 <div class="absolute inset-0 bg-black/40"></div>
                 <div class="absolute bottom-0 inset-x-0 p-4 pb-5">
-                    <p class="text-white font-bold text-lg leading-snug drop-shadow">İdeal evinizi<br>tapın</p>
-                    <p class="text-orange-100 text-[11px] mt-1">Yüzlərlə elan arasından seçim edin</p>
+                    <p class="text-white font-bold text-lg leading-snug drop-shadow">{!! __('ads.find_home_title') !!}</p>
+                    <p class="text-orange-100 text-[11px] mt-1">{{ __('ads.find_home_desc') }}</p>
                 </div>
             @endif
         </a>
