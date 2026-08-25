@@ -239,48 +239,13 @@
                     @endif
                 </div>
 
-                <!-- Contact Profile -->
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center font-semibold text-lg">
-                        {{ mb_strtoupper(mb_substr($listing->contact_name, 0, 1)) }}
-                    </div>
-                    <div>
-                        <div class="font-semibold text-sm sm:text-base text-gray-900">{{ $listing->contact_name }}</div>
-                        <div class="text-xs text-gray-400">{{ __('Elan sahibi') }}</div>
-                    </div>
-                </div>
+                <x-contact-profile :name="$listing->contact_name" :role="__('Elan sahibi')" />
 
-                <!-- Contact Action Buttons -->
-                <div class="space-y-3 pt-2">
-                    
-                    @if($listing->contact_whatsapp)
-                        @php
-                            $wa = preg_replace('/[^0-9]/', '', $listing->contact_whatsapp);
-                        @endphp
-                        <a href="https://wa.me/{{ $wa }}?text={{ urlencode('Salam, Metraj.az saytındakı otaq yoldaşı elanınızla bağlı yazıram: ' . $listing->title) }}"
-                           target="_blank" rel="noopener noreferrer"
-                           class="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm rounded-2xl shadow-xs transition hover:shadow-md">
-                            <i class="bi bi-whatsapp text-lg"></i>
-                            <span>{{ __('WhatsApp ilə Yaz') }}</span>
-                        </a>
-                    @endif
+                <x-contact-actions :whatsapp="$listing->contact_whatsapp" :phone="$listing->contact_phone"
+                    :message="'Salam, Metraj.az saytındakı otaq yoldaşı elanınızla bağlı yazıram: ' . $listing->title"
+                    :whatsapp-label="__('WhatsApp ilə Yaz')" />
 
-                    <a href="tel:{{ $listing->contact_phone }}"
-                       class="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-gray-900 hover:bg-[#f1913d] text-white font-semibold text-sm rounded-2xl shadow-xs transition hover:shadow-md">
-                        <i class="bi bi-telephone-fill text-base"></i>
-                        <span>{{ $listing->contact_phone }}</span>
-                    </a>
-
-                </div>
-
-                <!-- Safety Note -->
-                <div class="bg-gray-50 border border-gray-100 rounded-2xl p-4 text-[11px] text-gray-500 leading-relaxed space-y-1">
-                    <div class="font-semibold text-gray-700 flex items-center gap-1.5">
-                        <i class="bi bi-shield-check text-emerald-600"></i>
-                        <span>{{ __('Təhlükəsizlik Tövsiyəsi') }}</span>
-                    </div>
-                    <p>{{ __('Mənzillə əyani tanış olmadan və şərtləri razılaşdırmadan heç kimə əvvəlcədən beh / ödəniş göndərməyin.') }}</p>
-                </div>
+                <x-safety-note />
 
             </div>
 

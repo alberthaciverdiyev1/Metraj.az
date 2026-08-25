@@ -24,6 +24,24 @@
         $agentRole = $property->agency ? 'Rəsmi Agentlik' : ($property->agent ? 'Vasitəçi (agent)' : 'Mülkiyyətçi');
 
         $galleryImages = $property->images->sortBy('sort_order')->values();
+        $hasVideo = !empty($property->video_url);
+
+        $mediaItems = collect();
+        if ($hasVideo) {
+            $mediaItems->push([
+                'type' => 'video',
+                'url' => $property->video_url,
+                'thumb' => $galleryImages->first()?->url ?? null,
+            ]);
+        }
+        foreach ($galleryImages as $img) {
+            $mediaItems->push([
+                'type' => 'image',
+                'url' => $img->url,
+                'thumb' => $img->url,
+            ]);
+        }
+        $totalMedia = $mediaItems->count();
         $totalImages = count($galleryImages);
 
         $displayPrice = app(\App\Modules\Property\Services\PropertyPricePresenter::class)->display($property);
@@ -44,15 +62,31 @@
             <div class="lg:col-span-8 space-y-6">
                 <!-- Gallery (Hero & Thumbnails) -->
                 <div class="space-y-3">
-                    <!-- Main Hero Image Container -->
+                    <!-- Main Hero Media Container -->
                     <div
-                        class="relative w-full h-[320px] sm:h-[420px] md:h-[480px] lg:h-[500px] rounded-2xl md:rounded-3xl overflow-hidden bg-gray-900 shadow-sm select-none group">
-                        @if($totalImages > 0)
+                        class="relative w-full h-[320px] sm:h-[420px] md:h-[480px] lg:h-[500px] rounded-2xl md:rounded-3xl overflow-hidden bg-black shadow-sm select-none group">
+                        
+                        @if($totalMedia > 0)
+                            <!-- Hero Image -->
                             <img id="main-hero-image"
-                                 src="{{ $galleryImages->first()?->url }}"
+                                 src="{{ $mediaItems->firstWhere('type', 'image')['url'] ?? $galleryImages->first()?->url ?? 'https://static.vecteezy.com/system/resources/previews/004/640/986/non_2x/tower-building-illustration-isolated-on-white-background-vector.jpg' }}"
                                  alt="{{ $property->title }}"
                                  class="w-full h-full object-cover cursor-pointer transition-transform duration-300 group-hover:scale-[1.01]"
+                                 style="{{ $hasVideo ? 'display: none;' : 'display: block;' }}"
                                  onclick="openModal(currentHeroIndex)">
+
+                            <!-- Hero Video (if present, starts visible as item 0) -->
+                            @if($hasVideo)
+                                <div id="main-hero-video-wrapper" class="w-full h-full flex items-center justify-center bg-black" style="display: flex;">
+                                    <video id="main-hero-video"
+                                           src="{{ $property->video_url }}"
+                                           controls
+                                           playsinline
+                                           preload="metadata"
+                                           class="w-full h-full object-contain">
+                                    </video>
+                                </div>
+                            @endif
                         @else
                             <img id="main-hero-image"
                                  src="https://static.vecteezy.com/system/resources/previews/004/640/986/non_2x/tower-building-illustration-isolated-on-white-background-vector.jpg"
@@ -69,7 +103,7 @@
                         </button>
 
                         <!-- Navigation Chevrons (Left / Right) -->
-                        @if($totalImages > 1)
+                        @if($totalMedia > 1)
                             <button type="button"
                                     onclick="prevHeroImage(event)"
                                     class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black/45 hover:bg-black/65 text-white flex items-center justify-center backdrop-blur-md transition z-10 cursor-pointer shadow-sm"
@@ -87,57 +121,73 @@
 
                         <!-- Bottom-Left Badges (VIP / Crown) -->
                         @if($property->is_vip)
-
                             <div class="absolute bottom-4 left-4 flex items-center gap-1.5 z-10">
                                 <div class="flex items-center gap-1.5 bg-white px-2.5 py-1 rounded-lg shadow-sm">
                                     <i class="fa-solid fa-crown text-amber-500 text-xs"></i>
                                 </div>
                             </div>
-
                         @endif
 
-                        <!-- Bottom-Center Image Counter -->
+                        <!-- Bottom-Center Media Counter -->
                         <div id="hero-counter"
                              class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-md text-white text-xs font-semibold px-3 py-1.5 rounded-full z-10 shadow-sm">
-                            1/{{ max(1, $totalImages) }}
+                            1/{{ max(1, $totalMedia) }}
                         </div>
 
                         <!-- Bottom-Right "Bütün şəkillər" Button -->
                         <button type="button"
                                 onclick="openModal(0)"
                                 class="absolute bottom-4 right-4 bg-white/85 hover:bg-white text-gray-900 text-xs font-semibold px-3.5 py-1.5 rounded-xl backdrop-blur-md transition shadow-sm flex items-center gap-1.5 z-10 cursor-pointer">
-                            <span>{{ __('Bütün şəkillər') }}</span>
+                            <span>{{ __('Bütün media') }}</span>
                         </button>
                     </div>
 
                     <!-- Thumbnails Row -->
-                    @if($totalImages > 0)
+                    @if($totalMedia > 0)
                         <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
                             @php
                                 $maxThumbs = 8;
-                                $visibleImages = $galleryImages->take($maxThumbs);
-                                $hasMore = $totalImages > $maxThumbs;
+                                $visibleMedia = $mediaItems->take($maxThumbs);
+                                $hasMore = $totalMedia > $maxThumbs;
                             @endphp
 
-                            @foreach($visibleImages as $index => $image)
+                            @foreach($visibleMedia as $index => $item)
                                 @if($hasMore && $index === ($maxThumbs - 1))
                                     <!-- Last visible thumbnail with +X overlay -->
                                     <div
                                         class="h-16 sm:h-20 rounded-xl overflow-hidden cursor-pointer relative border-2 border-transparent hover:opacity-95 transition"
                                         onclick="openModal({{ $index }})">
-                                        <img src="{{ $image->url }}" alt="{{ $property->title }}"
-                                             class="w-full h-full object-cover">
+                                        @if($item['type'] === 'video')
+                                            <div class="w-full h-full bg-gray-900 flex items-center justify-center">
+                                                <i class="bi bi-play-circle-fill text-orange-500 text-2xl"></i>
+                                            </div>
+                                        @else
+                                            <img src="{{ $item['thumb'] }}" alt="{{ $property->title }}"
+                                                 class="w-full h-full object-cover">
+                                        @endif
                                         <div
                                             class="absolute inset-0 bg-black/65 hover:bg-black/55 backdrop-blur-[1px] flex items-center justify-center text-white text-xs sm:text-sm font-bold transition">
-                                            +{{ $totalImages - $maxThumbs + 1 }} {{ __('şəkil') }}
+                                            +{{ $totalMedia - $maxThumbs + 1 }}
                                         </div>
                                     </div>
                                 @else
                                     <div
                                         class="h-16 sm:h-20 rounded-xl overflow-hidden cursor-pointer relative border-2 hero-thumbnail {{ $index === 0 ? 'border-orange-500 ring-2 ring-orange-500/20' : 'border-transparent' }} hover:border-orange-300 transition"
                                         onclick="selectHeroImage({{ $index }})">
-                                        <img src="{{ $image->url }}" alt="{{ $property->title }}"
-                                             class="w-full h-full object-cover">
+                                        @if($item['type'] === 'video')
+                                            <div class="w-full h-full bg-gray-900 flex items-center justify-center relative overflow-hidden">
+                                                @if(!empty($item['thumb']))
+                                                    <img src="{{ $item['thumb'] }}" alt="" class="w-full h-full object-cover opacity-60">
+                                                @endif
+                                                <div class="absolute inset-0 flex flex-col items-center justify-center gap-0.5 bg-black/30">
+                                                    <i class="bi bi-play-circle-fill text-orange-500 text-xl sm:text-2xl drop-shadow"></i>
+                                                    <span class="text-[9px] font-bold text-white uppercase tracking-wider">Video</span>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <img src="{{ $item['thumb'] }}" alt="{{ $property->title }}"
+                                                 class="w-full h-full object-cover">
+                                        @endif
                                     </div>
                                 @endif
                             @endforeach
@@ -176,19 +226,6 @@
 
                 <!-- Map Component -->
                 @include('components.property.map', ['location' => $property, 'zoom' => 15])
-
-                @if(!empty($property->video_url))
-                    <!-- Video Component -->
-                    <div class="bg-white p-6 sm:p-7 rounded-3xl shadow-sm border border-gray-100 space-y-4">
-                        <div class="flex items-center gap-2">
-                            <i class="bi bi-camera-video-fill text-orange-500 text-lg"></i>
-                            <h3 class="text-base sm:text-lg font-bold text-gray-900">{{ __('Əmlakın Video Görüntüsü') }}</h3>
-                        </div>
-                        <div class="relative w-full rounded-2xl overflow-hidden bg-black shadow-inner aspect-video">
-                            <video src="{{ $property->video_url }}" controls preload="metadata" class="w-full h-full object-contain rounded-2xl"></video>
-                        </div>
-                    </div>
-                @endif
 
                 <!-- Features (Təchizatlar) Component -->
                 @include('components.property.features', ['features' => $property->amenities ?? [], 'column' => 3])
@@ -440,7 +477,7 @@
         <div
             class="absolute top-4 left-1/2 -translate-x-1/2 w-11/12 max-w-6xl flex justify-between items-center text-white z-[100002] px-2">
             <span id="counter"
-                  class="text-sm font-semibold bg-black/50 px-3.5 py-1.5 rounded-full backdrop-blur-md">1/{{ max(1, count($galleryImages)) }}</span>
+                  class="text-sm font-semibold bg-black/50 px-3.5 py-1.5 rounded-full backdrop-blur-md">1/{{ max(1, $totalMedia) }}</span>
             <div class="flex items-center gap-3">
                 <button type="button" onclick="toggleFullscreen()"
                         class="w-10 h-10 rounded-full bg-white/15 hover:bg-white/30 text-white flex items-center justify-center transition cursor-pointer"
@@ -454,8 +491,18 @@
             <button type="button" onclick="prevModalImage(event)"
                     class="pointer-events-auto w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-black/50 hover:bg-orange-500 text-white flex items-center justify-center text-xl sm:text-2xl transition cursor-pointer backdrop-blur-sm shadow-md"
                     aria-label="Əvvəlki"><i class="bi bi-chevron-left"></i></button>
-            <img id="modal-image" src="" alt="Modal Image"
-                 class="pointer-events-auto max-w-[90vw] max-h-[75vh] object-contain rounded-2xl shadow-2xl">
+
+            <div class="pointer-events-auto max-w-[90vw] max-h-[75vh] flex items-center justify-center">
+                <img id="modal-image" src="" alt="Modal Image"
+                     class="max-w-[90vw] max-h-[75vh] object-contain rounded-2xl shadow-2xl"
+                     style="display: block;">
+                @if($hasVideo)
+                    <div id="modal-video-wrapper" class="max-w-[90vw] max-h-[75vh] w-[900px] aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center" style="display: none;">
+                        <video id="modal-video" src="" controls playsinline class="w-full h-full object-contain"></video>
+                    </div>
+                @endif
+            </div>
+
             <button type="button" onclick="nextModalImage(event)"
                     class="pointer-events-auto w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-black/50 hover:bg-orange-500 text-white flex items-center justify-center text-xl sm:text-2xl transition cursor-pointer backdrop-blur-sm shadow-md"
                     aria-label="Növbəti"><i class="bi bi-chevron-right"></i></button>
@@ -463,28 +510,56 @@
         <div
             class="absolute bottom-4 left-1/2 -translate-x-1/2 w-11/12 max-w-4xl flex space-x-2 overflow-x-auto p-2 bg-black/60 backdrop-blur-md rounded-2xl z-[100001] justify-center"
             id="thumbnails">
-            @foreach($galleryImages as $index => $image)
-                <img src="{{ $image->url }}" onclick="openModal({{ $index }})" alt=""
-                     class="w-14 h-14 sm:w-18 sm:h-18 shrink-0 object-cover rounded-xl border-2 border-transparent cursor-pointer hover:border-orange-500 transition modal-thumb">
+            @foreach($mediaItems as $index => $item)
+                @if($item['type'] === 'video')
+                    <div onclick="openModal({{ $index }})"
+                         class="w-14 h-14 sm:w-18 sm:h-18 shrink-0 rounded-xl border-2 border-transparent cursor-pointer hover:border-orange-500 transition modal-thumb bg-gray-900 flex flex-col items-center justify-center relative overflow-hidden">
+                        @if(!empty($item['thumb']))
+                            <img src="{{ $item['thumb'] }}" alt="" class="w-full h-full object-cover opacity-50">
+                        @endif
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="bi bi-play-fill text-orange-500 text-2xl"></i>
+                        </div>
+                    </div>
+                @else
+                    <img src="{{ $item['thumb'] }}" onclick="openModal({{ $index }})" alt=""
+                         class="w-14 h-14 sm:w-18 sm:h-18 shrink-0 object-cover rounded-xl border-2 border-transparent cursor-pointer hover:border-orange-500 transition modal-thumb">
+                @endif
             @endforeach
         </div>
     </div>
 
     <script>
-        window.galleryImages = @json($galleryImages->map(fn($img) => $img->url)->values());
+        window.mediaList = @json($mediaItems->values());
         window.fullPhoneNumber = @json($agentPhone);
         let currentHeroIndex = 0;
 
         function selectHeroImage(index) {
-            if (!window.galleryImages || window.galleryImages.length === 0) return;
+            if (!window.mediaList || window.mediaList.length === 0) return;
             currentHeroIndex = index;
+            const item = window.mediaList[index];
+
             const mainImg = document.getElementById('main-hero-image');
-            if (mainImg) {
-                mainImg.src = window.galleryImages[index];
+            const videoWrapper = document.getElementById('main-hero-video-wrapper');
+            const heroVideo = document.getElementById('main-hero-video');
+
+            if (item.type === 'video') {
+                if (mainImg) mainImg.style.display = 'none';
+                if (videoWrapper) videoWrapper.style.display = 'flex';
+            } else {
+                if (videoWrapper) {
+                    videoWrapper.style.display = 'none';
+                    if (heroVideo) heroVideo.pause();
+                }
+                if (mainImg) {
+                    mainImg.style.display = 'block';
+                    mainImg.src = item.url;
+                }
             }
+
             const counter = document.getElementById('hero-counter');
             if (counter) {
-                counter.textContent = (index + 1) + '/' + window.galleryImages.length;
+                counter.textContent = (index + 1) + '/' + window.mediaList.length;
             }
             const thumbs = document.querySelectorAll('.hero-thumbnail');
             thumbs.forEach((thumb, i) => {
@@ -500,15 +575,15 @@
 
         function prevHeroImage(e) {
             if (e) e.stopPropagation();
-            if (!window.galleryImages || window.galleryImages.length === 0) return;
-            currentHeroIndex = (currentHeroIndex - 1 + window.galleryImages.length) % window.galleryImages.length;
+            if (!window.mediaList || window.mediaList.length === 0) return;
+            currentHeroIndex = (currentHeroIndex - 1 + window.mediaList.length) % window.mediaList.length;
             selectHeroImage(currentHeroIndex);
         }
 
         function nextHeroImage(e) {
             if (e) e.stopPropagation();
-            if (!window.galleryImages || window.galleryImages.length === 0) return;
-            currentHeroIndex = (currentHeroIndex + 1) % window.galleryImages.length;
+            if (!window.mediaList || window.mediaList.length === 0) return;
+            currentHeroIndex = (currentHeroIndex + 1) % window.mediaList.length;
             selectHeroImage(currentHeroIndex);
         }
 
@@ -531,10 +606,12 @@
         let currentModalIndex = 0;
         const modal = document.getElementById('modal');
         const modalImage = document.getElementById('modal-image');
+        const modalVideoWrapper = document.getElementById('modal-video-wrapper');
+        const modalVideo = document.getElementById('modal-video');
         const modalCounter = document.getElementById('counter');
 
         function openModal(index) {
-            if (!window.galleryImages || window.galleryImages.length === 0) return;
+            if (!window.mediaList || window.mediaList.length === 0) return;
             currentModalIndex = index;
             updateModal();
             if (modal) modal.style.display = 'flex';
@@ -543,29 +620,50 @@
 
         function closeModal() {
             if (modal) modal.style.display = 'none';
+            if (modalVideo) modalVideo.pause();
             document.body.style.overflow = 'auto';
         }
 
         function prevModalImage(e) {
             if (e) e.stopPropagation();
-            if (!window.galleryImages || window.galleryImages.length === 0) return;
-            currentModalIndex = (currentModalIndex - 1 + window.galleryImages.length) % window.galleryImages.length;
+            if (!window.mediaList || window.mediaList.length === 0) return;
+            currentModalIndex = (currentModalIndex - 1 + window.mediaList.length) % window.mediaList.length;
             updateModal();
         }
 
         function nextModalImage(e) {
             if (e) e.stopPropagation();
-            if (!window.galleryImages || window.galleryImages.length === 0) return;
-            currentModalIndex = (currentModalIndex + 1) % window.galleryImages.length;
+            if (!window.mediaList || window.mediaList.length === 0) return;
+            currentModalIndex = (currentModalIndex + 1) % window.mediaList.length;
             updateModal();
         }
 
         function updateModal() {
-            if (modalImage && window.galleryImages[currentModalIndex]) {
-                modalImage.src = window.galleryImages[currentModalIndex];
+            if (!window.mediaList || !window.mediaList[currentModalIndex]) return;
+            const item = window.mediaList[currentModalIndex];
+
+            if (item.type === 'video') {
+                if (modalImage) modalImage.style.display = 'none';
+                if (modalVideoWrapper) {
+                    modalVideoWrapper.style.display = 'flex';
+                    if (modalVideo) modalVideo.src = item.url;
+                }
+            } else {
+                if (modalVideoWrapper) {
+                    modalVideoWrapper.style.display = 'none';
+                    if (modalVideo) {
+                        modalVideo.pause();
+                        modalVideo.src = '';
+                    }
+                }
+                if (modalImage) {
+                    modalImage.style.display = 'block';
+                    modalImage.src = item.url;
+                }
             }
+
             if (modalCounter) {
-                modalCounter.textContent = (currentModalIndex + 1) + '/' + window.galleryImages.length;
+                modalCounter.textContent = (currentModalIndex + 1) + '/' + window.mediaList.length;
             }
             const modalThumbs = document.querySelectorAll('.modal-thumb');
             modalThumbs.forEach((thumb, i) => {

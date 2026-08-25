@@ -55,13 +55,6 @@ class PropertyDetailController extends Controller
         ];
 
         return view('pages.property.details', compact('property', 'similarProperties', 'breadcrumbs'))
-            ->with('css', ['listing-details.css'])
-            ->with('js', [
-                '/js/pages/property/detail/phone-modal.js',
-                '/js/pages/property/detail/videoplay.js',
-                '/js/pages/property/detail/image-gallery.js',
-                '/js/pages/property/detail/modal.js',
-            ])
             ->render();
     }
 

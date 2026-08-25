@@ -238,48 +238,14 @@
                     </div>
                 </div>
 
-                <!-- Contact Profile -->
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center font-semibold text-lg">
-                        {{ mb_strtoupper(mb_substr($propertyRequest->contact_name, 0, 1)) }}
-                    </div>
-                    <div>
-                        <div class="font-semibold text-sm sm:text-base text-gray-900">{{ $propertyRequest->contact_name }}</div>
-                        <div class="text-xs text-gray-400">{{ __('Müştəri / Axtaran şəxs') }}</div>
-                    </div>
-                </div>
+                <x-contact-profile :name="$propertyRequest->contact_name" :role="__('Müştəri / Axtaran şəxs')" />
 
-                <!-- Contact Action Buttons -->
-                <div class="space-y-3 pt-2">
-                    
-                    @if($propertyRequest->contact_whatsapp)
-                        @php
-                            $wa = preg_replace('/[^0-9]/', '', $propertyRequest->contact_whatsapp);
-                        @endphp
-                        <a href="https://wa.me/{{ $wa }}?text={{ urlencode('Salam, Metraj.az saytında yerləşdirdiyiniz tələb elanınızla bağlı sizə uyğun təklifim var: ' . $propertyRequest->title) }}"
-                           target="_blank" rel="noopener noreferrer"
-                           class="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm rounded-2xl shadow-xs transition hover:shadow-md">
-                            <i class="bi bi-whatsapp text-lg"></i>
-                            <span>{{ __('WhatsApp ilə Təklif Göndər') }}</span>
-                        </a>
-                    @endif
+                <x-contact-actions :whatsapp="$propertyRequest->contact_whatsapp" :phone="$propertyRequest->contact_phone"
+                    :message="'Salam, Metraj.az saytında yerləşdirdiyiniz tələb elanınızla bağlı sizə uyğun təklifim var: ' . $propertyRequest->title"
+                    :whatsapp-label="__('WhatsApp ilə Təklif Göndər')" />
 
-                    <a href="tel:{{ $propertyRequest->contact_phone }}"
-                       class="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-gray-900 hover:bg-[#f1913d] text-white font-semibold text-sm rounded-2xl shadow-xs transition hover:shadow-md">
-                        <i class="bi bi-telephone-fill text-base"></i>
-                        <span>{{ $propertyRequest->contact_phone }}</span>
-                    </a>
-
-                </div>
-
-                <!-- Safety Note -->
-                <div class="bg-gray-50 border border-gray-100 rounded-2xl p-4 text-[11px] text-gray-500 leading-relaxed space-y-1">
-                    <div class="font-semibold text-gray-700 flex items-center gap-1.5">
-                        <i class="bi bi-info-circle text-orange-500"></i>
-                        <span>{{ __('Agentlər və Ev Sahibləri üçün') }}</span>
-                    </div>
-                    <p>{{ __('Əgər bu müştərinin tələblərinə uyğun əmlakınız varsa, birbaşa zəng edərək və ya WhatsApp ilə əlaqə saxlayaraq təklifinizi təqdim edə bilərsiniz.') }}</p>
-                </div>
+                <x-safety-note icon="bi-info-circle" :title="__('Agentlər və Ev Sahibləri üçün')"
+                    :text="__('Əgər bu müştərinin tələblərinə uyğun əmlakınız varsa, birbaşa zəng edərək və ya WhatsApp ilə əlaqə saxlayaraq təklifinizi təqdim edə bilərsiniz.')" />
 
             </div>
 
