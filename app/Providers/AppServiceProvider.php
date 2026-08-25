@@ -28,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('*', function ($view) {
             try {
                 $view->with('siteSetting', \App\Modules\Shared\Models\SiteSetting::current());
+                $view->with('seoSetting', \App\Modules\Shared\Models\SeoSetting::current());
+                $view->with('currentPageSeo', \App\Modules\Shared\Models\PageSeo::findForCurrentRoute());
             } catch (\Throwable $e) {
                 // Fallback
             }

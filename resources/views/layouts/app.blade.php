@@ -6,6 +6,33 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    @php
+        $resolvedTitle = View::hasSection('title') ? View::getSection('title') : ($title ?? ($currentPageSeo?->getTrans('title') ?: ($seoSetting?->getTrans('default_meta_title') ?: 'KibrisKare.com')));
+        $resolvedDescription = $metaDescription ?? ($currentPageSeo?->getTrans('description') ?: ($seoSetting?->getTrans('default_meta_description') ?: ''));
+        $resolvedKeywords = $metaKeywords ?? ($currentPageSeo?->getTrans('keywords') ?: ($seoSetting?->getTrans('default_meta_keywords') ?: ''));
+        $resolvedOgImage = $ogImage ?? ($currentPageSeo?->og_image ?: ($seoSetting?->og_image ?: asset('images/kibriskarelogo1.png')));
+    @endphp
+
+    <title>{{ $resolvedTitle }}</title>
+
+    @if($resolvedDescription)
+        <meta name="description" content="{{ $resolvedDescription }}"/>
+    @endif
+    @if($resolvedKeywords)
+        <meta name="keywords" content="{{ $resolvedKeywords }}"/>
+    @endif
+
+    <!-- Open Graph / Social Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="{{ $resolvedTitle }}">
+    @if($resolvedDescription)
+        <meta property="og:description" content="{{ $resolvedDescription }}">
+    @endif
+    @if($resolvedOgImage)
+        <meta property="og:image" content="{{ $resolvedOgImage }}">
+    @endif
+
     @if(!empty($setting->favicon ?? $setting['favicon'] ?? null))
         <link rel="shortcut icon" href="{{ $setting->favicon ?? $setting['favicon'] ?? '' }}" type="">
     @endif
@@ -14,12 +41,6 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <title>{{ $title ?? 'KibrisKare.com' }}</title>
-
-    @if(isset($seo))
-        <meta name="description" content="{{ $seo->description ?? $seo['description'] ?? '' }}"/>
-        <meta name="keywords" content="{{ $seo->meta_tags ?? $seo['meta_tags'] ?? '' }}"/>
-    @endif
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -34,8 +55,18 @@
     @endif
 
     @stack('styles')
+
+    {{-- Global <head> Scripts (Raw HTML/JS from Admin) --}}
+    @if(!empty($seoSetting?->head_scripts))
+        {!! $seoSetting->head_scripts !!}
+    @endif
 </head>
 <body class="bg-[#F7F7F7] pb-20 md:pb-0">
+    {{-- Global <body> Opening Scripts (Raw HTML/JS from Admin, e.g. GTM noscript) --}}
+    @if(!empty($seoSetting?->body_scripts))
+        {!! $seoSetting->body_scripts !!}
+    @endif
+
     @if(!isset($useLayout) || $useLayout !== false)
         @include('layouts.navbar')
 
@@ -65,5 +96,10 @@
 
     @include('layouts.js')
     @stack('scripts')
+
+    {{-- Global Footer / </body> Scripts (Raw HTML/JS from Admin, e.g. Live chat, widgets) --}}
+    @if(!empty($seoSetting?->footer_scripts))
+        {!! $seoSetting->footer_scripts !!}
+    @endif
 </body>
 </html>

@@ -19,9 +19,6 @@
       <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'ayliq']) }}" class="{{ request('deal_type') === 'rent_monthly' ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
         {{ __('navbar.rent') }}
       </a>
-      <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'gunluk']) }}" class="{{ request('deal_type') === 'rent_daily' ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
-        {{ __('navbar.daily_rent') }}
-      </a>
       <a href="{{ route('requests.index') }}" class="{{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
         {{ __('navbar.requests') }}
       </a>
