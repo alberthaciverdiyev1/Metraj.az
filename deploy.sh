@@ -7,6 +7,8 @@ set -e
 
 echo "🚀 Starting Deployment Process..."
 
+export COMPOSER_ALLOW_SUPERUSER=1
+
 # 1. Maintenance Mode
 if [ "$1" == "--maintenance" ]; then
     echo "🚧 Putting application into maintenance mode..."
@@ -26,16 +28,16 @@ composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 echo "🗄️ Running database migrations..."
 php artisan migrate --force
 
-# 5. Build Frontend Assets (if Node/NPM is available)
-if command -v npm &> /dev/null; then
+# 5. Build Frontend Assets (if local node_modules exist)
+if [ -f "node_modules/.bin/vite" ]; then
     echo "⚡ Building frontend assets..."
-    npm run build --silent || npm run build
-    npm run assets:build --silent || npm run assets:build
+    npm run build 2>/dev/null || true
+    npm run assets:build 2>/dev/null || true
 fi
 
 # 6. Ensure Storage Link Exists
 echo "🔗 Verifying storage link..."
-php artisan storage:link || true
+php artisan storage:link 2>/dev/null || true
 
 # 7. Optimize & Cache Configuration / Routes / Views
 echo "🧹 Optimizing and caching Laravel..."
