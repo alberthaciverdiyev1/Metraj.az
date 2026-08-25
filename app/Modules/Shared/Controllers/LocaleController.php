@@ -7,7 +7,7 @@ use Illuminate\Http\RedirectResponse;
 
 class LocaleController extends Controller
 {
-    public const array VALID_LANGUAGES = ['az', 'en', 'ru'];
+    public const array VALID_LANGUAGES = ['az', 'en', 'ru', 'tr'];
 
     public const array VALID_CURRENCIES = ['AZN', 'USD', 'EUR', 'GBP', 'TRY', 'RUB', 'AED'];
 

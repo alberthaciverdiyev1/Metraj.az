@@ -7,29 +7,29 @@
       <img class="h-9 w-auto object-contain" src="{{ asset('images/metrajlogo1.png') }}" alt="Metraj.az" />
       <div class="leading-tight">
         <div class="text-xl font-bold text-[#545454] tracking-tight">Metraj.az</div>
-        <div class="text-[8px] text-gray-400 uppercase tracking-[0.18em]">sənin əmlakın</div>
+        <div class="text-[8px] text-gray-400 uppercase tracking-[0.18em]">{{ __('navbar.slogan') }}</div>
       </div>
     </a>
 
     <!-- Desktop Navigation Links (Always visible on md and up) -->
     <nav class="hidden md:flex items-center space-x-5 lg:space-x-7 text-[15px] font-medium">
       <a href="{{ route('listing.path1', ['first' => 'satilik']) }}" class="{{ request('deal_type') === 'sale' ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
-        {{ __('Alqı-satqı') }}
+        {{ __('navbar.sale') }}
       </a>
       <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'ayliq']) }}" class="{{ request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
-        {{ __('Kirayə') }}
+        {{ __('navbar.rent') }}
       </a>
       <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'gunluk']) }}" class="{{ request('deal_type') === 'rent_daily' ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
-        {{ __('Günlük') }}
+        {{ __('navbar.daily_rent') }}
       </a>
       <a href="{{ route('requests.index') }}" class="{{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
-        {{ __('Axtarıram') }}
+        {{ __('navbar.requests') }}
       </a>
       <a href="{{ route('agencies.list') }}" class="{{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
-        {{ __('Agencies') }}
+        {{ __('navbar.agencies') }}
       </a>
       <a href="{{ route('contact') }}" class="{{ request()->is('contact*') ? 'text-[#f1913d] font-semibold' : 'text-gray-700 hover:text-[#f1913d]' }} transition">
-        {{ __('Contact') }}
+        {{ __('navbar.contact') }}
       </a>
     </nav>
 
@@ -37,13 +37,13 @@
     <div class="flex items-center space-x-2.5 sm:space-x-3.5">
 
       <!-- Favorites -->
-      <a href="{{ route('favorites') }}" class="relative text-gray-700 hover:text-orange-500 p-2 rounded-xl transition inline-flex items-center justify-center hover:bg-gray-50" title="{{ __('Favorites') }}">
+      <a href="{{ route('favorites') }}" class="relative text-gray-700 hover:text-orange-500 p-2 rounded-xl transition inline-flex items-center justify-center hover:bg-gray-50" title="{{ __('navbar.favorites') }}">
         <i class="fa-regular fa-heart text-xl text-rose-500"></i>
         <span id="favorites-count" class="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] min-w-[16px] h-4 px-1 flex items-center justify-center rounded-full font-semibold shadow-sm">0</span>
       </a>
 
       <!-- Compares -->
-      <a href="{{ route('compares') }}" class="relative text-gray-700 hover:text-orange-500 p-2 rounded-xl transition inline-flex items-center justify-center hover:bg-gray-50" title="{{ __('Compare') }}">
+      <a href="{{ route('compares') }}" class="relative text-gray-700 hover:text-orange-500 p-2 rounded-xl transition inline-flex items-center justify-center hover:bg-gray-50" title="{{ __('navbar.compare') }}">
         <i class="bi bi-arrow-left-right text-xl text-gray-700"></i>
         <span id="compares-count" class="absolute top-0 -right-1 bg-orange-500 text-white text-[10px] min-w-[16px] h-4 px-1 flex items-center justify-center rounded-full font-semibold shadow-sm">0</span>
       </a>
@@ -101,15 +101,15 @@
       </div>
 
       <!-- Post Request Button (Axtarıram) -->
-      <a href="{{ route('requests.create') }}" class="hidden lg:flex items-center px-3.5 py-2 border border-orange-500 text-orange-600 hover:bg-orange-50 rounded-xl font-semibold text-xs sm:text-sm transition shadow-2xs" title="{{ __('Tələb Elanı Yerləşdir') }}">
+      <a href="{{ route('requests.create') }}" class="hidden lg:flex items-center px-3.5 py-2 border border-orange-500 text-orange-600 hover:bg-orange-50 rounded-xl font-semibold text-xs sm:text-sm transition shadow-2xs" title="{{ __('navbar.post_request') }}">
         <i class="fa-solid fa-bullhorn mr-1.5 text-xs text-orange-500"></i>
-        <span>{{ __('Tələb yerləşdir') }}</span>
+        <span>{{ __('navbar.post_request') }}</span>
       </a>
 
       <!-- Add Property Button -->
       <a href="{{ route('add-property') }}" class="hidden sm:flex items-center px-3.5 py-2 bg-[#f1913d] hover:bg-[#e07f2c] text-white rounded-xl font-semibold text-xs sm:text-sm transition shadow-sm">
         <i class="bi bi-plus-circle mr-1.5"></i>
-        <span>{{ __('Elan yerləşdir') }}</span>
+        <span>{{ __('navbar.post_property') }}</span>
       </a>
 
       <!-- Auth User / Login -->
@@ -129,25 +129,25 @@
             </div>
 
             <a href="{{ route('dashboard') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
-              <i class="bi bi-grid mr-3 text-gray-400"></i> {{ __('Dashboard') }}
+              <i class="bi bi-grid mr-3 text-gray-400"></i> {{ __('navbar.dashboard') }}
             </a>
             <a href="{{ route('profile') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
-              <i class="bi bi-person mr-3 text-gray-400"></i> {{ __('My profile') }}
+              <i class="bi bi-person mr-3 text-gray-400"></i> {{ __('navbar.my_profile') }}
             </a>
             <a href="{{ route('my-properties') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
-              <i class="bi bi-folder-check mr-3 text-gray-400"></i> {{ __('My properties') }}
+              <i class="bi bi-folder-check mr-3 text-gray-400"></i> {{ __('navbar.my_properties') }}
             </a>
             <a href="{{ route('favorites') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
-              <i class="bi bi-heart mr-3 text-gray-400"></i> {{ __('My favorites') }}
+              <i class="bi bi-heart mr-3 text-gray-400"></i> {{ __('navbar.my_favorites') }}
             </a>
             <a href="/mysavesearches" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#f1913d]">
-              <i class="bi bi-bookmark mr-3 text-gray-400"></i> {{ __('My save searches') }}
+              <i class="bi bi-bookmark mr-3 text-gray-400"></i> {{ __('navbar.my_saved_searches') }}
             </a>
 
             @if(auth()->user()->is_admin ?? false)
               <div class="border-t border-gray-100 my-1"></div>
               <a href="{{ route('filament.admin.pages.dashboard') }}" class="flex items-center px-4 py-2 text-sm text-indigo-600 hover:bg-indigo-50 font-medium">
-                <i class="bi bi-shield-lock mr-3"></i> Admin Panel
+                <i class="bi bi-shield-lock mr-3"></i> {{ __('navbar.admin_panel') }}
               </a>
             @endif
 
@@ -156,14 +156,14 @@
             <form method="POST" action="{{ route('logout') }}" class="m-0 js-logout">
               @csrf
               <button type="submit" class="w-full flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 text-left font-medium">
-                <i class="bi bi-box-arrow-right mr-3"></i> {{ __('Logout') }}
+                <i class="bi bi-box-arrow-right mr-3"></i> {{ __('navbar.logout') }}
               </button>
             </form>
           </div>
         @else
           <a href="{{ route('login') }}" class="flex items-center px-3.5 py-2 border border-gray-200 rounded-xl text-gray-700 hover:border-[#f1913d] hover:text-[#f1913d] text-sm font-semibold transition bg-white shadow-2xs">
             <i class="bi bi-person mr-1.5 text-base"></i>
-            <span>{{ __('Login / Register') }}</span>
+            <span>{{ __('navbar.login_register') }}</span>
           </a>
         @endauth
       </div>

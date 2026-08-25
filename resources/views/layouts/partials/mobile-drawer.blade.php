@@ -20,57 +20,57 @@
     <div class="grid grid-cols-2 gap-2.5">
       <a href="{{ route('add-property') }}" class="flex items-center justify-center gap-2 py-3 px-4 bg-[#f1913d] hover:bg-[#e07f2c] text-white rounded-2xl font-semibold text-xs shadow-sm">
         <i class="fa-solid fa-plus text-sm"></i>
-        <span>{{ __('Elan yerləşdir') }}</span>
+        <span>{{ __('navbar.post_property') }}</span>
       </a>
       <a href="{{ route('requests.create') }}" class="flex items-center justify-center gap-2 py-3 px-4 bg-orange-500 text-white rounded-2xl font-semibold text-xs shadow-sm">
         <i class="fa-solid fa-bullhorn text-xs"></i>
-        <span>{{ __('Tələb yerləşdir') }}</span>
+        <span>{{ __('navbar.post_request') }}</span>
       </a>
     </div>
 
     <!-- Navigation Links List -->
     <div class="space-y-1 py-1">
       <a href="{{ route('home') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('/') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
-        <span class="flex items-center gap-3"><i class="fa-solid fa-house text-gray-400 w-5 text-center"></i> {{ __('Ana Səhifə') }}</span>
+        <span class="flex items-center gap-3"><i class="fa-solid fa-house text-gray-400 w-5 text-center"></i> {{ __('navbar.home') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
       <a href="{{ route('listing.path1', ['first' => 'satilik']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request('deal_type') === 'sale' ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
-        <span class="flex items-center gap-3"><i class="fa-solid fa-key text-gray-400 w-5 text-center"></i> {{ __('Alqı-satqı') }}</span>
+        <span class="flex items-center gap-3"><i class="fa-solid fa-key text-gray-400 w-5 text-center"></i> {{ __('navbar.sale') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
       <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'ayliq']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request('deal_type') === 'rent_monthly' ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
-        <span class="flex items-center gap-3"><i class="fa-solid fa-calendar-days text-gray-400 w-5 text-center"></i> {{ __('Kirayə') }}</span>
+        <span class="flex items-center gap-3"><i class="fa-solid fa-calendar-days text-gray-400 w-5 text-center"></i> {{ __('navbar.rent') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
       <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'gunluk']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request('deal_type') === 'rent_daily' ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
-        <span class="flex items-center gap-3"><i class="fa-solid fa-clock text-gray-400 w-5 text-center"></i> {{ __('Günlük') }}</span>
+        <span class="flex items-center gap-3"><i class="fa-solid fa-clock text-gray-400 w-5 text-center"></i> {{ __('navbar.daily_rent') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
       <a href="{{ route('requests.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
-        <span class="flex items-center gap-3"><i class="fa-solid fa-magnifying-glass text-gray-400 w-5 text-center"></i> {{ __('Axtarıram') }}</span>
+        <span class="flex items-center gap-3"><i class="fa-solid fa-magnifying-glass text-gray-400 w-5 text-center"></i> {{ __('navbar.requests') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
       <a href="{{ route('agencies.list') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
-        <span class="flex items-center gap-3"><i class="fa-solid fa-building text-gray-400 w-5 text-center"></i> {{ __('Agencies') }}</span>
+        <span class="flex items-center gap-3"><i class="fa-solid fa-building text-gray-400 w-5 text-center"></i> {{ __('navbar.agencies') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
       <a href="{{ route('contact') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('contact*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
-        <span class="flex items-center gap-3"><i class="fa-solid fa-envelope text-gray-400 w-5 text-center"></i> {{ __('Contact') }}</span>
+        <span class="flex items-center gap-3"><i class="fa-solid fa-envelope text-gray-400 w-5 text-center"></i> {{ __('navbar.contact') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
       <a href="{{ route('compares') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('compares*') ? 'text-[#f1913d] bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
-        <span class="flex items-center gap-3"><i class="bi bi-arrow-left-right text-gray-400 w-5 text-center"></i> {{ __('Compare') }}</span>
+        <span class="flex items-center gap-3"><i class="bi bi-arrow-left-right text-gray-400 w-5 text-center"></i> {{ __('navbar.compare') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
     </div>
 
     <!-- Language Selector with Flags -->
     <div class="pt-3 border-t border-gray-100">
-      <div class="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-2">{{ __('Dil seçimi') }}</div>
-      <div class="grid grid-cols-3 gap-2">
+      <div class="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-2">{{ __('navbar.select_language') }}</div>
+      <div class="grid grid-cols-4 gap-1.5">
         @foreach($languages as $lKey => $lData)
           <a href="{{ route('lang.switch', $lKey) }}"
-             class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-2xl text-xs font-semibold border {{ $currentLocale === $lKey ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-2xs' : 'border-gray-200 text-gray-700 hover:bg-gray-50' }}">
+             class="flex items-center justify-center gap-1.5 py-2 px-2 rounded-2xl text-xs font-semibold border {{ $currentLocale === $lKey ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-2xs' : 'border-gray-200 text-gray-700 hover:bg-gray-50' }}">
             <span class="text-sm">{{ $lData['flag'] }}</span>
             <span>{{ $lData['label'] }}</span>
           </a>
@@ -80,7 +80,7 @@
 
     <!-- Currency Selector -->
     <div class="pt-3 border-t border-gray-100">
-      <div class="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-2">{{ __('Valyuta') }}</div>
+      <div class="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-2">{{ __('navbar.currency') }}</div>
       <div class="grid grid-cols-4 gap-1.5">
         @foreach($currencySymbols as $cCode => $cSym)
           <a href="{{ route('currency.switch', $cCode) }}"
@@ -96,30 +96,30 @@
       @auth
         <div class="space-y-1">
           <a href="{{ route('dashboard') }}" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
-            <i class="bi bi-grid mr-3 text-gray-400"></i> {{ __('Dashboard') }}
+            <i class="bi bi-grid mr-3 text-gray-400"></i> {{ __('navbar.dashboard') }}
           </a>
           <a href="{{ route('profile') }}" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
-            <i class="bi bi-person mr-3 text-gray-400"></i> {{ __('My profile') }}
+            <i class="bi bi-person mr-3 text-gray-400"></i> {{ __('navbar.my_profile') }}
           </a>
           <a href="{{ route('my-properties') }}" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
-            <i class="bi bi-folder-check mr-3 text-gray-400"></i> {{ __('My properties') }}
+            <i class="bi bi-folder-check mr-3 text-gray-400"></i> {{ __('navbar.my_properties') }}
           </a>
           @if(auth()->user()->is_admin ?? false)
             <a href="{{ route('filament.admin.pages.dashboard') }}" class="flex items-center px-3.5 py-2.5 rounded-xl text-sm font-semibold text-indigo-600 hover:bg-indigo-50">
-              <i class="bi bi-shield-lock mr-3"></i> Admin Panel
+              <i class="bi bi-shield-lock mr-3"></i> {{ __('navbar.admin_panel') }}
             </a>
           @endif
           <form method="POST" action="{{ route('logout') }}" class="m-0 js-logout pt-1">
             @csrf
             <button type="submit" class="w-full flex items-center px-3.5 py-2.5 text-sm text-red-600 hover:bg-red-50 text-left font-medium rounded-xl">
-              <i class="bi bi-box-arrow-right mr-3"></i> {{ __('Logout') }}
+              <i class="bi bi-box-arrow-right mr-3"></i> {{ __('navbar.logout') }}
             </button>
           </form>
         </div>
       @else
         <a href="{{ route('login') }}" class="w-full flex items-center justify-center gap-2 py-3 px-4 bg-gray-900 text-white rounded-2xl font-semibold text-xs shadow-sm">
           <i class="bi bi-person text-sm"></i>
-          <span>{{ __('Login / Register') }}</span>
+          <span>{{ __('navbar.login_register') }}</span>
         </a>
       @endauth
     </div>

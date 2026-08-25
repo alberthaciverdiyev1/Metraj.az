@@ -9,13 +9,14 @@
       'RUB' => '₽',
       'AED' => 'د.إ',
     ];
-    $currentLocale = session('lang', app()->getLocale() ?? 'az');
+    $currentLocale = app()->getLocale() ?? session('lang', config('app.locale', 'tr'));
     $languages = [
+      'tr' => ['name' => 'Türkçe', 'flag' => '🇹🇷', 'label' => 'TR'],
       'az' => ['name' => 'Azərbaycan', 'flag' => '🇦🇿', 'label' => 'AZ'],
       'en' => ['name' => 'English', 'flag' => '🇬🇧', 'label' => 'EN'],
       'ru' => ['name' => 'Русский', 'flag' => '🇷🇺', 'label' => 'RU'],
     ];
-    $activeLang = $languages[$currentLocale] ?? $languages['az'];
+    $activeLang = $languages[$currentLocale] ?? $languages['tr'];
 @endphp
 
 @include('layouts.partials.desktop-navbar')
