@@ -54,20 +54,29 @@ class User extends Authenticatable implements FilamentUser
     ];
 
     /**
+     * İstifadəçinin admin olub-olmadığını yoxlayır.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->email === self::ADMIN_EMAIL;
+    }
+
+    /**
      * Filament panellərinə giriş icazəsi.
      * Admin panelinə yalnız admin istifadəçi daxil ola bilər.
-     * Agentlik paneli bütün istifadəçilər üçün açıqdır — tenant scoping
-     * (Agency/Agent/Property resource) məlumatların yalnız sahibinə
-     * göstərilməsini təmin edir.
+     * Agentlik (Agency) panelinə yalnız qeyri-admin istifadəçilər daxil ola bilər (Admin daxil ola bilməz).
      */
     public function canAccessPanel(Panel $panel): bool
     {
         if ($panel->getId() === 'admin') {
-            return $this->email === self::ADMIN_EMAIL;
+            return $this->isAdmin();
         }
 
-        // Agentlik paneli — hər bir yeni yaradılmış istifadəçi daxil ola bilər
-        return true;
+        if ($panel->getId() === 'agency') {
+            return !$this->isAdmin();
+        }
+
+        return false;
     }
 
     /**
