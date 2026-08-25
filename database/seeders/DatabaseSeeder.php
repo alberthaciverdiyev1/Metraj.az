@@ -34,19 +34,60 @@ class DatabaseSeeder extends Seeder
 
         // 3. Amenities (Təchizatlar)
         $amenities = [
-            ['name' => 'Qaz', 'icon' => 'flame', 'category' => 'utilities'],
-            ['name' => 'Kupça (Çıxarış)', 'icon' => 'document', 'category' => 'document'],
-            ['name' => 'İpotekaya yararlı', 'icon' => 'banknotes', 'category' => 'financial'],
-            ['name' => 'Lift', 'icon' => 'arrows-up-down', 'category' => 'building'],
-            ['name' => 'Avtodayanacaq / Parkinq', 'icon' => 'truck', 'category' => 'building'],
-            ['name' => 'Mərkəzi istilik sistemi', 'icon' => 'sun', 'category' => 'utilities'],
-            ['name' => 'Kondisioner', 'icon' => 'sparkles', 'category' => 'interior'],
-            ['name' => 'Mebel ilə birlikdə', 'icon' => 'home', 'category' => 'interior'],
-            ['name' => 'Balkon / Terras', 'icon' => 'view-columns', 'category' => 'exterior'],
+            [
+                'name' => ['az' => 'Qaz', 'tr' => 'Doğalgaz / Gaz', 'en' => 'Gas Supply', 'ru' => 'Газ'],
+                'icon' => 'flame',
+                'category' => 'utilities',
+            ],
+            [
+                'name' => ['az' => 'Kupça (Çıxarış)', 'tr' => 'Tapu (Kupça)', 'en' => 'Deed (Kupcha)', 'ru' => 'Купчая (Выписка)'],
+                'icon' => 'document',
+                'category' => 'document',
+            ],
+            [
+                'name' => ['az' => 'İpotekaya yararlı', 'tr' => 'Krediye Uygun', 'en' => 'Mortgage Eligible', 'ru' => 'Ипотека'],
+                'icon' => 'banknotes',
+                'category' => 'financial',
+            ],
+            [
+                'name' => ['az' => 'Lift', 'tr' => 'Asansör', 'en' => 'Elevator', 'ru' => 'Лифт'],
+                'icon' => 'arrows-up-down',
+                'category' => 'building',
+            ],
+            [
+                'name' => ['az' => 'Avtodayanacaq / Parkinq', 'tr' => 'Otopark', 'en' => 'Parking', 'ru' => 'Парковка'],
+                'icon' => 'truck',
+                'category' => 'building',
+            ],
+            [
+                'name' => ['az' => 'Mərkəzi istilik sistemi', 'tr' => 'Merkezi Isıtma', 'en' => 'Central Heating', 'ru' => 'Центральное отопление'],
+                'icon' => 'sun',
+                'category' => 'utilities',
+            ],
+            [
+                'name' => ['az' => 'Kondisioner', 'tr' => 'Klima', 'en' => 'Air Conditioning', 'ru' => 'Кондиционер'],
+                'icon' => 'sparkles',
+                'category' => 'interior',
+            ],
+            [
+                'name' => ['az' => 'Mebel ilə birlikdə', 'tr' => 'Mobilyalı / Eşyalı', 'en' => 'Furnished', 'ru' => 'С мебелью'],
+                'icon' => 'home',
+                'category' => 'interior',
+            ],
+            [
+                'name' => ['az' => 'Balkon / Terras', 'tr' => 'Balkon / Teras', 'en' => 'Balcony / Terrace', 'ru' => 'Балкон / Терраса'],
+                'icon' => 'view-columns',
+                'category' => 'exterior',
+            ],
         ];
 
         foreach ($amenities as $item) {
-            Amenity::updateOrCreate(['name' => $item['name']], $item);
+            $existing = Amenity::where('name->az', $item['name']['az'])->first();
+            if ($existing) {
+                $existing->update($item);
+            } else {
+                Amenity::create($item);
+            }
         }
 
         // ==========================================

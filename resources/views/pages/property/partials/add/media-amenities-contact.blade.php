@@ -68,7 +68,7 @@
                         <label class="flex items-center gap-2 p-2.5 bg-gray-50/70 border border-gray-100 rounded-xl cursor-pointer hover:border-orange-200 transition">
                             <input type="checkbox" name="amenities[]" value="{{ $amenity->id }}" {{ in_array($amenity->id, old('amenities', [])) ? 'checked' : '' }}
                                 class="w-4 h-4 text-orange-500 rounded border-gray-300 focus:ring-orange-500">
-                            <span class="text-xs font-medium text-gray-800">{{ is_array($amenity->name) ? ($amenity->name['az'] ?? reset($amenity->name)) : $amenity->name }}</span>
+                            <span class="text-xs font-medium text-gray-800">{{ $amenity->localized_name }}</span>
                         </label>
                     @endforeach
                 </div>

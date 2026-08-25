@@ -640,9 +640,10 @@ document.addEventListener('DOMContentLoaded', function () {
                             const label = document.createElement('label');
                             label.className = 'flex items-center gap-2 p-2.5 bg-gray-50/70 border border-gray-100 rounded-xl cursor-pointer hover:border-orange-200 transition';
 
-                            const name = typeof amenity.name === 'object' && amenity.name !== null
-                                ? (amenity.name.az || Object.values(amenity.name)[0] || '')
-                                : (amenity.name || '');
+                            const name = amenity.localized_name
+                                || (typeof amenity.name === 'object' && amenity.name !== null
+                                    ? (amenity.name[window.currentLocale || 'tr'] || amenity.name.az || Object.values(amenity.name)[0] || '')
+                                    : (amenity.name || ''));
 
                             label.innerHTML = `
                                 <input type="checkbox" name="amenities[]" value="${amenity.id}"

@@ -521,7 +521,8 @@ class PropertyResource extends Resource
             ->columnSpan(2)
             ->schema([
                 Forms\Components\CheckboxList::make('amenities')
-                    ->relationship('amenities', 'name')
+                    ->relationship('amenities', 'id')
+                    ->getOptionLabelFromRecordUsing(fn ($record) => $record->localized_name)
                     ->label('')
                     ->columns(4)
                     ->columnSpanFull(),

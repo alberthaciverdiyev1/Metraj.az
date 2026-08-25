@@ -30,14 +30,31 @@ class AmenityResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Təchizat Məlumatları')
+                Forms\Components\Section::make('Təchizat Adı (Çoxdilli)')
                     ->schema([
-                        Forms\Components\TextInput::make('name')
-                            ->label('Təchizatın Adı')
-                            ->placeholder('Məs: Qaz, Kupça, Lift, Mərkəzi istilik sistemi')
-                            ->required()
-                            ->maxLength(255),
+                        Forms\Components\TextInput::make('name.az')
+                            ->label('Ad (AZ)')
+                            ->placeholder('Məs: Qaz, Lift, Parkinq')
+                            ->required(),
 
+                        Forms\Components\TextInput::make('name.tr')
+                            ->label('Ad (TR)')
+                            ->placeholder('Məs: Doğalgaz, Asansör, Otopark')
+                            ->nullable(),
+
+                        Forms\Components\TextInput::make('name.en')
+                            ->label('Ad (EN)')
+                            ->placeholder('Məs: Gas Supply, Elevator, Parking')
+                            ->nullable(),
+
+                        Forms\Components\TextInput::make('name.ru')
+                            ->label('Ad (RU)')
+                            ->placeholder('Məs: Газ, Лифт, Парковка')
+                            ->nullable(),
+                    ])->columns(4),
+
+                Forms\Components\Section::make('Əlavə Məlumatlar')
+                    ->schema([
                         Forms\Components\TextInput::make('icon')
                             ->label('İkon Kodu')
                             ->placeholder('flame, home, banknotes, sparkles')
@@ -47,7 +64,7 @@ class AmenityResource extends Resource
                             ->label('Kateqoriya')
                             ->placeholder('utilities, document, financial, building, interior, exterior')
                             ->maxLength(255),
-                    ])->columns(3),
+                    ])->columns(2),
             ]);
     }
 
@@ -56,11 +73,16 @@ class AmenityResource extends Resource
         return $table
             ->defaultSort('id', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->label('Ad')
+                Tables\Columns\TextColumn::make('name.az')
+                    ->label('Ad (AZ)')
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
+
+                Tables\Columns\TextColumn::make('name.tr')
+                    ->label('Ad (TR)')
+                    ->searchable()
+                    ->placeholder('—'),
 
                 Tables\Columns\TextColumn::make('category')
                     ->label('Kateqoriya')

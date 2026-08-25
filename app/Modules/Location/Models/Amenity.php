@@ -18,16 +18,25 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Amenity extends Model
 {
-    use HasFactory;
+    use HasFactory, \App\Modules\Shared\Concerns\HasLocalizedName;
 
     /**
      * Kütləvi doldurula bilən sütunlar (Mass Assignable)
      */
     protected $fillable = [
-        'name',      // Xüsusiyyətin adı (Məs: Qaz, Lift, Parkinq, Mərkəzi istilik)
+        'name',      // Xüsusiyyətin çoxdilli adı: {"az": "...", "tr": "...", "en": "...", "ru": "..."}
         'icon',      // İkon adı (Məs: flame, truck, home)
         'category',  // Kateqoriya (Kommunal, Bina, İnteryer, Eksteryer)
         'is_active', // Aktivlik vəziyyəti (true/false)
+    ];
+
+    protected $casts = [
+        'name' => 'array',
+        'is_active' => 'boolean',
+    ];
+
+    protected $appends = [
+        'localized_name',
     ];
 
     /**

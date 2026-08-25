@@ -120,8 +120,9 @@ class ViewProperty extends ViewRecord
                             ->label('Seçilmiş Elan')
                             ->boolean(),
 
-                        TextEntry::make('amenities.name')
+                        TextEntry::make('amenities')
                             ->label('Təchizatlar')
+                            ->getStateUsing(fn ($record) => $record->amenities->map(fn ($a) => $a->localized_name))
                             ->badge()
                             ->color('info'),
                     ]),
