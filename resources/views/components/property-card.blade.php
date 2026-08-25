@@ -13,7 +13,7 @@
     $fullTitle = $property->title;
 
     $date = $property->created_at
-        ? ($property->created_at->isToday() ? __('listing.today') . ' ' . $property->created_at->format('H:i') : $property->created_at->format('d.m.Y'))
+        ? ($property->created_at->diffInHours(now()) < 24 ? $property->created_at->diffForHumans() : $property->created_at->format('d.m.Y'))
         : '';
 
     $formattedPrice = number_format($property->price, 0, '', ' ');
