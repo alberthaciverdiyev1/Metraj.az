@@ -49,7 +49,13 @@ if command -v systemctl &> /dev/null; then
     sudo systemctl reload php8.4-fpm 2>/dev/null || systemctl reload php8.4-fpm 2>/dev/null || sudo systemctl reload php8.3-fpm 2>/dev/null || true
 fi
 
-# 9. Bring Application Out of Maintenance Mode
+# 9. Clean PM2 Logs (to prevent disk space bloat from other server apps)
+if command -v pm2 &> /dev/null; then
+    echo "🧹 Flushing PM2 logs..."
+    pm2 flush || true
+fi
+
+# 10. Bring Application Out of Maintenance Mode
 if [ "$1" == "--maintenance" ]; then
     echo "✨ Bringing application back online..."
     php artisan up
