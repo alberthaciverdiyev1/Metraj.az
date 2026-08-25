@@ -7,11 +7,11 @@
                     <img class="h-9 w-auto object-contain brightness-0 invert" src="{{ asset('images/metrajlogo1.png') }}" alt="Metraj" />
                     <div class="leading-tight">
                         <div class="text-xl font-bold text-white tracking-tight">Metraj.az</div>
-                        <div class="text-[8px] text-orange-500 underline underline-offset-4 uppercase tracking-[0.15em] font-semibold">sənin əmlakın</div>
+                        <div class="text-[8px] text-orange-500 underline underline-offset-4 uppercase tracking-[0.15em] font-semibold">{{ __('footer.tagline') }}</div>
                     </div>
                 </a>
                 <p class="text-sm text-neutral-400 leading-relaxed max-w-sm">
-                    {{ __('Kiprin ən böyük əmlak elanları platforması. Ev, villa, torpaq sahəsi və kommersiya obyektlərinin alqı-satqısı və kirayəsi üçün ən doğru ünvan.') }}
+                    {{ __('footer.description') }}
                 </p>
                 <div class="flex items-center space-x-4 pt-2">
                     <a href="#" class="w-10 h-10 rounded-xl bg-neutral-900 text-neutral-400 hover:text-white hover:bg-orange-500 flex items-center justify-center border border-neutral-800 transition duration-300 shadow-sm">
@@ -31,34 +31,34 @@
 
             <!-- Column 2: Navigation -->
             <div class="space-y-4">
-                <h4 class="text-sm font-semibold text-white uppercase tracking-wider">{{ __('Keçidlər') }}</h4>
+                <h4 class="text-sm font-semibold text-white uppercase tracking-wider">{{ __('footer.quick_links') }}</h4>
                 <ul class="space-y-2.5 text-sm">
-                    <li><a href="{{ route('home') }}" class="hover:text-white hover:underline transition">{{ __('Ana Səhifə') }}</a></li>
-                    <li><a href="{{ route('listing') }}" class="hover:text-white hover:underline transition">{{ __('Elanlar') }}</a></li>
-                    <li><a href="{{ route('requests.index') }}" class="hover:text-white hover:underline transition">{{ __('Axtarıram') }}</a></li>
-                    <li><a href="{{ route('agencies.list') }}" class="hover:text-white hover:underline transition">{{ __('Agentliklər') }}</a></li>
-                    <li><a href="{{ route('blog.list') }}" class="hover:text-white hover:underline transition">{{ __('Bloq') }}</a></li>
-                    <li><a href="{{ route('about-us') }}" class="hover:text-white hover:underline transition">{{ __('Haqqımızda') }}</a></li>
-                    <li><a href="{{ route('faq') }}" class="hover:text-white hover:underline transition">{{ __('FAQ') }}</a></li>
-                    <li><a href="{{ route('contact') }}" class="hover:text-white hover:underline transition">{{ __('Əlaqə') }}</a></li>
+                    <li><a href="{{ route('home') }}" class="hover:text-white hover:underline transition">{{ __('footer.home') }}</a></li>
+                    <li><a href="{{ route('listing') }}" class="hover:text-white hover:underline transition">{{ __('footer.listings') }}</a></li>
+                    <li><a href="{{ route('requests.index') }}" class="hover:text-white hover:underline transition">{{ __('footer.requests') }}</a></li>
+                    <li><a href="{{ route('agencies.list') }}" class="hover:text-white hover:underline transition">{{ __('footer.agencies') }}</a></li>
+                    <li><a href="{{ route('blog.list') }}" class="hover:text-white hover:underline transition">{{ __('footer.blog') }}</a></li>
+                    <li><a href="{{ route('about-us') }}" class="hover:text-white hover:underline transition">{{ __('footer.about_us') }}</a></li>
+                    <li><a href="{{ route('faq') }}" class="hover:text-white hover:underline transition">{{ __('footer.faq') }}</a></li>
+                    <li><a href="{{ route('contact') }}" class="hover:text-white hover:underline transition">{{ __('footer.contact') }}</a></li>
                 </ul>
             </div>
 
             <!-- Column 3: Locations -->
             <div class="space-y-4">
-                <h4 class="text-sm font-semibold text-white uppercase tracking-wider">{{ __('Populyar Bölgələr') }}</h4>
+                <h4 class="text-sm font-semibold text-white uppercase tracking-wider">{{ __('footer.popular_regions') }}</h4>
                 <ul class="space-y-2.5 text-sm">
-                    <li><a href="{{ route('listing.path1', ['first' => 'girne']) }}" class="hover:text-white hover:underline transition">{{ __('Girne') }}</a></li>
-                    <li><a href="{{ route('listing.path1', ['first' => 'lefkosa']) }}" class="hover:text-white hover:underline transition">{{ __('Lefkoşa') }}</a></li>
-                    <li><a href="{{ route('listing.path1', ['first' => 'gazimagusa']) }}" class="hover:text-white hover:underline transition">{{ __('Gazimağusa') }}</a></li>
-                    <li><a href="{{ route('listing.path1', ['first' => 'iskele']) }}" class="hover:text-white hover:underline transition">{{ __('İskele') }}</a></li>
-                    <li><a href="{{ route('listing.path1', ['first' => 'guzelyurt']) }}" class="hover:text-white hover:underline transition">{{ __('Güzelyurt') }}</a></li>
+                    <li><a href="{{ route('listing.path1', ['first' => 'girne']) }}" class="hover:text-white hover:underline transition">{{ __('footer.girne') }}</a></li>
+                    <li><a href="{{ route('listing.path1', ['first' => 'lefkosa']) }}" class="hover:text-white hover:underline transition">{{ __('footer.lefkosa') }}</a></li>
+                    <li><a href="{{ route('listing.path1', ['first' => 'gazimagusa']) }}" class="hover:text-white hover:underline transition">{{ __('footer.gazimagusa') }}</a></li>
+                    <li><a href="{{ route('listing.path1', ['first' => 'iskele']) }}" class="hover:text-white hover:underline transition">{{ __('footer.iskele') }}</a></li>
+                    <li><a href="{{ route('listing.path1', ['first' => 'guzelyurt']) }}" class="hover:text-white hover:underline transition">{{ __('footer.guzelyurt') }}</a></li>
                 </ul>
             </div>
 
             <!-- Column 4: Contact -->
             <div class="space-y-4">
-                <h4 class="text-sm font-semibold text-white uppercase tracking-wider">{{ __('Əlaqə & Dəstək') }}</h4>
+                <h4 class="text-sm font-semibold text-white uppercase tracking-wider">{{ __('footer.contact_support') }}</h4>
                 <ul class="space-y-3.5 text-sm">
                     <li class="flex items-start space-x-3">
                         <i class="bi bi-telephone text-orange-500 mt-0.5 text-base"></i>
@@ -70,7 +70,7 @@
                     </li>
                     <li class="flex items-start space-x-3">
                         <i class="bi bi-geo-alt text-orange-500 mt-0.5 text-base"></i>
-                        <span>{{ __('Girne, Şimali Kipr') }}</span>
+                        <span>{{ __('footer.location_address') }}</span>
                     </li>
                 </ul>
             </div>
@@ -81,11 +81,11 @@
         <!-- Bottom Bar -->
         <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
             <div>
-                &copy; {{ date('Y') }} <span class="text-white font-semibold">Metraj.az</span> — {{ __('Bütün hüquqlar qorunur.') }}
+                &copy; {{ date('Y') }} <span class="text-white font-semibold">Metraj.az</span> — {{ __('footer.all_rights_reserved') }}
             </div>
             <div class="flex items-center space-x-6">
-                <a href="#" class="hover:text-white transition">{{ __('İstifadəçi Razılaşması') }}</a>
-                <a href="#" class="hover:text-white transition">{{ __('Məxfilik Siyasəti') }}</a>
+                <a href="#" class="hover:text-white transition">{{ __('footer.user_agreement') }}</a>
+                <a href="#" class="hover:text-white transition">{{ __('footer.privacy_policy') }}</a>
             </div>
         </div>
     </div>

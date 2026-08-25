@@ -1,63 +1,62 @@
 <div>
-    <h2 class="text-4xl font-semibold text-[var(--text-color)]">{{ __('Do you need a home loan?') }}<br />{{ __('Get pre-approved') }}</h2>
-    <p class="text-gray-500 mt-3 text-[14px]">{{ __('Find a lender who can offer competitive mortgage rates and help you with pre-approval.') }}</p>
+    <h2 class="text-3xl sm:text-4xl font-bold text-[var(--text-color)]">{{ __('about.loan_calc_title') }}</h2>
+    <p class="text-gray-500 mt-2 text-sm">{{ __('about.loan_calc_subtitle') }}</p>
 </div>
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
     <div>
-        <label class="block text-sm font-medium text-gray-900 font-semibold">{{ __('Total Amount') }}</label>
+        <label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">{{ __('about.total_amount') }}</label>
         <input id="totalAmount" type="text" data-type="number" value="100000"
-            class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400" />
+            class="w-full rounded-2xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400" />
     </div>
     <div>
-        <label class="block text-sm font-medium text-gray-700 font-semibold">{{ __('Down Payment') }}</label>
+        <label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">{{ __('about.down_payment') }}</label>
         <div class="flex items-center space-x-2">
             <input id="downPayment" type="text" data-type="number" value="20000"
-                class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400" />
+                class="w-full rounded-2xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400" />
             <input id="downPaymentPercent" type="text" data-type="number" value="20"
-                class="mt-1 w-20 rounded-xl border border-gray-200 px-3 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400" />
-            <span class="text-sm font-medium text-gray-700">%</span>
+                class="w-20 rounded-2xl border border-gray-200 bg-gray-50/50 px-3 py-3 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 text-center font-bold" />
+            <span class="text-sm font-bold text-gray-700">%</span>
         </div>
     </div>
     <div>
-        <label class="block text-sm font-medium text-gray-700 font-semibold">{{ __('Interest Rate') }}</label>
+        <label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">{{ __('about.interest_rate') }} (%)</label>
         <input id="interestRate" type="text" data-type="number" value="5"
-            class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400" />
+            class="w-full rounded-2xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400" />
     </div>
     <div>
-        <label class="block text-sm font-medium text-gray-700 font-semibold">{{ __('Amortization Period (years)') }}</label>
+        <label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">{{ __('about.amortization_period') }}</label>
         <select id="amortizationPeriod"
-            class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400">
-            <option value="0">{{ __('Select amortization period') }}</option>
-            <option value="5">5 {{ __('years') }}</option>
-            <option value="10">10 {{ __('years') }}</option>
-            <option value="15">15 {{ __('years') }}</option>
-            <option value="20">20 {{ __('years') }}</option>
-            <option value="25">25 {{ __('years') }}</option>
-            <option value="30">30 {{ __('years') }}</option>
+            class="w-full rounded-2xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 cursor-pointer">
+            <option value="0">{{ __('about.select_period') }}</option>
+            <option value="5">5 {{ __('about.years') }}</option>
+            <option value="10">10 {{ __('about.years') }}</option>
+            <option value="15">15 {{ __('about.years') }}</option>
+            <option value="20">20 {{ __('about.years') }}</option>
+            <option value="25">25 {{ __('about.years') }}</option>
+            <option value="30">30 {{ __('about.years') }}</option>
         </select>
     </div>
     <div>
-        <label class="block text-sm font-medium text-gray-700 font-semibold">{{ __('Property Tax') }} ($/{{ __('year') }})</label>
+        <label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">{{ __('about.property_tax') }}</label>
         <input id="propertyTax" type="text" data-type="number" value="3000"
-            class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400" />
+            class="w-full rounded-2xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400" />
     </div>
     <div>
-        <label class="block text-sm font-medium text-gray-700 font-semibold">{{ __('Home Insurance') }} ($/{{ __('year') }})</label>
+        <label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">{{ __('about.home_insurance') }}</label>
         <input id="homeInsurance" type="text" data-type="number" value="1200"
-            class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400" />
+            class="w-full rounded-2xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400" />
     </div>
 </div>
 
-<p class="text-gray-700 mt-4">{{ __('Your estimated monthly payment') }}: <span id="paymentDisplay"
-        class="text-orange-500 font-semibold">$0</span></p>
+<p class="text-gray-700 text-sm font-medium mt-6">{{ __('about.estimated_monthly_payment') }}: <span id="paymentDisplay"
+        class="text-orange-500 font-bold text-lg sm:text-xl">$0</span></p>
 
-<div class="flex space-x-4 mt-4">
+<div class="flex items-center gap-3 mt-4 flex-wrap">
     <button onclick="calculatePayment()"
-        class="bg-[var(--primary)] text-white px-6 py-3 rounded-2xl all-btn button-hover">{{ __('Calculate now') }}</button>
+        class="bg-[var(--primary)] hover:bg-orange-600 text-white font-semibold text-sm px-7 py-3.5 rounded-2xl transition shadow-md">{{ __('about.calculate_now') }}</button>
     <button onclick="resetForm()"
-        class="relative inline-block px-8 py-3 rounded-2xl border border-[color:var(--primary)] text-md text-[color:var(--primary)] overflow-hidden transition-all duration-300 hover-effect-button">
-        <span class="absolute inset-0 w-0 h-full bg-[color:var(--primary)] transition-all duration-300 ease-in-out z-0 hover-effect-button-fill"></span>
-        <span class="relative z-10">{{ __('Start over') }}</span>
+        class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-sm px-6 py-3.5 rounded-2xl transition">
+        {{ __('about.start_over') }}
     </button>
 </div>

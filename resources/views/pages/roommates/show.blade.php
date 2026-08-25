@@ -23,34 +23,34 @@
                     @if($listing->listing_type->value === 'have_room')
                         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500 text-white shadow-xs">
                             <i class="fa-solid fa-door-open"></i>
-                            <span>{{ __('Otaq verilir') }}</span>
+                            <span>{{ __('roommates.have_room') }}</span>
                         </span>
                     @else
                         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-600 text-white shadow-xs">
                             <i class="fa-solid fa-user-group"></i>
-                            <span>{{ __('Otaq axtarır') }}</span>
+                            <span>{{ __('roommates.need_room') }}</span>
                         </span>
                     @endif
 
                     @if($listing->gender_preference->value === 'female')
                         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-pink-500 text-white shadow-xs">
                             <i class="fa-solid fa-venus"></i>
-                            <span>{{ __('Yalnız Xanım') }}</span>
+                            <span>{{ __('roommates.gender_female_label') }}</span>
                         </span>
                     @elseif($listing->gender_preference->value === 'male')
                         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-600 text-white shadow-xs">
                             <i class="fa-solid fa-mars"></i>
-                            <span>{{ __('Yalnız Bəy') }}</span>
+                            <span>{{ __('roommates.gender_male_label') }}</span>
                         </span>
                     @else
                         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-gray-800 text-white shadow-xs">
                             <i class="fa-solid fa-users"></i>
-                            <span>{{ __('Hamı üçün') }}</span>
+                            <span>{{ __('roommates.gender_any_badge') }}</span>
                         </span>
                     @endif
 
                     <span class="text-xs text-gray-400 ml-auto flex items-center gap-1">
-                        <i class="bi bi-eye"></i> {{ $listing->views_count }} baxış
+                        <i class="bi bi-eye"></i> {{ $listing->views_count }} {{ __('roommates.views') }}
                     </span>
                     <span class="text-xs text-gray-400">•</span>
                     <span class="text-xs text-gray-400">
@@ -105,58 +105,58 @@
 
             <!-- Key Parameters Grid -->
             <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs">
-                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-4">{{ __('Əsas Parametrlər') }}</h2>
+                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-4">{{ __('roommates.key_parameters') }}</h2>
                 
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     
                     <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
-                        <span class="text-xs text-gray-500 font-medium">{{ __('Aylıq Ödəniş') }}</span>
+                        <span class="text-xs text-gray-500 font-medium">{{ __('roommates.monthly_payment') }}</span>
                         <div class="text-lg font-bold text-[#f1913d] mt-1">
                             {{ $listing->formatted_price }}
                         </div>
                         <span class="text-[11px] font-semibold {{ $listing->bills_included ? 'text-emerald-600' : 'text-gray-400' }} mt-0.5">
-                            {{ $listing->bills_included ? __('Kommunal daxildir') : __('Kommunal xaricdir') }}
+                            {{ $listing->bills_included ? __('roommates.bills_included') : __('roommates.bills_excluded') }}
                         </span>
                     </div>
 
                     <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
-                        <span class="text-xs text-gray-500 font-medium">{{ __('Cinsiyyət Tələbi') }}</span>
+                        <span class="text-xs text-gray-500 font-medium">{{ __('roommates.gender_preference') }}</span>
                         <div class="text-base font-semibold text-gray-900 mt-1">
                             {{ $listing->gender_preference->label() }}
                         </div>
-                        <span class="text-[11px] text-gray-400 mt-0.5">{{ __('Otaq yoldaşı üçün') }}</span>
+                        <span class="text-[11px] text-gray-400 mt-0.5">{{ __('roommates.gender_preference') }}</span>
                     </div>
 
                     <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
-                        <span class="text-xs text-gray-500 font-medium">{{ __('Məşğuliyyət') }}</span>
+                        <span class="text-xs text-gray-500 font-medium">{{ __('roommates.occupation') }}</span>
                         <div class="text-base font-semibold text-gray-900 mt-1">
-                            {{ $listing->occupation_preference?->label() ?? 'Fərqi yoxdur' }}
+                            {{ $listing->occupation_preference?->label() ?? __('roommates.occupation_any') }}
                         </div>
-                        <span class="text-[11px] text-gray-400 mt-0.5">{{ __('Tələbə və ya işləyən') }}</span>
+                        <span class="text-[11px] text-gray-400 mt-0.5">{{ __('roommates.occupation') }}</span>
                     </div>
 
                     <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
-                        <span class="text-xs text-gray-500 font-medium">{{ __('Qalma Müddəti') }}</span>
+                        <span class="text-xs text-gray-500 font-medium">{{ __('roommates.stay_duration') }}</span>
                         <div class="text-base font-semibold text-gray-900 mt-1">
-                            {{ $listing->stay_duration ?: __('Fərqi yoxdur') }}
+                            {{ $listing->stay_duration ?: __('roommates.occupation_any') }}
                         </div>
-                        <span class="text-[11px] text-gray-400 mt-0.5">{{ __('Müqavilə müddəti') }}</span>
+                        <span class="text-[11px] text-gray-400 mt-0.5">{{ __('roommates.stay_duration') }}</span>
                     </div>
 
                     <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
-                        <span class="text-xs text-gray-500 font-medium">{{ __('Köçmə Tarixi') }}</span>
+                        <span class="text-xs text-gray-500 font-medium">{{ __('roommates.move_in_date') }}</span>
                         <div class="text-base font-semibold text-gray-900 mt-1">
-                            {{ $listing->available_from ? $listing->available_from->format('d.m.Y') : __('Dərhal') }}
+                            {{ $listing->available_from ? $listing->available_from->format('d.m.Y') : __('roommates.immediately') }}
                         </div>
-                        <span class="text-[11px] text-gray-400 mt-0.5">{{ __('Mənzil hazırdır') }}</span>
+                        <span class="text-[11px] text-gray-400 mt-0.5">{{ __('roommates.move_in_date') }}</span>
                     </div>
 
                     <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
-                        <span class="text-xs text-gray-500 font-medium">{{ __('Evdə Adam Sayı') }}</span>
+                        <span class="text-xs text-gray-500 font-medium">{{ __('roommates.total_roommates') }}</span>
                         <div class="text-base font-semibold text-gray-900 mt-1">
-                            {{ $listing->total_roommates ? $listing->total_roommates . ' nəfər' : '—' }}
+                            {{ $listing->total_roommates ? __('roommates.persons_count', ['count' => $listing->total_roommates]) : '—' }}
                         </div>
-                        <span class="text-[11px] text-gray-400 mt-0.5">{{ __('Ümumi sakin') }}</span>
+                        <span class="text-[11px] text-gray-400 mt-0.5">{{ __('roommates.total_roommates') }}</span>
                     </div>
 
                 </div>
@@ -167,7 +167,7 @@
                 
                 <!-- House Rules -->
                 <div>
-                    <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-3">{{ __('Ev Qaydaları') }}</h2>
+                    <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-3">{{ __('roommates.house_rules') }}</h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div class="flex items-center gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-100">
                             <div class="w-8 h-8 rounded-xl {{ $listing->smoker_allowed ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-500' }} flex items-center justify-center text-sm">
@@ -175,7 +175,7 @@
                             </div>
                             <div>
                                 <div class="text-xs font-semibold text-gray-900">
-                                    {{ $listing->smoker_allowed ? __('Siqaret çəkməyə icazə var') : __('Siqaret çəkmək qadağandır') }}
+                                    {{ $listing->smoker_allowed ? __('roommates.smoker_allowed') : __('roommates.smoker_forbidden') }}
                                 </div>
                             </div>
                         </div>
@@ -186,7 +186,7 @@
                             </div>
                             <div>
                                 <div class="text-xs font-semibold text-gray-900">
-                                    {{ $listing->pet_allowed ? __('Ev heyvanına icazə var') : __('Ev heyvanı saxlamaq olmaz') }}
+                                    {{ $listing->pet_allowed ? __('roommates.pet_allowed') : __('roommates.pet_forbidden') }}
                                 </div>
                             </div>
                         </div>
@@ -196,7 +196,7 @@
                 <!-- Amenities Checklist -->
                 @if(!empty($listing->amenities))
                     <div class="pt-4 border-t border-gray-100">
-                        <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-3">{{ __('Mənzildə Olan Şərait') }}</h2>
+                        <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-3">{{ __('roommates.amenities_in_flat') }}</h2>
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                             @foreach((array)$listing->amenities as $amenity)
                                 <div class="flex items-center gap-2 text-xs font-semibold text-gray-800 p-2.5 rounded-xl bg-orange-50/40 border border-orange-100">
@@ -212,7 +212,7 @@
 
             <!-- Description -->
             <div class="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xs">
-                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-3">{{ __('Ətraflı Təsvir') }}</h2>
+                <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-3">{{ __('roommates.detailed_description') }}</h2>
                 <div class="text-xs sm:text-sm text-gray-700 leading-relaxed whitespace-pre-line">
                     {{ $listing->description }}
                 </div>
@@ -228,22 +228,22 @@
                 
                 <!-- Price Box -->
                 <div class="pb-5 border-b border-gray-100">
-                    <span class="text-xs text-gray-500 font-medium">{{ __('Aylıq Ödəniş') }}</span>
+                    <span class="text-xs text-gray-500 font-medium">{{ __('roommates.monthly_payment') }}</span>
                     <div class="text-3xl font-bold text-[#f1913d] mt-0.5">
                         {{ $listing->formatted_price }}
                     </div>
                     @if($listing->bills_included)
                         <span class="inline-flex items-center gap-1 text-xs font-semibold text-emerald-600 mt-1">
-                            <i class="bi bi-check2-circle"></i> {{ __('Bütün kommunal xərclər daxildir') }}
+                            <i class="bi bi-check2-circle"></i> {{ __('roommates.bills_included') }}
                         </span>
                     @endif
                 </div>
 
-                <x-contact-profile :name="$listing->contact_name" :role="__('Elan sahibi')" />
+                <x-contact-profile :name="$listing->contact_name" :role="__('roommates.listing_owner')" />
 
                 <x-contact-actions :whatsapp="$listing->contact_whatsapp" :phone="$listing->contact_phone"
                     :message="'Salam, Metraj.az saytındakı otaq yoldaşı elanınızla bağlı yazıram: ' . $listing->title"
-                    :whatsapp-label="__('WhatsApp ilə Yaz')" />
+                    :whatsapp-label="__('roommates.write_whatsapp')" />
 
                 <x-safety-note />
 
@@ -258,10 +258,10 @@
         <div class="mt-12 pt-8 border-t border-gray-200">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">
-                    {{ __('Oxşar Otaq Yoldaşı Elanları') }}
+                    {{ __('roommates.similar_listings') }}
                 </h2>
                 <a href="{{ route('roommates.index') }}" class="text-xs sm:text-sm font-semibold text-orange-600 hover:underline">
-                    {{ __('Hamısına Bax') }} <i class="bi bi-arrow-right ml-1"></i>
+                    {{ __('roommates.view_all') }} <i class="bi bi-arrow-right ml-1"></i>
                 </a>
             </div>
 

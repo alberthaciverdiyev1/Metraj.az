@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Bloq və Xəbərlər') . ' - Metraj.az')
+@section('title', __('blog.page_title') . ' - Metraj.az')
 
 @section('content')
 <div class="w-full pt-4 pb-16">
@@ -12,10 +12,10 @@
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 sm:gap-6 mb-6 sm:mb-8">
             <div>
                 <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-[color:var(--text-color)] leading-tight">
-                    {{ __('Bloq və Xəbərlər') }}
+                    {{ __('blog.page_title') }}
                 </h1>
                 <p class="text-sm sm:text-base text-[color:var(--grey-text)] mt-1">
-                    {{ __('Daşınmaz əmlak bazarı, faydalı məsləhətlər və ən son yeniliklər') }}
+                    {{ __('blog.subtitle') }}
                 </p>
             </div>
 
@@ -23,17 +23,17 @@
                 <form method="GET" action="{{ route('blog.list') }}" class="relative flex-1 sm:w-72 lg:w-80">
                     <input type="hidden" name="category" value="{{ $category ?? 'all' }}">
                     <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-                    <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="{{ __('Məqalə axtar...') }}"
+                    <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="{{ __('blog.search_placeholder') }}"
                            class="w-full pl-10 pr-4 py-2.5 sm:py-3 text-sm bg-white border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-400/40 focus:border-orange-500 shadow-sm transition">
                 </form>
 
                 {{-- Grid / List View Toggle --}}
                 <div class="flex items-center bg-gray-100 p-1 rounded-2xl border border-gray-200/50 shadow-sm">
-                    <button type="button" id="gridViewBtn" title="Qrid görünüşü"
+                    <button type="button" id="gridViewBtn" title="{{ __('blog.grid_view') }}"
                             class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition duration-200 bg-white text-orange-500 shadow-sm">
                         <i class="bi bi-grid-3x3-gap-fill text-base"></i>
                     </button>
-                    <button type="button" id="listViewBtn" title="Siyahı görünüşü"
+                    <button type="button" id="listViewBtn" title="{{ __('blog.list_view') }}"
                             class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition duration-200 text-gray-600 hover:text-gray-900 hover:bg-white/50">
                         <i class="bi bi-list-ul text-lg"></i>
                     </button>
@@ -47,7 +47,7 @@
             <div class="flex items-center gap-2 flex-nowrap">
                 <a href="{{ route('blog.list', array_filter(['search' => $search, 'category' => 'all'])) }}"
                    class="px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold transition duration-200 whitespace-nowrap {{ ($category ?? 'all') === 'all' ? 'bg-orange-500 text-white shadow-sm' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200' }}">
-                    {{ __('Hamısı') }}
+                    {{ __('blog.all_categories') }}
                 </a>
                 @foreach($categories as $cat)
                     <a href="{{ route('blog.list', array_filter(['search' => $search, 'category' => $cat])) }}"
@@ -65,12 +65,12 @@
                 <div class="w-20 h-20 bg-orange-50 text-[var(--primary)] rounded-full flex items-center justify-center mx-auto text-3xl mb-4">
                     <i class="bi bi-journal-richtext"></i>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900">{{ __('Məqalə tapılmadı') }}</h3>
+                <h3 class="text-lg font-semibold text-gray-900">{{ __('blog.no_blogs_found') }}</h3>
                 <p class="text-xs sm:text-sm text-gray-500 mt-1.5 max-w-sm mx-auto">
-                    {{ __('Axtarışınıza uyğun heç bir bloq məqaləsi tapılmadı. Zəhmət olmasa axtarış sözünü dəyişin.') }}
+                    {{ __('blog.no_blogs_found_desc') }}
                 </p>
                 <a href="{{ route('blog.list') }}" class="inline-flex items-center gap-2 mt-5 px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-xl transition">
-                    <i class="bi bi-arrow-left"></i> {{ __('Bütün məqalələrə qayıt') }}
+                    <i class="bi bi-arrow-left"></i> {{ __('blog.back_to_all_blogs') }}
                 </a>
             </div>
         @else

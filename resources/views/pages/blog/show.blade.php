@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ($blog->title ?? '') . ' - Bloq - Metraj.az')
+@section('title', ($blog->title ?? '') . ' - ' . __('blog.page_title') . ' - Metraj.az')
 
 @section('content')
 <div class="w-full pb-16">
@@ -59,7 +59,7 @@
 
             {{-- Share --}}
             <div class="flex items-center gap-3 mt-8 pt-6 border-t border-gray-100">
-                <span class="text-sm font-semibold text-[color:var(--text-color)]">{{ __('Paylaş:') }}</span>
+                <span class="text-sm font-semibold text-[color:var(--text-color)]">{{ __('blog.share') }}</span>
                 <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank"
                    class="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition">
                     <i class="bi bi-facebook"></i>
@@ -84,18 +84,12 @@
     @if($related->isNotEmpty())
         <div class="mt-10 sm:mt-14">
             <div class="flex items-center gap-3 mb-5">
-                <h2 class="text-lg sm:text-xl font-semibold text-[color:var(--text-color)]">{{ __('Oxşar Məqalələr') }}</h2>
+                <h2 class="text-lg sm:text-xl font-semibold text-[color:var(--text-color)]">{{ __('blog.related_posts') }}</h2>
                 <div class="h-px flex-1 bg-gray-200"></div>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 @foreach($related as $item)
-                    @include('components.cards.blog', [
-                        'slug' => $item->slug,
-                        'images' => $item->cover_image ? [$item->cover_image] : [],
-                        'category' => (object) ['name' => $item->category ?? 'Bloq'],
-                        'date' => $item->formatted_date ?? '',
-                        'name' => $item->title ?? '',
-                    ])
+                    <x-cards.blog :blog="$item" />
                 @endforeach
             </div>
         </div>

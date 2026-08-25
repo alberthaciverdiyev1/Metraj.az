@@ -75,7 +75,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (clearAllBtn) {
         clearAllBtn.addEventListener('click', function () {
-            if (confirm('Bütün seçilmiş elanları silmək istədiyinizdən əminsiniz?')) {
+            const confirmMsg = clearAllBtn.getAttribute('data-confirm') || 'Bütün seçilmiş elanları silmək istədiyinizdən əminsiniz?';
+            if (confirm(confirmMsg)) {
                 const csrf = window.Metraj?.csrfToken() || '';
                 fetch(R.favoritesClear || '/api/favorites/clear', {
                     method: 'POST',

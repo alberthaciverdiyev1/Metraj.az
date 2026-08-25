@@ -1,201 +1,138 @@
 @extends('layouts.app')
 
+@section('title', __('about.page_title') . ' - Metraj.az')
+
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/about-us.css') }}">
 @endpush
 
 @section('content')
-<main>
+<main class="w-full pb-16">
+    @include('components.breadcrumb', ['items' => $breadcrumbs ?? []])
+    @include('components.scroll-top')
 
-    <section id="hero"
-        class="bg-no-repeat bg-cover mx-auto bg-[url('https://themesflat.co/html/proty/images/section/page-title-loan.jpg')] bg-top min-h-[370px] flex flex-col justify-center items-center">
-
-        <h2 class="text-center text-4xl text-black">{{ __('Home Loan Process') }}
-        </h2>
-        <div class="navigator">
-            <a href="{{ route('home') }}" class="text-[var(--primary)]">{{ __('Home') }}</a>
-            <span>></span>
-            <a href="{{ route('about-us') }}" class="text-gray-300">{{ __('About Us') }}</a>
+    {{-- Hero Banner --}}
+    <section class="mt-4 sm:mt-6 bg-gradient-to-r from-orange-500 to-amber-500 rounded-3xl p-8 sm:p-14 text-white shadow-lg text-center relative overflow-hidden">
+        <div class="max-w-3xl mx-auto relative z-10 space-y-3">
+            <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+                {{ __('about.hero_title') }}
+            </h1>
+            <p class="text-sm sm:text-base text-orange-100 leading-relaxed max-w-2xl mx-auto">
+                {{ __('about.hero_subtitle') }}
+            </p>
         </div>
-
     </section>
 
-    <section class="max-w-7xl mx-auto py-[120px]">
-        <div class="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-10 px-4">
-
-            <div class="w-full lg:w-1/2">
-                <h2 class="text-4xl font-semibold text-gray-900 mb-6">{{ __('We are here to Help') }}</h2>
-                <p class="text-gray-600 mb-4">
-                    {{ __("If you haven't experienced it before, the home loan process can feel overwhelming, but our agents will help you stay informed throughout the process, from pre-approval to closing. The first thing to do is consult with a mortgage specialist. If you don't already have someone in mind, we partner with some of the best lenders in the industry, and we'd be happy to introduce you, so you'll be taken care of.") }}
+    {{-- Who We Are & Statistics --}}
+    <section class="max-w-7xl mx-auto py-12 sm:py-16 px-4">
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-10">
+            <div class="w-full lg:w-1/2 space-y-5">
+                <span class="bg-orange-50 text-[var(--primary)] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider inline-block">
+                    {{ __('about.page_title') }}
+                </span>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
+                    {{ __('about.who_we_are_title') }}
+                </h2>
+                <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+                    {{ __('about.who_we_are_desc') }}
                 </p>
-                <p class="text-gray-600 mb-6">
-                    {{ __('We stand ready to serve you as your California real estate team.') }}
+                <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+                    {{ __('about.mission_desc') }}
                 </p>
-                <button
-                    class="bg-[var(--primary)] text-white font-semibold px-7 py-3 rounded-xl hover:bg-[var(--primary-light)] transition">{{ __('Meet The Team') }}</button>
+                <div class="pt-2">
+                    <a href="{{ route('agencies.list') }}"
+                       class="inline-flex items-center gap-2 bg-[var(--primary)] text-white font-semibold px-7 py-3.5 rounded-2xl hover:bg-orange-600 transition shadow-md">
+                        {{ __('about.meet_team_btn') }}
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
 
-                <div class="flex flex-col sm:flex-row items-center sm:items-start gap-10 mt-10 flex-wrap">
-                    <div class="flex flex-col gap-4 items-start">
-                        <i class="bi bi-house text-[var(--primary)] text-4xl mb-2"></i>
-                        <span class="text-4xl font-semibold text-gray-900">900+</span>
-                        <p class="text-sm text-gray-600">{{ __('Homes for Sale') }}</p>
+                {{-- Stats Counters --}}
+                <div class="grid grid-cols-3 gap-4 pt-6 border-t border-gray-100">
+                    <div class="space-y-1">
+                        <span class="text-2xl sm:text-3xl font-black text-gray-900">900+</span>
+                        <p class="text-xs text-gray-500 font-medium">{{ __('about.stats_homes_for_sale') }}</p>
                     </div>
-                    <div class="flex flex-col gap-4 items-start">
-                        <i class="bi bi-person text-[var(--primary)] text-4xl mb-2"></i>
-                        <span class="text-4xl font-semibold text-gray-900">287+</span>
-                        <p class="text-sm text-gray-600">{{ __('Real Estate Agents') }}</p>
+                    <div class="space-y-1">
+                        <span class="text-2xl sm:text-3xl font-black text-gray-900">280+</span>
+                        <p class="text-xs text-gray-500 font-medium">{{ __('about.stats_agents') }}</p>
                     </div>
-                    <div class="flex flex-col gap-4 items-start">
-                        <i class="bi bi-patch-check text-[var(--primary)] text-4xl mb-2"></i>
-                        <span class="text-4xl font-semibold text-gray-900">3.600+</span>
-                        <p class="text-sm text-gray-600">{{ __('Properties Sold') }}</p>
+                    <div class="space-y-1">
+                        <span class="text-2xl sm:text-3xl font-black text-gray-900">3,600+</span>
+                        <p class="text-xs text-gray-500 font-medium">{{ __('about.stats_properties_sold') }}</p>
                     </div>
                 </div>
             </div>
 
             <div class="w-full lg:w-1/2 relative flex justify-center items-center">
-                <div class="relative lg:w-[390px] lg:h-[500px] w-[200px] h-[400px]">
-                    <img src="https://themesflat.co/html/proty/images/section/section-box-team.jpg" alt="room2"
-                        class="absolute top-30 left-30 w-full h-full object-cover rounded-2xl transition-all duration-300 hover:z-20 hover:scale-105 shadow-lg">
-
-                    <img src="https://themesflat.co/html/proty/images/section/section-box-team-2.jpg" alt="room1"
-                        class="absolute top-0 left-0 w-full h-full object-cover rounded-2xl transition-all duration-300 hover:z-20 hover:scale-105 shadow-lg z-10">
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="bg-[#fff7f1] mt-6">
-        @include('components.title', ['title' => 'Selling Your Home With Realty', 'subtitle' => "We'll get to know you to understand your selling goals, and explain the selling process so you know what to expect."])
-
-        <div class="bg-[#fff7f0] mt-6 py-20 px-4">
-            <div class="max-w-7xl mx-auto">
-
-                <div class="flex justify-between items-center relative mb-14 max-w-3xl mx-auto">
-                    <div class="flex flex-col items-center text-[var(--primary)] font-semibold relative">
-                        <div
-                            class="border-2 border-dotted border-[var(--primary)] rounded-full w-12 h-12 flex items-center justify-center bg-white z-10">
-                            01</div>
-                        <span
-                            class="absolute top-1/2 left-0 w-full h-px border-t border-dotted border-[var(--primary)] -z-10"></span>
-                    </div>
-                    <div class="flex flex-col items-center text-[var(--primary)] font-semibold relative">
-                        <div
-                            class="border-2 border-dotted border-[var(--primary)] rounded-full w-12 h-12 flex items-center justify-center bg-white z-10">
-                            02</div>
-                    </div>
-                    <div class="flex flex-col items-center text-[var(--primary)] font-semibold relative">
-                        <div
-                            class="border-2 border-dotted border-[var(--primary)] rounded-full w-12 h-12 flex items-center justify-center bg-white z-10">
-                            03</div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-white rounded-2xl p-8 text-center shadow-sm hover:shadow-md transition">
-                        <div class="flex justify-center mb-6">
-                            <div
-                                class="w-20 h-20 bg-[var(--primary)] rounded-full flex items-center justify-center transform transition-transform duration-500 hover:rotate-x-180">
-                                <i class="bi bi-people-fill text-4xl text-white"></i>
-                            </div>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3 pt-5">{{ __('Complete The Questionnaire') }}</h3>
-                        <p class="text-sm text-gray-600 mb-6">
-                            {{ __('Your responses will help our partner. Shortly after your lender is selected, they\'ll contact you to discuss options for financing your future home.') }}
-                        </p>
-                        <a href="#" class="pt-5 text-[var(--primary)] font-semibold inline-block relative group">
-                            {{ __('Read More') }}
-                            <i class="bi bi-arrow-right ml-1"></i>
-                            <span
-                                class="block h-0.5 bg-[var(--primary)] absolute left-0 bottom-0 w-0 transition-all duration-300 group-hover:w-full"></span>
-                        </a>
-                    </div>
-
-                    <div class="bg-white rounded-2xl p-8 text-center shadow-sm hover:shadow-md transition">
-                        <div class="flex justify-center mb-6">
-                            <div
-                                class="w-20 h-20 bg-[var(--primary)] rounded-full flex items-center justify-center transform transition-transform duration-500 hover:rotate-x-180">
-                                <i class="bi bi-people-fill text-4xl text-white"></i>
-                            </div>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 pt-5 mb-3">{{ __('Get Financial Connections') }}</h3>
-                        <p class="text-sm text-gray-600 mb-6">
-                            {{ __('Your responses will help our partner. Shortly after your lender is selected, they\'ll contact you to discuss options for financing your future home.') }}
-                        </p>
-                        <a href="#" class="pt-5 text-[var(--primary)] font-semibold inline-block relative group">
-                            {{ __('Read More') }}
-                            <i class="bi bi-arrow-right ml-1"></i>
-                            <span
-                                class="block h-0.5 bg-[var(--primary)] absolute left-0 bottom-0 w-0 transition-all duration-300 group-hover:w-full"></span>
-                        </a>
-                    </div>
-
-                    <div class="bg-white rounded-2xl p-8 text-center shadow-sm hover:shadow-md transition">
-                        <div class="flex justify-center mb-6">
-                            <div
-                                class="w-20 h-20 bg-[var(--primary)] rounded-full flex items-center justify-center transform transition-transform duration-500 hover:rotate-x-180">
-                                <i class="bi bi-people-fill text-4xl text-white"></i>
-                            </div>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3 pt-5">{{ __('Receive Your Custom Quote') }}</h3>
-                        <p class="text-sm text-gray-600 mb-6">
-                            {{ __('Your responses will help our partner. Shortly after your lender is selected, they\'ll contact you to discuss options for financing your future home.') }}
-                        </p>
-                        <a href="#" class="text-[var(--primary)] pt-5 font-semibold inline-block relative group">
-                            {{ __('Read More') }}
-                            <i class="bi bi-arrow-right ml-1"></i>
-                            <span
-                                class="block h-0.5 bg-[var(--primary)] absolute left-0 bottom-0 w-0 transition-all duration-300 group-hover:w-full"></span>
-                        </a>
-                    </div>
+                <div class="w-full max-w-md aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-orange-50">
+                    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80" alt="Metraj Team"
+                         class="w-full h-full object-cover">
                 </div>
             </div>
         </div>
     </section>
-    <section class="container mt-6 border border-gray-200 rounded-3xl mx-auto max-w-7xl">
 
-        <section class="container mx-auto max-w-7xl overflow-hidden rounded-t-3xl">
-            <div class="relative h-[400px] rounded-t-3xl overflow-hidden">
-                <div
-                    class="absolute w-full inset-0 bg-[url('https://themesflat.co/html/proty/images/section/section-calculate.jpg')] bg-fixed bg-top bg-cover bg-no-repeat">
+    {{-- 3 Step Process --}}
+    <section class="bg-gray-50/80 rounded-3xl py-14 px-6 sm:px-10 border border-gray-100 my-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-12 space-y-2">
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">{{ __('about.process_title') }}</h2>
+                <p class="text-sm text-gray-500">{{ __('about.process_subtitle') }}</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                {{-- Step 1 --}}
+                <div class="bg-white rounded-3xl p-8 text-center shadow-sm border border-gray-100/80 space-y-4 hover:shadow-md transition">
+                    <div class="w-16 h-16 bg-orange-50 text-[var(--primary)] rounded-2xl flex items-center justify-center text-2xl font-black mx-auto">
+                        01
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">{{ __('about.step_1_title') }}</h3>
+                    <p class="text-xs sm:text-sm text-gray-500 leading-relaxed">
+                        {{ __('about.step_1_desc') }}
+                    </p>
+                </div>
+
+                {{-- Step 2 --}}
+                <div class="bg-white rounded-3xl p-8 text-center shadow-sm border border-gray-100/80 space-y-4 hover:shadow-md transition">
+                    <div class="w-16 h-16 bg-orange-50 text-[var(--primary)] rounded-2xl flex items-center justify-center text-2xl font-black mx-auto">
+                        02
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">{{ __('about.step_2_title') }}</h3>
+                    <p class="text-xs sm:text-sm text-gray-500 leading-relaxed">
+                        {{ __('about.step_2_desc') }}
+                    </p>
+                </div>
+
+                {{-- Step 3 --}}
+                <div class="bg-white rounded-3xl p-8 text-center shadow-sm border border-gray-100/80 space-y-4 hover:shadow-md transition">
+                    <div class="w-16 h-16 bg-orange-50 text-[var(--primary)] rounded-2xl flex items-center justify-center text-2xl font-black mx-auto">
+                        03
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">{{ __('about.step_3_title') }}</h3>
+                    <p class="text-xs sm:text-sm text-gray-500 leading-relaxed">
+                        {{ __('about.step_3_desc') }}
+                    </p>
                 </div>
             </div>
-
-            <div class="md:w-full space-y-6 p-8">
-                @include('components.do-you-need-loan')
-            </div>
-
-        </section>
-
-    </section>
-
-    <section
-        class="relative sm:flex max-w-7xl flex-col rounded-3xl mt-6 mx-auto bg-[var(--primary)] px-9 overflow-hidden">
-
-        <div
-            class="absolute inset-0 bg-[url('https://themesflat.co/html/proty/images/section/cta-4.png')] bg-no-repeat bg-left bg-contain opacity-100 pointer-events-none z-10">
-        </div>
-
-        <div class="relative z-20 flex sm:flex-row flex-col flex-1 justify-between items-center w-full">
-            <div class="left text-white max-w-xl">
-                <div class="logo">
-                    @if($setting->logo ?? false)
-                    <img src="{{ $setting->logo }}" class="w-[170px] h-[50px]" alt="">
-                    @endif
-                </div>
-                <h2 class="text-4xl sm:text-md mt-5 font-semibold">{{ __('Find a Local Real Estate Agent Today') }}</h2>
-                <p class="my-4">{{ __('If you\'re looking to buy or sell a home. We\'ll help you make the most money possible.') }}
-                </p>
-                <button
-                    class="bg-white sm:py-1 sm:px-3 text-[var(--primary)] px-6 py-4 rounded-xl font-semibold hover:bg-gray-100 transition mt-6">Find
-                    your Location agent</button>
-            </div>
-            <div class="right">
-                <img src="https://themesflat.co/html/proty/images/section/person-2.png" alt="">
-            </div>
         </div>
     </section>
 
+    {{-- Loan Calculator Section --}}
+    <section class="max-w-7xl mx-auto my-12 bg-white rounded-3xl border border-gray-100 shadow-sm p-6 sm:p-10">
+        @include('components.do-you-need-loan')
+    </section>
+
+    {{-- CTA Find Agent --}}
+    <section class="max-w-7xl mx-auto mt-10 bg-orange-500 rounded-3xl p-8 sm:p-12 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="max-w-xl space-y-2">
+            <h2 class="text-xl sm:text-3xl font-black">{{ __('about.find_agent_title') }}</h2>
+            <p class="text-xs sm:text-sm text-orange-100 leading-relaxed">{{ __('about.find_agent_desc') }}</p>
+        </div>
+        <a href="{{ route('agencies.list') }}"
+           class="bg-white text-orange-600 px-8 py-3.5 rounded-2xl font-bold text-sm hover:bg-orange-50 transition shadow-md whitespace-nowrap shrink-0">
+            {{ __('about.browse_agencies_btn') }}
+        </a>
+    </section>
 </main>
 @endsection

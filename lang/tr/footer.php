@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'tagline' => 'senin gayrimenkulün',
+    'description' => 'Kıbrıs\'ın en büyük emlak ilanları platformu. Ev, villa, arsa ve ticari gayrimenkullerin alım-satımı ve kiralanması için en doğru adres.',
+    'quick_links' => 'Hızlı Bağlantılar',
+    'home' => 'Ana Sayfa',
+    'listings' => 'İlanlar',
+    'requests' => 'Arıyorum',
+    'agencies' => 'Acenteler',
+    'blog' => 'Blog',
+    'about_us' => 'Hakkımızda',
+    'faq' => 'SSS',
+    'contact' => 'İletişim',
+    'popular_regions' => 'Popüler Bölgeler',
+    'girne' => 'Girne',
+    'lefkosa' => 'Lefkoşa',
+    'gazimagusa' => 'Gazimağusa',
+    'iskele' => 'İskele',
+    'guzelyurt' => 'Güzelyurt',
+    'contact_support' => 'İletişim & Destek',
+    'location_address' => 'Girne, Kuzey Kıbrıs',
+    'all_rights_reserved' => 'Tüm hakları saklıdır.',
+    'user_agreement' => 'Kullanıcı Sözleşmesi',
+    'privacy_policy' => 'Gizlilik Politikası',
+];

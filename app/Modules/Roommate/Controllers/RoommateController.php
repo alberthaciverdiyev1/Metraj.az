@@ -51,8 +51,8 @@ class RoommateController extends Controller
         $listings = $this->roommateService->paginate($filter, 18);
         $cities = $this->locationService->activeCities();
         $breadcrumbs = [
-            ['label' => __('Ana səhifə'), 'url' => '/'],
-            ['label' => __('Otaq Yoldaşı'), 'url' => null],
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => __('roommates.page_title'), 'url' => null],
         ];
 
         return view('pages.roommates.index', compact('listings', 'cities', 'breadcrumbs', 'filter'))->render();
@@ -62,9 +62,9 @@ class RoommateController extends Controller
     {
         $cities = $this->locationService->activeCities();
         $breadcrumbs = [
-            ['label' => __('Ana səhifə'), 'url' => '/'],
-            ['label' => __('Otaq Yoldaşı'), 'url' => route('roommates.index')],
-            ['label' => __('Elan Yerləşdir'), 'url' => null],
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => __('roommates.page_title'), 'url' => route('roommates.index')],
+            ['label' => __('roommates.post_roommate_ad'), 'url' => null],
         ];
 
         return view('pages.roommates.create', compact('cities', 'breadcrumbs'));
@@ -80,12 +80,12 @@ class RoommateController extends Controller
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Otaq yoldaşı elanınız uğurla yerləşdirildi!',
+                'message' => __('roommates.post_success'),
                 'redirect' => route('roommates.show', $listing->slug),
             ]);
         }
 
-        return redirect()->route('roommates.show', $listing->slug)->with('success', 'Otaq yoldaşı elanınız uğurla yerləşdirildi!');
+        return redirect()->route('roommates.show', $listing->slug)->with('success', __('roommates.post_success'));
     }
 
     public function show(string $slug): View
@@ -111,8 +111,8 @@ class RoommateController extends Controller
             ->get();
 
         $breadcrumbs = [
-            ['label' => __('Ana səhifə'), 'url' => '/'],
-            ['label' => __('Otaq Yoldaşı'), 'url' => route('roommates.index')],
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => __('roommates.page_title'), 'url' => route('roommates.index')],
             ['label' => $listing->title, 'url' => null],
         ];
 

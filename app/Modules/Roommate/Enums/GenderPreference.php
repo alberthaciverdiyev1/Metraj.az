@@ -11,18 +11,18 @@ enum GenderPreference: string
     public function label(): string
     {
         return match ($this) {
-            self::Any => 'Fərqi yoxdur (Hər kəs)',
-            self::Female => 'Yalnız xanım',
-            self::Male => 'Yalnız bəy',
+            self::Any => __('roommates.gender_any_label'),
+            self::Female => __('roommates.gender_female_label'),
+            self::Male => __('roommates.gender_male_label'),
         };
     }
 
     public function badgeLabel(): string
     {
         return match ($this) {
-            self::Any => 'Hamı üçün',
-            self::Female => 'Yalnız Xanım',
-            self::Male => 'Yalnız Bəy',
+            self::Any => __('roommates.gender_any_badge'),
+            self::Female => __('roommates.gender_female_label'),
+            self::Male => __('roommates.gender_male_label'),
         };
     }
 }

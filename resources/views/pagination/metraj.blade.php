@@ -1,5 +1,5 @@
 @if ($paginator->hasPages())
-    <nav role="navigation" aria-label="{{ __('Pagination Navigation') }}" class="mt-10">
+    <nav role="navigation" aria-label="{{ __('pagination.navigation') }}" class="mt-10">
         <ul class="pagination-metraj">
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
@@ -51,17 +51,17 @@
         <div class="showing-results text-center mt-5">
             <p class="text-sm text-gray-500">
                 @if ($paginator->firstItem())
-                    {{ __('Showing') }}
+                    {{ __('pagination.showing') }}
                     <span class="font-semibold text-gray-700">{{ $paginator->firstItem() }}</span>
-                    {{ __('to') }}
+                    {{ __('pagination.to') }}
                     <span class="font-semibold text-gray-700">{{ $paginator->lastItem() }}</span>
-                    {{ __('of') }}
+                    {{ __('pagination.of') }}
                     <span class="font-semibold text-gray-700">{{ $paginator->total() }}</span>
-                    {{ __('results') }}
+                    {{ __('pagination.results') }}
                 @else
-                    {{ __('Showing') }}
+                    {{ __('pagination.showing') }}
                     <span class="font-semibold text-gray-700">{{ $paginator->count() }}</span>
-                    {{ __('results') }}
+                    {{ __('pagination.results') }}
                 @endif
             </p>
         </div>

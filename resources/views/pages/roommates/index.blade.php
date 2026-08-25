@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Otaq və Ev Yoldaşı Elanları') . ' - Metraj.az')
+@section('title', __('roommates.page_title') . ' - Metraj.az')
 
 @section('content')
 <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -16,13 +16,13 @@
         <div class="space-y-2 max-w-2xl">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-orange-50 text-orange-600 border border-orange-200/60">
                 <i class="fa-solid fa-people-roof"></i>
-                <span>{{ __('Otaq & Ev Yoldaşı Axtarışı') }}</span>
+                <span>{{ __('roommates.search_title') }}</span>
             </div>
             <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 tracking-tight">
-                {{ __('Birlikdə yaşamaq üçün ideal otaq və ya yoldaş tap') }}
+                {{ __('roommates.hero_title') }}
             </h1>
             <p class="text-xs sm:text-sm text-gray-500 leading-relaxed">
-                {{ __('Evində boş otaq olanlar və ya birgə ev tutmaq istəyənlər üçün xüsusi elan platforması. Rahat filtrlə, əlaqə saxla və büdcənə qənaət et.') }}
+                {{ __('roommates.hero_desc') }}
             </p>
         </div>
 
@@ -30,7 +30,7 @@
             <a href="{{ route('roommates.create') }}"
                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#f1913d] hover:bg-[#e07f2c] text-white font-semibold text-sm rounded-2xl shadow-sm transition hover:shadow-md">
                 <i class="bi bi-plus-circle-fill text-base"></i>
-                <span>{{ __('Otaq Yoldaşı Elanı Ver') }}</span>
+                <span>{{ __('roommates.post_roommate_ad') }}</span>
             </a>
         </div>
     </div>
@@ -46,34 +46,34 @@
                 <div class="flex items-center gap-1.5 p-1 bg-gray-100/80 rounded-2xl">
                     <button type="button" data-filter-type=""
                             class="filter-type-btn flex-1 sm:flex-none px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl transition {{ empty(request('listing_type')) ? 'bg-white text-gray-900 shadow-xs' : 'text-gray-600 hover:text-gray-900' }}">
-                        {{ __('Bütün Elanlar') }}
+                        {{ __('roommates.all_listings') }}
                     </button>
                     <button type="button" data-filter-type="have_room"
                             class="filter-type-btn flex-1 sm:flex-none px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl transition {{ request('listing_type') === 'have_room' ? 'bg-emerald-500 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900' }}">
-                        <i class="fa-solid fa-door-open mr-1 text-[11px]"></i> {{ __('Otaq Verilir') }}
+                        <i class="fa-solid fa-door-open mr-1 text-[11px]"></i> {{ __('roommates.have_room') }}
                     </button>
                     <button type="button" data-filter-type="need_room"
                             class="filter-type-btn flex-1 sm:flex-none px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl transition {{ request('listing_type') === 'need_room' ? 'bg-blue-600 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900' }}">
-                        <i class="fa-solid fa-user-group mr-1 text-[11px]"></i> {{ __('Otaq Axtarır') }}
+                        <i class="fa-solid fa-user-group mr-1 text-[11px]"></i> {{ __('roommates.need_room') }}
                     </button>
                 </div>
                 <input type="hidden" name="listing_type" id="listingTypeInput" value="{{ request('listing_type') }}">
 
                 <!-- Gender Preference Selector -->
                 <div class="flex items-center gap-1.5">
-                    <span class="text-xs font-semibold text-gray-400 hidden sm:inline mr-1">{{ __('Cinsiyyət:') }}</span>
+                    <span class="text-xs font-semibold text-gray-400 hidden sm:inline mr-1">{{ __('roommates.gender_label') }}</span>
                     <div class="flex items-center gap-1 p-1 bg-gray-100/80 rounded-2xl w-full sm:w-auto">
                         <button type="button" data-filter-gender=""
                                 class="filter-gender-btn flex-1 sm:flex-none px-3 py-1.5 text-xs font-semibold rounded-xl transition {{ empty(request('gender')) && empty(request('gender_preference')) ? 'bg-white text-gray-900 shadow-xs' : 'text-gray-600 hover:text-gray-900' }}">
-                            {{ __('Hamı') }}
+                            {{ __('roommates.gender_all') }}
                         </button>
                         <button type="button" data-filter-gender="female"
                                 class="filter-gender-btn flex-1 sm:flex-none px-3 py-1.5 text-xs font-semibold rounded-xl transition {{ (request('gender') === 'female' || request('gender_preference') === 'female') ? 'bg-pink-500 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900' }}">
-                            <i class="fa-solid fa-venus mr-1 text-[10px]"></i> {{ __('Xanımlar') }}
+                            <i class="fa-solid fa-venus mr-1 text-[10px]"></i> {{ __('roommates.gender_female') }}
                         </button>
                         <button type="button" data-filter-gender="male"
                                 class="filter-gender-btn flex-1 sm:flex-none px-3 py-1.5 text-xs font-semibold rounded-xl transition {{ (request('gender') === 'male' || request('gender_preference') === 'male') ? 'bg-indigo-600 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900' }}">
-                            <i class="fa-solid fa-mars mr-1 text-[10px]"></i> {{ __('Bəylər') }}
+                            <i class="fa-solid fa-mars mr-1 text-[10px]"></i> {{ __('roommates.gender_male') }}
                         </button>
                     </div>
                     <input type="hidden" name="gender" id="genderInput" value="{{ request('gender', request('gender_preference')) }}">
@@ -85,10 +85,10 @@
                 
                 <!-- Search Input -->
                 <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Axtarış') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('roommates.search_label') }}</label>
                     <div class="relative">
                         <input type="text" name="search" value="{{ request('search') }}"
-                               placeholder="{{ __('Metro, qəsəbə və ya açar söz...') }}"
+                               placeholder="{{ __('roommates.search_placeholder') }}"
                                class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl pl-9 pr-3 py-2.5 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
                         <i class="bi bi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
                     </div>
@@ -96,10 +96,10 @@
 
                 <!-- City Select -->
                 <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Şəhər') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('roommates.city_label') }}</label>
                     <select name="city_id" id="citySelect"
                             class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:bg-white focus:outline-none focus:border-[#f1913d] transition cursor-pointer">
-                        <option value="">{{ __('Bütün Şəhərlər') }}</option>
+                        <option value="">{{ __('roommates.all_cities') }}</option>
                         @foreach($cities as $city)
                             @php
                                 $cName = is_array($city->name) ? ($city->name[app()->getLocale()] ?? $city->name['az'] ?? reset($city->name)) : $city->name;
@@ -113,14 +113,14 @@
 
                 <!-- Min Price -->
                 <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Min. Qiymət (₼)') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('roommates.min_price') }}</label>
                     <input type="number" name="min_price" value="{{ request('min_price') }}" placeholder="0" min="0"
                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
                 </div>
 
                 <!-- Max Price -->
                 <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('Maks. Qiymət (₼)') }}</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('roommates.max_price') }}</label>
                     <input type="number" name="max_price" value="{{ request('max_price') }}" placeholder="1000" min="0"
                            class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:bg-white focus:outline-none focus:border-[#f1913d] transition">
                 </div>
@@ -133,30 +133,30 @@
                     <label class="inline-flex items-center gap-2 cursor-pointer select-none">
                         <input type="checkbox" name="bills_included" value="1" {{ request('bills_included') ? 'checked' : '' }}
                                class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
-                        <span>{{ __('Kommunal xərclər daxildir') }}</span>
+                        <span>{{ __('roommates.bills_included') }}</span>
                     </label>
 
                     <label class="inline-flex items-center gap-2 cursor-pointer select-none">
                         <input type="checkbox" name="smoker_allowed" value="1" {{ request('smoker_allowed') ? 'checked' : '' }}
                                class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
-                        <span>{{ __('Siqaret çəkməyə icazə var') }}</span>
+                        <span>{{ __('roommates.smoker_allowed') }}</span>
                     </label>
 
                     <label class="inline-flex items-center gap-2 cursor-pointer select-none">
                         <input type="checkbox" name="pet_allowed" value="1" {{ request('pet_allowed') ? 'checked' : '' }}
                                class="rounded border-gray-300 text-[#f1913d] focus:ring-[#f1913d] h-4 w-4">
-                        <span>{{ __('Ev heyvanına icazə var') }}</span>
+                        <span>{{ __('roommates.pet_allowed') }}</span>
                     </label>
                 </div>
 
                 <div class="flex items-center gap-2 shrink-0">
                     <a href="{{ route('roommates.index') }}"
                        class="px-4 py-2 text-xs font-semibold text-gray-500 hover:text-gray-800 bg-gray-100 hover:bg-gray-200 rounded-xl transition">
-                        {{ __('Sıfırla') }}
+                        {{ __('roommates.reset') }}
                     </a>
                     <button type="submit"
                             class="px-5 py-2 text-xs sm:text-sm font-semibold text-white bg-gray-900 hover:bg-[#f1913d] rounded-xl transition shadow-xs">
-                        <i class="bi bi-funnel mr-1"></i> {{ __('Axtar') }}
+                        <i class="bi bi-funnel mr-1"></i> {{ __('roommates.search_btn') }}
                     </button>
                 </div>
             </div>

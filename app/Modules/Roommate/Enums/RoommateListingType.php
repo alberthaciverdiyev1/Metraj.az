@@ -10,16 +10,16 @@ enum RoommateListingType: string
     public function label(): string
     {
         return match ($this) {
-            self::HaveRoom => 'Evim var, otaq yoldaşı axtarıram',
-            self::NeedRoom => 'Ev axtarıram, ortaq ev tutmaq istəyirəm',
+            self::HaveRoom => __('roommates.have_room_full'),
+            self::NeedRoom => __('roommates.need_room_full'),
         };
     }
 
     public function badgeLabel(): string
     {
         return match ($this) {
-            self::HaveRoom => 'Otaq verilir',
-            self::NeedRoom => 'Otaq axtarır',
+            self::HaveRoom => __('roommates.have_room'),
+            self::NeedRoom => __('roommates.need_room'),
         };
     }
 }

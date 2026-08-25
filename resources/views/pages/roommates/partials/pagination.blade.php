@@ -1,1 +1,1 @@
-<x-pagination :paginator="$listings" :label="__('elan')" />
+<x-pagination :paginator="$listings" :label="__('pagination.ad')" />

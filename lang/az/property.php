@@ -78,4 +78,6 @@ return [
     'inquiry_success' => 'Müraciətiniz uğurla qəbul edildi! Ən qısa zamanda sizinlə əlaqə saxlanılacaq.',
     'contact_success' => 'Mesajınız uğurla göndərildi! Ən qısa zamanda sizinlə əlaqə saxlanılacaq.',
     'today' => 'Bugün',
+    'safety_note_title' => 'Təhlükəsizlik Tövsiyəsi',
+    'safety_note_desc' => 'Mənzillə əyani tanış olmadan və şərtləri razılaşdırmadan heç kimə əvvəlcədən beh / ödəniş göndərməyin.',
 ];

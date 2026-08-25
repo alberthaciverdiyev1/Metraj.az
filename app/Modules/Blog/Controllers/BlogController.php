@@ -36,8 +36,8 @@ class BlogController extends Controller
         $categories = Blog::published()->whereNotNull('category')->distinct()->pluck('category');
 
         $breadcrumbs = [
-            ['label' => __('Home'), 'url' => '/'],
-            ['label' => __('Blog'), 'url' => '/blog'],
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => __('blog.page_title'), 'url' => '/blog'],
         ];
 
         return view('pages.blog.list', compact('blogs', 'categories', 'category', 'search', 'breadcrumbs'))->render();
@@ -48,8 +48,8 @@ class BlogController extends Controller
         $related = $this->blogService->related($blog, 3);
 
         $breadcrumbs = [
-            ['label' => __('Home'), 'url' => '/'],
-            ['label' => __('Blog'), 'url' => '/blog'],
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => __('blog.page_title'), 'url' => '/blog'],
             ['label' => $blog->title],
         ];
 

@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'tagline' => 'your property',
+    'description' => 'Cyprus\'s largest real estate listings platform. The right address for buying, selling, and renting houses, villas, land, and commercial properties.',
+    'quick_links' => 'Quick Links',
+    'home' => 'Home',
+    'listings' => 'Listings',
+    'requests' => 'Property Requests',
+    'agencies' => 'Agencies',
+    'blog' => 'Blog',
+    'about_us' => 'About Us',
+    'faq' => 'FAQ',
+    'contact' => 'Contact',
+    'popular_regions' => 'Popular Regions',
+    'girne' => 'Kyrenia (Girne)',
+    'lefkosa' => 'Nicosia (Lefkoşa)',
+    'gazimagusa' => 'Famagusta (Gazimağusa)',
+    'iskele' => 'Trikomo (İskele)',
+    'guzelyurt' => 'Morphou (Güzelyurt)',
+    'contact_support' => 'Contact & Support',
+    'location_address' => 'Kyrenia, Northern Cyprus',
+    'all_rights_reserved' => 'All rights reserved.',
+    'user_agreement' => 'User Agreement',
+    'privacy_policy' => 'Privacy Policy',
+];

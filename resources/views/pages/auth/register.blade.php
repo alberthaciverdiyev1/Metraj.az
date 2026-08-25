@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Qeydiyyat - Metraj.az'))
+@section('title', __('auth.register_title') . ' - Metraj.az')
 
 @section('content')
 <div class="min-h-[calc(100vh-140px)] flex items-center justify-center py-8 sm:py-12 px-4">
@@ -15,10 +15,10 @@
                     <img src="{{ asset('images/metrajlogo1.png') }}" alt="Metraj.az" class="h-10 mx-auto object-contain">
                 </a>
                 <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
-                    {{ __('Yeni Hesab Yarat') }}
+                    {{ __('auth.register_heading') }}
                 </h1>
                 <p class="text-xs sm:text-sm text-gray-500">
-                    {{ __('Metraj.az platformasında fəaliyyət növünüzə uyğun profil seçin.') }}
+                    {{ __('auth.register_subheading') }}
                 </p>
             </div>
 
@@ -26,15 +26,15 @@
             <div class="grid grid-cols-3 gap-2 p-1.5 bg-gray-100/80 rounded-2xl">
                 <button type="button" class="role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-bold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 bg-white text-orange-600 shadow-sm" data-role="user">
                     <i class="bi bi-person text-base"></i>
-                    <span>{{ __('Fərdi İstifadəçi') }}</span>
+                    <span>{{ __('auth.role_individual') }}</span>
                 </button>
                 <button type="button" class="role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-bold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 text-gray-600 hover:text-gray-900" data-role="agent">
                     <i class="bi bi-person-badge text-base"></i>
-                    <span>{{ __('Rieltor (Agent)') }}</span>
+                    <span>{{ __('auth.role_agent') }}</span>
                 </button>
                 <button type="button" class="role-tab-btn py-3 px-2 rounded-xl text-xs sm:text-sm font-bold transition flex flex-col sm:flex-row items-center justify-center gap-1.5 text-gray-600 hover:text-gray-900" data-role="agency">
                     <i class="bi bi-building text-base"></i>
-                    <span>{{ __('Agentlik') }}</span>
+                    <span>{{ __('auth.role_agency') }}</span>
                 </button>
             </div>
 
@@ -42,7 +42,7 @@
             <div id="roleInfoBanner" class="p-3.5 rounded-2xl bg-orange-50/80 border border-orange-100/80 flex items-start gap-3 text-xs text-orange-950">
                 <i class="bi bi-info-circle-fill text-orange-500 text-base shrink-0 mt-0.5"></i>
                 <div id="roleInfoText" class="leading-relaxed">
-                    {{ __('Fərdi istifadəçi olaraq elanlar yerləşdirə, axtarışları və bəyəndiyiniz mənzilləri sevimlilər siyahısına əlavə edə bilərsiniz.') }}
+                    {{ __('auth.role_info_individual') }}
                 </div>
             </div>
 
@@ -56,11 +56,11 @@
                 {{-- ==================== AGENCY SPECIFIC FIELD ==================== --}}
                 <div id="field_agency_name" class="space-y-1.5 hidden">
                     <label for="agency_name" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                        {{ __('Agentliyin (Şirkətin) Adı') }} <span class="text-rose-500">*</span>
+                        {{ __('auth.agency_name') }} <span class="text-rose-500">*</span>
                     </label>
                     <div class="relative">
                         <i class="bi bi-building absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
-                        <input type="text" id="agency_name" name="agency_name" placeholder="{{ __('Məs: Fox Real Estate MMC') }}"
+                        <input type="text" id="agency_name" name="agency_name" placeholder="{{ __('auth.agency_name_placeholder') }}"
                                class="w-full pl-11 pr-4 py-3.5 sm:py-4 bg-gray-50/80 border border-gray-200 rounded-2xl text-sm sm:text-base text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-inner">
                     </div>
                     <span id="agency_name_error" class="text-rose-500 text-xs font-semibold hidden"></span>
@@ -69,11 +69,11 @@
                 {{-- Full Name Input (Applies to all) --}}
                 <div class="space-y-1.5">
                     <label for="reg_name" id="label_name" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                        {{ __('Ad və Soyadınız') }} <span class="text-rose-500">*</span>
+                        {{ __('auth.full_name') }} <span class="text-rose-500">*</span>
                     </label>
                     <div class="relative">
                         <i class="bi bi-person absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
-                        <input type="text" id="reg_name" name="name" required placeholder="{{ __('Məs: Əli Əliyev') }}"
+                        <input type="text" id="reg_name" name="name" required placeholder="{{ __('auth.full_name_placeholder') }}"
                                class="w-full pl-11 pr-4 py-3.5 sm:py-4 bg-gray-50/80 border border-gray-200 rounded-2xl text-sm sm:text-base text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-inner">
                     </div>
                     <span id="name_error" class="text-rose-500 text-xs font-semibold hidden"></span>
@@ -82,7 +82,7 @@
                 {{-- Email Input --}}
                 <div class="space-y-1.5">
                     <label for="reg_email" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                        {{ __('E-poçt ünvanı') }} <span class="text-rose-500">*</span>
+                        {{ __('auth.email_address') }} <span class="text-rose-500">*</span>
                     </label>
                     <div class="relative">
                         <i class="bi bi-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
@@ -96,7 +96,7 @@
                 <div id="contactFields" class="grid grid-cols-1 sm:grid-cols-2 gap-4 hidden">
                     <div class="space-y-1.5">
                         <label for="reg_phone" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            {{ __('Telefon nömrəsi') }} <span class="text-rose-500">*</span>
+                            {{ __('auth.phone_number') }} <span class="text-rose-500">*</span>
                         </label>
                         <div class="relative">
                             <i class="bi bi-telephone absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
@@ -108,7 +108,7 @@
 
                     <div class="space-y-1.5">
                         <label for="reg_whatsapp" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            {{ __('WhatsApp') }} <span class="text-gray-400 font-normal">({{ __('opsional') }})</span>
+                            {{ __('auth.whatsapp') }} <span class="text-gray-400 font-normal">({{ __('auth.optional') }})</span>
                         </label>
                         <div class="relative">
                             <i class="bi bi-whatsapp absolute left-4 top-1/2 -translate-y-1/2 text-emerald-600 text-base"></i>
@@ -121,13 +121,13 @@
                 {{-- ==================== AGENT: AGENCY SELECTION ==================== --}}
                 <div id="field_agency_select" class="space-y-1.5 hidden">
                     <label for="reg_agency_id" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                        {{ __('Aid Olduğunuz Agentlik') }} <span class="text-gray-400 font-normal">({{ __('opsional') }})</span>
+                        {{ __('auth.affiliated_agency') }} <span class="text-gray-400 font-normal">({{ __('auth.optional') }})</span>
                     </label>
                     <div class="relative">
                         <i class="bi bi-diagram-3 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
                         <select id="reg_agency_id" name="agency_id"
                                 class="w-full pl-11 pr-8 py-3.5 sm:py-4 bg-gray-50/80 border border-gray-200 rounded-2xl text-sm sm:text-base text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-inner appearance-none">
-                            <option value="">{{ __('Müstəqil Rieltor (Heç bir agentliyə bağlı deyil)') }}</option>
+                            <option value="">{{ __('auth.independent_realtor') }}</option>
                             @foreach($agencies as $agency)
                                 <option value="{{ $agency->id }}">{{ $agency->name }}</option>
                             @endforeach
@@ -139,11 +139,11 @@
                 {{-- ==================== AGENCY: ADDRESS ==================== --}}
                 <div id="field_agency_address" class="space-y-1.5 hidden">
                     <label for="reg_address" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                        {{ __('Ofis Ünvanı') }} <span class="text-gray-400 font-normal">({{ __('opsional') }})</span>
+                        {{ __('auth.office_address') }} <span class="text-gray-400 font-normal">({{ __('auth.optional') }})</span>
                     </label>
                     <div class="relative">
                         <i class="bi bi-geo-alt absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
-                        <input type="text" id="reg_address" name="address" placeholder="{{ __('Məs: Bakı ş., Nizami küç. 45') }}"
+                        <input type="text" id="reg_address" name="address" placeholder="{{ __('auth.office_address_placeholder') }}"
                                class="w-full pl-11 pr-4 py-3.5 sm:py-4 bg-gray-50/80 border border-gray-200 rounded-2xl text-sm sm:text-base text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-inner">
                     </div>
                 </div>
@@ -152,7 +152,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="space-y-1.5">
                         <label for="reg_password" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            {{ __('Şifrə') }} <span class="text-rose-500">*</span>
+                            {{ __('auth.password_label') }} <span class="text-rose-500">*</span>
                         </label>
                         <div class="relative">
                             <i class="bi bi-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
@@ -167,7 +167,7 @@
 
                     <div class="space-y-1.5">
                         <label for="reg_password_confirmation" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            {{ __('Şifrənin Təkrarı') }} <span class="text-rose-500">*</span>
+                            {{ __('auth.password_confirmation') }} <span class="text-rose-500">*</span>
                         </label>
                         <div class="relative">
                             <i class="bi bi-lock-fill absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
@@ -182,17 +182,17 @@
 
                 {{-- Terms & Agreement --}}
                 <p class="text-[11px] text-gray-500 leading-relaxed pt-1">
-                    {{ __('Qeydiyyatdan keçməklə siz Metraj.az') }}
-                    <a href="{{ route('about-us') }}" class="text-orange-600 hover:underline font-semibold">{{ __('İstifadəçi Qaydaları') }}</a>
-                    {{ __('və') }}
-                    <a href="{{ route('about-us') }}" class="text-orange-600 hover:underline font-semibold">{{ __('Məxfilik Siyasətini') }}</a>
-                    {{ __('qəbul etmiş olursunuz.') }}
+                    {{ __('auth.terms_prefix') }}
+                    <a href="{{ route('about-us') }}" class="text-orange-600 hover:underline font-semibold">{{ __('auth.terms_of_use') }}</a>
+                    {{ __('auth.and') }}
+                    <a href="{{ route('about-us') }}" class="text-orange-600 hover:underline font-semibold">{{ __('auth.privacy_policy') }}</a>
+                    {{ __('auth.terms_suffix') }}
                 </p>
 
                 {{-- Submit Button --}}
                 <button type="submit" id="registerSubmitBtn"
                         class="w-full py-4 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm sm:text-base rounded-2xl shadow-md transition duration-200 transform active:scale-98 flex items-center justify-center gap-2 mt-2">
-                    <span id="registerBtnText">{{ __('Qeydiyyatı Tamamla') }}</span>
+                    <span id="registerBtnText">{{ __('auth.complete_registration') }}</span>
                     <i class="bi bi-arrow-right text-sm"></i>
                 </button>
             </form>
@@ -200,14 +200,14 @@
             {{-- Footer Switch to Login --}}
             <div class="pt-4 border-t border-gray-100 text-center text-xs sm:text-sm text-gray-600 space-y-2">
                 <p>
-                    {{ __('Artıq hesabınız var?') }}
+                    {{ __('auth.already_have_account') }}
                     <a href="{{ route('login') }}" class="font-semibold text-orange-600 hover:text-orange-700 hover:underline">
-                        {{ __('Daxil olun') }}
+                        {{ __('auth.login_here') }}
                     </a>
                 </p>
                 <div>
                     <a href="{{ route('home') }}" class="text-xs text-gray-400 hover:text-gray-600 transition inline-flex items-center gap-1">
-                        <i class="bi bi-house-door"></i> {{ __('Ana səhifəyə qayıt') }}
+                        <i class="bi bi-house-door"></i> {{ __('auth.back_to_home') }}
                     </a>
                 </div>
             </div>
@@ -221,23 +221,23 @@
 <script>
     window.registerConfig = {
         i18n: {
-            label_user: "{{ __('Ad və Soyadınız') }}",
-            role_info_user: "{{ __('Fərdi istifadəçi olaraq elanlar yerləşdirə, axtarışları və bəyəndiyiniz mənzilləri sevimlilər siyahısına əlavə edə bilərsiniz.') }}",
-            btn_user: "{{ __('İstifadəçi Kimi Qeydiyyatdan Keç') }}",
+            label_user: "{{ __('auth.full_name') }}",
+            role_info_user: "{{ __('auth.role_info_individual') }}",
+            btn_user: "{{ __('auth.register_as_user') }}",
 
-            label_agent: "{{ __('Rieltorun Ad və Soyadı') }}",
-            role_info_agent: "<strong>{{ __('Rieltor Hesabı:') }}</strong> {{ __('Qeydiyyatdan dərhal sonra Rieltor İdarəetmə Panelinə yönləndiriləcəksiniz və elanlarınızı vahid paneldən idarə edə biləcəksiniz.') }}",
-            btn_agent: "{{ __('Rieltor Kimi Qeydiyyatdan Keç') }}",
+            label_agent: "{{ __('auth.realtor_name') }}",
+            role_info_agent: "<strong>{{ __('auth.role_agent') }}:</strong> {{ __('auth.role_info_agent') }}",
+            btn_agent: "{{ __('auth.register_as_agent') }}",
 
-            label_agency: "{{ __('Məsul Şəxsin Ad və Soyadı') }}",
-            role_info_agency: "<strong>{{ __('Agentlik Hesabı:') }}</strong> {{ __('Qeydiyyatdan dərhal sonra Agentlik İdarəetmə Panelinə yönləndiriləcəksiniz, şirkət profilinizi və agentlərinizi idarə edə biləcəksiniz.') }}",
-            btn_agency: "{{ __('Agentlik Kimi Qeydiyyatdan Keç') }}",
+            label_agency: "{{ __('auth.responsible_person_name') }}",
+            role_info_agency: "<strong>{{ __('auth.role_agency') }}:</strong> {{ __('auth.role_info_agency') }}",
+            btn_agency: "{{ __('auth.register_as_agency') }}",
 
-            checking: "{{ __('Qeydiyyat icra edilir...') }}",
-            success: "{{ __('Qeydiyyat tamamlandı!') }}",
-            completed: "{{ __('Uğurla tamamlandı!') }}",
-            invalid: "{{ __('Məlumatları düzgün doldurduğunuzdan əmin olun.') }}",
-            network: "{{ __('Şəbəkə xətası baş verdi. Yenidən cəhd edin.') }}"
+            checking: "{{ __('auth.register_checking') }}",
+            success: "{{ __('auth.register_success') }}",
+            completed: "{{ __('auth.register_completed') }}",
+            invalid: "{{ __('auth.invalid_form_data') }}",
+            network: "{{ __('auth.network_error') }}"
         }
     };
 </script>

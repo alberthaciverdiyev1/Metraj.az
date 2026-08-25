@@ -11,9 +11,9 @@ enum OccupationPreference: string
     public function label(): string
     {
         return match ($this) {
-            self::Any => 'Fərqi yoxdur',
-            self::Student => 'Yalnız tələbə',
-            self::Working => 'Yalnız işləyən',
+            self::Any => __('roommates.occupation_any'),
+            self::Student => __('roommates.occupation_student'),
+            self::Working => __('roommates.occupation_working'),
         };
     }
 }

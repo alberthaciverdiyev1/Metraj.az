@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'tagline' => 'sənin əmlakın',
+    'description' => 'Kiprin ən böyük əmlak elanları platforması. Ev, villa, torpaq sahəsi və kommersiya obyektlərinin alqı-satqısı və kirayəsi üçün ən doğru ünvan.',
+    'quick_links' => 'Keçidlər',
+    'home' => 'Ana Səhifə',
+    'listings' => 'Elanlar',
+    'requests' => 'Axtarıram',
+    'agencies' => 'Agentliklər',
+    'blog' => 'Bloq',
+    'about_us' => 'Haqqımızda',
+    'faq' => 'FAQ',
+    'contact' => 'Əlaqə',
+    'popular_regions' => 'Populyar Bölgələr',
+    'girne' => 'Girne',
+    'lefkosa' => 'Lefkoşa',
+    'gazimagusa' => 'Gazimağusa',
+    'iskele' => 'İskele',
+    'guzelyurt' => 'Güzelyurt',
+    'contact_support' => 'Əlaqə & Dəstək',
+    'location_address' => 'Girne, Şimali Kipr',
+    'all_rights_reserved' => 'Bütün hüquqlar qorunur.',
+    'user_agreement' => 'İstifadəçi Razılaşması',
+    'privacy_policy' => 'Məxfilik Siyasəti',
+];

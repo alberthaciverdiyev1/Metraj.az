@@ -78,4 +78,6 @@ return [
     'inquiry_success' => 'Talebiniz başarıyla alındı! En kısa sürede sizinle iletişime geçilecektir.',
     'contact_success' => 'Mesajınız başarıyla gönderildi! En kısa sürede sizinle iletişime geçilecektir.',
     'today' => 'Bugün',
+    'safety_note_title' => 'Güvenlik Tavsiyesi',
+    'safety_note_desc' => 'Mülkü bizzat görmeden ve şartları netleştirmeden kimseye önceden kapora / ödeme göndermeyiniz.',
 ];

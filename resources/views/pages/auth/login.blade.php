@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Daxil ol - Metraj.az'))
+@section('title', __('auth.login_title') . ' - Metraj.az')
 
 @section('content')
 <div class="min-h-[calc(100vh-140px)] flex items-center justify-center py-8 sm:py-12 px-4">
@@ -15,10 +15,10 @@
                     <img src="{{ asset('images/metrajlogo1.png') }}" alt="Metraj.az" class="h-10 mx-auto object-contain">
                 </a>
                 <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
-                    {{ __('Hesaba Daxil Ol') }}
+                    {{ __('auth.login_heading') }}
                 </h1>
                 <p class="text-xs sm:text-sm text-gray-500">
-                    {{ __('Elanlarınızı və hesabınızı idarə etmək üçün məlumatlarınızı daxil edin.') }}
+                    {{ __('auth.login_subheading') }}
                 </p>
             </div>
 
@@ -26,8 +26,8 @@
             <div class="p-3.5 rounded-2xl bg-orange-50/80 border border-orange-100/80 flex items-start gap-3 text-xs text-orange-900">
                 <i class="bi bi-info-circle-fill text-orange-500 text-base shrink-0 mt-0.5"></i>
                 <div class="leading-relaxed">
-                    <span class="font-semibold">{{ __('Agentlik və Rieltorlar:') }}</span>
-                    <span>{{ __('Daxil olduqdan sonra avtomatik olaraq biznes idarəetmə panelinə yönləndiriləcəksiniz.') }}</span>
+                    <span class="font-semibold">{{ __('auth.agency_realtor_info') }}</span>
+                    <span>{{ __('auth.agency_realtor_redirect_desc') }}</span>
                 </div>
             </div>
 
@@ -38,7 +38,7 @@
                 {{-- Email Input --}}
                 <div class="space-y-1.5">
                     <label for="login_email" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                        {{ __('E-poçt ünvanı') }} <span class="text-rose-500">*</span>
+                        {{ __('auth.email_address') }} <span class="text-rose-500">*</span>
                     </label>
                     <div class="relative">
                         <i class="bi bi-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
@@ -53,7 +53,7 @@
                 <div class="space-y-1.5">
                     <div class="flex items-center justify-between">
                         <label for="login_password" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            {{ __('Şifrə') }} <span class="text-rose-500">*</span>
+                            {{ __('auth.password_label') }} <span class="text-rose-500">*</span>
                         </label>
                     </div>
                     <div class="relative">
@@ -73,14 +73,14 @@
                     <label class="flex items-center gap-2 cursor-pointer select-none">
                         <input type="checkbox" name="remember" id="remember"
                                class="w-4 h-4 rounded text-orange-500 border-gray-300 focus:ring-orange-500">
-                        <span class="text-xs sm:text-sm text-gray-600 font-medium">{{ __('Məni xatırla') }}</span>
+                        <span class="text-xs sm:text-sm text-gray-600 font-medium">{{ __('auth.remember_me') }}</span>
                     </label>
                 </div>
 
                 {{-- Submit Button --}}
                 <button type="submit" id="loginSubmitBtn"
                         class="w-full py-4 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm sm:text-base rounded-2xl shadow-md transition duration-200 transform active:scale-98 flex items-center justify-center gap-2 mt-2">
-                    <span>{{ __('Daxil Ol') }}</span>
+                    <span>{{ __('auth.login_btn') }}</span>
                     <i class="bi bi-arrow-right text-sm"></i>
                 </button>
             </form>
@@ -88,14 +88,14 @@
             {{-- Footer Switch to Register --}}
             <div class="pt-4 border-t border-gray-100 text-center text-xs sm:text-sm text-gray-600 space-y-2">
                 <p>
-                    {{ __('Hesabınız yoxdur?') }}
+                    {{ __('auth.no_account') }}
                     <a href="{{ route('register') }}" class="font-semibold text-orange-600 hover:text-orange-700 hover:underline">
-                        {{ __('Qeydiyyatdan keçin') }}
+                        {{ __('auth.register_now') }}
                     </a>
                 </p>
                 <div>
                     <a href="{{ route('home') }}" class="text-xs text-gray-400 hover:text-gray-600 transition inline-flex items-center gap-1">
-                        <i class="bi bi-house-door"></i> {{ __('Ana səhifəyə qayıt') }}
+                        <i class="bi bi-house-door"></i> {{ __('auth.back_to_home') }}
                     </a>
                 </div>
             </div>
@@ -109,11 +109,11 @@
 <script>
     window.loginConfig = {
         i18n: {
-            checking: "{{ __('Yoxlanılır...') }}",
-            success: "{{ __('Uğurla daxil oldunuz!') }}",
-            loggedIn: "{{ __('Daxil olundu!') }}",
-            invalid: "{{ __('E-poçt və ya şifrə yanlışdır.') }}",
-            network: "{{ __('Şəbəkə xətası baş verdi. Yenidən cəhd edin.') }}"
+            checking: "{{ __('auth.checking') }}",
+            success: "{{ __('auth.login_success') }}",
+            loggedIn: "{{ __('auth.logged_in') }}",
+            invalid: "{{ __('auth.invalid_credentials') }}",
+            network: "{{ __('auth.network_error') }}"
         }
     };
 </script>

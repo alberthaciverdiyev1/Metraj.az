@@ -18,36 +18,6 @@ class StaticPageController extends Controller
         return 'compares_page:'.($userId ?: $sessionId);
     }
 
-    public function about(): View
-    {
-        $breadcrumbs = [
-            ['label' => __('Ana səhifə'), 'url' => '/'],
-            ['label' => __('Haqqımızda'), 'url' => null],
-        ];
-
-        return view('pages.static.about-us', compact('breadcrumbs'));
-    }
-
-    public function contact(): View
-    {
-        $breadcrumbs = [
-            ['label' => __('navbar.home'), 'url' => '/'],
-            ['label' => __('contact.page_title'), 'url' => null],
-        ];
-
-        return view('pages.static.contact', compact('breadcrumbs'));
-    }
-
-    public function faq(): View
-    {
-        $breadcrumbs = [
-            ['label' => __('Ana səhifə'), 'url' => '/'],
-            ['label' => __('FAQ'), 'url' => null],
-        ];
-
-        return view('pages.static.faq', compact('breadcrumbs'));
-    }
-
     public function favorites(\Illuminate\Http\Request $request): \Illuminate\Http\Response|View
     {
         $userId = auth()->id();
@@ -55,8 +25,8 @@ class StaticPageController extends Controller
 
         $html = Cache::remember(self::favoritesCacheKey($userId, $sessionId), 10, function () use ($request, $userId, $sessionId) {
             $breadcrumbs = [
-                ['label' => __('Ana səhifə'), 'url' => '/'],
-                ['label' => __('Seçilmişlər'), 'url' => null],
+                ['label' => __('navbar.home'), 'url' => '/'],
+                ['label' => __('favorites.page_title'), 'url' => null],
             ];
 
             $favoritePropertyIds = \App\Modules\Property\Models\Favorite::where($userId ? 'user_id' : 'session_id', $userId ?: $sessionId)
@@ -128,8 +98,8 @@ class StaticPageController extends Controller
 
         $html = Cache::remember(self::comparesCacheKey($userId, $sessionId), 10, function () use ($userId, $sessionId) {
             $breadcrumbs = [
-                ['label' => __('Ana səhifə'), 'url' => '/'],
-                ['label' => __('Müqayisə'), 'url' => null],
+                ['label' => __('navbar.home'), 'url' => '/'],
+                ['label' => __('compare.page_title'), 'url' => null],
             ];
 
             $comparePropertyIds = \App\Modules\Property\Models\Compare::where($userId ? 'user_id' : 'session_id', $userId ?: $sessionId)
@@ -148,6 +118,36 @@ class StaticPageController extends Controller
         });
 
         return response($html);
+    }
+
+    public function about(): View
+    {
+        $breadcrumbs = [
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => __('about.page_title'), 'url' => null],
+        ];
+
+        return view('pages.static.about-us', compact('breadcrumbs'));
+    }
+
+    public function contact(): View
+    {
+        $breadcrumbs = [
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => __('contact.page_title'), 'url' => null],
+        ];
+
+        return view('pages.static.contact', compact('breadcrumbs'));
+    }
+
+    public function faq(): View
+    {
+        $breadcrumbs = [
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => __('faq.page_title'), 'url' => null],
+        ];
+
+        return view('pages.static.faq', compact('breadcrumbs'));
     }
 
     public function login(): View

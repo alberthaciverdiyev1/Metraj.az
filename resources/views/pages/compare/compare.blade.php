@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Mülkləri Müqayisə Et') . ' - Metraj.az')
+@section('title', __('compare.page_title') . ' - Metraj.az')
 
 @section('content')
     <div class="max-w-[1400px] mx-auto sm:px-6 lg:px-8 py-8">
@@ -19,7 +19,7 @@
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">{{ __('Mülkləri Müqayisə Et') }}</h1>
+                        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">{{ __('compare.page_title') }}</h1>
                         <span id="compareTotalBadge"
                               class="{{ count($properties) > 0 ? '' : 'hidden' }} px-2.5 py-0.5 rounded-full text-xs font-semibold bg-orange-100 text-orange-600">
                         {{ count($properties) }} / 4
@@ -30,15 +30,16 @@
 
             <div id="compareActions" class="{{ count($properties) > 0 ? '' : 'hidden' }} flex items-center gap-3">
                 <button id="clearAllCompareBtn" type="button"
+                        data-confirm="{{ __('compare.confirm_clear_all') }}"
                         class="inline-flex items-center gap-2 px-4 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-600 text-sm font-semibold rounded-xl transition duration-200 border border-rose-200 cursor-pointer">
                     <i class="fa-regular fa-trash-can text-sm"></i>
-                    <span>{{ __('Hamısını Təmizlə') }}</span>
+                    <span>{{ __('compare.clear_all') }}</span>
                 </button>
                 @if(count($properties) < 4)
                     <a href="{{ route('listing') }}"
                        class="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-semibold rounded-xl transition duration-200">
                         <i class="bi bi-plus-circle"></i>
-                        <span>{{ __('Daha Çox Elan Əlavə Et') }}</span>
+                        <span>{{ __('compare.add_more_properties') }}</span>
                     </a>
                 @endif
             </div>
@@ -50,14 +51,14 @@
             <div class="w-20 h-20 bg-orange-50 text-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl shadow-sm">
                 <i class="bi bi-arrow-left-right"></i>
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ __('Müqayisə siyahınız boşdur') }}</h3>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ __('compare.empty_title') }}</h3>
             <p class="text-gray-500 text-sm mb-6 max-w-sm mx-auto leading-relaxed">
-                {{ __('Elanların üzərindəki müqayisə ikonuna klikləyərək eyni anda 4 əmlaka qədər parametri yan-yana müqayisə edə bilərsiniz.') }}
+                {{ __('compare.empty_desc') }}
             </p>
             <a href="{{ route('listing') }}"
                class="inline-flex items-center px-6 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm rounded-xl shadow-md transition-all duration-200 hover:shadow-lg">
                 <i class="bi bi-search mr-2"></i>
-                <span>{{ __('Elanları Kəşf Et') }}</span>
+                <span>{{ __('compare.explore_listings') }}</span>
             </a>
         </div>
 
@@ -69,14 +70,14 @@
                     <thead>
                     <tr class="bg-gray-50/80 border-b border-gray-200">
                         <th class="p-3 sm:p-4 w-32 sm:w-44 text-xs font-semibold uppercase tracking-wider text-gray-400 align-top">
-                            {{ __('Parametr') }}
+                            {{ __('compare.parameter') }}
                         </th>
                         @foreach($properties as $property)
                             <th class="p-3 sm:p-4 text-center border-l border-gray-100 relative group align-top"
                                 data-comp-header-id="{{ $property->id }}">
                                 <button type="button" onclick="removeCompareItem({{ $property->id }})"
                                         class="absolute top-2 right-2 w-7 h-7 bg-white hover:bg-rose-50 text-gray-400 hover:text-rose-600 rounded-full flex items-center justify-center shadow-sm border border-gray-200 transition cursor-pointer z-10"
-                                        title="{{ __('Müqayisədən çıxar') }}">
+                                        title="{{ __('compare.remove_from_compare') }}">
                                     <i class="fa-solid fa-xmark text-xs"></i>
                                 </button>
                                 <div class="w-full max-w-[220px] h-[130px] sm:h-[150px] mx-auto rounded-xl overflow-hidden mb-2.5 bg-gray-100 shadow-sm relative">
@@ -109,9 +110,9 @@
                         };
                     @endphp
 
-                            <!-- Şəhər / Rayon -->
+                    <!-- Location / City -->
                     <tr class="hover:bg-gray-50/50 transition">
-                        <td class="p-3 sm:p-4 font-semibold text-gray-700 bg-gray-50/30">{{ __('Məkan / Şəhər') }}</td>
+                        <td class="p-3 sm:p-4 font-semibold text-gray-700 bg-gray-50/30">{{ __('compare.location_city') }}</td>
                         @foreach($properties as $property)
                             <td class="p-3 sm:p-4 text-center border-l border-gray-100 text-gray-800"
                                 data-comp-col-id="{{ $property->id }}">
@@ -122,9 +123,9 @@
                         @endforeach
                     </tr>
 
-                    <!-- Ünvan -->
+                    <!-- Address -->
                     <tr class="hover:bg-gray-50/50 transition">
-                        <td class="p-3 sm:p-4 font-semibold text-gray-700 bg-gray-50/30">{{ __('Ünvan') }}</td>
+                        <td class="p-3 sm:p-4 font-semibold text-gray-700 bg-gray-50/30">{{ __('compare.address') }}</td>
                         @foreach($properties as $property)
                             <td class="p-3 sm:p-4 text-center border-l border-gray-100 text-gray-600 text-xs truncate max-w-[200px]"
                                 data-comp-col-id="{{ $property->id }}">
@@ -133,20 +134,20 @@
                         @endforeach
                     </tr>
 
-                    <!-- Otaq Sayı -->
+                    <!-- Room Count -->
                     <tr class="hover:bg-gray-50/50 transition">
-                        <td class="p-3 sm:p-4 font-semibold text-gray-700 bg-gray-50/30">{{ __('Otaq Sayı') }}</td>
+                        <td class="p-3 sm:p-4 font-semibold text-gray-700 bg-gray-50/30">{{ __('compare.room_count') }}</td>
                         @foreach($properties as $property)
                             <td class="p-3 sm:p-4 text-center border-l border-gray-100 font-medium text-gray-800"
                                 data-comp-col-id="{{ $property->id }}">
-                                {{ $property->rooms ? $property->rooms . ' otaqlı' : '—' }}
+                                {{ $property->rooms ? __('compare.rooms_count', ['count' => $property->rooms]) : '—' }}
                             </td>
                         @endforeach
                     </tr>
 
-                    <!-- Sahə -->
+                    <!-- Area -->
                     <tr class="hover:bg-gray-50/50 transition">
-                        <td class="p-3 sm:p-4 font-semibold text-gray-700 bg-gray-50/30">{{ __('Sahə') }}</td>
+                        <td class="p-3 sm:p-4 font-semibold text-gray-700 bg-gray-50/30">{{ __('compare.area') }}</td>
                         @foreach($properties as $property)
                             <td class="p-3 sm:p-4 text-center border-l border-gray-100 font-medium text-gray-800"
                                 data-comp-col-id="{{ $property->id }}">
@@ -155,9 +156,9 @@
                         @endforeach
                     </tr>
 
-                    <!-- Mərtəbə -->
+                    <!-- Floor -->
                     <tr class="hover:bg-gray-50/50 transition">
-                        <td class="p-3 sm:p-4 font-semibold text-gray-700 bg-gray-50/30">{{ __('Mərtəbə') }}</td>
+                        <td class="p-3 sm:p-4 font-semibold text-gray-700 bg-gray-50/30">{{ __('compare.floor') }}</td>
                         @foreach($properties as $property)
                             <td class="p-3 sm:p-4 text-center border-l border-gray-100 text-gray-800"
                                 data-comp-col-id="{{ $property->id }}">
@@ -172,45 +173,45 @@
                         @endforeach
                     </tr>
 
-                    <!-- Kupça / Sənəd -->
+                    <!-- Document / Kupcha -->
                     <tr class="hover:bg-gray-50/50 transition">
-                        <td class="p-3 sm:p-4 font-semibold text-gray-700 bg-gray-50/30">{{ __('Çıxarış (Kupça)') }}</td>
+                        <td class="p-3 sm:p-4 font-semibold text-gray-700 bg-gray-50/30">{{ __('compare.has_document') }}</td>
                         @foreach($properties as $property)
                             <td class="p-3 sm:p-4 text-center border-l border-gray-100"
                                 data-comp-col-id="{{ $property->id }}">
                                 @if($property->has_document)
                                     <span class="inline-flex items-center text-emerald-600 font-semibold gap-1">
-                                    <i class="bi bi-check-circle-fill"></i> Var
+                                    <i class="bi bi-check-circle-fill"></i> {{ __('compare.yes') }}
                                 </span>
                                 @else
                                     <span class="inline-flex items-center text-gray-400 gap-1">
-                                    <i class="bi bi-dash-circle"></i> Yoxdur
+                                    <i class="bi bi-dash-circle"></i> {{ __('compare.no') }}
                                 </span>
                                 @endif
                             </td>
                         @endforeach
                     </tr>
 
-                    <!-- İpoteka -->
+                    <!-- Mortgage -->
                     <tr class="hover:bg-gray-50/50 transition">
-                        <td class="p-3 sm:p-4 font-semibold text-gray-700 bg-gray-50/30">{{ __('İpoteka') }}</td>
+                        <td class="p-3 sm:p-4 font-semibold text-gray-700 bg-gray-50/30">{{ __('compare.has_mortgage') }}</td>
                         @foreach($properties as $property)
                             <td class="p-3 sm:p-4 text-center border-l border-gray-100"
                                 data-comp-col-id="{{ $property->id }}">
                                 @if($property->has_mortgage)
                                     <span class="inline-flex items-center text-emerald-600 font-semibold gap-1">
-                                    <i class="bi bi-check-circle-fill"></i> Var
+                                    <i class="bi bi-check-circle-fill"></i> {{ __('compare.yes') }}
                                 </span>
                                 @else
                                     <span class="inline-flex items-center text-gray-400 gap-1">
-                                    <i class="bi bi-dash-circle"></i> Yoxdur
+                                    <i class="bi bi-dash-circle"></i> {{ __('compare.no') }}
                                 </span>
                                 @endif
                             </td>
                         @endforeach
                     </tr>
 
-                    <!-- Əməliyyat -->
+                    <!-- View button -->
                     <tr class="bg-gray-50/50">
                         <td class="p-3 sm:p-4 bg-gray-50/80"></td>
                         @foreach($properties as $property)
@@ -218,7 +219,7 @@
                                 data-comp-col-id="{{ $property->id }}">
                                 <a href="{{ route('properties.show', $property->slug) }}"
                                    class="inline-flex items-center justify-center max-w-[200px] w-full py-2 sm:py-2.5 px-3 sm:px-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-xs rounded-xl shadow-sm transition">
-                                    {{ __('Elana Bax') }} <i class="bi bi-arrow-right ml-1.5"></i>
+                                    {{ __('compare.view_listing') }} <i class="bi bi-arrow-right ml-1.5"></i>
                                 </a>
                             </td>
                         @endforeach

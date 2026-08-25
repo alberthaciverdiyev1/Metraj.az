@@ -42,7 +42,7 @@
             </span>
             <span class="text-gray-300">•</span>
             <span class="flex items-center gap-1 text-gray-400">
-                <i class="bi bi-clock"></i> 3 dəq
+                <i class="bi bi-clock"></i> {{ __('blog.read_time_min', ['min' => 3]) }}
             </span>
         </div>
 
@@ -59,7 +59,7 @@
         <div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-100/70">
             <a href="{{ route('blog.show', $blogSlug) }}" onclick="event.stopPropagation()"
                class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[var(--primary)] group-hover:text-orange-700 transition">
-                {{ __('Ətraflı oxu') }}
+                {{ __('blog.read_more') }}
                 <i class="bi bi-arrow-right group-hover:translate-x-1 transition-transform"></i>
             </a>
             <span class="w-8 h-8 rounded-full bg-orange-50 text-[var(--primary)] group-hover:bg-[var(--primary)] group-hover:text-white flex items-center justify-center transition">

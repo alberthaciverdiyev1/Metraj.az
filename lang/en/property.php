@@ -78,4 +78,6 @@ return [
     'inquiry_success' => 'Your inquiry has been received successfully! We will contact you shortly.',
     'contact_success' => 'Your message has been sent successfully! We will contact you shortly.',
     'today' => 'Today',
+    'safety_note_title' => 'Safety Advice',
+    'safety_note_desc' => 'Never send advance deposits or payments without viewing the property in person and agreeing on the terms.',
 ];

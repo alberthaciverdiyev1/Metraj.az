@@ -24,7 +24,9 @@ window.removeCompareItem = function (propertyId) {
 };
 
 document.getElementById('clearAllCompareBtn')?.addEventListener('click', function () {
-    if (confirm('Bütün müqayisə siyahısını təmizləmək istədiyinizdən əminsiniz?')) {
+    const btn = document.getElementById('clearAllCompareBtn');
+    const confirmMsg = btn?.getAttribute('data-confirm') || 'Bütün müqayisə siyahısını təmizləmək istədiyinizdən əminsiniz?';
+    if (confirm(confirmMsg)) {
         const csrf = window.Metraj?.csrfToken() || '';
         fetch(R.comparesClear || '/api/compares/clear', {
             method: 'POST',
