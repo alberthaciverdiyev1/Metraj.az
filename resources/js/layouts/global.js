@@ -187,7 +187,7 @@ const R = window.KibrisKareRoutes || {};
                 btn.classList.add('text-gray-700');
                 if (textSpan) textSpan.textContent = 'Müqayisə';
                 if (icon) {
-                    icon.className = 'bi bi-arrow-left-right text-sm sm:text-base';
+                    icon.className = 'bi bi-arrow-left-right text-sm sm:text-base text-orange-500';
                 }
             }
         });
