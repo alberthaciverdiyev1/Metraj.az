@@ -1,0 +1,14 @@
+document.addEventListener("DOMContentLoaded",function(){document.querySelectorAll("[data-map-config]").forEach(function(i){if(typeof L!="undefined"){var e;try{e=JSON.parse(i.getAttribute("data-map-config"))}catch{return}var t=e.id;if(!(!t||!i)){var n=parseFloat(e.lat)||40.409264,s=parseFloat(e.lng)||49.867092,v=e.title||"",f=e.price||"",u=e.address||"",a=L.map(t,{zoomControl:!1,attributionControl:!1}).setView([n,s],15);L.control.zoom({position:"bottomright"}).addTo(a);var d=L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",{maxZoom:19,subdomains:"abcd"}).addTo(a),l=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19}),r="carto";window["switchLayer_"+t]=function(o){if(o==="satellite"&&r!=="satellite"){a.removeLayer(d),l.addTo(a),r="satellite";var p=document.getElementById("btn_sat_"+t),c=document.getElementById("btn_carto_"+t);p&&(p.className="px-3 py-1.5 rounded-lg bg-orange-500 text-white shadow-sm transition"),c&&(c.className="px-3 py-1.5 rounded-lg bg-transparent text-gray-700 hover:bg-gray-100 transition")}else if(o==="carto"&&r!=="carto"){a.removeLayer(l),d.addTo(a),r="carto";var g=document.getElementById("btn_carto_"+t),m=document.getElementById("btn_sat_"+t);g&&(g.className="px-3 py-1.5 rounded-lg bg-orange-500 text-white shadow-sm transition"),m&&(m.className="px-3 py-1.5 rounded-lg bg-transparent text-gray-700 hover:bg-gray-100 transition")}};var y=L.divIcon({className:"custom-pulse-marker",html:`
+                <div style="position: relative; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">
+                    <div style="position: absolute; width: 40px; height: 40px; border-radius: 50%; background: rgba(249, 115, 22, 0.28); animation: leaflet-pulse 2s infinite ease-in-out;"></div>
+                    <div style="width: 32px; height: 32px; border-radius: 50%; background: #ea580c; border: 3px solid #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; color: white;">
+                        <svg style="width: 16px; height: 16px;" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    </div>
+                </div>
+            `,iconSize:[44,44],iconAnchor:[22,40],popupAnchor:[0,-36]}),h=L.marker([n,s],{icon:y}).addTo(a),x=`
+            <div style="font-family: inherit; font-size: 13px; padding: 4px;">
+                <p style="font-weight: bold; color: #111827; margin: 0 0 4px 0;">${v}</p>
+                <p style="font-size: 14px; font-weight: 800; color: #ea580c; margin: 0 0 4px 0;">${f}</p>
+                <p style="font-size: 11px; color: #6b7280; margin: 0;">${u}</p>
+            </div>
+        `;h.bindPopup(x).openPopup()}}})});
