@@ -48,8 +48,8 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <link rel="stylesheet" href="{{ asset('css/app-legacy.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/components.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app-legacy.css') }}?v=1.2">
+    <link rel="stylesheet" href="{{ asset('css/components.css') }}?v=1.2">
 
     @if(isset($css))
         @foreach($css as $file)
