@@ -21,30 +21,12 @@ class HomeController extends Controller
 
     public function __invoke(Request $request, ?string $first = null, ?string $second = null, ?string $third = null)
     {
-        // AJAX istekleri her zaman canlı veri döndürür (keşlenmez)
+        // AJAX istekleri her zaman canlı veri döndürür
         if ($request->ajax() || $request->wantsJson()) {
             return $this->ajaxListing($request, $first, $second, $third);
         }
 
-        // Tam səhifə keşi: qonaq ziyarətçilər üçün qısa TTL.
-        // Giriş etmiş istifadəçilər her zaman canlı render edilir (öz navbar məlumatları/CSRF üçün).
-        // Flash mesajlar varsa keşlənir ki, istifadəçiyə göstərilsin.
-        if (auth()->guest()
-            && ! session()->has('success')
-            && ! session()->has('error')
-            && ! $request->has('_cache_bust')) {
-            $cacheKey = 'listing_page:'.md5($request->fullUrl().'|'.session('currency').'|'.app()->getLocale());
-
-            $html = \Illuminate\Support\Facades\Cache::remember(
-                $cacheKey,
-                60,
-                fn () => $this->renderListingPage($request, $first, $second, $third)
-            );
-
-            return response($html);
-        }
-
-        return $this->renderListingPage($request, $first, $second, $third);
+        return response($this->renderListingPage($request, $first, $second, $third));
     }
 
     /**
@@ -85,10 +67,10 @@ class HomeController extends Controller
         $filter = PropertyFilterDTO::fromArray($request->all());
         $properties = $this->propertyService->paginate($filter, $perPage);
 
-        $cities = \Illuminate\Support\Facades\Cache::remember('active_cities_list', 300, fn() => $this->locationService->activeCities());
-        $buildingTypes = \Illuminate\Support\Facades\Cache::remember('building_types_list', 300, fn() => $this->locationService->propertyTypeOptions());
-        $dynamicFilters = \Illuminate\Support\Facades\Cache::remember('dynamic_filters_list', 300, fn() => $this->locationService->dynamicFilters());
-        $popularSearches = \Illuminate\Support\Facades\Cache::remember('popular_searches_list', 300, fn() => QuickSearch::popular()->limit(15)->get());
+        $cities = $this->locationService->activeCities();
+        $buildingTypes = $this->locationService->propertyTypeOptions();
+        $dynamicFilters = $this->locationService->dynamicFilters();
+        $popularSearches = QuickSearch::popular()->limit(15)->get();
 
         $breadcrumbs = [
             ['label' => __('navbar.home'), 'url' => '/'],

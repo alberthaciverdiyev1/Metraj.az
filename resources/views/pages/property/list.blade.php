@@ -123,8 +123,13 @@
                                         $currentBuildingType = request('buildingType', '');
                                         $currentBuildingLabel = __('listing.all_categories');
                                         if ($currentBuildingType) {
-                                            $matching = collect($buildingTypes)->firstWhere('value', $currentBuildingType);
-                                            if ($matching) $currentBuildingLabel = $matching->localized_name;
+                                            $matching = collect($buildingTypes)->first(function ($b) use ($currentBuildingType) {
+                                                $val = is_object($b) ? ($b->value ?? null) : (is_array($b) ? ($b['value'] ?? null) : $b);
+                                                return (string) $val === (string) $currentBuildingType;
+                                            });
+                                            if ($matching) {
+                                                $currentBuildingLabel = is_object($matching) ? ($matching->localized_name ?? ($matching->name['az'] ?? $matching->value)) : (is_array($matching) ? ($matching['name']['az'] ?? $matching['value'] ?? '') : (string) $matching);
+                                            }
                                         }
                                     @endphp
                                     <div class="relative">
@@ -146,10 +151,11 @@
                                             </div>
                                             @foreach($buildingTypes ?? [] as $bType)
                                                 @php
-                                                    $bLabel = $bType->localized_name;
-                                                    $isSel = $currentBuildingType === $bType->value;
+                                                    $bVal = is_object($bType) ? ($bType->value ?? '') : (is_array($bType) ? ($bType['value'] ?? '') : (string) $bType);
+                                                    $bLabel = is_object($bType) ? ($bType->localized_name ?? ($bType->name['az'] ?? $bType->value)) : (is_array($bType) ? ($bType['name']['az'] ?? $bType['value'] ?? '') : (string) $bType);
+                                                    $isSel = (string) $currentBuildingType === (string) $bVal;
                                                 @endphp
-                                                <div data-val="{{ $bType->value }}"
+                                                <div data-val="{{ $bVal }}"
                                                      class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ $isSel ? 'text-orange-500 bg-orange-50/60 font-semibold' : 'text-gray-700 hover:bg-gray-50' }} transition cursor-pointer">
                                                     <span class="item-label">{{ $bLabel }}</span>
                                                     <i class="bi bi-check2 text-sm text-orange-500 item-check {{ $isSel ? '' : 'hidden' }}"></i>
@@ -165,8 +171,12 @@
                                                 class="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 bg-gray-50 hover:bg-gray-100/80 border border-gray-200/90 rounded-2xl text-xs sm:text-sm font-semibold text-gray-800 transition shadow-2xs cursor-pointer select-none">
                                             <div class="flex items-center gap-2 min-w-0">
                                                 <img src="{{ asset('images/city.svg') }}" alt="city" class="w-4 h-4 shrink-0">
+                                                @php
+                                                    $selCity = $cities ? collect($cities)->first(fn($c) => (is_object($c) ? ($c->id ?? null) : ($c['id'] ?? null)) == request('cityId')) : null;
+                                                    $selCityName = is_object($selCity) ? ($selCity->localized_name ?? ($selCity->name['az'] ?? '')) : (is_array($selCity) ? ($selCity['name']['az'] ?? '') : '');
+                                                @endphp
                                                 <span class="truncate font-semibold text-gray-800" data-role="display-value" data-filter="city" data-default-label="{{ __('listing.all_cities') }}">
-                                                    {{ $cities->firstWhere('id', request('cityId'))?->localized_name ?? __('listing.all_cities') }}
+                                                    {{ $selCityName ?: __('listing.all_cities') }}
                                                 </span>
                                             </div>
                                             <i class="bi bi-chevron-down text-xs text-gray-400 shrink-0"></i>
