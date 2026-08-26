@@ -85,16 +85,10 @@ class HomeController extends Controller
         $filter = PropertyFilterDTO::fromArray($request->all());
         $properties = $this->propertyService->paginate($filter, $perPage);
 
-        $cities = $this->locationService->activeCities();
-
-        // Əsas axtarışda göstərilən əmlak növü seçimləri
-        $buildingTypes = $this->locationService->propertyTypeOptions();
-
-        // Əlavə filtr pəncərəsində göstərilən dinamik filtrlər
-        // (əsas axtarışda olan deal_type və property_type istisna olunur)
-        $dynamicFilters = $this->locationService->dynamicFilters();
-
-        $popularSearches = QuickSearch::popular()->limit(15)->get();
+        $cities = \Illuminate\Support\Facades\Cache::remember('active_cities_list', 300, fn() => $this->locationService->activeCities());
+        $buildingTypes = \Illuminate\Support\Facades\Cache::remember('building_types_list', 300, fn() => $this->locationService->propertyTypeOptions());
+        $dynamicFilters = \Illuminate\Support\Facades\Cache::remember('dynamic_filters_list', 300, fn() => $this->locationService->dynamicFilters());
+        $popularSearches = \Illuminate\Support\Facades\Cache::remember('popular_searches_list', 300, fn() => QuickSearch::popular()->limit(15)->get());
 
         $breadcrumbs = [
             ['label' => __('navbar.home'), 'url' => '/'],
