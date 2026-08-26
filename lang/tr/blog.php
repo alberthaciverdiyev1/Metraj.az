@@ -12,6 +12,7 @@ return [
     'back_to_all_blogs' => 'Tüm makalelere dön',
     'read_more' => 'Devamını oku',
     'read_time_min' => ':min dk',
+    'views_count' => 'okunma',
     'share' => 'Paylaş:',
     'related_posts' => 'Benzer Makaleler',
 ];

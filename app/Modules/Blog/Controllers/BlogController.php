@@ -45,6 +45,12 @@ class BlogController extends Controller
 
     public function show(Blog $blog): View
     {
+        $viewKey = 'viewed_blog_' . $blog->id;
+        if (!session()->has($viewKey)) {
+            $blog->increment('views_count');
+            session()->put($viewKey, true);
+        }
+
         $related = $this->blogService->related($blog, 3);
 
         $breadcrumbs = [

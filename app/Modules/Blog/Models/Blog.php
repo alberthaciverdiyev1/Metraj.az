@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
  * @property string|null $cover_image
  * @property string|null $excerpt
  * @property string $content
+ * @property int $views_count
  * @property \Illuminate\Support\Carbon|null $published_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -35,6 +36,7 @@ class Blog extends Model
         'cover_image',  // Üzlük / başlıq şəkli
         'excerpt',      // Qısa mətn (kartda göstərilir)
         'content',      // Tam məzmun
+        'views_count',  // Baxış sayı
         'published_at', // Dərc tarixi
     ];
 
@@ -43,6 +45,7 @@ class Blog extends Model
      */
     protected $casts = [
         'published_at' => 'datetime',
+        'views_count' => 'integer',
     ];
 
     /**

@@ -49,6 +49,12 @@
             <span class="flex items-center gap-1 text-gray-400">
                 <i class="bi bi-clock"></i> {{ __('blog.read_time_min', ['min' => 3]) }}
             </span>
+            @if(($blog && $blog->views_count > 0) || !empty($viewsCount))
+                <span class="text-gray-300">•</span>
+                <span class="flex items-center gap-1 text-gray-400">
+                    <i class="bi bi-eye"></i> {{ number_format($blog ? $blog->views_count : $viewsCount) }}
+                </span>
+            @endif
         </div>
 
         <h3 class="font-semibold text-gray-900 text-base sm:text-lg group-hover:text-[var(--primary)] transition-colors line-clamp-2 leading-snug">

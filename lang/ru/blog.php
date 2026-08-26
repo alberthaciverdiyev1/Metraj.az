@@ -12,6 +12,7 @@ return [
     'back_to_all_blogs' => 'Вернуться ко всем статьям',
     'read_more' => 'Читать далее',
     'read_time_min' => ':min мин',
+    'views_count' => 'просмотров',
     'share' => 'Поделиться:',
     'related_posts' => 'Похожие статьи',
 ];

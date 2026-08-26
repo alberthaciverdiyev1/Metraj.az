@@ -34,6 +34,10 @@
                     <i class="bi bi-clock-history text-[var(--primary)]"></i>
                     {{ $blog->formatted_date }}
                 </span>
+                <span class="flex items-center gap-1.5">
+                    <i class="bi bi-eye text-[var(--primary)]"></i>
+                    {{ number_format($blog->views_count ?? 0) }} {{ __('blog.views_count') }}
+                </span>
                 @if($blog->category)
                     <span class="flex items-center gap-1.5">
                         <i class="bi bi-tag text-[var(--primary)]"></i>

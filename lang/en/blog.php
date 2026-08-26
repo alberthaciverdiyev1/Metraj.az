@@ -12,6 +12,7 @@ return [
     'back_to_all_blogs' => 'Back to all articles',
     'read_more' => 'Read more',
     'read_time_min' => ':min min',
+    'views_count' => 'views',
     'share' => 'Share:',
     'related_posts' => 'Related Articles',
 ];

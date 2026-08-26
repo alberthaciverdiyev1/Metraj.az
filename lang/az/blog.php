@@ -12,6 +12,7 @@ return [
     'back_to_all_blogs' => 'Bütün məqalələrə qayıt',
     'read_more' => 'Ətraflı oxu',
     'read_time_min' => ':min dəq',
+    'views_count' => 'baxış',
     'share' => 'Paylaş:',
     'related_posts' => 'Oxşar Məqalələr',
 ];

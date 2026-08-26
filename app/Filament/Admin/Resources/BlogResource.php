@@ -129,6 +129,15 @@ class BlogResource extends Resource
                     ->limit(40)
                     ->toggleable(isToggledHiddenByDefault: true),
 
+                Tables\Columns\TextColumn::make('views_count')
+                    ->label('Baxış')
+                    ->icon('heroicon-m-eye')
+                    ->numeric()
+                    ->default(0)
+                    ->sortable()
+                    ->badge()
+                    ->color('gray'),
+
                 Tables\Columns\TextColumn::make('published_at')
                     ->label('Dərc Tarixi')
                     ->dateTime('d.m.Y H:i')
