@@ -68,7 +68,7 @@ php artisan view:cache
 # 8. Reload PHP-FPM to Clear OPcache (if running with systemctl/sudo)
 if command -v systemctl &> /dev/null; then
     echo "🔄 Reloading PHP-FPM..."
-    sudo systemctl reload php8.4-fpm 2>/dev/null || systemctl reload php8.4-fpm 2>/dev/null || sudo systemctl reload php8.3-fpm 2>/dev/null || true
+    sudo systemctl restart php8.4-fpm 2>/dev/null || systemctl restart php8.4-fpm 2>/dev/null || sudo systemctl reload php8.4-fpm 2>/dev/null || true
 fi
 
 # 9. Clean PM2 Logs (to prevent disk space bloat from other server apps)
