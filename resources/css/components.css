@@ -182,3 +182,12 @@ circle.progress {
         display: none !important;
     }
 }
+
+.desktop-only-block {
+    display: block !important;
+}
+@media (max-width: 767px) {
+    .desktop-only-block {
+        display: none !important;
+    }
+}

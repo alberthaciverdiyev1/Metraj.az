@@ -192,7 +192,7 @@
                                     </div>
                                 </div>
 
-                                <div class="p-3 bg-gray-50 rounded-2xl border border-gray-200/90">
+                                <div class="desktop-only-block p-3 bg-gray-50 rounded-2xl border border-gray-200/90">
                                     <label class="block text-gray-700 font-semibold mb-2 flex items-center gap-2 text-xs sm:text-sm">
                                         <i class="bi bi-fullscreen text-orange-500 text-base"></i>
                                         {{ __('listing.area') }}
