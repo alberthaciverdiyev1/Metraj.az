@@ -7,6 +7,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Navigation\NavigationGroup;
 use Filament\Navigation\NavigationItem;
 use Filament\Pages;
@@ -37,10 +38,24 @@ class AgencyPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Orange,
             ])
+            ->userMenuItems([
+                'website' => MenuItem::make()
+                    ->label('Sayta Keçid')
+                    ->url('/')
+                    ->icon('heroicon-o-arrow-top-right-on-square')
+                    ->openUrlInNewTab(true),
+            ])
             ->discoverResources(in: app_path('Filament/Agency/Resources'), for: 'App\\Filament\\Agency\\Resources')
             ->discoverPages(in: app_path('Filament/Agency/Pages'), for: 'App\\Filament\\Agency\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+            ])
+            ->navigationItems([
+                NavigationItem::make('Sayta Keçid')
+                    ->url('/')
+                    ->icon('heroicon-o-globe-alt')
+                    ->sort(99)
+                    ->openUrlInNewTab(true),
             ])
             ->discoverWidgets(in: app_path('Filament/Agency/Widgets'), for: 'App\\Filament\\Agency\\Widgets')
             ->widgets([
@@ -61,6 +76,10 @@ class AgencyPanelProvider extends PanelProvider
             ->topNavigation()
             ->breadcrumbs(false)
             ->maxContentWidth(\Filament\Support\Enums\MaxWidth::Full)
+            ->renderHook(
+                'panels::user-menu.before',
+                fn () => view('filament.hooks.site-button')
+            )
             ->renderHook(
                 'panels::head.end',
                 fn () => view('filament.head-end')->render()

@@ -7,6 +7,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Navigation\NavigationGroup;
 use Filament\Navigation\NavigationItem;
 use Filament\Pages;
@@ -38,6 +39,13 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Orange,
             ])
+            ->userMenuItems([
+                'website' => MenuItem::make()
+                    ->label('Sayta Keçid')
+                    ->url('/')
+                    ->icon('heroicon-o-arrow-top-right-on-square')
+                    ->openUrlInNewTab(true),
+            ])
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
             ->pages([
@@ -51,6 +59,11 @@ class AdminPanelProvider extends PanelProvider
                     ->url(fn (): string => EditProfile::getUrl())
                     ->group('Parametrlər')
                     ->sort(1),
+                NavigationItem::make('Sayta Keçid')
+                    ->url('/')
+                    ->icon('heroicon-o-globe-alt')
+                    ->sort(99)
+                    ->openUrlInNewTab(true),
             ])
             ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\\Filament\\Admin\\Widgets')
             ->widgets([
@@ -70,6 +83,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->breadcrumbs(false)
             ->maxContentWidth(\Filament\Support\Enums\MaxWidth::Full)
+            ->renderHook(
+                'panels::user-menu.before',
+                fn () => view('filament.hooks.site-button')
+            )
             ->renderHook(
                 'panels::head.end',
                 fn () => view('filament.head-end')->render()
