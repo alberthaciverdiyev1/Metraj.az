@@ -52,7 +52,7 @@
                                     {{ __("navbar.rent") }}
                                 </button>
                                 <button type="button" data-value="rent_daily"
-                                        class="hidden md:inline-flex px-5 py-2.5 rounded-xl font-semibold text-xs tracking-wide uppercase transition duration-200 {{ $selectedAdType === 'rent_daily' ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}"
+                                        class="desktop-only-tab px-5 py-2.5 rounded-xl font-semibold text-xs tracking-wide uppercase transition duration-200 {{ $selectedAdType === 'rent_daily' ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}"
                                         data-add-type="rent_daily">
                                     {{ __("navbar.daily_rent") }}
                                 </button>

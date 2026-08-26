@@ -173,3 +173,12 @@ circle.progress {
     opacity: 1 !important;
     color: #ffffff !important;
 }
+
+.desktop-only-tab {
+    display: inline-flex !important;
+}
+@media (max-width: 767px) {
+    .desktop-only-tab {
+        display: none !important;
+    }
+}
