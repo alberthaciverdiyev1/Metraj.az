@@ -4,7 +4,7 @@ return [
     'slogan' => 'senin mülkün',
     'sale' => 'Satılık',
     'rent' => 'Kira',
-    'daily_rent' => 'Günlük',
+    'daily_rent' => 'Günlük Kira',
     'requests' => 'Arıyorum',
     'agencies' => 'Acenteler',
     'contact' => 'İletişim',

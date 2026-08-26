@@ -27,7 +27,9 @@
                                 $selectedAdType = request('adType', 'all');
                                 if (request('deal_type') === 'sale') {
                                     $selectedAdType = 'sale';
-                                } elseif (in_array(request('deal_type'), ['rent', 'rent_monthly', 'rent_daily']) || $selectedAdType === 'rent_monthly' || $selectedAdType === 'rent_daily') {
+                                } elseif (request('deal_type') === 'rent_daily' || $selectedAdType === 'rent_daily') {
+                                    $selectedAdType = 'rent_daily';
+                                } elseif (in_array(request('deal_type'), ['rent', 'rent_monthly']) || $selectedAdType === 'rent_monthly' || $selectedAdType === 'rent') {
                                     $selectedAdType = 'rent';
                                 }
                             @endphp
@@ -48,6 +50,11 @@
                                         class="px-5 py-2.5 rounded-xl font-semibold text-xs tracking-wide uppercase transition duration-200 {{ $selectedAdType === 'rent' ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}"
                                         data-add-type="rent">
                                     {{ __("navbar.rent") }}
+                                </button>
+                                <button type="button" data-value="rent_daily"
+                                        class="hidden md:inline-flex px-5 py-2.5 rounded-xl font-semibold text-xs tracking-wide uppercase transition duration-200 {{ $selectedAdType === 'rent_daily' ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}"
+                                        data-add-type="rent_daily">
+                                    {{ __("navbar.daily_rent") }}
                                 </button>
                                 <input type="hidden" name="adType" id="adTypeInput"
                                        value="{{ $selectedAdType }}">
