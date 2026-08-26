@@ -28,6 +28,9 @@ use Illuminate\Support\Facades\Cache;
  * @property array|null $tagline
  * @property array|null $footer_description
  * @property string|null $copyright_text
+ * @property array|null $user_agreement
+ * @property array|null $privacy_policy
+ * @property array|null $terms_of_use
  */
 class SiteSetting extends Model
 {
@@ -55,12 +58,18 @@ class SiteSetting extends Model
         'tagline',
         'footer_description',
         'copyright_text',
+        'user_agreement',
+        'privacy_policy',
+        'terms_of_use',
     ];
 
     protected $casts = [
         'address' => 'array',
         'tagline' => 'array',
         'footer_description' => 'array',
+        'user_agreement' => 'array',
+        'privacy_policy' => 'array',
+        'terms_of_use' => 'array',
         'map_latitude' => 'float',
         'map_longitude' => 'float',
     ];

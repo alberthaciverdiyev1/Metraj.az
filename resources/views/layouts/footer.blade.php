@@ -110,9 +110,10 @@
             <div>
                 &copy; {{ date('Y') }} <span class="text-white font-semibold">{{ $siteSetting?->copyright_text ?: 'KibrisKare.com' }}</span> — {{ __('footer.all_rights_reserved') }}
             </div>
-            <div class="flex items-center space-x-6">
-                <a href="{{ route('about-us') }}" class="hover:text-white transition">{{ __('footer.user_agreement') }}</a>
-                <a href="{{ route('about-us') }}" class="hover:text-white transition">{{ __('footer.privacy_policy') }}</a>
+            <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+                <a href="{{ route('user-agreement') }}" class="hover:text-white transition">{{ __('footer.user_agreement') }}</a>
+                <a href="{{ route('privacy-policy') }}" class="hover:text-white transition">{{ __('footer.privacy_policy') }}</a>
+                <a href="{{ route('terms-of-use') }}" class="hover:text-white transition">{{ __('footer.terms_of_use') }}</a>
             </div>
         </div>
     </div>

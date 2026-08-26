@@ -11,6 +11,19 @@ Route::get('/about-us', [StaticPageController::class, 'about'])->name('about-us'
 Route::get('/contact', [StaticPageController::class, 'contact'])->name('contact');
 Route::get('/faq', [StaticPageController::class, 'faq'])->name('faq');
 
+// Hüquqi Sənədlər (Legal Pages)
+Route::get('/user-agreement', [StaticPageController::class, 'userAgreement'])->name('user-agreement');
+Route::get('/kullanici-sozlesmesi', [StaticPageController::class, 'userAgreement']);
+Route::get('/istifadeci-razilasmasi', [StaticPageController::class, 'userAgreement']);
+
+Route::get('/privacy-policy', [StaticPageController::class, 'privacyPolicy'])->name('privacy-policy');
+Route::get('/gizlilik-politikasi', [StaticPageController::class, 'privacyPolicy']);
+Route::get('/mexfilik-siyaseti', [StaticPageController::class, 'privacyPolicy']);
+
+Route::get('/terms-of-use', [StaticPageController::class, 'termsOfUse'])->name('terms-of-use');
+Route::get('/kullanim-kosullari', [StaticPageController::class, 'termsOfUse']);
+Route::get('/istifade-qaydalari', [StaticPageController::class, 'termsOfUse']);
+
 // Favoritlər & Müqayisə Səhifələri
 Route::get('/favorites', [StaticPageController::class, 'favorites'])->name('favorites');
 Route::post('/favorites/items', [StaticPageController::class, 'favoritesItems'])->name('favorites.items');

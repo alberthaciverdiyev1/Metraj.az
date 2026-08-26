@@ -189,9 +189,9 @@
                 {{-- Terms & Agreement --}}
                 <p class="text-xs text-gray-500 leading-relaxed pt-1 text-center">
                     {{ __('auth.terms_prefix') }}
-                    <a href="{{ route('about-us') }}" class="text-orange-600 hover:underline font-semibold">{{ __('auth.terms_of_use') }}</a>
+                    <a href="{{ route('terms-of-use') }}" target="_blank" class="text-orange-600 hover:underline font-semibold">{{ __('auth.terms_of_use') }}</a>
                     {{ __('auth.and') }}
-                    <a href="{{ route('about-us') }}" class="text-orange-600 hover:underline font-semibold">{{ __('auth.privacy_policy') }}</a>
+                    <a href="{{ route('privacy-policy') }}" target="_blank" class="text-orange-600 hover:underline font-semibold">{{ __('auth.privacy_policy') }}</a>
                     {{ __('auth.terms_suffix') }}
                 </p>
 

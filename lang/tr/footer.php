@@ -23,4 +23,5 @@ return [
     'all_rights_reserved' => 'Tüm hakları saklıdır.',
     'user_agreement' => 'Kullanıcı Sözleşmesi',
     'privacy_policy' => 'Gizlilik Politikası',
+    'terms_of_use' => 'Kullanım Koşulları',
 ];

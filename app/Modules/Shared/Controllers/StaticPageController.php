@@ -150,6 +150,51 @@ class StaticPageController extends Controller
         return view('pages.static.faq', compact('breadcrumbs'));
     }
 
+    public function userAgreement(): View
+    {
+        $siteSetting = \App\Modules\Shared\Models\SiteSetting::current();
+        $title = __('footer.user_agreement');
+        $activeDoc = 'user_agreement';
+        $content = $siteSetting?->getTrans('user_agreement') ?: '';
+
+        $breadcrumbs = [
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => $title, 'url' => null],
+        ];
+
+        return view('pages.static.legal', compact('breadcrumbs', 'title', 'activeDoc', 'content', 'siteSetting'));
+    }
+
+    public function privacyPolicy(): View
+    {
+        $siteSetting = \App\Modules\Shared\Models\SiteSetting::current();
+        $title = __('footer.privacy_policy');
+        $activeDoc = 'privacy_policy';
+        $content = $siteSetting?->getTrans('privacy_policy') ?: '';
+
+        $breadcrumbs = [
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => $title, 'url' => null],
+        ];
+
+        return view('pages.static.legal', compact('breadcrumbs', 'title', 'activeDoc', 'content', 'siteSetting'));
+    }
+
+    public function termsOfUse(): View
+    {
+        $siteSetting = \App\Modules\Shared\Models\SiteSetting::current();
+        $title = __('footer.terms_of_use') ?: 'Kullanım Koşulları';
+        $activeDoc = 'terms_of_use';
+        $content = $siteSetting?->getTrans('terms_of_use') ?: '';
+
+        $breadcrumbs = [
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => $title, 'url' => null],
+        ];
+
+        return view('pages.static.legal', compact('breadcrumbs', 'title', 'activeDoc', 'content', 'siteSetting'));
+    }
+
     public function login(): View
     {
         return view('pages.auth.login');

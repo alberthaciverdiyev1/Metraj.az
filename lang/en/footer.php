@@ -23,4 +23,5 @@ return [
     'all_rights_reserved' => 'All rights reserved.',
     'user_agreement' => 'User Agreement',
     'privacy_policy' => 'Privacy Policy',
+    'terms_of_use' => 'Terms of Use',
 ];

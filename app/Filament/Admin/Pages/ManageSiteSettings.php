@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Pages;
 use App\Modules\Shared\Models\SiteSetting;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Textarea;
@@ -184,6 +185,94 @@ class ManageSiteSettings extends Page implements HasForms
                                 TextInput::make('copyright_text')
                                     ->label('Müəllif Hüququ (Copyright)')
                                     ->placeholder('KibrisKare.com'),
+                            ]),
+
+                        Tabs\Tab::make('Hüquqi Sənədlər & Şərtlər')
+                            ->icon('heroicon-o-scale')
+                            ->schema([
+                                Section::make('Kullanıcı Sözleşmesi (İstifadəçi Razılaşması - 4 Dildə)')
+                                    ->description('İstifadəçilərin saytdan qeydiyyatdan keçərkən və xidmətlərdən istifadə edərkən razılaşdığı hüquqi müqavilə')
+                                    ->schema([
+                                        Tabs::make('UserAgreementLangTabs')->tabs([
+                                            Tabs\Tab::make('Türkçə (TR)')->schema([
+                                                RichEditor::make('user_agreement.tr')
+                                                    ->label('Kullanıcı Sözleşmesi (Türkçe)')
+                                                    ->placeholder('Kullanıcı sözleşmesi metnini buraya giriniz...'),
+                                            ]),
+                                            Tabs\Tab::make('Azərbaycanca (AZ)')->schema([
+                                                RichEditor::make('user_agreement.az')
+                                                    ->label('İstifadəçi Razılaşması (Azərbaycanca)')
+                                                    ->placeholder('İstifadəçi razılaşması mətnini bura daxil edin...'),
+                                            ]),
+                                            Tabs\Tab::make('İngiliscə (EN)')->schema([
+                                                RichEditor::make('user_agreement.en')
+                                                    ->label('User Agreement (English)')
+                                                    ->placeholder('Enter user agreement text here...'),
+                                            ]),
+                                            Tabs\Tab::make('Rusca (RU)')->schema([
+                                                RichEditor::make('user_agreement.ru')
+                                                    ->label('Пользовательское соглашение (Русский)')
+                                                    ->placeholder('Введите текст пользовательского соглашения...'),
+                                            ]),
+                                        ]),
+                                    ])
+                                    ->collapsible(),
+
+                                Section::make('Gizlilik Politikası (Məxfilik Siyasəti - 4 Dildə)')
+                                    ->description('Fərdi məlumatların toplanması, emalı və təhlükəsizliyi qaydaları')
+                                    ->schema([
+                                        Tabs::make('PrivacyPolicyLangTabs')->tabs([
+                                            Tabs\Tab::make('Türkçə (TR)')->schema([
+                                                RichEditor::make('privacy_policy.tr')
+                                                    ->label('Gizlilik Politikası (Türkçe)')
+                                                    ->placeholder('Gizlilik politikası metnini buraya giriniz...'),
+                                            ]),
+                                            Tabs\Tab::make('Azərbaycanca (AZ)')->schema([
+                                                RichEditor::make('privacy_policy.az')
+                                                    ->label('Məxfilik Siyasəti (Azərbaycanca)')
+                                                    ->placeholder('Məxfilik siyasəti mətnini bura daxil edin...'),
+                                            ]),
+                                            Tabs\Tab::make('İngiliscə (EN)')->schema([
+                                                RichEditor::make('privacy_policy.en')
+                                                    ->label('Privacy Policy (English)')
+                                                    ->placeholder('Enter privacy policy text here...'),
+                                            ]),
+                                            Tabs\Tab::make('Rusca (RU)')->schema([
+                                                RichEditor::make('privacy_policy.ru')
+                                                    ->label('Политика конфиденциальности (Русский)')
+                                                    ->placeholder('Введите текст политики конфиденциальности...'),
+                                            ]),
+                                        ]),
+                                    ])
+                                    ->collapsible(),
+
+                                Section::make('Kullanım Koşulları (İstifadə Qaydaları - 4 Dildə)')
+                                    ->description('Saytın və elanların istifadəsi üzrə ümumi şərtlər və qaydalar')
+                                    ->schema([
+                                        Tabs::make('TermsOfUseLangTabs')->tabs([
+                                            Tabs\Tab::make('Türkçə (TR)')->schema([
+                                                RichEditor::make('terms_of_use.tr')
+                                                    ->label('Kullanım Koşulları (Türkçe)')
+                                                    ->placeholder('Kullanım koşulları metnini buraya giriniz...'),
+                                            ]),
+                                            Tabs\Tab::make('Azərbaycanca (AZ)')->schema([
+                                                RichEditor::make('terms_of_use.az')
+                                                    ->label('İstifadə Qaydaları (Azərbaycanca)')
+                                                    ->placeholder('İstifadə qaydaları mətnini bura daxil edin...'),
+                                            ]),
+                                            Tabs\Tab::make('İngiliscə (EN)')->schema([
+                                                RichEditor::make('terms_of_use.en')
+                                                    ->label('Terms of Use (English)')
+                                                    ->placeholder('Enter terms of use text here...'),
+                                            ]),
+                                            Tabs\Tab::make('Rusca (RU)')->schema([
+                                                RichEditor::make('terms_of_use.ru')
+                                                    ->label('Условия использования (Русский)')
+                                                    ->placeholder('Введите текст условий использования...'),
+                                            ]),
+                                        ]),
+                                    ])
+                                    ->collapsible(),
                             ]),
                     ]),
             ])
