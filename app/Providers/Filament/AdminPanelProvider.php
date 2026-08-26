@@ -52,18 +52,25 @@ class AdminPanelProvider extends PanelProvider
                 Pages\Dashboard::class,
             ])
             ->navigationGroups([
-                NavigationGroup::make('Parametrlər'),
+                NavigationGroup::make('Əmlak və Müraciətlər')
+                    ->icon('heroicon-o-home-modern')
+                    ->collapsed(false),
+                NavigationGroup::make('İstifadəçilər və Agentliklər')
+                    ->icon('heroicon-o-users')
+                    ->collapsed(false),
+                NavigationGroup::make('Məzmun və Axtarış')
+                    ->icon('heroicon-o-newspaper')
+                    ->collapsed(false),
+                NavigationGroup::make('Kataloq və Tənzimləmələr')
+                    ->icon('heroicon-o-cog-6-tooth')
+                    ->collapsed(true),
             ])
             ->navigationItems([
                 NavigationItem::make('Profilim')
                     ->url(fn (): string => EditProfile::getUrl())
-                    ->group('Parametrlər')
-                    ->sort(1),
-                NavigationItem::make('Sayta Keçid')
-                    ->url('/')
-                    ->icon('heroicon-o-globe-alt')
-                    ->sort(99)
-                    ->openUrlInNewTab(true),
+                    ->group('Kataloq və Tənzimləmələr')
+                    ->icon('heroicon-o-user-circle')
+                    ->sort(10),
             ])
             ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\\Filament\\Admin\\Widgets')
             ->widgets([])

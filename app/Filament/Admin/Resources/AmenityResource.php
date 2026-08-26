@@ -16,15 +16,15 @@ class AmenityResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-sparkles';
 
-    protected static ?string $navigationGroup = 'Əmlak İdarəetməsi';
+    protected static ?string $navigationGroup = 'Kataloq və Tənzimləmələr';
 
-    protected static ?string $navigationLabel = 'Təchizatlar & Xüsusiyyətlər';
+    protected static ?string $navigationLabel = 'Təchizatlar';
 
     protected static ?string $modelLabel = 'Təchizat';
 
     protected static ?string $pluralModelLabel = 'Təchizatlar';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {

@@ -18,7 +18,7 @@ class FilterResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-adjustments-horizontal';
 
-    protected static ?string $navigationGroup = 'Sistem & İstifadəçilər';
+    protected static ?string $navigationGroup = 'Kataloq və Tənzimləmələr';
 
     protected static ?string $navigationLabel = 'Dinamik Filtrlər';
 
@@ -26,7 +26,7 @@ class FilterResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Dinamik Filtrlər';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {

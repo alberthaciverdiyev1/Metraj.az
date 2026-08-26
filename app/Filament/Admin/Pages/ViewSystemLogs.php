@@ -11,10 +11,10 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class ViewSystemLogs extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-magnifying-glass';
-    protected static ?string $navigationGroup = 'Parametrlər';
-    protected static ?string $navigationLabel = 'Sistem Loqları';
-    protected static ?string $title = 'Laravel Sistem Loqları';
-    protected static ?int $navigationSort = 4;
+    protected static ?string $navigationGroup = 'Kataloq və Tənzimləmələr';
+    protected static ?string $navigationLabel = 'Sistem Qeydləri (Logs)';
+    protected static ?string $title = 'Laravel Sistem Qeydləri';
+    protected static ?int $navigationSort = 6;
 
     protected static string $view = 'filament.pages.view-system-logs';
 

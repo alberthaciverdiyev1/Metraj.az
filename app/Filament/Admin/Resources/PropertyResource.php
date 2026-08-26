@@ -22,15 +22,31 @@ class PropertyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-home-modern';
 
-    protected static ?string $navigationGroup = 'Əmlak İdarəetməsi';
+    protected static ?string $navigationGroup = 'Əmlak və Müraciətlər';
 
-    protected static ?string $navigationLabel = 'Bütün Elanlar';
+    protected static ?string $navigationLabel = 'Bütün Əmlaklar';
 
     protected static ?string $modelLabel = 'Əmlak Elanı';
 
     protected static ?string $pluralModelLabel = 'Əmlak Elanları';
 
     protected static ?int $navigationSort = 1;
+
+    public static function getNavigationBadge(): ?string
+    {
+        $count = static::getModel()::where('status', PropertyStatus::PendingApproval)->count();
+        return $count > 0 ? (string) $count : null;
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return 'warning';
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'Təsdiq gözləyən elanlar';
+    }
 
     public static function form(Form $form): Form
     {

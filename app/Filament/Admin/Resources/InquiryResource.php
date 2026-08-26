@@ -16,15 +16,26 @@ class InquiryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
 
-    protected static ?string $navigationGroup = 'Müştəri Müraciətləri';
+    protected static ?string $navigationGroup = 'Əmlak və Müraciətlər';
 
-    protected static ?string $navigationLabel = 'Müraciətlər (Leads)';
+    protected static ?string $navigationLabel = 'Müştəri Müraciətləri';
 
     protected static ?string $modelLabel = 'Müraciət';
 
-    protected static ?string $pluralModelLabel = 'Müraciətlər';
+    protected static ?string $pluralModelLabel = 'Müştəri Müraciətləri';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 4;
+
+    public static function getNavigationBadge(): ?string
+    {
+        $count = static::getModel()::whereIn('status', ['new', 'yeni'])->count();
+        return $count > 0 ? (string) $count : null;
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return 'danger';
+    }
 
     public static function form(Form $form): Form
     {

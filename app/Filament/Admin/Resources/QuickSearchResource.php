@@ -23,17 +23,17 @@ class QuickSearchResource extends Resource
 {
     protected static ?string $model = QuickSearch::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-magnifying-glass-circle';
+    protected static ?string $navigationIcon = 'heroicon-o-magnifying-glass';
 
-    protected static ?string $navigationGroup = 'Elanlar & Əmlak';
+    protected static ?string $navigationGroup = 'Məzmun və Axtarış';
 
-    protected static ?string $navigationLabel = 'Populyar Axtarışlar (SEO)';
+    protected static ?string $navigationLabel = 'Sürətli Axtarışlar';
 
     protected static ?string $modelLabel = 'Axtarış Şablonu';
 
-    protected static ?string $pluralModelLabel = 'Populyar Axtarışlar';
+    protected static ?string $pluralModelLabel = 'Sürətli Axtarışlar';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {

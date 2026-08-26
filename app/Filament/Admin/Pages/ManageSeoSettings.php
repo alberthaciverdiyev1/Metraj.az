@@ -21,10 +21,10 @@ class ManageSeoSettings extends Page implements HasForms
     use InteractsWithForms;
 
     protected static ?string $navigationIcon = 'heroicon-o-globe-alt';
-    protected static ?string $navigationGroup = 'Parametrlər';
-    protected static ?string $navigationLabel = 'SEO & Skriptlər';
+    protected static ?string $navigationGroup = 'Kataloq və Tənzimləmələr';
+    protected static ?string $navigationLabel = 'SEO Tənzimləmələri';
     protected static ?string $title = 'SEO Tənzimləmələri və Qlobal Skriptlər';
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 5;
 
     protected static string $view = 'filament.pages.manage-seo-settings';
 

@@ -16,9 +16,9 @@ class BlogResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
 
-    protected static ?string $navigationGroup = 'Məzmun';
+    protected static ?string $navigationGroup = 'Məzmun və Axtarış';
 
-    protected static ?string $navigationLabel = 'Bloqlar';
+    protected static ?string $navigationLabel = 'Bloq və Xəbərlər';
 
     protected static ?string $modelLabel = 'Bloq';
 

@@ -18,9 +18,9 @@ class LocationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
 
-    protected static ?string $navigationGroup = 'Yerləşmə & Ərazi';
+    protected static ?string $navigationGroup = 'Kataloq və Tənzimləmələr';
 
-    protected static ?string $navigationLabel = 'Yerləşmələr (Şəhərlər & Rayonlar)';
+    protected static ?string $navigationLabel = 'Şəhər və Rayonlar';
 
     protected static ?string $modelLabel = 'Şəhər';
 

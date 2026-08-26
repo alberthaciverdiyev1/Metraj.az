@@ -16,17 +16,17 @@ class PropertyRequestResource extends Resource
 {
     protected static ?string $model = PropertyRequest::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-megaphone';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
 
-    protected static ?string $navigationGroup = 'Əmlak İdarəetməsi';
+    protected static ?string $navigationGroup = 'Əmlak və Müraciətlər';
 
-    protected static ?string $navigationLabel = 'Tələb Elanları (Axtarıram)';
+    protected static ?string $navigationLabel = 'Əmlak Sifarişləri';
 
-    protected static ?string $modelLabel = 'Tələb Elanı';
+    protected static ?string $modelLabel = 'Əmlak Sifarişi';
 
-    protected static ?string $pluralModelLabel = 'Tələb Elanları';
+    protected static ?string $pluralModelLabel = 'Əmlak Sifarişləri';
 
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {

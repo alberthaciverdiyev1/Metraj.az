@@ -19,7 +19,7 @@ class AgencyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
-    protected static ?string $navigationGroup = 'Agentliklər və Rieltorlar';
+    protected static ?string $navigationGroup = 'İstifadəçilər və Agentliklər';
 
     protected static ?string $navigationLabel = 'Agentliklər';
 
@@ -27,7 +27,7 @@ class AgencyResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Agentliklər';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {

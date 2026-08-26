@@ -22,15 +22,15 @@ class RoommateListingResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    protected static ?string $navigationGroup = 'Əmlak İdarəetməsi';
+    protected static ?string $navigationGroup = 'Əmlak və Müraciətlər';
 
-    protected static ?string $navigationLabel = 'Otaq Yoldaşı Elanları';
+    protected static ?string $navigationLabel = 'Otaq Yoldaşı';
 
     protected static ?string $modelLabel = 'Otaq Yoldaşı Elanı';
 
     protected static ?string $pluralModelLabel = 'Otaq Yoldaşı Elanları';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {

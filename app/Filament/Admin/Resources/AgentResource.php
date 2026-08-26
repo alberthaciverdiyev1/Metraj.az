@@ -14,17 +14,17 @@ class AgentResource extends Resource
 {
     protected static ?string $model = Agent::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $navigationIcon = 'heroicon-o-identification';
 
-    protected static ?string $navigationGroup = 'Agentliklər və Rieltorlar';
+    protected static ?string $navigationGroup = 'İstifadəçilər və Agentliklər';
 
-    protected static ?string $navigationLabel = 'Rieltorlar (Agentlər)';
+    protected static ?string $navigationLabel = 'Agentlər / Rieltorlar';
 
     protected static ?string $modelLabel = 'Agent';
 
     protected static ?string $pluralModelLabel = 'Agentlər';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
