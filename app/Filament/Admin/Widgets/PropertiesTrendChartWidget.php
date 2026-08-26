@@ -11,9 +11,10 @@ class PropertiesTrendChartWidget extends ChartWidget
 {
     protected static ?string $heading = 'Elan və Qeydiyyat Dinamikası (Son 30 Gün)';
     protected static ?int $sort = 2;
+    protected static ?string $maxHeight = '230px';
     protected int | string | array $columnSpan = [
         'default' => 'full',
-        'lg' => 2,
+        'xl' => 2,
     ];
 
     protected function getData(): array
@@ -39,7 +40,7 @@ class PropertiesTrendChartWidget extends ChartWidget
                     'label' => 'Yeni Əmlaklar',
                     'data' => $propertyData,
                     'borderColor' => '#ea580c',
-                    'backgroundColor' => 'rgba(234, 88, 12, 0.12)',
+                    'backgroundColor' => 'rgba(234, 88, 12, 0.10)',
                     'fill' => true,
                     'tension' => 0.35,
                 ],
@@ -47,12 +48,29 @@ class PropertiesTrendChartWidget extends ChartWidget
                     'label' => 'Yeni İstifadəçilər',
                     'data' => $userData,
                     'borderColor' => '#3b82f6',
-                    'backgroundColor' => 'rgba(59, 130, 246, 0.12)',
+                    'backgroundColor' => 'rgba(59, 130, 246, 0.10)',
                     'fill' => true,
                     'tension' => 0.35,
                 ],
             ],
             'labels' => $labels,
+        ];
+    }
+
+    protected function getOptions(): array
+    {
+        return [
+            'plugins' => [
+                'legend' => [
+                    'display' => true,
+                    'position' => 'top',
+                    'labels' => [
+                        'boxWidth' => 12,
+                        'font' => ['size' => 11],
+                    ],
+                ],
+            ],
+            'maintainAspectRatio' => false,
         ];
     }
 

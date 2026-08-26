@@ -9,9 +9,11 @@ class PropertiesByCityChartWidget extends ChartWidget
 {
     protected static ?string $heading = 'Şəhərlər Üzrə Əmlak Bölgüsü';
     protected static ?int $sort = 3;
+    protected static ?string $maxHeight = '230px';
     protected int | string | array $columnSpan = [
         'default' => 'full',
-        'lg' => 1,
+        'md' => 1,
+        'xl' => 1,
     ];
 
     protected function getData(): array
@@ -48,6 +50,24 @@ class PropertiesByCityChartWidget extends ChartWidget
                 ],
             ],
             'labels' => $labels,
+        ];
+    }
+
+    protected function getOptions(): array
+    {
+        return [
+            'plugins' => [
+                'legend' => [
+                    'display' => true,
+                    'position' => 'bottom',
+                    'labels' => [
+                        'boxWidth' => 10,
+                        'font' => ['size' => 10],
+                        'padding' => 8,
+                    ],
+                ],
+            ],
+            'maintainAspectRatio' => false,
         ];
     }
 

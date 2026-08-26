@@ -17,6 +17,11 @@ use Illuminate\Support\Carbon;
 class StatsOverviewWidget extends BaseWidget
 {
     protected static ?int $sort = 1;
+    protected int | string | array $columns = [
+        'sm' => 2,
+        'lg' => 4,
+        'xl' => 4,
+    ];
 
     protected function getStats(): array
     {
@@ -34,7 +39,6 @@ class StatsOverviewWidget extends BaseWidget
         $totalProperties = Property::count();
         $publishedCount = Property::where('status', PropertyStatus::Published)->count();
         $pendingCount = Property::where('status', PropertyStatus::PendingApproval)->count();
-        $vipCount = Property::where('is_vip', true)->orWhere('is_featured', true)->count();
         $totalViews = (int) Property::sum('views_count');
 
         $totalUsers = User::count();
@@ -49,54 +53,44 @@ class StatsOverviewWidget extends BaseWidget
 
         return [
             Stat::make('Ümumi Əmlak', number_format($totalProperties))
-                ->description("Son 7 gündə: +".array_sum($propertyTrend))
+                ->description("Son 7 gündə: +" . array_sum($propertyTrend))
                 ->descriptionIcon('heroicon-m-home-modern')
                 ->color('primary')
                 ->chart($propertyTrend),
 
-            Stat::make('Dərc Olunmuş Elanlar', number_format($publishedCount))
-                ->description('Saytda aktiv görünən')
+            Stat::make('Dərc Olunmuş', number_format($publishedCount))
+                ->description('Saytda aktiv elanlar')
                 ->descriptionIcon('heroicon-m-check-badge')
                 ->color('success'),
 
             Stat::make('Təsdiq Gözləyən', number_format($pendingCount))
-                ->description($pendingCount > 0 ? 'Moderasiya tələb olunur' : 'Bütün elanlar yoxlanılıb')
+                ->description($pendingCount > 0 ? 'Moderasiya tələb olunur' : 'Yoxlanılıb')
                 ->descriptionIcon('heroicon-m-clock')
                 ->color($pendingCount > 0 ? 'warning' : 'gray'),
 
-            Stat::make('VIP & Premium Elanlar', number_format($vipCount))
-                ->description('Xüsusi vurğulanmış elanlar')
-                ->descriptionIcon('heroicon-m-star')
-                ->color('warning'),
-
             Stat::make('İstifadəçilər', number_format($totalUsers))
-                ->description("Bu həftə: +{$newUsersThisWeek} yeni")
+                ->description("+{$newUsersThisWeek} yeni (bu həftə)")
                 ->descriptionIcon('heroicon-m-users')
                 ->color('info')
                 ->chart($userTrend),
 
             Stat::make('Agentliklər & Agentlər', "{$agencyCount} / {$agentCount}")
-                ->description("{$agencyCount} agentlik, {$agentCount} agent")
+                ->description("{$agencyCount} şirkət, {$agentCount} rieltor")
                 ->descriptionIcon('heroicon-m-building-office-2')
                 ->color('primary'),
 
-            Stat::make('Otaq Yoldaşı Elanları', number_format($roommateCount))
-                ->description('Aktiv otaq elanları')
+            Stat::make('Otaq Yoldaşı & Sifariş', "{$roommateCount} / {$requestCount}")
+                ->description("{$roommateCount} otaq, {$requestCount} tələb")
                 ->descriptionIcon('heroicon-m-user-group')
                 ->color('success'),
 
-            Stat::make('Əmlak Sifarişləri', number_format($requestCount))
-                ->description('Müştəri axtarış tələbləri')
-                ->descriptionIcon('heroicon-m-clipboard-document-list')
-                ->color('info'),
-
             Stat::make('Müştəri Müraciətləri', number_format($inquiryCount))
-                ->description('Daxil olmuş mesaj & əlaqələr')
+                ->description('Gələn mesaj & sorğular')
                 ->descriptionIcon('heroicon-m-chat-bubble-left-right')
                 ->color('danger'),
 
             Stat::make('Ümumi Baxış Sayı', number_format($totalViews))
-                ->description('Bütün elanların baxış cəmi')
+                ->description('Bütün baxışlar cəmi')
                 ->descriptionIcon('heroicon-m-eye')
                 ->color('gray'),
         ];
