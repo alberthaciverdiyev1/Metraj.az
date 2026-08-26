@@ -57,16 +57,12 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationGroups([
                 NavigationGroup::make('Əmlak və Müraciətlər')
-                    ->icon('heroicon-o-home-modern')
                     ->collapsed(false),
                 NavigationGroup::make('İstifadəçilər və Agentliklər')
-                    ->icon('heroicon-o-users')
                     ->collapsed(false),
                 NavigationGroup::make('Məzmun və Axtarış')
-                    ->icon('heroicon-o-newspaper')
                     ->collapsed(false),
                 NavigationGroup::make('Kataloq və Tənzimləmələr')
-                    ->icon('heroicon-o-cog-6-tooth')
                     ->collapsed(true),
             ])
             ->navigationItems([
