@@ -10,6 +10,7 @@ return [
     'compare' => 'Compare',
     'print' => 'Print',
     'share' => 'Share',
+    'share_copied' => 'Link copied',
     'per_month' => '/month',
     'official_agency' => 'Official Agency',
     'agent' => 'Agent',

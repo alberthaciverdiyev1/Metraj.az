@@ -3,7 +3,6 @@
 namespace App\Modules\Shared\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Shared\Models\User;
 use Illuminate\Http\RedirectResponse;
 
 class DashboardController extends Controller
@@ -33,7 +32,7 @@ class DashboardController extends Controller
             return redirect('/login');
         }
 
-        if (auth()->user()->email === User::ADMIN_EMAIL) {
+        if (auth()->user()->isAdmin()) {
             return redirect($adminPath);
         }
 

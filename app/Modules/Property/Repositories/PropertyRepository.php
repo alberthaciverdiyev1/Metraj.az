@@ -148,9 +148,14 @@ class PropertyRepository implements PropertyRepositoryInterface
 
         $currentPage = Paginator::resolveCurrentPage() ?: 1;
 
-        $premPrev = min($totalPremium, ($currentPage - 1) * 10);
+        // Premium elanlar hər səhifədə sabit "10" deyil, səhifə ölçüsünü aşmayan
+        // uyğunlaşan bir blokda göstərilir. (Əvvəlki hardcoded 10, items_per_page < 10
+        // olduqda səhifənin boş qalmasına səbəb ola bilirdi.)
+        $premiumBlock = min(10, $perPage);
+
+        $premPrev = min($totalPremium, ($currentPage - 1) * $premiumBlock);
         $regPrev = max(0, min($totalRegular, ($currentPage - 1) * $perPage - $premPrev));
-        $premiumCount = max(0, min(10, $totalPremium - ($currentPage - 1) * 10));
+        $premiumCount = max(0, min($premiumBlock, $totalPremium - ($currentPage - 1) * $premiumBlock));
         $regularCount = max(0, min($perPage - $premiumCount, $totalRegular - $regPrev));
 
         $premiumItems = $premiumCount > 0
@@ -158,7 +163,7 @@ class PropertyRepository implements PropertyRepositoryInterface
                 ->orderBy('is_vip', 'desc')
                 ->orderBy('is_featured', 'desc')
                 ->orderBy($sortBy, $filter->sortDirection)
-                ->skip(($currentPage - 1) * 10)
+                ->skip(($currentPage - 1) * $premiumBlock)
                 ->take($premiumCount)
                 ->get()
             : collect();
@@ -200,11 +205,16 @@ class PropertyRepository implements PropertyRepositoryInterface
 
         if (!empty($filter->search)) {
             $search = $filter->search;
+            // title/description jsonb sütunlarıdır — LIKE ilə birbaşa müqayisə Postgres-də
+            // "operator does not exist: jsonb ~~ unknown" xətası verir. Bu səbəbdən
+            // ::text cast edərək ILIKE ilə axtarırıq (bütün dillərdəki mətnləri əhatə edir).
             $query->where(function ($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%")
-                  ->orWhere('landmark', 'like', "%{$search}%")
-                  ->orWhere('address', 'like', "%{$search}%");
+                $q->whereRaw('(title::text ILIKE ? OR description::text ILIKE ? OR landmark ILIKE ? OR address ILIKE ?)', [
+                    "%{$search}%",
+                    "%{$search}%",
+                    "%{$search}%",
+                    "%{$search}%",
+                ]);
             });
         }
 
@@ -401,7 +411,7 @@ class PropertyRepository implements PropertyRepositoryInterface
     {
         return $this->model->with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
             ->where('is_featured', true)
-            ->where('status', 'published')
+            ->where('status', PropertyStatus::Published)
             ->where('updated_at', '>=', $this->getExpirationCutoff())
             ->orderBy('updated_at', 'desc')
             ->limit($limit)
@@ -412,7 +422,7 @@ class PropertyRepository implements PropertyRepositoryInterface
     {
         return $this->model->with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
             ->where('is_vip', true)
-            ->where('status', 'published')
+            ->where('status', PropertyStatus::Published)
             ->where('updated_at', '>=', $this->getExpirationCutoff())
             ->orderBy('updated_at', 'desc')
             ->limit($limit)

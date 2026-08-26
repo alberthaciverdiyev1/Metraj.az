@@ -17,8 +17,6 @@
         ? ($property->created_at->diffInHours(now()) < 24 ? $property->created_at->diffForHumans() : $property->created_at->format('d.m.Y'))
         : '';
 
-    $formattedPrice = number_format($property->price, 0, '', ' ');
-
     // Dinamik olaraq deal_type və property_type filtrlərini əldə edirik
     $selectedOptions = $property->filterOptions ?? collect();
     $dealTypeOpt = $selectedOptions->first(fn($o) => in_array($o->value, ['sale', 'rent_monthly', 'rent_daily']) || ($o->filter && $o->filter->key === 'deal_type'));

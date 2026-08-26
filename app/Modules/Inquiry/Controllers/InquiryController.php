@@ -25,6 +25,7 @@ class InquiryController extends Controller
             'phone' => $validated['phone'],
             'email' => $validated['email'] ?? null,
             'message' => $validated['message'] ?? null,
+            'type' => 'property',
             'status' => 'new',
         ]);
 

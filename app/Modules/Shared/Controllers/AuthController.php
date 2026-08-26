@@ -29,7 +29,7 @@ class AuthController extends Controller
      */
     public static function getRedirectUrlForUser(User $user): string
     {
-        if ($user->email === User::ADMIN_EMAIL) {
+        if ($user->isAdmin()) {
             return '/admin';
         }
 
@@ -123,7 +123,7 @@ class AuthController extends Controller
             $redirectUrl = self::getRedirectUrlForUser($user);
 
             $role = 'user';
-            if ($user->email === User::ADMIN_EMAIL) {
+            if ($user->isAdmin()) {
                 $role = 'admin';
             } elseif ($user->agencies()->exists()) {
                 $role = 'agency';

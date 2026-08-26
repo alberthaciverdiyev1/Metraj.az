@@ -167,7 +167,6 @@
         if (propertyContainer) propertyContainer.innerHTML = data.properties;
         if (paginationContainer) paginationContainer.innerHTML = data.pagination;
 
-        initHoverImages();
         if (typeof window.syncCardStates === 'function') window.syncCardStates();
     }
 
@@ -955,11 +954,6 @@
         });
     }
 
-    /* ===== HOVER IMAGE SWITCH (Disabled auto-rotation on hover) ===== */
-    function initHoverImages() {
-        // Şəkillər hover zamanı avtomatik çevrilmir, yalnız ox düymələrinə basıldıqda dəyişir
-    }
-
     /* ===== PAGINATION CLICK DELEGATION ===== */
     function initPagination() {
         let container = document.getElementById('paginationContainer');
@@ -1044,7 +1038,6 @@
         initViewToggle();
         initMoreFilters();
         initCityModal();
-        initHoverImages();
         initPagination();
         initPopState();
     }

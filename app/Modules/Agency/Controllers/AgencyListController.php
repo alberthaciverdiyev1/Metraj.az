@@ -23,7 +23,8 @@ class AgencyListController extends Controller
         $search = $request->get('search');
 
         if ($request->ajax() || $request->wantsJson()) {
-            $items = $this->buildItems($type, $search);
+            [$agencies, $independentAgents] = $this->buildCollections($type, $search);
+            $items = $this->buildItems($type, $agencies, $independentAgents);
 
             return response()->json([
                 'html' => view('pages.agency.partials.grid', compact('items'))->render(),
@@ -44,25 +45,32 @@ class AgencyListController extends Controller
 
     protected function renderList(string $type, ?string $search): string
     {
-        $items = $this->buildItems($type, $search);
-        $totalAgenciesCount = $this->agencyService->activeAgencies()->count();
-        $totalAgentsCount = $this->agencyService->independentAgents()->count();
+        [$agencies, $independentAgents] = $this->buildCollections($type, $search);
+        $items = $this->buildItems($type, $agencies, $independentAgents);
 
-        $agenciesCount = $totalAgenciesCount;
-        $agentsCount = $totalAgentsCount;
+        $agenciesCount = $agencies->count();
+        $agentsCount = $independentAgents->count();
         $activeType = in_array($type, ['agency', 'agent']) ? $type : 'all';
-
-        $agencies = ($type === 'agent') ? collect() : $this->agencyService->activeAgencies($search);
-        $independentAgents = ($type === 'agency') ? collect() : $this->agencyService->independentAgents($search);
 
         return view('pages.agency.list', compact('items', 'agenciesCount', 'agentsCount', 'activeType', 'search', 'agencies', 'independentAgents'))->render();
     }
 
-    protected function buildItems(string $type, ?string $search): \Illuminate\Support\Collection
+    /**
+     * Aktiv agentlikləri və müstəqil rieltorları bir dəfəyə çəkir
+     * (təkrarlanan sorğuların qarşısını almaq üçün).
+     *
+     * @return array{0: \Illuminate\Support\Collection, 1: \Illuminate\Support\Collection}
+     */
+    protected function buildCollections(string $type, ?string $search): array
     {
         $agencies = ($type === 'agent') ? collect() : $this->agencyService->activeAgencies($search);
         $independentAgents = ($type === 'agency') ? collect() : $this->agencyService->independentAgents($search);
 
+        return [$agencies, $independentAgents];
+    }
+
+    protected function buildItems(string $type, \Illuminate\Support\Collection $agencies, \Illuminate\Support\Collection $independentAgents): \Illuminate\Support\Collection
+    {
         $agencyItems = $agencies->map(function ($agency) {
             return (object) [
                 'type' => 'agency',

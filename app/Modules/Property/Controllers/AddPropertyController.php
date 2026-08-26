@@ -102,7 +102,7 @@ class AddPropertyController extends Controller
             );
             $slug = Str::slug($generatedTitles['az'] ?? reset($generatedTitles)) . '-' . $code;
 
-            $sellerType = ($validated['advertiser'] === 'agent') ? SellerType::Agent : SellerType::Owner;
+            $sellerType = ($validated['advertiser'] === 'agent') ? SellerType::Agency : SellerType::Owner;
 
             $user = auth()->user();
             if (!$user && !empty($validated['email'])) {

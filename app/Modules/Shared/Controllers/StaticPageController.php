@@ -23,7 +23,7 @@ class StaticPageController extends Controller
         $userId = auth()->id();
         $sessionId = $request->hasSession() ? $request->session()->getId() : 'default-session';
 
-        $html = Cache::remember(self::favoritesCacheKey($userId, $sessionId), 10, function () use ($request, $userId, $sessionId) {
+        $html = Cache::remember(self::favoritesCacheKey($userId, $sessionId), 60, function () use ($request, $userId, $sessionId) {
             $breadcrumbs = [
                 ['label' => __('navbar.home'), 'url' => '/'],
                 ['label' => __('favorites.page_title'), 'url' => null],
@@ -96,7 +96,7 @@ class StaticPageController extends Controller
         $userId = auth()->id();
         $sessionId = $request->hasSession() ? $request->session()->getId() : 'default-session';
 
-        $html = Cache::remember(self::comparesCacheKey($userId, $sessionId), 10, function () use ($userId, $sessionId) {
+        $html = Cache::remember(self::comparesCacheKey($userId, $sessionId), 60, function () use ($userId, $sessionId) {
             $breadcrumbs = [
                 ['label' => __('navbar.home'), 'url' => '/'],
                 ['label' => __('compare.page_title'), 'url' => null],
@@ -193,10 +193,5 @@ class StaticPageController extends Controller
         ];
 
         return view('pages.static.legal', compact('breadcrumbs', 'title', 'activeDoc', 'content', 'siteSetting'));
-    }
-
-    public function login(): View
-    {
-        return view('pages.auth.login');
     }
 }

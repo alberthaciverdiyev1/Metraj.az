@@ -109,7 +109,9 @@ class LocationService
      */
     public function paginateAmenities(int $perPage = 20): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-        return Amenity::where('is_active', true)->orWhereNull('is_active')
+        return Amenity::where(function ($q) {
+                $q->where('is_active', true)->orWhereNull('is_active');
+            })
             ->orderBy('name')
             ->paginate($perPage);
     }

@@ -36,8 +36,11 @@
         <meta property="og:image" content="{{ $resolvedOgImage }}">
     @endif
 
-    @if(!empty($setting->favicon ?? $setting['favicon'] ?? null))
-        <link rel="shortcut icon" href="{{ $setting->favicon ?? $setting['favicon'] ?? '' }}" type="">
+    @php
+        $siteSetting = $siteSetting ?? \App\Modules\Shared\Models\SiteSetting::current();
+    @endphp
+    @if(!empty($siteSetting->favicon))
+        <link rel="shortcut icon" href="{{ $siteSetting->favicon }}" type="image/x-icon">
     @endif
 
     <link rel="stylesheet" href="{{ asset('vendor/fontawesome/css/all.min.css') }}">

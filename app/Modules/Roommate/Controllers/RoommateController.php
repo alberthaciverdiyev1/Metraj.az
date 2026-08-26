@@ -97,12 +97,21 @@ class RoommateController extends Controller
 
         $this->roommateService->incrementViews($listing);
 
-        // Oxşar elanlar (eyni şəhər və ya eyni cinsiyyət)
+        // Oxşar elanlar (eyni şəhər və ya eyni cinsiyyət tercihi)
         $similarListings = RoommateListing::published()
             ->where('id', '!=', $listing->id)
             ->where(function ($q) use ($listing) {
-                if ($listing->city_id) {
+                $hasCity = !empty($listing->city_id);
+                $gender = $listing->gender_preference?->value;
+                $hasGender = !empty($gender) && $gender !== 'any';
+
+                if ($hasCity && $hasGender) {
+                    $q->where('city_id', $listing->city_id)
+                      ->orWhere('gender_preference', $gender);
+                } elseif ($hasCity) {
                     $q->where('city_id', $listing->city_id);
+                } elseif ($hasGender) {
+                    $q->where('gender_preference', $gender);
                 }
             })
             ->with(['city', 'district', 'images'])

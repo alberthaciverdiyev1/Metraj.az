@@ -10,6 +10,7 @@ return [
     'compare' => 'Karşılaştır',
     'print' => 'Yazdır',
     'share' => 'Paylaş',
+    'share_copied' => 'Bağlantı kopyalandı',
     'per_month' => '/ay',
     'official_agency' => 'Yetkili Emlak Ofisi',
     'agent' => 'Emlak Danışmanı',

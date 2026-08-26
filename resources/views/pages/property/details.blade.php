@@ -201,18 +201,22 @@
                     <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                         <h1 class="text-xl sm:text-2xl font-bold text-gray-900 leading-snug">{{ $property->title }}</h1>
                         <div class="flex items-center gap-3 text-gray-400 text-lg shrink-0">
-                            <button
-                                class="w-9 h-9 rounded-xl bg-gray-50 hover:bg-red-50 hover:text-red-500 flex items-center justify-center transition"
-                                title="{{ __('property.add_to_favorites') }}"><i class="bi bi-heart"></i></button>
-                            <button
-                                class="w-9 h-9 rounded-xl bg-gray-50 hover:bg-orange-50 hover:text-orange-500 flex items-center justify-center transition"
+                            <button type="button"
+                                onclick="event.stopPropagation(); toggleFavorite(this, {{ $property->id }})"
+                                data-fav-btn="{{ $property->id }}"
+                                class="w-9 h-9 rounded-xl bg-gray-50 hover:bg-red-50 hover:text-red-500 flex items-center justify-center transition cursor-pointer"
+                                title="{{ __('property.add_to_favorites') }}"><i class="fa-regular fa-heart"></i></button>
+                            <button type="button"
+                                onclick="event.stopPropagation(); toggleCompare(this, {{ $property->id }})"
+                                data-compare-btn="{{ $property->id }}"
+                                class="w-9 h-9 rounded-xl bg-gray-50 hover:bg-orange-50 hover:text-orange-500 flex items-center justify-center transition cursor-pointer"
                                 title="{{ __('property.compare') }}"><i class="bi bi-arrow-left-right"></i></button>
-                            <button
-                                class="w-9 h-9 rounded-xl bg-gray-50 hover:bg-gray-100 hover:text-gray-900 flex items-center justify-center transition"
-                                id="printBtn" title="{{ __('property.print') }}"><i class="bi bi-printer"></i></button>
-                            <button
-                                class="w-9 h-9 rounded-xl bg-gray-50 hover:bg-blue-50 hover:text-blue-500 flex items-center justify-center transition"
-                                title="{{ __('property.share') }}"><i class="bi bi-share"></i></button>
+                            <button type="button"
+                                class="w-9 h-9 rounded-xl bg-gray-50 hover:bg-gray-100 hover:text-gray-900 flex items-center justify-center transition cursor-pointer"
+                                id="printBtn" onclick="window.print()" title="{{ __('property.print') }}"><i class="bi bi-printer"></i></button>
+                            <button type="button"
+                                class="w-9 h-9 rounded-xl bg-gray-50 hover:bg-blue-50 hover:text-blue-500 flex items-center justify-center transition cursor-pointer"
+                                onclick="shareProperty(this)" title="{{ __('property.share') }}"><i class="bi bi-share"></i></button>
                         </div>
                     </div>
 
@@ -600,6 +604,29 @@
                 } else if (btn && btn.dataset.revealed === "true") {
                     window.location.href = "tel:" + window.fullPhoneNumber;
                 }
+            }
+        }
+
+        function shareProperty(btn) {
+            const url = window.location.href;
+            const text = @json($property->title);
+            const done = function () {
+                if (typeof window.KibrisKare !== 'undefined' && window.KibrisKare.toast) {
+                    window.KibrisKare.toast("{{ __('property.share_copied') }}", 'success');
+                }
+            };
+            if (navigator.share) {
+                navigator.share({ title: text, url: url }).catch(function () {});
+            } else if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(done).catch(function () {});
+            } else {
+                const input = document.createElement('input');
+                input.value = url;
+                document.body.appendChild(input);
+                input.select();
+                try { document.execCommand('copy'); } catch (e) {}
+                document.body.removeChild(input);
+                done();
             }
         }
 

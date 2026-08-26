@@ -39,16 +39,6 @@ class PropertyService
         return $this->propertyRepository->similar($property, $limit);
     }
 
-    public function featured(int $limit = 6): Collection
-    {
-        return $this->propertyRepository->getFeatured($limit);
-    }
-
-    public function vip(int $limit = 6): Collection
-    {
-        return $this->propertyRepository->getVip($limit);
-    }
-
     public function incrementViews(int $id): void
     {
         $this->propertyRepository->incrementViews($id);
@@ -65,17 +55,6 @@ class PropertyService
     public function generateCode(): string
     {
         return Property::generateUniqueCode();
-    }
-
-    /**
-     * Premium elanları (VIP / Featured) filtrələyir.
-     *
-     * @return Collection<int, Property>
-     */
-    public function filterPremium(LengthAwarePaginator $paginator): Collection
-    {
-        return $paginator->getCollection()
-            ->filter(fn (Property $property) => $property->is_vip || $property->is_featured);
     }
 
     /**

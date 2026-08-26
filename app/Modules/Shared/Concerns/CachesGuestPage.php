@@ -27,6 +27,10 @@ trait CachesGuestPage
 
             $html = Cache::remember($key, $ttl, $render);
 
+            // Keşlənmiş səhifədəki CSRF tokenini cari sessiyanın tokeni ilə yenilə
+            // (fərqli qonaq sessiyaları üçün form göndərimi 419 verməsin).
+            $html = $this->refreshCsrfToken($html);
+
             return response($html);
         }
 

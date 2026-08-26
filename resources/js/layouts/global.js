@@ -2,8 +2,6 @@
 (function () {
 'use strict';
 
-AOS.init();
-
 const R = window.KibrisKareRoutes || {};
 
     // Qlobal AJAX köməkçisi — bütün POST-lar JS fetch ilə gedir

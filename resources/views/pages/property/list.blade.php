@@ -281,5 +281,5 @@
         };
     </script>
     <script src="{{ asset('js/pages/property/list-filters.js') }}"></script>
-    <script src="{{ asset('js/pages/property/listing.js') }}?v={{ time() }}"></script>
+    <script src="{{ asset('js/pages/property/listing.js') }}?v=2"></script>
 @endpush

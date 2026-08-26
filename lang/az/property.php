@@ -10,6 +10,7 @@ return [
     'compare' => 'Müqayisə et',
     'print' => 'Çap et',
     'share' => 'Paylaş',
+    'share_copied' => 'Link kopyalandı',
     'per_month' => '/ay',
     'official_agency' => 'Rəsmi Agentlik',
     'agent' => 'Vasitəçi (agent)',

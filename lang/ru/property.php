@@ -10,6 +10,7 @@ return [
     'compare' => 'Сравнить',
     'print' => 'Печать',
     'share' => 'Поделиться',
+    'share_copied' => 'Ссылка скопирована',
     'per_month' => '/мес',
     'official_agency' => 'Официальное агентство',
     'agent' => 'Агент',

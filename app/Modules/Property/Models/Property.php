@@ -161,25 +161,40 @@ class Property extends Model
     }
 
     /**
-     * Elan başlığını çoxdilli JSON kimi saxlayır
+     * Elan başlığını çoxdilli JSON kimi saxlayır.
+     * Düz mətn göndərildikdə mövcud çoxdilli JSON qorunur və yalnız cari dil
+     * güncəllənir — beləliklə admin redaktəsi digər dilləri silmir.
      */
     public function setTitleAttribute($value): void
     {
         if (is_array($value)) {
             $this->attributes['title'] = json_encode($value, JSON_UNESCAPED_UNICODE);
-        } else {
-            $str = (string) $value;
-            if (str_starts_with(trim($str), '{') && is_array(json_decode($str, true))) {
-                $this->attributes['title'] = $str;
-            } else {
-                $this->attributes['title'] = json_encode([
-                    'az' => $str,
-                    'tr' => $str,
-                    'en' => $str,
-                    'ru' => $str,
-                ], JSON_UNESCAPED_UNICODE);
-            }
+            return;
         }
+
+        $str = (string) $value;
+        if (str_starts_with(trim($str), '{') && is_array(json_decode($str, true))) {
+            $this->attributes['title'] = $str;
+            return;
+        }
+
+        $existing = $this->attributes['title'] ?? null;
+        $decoded = is_array($existing)
+            ? $existing
+            : (is_string($existing) ? json_decode($existing, true) : null);
+
+        if (is_array($decoded) && !empty($decoded)) {
+            $decoded[app()->getLocale()] = $str;
+            $this->attributes['title'] = json_encode($decoded, JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        $this->attributes['title'] = json_encode([
+            'az' => $str,
+            'tr' => $str,
+            'en' => $str,
+            'ru' => $str,
+        ], JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -208,7 +223,9 @@ class Property extends Model
     }
 
     /**
-     * Elan təsvirini çoxdilli JSON kimi saxlayır
+     * Elan təsvirini çoxdilli JSON kimi saxlayır.
+     * Düz mətn göndərildikdə mövcud çoxdilli JSON qorunur və yalnız cari dil
+     * güncəllənir — beləliklə admin redaktəsi digər dilləri silmir.
      */
     public function setDescriptionAttribute($value): void
     {
@@ -219,19 +236,32 @@ class Property extends Model
 
         if (is_array($value)) {
             $this->attributes['description'] = json_encode($value, JSON_UNESCAPED_UNICODE);
-        } else {
-            $str = (string) $value;
-            if (str_starts_with(trim($str), '{') && is_array(json_decode($str, true))) {
-                $this->attributes['description'] = $str;
-            } else {
-                $this->attributes['description'] = json_encode([
-                    'az' => $str,
-                    'tr' => $str,
-                    'en' => $str,
-                    'ru' => $str,
-                ], JSON_UNESCAPED_UNICODE);
-            }
+            return;
         }
+
+        $str = (string) $value;
+        if (str_starts_with(trim($str), '{') && is_array(json_decode($str, true))) {
+            $this->attributes['description'] = $str;
+            return;
+        }
+
+        $existing = $this->attributes['description'] ?? null;
+        $decoded = is_array($existing)
+            ? $existing
+            : (is_string($existing) ? json_decode($existing, true) : null);
+
+        if (is_array($decoded) && !empty($decoded)) {
+            $decoded[app()->getLocale()] = $str;
+            $this->attributes['description'] = json_encode($decoded, JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        $this->attributes['description'] = json_encode([
+            'az' => $str,
+            'tr' => $str,
+            'en' => $str,
+            'ru' => $str,
+        ], JSON_UNESCAPED_UNICODE);
     }
 
     /**
