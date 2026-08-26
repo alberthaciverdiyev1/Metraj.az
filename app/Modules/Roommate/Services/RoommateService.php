@@ -90,10 +90,11 @@ class RoommateService
             $listing = RoommateListing::create($data);
 
             if (!empty($uploadedImages)) {
+                $optimizer = app(\App\Modules\Shared\Services\ImageOptimizerService::class);
                 $sort = 0;
                 foreach ($uploadedImages as $file) {
                     if ($file instanceof UploadedFile) {
-                        $path = $file->store('roommates', 'public');
+                        $path = $optimizer->saveWithWatermark($file, 'roommates');
                         RoommateImage::create([
                             'roommate_listing_id' => $listing->id,
                             'image_path' => $path,

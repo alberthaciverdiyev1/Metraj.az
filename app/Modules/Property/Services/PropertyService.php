@@ -94,10 +94,12 @@ class PropertyService
     public function storeImages(Property $property, array $photos): void
     {
         foreach ($photos as $order => $photo) {
-            $path = $photo->store('properties', 'public');
+            // Şəkli "KibrisKare.com" watermark ilə yaddaşa yazırıq
+            $path = $this->imageOptimizer->saveWithWatermark($photo, 'properties');
             
-            // Kiçik həcmli WebP thumbnail yaradırıq (5-20 KB)
-            $thumbnailPath = $this->imageOptimizer->createThumbnail($photo, 'properties/thumbnails');
+            // Həmin şəkildən kiçik həcmli WebP thumbnail yaradırıq (5-20 KB)
+            $absolutePath = \Illuminate\Support\Facades\Storage::disk('public')->path($path);
+            $thumbnailPath = $this->imageOptimizer->createThumbnail($absolutePath, 'properties/thumbnails');
 
             PropertyImage::create([
                 'property_id' => $property->id,

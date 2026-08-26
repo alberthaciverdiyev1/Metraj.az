@@ -70,6 +70,7 @@ trait SyncsDynamicFilters
                     $thumbPath = null;
                     $absPath = \Illuminate\Support\Facades\Storage::disk('public')->path($url);
                     if (file_exists($absPath)) {
+                        $optimizer->addWatermarkToFile($absPath);
                         $thumbPath = $optimizer->createThumbnail($absPath, 'properties/thumbnails');
                     }
                     $record->images()->create([

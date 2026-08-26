@@ -105,10 +105,11 @@ class PropertyRequestService
             $request = PropertyRequest::create($data);
 
             if (!empty($uploadedImages)) {
+                $optimizer = app(\App\Modules\Shared\Services\ImageOptimizerService::class);
                 $sort = 0;
                 foreach ($uploadedImages as $file) {
                     if ($file instanceof UploadedFile) {
-                        $path = $file->store('property_requests', 'public');
+                        $path = $optimizer->saveWithWatermark($file, 'property_requests');
                         PropertyRequestImage::create([
                             'property_request_id' => $request->id,
                             'image_path' => $path,
