@@ -9,6 +9,10 @@ echo "🚀 Starting Deployment Process..."
 
 export COMPOSER_ALLOW_SUPERUSER=1
 
+# 0. Pre-Deployment Database Backup
+echo "💾 Creating pre-deployment database backup..."
+php artisan db:backup || true
+
 # 1. Maintenance Mode
 if [ "$1" == "--maintenance" ]; then
     echo "🚧 Putting application into maintenance mode..."
