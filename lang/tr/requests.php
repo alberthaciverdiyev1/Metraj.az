@@ -15,7 +15,7 @@ return [
     'property_type' => 'Emlak Türü',
     'all_types' => 'Tüm Türler',
     'apartment' => 'Daire',
-    'house' => 'Müstakil Ev / Villa',
+    'house' => 'Müstakil Ev',
     'villa' => 'Villa',
     'land' => 'Arsa / Arazi',
     'commercial' => 'Ticari / Dükkan',

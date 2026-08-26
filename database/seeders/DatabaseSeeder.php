@@ -124,7 +124,7 @@ class DatabaseSeeder extends Seeder
         );
         $optHouse = FilterOption::updateOrCreate(
             ['filter_id' => $propertyTypeFilter->id, 'value' => 'house'],
-            ['name' => ['az' => 'Həyət evi / Bağ evi', 'tr' => 'Müstakil Ev / Villa', 'ru' => 'Дом / Дача', 'en' => 'House / Villa'], 'sort_order' => 2, 'is_active' => true]
+            ['name' => ['az' => 'Həyət evi / Bağ evi', 'tr' => 'Müstakil Ev', 'ru' => 'Дом / Дача', 'en' => 'House / Villa'], 'sort_order' => 2, 'is_active' => true]
         );
         $optOffice = FilterOption::updateOrCreate(
             ['filter_id' => $propertyTypeFilter->id, 'value' => 'office'],
