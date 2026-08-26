@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ==============================================================================
-# Laravel Deployment Script
+# Laravel Deployment Script - KibrisKare.com
 # ==============================================================================
 set -e
 
@@ -58,29 +58,47 @@ fi
 echo "🔗 Verifying storage link..."
 php artisan storage:link 2>/dev/null || true
 
-# 7. Optimize & Cache Configuration / Routes / Views
-echo "🧹 Optimizing and caching Laravel..."
-php artisan optimize:clear
+# 7. Complete Cache Purge (Laravel App Cache, Views, Config, Routes, Events)
+echo "🧹 Purging all application caches..."
+php artisan cache:clear || true
+php artisan optimize:clear || true
+php artisan view:clear || true
+php artisan route:clear || true
+php artisan config:clear || true
+php artisan event:clear || true
+
+# 8. Re-warming Caches (Production Optimization)
+echo "⚡ Re-caching configuration, routes, and views..."
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
+php artisan event:cache 2>/dev/null || true
 
-# 8. Reload PHP-FPM to Clear OPcache (if running with systemctl/sudo)
+# 9. Purge Nginx Caches & Reload Nginx
+echo "🌐 Flushing Nginx cache and reloading Nginx..."
+if [ -d "/var/cache/nginx" ]; then
+    rm -rf /var/cache/nginx/* 2>/dev/null || sudo rm -rf /var/cache/nginx/* 2>/dev/null || true
+fi
 if command -v systemctl &> /dev/null; then
-    echo "🔄 Reloading PHP-FPM..."
+    sudo systemctl reload nginx 2>/dev/null || systemctl reload nginx 2>/dev/null || true
+fi
+
+# 10. Restart PHP-FPM to Flush OPcache
+if command -v systemctl &> /dev/null; then
+    echo "🔄 Restarting PHP-FPM to clear OPcache..."
     sudo systemctl restart php8.4-fpm 2>/dev/null || systemctl restart php8.4-fpm 2>/dev/null || sudo systemctl reload php8.4-fpm 2>/dev/null || true
 fi
 
-# 9. Clean PM2 Logs (to prevent disk space bloat from other server apps)
+# 11. Clean PM2 Logs (to prevent disk space bloat from other server apps)
 if command -v pm2 &> /dev/null; then
     echo "🧹 Flushing PM2 logs..."
     pm2 flush || true
 fi
 
-# 10. Bring Application Out of Maintenance Mode
+# 12. Bring Application Out of Maintenance Mode
 if [ "$1" == "--maintenance" ]; then
     echo "✨ Bringing application back online..."
     php artisan up
 fi
 
-echo "✅ Deployment completed successfully!"
+echo "✅ Deployment completed successfully! All caches cleared & re-warmed."
