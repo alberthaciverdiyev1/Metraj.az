@@ -1,4 +1,4 @@
-{{-- Mobile Top Navbar: Refined Minimalist Design with Semibold Brand & Beautiful Custom Dropdowns --}}
+{{-- Mobile Top Navbar: Semibold Brand on Left, Currency & Language Dropdowns on Right (No Plus Button) --}}
 <header class="md:hidden bg-white border-b border-gray-200/80 sticky top-0 z-30 px-3.5 h-13 flex items-center justify-between shadow-2xs select-none">
     {{-- Left: Brand Name (Semibold) --}}
     <a href="{{ route('home') }}" class="shrink-0 flex items-center group">
@@ -7,12 +7,13 @@
         </span>
     </a>
 
-    {{-- Right: Currency + Language Beautiful Custom Select Dropdowns + Green Post Ad Button --}}
+    {{-- Right: Currency + Language Dropdowns --}}
     <div class="flex items-center gap-2 shrink-0">
         {{-- Currency Custom Dropdown --}}
-        <div class="relative">
+        <div class="relative" id="mobileCurrencyContainer">
             <button id="mobileNavCurrencyBtn" 
-                    type="button" 
+                    type="button"
+                    onclick="toggleMobileNavbarMenu('mobileNavCurrencyDropdown', 'mobileNavCurrencyChevron', event)"
                     class="flex items-center gap-1.5 bg-gray-50 hover:bg-gray-100 active:bg-gray-200/70 border border-gray-200/80 rounded-xl px-2.5 py-1.5 transition-all shadow-2xs cursor-pointer select-none">
                 <span class="text-[11px] font-bold text-orange-500 leading-none">
                     {{ $currencySymbols[$currentCurrency] ?? '₼' }}
@@ -25,7 +26,7 @@
 
             {{-- Currency Menu --}}
             <div id="mobileNavCurrencyDropdown" 
-                 class="hidden absolute right-0 mt-2 w-44 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden">
+                 class="hidden absolute right-0 mt-2 w-44 bg-white rounded-2xl shadow-2xl border border-gray-100 py-1.5 z-50 overflow-hidden">
                 <div class="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-gray-400 border-b border-gray-100 mb-1">
                     {{ __('navbar.currency') ?? 'Valyuta' }}
                 </div>
@@ -47,9 +48,10 @@
         </div>
 
         {{-- Language Custom Dropdown --}}
-        <div class="relative">
+        <div class="relative" id="mobileLangContainer">
             <button id="mobileNavLangBtn" 
-                    type="button" 
+                    type="button"
+                    onclick="toggleMobileNavbarMenu('mobileNavLangDropdown', 'mobileNavLangChevron', event)"
                     class="flex items-center gap-1.5 bg-gray-50 hover:bg-gray-100 active:bg-gray-200/70 border border-gray-200/80 rounded-xl px-2.5 py-1.5 transition-all shadow-2xs cursor-pointer select-none">
                 <span class="text-xs leading-none">
                     {{ $activeLang['flag'] ?? '🌐' }}
@@ -62,7 +64,7 @@
 
             {{-- Language Menu --}}
             <div id="mobileNavLangDropdown" 
-                 class="hidden absolute right-0 mt-2 w-44 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden">
+                 class="hidden absolute right-0 mt-2 w-44 bg-white rounded-2xl shadow-2xl border border-gray-100 py-1.5 z-50 overflow-hidden">
                 <div class="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-gray-400 border-b border-gray-100 mb-1">
                     {{ __('navbar.language') ?? 'Dil' }}
                 </div>
@@ -83,12 +85,56 @@
                 @endforeach
             </div>
         </div>
-
-        {{-- Green Circular Plus Button (Bina.az Style) --}}
-        <a href="{{ route('add-property') }}" 
-           class="w-8 h-8 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-90 text-white flex items-center justify-center shadow-sm shadow-emerald-600/20 transition-all duration-150 shrink-0 ml-0.5" 
-           title="{{ __('navbar.post_property') }}">
-            <i class="fa-solid fa-plus text-sm font-black"></i>
-        </a>
     </div>
 </header>
+
+<script>
+function toggleMobileNavbarMenu(menuId, chevronId, event) {
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+    var menu = document.getElementById(menuId);
+    var chevron = document.getElementById(chevronId);
+    var allDropdowns = ['mobileNavCurrencyDropdown', 'mobileNavLangDropdown'];
+    var allChevrons = ['mobileNavCurrencyChevron', 'mobileNavLangChevron'];
+
+    allDropdowns.forEach(function(id) {
+        if (id !== menuId) {
+            var el = document.getElementById(id);
+            if (el) el.classList.add('hidden');
+        }
+    });
+
+    allChevrons.forEach(function(id) {
+        if (id !== chevronId) {
+            var el = document.getElementById(id);
+            if (el) el.classList.remove('rotate-180');
+        }
+    });
+
+    if (menu) {
+        var isHidden = menu.classList.contains('hidden');
+        menu.classList.toggle('hidden', !isHidden);
+        if (chevron) chevron.classList.toggle('rotate-180', isHidden);
+    }
+}
+
+document.addEventListener('click', function(event) {
+    var cContainer = document.getElementById('mobileCurrencyContainer');
+    var lContainer = document.getElementById('mobileLangContainer');
+    
+    if (cContainer && !cContainer.contains(event.target)) {
+        var cMenu = document.getElementById('mobileNavCurrencyDropdown');
+        var cChev = document.getElementById('mobileNavCurrencyChevron');
+        if (cMenu) cMenu.classList.add('hidden');
+        if (cChev) cChev.classList.remove('rotate-180');
+    }
+    if (lContainer && !lContainer.contains(event.target)) {
+        var lMenu = document.getElementById('mobileNavLangDropdown');
+        var lChev = document.getElementById('mobileNavLangChevron');
+        if (lMenu) lMenu.classList.add('hidden');
+        if (lChev) lChev.classList.remove('rotate-180');
+    }
+});
+</script>
