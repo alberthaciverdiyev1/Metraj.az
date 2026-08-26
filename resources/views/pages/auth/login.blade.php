@@ -61,7 +61,10 @@
                         <input type="password" id="login_password" name="password" required
                                placeholder="••••••••"
                                class="w-full pl-11 pr-12 py-3.5 sm:py-4 bg-gray-50/80 border border-gray-200 rounded-2xl text-sm sm:text-base text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-inner">
-                        <button type="button" id="togglePasswordBtn" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition cursor-pointer">
+                        <button type="button" id="togglePasswordBtn" 
+                                onclick="togglePasswordVisibility('login_password', this)"
+                                class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition cursor-pointer p-1 z-10"
+                                aria-label="Toggle Password">
                             <i class="bi bi-eye text-lg" id="togglePasswordIcon"></i>
                         </button>
                     </div>
@@ -72,7 +75,7 @@
                 <div class="flex items-center justify-between pt-1">
                     <label class="flex items-center gap-2 cursor-pointer select-none">
                         <input type="checkbox" name="remember" id="remember"
-                               class="w-4 h-4 rounded text-orange-500 border-gray-300 focus:ring-orange-500">
+                                class="w-4 h-4 rounded text-orange-500 border-gray-300 focus:ring-orange-500">
                         <span class="text-xs sm:text-sm text-gray-600 font-medium">{{ __('auth.remember_me') }}</span>
                     </label>
                 </div>
@@ -107,6 +110,21 @@
 
 @push('scripts')
 <script>
+    function togglePasswordVisibility(inputId, btn) {
+        const input = document.getElementById(inputId);
+        if (!input) return;
+        const icon = btn.querySelector('i') || btn;
+        const isPass = input.type === 'password';
+        input.type = isPass ? 'text' : 'password';
+        if (isPass) {
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        } else {
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        }
+    }
+
     window.loginConfig = {
         i18n: {
             checking: "{{ __('auth.checking') }}",
@@ -117,6 +135,6 @@
         }
     };
 </script>
-<script src="{{ asset('js/pages/auth/login.js') }}"></script>
+<script src="{{ asset('js/pages/auth/login.js') }}?v={{ time() }}"></script>
 @endpush
 @endsection

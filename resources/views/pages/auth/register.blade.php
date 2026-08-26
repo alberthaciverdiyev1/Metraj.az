@@ -164,7 +164,11 @@
                             <i class="bi bi-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
                             <input type="password" id="reg_password" name="password" required placeholder="••••••••"
                                    class="w-full pl-11 pr-11 py-3.5 bg-gray-50/80 border border-gray-200 rounded-2xl text-sm sm:text-base text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-inner">
-                            <button type="button" class="toggle-pass-btn absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition cursor-pointer" data-target="reg_password">
+                            <button type="button" 
+                                    onclick="togglePasswordVisibility('reg_password', this)"
+                                    class="toggle-pass-btn absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition cursor-pointer p-1 z-10" 
+                                    data-target="reg_password"
+                                    aria-label="Toggle Password">
                                 <i class="bi bi-eye text-base"></i>
                             </button>
                         </div>
@@ -179,7 +183,11 @@
                             <i class="bi bi-lock-fill absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
                             <input type="password" id="reg_password_confirmation" name="password_confirmation" required placeholder="••••••••"
                                    class="w-full pl-11 pr-11 py-3.5 bg-gray-50/80 border border-gray-200 rounded-2xl text-sm sm:text-base text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-inner">
-                            <button type="button" class="toggle-pass-btn absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition cursor-pointer" data-target="reg_password_confirmation">
+                            <button type="button" 
+                                    onclick="togglePasswordVisibility('reg_password_confirmation', this)"
+                                    class="toggle-pass-btn absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition cursor-pointer p-1 z-10" 
+                                    data-target="reg_password_confirmation"
+                                    aria-label="Toggle Password Confirmation">
                                 <i class="bi bi-eye text-base"></i>
                             </button>
                         </div>
@@ -225,6 +233,21 @@
 
 @push('scripts')
 <script>
+    function togglePasswordVisibility(inputId, btn) {
+        const input = document.getElementById(inputId);
+        if (!input) return;
+        const icon = btn.querySelector('i') || btn;
+        const isPass = input.type === 'password';
+        input.type = isPass ? 'text' : 'password';
+        if (isPass) {
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        } else {
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        }
+    }
+
     window.registerConfig = {
         i18n: {
             label_user: "{{ __('auth.full_name') }}",
@@ -247,6 +270,6 @@
         }
     };
 </script>
-<script src="{{ asset('js/pages/auth/register.js') }}"></script>
+<script src="{{ asset('js/pages/auth/register.js') }}?v={{ time() }}"></script>
 @endpush
 @endsection
