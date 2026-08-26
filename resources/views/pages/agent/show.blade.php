@@ -10,7 +10,11 @@
     {{-- ==================== AGENT PROFILE CARD ==================== --}}
     <div class="bg-white rounded-3xl shadow-sm border border-gray-100 mt-4 sm:mt-6 overflow-hidden">
         {{-- Banner strip --}}
-        <div class="h-28 sm:h-36 relative overflow-hidden bg-[var(--primary)]">
+        <div class="h-32 sm:h-44 relative overflow-hidden bg-gradient-to-r from-orange-500 to-amber-600">
+            @if($agent->banner || $agent->banner_url)
+                <img src="{{ $agent->banner_url }}" alt="{{ $agent->user?->name }} banner" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/15"></div>
+            @endif
         </div>
 
         <div class="px-6 sm:px-8 pb-6 sm:pb-8">

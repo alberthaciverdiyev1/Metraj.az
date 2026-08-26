@@ -18,11 +18,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $phone
  * @property string|null $whatsapp
  * @property string|null $avatar
+ * @property string|null $banner
  * @property bool $is_active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read string|null $avatar_url
+ * @property-read string|null $banner_url
  * @property-read \App\Modules\Agency\Models\Agency|null $agency
  * @property-read \App\Modules\Shared\Models\User|null $user
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Property\Models\Property> $properties
@@ -41,6 +43,7 @@ class Agent extends Model
         'phone',      // Şəxsi / İş telefonu
         'whatsapp',   // WhatsApp nömrəsi
         'avatar',     // Profil şəkli
+        'banner',     // Banner şəkli (Üzlük)
         'is_active',  // Aktivlik statusu (true/false)
     ];
 
@@ -65,6 +68,22 @@ class Agent extends Model
         }
 
         return asset('storage/' . $this->avatar);
+    }
+
+    /**
+     * Banner şəkillərinin tam URL-ni qaytarır (lokal storage və ya xarici link).
+     */
+    public function getBannerUrlAttribute(): ?string
+    {
+        if (empty($this->banner)) {
+            return null;
+        }
+
+        if (str_starts_with($this->banner, 'http://') || str_starts_with($this->banner, 'https://') || str_starts_with($this->banner, '/')) {
+            return $this->banner;
+        }
+
+        return asset('storage/' . $this->banner);
     }
 
     /**

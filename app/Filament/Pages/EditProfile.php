@@ -139,7 +139,15 @@ class EditProfile extends BaseEditProfile
                         ->imageEditor()
                         ->directory('agents')
                         ->visibility('public')
-                        ->columnSpanFull(),
+                        ->columnSpan(1),
+
+                    FileUpload::make('agent.banner')
+                        ->label('Banner Şəkli (Üzlük)')
+                        ->image()
+                        ->imageEditor()
+                        ->directory('agents/banners')
+                        ->visibility('public')
+                        ->columnSpan(1),
 
                     TextInput::make('agent.position')
                         ->label('Vəzifə / Titul')
@@ -153,7 +161,8 @@ class EditProfile extends BaseEditProfile
                     TextInput::make('agent.whatsapp')
                         ->label('WhatsApp Nömrəsi')
                         ->tel()
-                        ->prefixIcon('heroicon-o-chat-bubble-left-right'),
+                        ->prefixIcon('heroicon-o-chat-bubble-left-right')
+                        ->columnSpanFull(),
                 ])->columns(2);
         }
 
@@ -203,6 +212,7 @@ class EditProfile extends BaseEditProfile
         elseif ($user->agent) {
             $data['agent'] = [
                 'avatar' => $user->agent->avatar,
+                'banner' => $user->agent->banner,
                 'position' => $user->agent->position,
                 'phone' => $user->agent->phone,
                 'whatsapp' => $user->agent->whatsapp,

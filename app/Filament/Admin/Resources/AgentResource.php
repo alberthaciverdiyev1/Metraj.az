@@ -65,13 +65,22 @@ class AgentResource extends Resource
                             ->prefixIcon('heroicon-o-chat-bubble-left-right'),
 
                         Forms\Components\FileUpload::make('avatar')
-                            ->label('Profil Şəkli')
+                            ->label('Profil Şəkli (Avatar)')
                             ->image()
                             ->imageEditor()
                             ->directory('agents')
                             ->visibility('public')
-                            ->helperText('Web saytındakı rieltor kartında və detal səhifəsində görünür.')
-                            ->columnSpanFull(),
+                            ->helperText('Rieltor kartında və detal səhifəsində görünür.')
+                            ->columnSpan(1),
+
+                        Forms\Components\FileUpload::make('banner')
+                            ->label('Banner Şəkli (Üzlük)')
+                            ->image()
+                            ->imageEditor()
+                            ->directory('agents/banners')
+                            ->visibility('public')
+                            ->helperText('Rieltor profil səhifəsinin yuxarı başlıq fonunda görünür.')
+                            ->columnSpan(1),
 
                         Forms\Components\Toggle::make('is_active')
                             ->label('Aktivdir')

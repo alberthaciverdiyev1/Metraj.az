@@ -39,6 +39,10 @@ class AgencyPanelProvider extends PanelProvider
                 'primary' => Color::Orange,
             ])
             ->userMenuItems([
+                'profile' => MenuItem::make()
+                    ->label('Profilim')
+                    ->url(fn (): string => EditProfile::getUrl())
+                    ->icon('heroicon-o-user-circle'),
                 'website' => MenuItem::make()
                     ->label('Sayta Keçid')
                     ->url('/')
