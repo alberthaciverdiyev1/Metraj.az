@@ -1,1 +1,126 @@
-document.addEventListener("DOMContentLoaded",function(){function m(){const e=document.getElementById("favorites-count"),n=document.getElementById("mobile-bottom-fav-count"),a=document.getElementById("compares-count");try{const t=JSON.parse(localStorage.getItem("favorites"))||[];e&&(e.textContent=t.length),n&&(n.textContent=t.length,n.classList.toggle("hidden",t.length===0))}catch{}if(a)try{const t=JSON.parse(localStorage.getItem("compareList"))||[];a.textContent=t.length}catch{}}m(),window.addEventListener("storage",m);function s(e,n,a){const t=document.getElementById(e),l=document.getElementById(n),p=a?document.getElementById(a):null;!t||!l||t.addEventListener("click",function(E){E.stopPropagation(),["navCurrencyDropdown","navLangDropdown","navUserDropdown"].forEach(r=>{if(r!==n){const c=document.getElementById(r);c&&c.classList.add("hidden")}}),["navCurrencyChevron","navLangChevron","navUserChevron"].forEach(r=>{if(r!==a){const c=document.getElementById(r);c&&c.classList.remove("rotate-180")}});const y=l.classList.contains("hidden");l.classList.toggle("hidden",!y),p&&p.classList.toggle("rotate-180",y)})}s("navCurrencyBtn","navCurrencyDropdown","navCurrencyChevron"),s("navLangBtn","navLangDropdown","navLangChevron"),s("navUserMenuBtn","navUserDropdown","navUserChevron"),document.addEventListener("click",function(){["navCurrencyDropdown","navLangDropdown","navUserDropdown"].forEach(e=>{const n=document.getElementById(e);n&&n.classList.add("hidden")}),["navCurrencyChevron","navLangChevron","navUserChevron"].forEach(e=>{const n=document.getElementById(e);n&&n.classList.remove("rotate-180")})});const v=document.getElementById("mobileMoreDrawerBtn"),o=document.getElementById("mobileMoreDrawer"),g=document.getElementById("closeMobileMoreDrawer"),u=document.getElementById("mobileMoreDrawerBackdrop");function L(){o&&o.classList.remove("hidden")}function d(){o&&o.classList.add("hidden")}v&&v.addEventListener("click",L),g&&g.addEventListener("click",d),u&&u.addEventListener("click",d);var f=document.getElementById("mobileBottomNav"),i=window.matchMedia("(min-width: 768px)");function h(){var e=i.matches;f&&(f.style.display=e?"none":""),e&&o&&o.classList.add("hidden")}h(),i.addEventListener&&i.addEventListener("change",function(e){e.matches&&typeof d=="function"&&d(),h()})});
+/* Navbar — badge-lər, dropdown-lar, mobil drawer (navbar.blade.php-dən çıxarılıb) */
+document.addEventListener('DOMContentLoaded', function () {
+    // Nav count badges
+    function updateNavBadges() {
+      const favBadge = document.getElementById('favorites-count');
+      const mobileFavBadge = document.getElementById('mobile-bottom-fav-count');
+      const compBadge = document.getElementById('compares-count');
+
+      try {
+        const favs = JSON.parse(localStorage.getItem('favorites')) || [];
+        if (favBadge) favBadge.textContent = favs.length;
+        if (mobileFavBadge) {
+          mobileFavBadge.textContent = favs.length;
+          mobileFavBadge.classList.toggle('hidden', favs.length === 0);
+        }
+      } catch(e) {}
+
+      if (compBadge) {
+        try {
+          const comps = JSON.parse(localStorage.getItem('compareList')) || [];
+          compBadge.textContent = comps.length;
+        } catch(e) {}
+      }
+    }
+    updateNavBadges();
+    window.addEventListener('storage', updateNavBadges);
+
+    // All dropdown menus and chevrons
+    const allDropdowns = [
+      'navCurrencyDropdown', 'navLangDropdown', 'navUserDropdown',
+      'mobileNavCurrencyDropdown', 'mobileNavLangDropdown'
+    ];
+    const allChevrons = [
+      'navCurrencyChevron', 'navLangChevron', 'navUserChevron',
+      'mobileNavCurrencyChevron', 'mobileNavLangChevron'
+    ];
+
+    // Generic Dropdown Helper
+    function setupDropdown(btnId, menuId, chevronId) {
+      const btn = document.getElementById(btnId);
+      const menu = document.getElementById(menuId);
+      const chevron = chevronId ? document.getElementById(chevronId) : null;
+      if (!btn || !menu) return;
+
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        allDropdowns.forEach(id => {
+          if (id !== menuId) {
+            const el = document.getElementById(id);
+            if (el) el.classList.add('hidden');
+          }
+        });
+        allChevrons.forEach(id => {
+          if (id !== chevronId) {
+            const el = document.getElementById(id);
+            if (el) el.classList.remove('rotate-180');
+          }
+        });
+
+        const isHidden = menu.classList.contains('hidden');
+        menu.classList.toggle('hidden', !isHidden);
+        if (chevron) chevron.classList.toggle('rotate-180', isHidden);
+      });
+    }
+
+    setupDropdown('navCurrencyBtn', 'navCurrencyDropdown', 'navCurrencyChevron');
+    setupDropdown('navLangBtn', 'navLangDropdown', 'navLangChevron');
+    setupDropdown('navUserMenuBtn', 'navUserDropdown', 'navUserChevron');
+    setupDropdown('mobileNavCurrencyBtn', 'mobileNavCurrencyDropdown', 'mobileNavCurrencyChevron');
+    setupDropdown('mobileNavLangBtn', 'mobileNavLangDropdown', 'mobileNavLangChevron');
+
+    document.addEventListener('click', function () {
+      allDropdowns.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
+      allChevrons.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('rotate-180');
+      });
+    });
+
+    // Mobile "Daha Çox" Drawer toggle
+    const mobileMoreBtn = document.getElementById('mobileMoreDrawerBtn');
+    const mobileDrawer = document.getElementById('mobileMoreDrawer');
+    const closeDrawerBtn = document.getElementById('closeMobileMoreDrawer');
+    const backdrop = document.getElementById('mobileMoreDrawerBackdrop');
+
+    function openDrawer() {
+      if (mobileDrawer) mobileDrawer.classList.remove('hidden');
+    }
+    function closeDrawer() {
+      if (mobileDrawer) mobileDrawer.classList.add('hidden');
+    }
+
+    if (mobileMoreBtn) mobileMoreBtn.addEventListener('click', openDrawer);
+    if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+    if (backdrop) backdrop.addEventListener('click', closeDrawer);
+
+    // Responsive guard: hide the mobile bottom nav & close the drawer on
+    // desktop. Uses an inline style because the `hidden` class can be
+    // overridden by the @tailwindcss/browser runtime-generated `.flex` rule;
+    // an inline style wins over every class, so the mobile UI can never leak
+    // onto desktop regardless of Tailwind utility ordering or media-query
+    // support.
+    var mobileNav = document.getElementById('mobileBottomNav');
+    var desktopQuery = window.matchMedia('(min-width: 768px)');
+
+    function applyResponsiveMobileUI() {
+      var isDesktop = desktopQuery.matches;
+      if (mobileNav) {
+        mobileNav.style.display = isDesktop ? 'none' : '';
+      }
+      if (isDesktop && mobileDrawer) {
+        mobileDrawer.classList.add('hidden');
+      }
+    }
+
+    applyResponsiveMobileUI();
+    if (desktopQuery.addEventListener) {
+      desktopQuery.addEventListener('change', function (e) {
+        if (e.matches && typeof closeDrawer === 'function') closeDrawer();
+        applyResponsiveMobileUI();
+      });
+    }
+});

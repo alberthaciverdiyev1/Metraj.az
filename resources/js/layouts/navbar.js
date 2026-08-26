@@ -25,6 +25,16 @@ document.addEventListener('DOMContentLoaded', function () {
     updateNavBadges();
     window.addEventListener('storage', updateNavBadges);
 
+    // All dropdown menus and chevrons
+    const allDropdowns = [
+      'navCurrencyDropdown', 'navLangDropdown', 'navUserDropdown',
+      'mobileNavCurrencyDropdown', 'mobileNavLangDropdown'
+    ];
+    const allChevrons = [
+      'navCurrencyChevron', 'navLangChevron', 'navUserChevron',
+      'mobileNavCurrencyChevron', 'mobileNavLangChevron'
+    ];
+
     // Generic Dropdown Helper
     function setupDropdown(btnId, menuId, chevronId) {
       const btn = document.getElementById(btnId);
@@ -34,13 +44,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
       btn.addEventListener('click', function (e) {
         e.stopPropagation();
-        ['navCurrencyDropdown', 'navLangDropdown', 'navUserDropdown'].forEach(id => {
+        allDropdowns.forEach(id => {
           if (id !== menuId) {
             const el = document.getElementById(id);
             if (el) el.classList.add('hidden');
           }
         });
-        ['navCurrencyChevron', 'navLangChevron', 'navUserChevron'].forEach(id => {
+        allChevrons.forEach(id => {
           if (id !== chevronId) {
             const el = document.getElementById(id);
             if (el) el.classList.remove('rotate-180');
@@ -56,13 +66,15 @@ document.addEventListener('DOMContentLoaded', function () {
     setupDropdown('navCurrencyBtn', 'navCurrencyDropdown', 'navCurrencyChevron');
     setupDropdown('navLangBtn', 'navLangDropdown', 'navLangChevron');
     setupDropdown('navUserMenuBtn', 'navUserDropdown', 'navUserChevron');
+    setupDropdown('mobileNavCurrencyBtn', 'mobileNavCurrencyDropdown', 'mobileNavCurrencyChevron');
+    setupDropdown('mobileNavLangBtn', 'mobileNavLangDropdown', 'mobileNavLangChevron');
 
     document.addEventListener('click', function () {
-      ['navCurrencyDropdown', 'navLangDropdown', 'navUserDropdown'].forEach(id => {
+      allDropdowns.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('hidden');
       });
-      ['navCurrencyChevron', 'navLangChevron', 'navUserChevron'].forEach(id => {
+      allChevrons.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.remove('rotate-180');
       });
