@@ -11,18 +11,6 @@
     @include('components.breadcrumb', ['items' => $breadcrumbs ?? []])
     @include('components.scroll-top')
 
-    {{-- Hero Banner --}}
-    <section class="mt-4 sm:mt-6 bg-gradient-to-r from-orange-500 to-amber-500 rounded-3xl p-8 sm:p-14 text-white shadow-lg text-center relative overflow-hidden">
-        <div class="max-w-3xl mx-auto relative z-10 space-y-3">
-            <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
-                {{ __('about.hero_title') }}
-            </h1>
-            <p class="text-sm sm:text-base text-orange-100 leading-relaxed max-w-2xl mx-auto">
-                {{ __('about.hero_subtitle') }}
-            </p>
-        </div>
-    </section>
-
     {{-- Who We Are & Statistics --}}
     <section class="max-w-7xl mx-auto py-12 sm:py-16 px-4">
         <div class="flex flex-col lg:flex-row items-center justify-between gap-10">
@@ -61,13 +49,6 @@
                         <span class="text-2xl sm:text-3xl font-black text-gray-900">3,600+</span>
                         <p class="text-xs text-gray-500 font-medium">{{ __('about.stats_properties_sold') }}</p>
                     </div>
-                </div>
-            </div>
-
-            <div class="w-full lg:w-1/2 relative flex justify-center items-center">
-                <div class="w-full max-w-md aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-orange-50">
-                    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80" alt="KibrisKare Team"
-                         class="w-full h-full object-cover">
                 </div>
             </div>
         </div>
@@ -116,11 +97,6 @@
                 </div>
             </div>
         </div>
-    </section>
-
-    {{-- Loan Calculator Section --}}
-    <section class="max-w-7xl mx-auto my-12 bg-white rounded-3xl border border-gray-100 shadow-sm p-6 sm:p-10">
-        @include('components.do-you-need-loan')
     </section>
 
     {{-- CTA Find Agent --}}
