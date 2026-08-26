@@ -62,12 +62,19 @@ trait SyncsDynamicFilters
 
             $record->images()->delete();
             $sort = 0;
+            $optimizer = app(\App\Modules\Shared\Services\ImageOptimizerService::class);
             foreach ($images as $imgItem) {
                 if (empty($imgItem)) continue;
                 $url = is_array($imgItem) ? ($imgItem['url'] ?? reset($imgItem)) : $imgItem;
                 if (!empty($url)) {
+                    $thumbPath = null;
+                    $absPath = \Illuminate\Support\Facades\Storage::disk('public')->path($url);
+                    if (file_exists($absPath)) {
+                        $thumbPath = $optimizer->createThumbnail($absPath, 'properties/thumbnails');
+                    }
                     $record->images()->create([
                         'url' => $url,
+                        'thumbnail_url' => $thumbPath,
                         'sort_order' => $sort++,
                     ]);
                 }

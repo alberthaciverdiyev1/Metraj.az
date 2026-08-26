@@ -27,6 +27,7 @@ class PropertyImage extends Model
     protected $fillable = [
         'property_id',
         'url',
+        'thumbnail_url',
         'sort_order',
     ];
 
@@ -49,5 +50,29 @@ class PropertyImage extends Model
         }
 
         return asset('storage/' . $value);
+    }
+
+    /**
+     * Get thumbnail image URL; falls back to full URL if thumbnail is not available
+     */
+    public function getThumbnailUrlAttribute($value): string
+    {
+        if (empty($value)) {
+            return $this->url;
+        }
+
+        if (str_starts_with($value, 'http://') || str_starts_with($value, 'https://') || str_starts_with($value, '/')) {
+            return $value;
+        }
+
+        return asset('storage/' . $value);
+    }
+
+    /**
+     * Helper accessor for $image->thumbnail
+     */
+    public function getThumbnailAttribute(): string
+    {
+        return $this->thumbnail_url;
     }
 }

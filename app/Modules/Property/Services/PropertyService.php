@@ -11,6 +11,8 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;
 
+use App\Modules\Shared\Services\ImageOptimizerService;
+
 /**
  * Əmlak elanları üzərindəki bütün iş məntiqini cəmləyən servis.
  * Controller-lar Eloquent modellərinə birbaşa toxunmur, yalnız bu servisi çağırır.
@@ -19,6 +21,7 @@ class PropertyService
 {
     public function __construct(
         protected PropertyRepository $propertyRepository,
+        protected ImageOptimizerService $imageOptimizer,
     ) {}
 
     public function paginate(PropertyFilterDTO $filter, int $perPage = 30): LengthAwarePaginator
@@ -84,7 +87,7 @@ class PropertyService
     }
 
     /**
-     * Yüklənən fotoşəkilləri əmlaka əlavə edir.
+     * Yüklənən fotoşəkilləri əmlaka əlavə edir və kiçik thumbnail-lər yaradır.
      *
      * @param  array<int, UploadedFile>  $photos
      */
@@ -92,10 +95,14 @@ class PropertyService
     {
         foreach ($photos as $order => $photo) {
             $path = $photo->store('properties', 'public');
+            
+            // Kiçik həcmli WebP thumbnail yaradırıq (5-20 KB)
+            $thumbnailPath = $this->imageOptimizer->createThumbnail($photo, 'properties/thumbnails');
 
             PropertyImage::create([
                 'property_id' => $property->id,
                 'url' => $path,
+                'thumbnail_url' => $thumbnailPath,
                 'sort_order' => $order,
             ]);
         }

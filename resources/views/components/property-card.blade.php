@@ -2,9 +2,9 @@
 
 @php
     $defaultPropertyImg = asset('images/box-house.jpg');
-    $firstImage = $property->images->sortBy('sort_order')->first()?->url
+    $firstImage = $property->images->sortBy('sort_order')->first()?->thumbnail_url
         ?? $defaultPropertyImg;
-    $allImagePaths = $property->images->sortBy('sort_order')->pluck('url')->toArray();
+    $allImagePaths = $property->images->sortBy('sort_order')->map(fn($img) => $img->thumbnail_url)->values()->toArray();
     if (empty($allImagePaths)) {
         $allImagePaths = [$firstImage];
     }
