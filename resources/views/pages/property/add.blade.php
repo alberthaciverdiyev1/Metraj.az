@@ -62,5 +62,5 @@
         }
     };
 </script>
-<script src="{{ asset('js/pages/property/add-form.js') }}"></script>
+<script src="{{ asset('js/pages/property/add-form.js') }}?v={{ file_exists(public_path('js/pages/property/add-form.js')) ? filemtime(public_path('js/pages/property/add-form.js')) : time() }}"></script>
 @endsection
