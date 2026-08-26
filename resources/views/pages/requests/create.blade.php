@@ -8,8 +8,8 @@
 
 @section('content')
 <!-- Quill Rich Text Editor Assets -->
-<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
-<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+<link href="{{ asset('vendor/quill/quill.snow.css') }}" rel="stylesheet">
+<script src="{{ asset('vendor/quill/quill.min.js') }}"></script>
 
 <div class="mx-auto px-4 sm:px-6 lg:px-8 py-8">
 

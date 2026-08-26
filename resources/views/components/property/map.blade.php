@@ -72,8 +72,8 @@
     </div>
 </div>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}" />
+<script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
 
 <link rel="stylesheet" href="{{ asset('css/components/property-map.css') }}" />
 <script src="{{ asset('js/components/property-map.js') }}"></script>

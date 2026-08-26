@@ -1,4 +1,4 @@
-<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="{{ asset('vendor/toastify/toastify.min.js') }}"></script>
 
 <script>
     // Front JS faylları üçün Laravel route() ilə yaradılmış API URL-ləri

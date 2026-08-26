@@ -44,12 +44,12 @@
     </form>
 </section>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}" />
+<script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
 
-<!-- Quill Rich Text Editor CDN -->
-<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
-<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+<!-- Quill Rich Text Editor Local -->
+<link href="{{ asset('vendor/quill/quill.snow.css') }}" rel="stylesheet">
+<script src="{{ asset('vendor/quill/quill.min.js') }}"></script>
 
 <script>
     window.addFormConfig = {
