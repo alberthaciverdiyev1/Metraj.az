@@ -22,7 +22,7 @@ return [
     'advanced_search' => 'Detaylı Arama',
     'deal_type' => 'İşlem Türü',
     'buy' => 'Satılık',
-    'rent' => 'Kiralık',
+    'rent' => 'Kira',
     'room_count' => 'Oda Sayısı',
     'no_matter' => 'Fark etmez',
     'has_deed' => 'Tapulu',

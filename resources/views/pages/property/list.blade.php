@@ -25,9 +25,10 @@
                         <div class="flex justify-between items-center mb-3">
                             @php
                                 $selectedAdType = request('adType', 'all');
-                                $dealTypes = \App\Modules\Location\Models\FilterOption::whereHas('filter', fn($q) => $q->where('key', \App\Modules\Location\Enums\FilterKey::DealType->value))->orderBy('sort_order')->get();
-                                if ($dealTypes->isEmpty()) {
-                                    $dealTypes = \App\Modules\Location\Models\FilterOption::whereIn('value', ['sale', 'rent_monthly', 'rent_daily'])->orderBy('id')->get();
+                                if (request('deal_type') === 'sale') {
+                                    $selectedAdType = 'sale';
+                                } elseif (in_array(request('deal_type'), ['rent', 'rent_monthly', 'rent_daily']) || $selectedAdType === 'rent_monthly' || $selectedAdType === 'rent_daily') {
+                                    $selectedAdType = 'rent';
                                 }
                             @endphp
                             <div
@@ -38,16 +39,19 @@
                                         data-add-type="all">
                                     {{ __("listing.all") }}
                                 </button>
-                                @foreach($dealTypes as $dt)
-                                            <button type="button" data-value="{{ $dt->value }}"
-                                                    class="px-5 py-2.5 rounded-xl font-semibold text-xs tracking-wide uppercase transition duration-200 {{ $selectedAdType === $dt->value ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}"
-                                                    data-add-type="{{ $dt->value }}">
-                                                {{ $dt->localized_name }}
-                                            </button>
-                                        @endforeach
-                                        <input type="hidden" name="adType" id="adTypeInput"
-                                               value="{{ request('adType') }}">
-                                    </div>
+                                <button type="button" data-value="sale"
+                                        class="px-5 py-2.5 rounded-xl font-semibold text-xs tracking-wide uppercase transition duration-200 {{ $selectedAdType === 'sale' ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}"
+                                        data-add-type="sale">
+                                    {{ __("navbar.sale") }}
+                                </button>
+                                <button type="button" data-value="rent"
+                                        class="px-5 py-2.5 rounded-xl font-semibold text-xs tracking-wide uppercase transition duration-200 {{ $selectedAdType === 'rent' ? 'bg-white text-orange-500 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50' }}"
+                                        data-add-type="rent">
+                                    {{ __("navbar.rent") }}
+                                </button>
+                                <input type="hidden" name="adType" id="adTypeInput"
+                                       value="{{ $selectedAdType }}">
+                            </div>
 
                                     <div class="flex gap-2">
                                         <button type="button" id="resetFiltersBtn"

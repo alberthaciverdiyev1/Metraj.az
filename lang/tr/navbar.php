@@ -3,7 +3,7 @@
 return [
     'slogan' => 'senin mülkün',
     'sale' => 'Satılık',
-    'rent' => 'Kiralık',
+    'rent' => 'Kira',
     'daily_rent' => 'Günlük',
     'requests' => 'Arıyorum',
     'agencies' => 'Acenteler',

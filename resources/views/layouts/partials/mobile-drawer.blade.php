@@ -38,12 +38,8 @@
         <span class="flex items-center gap-3"><i class="fa-solid fa-key text-gray-400 w-5 text-center"></i> {{ __('navbar.sale') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'ayliq']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request('deal_type') === 'rent_monthly' ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'ayliq']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ in_array(request('deal_type'), ['rent', 'rent_monthly', 'rent_daily']) ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-calendar-days text-gray-400 w-5 text-center"></i> {{ __('navbar.rent') }}</span>
-        <i class="bi bi-chevron-right text-xs text-gray-300"></i>
-      </a>
-      <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'gunluk']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request('deal_type') === 'rent_daily' ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
-        <span class="flex items-center gap-3"><i class="fa-solid fa-clock text-gray-400 w-5 text-center"></i> {{ __('navbar.daily_rent') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
       <a href="{{ route('requests.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
