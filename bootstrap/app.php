@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
             \App\Modules\Shared\Middleware\SetLocale::class,
+            \App\Modules\Shared\Middleware\LogActivityMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
