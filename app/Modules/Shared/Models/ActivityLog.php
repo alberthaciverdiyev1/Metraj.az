@@ -24,6 +24,8 @@ class ActivityLog extends Model
 {
     use HasFactory;
 
+    protected $connection = 'logs';
+
     public $timestamps = false;
 
     protected $fillable = [

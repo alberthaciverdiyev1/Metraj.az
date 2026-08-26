@@ -6,25 +6,27 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    protected $connection = 'logs';
+
     public function up(): void
     {
-        Schema::create('activity_logs', function (Blueprint $table) {
+        Schema::connection('logs')->create('activity_logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id')->nullable(); // stored as raw ID since it is across database connection
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->string('method', 10)->nullable();
             $table->text('url')->nullable();
-            $table->string('action')->nullable(); // Məs: 'view', 'login', 'create', 'update', 'delete'
+            $table->string('action')->nullable();
             $table->string('model_type')->nullable();
             $table->unsignedBigInteger('model_id')->nullable();
-            $table->json('payload')->nullable(); // Request parameters, model changes, etc.
+            $table->json('payload')->nullable();
             $table->timestamp('created_at')->useCurrent();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('activity_logs');
+        Schema::connection('logs')->dropIfExists('activity_logs');
     }
 };

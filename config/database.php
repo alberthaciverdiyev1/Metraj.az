@@ -117,6 +117,21 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
+        'logs' => [
+            'driver' => 'pgsql',
+            'url' => env('DB_LOGS_URL'),
+            'host' => env('DB_LOGS_HOST', env('DB_HOST', '127.0.0.1')),
+            'port' => env('DB_LOGS_PORT', env('DB_PORT', '5432')),
+            'database' => env('DB_LOGS_DATABASE', 'metraj_logs'),
+            'username' => env('DB_LOGS_USERNAME', env('DB_USERNAME', 'root')),
+            'password' => env('DB_LOGS_PASSWORD', env('DB_PASSWORD', '')),
+            'charset' => env('DB_CHARSET', 'utf8'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'search_path' => 'public',
+            'sslmode' => env('DB_SSLMODE', 'prefer'),
+        ],
+
     ],
 
     /*
