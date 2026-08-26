@@ -30,21 +30,43 @@ const R = window.KibrisKareRoutes || {};
             return { ok: res.ok, status: res.status, data };
         },
         toast(message, type = 'success') {
-            if (typeof Toastify === 'undefined') return;
-            Toastify({
-                text: message,
-                duration: 5000,
-                close: true,
-                gravity: 'top',
-                position: 'right',
-                style: {
-                    background: type === 'success' ? '#059669' : '#e11d48',
-                    borderRadius: '14px',
-                    fontSize: '14px',
-                    fontWeight: '600',
-                    padding: '14px 20px',
-                },
-            }).showToast();
+            if (typeof Toastify !== 'undefined') {
+                Toastify({
+                    text: message,
+                    duration: 5000,
+                    close: true,
+                    gravity: 'top',
+                    position: 'right',
+                    style: {
+                        background: type === 'success' ? '#059669' : '#e11d48',
+                        borderRadius: '14px',
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        padding: '14px 20px',
+                        boxShadow: '0 10px 25px -5px rgba(0,0,0,0.3)',
+                        zIndex: '999999'
+                    },
+                }).showToast();
+                return;
+            }
+
+            // Fallback native floating toast
+            let container = document.getElementById('kibriskare-fallback-toasts');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'kibriskare-fallback-toasts';
+                container.style.cssText = 'position:fixed;top:20px;right:20px;z-index:999999;display:flex;flex-direction:column;gap:10px;max-width:380px;';
+                document.body.appendChild(container);
+            }
+            const el = document.createElement('div');
+            el.style.cssText = `background:${type === 'success' ? '#059669' : '#e11d48'};color:#fff;border-radius:14px;font-size:14px;font-weight:600;padding:14px 20px;box-shadow:0 10px 25px -5px rgba(0,0,0,0.3);transition:all 0.3s ease;`;
+            el.textContent = message;
+            container.appendChild(el);
+            setTimeout(() => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(-10px)';
+                setTimeout(() => el.remove(), 300);
+            }, 5000);
         },
     };
 

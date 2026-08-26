@@ -31,6 +31,111 @@ document.addEventListener('DOMContentLoaded', function () {
     const propertyForm = document.getElementById('propertyForm');
     const descriptionHiddenInput = document.getElementById('description_input');
 
+    function clearFormErrors() {
+        if (!propertyForm) return;
+        propertyForm.querySelectorAll('.field-error-msg').forEach(el => el.remove());
+        propertyForm.querySelectorAll('.border-rose-500, .ring-rose-400, .ring-2, .ring-red-400, .border-red-400').forEach(el => {
+            el.classList.remove('border-rose-500', 'ring-2', 'ring-rose-400', 'ring-red-400', 'border-red-400');
+        });
+        const banner = document.getElementById('form_ajax_error_banner');
+        if (banner) banner.remove();
+    }
+
+    function renderFormErrors(errors, message) {
+        clearFormErrors();
+
+        const banner = document.createElement('div');
+        banner.id = 'form_ajax_error_banner';
+        banner.className = 'bg-rose-50 border border-rose-200 text-rose-800 px-6 py-4 rounded-2xl mb-8 shadow-sm transition-all';
+
+        let errorListHtml = '';
+        if (errors && Object.keys(errors).length > 0) {
+            errorListHtml = '<ul class="list-disc list-inside text-xs space-y-1 mt-2 text-rose-700">';
+            for (const [key, msgs] of Object.entries(errors)) {
+                const txt = Array.isArray(msgs) ? msgs[0] : msgs;
+                errorListHtml += `<li>${txt}</li>`;
+            }
+            errorListHtml += '</ul>';
+        }
+
+        banner.innerHTML = `
+            <div class="flex items-center gap-2 font-semibold text-sm text-rose-800">
+                <i class="bi bi-exclamation-triangle-fill text-rose-600 text-base"></i>
+                <span>${message || (i18n.fix_errors || 'Zəhmət olmasa formdakı xətaları düzəldin:')}</span>
+            </div>
+            ${errorListHtml}
+        `;
+
+        propertyForm.prepend(banner);
+
+        let firstInvalidElement = null;
+
+        if (errors && Object.keys(errors).length > 0) {
+            for (const [key, msgs] of Object.entries(errors)) {
+                const errorText = Array.isArray(msgs) ? msgs[0] : msgs;
+                const cleanKey = key.split('.')[0];
+
+                let targetEl = propertyForm.querySelector(`[name="${key}"], [name="${key}[]"], #${key}`);
+                if (!targetEl && cleanKey !== key) {
+                    targetEl = propertyForm.querySelector(`[name="${cleanKey}"], [name="${cleanKey}[]"], #${cleanKey}`);
+                }
+
+                if (!targetEl) {
+                    if (cleanKey === 'price' || cleanKey === 'price_gbp') {
+                        targetEl = document.getElementById('main_price_input') || document.getElementById('price_gbp');
+                    } else if (cleanKey === 'photos') {
+                        targetEl = document.getElementById('dropzone_box');
+                    } else if (cleanKey === 'video') {
+                        targetEl = document.getElementById('video_dropzone_box');
+                    } else if (cleanKey === 'description') {
+                        targetEl = document.getElementById('editor_wrapper') || document.getElementById('editor_container');
+                    } else if (cleanKey === 'property_type_id') {
+                        targetEl = document.getElementById('property_type_id') || document.querySelector('input[name="property_type_id"]')?.closest('.grid') || document.querySelector('input[name="property_type_id"]')?.closest('div');
+                    } else if (cleanKey === 'deal_type_id') {
+                        targetEl = document.getElementById('deal_type_id') || document.querySelector('input[name="deal_type_id"]')?.closest('.grid') || document.querySelector('input[name="deal_type_id"]')?.closest('div');
+                    } else if (cleanKey === 'advertiser') {
+                        targetEl = document.querySelector('input[name="advertiser"]')?.closest('.grid') || document.querySelector('input[name="advertiser"]')?.closest('div');
+                    } else if (cleanKey === 'amenities') {
+                        targetEl = document.getElementById('amenities_grid');
+                    }
+                }
+
+                if (targetEl) {
+                    if (!firstInvalidElement) {
+                        firstInvalidElement = targetEl;
+                    }
+
+                    if (targetEl.tagName === 'INPUT' || targetEl.tagName === 'SELECT' || targetEl.tagName === 'TEXTAREA') {
+                        targetEl.classList.add('border-rose-500', 'ring-2', 'ring-rose-400');
+                    } else {
+                        targetEl.classList.add('border-rose-500', 'ring-2', 'ring-rose-400');
+                    }
+
+                    const errP = document.createElement('p');
+                    errP.className = 'field-error-msg text-xs text-rose-600 font-medium mt-1.5 flex items-center gap-1.5';
+                    errP.innerHTML = `<i class="bi bi-exclamation-circle-fill text-rose-500 text-xs"></i> <span>${errorText}</span>`;
+
+                    const parentBox = targetEl.closest('.relative') || targetEl.parentElement;
+                    if (parentBox && !parentBox.querySelector('.field-error-msg')) {
+                        parentBox.appendChild(errP);
+                    } else if (!targetEl.querySelector('.field-error-msg')) {
+                        targetEl.insertAdjacentElement('afterend', errP);
+                    }
+                }
+            }
+        }
+
+        const scrollTarget = banner || firstInvalidElement;
+        if (scrollTarget) {
+            scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (firstInvalidElement && typeof firstInvalidElement.focus === 'function' && firstInvalidElement.tagName !== 'DIV') {
+                firstInvalidElement.focus();
+            }
+        }
+
+        window.KibrisKare.toast(message || 'Zəhmət olmasa xətaları düzəldin', 'error');
+    }
+
     if (propertyForm) {
         const submitBtn = propertyForm.querySelector('button[type="submit"]');
 
@@ -50,41 +155,40 @@ document.addEventListener('DOMContentLoaded', function () {
             if (submitBtn) {
                 submitBtn.disabled = true;
                 submitBtn.style.opacity = '0.6';
-                const original = submitBtn.innerHTML;
-                submitBtn.innerHTML = '<span class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>';
-                submitBtn.dataset.originalHtml = original;
+                if (!submitBtn.dataset.originalHtml) {
+                    submitBtn.dataset.originalHtml = submitBtn.innerHTML;
+                }
+                submitBtn.innerHTML = '<span class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span> <span>' + (i18n.loading || 'Yüklənir...') + '</span>';
             }
 
-            const { ok, status, data } = await window.KibrisKare.post(
-                propertyForm.action,
-                new FormData(propertyForm)
-            );
+            try {
+                const { ok, status, data } = await window.KibrisKare.post(
+                    propertyForm.action,
+                    new FormData(propertyForm)
+                );
 
-            if (submitBtn) {
-                submitBtn.disabled = false;
-                submitBtn.style.opacity = '1';
-                submitBtn.innerHTML = submitBtn.dataset.originalHtml || (i18n.submit || 'Elanı Yerləşdir');
-            }
-
-            if (ok) {
-                window.KibrisKare.toast(data.message || 'Elanınız uğurla qəbul edildi ✅');
-                setTimeout(() => {
-                    window.location.href = data.redirect || '/';
-                }, 2000);
-            } else {
-                let msg = data.message || 'Xəta baş verdi, zəhmət olmasa formu yoxlayın';
-                if (status === 422 && data.errors) {
-                    const firstKey = Object.keys(data.errors)[0];
-                    if (firstKey) msg = data.errors[firstKey][0];
-                    // Xəta olan ilk inputa fokuslan
-                    const errInput = propertyForm.querySelector('[name="' + firstKey + '"], [name="' + firstKey + '[]"]');
-                    if (errInput) {
-                        errInput.focus();
-                        errInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        errInput.classList.add('ring-2', 'ring-red-400');
+                if (ok) {
+                    clearFormErrors();
+                    window.KibrisKare.toast(data.message || 'Elanınız uğurla qəbul edildi ✅', 'success');
+                    setTimeout(() => {
+                        window.location.href = data.redirect || '/';
+                    }, 1500);
+                } else {
+                    if (status === 422 && data && data.errors) {
+                        renderFormErrors(data.errors, data.message);
+                    } else {
+                        renderFormErrors({}, data?.message || 'Server xətası baş verdi (' + status + '). Zəhmət olmasa formu yoxlayın.');
                     }
                 }
-                window.KibrisKare.toast(msg, 'error');
+            } catch (err) {
+                console.error('Add Property Submit Error:', err);
+                renderFormErrors({}, 'Şəbəkə və ya server xətası baş verdi. Zəhmət olmasa yenidən cəhd edin.');
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                    submitBtn.innerHTML = submitBtn.dataset.originalHtml || (i18n.submit || 'Elanı Yerləşdir');
+                }
             }
         });
     }
@@ -329,38 +433,44 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(() => {});
     }
 
-    citySelect.addEventListener('change', function() {
-        districtSelect.innerHTML = '<option value="">Rayon seçin...</option>';
-        const selectedOpt = citySelect.options[citySelect.selectedIndex];
-        const districtsData = selectedOpt.getAttribute('data-districts');
+    if (citySelect) {
+        citySelect.addEventListener('change', function() {
+            if (districtSelect) {
+                districtSelect.innerHTML = '<option value="">Rayon seçin...</option>';
+                const selectedOpt = citySelect.options[citySelect.selectedIndex];
+                const districtsData = selectedOpt ? selectedOpt.getAttribute('data-districts') : null;
 
-        if (districtsData) {
-            try {
-                const districts = JSON.parse(districtsData);
-                districts.forEach(d => {
-                    const opt = document.createElement('option');
-                    opt.value = d.id;
-                    opt.text = d.name?.tr || d.name?.az || d.slug;
-                    districtSelect.appendChild(opt);
-                });
-            } catch(e) {}
-        }
+                if (districtsData) {
+                    try {
+                        const districts = JSON.parse(districtsData);
+                        districts.forEach(d => {
+                            const opt = document.createElement('option');
+                            opt.value = d.id;
+                            opt.text = d.name?.tr || d.name?.az || d.slug;
+                            districtSelect.appendChild(opt);
+                        });
+                    } catch(e) {}
+                }
 
-        const cityName = selectedOpt.text.trim();
-        if (cityName && cityName !== 'Şəhər seçin...') {
-            updateMapBoundary(cityName, cityName);
-        }
-    });
+                const cityName = selectedOpt ? selectedOpt.text.trim() : '';
+                if (cityName && cityName !== 'Şəhər seçin...') {
+                    updateMapBoundary(cityName, cityName);
+                }
+            }
+        });
+    }
 
-    districtSelect.addEventListener('change', function() {
-        const districtName = districtSelect.options[districtSelect.selectedIndex]?.text?.trim();
-        const cityName = citySelect.options[citySelect.selectedIndex]?.text?.trim() || 'Girne';
-        if (districtName && districtName !== 'Rayon seçin...') {
-            updateMapBoundary(districtName + ', ' + cityName, districtName);
-        } else if (cityName && cityName !== 'Şəhər seçin...') {
-            updateMapBoundary(cityName, cityName);
-        }
-    });
+    if (districtSelect) {
+        districtSelect.addEventListener('change', function() {
+            const districtName = districtSelect.options[districtSelect.selectedIndex]?.text?.trim();
+            const cityName = citySelect ? citySelect.options[citySelect.selectedIndex]?.text?.trim() || 'Girne' : 'Girne';
+            if (districtName && districtName !== 'Rayon seçin...') {
+                updateMapBoundary(districtName + ', ' + cityName, districtName);
+            } else if (cityName && cityName !== 'Şəhər seçin...') {
+                updateMapBoundary(cityName, cityName);
+            }
+        });
+    }
 
     // 4) Modern OpenStreetMap with 2-Way Geocoding
     let lat = lastValidLat;
@@ -419,8 +529,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }).addTo(map);
 
     function updateCoords(newLat, newLng) {
-        document.getElementById('latitude').value = newLat.toFixed(6);
-        document.getElementById('longitude').value = newLng.toFixed(6);
+        const latInput = document.getElementById('latitude');
+        const lngInput = document.getElementById('longitude');
+        if (latInput) latInput.value = newLat.toFixed(6);
+        if (lngInput) lngInput.value = newLng.toFixed(6);
     }
 
     function reverseGeocode(newLat, newLng) {
@@ -429,7 +541,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data && data.display_name) {
                     const addressField = document.getElementById('address');
-                    if (!addressField.value || addressField.value.length < 5) {
+                    if (addressField && (!addressField.value || addressField.value.length < 5)) {
                         addressField.value = data.display_name.split(',').slice(0, 3).join(',');
                     }
                 }
@@ -464,83 +576,87 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let searchTimeout = null;
     const addressInput = document.getElementById('address');
-    addressInput.addEventListener('input', function() {
-        clearTimeout(searchTimeout);
-        const query = this.value.trim();
-        if (query.length < 4) return;
+    if (addressInput) {
+        addressInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            const query = this.value.trim();
+            if (query.length < 4) return;
 
-        searchTimeout = setTimeout(() => {
-            const cityName = citySelect.options[citySelect.selectedIndex]?.text?.trim() || 'Girne';
-            const fullQuery = (query.includes('Cyprus') || query.includes('Kıbrıs')) ? query : `${query}, ${cityName}, Cyprus`;
+            searchTimeout = setTimeout(() => {
+                const cityName = citySelect ? citySelect.options[citySelect.selectedIndex]?.text?.trim() || 'Girne' : 'Girne';
+                const fullQuery = (query.includes('Cyprus') || query.includes('Kıbrıs')) ? query : `${query}, ${cityName}, Cyprus`;
 
-            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullQuery)}&limit=1&accept-language=tr,en,az`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data && data.length > 0) {
-                        const newLat = parseFloat(data[0].lat);
-                        const newLng = parseFloat(data[0].lon);
-                        const newPos = L.latLng(newLat, newLng);
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullQuery)}&limit=1&accept-language=tr,en,az`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.length > 0) {
+                            const newLat = parseFloat(data[0].lat);
+                            const newLng = parseFloat(data[0].lon);
+                            const newPos = L.latLng(newLat, newLng);
 
-                        if (currentAllowedBounds && !currentAllowedBounds.contains(newPos)) {
-                            showBoundaryAlert(`Axtarılan ünvan seçilmiş ${currentRegionName || 'ərazi'} hüdudlarından kənardadır.`);
-                            return;
+                            if (currentAllowedBounds && !currentAllowedBounds.contains(newPos)) {
+                                showBoundaryAlert(`Axtarılan ünvan seçilmiş ${currentRegionName || 'ərazi'} hüdudlarından kənardadır.`);
+                                return;
+                            }
+
+                            marker.setLatLng(newPos);
+                            lastValidLat = newLat;
+                            lastValidLng = newLng;
+                            map.flyTo(newPos, 16, { duration: 1.2 });
+                            updateCoords(newLat, newLng);
                         }
-
-                        marker.setLatLng(newPos);
-                        lastValidLat = newLat;
-                        lastValidLng = newLng;
-                        map.flyTo(newPos, 16, { duration: 1.2 });
-                        updateCoords(newLat, newLng);
-                    }
-                })
-                .catch(() => {});
-        }, 700);
-    });
+                    })
+                    .catch(() => {});
+            }, 700);
+        });
+    }
 
     // 5) Multi-Photo Upload Preview
     const dropzoneBox = document.getElementById('dropzone_box');
     const photosInput = document.getElementById('photos_input');
     const previewGrid = document.getElementById('photos_preview_grid');
 
-    dropzoneBox.addEventListener('click', () => photosInput.click());
+    if (dropzoneBox && photosInput && previewGrid) {
+        dropzoneBox.addEventListener('click', () => photosInput.click());
 
-    dropzoneBox.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        dropzoneBox.classList.add('border-orange-500', 'bg-orange-50/40');
-    });
-
-    dropzoneBox.addEventListener('dragleave', () => {
-        dropzoneBox.classList.remove('border-orange-500', 'bg-orange-50/40');
-    });
-
-    dropzoneBox.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropzoneBox.classList.remove('border-orange-500', 'bg-orange-50/40');
-        if (e.dataTransfer.files.length > 0) {
-            photosInput.files = e.dataTransfer.files;
-            renderPhotosPreview();
-        }
-    });
-
-    photosInput.addEventListener('change', renderPhotosPreview);
-
-    function renderPhotosPreview() {
-        previewGrid.innerHTML = '';
-        const files = Array.from(photosInput.files);
-        files.forEach((file, index) => {
-            if (!file.type.startsWith('image/')) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const card = document.createElement('div');
-                card.className = 'relative aspect-square rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-gray-100 group';
-                card.innerHTML = `
-                    <img src="${e.target.result}" class="w-full h-full object-cover">
-                    ${index === 0 ? '<span class="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-orange-500 text-white text-[9px] font-semibold shadow">Əsas</span>' : ''}
-                `;
-                previewGrid.appendChild(card);
-            };
-            reader.readAsDataURL(file);
+        dropzoneBox.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzoneBox.classList.add('border-orange-500', 'bg-orange-50/40');
         });
+
+        dropzoneBox.addEventListener('dragleave', () => {
+            dropzoneBox.classList.remove('border-orange-500', 'bg-orange-50/40');
+        });
+
+        dropzoneBox.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzoneBox.classList.remove('border-orange-500', 'bg-orange-50/40');
+            if (e.dataTransfer.files.length > 0) {
+                photosInput.files = e.dataTransfer.files;
+                renderPhotosPreview();
+            }
+        });
+
+        photosInput.addEventListener('change', renderPhotosPreview);
+
+        function renderPhotosPreview() {
+            previewGrid.innerHTML = '';
+            const files = Array.from(photosInput.files);
+            files.forEach((file, index) => {
+                if (!file.type.startsWith('image/')) return;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const card = document.createElement('div');
+                    card.className = 'relative aspect-square rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-gray-100 group';
+                    card.innerHTML = `
+                        <img src="${e.target.result}" class="w-full h-full object-cover">
+                        ${index === 0 ? '<span class="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-orange-500 text-white text-[9px] font-semibold shadow">Əsas</span>' : ''}
+                    `;
+                    previewGrid.appendChild(card);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
     }
 
     // 6) Video Upload Preview & Handling

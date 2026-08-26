@@ -1,15 +1,793 @@
-document.addEventListener("DOMContentLoaded",function(){const K=window.addFormConfig||{},Q=K.rates||{},he=K.amenityUrl||"/add-property/amenities",ee=K.i18n||{},A=new Quill("#editor_container",{theme:"snow",placeholder:"M\u0259s: M\u0259nzil y\xFCks\u0259k z\xF6vql\u0259 t\u0259mir olunub, b\xFCt\xFCn mebel v\u0259 avadanl\u0131qlar qal\u0131r...",modules:{toolbar:[[{header:[2,3,!1]}],["bold","italic","underline","strike"],[{list:"ordered"},{list:"bullet"}],["link","clean"]]}}),te=document.getElementById("editor_wrapper");te&&te.addEventListener("click",function(e){e.target.closest(".ql-toolbar")||A.focus()});const h=document.getElementById("propertyForm"),V=document.getElementById("description_input");if(h){const e=h.querySelector('button[type="submit"]');h.addEventListener("submit",async function(t){if(t.preventDefault(),V&&(A.getText().trim().length===0?V.value="":V.value=A.root.innerHTML),e){e.disabled=!0,e.style.opacity="0.6";const o=e.innerHTML;e.innerHTML='<span class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>',e.dataset.originalHtml=o}const{ok:n,status:s,data:a}=await window.KibrisKare.post(h.action,new FormData(h));if(e&&(e.disabled=!1,e.style.opacity="1",e.innerHTML=e.dataset.originalHtml||ee.submit||"Elan\u0131 Yerl\u0259\u015Fdir"),n)window.KibrisKare.toast(a.message||"Elan\u0131n\u0131z u\u011Furla q\u0259bul edildi \u2705"),setTimeout(()=>{window.location.href=a.redirect||"/"},2e3);else{let o=a.message||"X\u0259ta ba\u015F verdi, z\u0259hm\u0259t olmasa formu yoxlay\u0131n";if(s===422&&a.errors){const i=Object.keys(a.errors)[0];i&&(o=a.errors[i][0]);const r=h.querySelector('[name="'+i+'"], [name="'+i+'[]"]');r&&(r.focus(),r.scrollIntoView({behavior:"smooth",block:"center"}),r.classList.add("ring-2","ring-red-400"))}window.KibrisKare.toast(o,"error")}})}const ve={GBP:"\xA3",AZN:"\u20BC",USD:"$",EUR:"\u20AC",TRY:"\u20BA",RUB:"\u20BD",AED:"\u062F.\u0625"},v=document.getElementById("auto_convert_toggle"),j=document.getElementById("main_currency"),ne=document.getElementById("main_currency_symbol"),N=document.getElementById("main_price_input"),oe=document.getElementById("price_gbp");function D(){const e=j?j.value:"GBP",t=ve[e]||e;ne&&(ne.textContent=t);const n=parseFloat(N?N.value:0)||0;if(n<=0)return;const s=Q[e]||1,a=e==="GBP"?n:s>0?n/s:n;if(oe&&(oe.value=a>=1e3?Math.round(a):a.toFixed(2)),!(!v||!v.checked))for(const[o,i]of Object.entries(Q)){const r=o==="GBP"?"price_gbp_val":"price_"+o.toLowerCase(),m=document.getElementById(r);if(m)if(o===e)m.value=n;else{const p=a*i;m.value=p>=1e3?Math.round(p):p.toFixed(2)}}}function ae(){const e=document.querySelectorAll(".currency-converted-input");v&&v.checked?(e.forEach(t=>{t.readOnly=!0,t.classList.add("bg-gray-100/90","text-gray-500","cursor-not-allowed"),t.classList.remove("bg-white","text-gray-800","cursor-text")}),D()):e.forEach(t=>{t.readOnly=!1,t.classList.remove("bg-gray-100/90","text-gray-500","cursor-not-allowed"),t.classList.add("bg-white","text-gray-800","cursor-text")})}N&&N.addEventListener("input",D),j&&j.addEventListener("change",D),v&&v.addEventListener("change",ae),ae();const b=document.getElementById("wrapper_area"),x=document.getElementById("wrapper_land_area"),E=document.getElementById("wrapper_rooms"),_=document.getElementById("wrapper_floor"),I=document.getElementById("wrapper_total_floors"),B=document.getElementById("section_features"),w=document.getElementById("section_amenities");function U(){var n,s,a,o;let e=!1;const t=document.getElementById("property_type_id");if(t&&t.tagName==="SELECT")e=(((s=(n=t.options[t.selectedIndex])==null?void 0:n.text)==null?void 0:s.toLowerCase())||"").includes("torpaq");else{const i=document.querySelector('input[name="property_type_id"]:checked');i&&(e=(((o=(a=i.closest("label"))==null?void 0:a.innerText)==null?void 0:o.toLowerCase())||"").includes("torpaq"))}e?(b==null||b.classList.add("hidden"),x==null||x.classList.remove("hidden"),E==null||E.classList.add("hidden"),_==null||_.classList.add("hidden"),I==null||I.classList.add("hidden"),B==null||B.classList.add("hidden"),w==null||w.classList.add("hidden")):(b==null||b.classList.remove("hidden"),x==null||x.classList.add("hidden"),E==null||E.classList.remove("hidden"),_==null||_.classList.remove("hidden"),I==null||I.classList.remove("hidden"),B==null||B.classList.remove("hidden"),w==null||w.classList.remove("hidden"))}const P=document.getElementById("property_type_id")||document.querySelectorAll('input[name="property_type_id"]');P instanceof NodeList?P.forEach(e=>e.addEventListener("change",U)):P&&P.addEventListener("change",U),U();const c=document.getElementById("section_documents_credit");function W(){var n,s,a,o;const e=document.getElementById("deal_type_id");let t=!1;if(e&&e.tagName==="SELECT"){const i=((s=(n=e.options[e.selectedIndex])==null?void 0:n.text)==null?void 0:s.toLowerCase())||"";t=i.includes("kiray\u0259")||i.includes("kira")||i.includes("rent")}else{const i=document.querySelector('input[name="deal_type_id"]:checked');if(i){const r=((o=(a=i.closest("label"))==null?void 0:a.innerText)==null?void 0:o.toLowerCase())||"";t=r.includes("kiray\u0259")||r.includes("kira")||r.includes("rent")}}if(t){c==null||c.classList.add("hidden");const i=c==null?void 0:c.querySelectorAll('input[type="checkbox"]');i==null||i.forEach(r=>r.checked=!1)}else c==null||c.classList.remove("hidden")}const H=document.getElementById("deal_type_id")||document.querySelectorAll('input[name="deal_type_id"]');H instanceof NodeList?H.forEach(e=>e.addEventListener("change",W)):H&&H.addEventListener("change",W),W();const f=document.getElementById("city_id"),z=document.getElementById("district_id");let l=null,C=null,F="",T=parseFloat(document.getElementById("latitude").value)||35.3382,k=parseFloat(document.getElementById("longitude").value)||33.3186,se=null;function X(e){const t=document.getElementById("map_boundary_notice"),n=document.getElementById("map_boundary_msg");!t||!n||(n.textContent=e,t.classList.remove("hidden"),clearTimeout(se),se=setTimeout(()=>{t.classList.add("hidden")},3500))}function Z(e,t){F=t,fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(e+", Cyprus")}&polygon_geojson=1&limit=1&accept-language=tr,en,az`).then(n=>n.json()).then(n=>{if(n&&n.length>0){const s=n[0],a=s.boundingbox;if(a&&a.length===4){const o=parseFloat(a[0]),i=parseFloat(a[1]),r=parseFloat(a[2]),m=parseFloat(a[3]);l=L.latLngBounds([[o,r],[i,m]]),C&&(d.removeLayer(C),C=null),s.geojson&&(s.geojson.type==="Polygon"||s.geojson.type==="MultiPolygon")?C=L.geoJSON(s.geojson,{style:{color:"#ea580c",weight:2,dashArray:"6, 6",fillOpacity:.06,fillColor:"#ea580c"}}).addTo(d):C=L.rectangle(l,{color:"#ea580c",weight:2,dashArray:"6, 6",fillOpacity:.06,fillColor:"#ea580c"}).addTo(d),d.setMaxBounds(l.pad(.12)),d.options.maxBoundsViscosity=1,d.fitBounds(l,{padding:[25,25]});const p=parseFloat(s.lat),G=parseFloat(s.lon);S.setLatLng([p,G]),T=p,k=G,$(p,G),Y(p,G)}}}).catch(()=>{})}f.addEventListener("change",function(){z.innerHTML='<option value="">Rayon se\xE7in...</option>';const e=f.options[f.selectedIndex],t=e.getAttribute("data-districts");if(t)try{JSON.parse(t).forEach(a=>{var i,r;const o=document.createElement("option");o.value=a.id,o.text=((i=a.name)==null?void 0:i.tr)||((r=a.name)==null?void 0:r.az)||a.slug,z.appendChild(o)})}catch{}const n=e.text.trim();n&&n!=="\u015E\u0259h\u0259r se\xE7in..."&&Z(n,n)}),z.addEventListener("change",function(){var n,s,a,o;const e=(s=(n=z.options[z.selectedIndex])==null?void 0:n.text)==null?void 0:s.trim(),t=((o=(a=f.options[f.selectedIndex])==null?void 0:a.text)==null?void 0:o.trim())||"Girne";e&&e!=="Rayon se\xE7in..."?Z(e+", "+t,e):t&&t!=="\u015E\u0259h\u0259r se\xE7in..."&&Z(t,t)});let ie=T,re=k;const d=L.map("add_property_map",{zoomControl:!1,attributionControl:!1}).setView([ie,re],14);L.control.zoom({position:"bottomright"}).addTo(d);const de=L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",{maxZoom:19,subdomains:"abcd"}).addTo(d),le=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19});let R="carto";window.switchMapLayer=function(e){e==="satellite"&&R!=="satellite"?(d.removeLayer(de),le.addTo(d),R="satellite",document.getElementById("btn_map_sat").className="px-2.5 py-1 rounded-lg bg-orange-500 text-white shadow-sm transition",document.getElementById("btn_map_carto").className="px-2.5 py-1 rounded-lg bg-transparent text-gray-700 hover:bg-gray-100 transition"):e==="carto"&&R!=="carto"&&(d.removeLayer(le),de.addTo(d),R="carto",document.getElementById("btn_map_carto").className="px-2.5 py-1 rounded-lg bg-orange-500 text-white shadow-sm transition",document.getElementById("btn_map_sat").className="px-2.5 py-1 rounded-lg bg-transparent text-gray-700 hover:bg-gray-100 transition")};const be=L.divIcon({className:"custom-pulse-marker",html:`
+/* Yeni elan yerləşdirmə səhifəsi (add.blade.php-dən çıxarılıb) */
+document.addEventListener('DOMContentLoaded', function () {
+    const CONFIG = window.addFormConfig || {};
+    const rates = CONFIG.rates || {};
+    const amenityUrl = CONFIG.amenityUrl || '/add-property/amenities';
+    const i18n = CONFIG.i18n || {};
+
+    // 0) Initialize Quill Rich Text Editor
+    const quill = new Quill('#editor_container', {
+        theme: 'snow',
+        placeholder: 'Məs: Mənzil yüksək zövqlə təmir olunub, bütün mebel və avadanlıqlar qalır...',
+        modules: {
+            toolbar: [
+                [{ 'header': [2, 3, false] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                ['link', 'clean']
+            ]
+        }
+    });
+
+    const editorWrapper = document.getElementById('editor_wrapper');
+    if (editorWrapper) {
+        editorWrapper.addEventListener('click', function(e) {
+            if (!e.target.closest('.ql-toolbar')) {
+                quill.focus();
+            }
+        });
+    }
+
+    const propertyForm = document.getElementById('propertyForm');
+    const descriptionHiddenInput = document.getElementById('description_input');
+
+    function clearFormErrors() {
+        if (!propertyForm) return;
+        propertyForm.querySelectorAll('.field-error-msg').forEach(el => el.remove());
+        propertyForm.querySelectorAll('.border-rose-500, .ring-rose-400, .ring-2, .ring-red-400, .border-red-400').forEach(el => {
+            el.classList.remove('border-rose-500', 'ring-2', 'ring-rose-400', 'ring-red-400', 'border-red-400');
+        });
+        const banner = document.getElementById('form_ajax_error_banner');
+        if (banner) banner.remove();
+    }
+
+    function renderFormErrors(errors, message) {
+        clearFormErrors();
+
+        const banner = document.createElement('div');
+        banner.id = 'form_ajax_error_banner';
+        banner.className = 'bg-rose-50 border border-rose-200 text-rose-800 px-6 py-4 rounded-2xl mb-8 shadow-sm transition-all';
+
+        let errorListHtml = '';
+        if (errors && Object.keys(errors).length > 0) {
+            errorListHtml = '<ul class="list-disc list-inside text-xs space-y-1 mt-2 text-rose-700">';
+            for (const [key, msgs] of Object.entries(errors)) {
+                const txt = Array.isArray(msgs) ? msgs[0] : msgs;
+                errorListHtml += `<li>${txt}</li>`;
+            }
+            errorListHtml += '</ul>';
+        }
+
+        banner.innerHTML = `
+            <div class="flex items-center gap-2 font-semibold text-sm text-rose-800">
+                <i class="bi bi-exclamation-triangle-fill text-rose-600 text-base"></i>
+                <span>${message || (i18n.fix_errors || 'Zəhmət olmasa formdakı xətaları düzəldin:')}</span>
+            </div>
+            ${errorListHtml}
+        `;
+
+        propertyForm.prepend(banner);
+
+        let firstInvalidElement = null;
+
+        if (errors && Object.keys(errors).length > 0) {
+            for (const [key, msgs] of Object.entries(errors)) {
+                const errorText = Array.isArray(msgs) ? msgs[0] : msgs;
+                const cleanKey = key.split('.')[0];
+
+                let targetEl = propertyForm.querySelector(`[name="${key}"], [name="${key}[]"], #${key}`);
+                if (!targetEl && cleanKey !== key) {
+                    targetEl = propertyForm.querySelector(`[name="${cleanKey}"], [name="${cleanKey}[]"], #${cleanKey}`);
+                }
+
+                if (!targetEl) {
+                    if (cleanKey === 'price' || cleanKey === 'price_gbp') {
+                        targetEl = document.getElementById('main_price_input') || document.getElementById('price_gbp');
+                    } else if (cleanKey === 'photos') {
+                        targetEl = document.getElementById('dropzone_box');
+                    } else if (cleanKey === 'video') {
+                        targetEl = document.getElementById('video_dropzone_box');
+                    } else if (cleanKey === 'description') {
+                        targetEl = document.getElementById('editor_wrapper') || document.getElementById('editor_container');
+                    } else if (cleanKey === 'property_type_id') {
+                        targetEl = document.getElementById('property_type_id') || document.querySelector('input[name="property_type_id"]')?.closest('.grid') || document.querySelector('input[name="property_type_id"]')?.closest('div');
+                    } else if (cleanKey === 'deal_type_id') {
+                        targetEl = document.getElementById('deal_type_id') || document.querySelector('input[name="deal_type_id"]')?.closest('.grid') || document.querySelector('input[name="deal_type_id"]')?.closest('div');
+                    } else if (cleanKey === 'advertiser') {
+                        targetEl = document.querySelector('input[name="advertiser"]')?.closest('.grid') || document.querySelector('input[name="advertiser"]')?.closest('div');
+                    } else if (cleanKey === 'amenities') {
+                        targetEl = document.getElementById('amenities_grid');
+                    }
+                }
+
+                if (targetEl) {
+                    if (!firstInvalidElement) {
+                        firstInvalidElement = targetEl;
+                    }
+
+                    if (targetEl.tagName === 'INPUT' || targetEl.tagName === 'SELECT' || targetEl.tagName === 'TEXTAREA') {
+                        targetEl.classList.add('border-rose-500', 'ring-2', 'ring-rose-400');
+                    } else {
+                        targetEl.classList.add('border-rose-500', 'ring-2', 'ring-rose-400');
+                    }
+
+                    const errP = document.createElement('p');
+                    errP.className = 'field-error-msg text-xs text-rose-600 font-medium mt-1.5 flex items-center gap-1.5';
+                    errP.innerHTML = `<i class="bi bi-exclamation-circle-fill text-rose-500 text-xs"></i> <span>${errorText}</span>`;
+
+                    const parentBox = targetEl.closest('.relative') || targetEl.parentElement;
+                    if (parentBox && !parentBox.querySelector('.field-error-msg')) {
+                        parentBox.appendChild(errP);
+                    } else if (!targetEl.querySelector('.field-error-msg')) {
+                        targetEl.insertAdjacentElement('afterend', errP);
+                    }
+                }
+            }
+        }
+
+        const scrollTarget = banner || firstInvalidElement;
+        if (scrollTarget) {
+            scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (firstInvalidElement && typeof firstInvalidElement.focus === 'function' && firstInvalidElement.tagName !== 'DIV') {
+                firstInvalidElement.focus();
+            }
+        }
+
+        window.KibrisKare.toast(message || 'Zəhmət olmasa xətaları düzəldin', 'error');
+    }
+
+    if (propertyForm) {
+        const submitBtn = propertyForm.querySelector('button[type="submit"]');
+
+        propertyForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            // Quill məzmununu gizli input-a yaz
+            if (descriptionHiddenInput) {
+                if (quill.getText().trim().length === 0) {
+                    descriptionHiddenInput.value = '';
+                } else {
+                    descriptionHiddenInput.value = quill.root.innerHTML;
+                }
+            }
+
+            // Yükləmə halında düyməni deaktiv et
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.6';
+                if (!submitBtn.dataset.originalHtml) {
+                    submitBtn.dataset.originalHtml = submitBtn.innerHTML;
+                }
+                submitBtn.innerHTML = '<span class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span> <span>' + (i18n.loading || 'Yüklənir...') + '</span>';
+            }
+
+            try {
+                const { ok, status, data } = await window.KibrisKare.post(
+                    propertyForm.action,
+                    new FormData(propertyForm)
+                );
+
+                if (ok) {
+                    clearFormErrors();
+                    window.KibrisKare.toast(data.message || 'Elanınız uğurla qəbul edildi ✅', 'success');
+                    setTimeout(() => {
+                        window.location.href = data.redirect || '/';
+                    }, 1500);
+                } else {
+                    if (status === 422 && data && data.errors) {
+                        renderFormErrors(data.errors, data.message);
+                    } else {
+                        renderFormErrors({}, data?.message || 'Server xətası baş verdi (' + status + '). Zəhmət olmasa formu yoxlayın.');
+                    }
+                }
+            } catch (err) {
+                console.error('Add Property Submit Error:', err);
+                renderFormErrors({}, 'Şəbəkə və ya server xətası baş verdi. Zəhmət olmasa yenidən cəhd edin.');
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                    submitBtn.innerHTML = submitBtn.dataset.originalHtml || (i18n.submit || 'Elanı Yerləşdir');
+                }
+            }
+        });
+    }
+
+    // 1) Rates & Multi-Currency Converter
+    const currencySymbols = {
+        'GBP': '£',
+        'AZN': '₼',
+        'USD': '$',
+        'EUR': '€',
+        'TRY': '₺',
+        'RUB': '₽',
+        'AED': 'د.إ'
+    };
+    const autoConvertToggle = document.getElementById('auto_convert_toggle');
+    const mainCurrencySelect = document.getElementById('main_currency');
+    const mainCurrencySymbol = document.getElementById('main_currency_symbol');
+    const mainPriceInput = document.getElementById('main_price_input');
+    const priceGbpInput = document.getElementById('price_gbp');
+
+    function calculateCurrencies() {
+        const cur = mainCurrencySelect ? mainCurrencySelect.value : 'GBP';
+        const symbol = currencySymbols[cur] || cur;
+        if (mainCurrencySymbol) mainCurrencySymbol.textContent = symbol;
+
+        const val = parseFloat(mainPriceInput ? mainPriceInput.value : 0) || 0;
+        if (val <= 0) return;
+
+        // Calculate base GBP from selected currency
+        const fromRate = rates[cur] || 1.0;
+        const gbp = cur === 'GBP' ? val : (fromRate > 0 ? (val / fromRate) : val);
+        if (priceGbpInput) priceGbpInput.value = gbp >= 1000 ? Math.round(gbp) : gbp.toFixed(2);
+
+        if (!autoConvertToggle || !autoConvertToggle.checked) return;
+
+        // Calculate all 7 currencies
+        for (const [targetCur, rate] of Object.entries(rates)) {
+            const inputId = targetCur === 'GBP' ? 'price_gbp_val' : ('price_' + targetCur.toLowerCase());
+            const targetInput = document.getElementById(inputId);
+            if (targetInput) {
+                if (targetCur === cur) {
+                    targetInput.value = val;
+                } else {
+                    const converted = gbp * rate;
+                    targetInput.value = converted >= 1000 ? Math.round(converted) : converted.toFixed(2);
+                }
+            }
+        }
+    }
+
+    function toggleCurrencyInputs() {
+        const currencyInputs = document.querySelectorAll('.currency-converted-input');
+        if (autoConvertToggle && autoConvertToggle.checked) {
+            currencyInputs.forEach(input => {
+                input.readOnly = true;
+                input.classList.add('bg-gray-100/90', 'text-gray-500', 'cursor-not-allowed');
+                input.classList.remove('bg-white', 'text-gray-800', 'cursor-text');
+            });
+            calculateCurrencies();
+        } else {
+            currencyInputs.forEach(input => {
+                input.readOnly = false;
+                input.classList.remove('bg-gray-100/90', 'text-gray-500', 'cursor-not-allowed');
+                input.classList.add('bg-white', 'text-gray-800', 'cursor-text');
+            });
+        }
+    }
+
+    if (mainPriceInput) mainPriceInput.addEventListener('input', calculateCurrencies);
+    if (mainCurrencySelect) mainCurrencySelect.addEventListener('change', calculateCurrencies);
+    if (autoConvertToggle) autoConvertToggle.addEventListener('change', toggleCurrencyInputs);
+    toggleCurrencyInputs();
+
+    // 2) Torpaq (Land) Dynamic Conditional Visibility
+    const wrapperArea = document.getElementById('wrapper_area');
+    const wrapperLandArea = document.getElementById('wrapper_land_area');
+    const wrapperRooms = document.getElementById('wrapper_rooms');
+    const wrapperFloor = document.getElementById('wrapper_floor');
+    const wrapperTotalFloors = document.getElementById('wrapper_total_floors');
+    const sectionFeatures = document.getElementById('section_features');
+    const sectionAmenities = document.getElementById('section_amenities');
+
+    function checkLand() {
+        let isLand = false;
+        const propTypeSelect = document.getElementById('property_type_id');
+        if (propTypeSelect && propTypeSelect.tagName === 'SELECT') {
+            const selectedText = propTypeSelect.options[propTypeSelect.selectedIndex]?.text?.toLowerCase() || '';
+            isLand = selectedText.includes('torpaq');
+        } else {
+            const checkedRadio = document.querySelector('input[name="property_type_id"]:checked');
+            if (checkedRadio) {
+                const labelText = checkedRadio.closest('label')?.innerText?.toLowerCase() || '';
+                isLand = labelText.includes('torpaq');
+            }
+        }
+
+        if (isLand) {
+            wrapperArea?.classList.add('hidden');
+            wrapperLandArea?.classList.remove('hidden');
+            wrapperRooms?.classList.add('hidden');
+            wrapperFloor?.classList.add('hidden');
+            wrapperTotalFloors?.classList.add('hidden');
+            sectionFeatures?.classList.add('hidden');
+            sectionAmenities?.classList.add('hidden');
+        } else {
+            wrapperArea?.classList.remove('hidden');
+            wrapperLandArea?.classList.add('hidden');
+            wrapperRooms?.classList.remove('hidden');
+            wrapperFloor?.classList.remove('hidden');
+            wrapperTotalFloors?.classList.remove('hidden');
+            sectionFeatures?.classList.remove('hidden');
+            sectionAmenities?.classList.remove('hidden');
+        }
+    }
+
+    const propTypeEl = document.getElementById('property_type_id') || document.querySelectorAll('input[name="property_type_id"]');
+    if (propTypeEl instanceof NodeList) {
+        propTypeEl.forEach(r => r.addEventListener('change', checkLand));
+    } else if (propTypeEl) {
+        propTypeEl.addEventListener('change', checkLand);
+    }
+    checkLand();
+
+    // 2.2) Toggle "Sənəd və Kredit Şərtləri" based on Deal Type (Hide when Rent / Kirayə)
+    const sectionDocsCredit = document.getElementById('section_documents_credit');
+
+    function checkDealType() {
+        const dealSelect = document.getElementById('deal_type_id');
+        let isRent = false;
+
+        if (dealSelect && dealSelect.tagName === 'SELECT') {
+            const selectedText = dealSelect.options[dealSelect.selectedIndex]?.text?.toLowerCase() || '';
+            isRent = selectedText.includes('kirayə') || selectedText.includes('kira') || selectedText.includes('rent');
+        } else {
+            const checkedRadio = document.querySelector('input[name="deal_type_id"]:checked');
+            if (checkedRadio) {
+                const labelText = checkedRadio.closest('label')?.innerText?.toLowerCase() || '';
+                isRent = labelText.includes('kirayə') || labelText.includes('kira') || labelText.includes('rent');
+            }
+        }
+
+        if (isRent) {
+            sectionDocsCredit?.classList.add('hidden');
+            // Uncheck the checkboxes when hidden so they are not accidentally submitted
+            const checkboxes = sectionDocsCredit?.querySelectorAll('input[type="checkbox"]');
+            checkboxes?.forEach(cb => cb.checked = false);
+        } else {
+            sectionDocsCredit?.classList.remove('hidden');
+        }
+    }
+
+    const dealTypeEl = document.getElementById('deal_type_id') || document.querySelectorAll('input[name="deal_type_id"]');
+    if (dealTypeEl instanceof NodeList) {
+        dealTypeEl.forEach(r => r.addEventListener('change', checkDealType));
+    } else if (dealTypeEl) {
+        dealTypeEl.addEventListener('change', checkDealType);
+    }
+    checkDealType();
+
+    // 3) City & District dynamic filter options with Strict Map Boundary Restriction
+    const citySelect = document.getElementById('city_id');
+    const districtSelect = document.getElementById('district_id');
+
+    let currentAllowedBounds = null;
+    let currentBoundaryLayer = null;
+    let currentRegionName = '';
+    let lastValidLat = parseFloat(document.getElementById('latitude').value) || 35.3382;
+    let lastValidLng = parseFloat(document.getElementById('longitude').value) || 33.3186;
+    let noticeTimeout = null;
+
+    function showBoundaryAlert(msg) {
+        const notice = document.getElementById('map_boundary_notice');
+        const noticeMsg = document.getElementById('map_boundary_msg');
+        if (!notice || !noticeMsg) return;
+        noticeMsg.textContent = msg;
+        notice.classList.remove('hidden');
+        clearTimeout(noticeTimeout);
+        noticeTimeout = setTimeout(() => {
+            notice.classList.add('hidden');
+        }, 3500);
+    }
+
+    function updateMapBoundary(query, label) {
+        currentRegionName = label;
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', Cyprus')}&polygon_geojson=1&limit=1&accept-language=tr,en,az`)
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    const item = data[0];
+                    const bbox = item.boundingbox;
+                    if (bbox && bbox.length === 4) {
+                        const latMin = parseFloat(bbox[0]);
+                        const latMax = parseFloat(bbox[1]);
+                        const lonMin = parseFloat(bbox[2]);
+                        const lonMax = parseFloat(bbox[3]);
+
+                        currentAllowedBounds = L.latLngBounds([[latMin, lonMin], [latMax, lonMax]]);
+
+                        // Remove previous boundary overlay
+                        if (currentBoundaryLayer) {
+                            map.removeLayer(currentBoundaryLayer);
+                            currentBoundaryLayer = null;
+                        }
+
+                        // Render boundary polygon/box
+                        if (item.geojson && (item.geojson.type === 'Polygon' || item.geojson.type === 'MultiPolygon')) {
+                            currentBoundaryLayer = L.geoJSON(item.geojson, {
+                                style: {
+                                    color: '#ea580c',
+                                    weight: 2,
+                                    dashArray: '6, 6',
+                                    fillOpacity: 0.06,
+                                    fillColor: '#ea580c'
+                                }
+                            }).addTo(map);
+                        } else {
+                            currentBoundaryLayer = L.rectangle(currentAllowedBounds, {
+                                color: '#ea580c',
+                                weight: 2,
+                                dashArray: '6, 6',
+                                fillOpacity: 0.06,
+                                fillColor: '#ea580c'
+                            }).addTo(map);
+                        }
+
+                        // Strictly restrict panning and fit to bounds
+                        map.setMaxBounds(currentAllowedBounds.pad(0.12));
+                        map.options.maxBoundsViscosity = 1.0;
+                        map.fitBounds(currentAllowedBounds, { padding: [25, 25] });
+
+                        // Center marker inside the chosen territory
+                        const centerLat = parseFloat(item.lat);
+                        const centerLng = parseFloat(item.lon);
+                        marker.setLatLng([centerLat, centerLng]);
+                        lastValidLat = centerLat;
+                        lastValidLng = centerLng;
+                        updateCoords(centerLat, centerLng);
+                        reverseGeocode(centerLat, centerLng);
+                    }
+                }
+            })
+            .catch(() => {});
+    }
+
+    if (citySelect) {
+        citySelect.addEventListener('change', function() {
+            if (districtSelect) {
+                districtSelect.innerHTML = '<option value="">Rayon seçin...</option>';
+                const selectedOpt = citySelect.options[citySelect.selectedIndex];
+                const districtsData = selectedOpt ? selectedOpt.getAttribute('data-districts') : null;
+
+                if (districtsData) {
+                    try {
+                        const districts = JSON.parse(districtsData);
+                        districts.forEach(d => {
+                            const opt = document.createElement('option');
+                            opt.value = d.id;
+                            opt.text = d.name?.tr || d.name?.az || d.slug;
+                            districtSelect.appendChild(opt);
+                        });
+                    } catch(e) {}
+                }
+
+                const cityName = selectedOpt ? selectedOpt.text.trim() : '';
+                if (cityName && cityName !== 'Şəhər seçin...') {
+                    updateMapBoundary(cityName, cityName);
+                }
+            }
+        });
+    }
+
+    if (districtSelect) {
+        districtSelect.addEventListener('change', function() {
+            const districtName = districtSelect.options[districtSelect.selectedIndex]?.text?.trim();
+            const cityName = citySelect ? citySelect.options[citySelect.selectedIndex]?.text?.trim() || 'Girne' : 'Girne';
+            if (districtName && districtName !== 'Rayon seçin...') {
+                updateMapBoundary(districtName + ', ' + cityName, districtName);
+            } else if (cityName && cityName !== 'Şəhər seçin...') {
+                updateMapBoundary(cityName, cityName);
+            }
+        });
+    }
+
+    // 4) Modern OpenStreetMap with 2-Way Geocoding
+    let lat = lastValidLat;
+    let lng = lastValidLng;
+
+    const map = L.map('add_property_map', {
+        zoomControl: false,
+        attributionControl: false
+    }).setView([lat, lng], 14);
+
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+    const cartoLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+        subdomains: 'abcd'
+    }).addTo(map);
+
+    const satLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19
+    });
+
+    let currentLayer = 'carto';
+    window.switchMapLayer = function(type) {
+        if (type === 'satellite' && currentLayer !== 'satellite') {
+            map.removeLayer(cartoLayer);
+            satLayer.addTo(map);
+            currentLayer = 'satellite';
+            document.getElementById('btn_map_sat').className = 'px-2.5 py-1 rounded-lg bg-orange-500 text-white shadow-sm transition';
+            document.getElementById('btn_map_carto').className = 'px-2.5 py-1 rounded-lg bg-transparent text-gray-700 hover:bg-gray-100 transition';
+        } else if (type === 'carto' && currentLayer !== 'carto') {
+            map.removeLayer(satLayer);
+            cartoLayer.addTo(map);
+            currentLayer = 'carto';
+            document.getElementById('btn_map_carto').className = 'px-2.5 py-1 rounded-lg bg-orange-500 text-white shadow-sm transition';
+            document.getElementById('btn_map_sat').className = 'px-2.5 py-1 rounded-lg bg-transparent text-gray-700 hover:bg-gray-100 transition';
+        }
+    };
+
+    const pulseIcon = L.divIcon({
+        className: 'custom-pulse-marker',
+        html: `
             <div style="position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
                 <div style="position: absolute; width: 36px; height: 36px; border-radius: 50%; background: rgba(249, 115, 22, 0.28); animation: leaflet-pulse 2s infinite ease-in-out;"></div>
                 <div style="width: 28px; height: 28px; border-radius: 50%; background: #ea580c; border: 3px solid #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; color: white;">
                     <svg style="width: 14px; height: 14px;" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                 </div>
             </div>
-        `,iconSize:[40,40],iconAnchor:[20,36]}),S=L.marker([ie,re],{icon:be,draggable:!0}).addTo(d);function $(e,t){document.getElementById("latitude").value=e.toFixed(6),document.getElementById("longitude").value=t.toFixed(6)}function Y(e,t){fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${e}&lon=${t}&accept-language=az,en`).then(n=>n.json()).then(n=>{if(n&&n.display_name){const s=document.getElementById("address");(!s.value||s.value.length<5)&&(s.value=n.display_name.split(",").slice(0,3).join(","))}}).catch(()=>{})}S.on("dragend",function(e){const t=e.target.getLatLng();if(l&&!l.contains(t)){X(`Xahi\u015F olunur yaln\u0131z se\xE7ilmi\u015F ${F||"\u0259razi"} daxilind\u0259 yer se\xE7in.`),S.setLatLng([T,k]);return}T=t.lat,k=t.lng,$(t.lat,t.lng),Y(t.lat,t.lng)}),d.on("click",function(e){if(l&&!l.contains(e.latlng)){X(`Xahi\u015F olunur yaln\u0131z se\xE7ilmi\u015F ${F||"\u0259razi"} daxilind\u0259 yer se\xE7in.`);return}S.setLatLng(e.latlng),T=e.latlng.lat,k=e.latlng.lng,$(e.latlng.lat,e.latlng.lng),Y(e.latlng.lat,e.latlng.lng)});let ce=null;document.getElementById("address").addEventListener("input",function(){clearTimeout(ce);const e=this.value.trim();e.length<4||(ce=setTimeout(()=>{var s,a;const t=((a=(s=f.options[f.selectedIndex])==null?void 0:s.text)==null?void 0:a.trim())||"Girne",n=e.includes("Cyprus")||e.includes("K\u0131br\u0131s")?e:`${e}, ${t}, Cyprus`;fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(n)}&limit=1&accept-language=tr,en,az`).then(o=>o.json()).then(o=>{if(o&&o.length>0){const i=parseFloat(o[0].lat),r=parseFloat(o[0].lon),m=L.latLng(i,r);if(l&&!l.contains(m)){X(`Axtar\u0131lan \xFCnvan se\xE7ilmi\u015F ${F||"\u0259razi"} h\xFCdudlar\u0131ndan k\u0259nardad\u0131r.`);return}S.setLatLng(m),T=i,k=r,d.flyTo(m,16,{duration:1.2}),$(i,r)}}).catch(()=>{})},700))});const y=document.getElementById("dropzone_box"),O=document.getElementById("photos_input"),ue=document.getElementById("photos_preview_grid");y.addEventListener("click",()=>O.click()),y.addEventListener("dragover",e=>{e.preventDefault(),y.classList.add("border-orange-500","bg-orange-50/40")}),y.addEventListener("dragleave",()=>{y.classList.remove("border-orange-500","bg-orange-50/40")}),y.addEventListener("drop",e=>{e.preventDefault(),y.classList.remove("border-orange-500","bg-orange-50/40"),e.dataTransfer.files.length>0&&(O.files=e.dataTransfer.files,me())}),O.addEventListener("change",me);function me(){ue.innerHTML="",Array.from(O.files).forEach((t,n)=>{if(!t.type.startsWith("image/"))return;const s=new FileReader;s.onload=function(a){const o=document.createElement("div");o.className="relative aspect-square rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-gray-100 group",o.innerHTML=`
-                    <img src="${a.target.result}" class="w-full h-full object-cover">
-                    ${n===0?'<span class="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-orange-500 text-white text-[9px] font-semibold shadow">\u018Fsas</span>':""}
-                `,ue.appendChild(o)},s.readAsDataURL(t)})}const g=document.getElementById("video_dropzone_box"),q=document.getElementById("video_input"),M=document.getElementById("video_preview_container"),ge=document.getElementById("video_preview_name"),pe=document.getElementById("video_preview_size"),fe=document.getElementById("btn_remove_video");if(g&&q){let e=function(t){if(!M||!ge)return;ge.textContent=t.name;const n=(t.size/(1024*1024)).toFixed(2);pe&&(pe.textContent=n+" MB"),M.classList.remove("hidden")};g.addEventListener("click",t=>{t.target.closest("#btn_remove_video")||q.click()}),g.addEventListener("dragover",t=>{t.preventDefault(),g.classList.add("border-orange-500","bg-orange-50/40")}),g.addEventListener("dragleave",()=>{g.classList.remove("border-orange-500","bg-orange-50/40")}),g.addEventListener("drop",t=>{if(t.preventDefault(),g.classList.remove("border-orange-500","bg-orange-50/40"),t.dataTransfer.files.length>0){const n=t.dataTransfer.files[0];n.type.startsWith("video/")?(q.files=t.dataTransfer.files,e(n)):window.KibrisKare.toast("Z\u0259hm\u0259t olmasa d\xFCzg\xFCn video format\u0131 se\xE7in (MP4, WebM, MOV)","error")}}),q.addEventListener("change",function(){if(this.files&&this.files[0]){const t=this.files[0];if(t.size>52428800){window.KibrisKare.toast("Video h\u0259cmi maksimum 50MB ola bil\u0259r","error"),this.value="",M&&M.classList.add("hidden");return}e(t)}}),fe&&fe.addEventListener("click",t=>{t.stopPropagation(),q.value="",M&&M.classList.add("hidden")})}const u=document.getElementById("load_more_amenities_btn"),J=document.getElementById("amenities_grid"),ye=document.getElementById("load_more_amenities_wrapper");u&&J&&u.addEventListener("click",async function(){const e=parseInt(this.dataset.nextPage,10)||2,t=this.innerHTML;this.disabled=!0,this.innerHTML='<span class="inline-block w-3.5 h-3.5 border-2 border-orange-500 border-t-transparent rounded-full animate-spin"></span> <span>'+(ee.loading||"Y\xFCkl\u0259nir...")+"</span>";try{const n=await fetch(he+"?page="+e,{headers:{Accept:"application/json","X-Requested-With":"XMLHttpRequest"}});if(n.ok){const s=await n.json();(s.data||[]).forEach(o=>{if(!J.querySelector('input[value="'+o.id+'"]')){const i=document.createElement("label");i.className="flex items-center gap-2 p-2.5 bg-gray-50/70 border border-gray-100 rounded-xl cursor-pointer hover:border-orange-200 transition";const r=o.localized_name||(typeof o.name=="object"&&o.name!==null?o.name[window.currentLocale||"tr"]||o.name.az||Object.values(o.name)[0]||"":o.name||"");i.innerHTML=`
-                                <input type="checkbox" name="amenities[]" value="${o.id}"
+        `,
+        iconSize: [40, 40],
+        iconAnchor: [20, 36]
+    });
+
+    const marker = L.marker([lat, lng], {
+        icon: pulseIcon,
+        draggable: true
+    }).addTo(map);
+
+    function updateCoords(newLat, newLng) {
+        const latInput = document.getElementById('latitude');
+        const lngInput = document.getElementById('longitude');
+        if (latInput) latInput.value = newLat.toFixed(6);
+        if (lngInput) lngInput.value = newLng.toFixed(6);
+    }
+
+    function reverseGeocode(newLat, newLng) {
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${newLat}&lon=${newLng}&accept-language=az,en`)
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.display_name) {
+                    const addressField = document.getElementById('address');
+                    if (addressField && (!addressField.value || addressField.value.length < 5)) {
+                        addressField.value = data.display_name.split(',').slice(0, 3).join(',');
+                    }
+                }
+            })
+            .catch(() => {});
+    }
+
+    marker.on('dragend', function(e) {
+        const pos = e.target.getLatLng();
+        if (currentAllowedBounds && !currentAllowedBounds.contains(pos)) {
+            showBoundaryAlert(`Xahiş olunur yalnız seçilmiş ${currentRegionName || 'ərazi'} daxilində yer seçin.`);
+            marker.setLatLng([lastValidLat, lastValidLng]);
+            return;
+        }
+        lastValidLat = pos.lat;
+        lastValidLng = pos.lng;
+        updateCoords(pos.lat, pos.lng);
+        reverseGeocode(pos.lat, pos.lng);
+    });
+
+    map.on('click', function(e) {
+        if (currentAllowedBounds && !currentAllowedBounds.contains(e.latlng)) {
+            showBoundaryAlert(`Xahiş olunur yalnız seçilmiş ${currentRegionName || 'ərazi'} daxilində yer seçin.`);
+            return;
+        }
+        marker.setLatLng(e.latlng);
+        lastValidLat = e.latlng.lat;
+        lastValidLng = e.latlng.lng;
+        updateCoords(e.latlng.lat, e.latlng.lng);
+        reverseGeocode(e.latlng.lat, e.latlng.lng);
+    });
+
+    let searchTimeout = null;
+    const addressInput = document.getElementById('address');
+    if (addressInput) {
+        addressInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            const query = this.value.trim();
+            if (query.length < 4) return;
+
+            searchTimeout = setTimeout(() => {
+                const cityName = citySelect ? citySelect.options[citySelect.selectedIndex]?.text?.trim() || 'Girne' : 'Girne';
+                const fullQuery = (query.includes('Cyprus') || query.includes('Kıbrıs')) ? query : `${query}, ${cityName}, Cyprus`;
+
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullQuery)}&limit=1&accept-language=tr,en,az`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.length > 0) {
+                            const newLat = parseFloat(data[0].lat);
+                            const newLng = parseFloat(data[0].lon);
+                            const newPos = L.latLng(newLat, newLng);
+
+                            if (currentAllowedBounds && !currentAllowedBounds.contains(newPos)) {
+                                showBoundaryAlert(`Axtarılan ünvan seçilmiş ${currentRegionName || 'ərazi'} hüdudlarından kənardadır.`);
+                                return;
+                            }
+
+                            marker.setLatLng(newPos);
+                            lastValidLat = newLat;
+                            lastValidLng = newLng;
+                            map.flyTo(newPos, 16, { duration: 1.2 });
+                            updateCoords(newLat, newLng);
+                        }
+                    })
+                    .catch(() => {});
+            }, 700);
+        });
+    }
+
+    // 5) Multi-Photo Upload Preview
+    const dropzoneBox = document.getElementById('dropzone_box');
+    const photosInput = document.getElementById('photos_input');
+    const previewGrid = document.getElementById('photos_preview_grid');
+
+    if (dropzoneBox && photosInput && previewGrid) {
+        dropzoneBox.addEventListener('click', () => photosInput.click());
+
+        dropzoneBox.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzoneBox.classList.add('border-orange-500', 'bg-orange-50/40');
+        });
+
+        dropzoneBox.addEventListener('dragleave', () => {
+            dropzoneBox.classList.remove('border-orange-500', 'bg-orange-50/40');
+        });
+
+        dropzoneBox.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzoneBox.classList.remove('border-orange-500', 'bg-orange-50/40');
+            if (e.dataTransfer.files.length > 0) {
+                photosInput.files = e.dataTransfer.files;
+                renderPhotosPreview();
+            }
+        });
+
+        photosInput.addEventListener('change', renderPhotosPreview);
+
+        function renderPhotosPreview() {
+            previewGrid.innerHTML = '';
+            const files = Array.from(photosInput.files);
+            files.forEach((file, index) => {
+                if (!file.type.startsWith('image/')) return;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const card = document.createElement('div');
+                    card.className = 'relative aspect-square rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-gray-100 group';
+                    card.innerHTML = `
+                        <img src="${e.target.result}" class="w-full h-full object-cover">
+                        ${index === 0 ? '<span class="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-orange-500 text-white text-[9px] font-semibold shadow">Əsas</span>' : ''}
+                    `;
+                    previewGrid.appendChild(card);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+    }
+
+    // 6) Video Upload Preview & Handling
+    const videoDropzoneBox = document.getElementById('video_dropzone_box');
+    const videoInput = document.getElementById('video_input');
+    const videoPreviewContainer = document.getElementById('video_preview_container');
+    const videoPreviewName = document.getElementById('video_preview_name');
+    const videoPreviewSize = document.getElementById('video_preview_size');
+    const btnRemoveVideo = document.getElementById('btn_remove_video');
+
+    if (videoDropzoneBox && videoInput) {
+        videoDropzoneBox.addEventListener('click', (e) => {
+            if (e.target.closest('#btn_remove_video')) return;
+            videoInput.click();
+        });
+
+        videoDropzoneBox.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            videoDropzoneBox.classList.add('border-orange-500', 'bg-orange-50/40');
+        });
+
+        videoDropzoneBox.addEventListener('dragleave', () => {
+            videoDropzoneBox.classList.remove('border-orange-500', 'bg-orange-50/40');
+        });
+
+        videoDropzoneBox.addEventListener('drop', (e) => {
+            e.preventDefault();
+            videoDropzoneBox.classList.remove('border-orange-500', 'bg-orange-50/40');
+            if (e.dataTransfer.files.length > 0) {
+                const file = e.dataTransfer.files[0];
+                if (file.type.startsWith('video/')) {
+                    videoInput.files = e.dataTransfer.files;
+                    renderVideoPreview(file);
+                } else {
+                    window.KibrisKare.toast('Zəhmət olmasa düzgün video formatı seçin (MP4, WebM, MOV)', 'error');
+                }
+            }
+        });
+
+        videoInput.addEventListener('change', function () {
+            if (this.files && this.files[0]) {
+                const file = this.files[0];
+                if (file.size > 52428800) { // 50MB
+                    window.KibrisKare.toast('Video həcmi maksimum 50MB ola bilər', 'error');
+                    this.value = '';
+                    if (videoPreviewContainer) videoPreviewContainer.classList.add('hidden');
+                    return;
+                }
+                renderVideoPreview(file);
+            }
+        });
+
+        if (btnRemoveVideo) {
+            btnRemoveVideo.addEventListener('click', (e) => {
+                e.stopPropagation();
+                videoInput.value = '';
+                if (videoPreviewContainer) videoPreviewContainer.classList.add('hidden');
+            });
+        }
+
+        function renderVideoPreview(file) {
+            if (!videoPreviewContainer || !videoPreviewName) return;
+            videoPreviewName.textContent = file.name;
+            const sizeInMb = (file.size / (1024 * 1024)).toFixed(2);
+            if (videoPreviewSize) videoPreviewSize.textContent = sizeInMb + ' MB';
+            videoPreviewContainer.classList.remove('hidden');
+        }
+    }
+
+    // Amenities Load More
+    const loadMoreAmenitiesBtn = document.getElementById('load_more_amenities_btn');
+    const amenitiesGrid = document.getElementById('amenities_grid');
+    const loadMoreWrapper = document.getElementById('load_more_amenities_wrapper');
+
+    if (loadMoreAmenitiesBtn && amenitiesGrid) {
+        loadMoreAmenitiesBtn.addEventListener('click', async function () {
+            const nextPage = parseInt(this.dataset.nextPage, 10) || 2;
+            const originalHtml = this.innerHTML;
+
+            this.disabled = true;
+            this.innerHTML = '<span class="inline-block w-3.5 h-3.5 border-2 border-orange-500 border-t-transparent rounded-full animate-spin"></span> <span>' + (i18n.loading || 'Yüklənir...') + '</span>';
+
+            try {
+                const res = await fetch(amenityUrl + '?page=' + nextPage, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    const items = data.data || [];
+
+                    items.forEach(amenity => {
+                        if (!amenitiesGrid.querySelector('input[value="' + amenity.id + '"]')) {
+                            const label = document.createElement('label');
+                            label.className = 'flex items-center gap-2 p-2.5 bg-gray-50/70 border border-gray-100 rounded-xl cursor-pointer hover:border-orange-200 transition';
+
+                            const name = amenity.localized_name
+                                || (typeof amenity.name === 'object' && amenity.name !== null
+                                    ? (amenity.name[window.currentLocale || 'tr'] || amenity.name.az || Object.values(amenity.name)[0] || '')
+                                    : (amenity.name || ''));
+
+                            label.innerHTML = `
+                                <input type="checkbox" name="amenities[]" value="${amenity.id}"
                                     class="w-4 h-4 text-orange-500 rounded border-gray-300 focus:ring-orange-500">
-                                <span class="text-xs font-medium text-gray-800">${r}</span>
-                            `,J.appendChild(i)}}),s.has_more?(u.dataset.nextPage=e+1,u.disabled=!1,u.innerHTML=t):ye&&ye.remove()}else u.disabled=!1,u.innerHTML=t}catch(n){console.error(n),u.disabled=!1,u.innerHTML=t}})});
+                                <span class="text-xs font-medium text-gray-800">${name}</span>
+                            `;
+                            amenitiesGrid.appendChild(label);
+                        }
+                    });
+
+                    if (data.has_more) {
+                        loadMoreAmenitiesBtn.dataset.nextPage = nextPage + 1;
+                        loadMoreAmenitiesBtn.disabled = false;
+                        loadMoreAmenitiesBtn.innerHTML = originalHtml;
+                    } else {
+                        if (loadMoreWrapper) {
+                            loadMoreWrapper.remove();
+                        }
+                    }
+                } else {
+                    loadMoreAmenitiesBtn.disabled = false;
+                    loadMoreAmenitiesBtn.innerHTML = originalHtml;
+                }
+            } catch (err) {
+                console.error(err);
+                loadMoreAmenitiesBtn.disabled = false;
+                loadMoreAmenitiesBtn.innerHTML = originalHtml;
+            }
+        });
+    }
+});

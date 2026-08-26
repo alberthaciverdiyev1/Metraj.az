@@ -57,7 +57,8 @@
         amenityUrl: "{{ route('add-property.amenities') }}",
         i18n: {
             submit: "{{ __('add_property.submit_btn') }}",
-            loading: "{{ __('add_property.loading') }}"
+            loading: "{{ __('add_property.loading') }}",
+            fix_errors: "{{ __('add_property.fix_errors') }}"
         }
     };
 </script>
