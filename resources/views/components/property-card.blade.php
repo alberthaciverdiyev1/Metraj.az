@@ -43,6 +43,10 @@
        data-current="0">
     <img src="{{ $allImagePaths[0] }}"
          alt="{{ $title }}"
+         loading="lazy"
+         decoding="async"
+         width="400"
+         height="300"
          class="card-image w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
 
     @if($hasMultiple)

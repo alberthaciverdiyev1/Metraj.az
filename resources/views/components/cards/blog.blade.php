@@ -25,6 +25,10 @@
     <div class="blog-card-image relative overflow-hidden aspect-[16/10] bg-orange-50 shrink-0">
         <img src="{{ $blogImage }}"
              alt="{{ $blogTitle }}"
+             loading="lazy"
+             decoding="async"
+             width="400"
+             height="250"
              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
         
         @if(!empty($blogCategory))

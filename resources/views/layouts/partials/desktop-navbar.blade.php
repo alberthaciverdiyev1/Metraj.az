@@ -4,7 +4,7 @@
 
     <!-- Logo -->
     <a href="{{ route('home') }}" class="flex items-center space-x-2 shrink-0">
-      <img class="h-9 w-auto object-contain" src="{{ asset('images/kibriskarelogo1.png') }}" alt="KibrisKare.com" />
+      <img class="h-9 w-auto object-contain" width="36" height="36" fetchpriority="high" src="{{ asset('images/kibriskarelogo1.png') }}" alt="KibrisKare.com" />
       <div class="leading-tight">
         <div class="text-xl font-bold text-[#545454] tracking-tight">KibrisKare.com</div>
         <div class="text-[8px] text-gray-400 uppercase tracking-[0.18em]">{{ __('navbar.slogan') }}</div>

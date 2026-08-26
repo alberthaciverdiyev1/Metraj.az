@@ -71,6 +71,7 @@
                             <img id="main-hero-image"
                                  src="{{ $mediaItems->firstWhere('type', 'image')['url'] ?? $galleryImages->first()?->url ?? asset('images/box-house.jpg') }}"
                                  alt="{{ $property->title }}"
+                                 fetchpriority="high"
                                  class="w-full h-full object-cover cursor-pointer transition-transform duration-300 group-hover:scale-[1.01]"
                                  style="{{ $hasVideo ? 'display: none;' : 'display: block;' }}"
                                  onclick="openModal(currentHeroIndex)">
