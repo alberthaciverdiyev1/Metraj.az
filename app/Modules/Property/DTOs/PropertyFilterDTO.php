@@ -49,7 +49,7 @@ readonly class PropertyFilterDTO
         public ?bool $isVip = null,
         public array $filterOptionIds = [],
         public ?string $search = null,
-        public string $sortBy = 'created_at',
+        public string $sortBy = 'updated_at',
         public string $sortDirection = 'desc',
     ) {}
 
@@ -235,7 +235,7 @@ readonly class PropertyFilterDTO
             isVip: isset($data['is_vip']) && $data['is_vip'] !== '' ? (bool) $data['is_vip'] : null,
             filterOptionIds: $filterOptionIds,
             search: $data['q'] ?? ($data['search'] ?? null),
-            sortBy: $data['sort_by'] ?? 'created_at',
+            sortBy: $data['sort_by'] ?? ($data['sortBy'] ?? 'updated_at'),
             sortDirection: in_array(strtolower($data['sort_direction'] ?? ''), ['asc', 'desc'])
                 ? strtolower($data['sort_direction'])
                 : 'desc',

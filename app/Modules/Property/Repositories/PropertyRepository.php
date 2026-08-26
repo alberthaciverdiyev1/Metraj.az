@@ -121,9 +121,9 @@ class PropertyRepository implements PropertyRepositoryInterface
 
     public function paginate(PropertyFilterDTO $filter, int $perPage = 30): LengthAwarePaginator
     {
-        $sortBy = in_array($filter->sortBy, ['price', 'created_at', 'views_count', 'area']) 
+        $sortBy = in_array($filter->sortBy, ['price', 'created_at', 'updated_at', 'views_count', 'area']) 
             ? $filter->sortBy 
-            : 'created_at';
+            : 'updated_at';
 
         // Kart görünümü yalnızca görsellər və filtr seçimlərini istifadə edir;
         $baseQuery = $this->model->query()->with(['filterOptions.filter', 'images']);
@@ -184,6 +184,9 @@ class PropertyRepository implements PropertyRepositoryInterface
 
     protected function applyFilterConditions($query, PropertyFilterDTO $filter): void
     {
+        // 30 gündən köhnə elanlar göstərilməsin
+        $query->where('updated_at', '>=', now()->subDays(30));
+
         if ($filter->status) {
             $query->where('status', $filter->status);
         }
@@ -357,7 +360,8 @@ class PropertyRepository implements PropertyRepositoryInterface
 
         $query = $this->model->with(['images', 'city', 'district', 'agency', 'agent.user', 'filterOptions.filter'])
             ->where('id', '!=', $property->id)
-            ->where('status', PropertyStatus::Published);
+            ->where('status', PropertyStatus::Published)
+            ->where('updated_at', '>=', now()->subDays(30));
 
         if ($propertyTypeOpt) {
             $query->whereHas('filterOptions', fn ($q) => $q->where('filter_options.id', $propertyTypeOpt->id));
@@ -365,7 +369,7 @@ class PropertyRepository implements PropertyRepositoryInterface
             $query->where('city_id', $property->city_id);
         }
 
-        $similar = $query->latest('id')->limit($limit)->get();
+        $similar = $query->orderBy('updated_at', 'desc')->limit($limit)->get();
 
         // Əgər limit qədər deyilsə, digər sonuncu dərc edilmiş elanlarla tamamlayırıq
         if ($similar->count() < $limit) {
@@ -375,7 +379,8 @@ class PropertyRepository implements PropertyRepositoryInterface
             $more = $this->model->with(['images', 'city', 'district', 'agency', 'agent.user', 'filterOptions.filter'])
                 ->whereNotIn('id', $excludeIds)
                 ->where('status', PropertyStatus::Published)
-                ->latest('id')
+                ->where('updated_at', '>=', now()->subDays(30))
+                ->orderBy('updated_at', 'desc')
                 ->limit($fillCount)
                 ->get();
 
@@ -390,7 +395,8 @@ class PropertyRepository implements PropertyRepositoryInterface
         return $this->model->with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
             ->where('is_featured', true)
             ->where('status', 'published')
-            ->orderBy('created_at', 'desc')
+            ->where('updated_at', '>=', now()->subDays(30))
+            ->orderBy('updated_at', 'desc')
             ->limit($limit)
             ->get();
     }
@@ -400,7 +406,8 @@ class PropertyRepository implements PropertyRepositoryInterface
         return $this->model->with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
             ->where('is_vip', true)
             ->where('status', 'published')
-            ->orderBy('created_at', 'desc')
+            ->where('updated_at', '>=', now()->subDays(30))
+            ->orderBy('updated_at', 'desc')
             ->limit($limit)
             ->get();
     }
