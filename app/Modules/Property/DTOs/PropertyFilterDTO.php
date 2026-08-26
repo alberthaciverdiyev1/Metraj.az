@@ -172,8 +172,13 @@ readonly class PropertyFilterDTO
             $hasMortgage = (bool) $data['inCredit'];
         }
 
-        $minPrice = isset($data['min_price']) && $data['min_price'] !== '' ? (float) $data['min_price'] : (isset($data['minPrice']) && $data['minPrice'] !== '' ? (float) $data['minPrice'] : null);
-        $maxPrice = isset($data['max_price']) && $data['max_price'] !== '' ? (float) $data['max_price'] : (isset($data['maxPrice']) && $data['maxPrice'] !== '' ? (float) $data['maxPrice'] : null);
+        $filterCurrency = strtoupper($data['currency'] ?? session('currency', 'AZN'));
+        $rawMinPrice = isset($data['min_price']) && $data['min_price'] !== '' ? (float) $data['min_price'] : (isset($data['minPrice']) && $data['minPrice'] !== '' ? (float) $data['minPrice'] : null);
+        $rawMaxPrice = isset($data['max_price']) && $data['max_price'] !== '' ? (float) $data['max_price'] : (isset($data['maxPrice']) && $data['maxPrice'] !== '' ? (float) $data['maxPrice'] : null);
+
+        $currencyService = app(\App\Modules\Shared\Services\CurrencyService::class);
+        $minPrice = $rawMinPrice !== null ? $currencyService->getBaseGbp($rawMinPrice, $filterCurrency) : null;
+        $maxPrice = $rawMaxPrice !== null ? $currencyService->getBaseGbp($rawMaxPrice, $filterCurrency) : null;
         $minArea = isset($data['min_area']) && $data['min_area'] !== '' ? (int) $data['min_area'] : (isset($data['minArea']) && $data['minArea'] !== '' ? (int) $data['minArea'] : null);
         $maxArea = isset($data['max_area']) && $data['max_area'] !== '' ? (int) $data['max_area'] : (isset($data['maxArea']) && $data['maxArea'] !== '' ? (int) $data['maxArea'] : null);
         $minLandArea = isset($data['min_land_area']) && $data['min_land_area'] !== '' ? (int) $data['min_land_area'] : (isset($data['fieldAreaMin']) && $data['fieldAreaMin'] !== '' ? (int) $data['fieldAreaMin'] : null);
