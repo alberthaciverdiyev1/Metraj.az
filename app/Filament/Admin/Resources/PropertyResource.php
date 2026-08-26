@@ -782,19 +782,18 @@ class PropertyResource extends Resource
                     ->badge()
                     ->formatStateUsing(fn (?SellerType $state): string => $state?->label() ?? '—'),
 
-                Tables\Columns\TextColumn::make('status')
+                Tables\Columns\SelectColumn::make('status')
                     ->label('Status')
-                    ->badge()
-                    ->color(fn (PropertyStatus $state): string => match ($state) {
-                        PropertyStatus::Draft => 'gray',
-                        PropertyStatus::PendingApproval => 'warning',
-                        PropertyStatus::Published => 'success',
-                        PropertyStatus::Rejected => 'danger',
-                        PropertyStatus::Sold => 'info',
-                        PropertyStatus::Rented => 'info',
-                        PropertyStatus::Archived => 'gray',
+                    ->options(collect(PropertyStatus::cases())->mapWithKeys(fn ($status) => [$status->value => $status->label()]))
+                    ->selectablePlaceholder(false)
+                    ->afterStateUpdated(function (Property $record, $state) {
+                        \Filament\Notifications\Notification::make()
+                            ->title('Status yeniləndi')
+                            ->body("#{$record->code} elanın statusu dəyişdirildi.")
+                            ->success()
+                            ->send();
                     })
-                    ->formatStateUsing(fn (PropertyStatus $state): string => $state->label()),
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Tarix')
@@ -812,12 +811,102 @@ class PropertyResource extends Resource
                     ->options(collect(PropertyStatus::cases())->mapWithKeys(fn ($status) => [$status->value => $status->label()])),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()
-                    ->url(fn (\Illuminate\Database\Eloquent\Model $record): string => static::getUrl('view', ['record' => $record])),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make()
+                        ->url(fn (\Illuminate\Database\Eloquent\Model $record): string => static::getUrl('view', ['record' => $record])),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\Action::make('changeStatus')
+                        ->label('Statusu Dəyiş')
+                        ->icon('heroicon-m-arrow-path')
+                        ->color('warning')
+                        ->form([
+                            Forms\Components\Select::make('status')
+                                ->label('Yeni Status')
+                                ->options(collect(PropertyStatus::cases())->mapWithKeys(fn ($s) => [$s->value => $s->label()]))
+                                ->default(fn (Property $record) => $record->status->value)
+                                ->required(),
+                        ])
+                        ->action(function (Property $record, array $data) {
+                            $record->update(['status' => $data['status']]);
+                            \Filament\Notifications\Notification::make()
+                                ->title('Status yeniləndi')
+                                ->success()
+                                ->send();
+                        }),
+                    Tables\Actions\Action::make('quickPublish')
+                        ->label('Dərc et (Təsdiqlə)')
+                        ->icon('heroicon-m-check-circle')
+                        ->color('success')
+                        ->visible(fn (Property $record) => $record->status !== PropertyStatus::Published)
+                        ->requiresConfirmation()
+                        ->modalHeading('Elanı Dərc Et')
+                        ->modalDescription('Bu elanı dərhal təsdiqləyib saytda dərc etmək istədiyinizə əminsiniz?')
+                        ->action(function (Property $record) {
+                            $record->update(['status' => PropertyStatus::Published]);
+                            \Filament\Notifications\Notification::make()
+                                ->title('Elan dərc edildi')
+                                ->success()
+                                ->send();
+                        }),
+                    Tables\Actions\Action::make('quickReject')
+                        ->label('İmtina et')
+                        ->icon('heroicon-m-x-circle')
+                        ->color('danger')
+                        ->visible(fn (Property $record) => $record->status !== PropertyStatus::Rejected)
+                        ->requiresConfirmation()
+                        ->modalHeading('Elanı İmtina Et')
+                        ->modalDescription('Bu elanı imtina edilmiş statusa keçirmək istədiyinizə əminsiniz?')
+                        ->action(function (Property $record) {
+                            $record->update(['status' => PropertyStatus::Rejected]);
+                            \Filament\Notifications\Notification::make()
+                                ->title('Elan imtina edildi')
+                                ->warning()
+                                ->send();
+                        }),
+                    Tables\Actions\DeleteAction::make(),
+                ]),
             ])
-            ->bulkActions([]);
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\BulkAction::make('bulkPublish')
+                        ->label('Seçilənləri Dərc Et')
+                        ->icon('heroicon-m-check-badge')
+                        ->color('success')
+                        ->requiresConfirmation()
+                        ->action(function (\Illuminate\Database\Eloquent\Collection $records) {
+                            $records->each->update(['status' => PropertyStatus::Published]);
+                            \Filament\Notifications\Notification::make()
+                                ->title('Seçilmiş elanlar dərc edildi')
+                                ->success()
+                                ->send();
+                        }),
+                    Tables\Actions\BulkAction::make('bulkPending')
+                        ->label('Seçilənləri Gözləməyə Al')
+                        ->icon('heroicon-m-clock')
+                        ->color('warning')
+                        ->requiresConfirmation()
+                        ->action(function (\Illuminate\Database\Eloquent\Collection $records) {
+                            $records->each->update(['status' => PropertyStatus::PendingApproval]);
+                            \Filament\Notifications\Notification::make()
+                                ->title('Seçilmiş elanlar təsdiq gözləməyə keçirildi')
+                                ->warning()
+                                ->send();
+                        }),
+                    Tables\Actions\BulkAction::make('bulkArchive')
+                        ->label('Seçilənləri Arxivlə')
+                        ->icon('heroicon-m-archive-box')
+                        ->color('gray')
+                        ->requiresConfirmation()
+                        ->action(function (\Illuminate\Database\Eloquent\Collection $records) {
+                            $records->each->update(['status' => PropertyStatus::Archived]);
+                            \Filament\Notifications\Notification::make()
+                                ->title('Seçilmiş elanlar arxivləndi')
+                                ->success()
+                                ->send();
+                        }),
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
     }
 
     public static function getRelations(): array
