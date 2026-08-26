@@ -623,16 +623,19 @@
             if (name === 'buildingType') {
                 const display = form.querySelector('[data-role="display-value"][data-filter="buildingType"]');
                 if (display) {
+                    const defaultCat = (window.__trans && window.__trans.all_categories) ? window.__trans.all_categories : 'Tüm Kategoriler';
                     display.textContent = (isChecked && input.value)
                         ? (input.parentElement.textContent.trim())
-                        : 'Butun Kateqoriyalar';
+                        : defaultCat;
                 }
             } else if (name === 'roomCount') {
                 const display = form.querySelector('[data-role="display-value"][data-filter="roomCount"]');
                 if (display) {
+                    const roomsSuffix = (window.__trans && window.__trans.rooms_suffix) ? window.__trans.rooms_suffix : 'odalı';
+                    const defaultRooms = (window.__trans && window.__trans.room_count) ? window.__trans.room_count : 'Oda Sayısı';
                     display.textContent = (isChecked && input.value)
-                        ? input.value + ' otaqli'
-                        : 'Otaq sayi';
+                        ? input.value + ' ' + roomsSuffix
+                        : defaultRooms;
                 }
             } else if (name === 'adType') {
                 const adHidden = document.getElementById('adTypeInput');
@@ -768,14 +771,16 @@
                 : '';
 
             if (cityDisplay) {
+                const districtSuffix = (window.__trans && window.__trans.district_suffix) ? window.__trans.district_suffix : 'bölge';
+                const allCitiesText = (window.__trans && window.__trans.all_cities) ? window.__trans.all_cities : 'Tüm Şehirler';
                 if (checkedDistricts.length === 1) {
                     cityDisplay.textContent = cityName ? cityName + ' (' + checkedDistricts[0] + ')' : checkedDistricts[0];
                 } else if (checkedDistricts.length > 1) {
-                    cityDisplay.textContent = cityName ? cityName + ' (' + checkedDistricts.length + ' rayon)' : checkedDistricts.length + ' rayon';
+                    cityDisplay.textContent = cityName ? cityName + ' (' + checkedDistricts.length + ' ' + districtSuffix + ')' : checkedDistricts.length + ' ' + districtSuffix;
                 } else if (cityName) {
                     cityDisplay.textContent = cityName;
                 } else {
-                    cityDisplay.textContent = 'Bütün Şəhərlər';
+                    cityDisplay.textContent = allCitiesText;
                 }
             }
         }

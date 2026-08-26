@@ -13,7 +13,8 @@
     $blogTitle = $blog ? $blog->title : $name;
     $blogDate = $blog ? $blog->formatted_date : $date;
     $blogCategory = $blog ? $blog->category : (is_object($category) ? ($category->name ?? '') : $category);
-    $blogImage = $blog ? ($blog->cover_image ?: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80') : (!empty($images[0]) ? $images[0] : 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80');
+    $defaultBlogImg = asset('images/section-contact.jpg');
+    $blogImage = $blog ? ($blog->cover_image ?: $defaultBlogImg) : (!empty($images[0]) ? $images[0] : $defaultBlogImg);
     $blogExcerpt = $blog ? $blog->excerpt : $excerpt;
 @endphp
 

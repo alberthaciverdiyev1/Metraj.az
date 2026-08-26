@@ -54,4 +54,5 @@ return [
     'popular_searches' => 'Popüler aramalar',
     'popular_searches_desc' => 'Kuzey Kıbrıs’ta en çok aranan emlak kategorileri ve aramalar',
     'advanced_options' => 'Gelişmiş Seçenekler',
+    'district_suffix' => 'bölge',
 ];

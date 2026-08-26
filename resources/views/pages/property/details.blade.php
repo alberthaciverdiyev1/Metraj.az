@@ -69,7 +69,7 @@
                         @if($totalMedia > 0)
                             <!-- Hero Image -->
                             <img id="main-hero-image"
-                                 src="{{ $mediaItems->firstWhere('type', 'image')['url'] ?? $galleryImages->first()?->url ?? 'https://static.vecteezy.com/system/resources/previews/004/640/986/non_2x/tower-building-illustration-isolated-on-white-background-vector.jpg' }}"
+                                 src="{{ $mediaItems->firstWhere('type', 'image')['url'] ?? $galleryImages->first()?->url ?? asset('images/box-house.jpg') }}"
                                  alt="{{ $property->title }}"
                                  class="w-full h-full object-cover cursor-pointer transition-transform duration-300 group-hover:scale-[1.01]"
                                  style="{{ $hasVideo ? 'display: none;' : 'display: block;' }}"
@@ -89,7 +89,7 @@
                             @endif
                         @else
                             <img id="main-hero-image"
-                                 src="https://static.vecteezy.com/system/resources/previews/004/640/986/non_2x/tower-building-illustration-isolated-on-white-background-vector.jpg"
+                                 src="{{ asset('images/box-house.jpg') }}"
                                  alt="{{ $property->title }}"
                                  class="w-full h-full object-cover">
                         @endif

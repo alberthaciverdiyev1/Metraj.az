@@ -3,17 +3,17 @@
 namespace App\Modules\Shared\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Shared\Enums\Currency;
+use App\Modules\Shared\Enums\SupportedLocale;
 use Illuminate\Http\RedirectResponse;
 
 class LocaleController extends Controller
 {
-    public const array VALID_LANGUAGES = ['az', 'en', 'ru', 'tr'];
-
-    public const array VALID_CURRENCIES = ['AZN', 'USD', 'EUR', 'GBP', 'TRY', 'RUB', 'AED'];
-
     public function switchLanguage(string $locale): RedirectResponse
     {
-        if (in_array($locale, self::VALID_LANGUAGES)) {
+        $locale = strtolower(trim($locale));
+
+        if (SupportedLocale::isValid($locale)) {
             session(['lang' => $locale]);
             app()->setLocale($locale);
         }
@@ -23,9 +23,9 @@ class LocaleController extends Controller
 
     public function switchCurrency(string $code): RedirectResponse
     {
-        $code = strtoupper($code);
+        $code = strtoupper(trim($code));
 
-        if (in_array($code, self::VALID_CURRENCIES)) {
+        if (Currency::isValid($code)) {
             session(['currency' => $code]);
         }
 

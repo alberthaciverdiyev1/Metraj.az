@@ -56,8 +56,11 @@ class HomeController extends Controller
             $this->applyPathFilters($request, $first, $second, $third);
         }
 
+        $perPage = (int) (\App\Modules\Shared\Models\SiteSetting::current()->items_per_page ?? 30);
+        $perPage = $perPage > 0 ? $perPage : 30;
+
         $filter = PropertyFilterDTO::fromArray($request->all());
-        $properties = $this->propertyService->paginate($filter, 30);
+        $properties = $this->propertyService->paginate($filter, $perPage);
 
         return response()->json([
             'properties' => view('pages.property.partials.cards', compact('properties'))->render(),
@@ -76,8 +79,11 @@ class HomeController extends Controller
             $currentQuickSearch = $this->applyPathFilters($request, $first, $second, $third);
         }
 
+        $perPage = (int) (\App\Modules\Shared\Models\SiteSetting::current()->items_per_page ?? 30);
+        $perPage = $perPage > 0 ? $perPage : 30;
+
         $filter = PropertyFilterDTO::fromArray($request->all());
-        $properties = $this->propertyService->paginate($filter, 30);
+        $properties = $this->propertyService->paginate($filter, $perPage);
 
         $cities = $this->locationService->activeCities();
 

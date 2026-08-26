@@ -258,10 +258,17 @@
 
 @push('scripts')
     <script>
-        // SEO URL-ləri üçün şəhər id → slug map (listing.js tərəfindən istifadə olunur)
+        // SEO URL-ləri üçün şəhər id → slug map və dinamik lokalizasiya tərcümələri
         window.KibrisKareRoutes = Object.assign({}, window.KibrisKareRoutes || {}, {
             citySlugs: @json($cities->pluck('slug', 'id'))
         });
+        window.__trans = {
+            all_categories: @json(__('listing.all_categories')),
+            room_count: @json(__('listing.room_count')),
+            rooms_suffix: @json(__('listing.rooms_suffix')),
+            all_cities: @json(__('listing.all_cities')),
+            district_suffix: @json(__('listing.district_suffix')),
+        };
     </script>
     <script src="{{ asset('js/pages/property/list-filters.js') }}"></script>
     <script src="{{ asset('js/pages/property/listing.js') }}?v={{ time() }}"></script>

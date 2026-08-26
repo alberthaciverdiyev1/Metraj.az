@@ -274,6 +274,58 @@ class ManageSiteSettings extends Page implements HasForms
                                     ])
                                     ->collapsible(),
                             ]),
+
+                        Tabs\Tab::make('Limitlər & Mesaj Şablonları')
+                            ->icon('heroicon-o-cog-6-tooth')
+                            ->schema([
+                                Section::make('Elan & Səhifələmə Limitləri')
+                                    ->description('Saytdakı elanların görünmə müddəti və siyahılama limitləri')
+                                    ->schema([
+                                        Grid::make(2)->schema([
+                                            TextInput::make('listing_expiration_days')
+                                                ->label('Elanların Aktivlik Müddəti (Gün)')
+                                                ->numeric()
+                                                ->default(30)
+                                                ->helperText('Yenilənmə tarixindən bu qədər gün keçmiş köhnə elanlar avtomatik gizlədilir.'),
+                                            TextInput::make('items_per_page')
+                                                ->label('Səhifə Başına Elan Sayı (Paginasiya)')
+                                                ->numeric()
+                                                ->default(30),
+                                            TextInput::make('featured_limit')
+                                                ->label('Seçilmiş Elanlar Sayı (Featured)')
+                                                ->numeric()
+                                                ->default(10),
+                                            TextInput::make('vip_limit')
+                                                ->label('VIP Elanlar Sayı')
+                                                ->numeric()
+                                                ->default(10),
+                                        ]),
+                                    ]),
+
+                                Section::make('WhatsApp Sorğu Mesaj Şablonları (4 Dildə)')
+                                    ->description('İstifadəçilər "WhatsApp ilə Əlaqə" düyməsini basdıqda avtomatik doldurulan mətn')
+                                    ->schema([
+                                        Tabs::make('WhatsAppMsgTabs')->tabs([
+                                            Tabs\Tab::make('Əmlak Mesajı')->schema([
+                                                Grid::make(2)->schema([
+                                                    TextInput::make('whatsapp_property_message.tr')->label('Mesaj (Türkcə)')->placeholder('Merhaba, KibrisKare.com ilanınızla ilgili bilgi almak istiyorum: {title}'),
+                                                    TextInput::make('whatsapp_property_message.az')->label('Mesaj (Azərbaycanca)')->placeholder('Salam, KibrisKare.com elanınızla bağlı məlumat almaq istəyirəm: {title}'),
+                                                    TextInput::make('whatsapp_property_message.en')->label('Mesaj (İngiliscə)')->placeholder('Hello, I would like to get information regarding your KibrisKare.com listing: {title}'),
+                                                    TextInput::make('whatsapp_property_message.ru')->label('Mesaj (Rusca)')->placeholder('Здравствуйте, хочу получить информацию по вашему объявлению на KibrisKare.com: {title}'),
+                                                ]),
+                                            ]),
+                                            Tabs\Tab::make('Otaq Yoldaşı Mesajı')->schema([
+                                                Grid::make(2)->schema([
+                                                    TextInput::make('whatsapp_roommate_message.tr')->label('Mesaj (Türkcə)')->placeholder('Merhaba, KibrisKare.com oda arkadaşı ilanınızla ilgili yazıyorum: {title}'),
+                                                    TextInput::make('whatsapp_roommate_message.az')->label('Mesaj (Azərbaycanca)')->placeholder('Salam, KibrisKare.com otaq yoldaşı elanınızla bağlı yazıram: {title}'),
+                                                    TextInput::make('whatsapp_roommate_message.en')->label('Mesaj (İngiliscə)')->placeholder('Hello, I am contacting you regarding your roommate listing on KibrisKare.com: {title}'),
+                                                    TextInput::make('whatsapp_roommate_message.ru')->label('Mesaj (Rusca)')->placeholder('Здравствуйте, пишу по поводу вашего объявления о поиске соседа на KibrisKare.com: {title}'),
+                                                ]),
+                                            ]),
+                                        ]),
+                                    ])
+                                    ->collapsible(),
+                            ]),
                     ]),
             ])
             ->statePath('data');

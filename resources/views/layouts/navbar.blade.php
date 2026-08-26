@@ -1,21 +1,8 @@
 @php
     $currentCurrency = session('currency', 'AZN');
-    $currencySymbols = [
-      'AZN' => '₼',
-      'USD' => '$',
-      'EUR' => '€',
-      'GBP' => '£',
-      'TRY' => '₺',
-      'RUB' => '₽',
-      'AED' => 'د.إ',
-    ];
+    $currencySymbols = \App\Modules\Shared\Enums\Currency::getSymbols();
     $currentLocale = app()->getLocale() ?? session('lang', config('app.locale', 'tr'));
-    $languages = [
-      'tr' => ['name' => 'Türkçe', 'flag' => '🇹🇷', 'label' => 'TR'],
-      'az' => ['name' => 'Azərbaycan', 'flag' => '🇦🇿', 'label' => 'AZ'],
-      'en' => ['name' => 'English', 'flag' => '🇬🇧', 'label' => 'EN'],
-      'ru' => ['name' => 'Русский', 'flag' => '🇷🇺', 'label' => 'RU'],
-    ];
+    $languages = \App\Modules\Shared\Enums\SupportedLocale::getList();
     $activeLang = $languages[$currentLocale] ?? $languages['tr'];
 @endphp
 

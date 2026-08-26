@@ -54,4 +54,5 @@ return [
     'popular_searches' => 'Populyar axtarışlar',
     'popular_searches_desc' => 'Şimali Kiprdə ən çox axtarılan əmlak kateqoriyaları və tələblər',
     'advanced_options' => 'Ətraflı Seçimlər',
+    'district_suffix' => 'rayon',
 ];

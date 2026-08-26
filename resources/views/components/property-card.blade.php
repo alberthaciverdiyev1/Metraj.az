@@ -1,8 +1,9 @@
 @props(['property'])
 
 @php
+    $defaultPropertyImg = asset('images/box-house.jpg');
     $firstImage = $property->images->sortBy('sort_order')->first()?->url
-        ?? 'https://static.vecteezy.com/system/resources/previews/004/640/986/non_2x/tower-building-illustration-isolated-on-white-background-vector.jpg';
+        ?? $defaultPropertyImg;
     $allImagePaths = $property->images->sortBy('sort_order')->pluck('url')->toArray();
     if (empty($allImagePaths)) {
         $allImagePaths = [$firstImage];

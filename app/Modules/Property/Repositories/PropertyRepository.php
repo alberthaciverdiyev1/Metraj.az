@@ -182,10 +182,17 @@ class PropertyRepository implements PropertyRepositoryInterface
         );
     }
 
+    protected function getExpirationCutoff(): \Illuminate\Support\Carbon
+    {
+        $days = (int) (\App\Modules\Shared\Models\SiteSetting::current()->listing_expiration_days ?? 30);
+        $days = $days > 0 ? $days : 30;
+        return now()->subDays($days);
+    }
+
     protected function applyFilterConditions($query, PropertyFilterDTO $filter): void
     {
-        // 30 gündən köhnə elanlar göstərilməsin
-        $query->where('updated_at', '>=', now()->subDays(30));
+        // Köhnə elanlar göstərilməsin (Admin parametrlərindən gələn gün sayı)
+        $query->where('updated_at', '>=', $this->getExpirationCutoff());
 
         if ($filter->status) {
             $query->where('status', $filter->status);
@@ -361,7 +368,7 @@ class PropertyRepository implements PropertyRepositoryInterface
         $query = $this->model->with(['images', 'city', 'district', 'agency', 'agent.user', 'filterOptions.filter'])
             ->where('id', '!=', $property->id)
             ->where('status', PropertyStatus::Published)
-            ->where('updated_at', '>=', now()->subDays(30));
+            ->where('updated_at', '>=', $this->getExpirationCutoff());
 
         if ($propertyTypeOpt) {
             $query->whereHas('filterOptions', fn ($q) => $q->where('filter_options.id', $propertyTypeOpt->id));
@@ -379,7 +386,7 @@ class PropertyRepository implements PropertyRepositoryInterface
             $more = $this->model->with(['images', 'city', 'district', 'agency', 'agent.user', 'filterOptions.filter'])
                 ->whereNotIn('id', $excludeIds)
                 ->where('status', PropertyStatus::Published)
-                ->where('updated_at', '>=', now()->subDays(30))
+                ->where('updated_at', '>=', $this->getExpirationCutoff())
                 ->orderBy('updated_at', 'desc')
                 ->limit($fillCount)
                 ->get();
@@ -395,7 +402,7 @@ class PropertyRepository implements PropertyRepositoryInterface
         return $this->model->with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
             ->where('is_featured', true)
             ->where('status', 'published')
-            ->where('updated_at', '>=', now()->subDays(30))
+            ->where('updated_at', '>=', $this->getExpirationCutoff())
             ->orderBy('updated_at', 'desc')
             ->limit($limit)
             ->get();
@@ -406,7 +413,7 @@ class PropertyRepository implements PropertyRepositoryInterface
         return $this->model->with(['agency', 'agent', 'amenities', 'filterOptions.filter', 'images'])
             ->where('is_vip', true)
             ->where('status', 'published')
-            ->where('updated_at', '>=', now()->subDays(30))
+            ->where('updated_at', '>=', $this->getExpirationCutoff())
             ->orderBy('updated_at', 'desc')
             ->limit($limit)
             ->get();

@@ -2,6 +2,7 @@
 
 namespace App\Modules\Shared\Services;
 
+use App\Modules\Shared\Enums\Currency;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
@@ -15,32 +16,11 @@ class CurrencyService
     public const int CACHE_TTL_SECONDS = 3600 * 12;
 
     /**
-     * Standard fallback rates per 1 GBP if network is unavailable
-     */
-    public const array DEFAULT_RATES_FROM_GBP = [
-        'GBP' => 1.0,
-        'USD' => 1.30,
-        'EUR' => 1.18,
-        'AZN' => 2.21,
-        'TRY' => 44.50,
-        'RUB' => 120.0,
-        'AED' => 4.77,
-    ];
-
-    /**
-     * Get currency symbols and labels
+     * Get currency symbols and labels from Currency Enum
      */
     public function getCurrencies(): array
     {
-        return [
-            'GBP' => ['symbol' => '£', 'label' => 'Funt Sterlinq (GBP)', 'code' => 'GBP'],
-            'USD' => ['symbol' => '$', 'label' => 'ABŞ Dolları (USD)', 'code' => 'USD'],
-            'EUR' => ['symbol' => '€', 'label' => 'Avro (EUR)', 'code' => 'EUR'],
-            'AZN' => ['symbol' => '₼', 'label' => 'Azərbaycan Manatı (AZN)', 'code' => 'AZN'],
-            'TRY' => ['symbol' => '₺', 'label' => 'Türk Lirəsi (TRY)', 'code' => 'TRY'],
-            'RUB' => ['symbol' => '₽', 'label' => 'Rusiya Rublu (RUB)', 'code' => 'RUB'],
-            'AED' => ['symbol' => 'د.إ', 'label' => 'BƏƏ Dirhəmi (AED)', 'code' => 'AED'],
-        ];
+        return Currency::getCurrenciesList();
     }
 
     /**
@@ -49,13 +29,14 @@ class CurrencyService
     public function getRatesFromGbp(): array
     {
         return Cache::remember(self::CACHE_KEY, self::CACHE_TTL_SECONDS, function () {
+            $defaultRates = Currency::getDefaultRatesFromGbp();
             try {
                 $response = Http::timeout(3)->get('https://open.er-api.com/v6/latest/GBP');
                 if ($response->successful() && isset($response->json()['rates'])) {
                     $apiRates = $response->json()['rates'];
-                    $rates = self::DEFAULT_RATES_FROM_GBP;
+                    $rates = $defaultRates;
 
-                    foreach (array_keys(self::DEFAULT_RATES_FROM_GBP) as $cur) {
+                    foreach (array_keys($defaultRates) as $cur) {
                         if (isset($apiRates[$cur])) {
                             $rates[$cur] = (float) $apiRates[$cur];
                         }
@@ -64,10 +45,10 @@ class CurrencyService
                     return $rates;
                 }
             } catch (\Throwable $e) {
-                // Fallback to default
+                // Fallback to default rates
             }
 
-            return self::DEFAULT_RATES_FROM_GBP;
+            return $defaultRates;
         });
     }
 

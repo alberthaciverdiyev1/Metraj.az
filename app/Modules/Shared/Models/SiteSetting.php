@@ -31,6 +31,14 @@ use Illuminate\Support\Facades\Cache;
  * @property array|null $user_agreement
  * @property array|null $privacy_policy
  * @property array|null $terms_of_use
+ * @property int $listing_expiration_days
+ * @property int $items_per_page
+ * @property int $featured_limit
+ * @property int $vip_limit
+ * @property array|null $whatsapp_property_message
+ * @property array|null $whatsapp_roommate_message
+ * @property string|null $default_property_image
+ * @property string|null $default_blog_image
  */
 class SiteSetting extends Model
 {
@@ -61,6 +69,14 @@ class SiteSetting extends Model
         'user_agreement',
         'privacy_policy',
         'terms_of_use',
+        'listing_expiration_days',
+        'items_per_page',
+        'featured_limit',
+        'vip_limit',
+        'whatsapp_property_message',
+        'whatsapp_roommate_message',
+        'default_property_image',
+        'default_blog_image',
     ];
 
     protected $casts = [
@@ -70,6 +86,12 @@ class SiteSetting extends Model
         'user_agreement' => 'array',
         'privacy_policy' => 'array',
         'terms_of_use' => 'array',
+        'whatsapp_property_message' => 'array',
+        'whatsapp_roommate_message' => 'array',
+        'listing_expiration_days' => 'integer',
+        'items_per_page' => 'integer',
+        'featured_limit' => 'integer',
+        'vip_limit' => 'integer',
         'map_latitude' => 'float',
         'map_longitude' => 'float',
     ];

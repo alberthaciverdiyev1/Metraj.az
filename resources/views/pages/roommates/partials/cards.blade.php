@@ -114,8 +114,11 @@
                     @if($listing->contact_whatsapp)
                         @php
                             $wa = preg_replace('/[^0-9]/', '', $listing->contact_whatsapp);
+                            $waTpl = \App\Modules\Shared\Models\SiteSetting::current()?->getTrans('whatsapp_roommate_message') 
+                                ?: 'Merhaba, KibrisKare.com oda arkadaşı ilanınızla ilgili yazıyorum: {title}';
+                            $waMsg = str_replace('{title}', $listing->title, $waTpl);
                         @endphp
-                        <a href="https://wa.me/{{ $wa }}?text={{ urlencode('Salam, KibrisKare.com saytındakı otaq yoldaşı elanınızla bağlı yazıram: ' . $listing->title) }}"
+                        <a href="https://wa.me/{{ $wa }}?text={{ urlencode($waMsg) }}"
                            target="_blank" rel="noopener noreferrer"
                            class="w-8 h-8 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-600 flex items-center justify-center transition"
                            title="{{ __('roommates.write_whatsapp') }}">

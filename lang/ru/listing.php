@@ -54,4 +54,5 @@ return [
     'popular_searches' => 'Популярные поиски',
     'popular_searches_desc' => 'Самые популярные категории недвижимости и запросы на Северном Кипре',
     'advanced_options' => 'Расширенные параметры',
+    'district_suffix' => 'район(ов)',
 ];
