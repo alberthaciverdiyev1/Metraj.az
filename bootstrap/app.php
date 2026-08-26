@@ -20,4 +20,18 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
+
+        $exceptions->render(function (\Illuminate\Http\Exceptions\PostTooLargeException $e, Request $request) {
+            $msg = 'Yüklənən faylların ümumi həcmi çox böyükdür (maksimum 100MB). Zəhmət olmasa daha az və ya kiçik ölçülü fayl seçin.';
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $msg,
+                    'errors' => [
+                        'photos' => [$msg],
+                    ],
+                ], 422);
+            }
+            return back()->with('error', $msg);
+        });
     })->create();
