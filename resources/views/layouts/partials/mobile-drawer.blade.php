@@ -34,23 +34,23 @@
         <span class="flex items-center gap-3"><i class="fa-solid fa-house text-gray-400 w-5 text-center"></i> {{ __('navbar.home') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="{{ route('listing.path1', ['first' => 'satilik']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request('deal_type') === 'sale' ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('listing.path1', ['first' => 'satilik']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request('deal_type') === 'sale' || request()->is('*satilik*') ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-key text-gray-400 w-5 text-center"></i> {{ __('navbar.sale') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'ayliq']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ in_array(request('deal_type'), ['rent', 'rent_monthly', 'rent_daily']) ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('listing.path2', ['first' => 'kiralik', 'second' => 'aylik']) }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ in_array(request('deal_type'), ['rent', 'rent_monthly', 'rent_daily']) || request()->is('*kiralik*') || request()->is('*kira*') ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-calendar-days text-gray-400 w-5 text-center"></i> {{ __('navbar.rent') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="{{ route('requests.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('requests.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('*ariyorum*') || request()->is('*oda-arkadasi*') || request()->is('*axtariram*') || request()->is('*otaq-yoldasi*') ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-magnifying-glass text-gray-400 w-5 text-center"></i> {{ __('navbar.requests') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="{{ route('agencies.list') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('agencies.list') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('*emlak-ofis*') || request()->is('*agencies*') || request()->is('*agentlik*') ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-building text-gray-400 w-5 text-center"></i> {{ __('navbar.agencies') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>
-      <a href="{{ route('contact') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('contact*') ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
+      <a href="{{ route('contact') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->is('*iletisim*') || request()->is('*contact*') ? 'text-orange-500 bg-orange-50 font-semibold' : 'text-gray-700 hover:bg-gray-50 font-medium' }} text-sm">
         <span class="flex items-center gap-3"><i class="fa-solid fa-envelope text-gray-400 w-5 text-center"></i> {{ __('navbar.contact') }}</span>
         <i class="bi bi-chevron-right text-xs text-gray-300"></i>
       </a>

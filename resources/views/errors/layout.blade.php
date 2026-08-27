@@ -67,7 +67,7 @@
                 <a href="{{ route('listing.path1', ['first' => 'satilik']) }}" class="px-3 py-1.5 bg-white hover:bg-orange-50 hover:text-orange-600 border border-gray-200/80 rounded-xl text-gray-700 transition">
                     🏷️ Satılıq Əmlaklar
                 </a>
-                <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'ayliq']) }}" class="px-3 py-1.5 bg-white hover:bg-orange-50 hover:text-orange-600 border border-gray-200/80 rounded-xl text-gray-700 transition">
+                <a href="{{ route('listing.path2', ['first' => 'kiralik', 'second' => 'aylik']) }}" class="px-3 py-1.5 bg-white hover:bg-orange-50 hover:text-orange-600 border border-gray-200/80 rounded-xl text-gray-700 transition">
                     🔑 Kirayə Mənzillər
                 </a>
                 <a href="{{ route('requests.index') }}" class="px-3 py-1.5 bg-white hover:bg-orange-50 hover:text-orange-600 border border-gray-200/80 rounded-xl text-gray-700 transition">

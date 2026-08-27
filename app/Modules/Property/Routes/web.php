@@ -5,17 +5,22 @@ use App\Modules\Property\Controllers\HomeController;
 use App\Modules\Property\Controllers\PropertyDetailController;
 use Illuminate\Support\Facades\Route;
 
-// Ana Səhifə & Axtarış
+// Ana Sayfa & İlan Listesi
 Route::get('/', HomeController::class)->name('home');
-Route::get('/listing', HomeController::class)->name('listing');
+Route::get('/ilanlar', HomeController::class)->name('listing');
+Route::get('/listing', HomeController::class);
 Route::get('/properties', HomeController::class);
 
-// Əmlak Detal Səhifəsi
-Route::get('/elan/{slug}', PropertyDetailController::class)->name('properties.show');
+// İlan Detay Sayfası (Turkish /ilan/{slug}, aliases: /elan, /property, /properties)
+Route::get('/ilan/{slug}', PropertyDetailController::class)->name('properties.show');
+Route::get('/elan/{slug}', PropertyDetailController::class);
 Route::get('/property/{slug}', PropertyDetailController::class);
 Route::get('/properties/{slug}', PropertyDetailController::class);
 
-// Elan Əlavə Et
-Route::get('/add-property/amenities', [AddPropertyController::class, 'amenities'])->name('add-property.amenities');
-Route::get('/add-property', [AddPropertyController::class, 'create'])->name('add-property');
-Route::post('/add-property', [AddPropertyController::class, 'store'])->name('add-property.store');
+// İlan Ekle (Add Property)
+Route::get('/ilan-ver/ozellikler', [AddPropertyController::class, 'amenities'])->name('add-property.amenities');
+Route::get('/add-property/amenities', [AddPropertyController::class, 'amenities']);
+Route::get('/ilan-ver', [AddPropertyController::class, 'create'])->name('add-property');
+Route::get('/add-property', [AddPropertyController::class, 'create']);
+Route::post('/ilan-ver', [AddPropertyController::class, 'store'])->name('add-property.store');
+Route::post('/add-property', [AddPropertyController::class, 'store']);

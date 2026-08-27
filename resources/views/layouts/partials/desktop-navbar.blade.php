@@ -13,19 +13,19 @@
 
     <!-- Desktop Navigation Links (Always visible on md and up) -->
     <nav class="hidden md:flex items-center space-x-5 lg:space-x-7 text-[15px] font-medium">
-      <a href="{{ route('listing.path1', ['first' => 'satilik']) }}" class="{{ request('deal_type') === 'sale' ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
+      <a href="{{ route('listing.path1', ['first' => 'satilik']) }}" class="{{ request('deal_type') === 'sale' || request()->is('*satilik*') ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
         {{ __('navbar.sale') }}
       </a>
-      <a href="{{ route('listing.path2', ['first' => 'kira', 'second' => 'ayliq']) }}" class="{{ request('deal_type') === 'rent_monthly' ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
+      <a href="{{ route('listing.path2', ['first' => 'kiralik', 'second' => 'aylik']) }}" class="{{ request('deal_type') === 'rent_monthly' || request()->is('*kiralik*') || request()->is('*kira*') ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
         {{ __('navbar.rent') }}
       </a>
-      <a href="{{ route('requests.index') }}" class="{{ request()->is('axtariram*') || request()->is('otaq-yoldasi*') ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
+      <a href="{{ route('requests.index') }}" class="{{ request()->is('*ariyorum*') || request()->is('*oda-arkadasi*') || request()->is('*axtariram*') || request()->is('*otaq-yoldasi*') ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
         {{ __('navbar.requests') }}
       </a>
-      <a href="{{ route('agencies.list') }}" class="{{ request()->is('agencies*') || request()->is('agentlik*') ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
+      <a href="{{ route('agencies.list') }}" class="{{ request()->is('*emlak-ofis*') || request()->is('*agencies*') || request()->is('*agentlik*') ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
         {{ __('navbar.agencies') }}
       </a>
-      <a href="{{ route('contact') }}" class="{{ request()->is('contact*') ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
+      <a href="{{ route('contact') }}" class="{{ request()->is('*iletisim*') || request()->is('*contact*') ? 'text-orange-500 font-semibold' : 'text-gray-700 hover:text-orange-500' }} transition">
         {{ __('navbar.contact') }}
       </a>
     </nav>

@@ -6,19 +6,54 @@ use App\Http\Controllers\Controller;
 use App\Modules\Shared\Enums\Currency;
 use App\Modules\Shared\Enums\SupportedLocale;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class LocaleController extends Controller
 {
-    public function switchLanguage(string $locale): RedirectResponse
+    public function switchLanguage(Request $request, string $locale): RedirectResponse
     {
         $locale = strtolower(trim($locale));
+        $supportedLocales = ['az', 'en', 'ru', 'tr'];
 
-        if (SupportedLocale::isValid($locale)) {
-            session(['lang' => $locale]);
-            app()->setLocale($locale);
+        if (!in_array($locale, $supportedLocales, true)) {
+            return redirect()->back();
         }
 
-        return redirect()->back();
+        session(['lang' => $locale]);
+        app()->setLocale($locale);
+
+        $previousUrl = url()->previous();
+        $parsedUrl = parse_url($previousUrl);
+        $path = $parsedUrl['path'] ?? '/';
+        $query = isset($parsedUrl['query']) ? '?' . $parsedUrl['query'] : '';
+
+        // Do not alter admin, agency, or API paths
+        if (
+            str_starts_with($path, '/admin') ||
+            str_starts_with($path, '/agency') ||
+            str_starts_with($path, '/api') ||
+            str_starts_with($path, '/livewire')
+        ) {
+            return redirect()->to($path . $query);
+        }
+
+        // Strip existing locale prefix if present
+        $segments = explode('/', trim($path, '/'));
+        if (!empty($segments) && in_array($segments[0], $supportedLocales, true)) {
+            array_shift($segments);
+        }
+
+        $cleanPath = implode('/', $segments);
+
+        // Build target URL
+        if ($locale === 'tr') {
+            // Default Turkish can be root or /tr
+            $targetUrl = '/' . $cleanPath;
+        } else {
+            $targetUrl = '/' . $locale . ($cleanPath !== '' ? '/' . $cleanPath : '');
+        }
+
+        return redirect()->to($targetUrl . $query);
     }
 
     public function switchCurrency(string $code): RedirectResponse
