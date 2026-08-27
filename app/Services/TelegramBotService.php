@@ -187,19 +187,33 @@ class TelegramBotService
                 $model = $this->getModelInstance($type, $id);
                 if ($model) {
                     $model->status = $type === 'property' ? 'published' : 'published';
+                    if (isset($model->rejection_reason)) {
+                        $model->rejection_reason = null;
+                    }
                     $model->save();
 
-                    // Edit original message (supports text and captions)
-                    $newText = $originalText . "\n\n🟢 *TƏSDİQLƏNDİ* (Admin tərəfindən qəbul edildi)";
+                    // Clean status suffix and append new one
+                    $cleanText = $this->cleanStatusSuffix($originalText);
+                    $newText = $cleanText . "\n\n🟢 *TƏSDİQLƏNDİ* (Admin tərəfindən qəbul edildi)";
                     $hasCaption = isset($callbackQuery['message']['caption']);
                     $method = $hasCaption ? '/editMessageCaption' : '/editMessageText';
                     $paramName = $hasCaption ? 'caption' : 'text';
+
+                    // Update keyboard: allow rejection later
+                    $keyboard = [
+                        'inline_keyboard' => [
+                            [
+                                ['text' => '❌ İmtina et', 'callback_data' => "reject_prompt_{$type}_{$id}"],
+                            ]
+                        ]
+                    ];
 
                     Http::post($this->getApiUrl() . $method, [
                         'chat_id' => $chatId,
                         'message_id' => $messageId,
                         $paramName => $newText,
                         'parse_mode' => 'Markdown',
+                        'reply_markup' => json_encode($keyboard),
                     ]);
 
                     Http::post($this->getApiUrl() . '/answerCallbackQuery', [
@@ -211,13 +225,14 @@ class TelegramBotService
                 $type = $matches[1];
                 $id = $matches[2];
 
-                // Set state in Cache
+                // Set state in Cache with cleaned text
+                $cleanText = $this->cleanStatusSuffix($originalText);
                 Cache::put("telegram_state_{$chatId}", [
                     'action' => 'reject',
                     'type' => $type,
                     'id' => $id,
                     'message_id' => $messageId,
-                    'original_text' => $originalText,
+                    'original_text' => $cleanText,
                     'has_caption' => isset($callbackQuery['message']['caption'])
                 ], now()->addMinutes(10));
 
@@ -285,11 +300,21 @@ class TelegramBotService
                     $method = $hasCaption ? '/editMessageCaption' : '/editMessageText';
                     $paramName = $hasCaption ? 'caption' : 'text';
 
+                    // Update keyboard: allow re-approval (accepting later)
+                    $keyboard = [
+                        'inline_keyboard' => [
+                            [
+                                ['text' => '✅ Yenidən Təsdiqlə', 'callback_data' => "approve_{$type}_{$id}"],
+                            ]
+                        ]
+                    ];
+
                     Http::post($this->getApiUrl() . $method, [
                         'chat_id' => $chatId,
                         'message_id' => $origMsgId,
                         $paramName => $newText,
                         'parse_mode' => 'Markdown',
+                        'reply_markup' => json_encode($keyboard),
                     ]);
 
                     Http::post($this->getApiUrl() . '/sendMessage', [
@@ -323,5 +348,12 @@ class TelegramBotService
             return $value['az'] ?? $value['ru'] ?? $value['en'] ?? reset($value) ?? $default;
         }
         return (string) ($value ?? $default);
+    }
+
+    protected function cleanStatusSuffix(string $text): string
+    {
+        $text = preg_replace('/\n\n🟢 \*TƏSDİQLƏNDİ\*.*$/s', '', $text);
+        $text = preg_replace('/\n\n🔴 \*İMTİNA EDİLDİ\*.*$/s', '', $text);
+        return trim($text);
     }
 }
