@@ -10,17 +10,17 @@ use Illuminate\Http\Request;
 
 class LocaleController extends Controller
 {
-    public function switchLanguage(Request $request, string $locale): RedirectResponse
+    public function switchLanguage(Request $request, ?string $lang = null, ?string $locale = null): RedirectResponse
     {
-        $locale = strtolower(trim($locale));
+        $targetLocale = strtolower(trim($lang ?? $locale ?? ''));
         $supportedLocales = ['az', 'en', 'ru', 'tr'];
 
-        if (!in_array($locale, $supportedLocales, true)) {
+        if (!in_array($targetLocale, $supportedLocales, true)) {
             return redirect()->back();
         }
 
-        session(['lang' => $locale]);
-        app()->setLocale($locale);
+        session(['lang' => $targetLocale]);
+        app()->setLocale($targetLocale);
 
         $previousUrl = url()->previous();
         $parsedUrl = parse_url($previousUrl);
