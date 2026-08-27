@@ -55,13 +55,32 @@ class ManageSeoSettings extends Page implements HasForms
     public function form(Form $form): Form
     {
         PageSeo::ensureDefaults();
-        $pages = PageSeo::orderBy('sort_order')->get();
+        $iconMap = [
+            'home' => 'heroicon-o-home',
+            'listing_sale' => 'heroicon-o-tag',
+            'listing_rent_monthly' => 'heroicon-o-key',
+            'listing_rent_daily' => 'heroicon-o-calendar',
+            'listing' => 'heroicon-o-magnifying-glass',
+            'requests' => 'heroicon-o-megaphone',
+            'requests_create' => 'heroicon-o-plus-circle',
+            'roommates' => 'heroicon-o-user-group',
+            'roommates_create' => 'heroicon-o-user-plus',
+            'add_property' => 'heroicon-o-document-plus',
+            'agencies' => 'heroicon-o-building-office-2',
+            'blog' => 'heroicon-o-newspaper',
+            'contact' => 'heroicon-o-phone',
+            'about' => 'heroicon-o-information-circle',
+            'faq' => 'heroicon-o-question-mark-circle',
+            'compare' => 'heroicon-o-arrows-right-left',
+            'favorites' => 'heroicon-o-heart',
+        ];
 
         $pageTabs = [];
         foreach ($pages as $p) {
             $key = $p->page_key;
             $pageTabs[] = Tabs\Tab::make("page_{$key}")
                 ->label($p->page_name)
+                ->icon($iconMap[$key] ?? 'heroicon-o-document-text')
                 ->schema([
                     Section::make("{$p->page_name} — SEO Başlığı (Meta Title)")
                         ->description('Axtarış sistemlərində və brauzer tabında görünəcək səhifə başlığı')
