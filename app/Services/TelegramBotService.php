@@ -47,6 +47,11 @@ class TelegramBotService
         $contactName = $this->getTranslatableString($model->contact_name ?? $user?->name, 'Qeyd olunmayıb');
         $contactPhone = $this->getTranslatableString($model->contact_phone, 'Qeyd olunmayıb');
 
+        $description = $this->getTranslatableString($model->description, '');
+        $description = strip_tags($description);
+        $description = \Illuminate\Support\Str::limit($description, 250);
+        $descText = $description ? "📝 *Təsvir:* {$description}\n" : '';
+
         if ($model instanceof Property) {
             $type = 'property';
             $price = number_format($model->price) . ' ' . $model->currency;
@@ -59,7 +64,8 @@ class TelegramBotService
                 . "🏷️ *Başlıq:* {$title}\n"
                 . "💰 *Qiymət:* {$price}\n"
                 . "📍 *Məkan:* {$city} / {$district}\n"
-                . "🚪 *Otaq:* {$rooms} otaqlı | *Sahə:* {$area}\n";
+                . "🚪 *Otaq:* {$rooms} otaqlı | *Sahə:* {$area}\n"
+                . $descText;
         } elseif ($model instanceof PropertyRequest) {
             $type = 'request';
             $budget = number_format($model->budget_min) . ' - ' . number_format($model->budget_max) . ' ' . $model->currency;
@@ -69,7 +75,8 @@ class TelegramBotService
             $details = "🔍 *YENİ ƏMLAK TƏLƏBİ (AXTARIRAM)*\n"
                 . "🏷️ *Başlıq:* {$title}\n"
                 . "💰 *Büdcə:* {$budget}\n"
-                . "📍 *Məkan:* {$city} / {$district}\n";
+                . "📍 *Məkan:* {$city} / {$district}\n"
+                . $descText;
         } elseif ($model instanceof RoommateListing) {
             $type = 'roommate';
             $price = number_format($model->price) . ' ' . $model->currency;
@@ -78,7 +85,8 @@ class TelegramBotService
             $details = "🤝 *YENİ OTAQ YOLDAŞI ELANI*\n"
                 . "🏷️ *Başlıq:* {$title}\n"
                 . "💰 *Qiymət:* {$price}\n"
-                . "📍 *Məkan:* {$city}\n";
+                . "📍 *Məkan:* {$city}\n"
+                . $descText;
         }
 
         $message = $details
@@ -96,12 +104,37 @@ class TelegramBotService
             ]
         ];
 
-        Http::post($this->getApiUrl() . '/sendMessage', [
-            'chat_id' => $chatId,
-            'text' => $message,
-            'parse_mode' => 'Markdown',
-            'reply_markup' => json_encode($keyboard),
-        ]);
+        $firstImage = $model->images ? $model->images->first() : null;
+        $imageUrl = $firstImage ? $firstImage->url : null;
+
+        $sent = false;
+        if ($imageUrl) {
+            // Truncate caption to Telegram limit of 1024 characters
+            $caption = \Illuminate\Support\Str::limit($message, 1000);
+            
+            $response = Http::post($this->getApiUrl() . '/sendPhoto', [
+                'chat_id' => $chatId,
+                'photo' => $imageUrl,
+                'caption' => $caption,
+                'parse_mode' => 'Markdown',
+                'reply_markup' => json_encode($keyboard),
+            ]);
+            
+            if ($response->json('ok', false)) {
+                $sent = true;
+            } else {
+                Log::warning('Telegram sendPhoto failed, falling back to sendMessage: ' . $response->body());
+            }
+        }
+
+        if (!$sent) {
+            Http::post($this->getApiUrl() . '/sendMessage', [
+                'chat_id' => $chatId,
+                'text' => $message,
+                'parse_mode' => 'Markdown',
+                'reply_markup' => json_encode($keyboard),
+            ]);
+        }
     }
 
     public function handleWebhook(array $update): void
@@ -113,7 +146,7 @@ class TelegramBotService
             $chatId = $callbackQuery['message']['chat']['id'];
             $messageId = $callbackQuery['message']['message_id'];
             $data = $callbackQuery['data'];
-            $originalText = $callbackQuery['message']['text'] ?? '';
+            $originalText = $callbackQuery['message']['text'] ?? $callbackQuery['message']['caption'] ?? '';
 
             if (preg_match('/^approve_(property|request|roommate)_(\d+)$/', $data, $matches)) {
                 $type = $matches[1];
@@ -124,12 +157,16 @@ class TelegramBotService
                     $model->status = $type === 'property' ? 'published' : 'published';
                     $model->save();
 
-                    // Edit original message
+                    // Edit original message (supports text and captions)
                     $newText = $originalText . "\n\n🟢 *TƏSDİQLƏNDİ* (Admin tərəfindən qəbul edildi)";
-                    Http::post($this->getApiUrl() . '/editMessageText', [
+                    $hasCaption = isset($callbackQuery['message']['caption']);
+                    $method = $hasCaption ? '/editMessageCaption' : '/editMessageText';
+                    $paramName = $hasCaption ? 'caption' : 'text';
+
+                    Http::post($this->getApiUrl() . $method, [
                         'chat_id' => $chatId,
                         'message_id' => $messageId,
-                        'text' => $newText,
+                        $paramName => $newText,
                         'parse_mode' => 'Markdown',
                     ]);
 
@@ -148,7 +185,8 @@ class TelegramBotService
                     'type' => $type,
                     'id' => $id,
                     'message_id' => $messageId,
-                    'original_text' => $originalText
+                    'original_text' => $originalText,
+                    'has_caption' => isset($callbackQuery['message']['caption'])
                 ], now()->addMinutes(10));
 
                 // Send reply request
@@ -211,10 +249,14 @@ class TelegramBotService
 
                     // Update original notification message
                     $newText = $originalText . "\n\n🔴 *İMTİNA EDİLDİ*\n❌ *Səbəb:* {$text}";
-                    Http::post($this->getApiUrl() . '/editMessageText', [
+                    $hasCaption = $state['has_caption'] ?? false;
+                    $method = $hasCaption ? '/editMessageCaption' : '/editMessageText';
+                    $paramName = $hasCaption ? 'caption' : 'text';
+
+                    Http::post($this->getApiUrl() . $method, [
                         'chat_id' => $chatId,
                         'message_id' => $origMsgId,
-                        'text' => $newText,
+                        $paramName => $newText,
                         'parse_mode' => 'Markdown',
                     ]);
 
