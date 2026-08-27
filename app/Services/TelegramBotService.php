@@ -30,7 +30,9 @@ class TelegramBotService
 
     public function sendNewListingNotification($model): void
     {
-        $chatId = Cache::get('telegram_admin_chat_id');
+        $chatIdPath = storage_path('app/telegram_chat_id.txt');
+        $chatId = file_exists($chatIdPath) ? trim(file_get_contents($chatIdPath)) : null;
+        
         if (!$chatId) {
             Log::warning('Telegram admin chat ID not set. Send /start to the bot.');
             return;
@@ -173,7 +175,7 @@ class TelegramBotService
 
             $lowerText = strtolower(trim($text));
             if ($lowerText === '/start' || str_starts_with($lowerText, '/start@')) {
-                Cache::forever('telegram_admin_chat_id', $chatId);
+                @file_put_contents(storage_path('app/telegram_chat_id.txt'), $chatId);
                 
                 $chatType = $message['chat']['type'] ?? 'private';
                 $chatTitle = $message['chat']['title'] ?? 'Şəxsi Çat';
