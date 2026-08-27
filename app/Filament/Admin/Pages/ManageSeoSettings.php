@@ -55,6 +55,7 @@ class ManageSeoSettings extends Page implements HasForms
     public function form(Form $form): Form
     {
         PageSeo::ensureDefaults();
+        $pages = PageSeo::orderBy('sort_order')->get();
         $iconMap = [
             'home' => 'heroicon-o-home',
             'listing_sale' => 'heroicon-o-tag',
