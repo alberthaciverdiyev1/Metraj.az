@@ -2,7 +2,6 @@
 
 namespace App\Modules\Shared\Middleware;
 
-use App\Modules\Shared\Enums\SupportedLocale;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
@@ -19,14 +18,19 @@ class SetLocale
             $locale = $segment;
             session(['lang' => $locale]);
             app()->setLocale($locale);
-            URL::defaults(['locale' => $locale]);
         } else {
             $locale = session('lang', config('app.locale', 'tr'));
             if (!in_array($locale, $supportedLocales, true)) {
                 $locale = config('app.locale', 'tr');
             }
             app()->setLocale($locale);
+        }
+
+        // Set default URL parameter for {locale?} so all route(...) calls preserve the current locale!
+        if ($locale !== 'tr' || $segment === 'tr') {
             URL::defaults(['locale' => $locale]);
+        } else {
+            URL::defaults(['locale' => null]);
         }
 
         return $next($request);
