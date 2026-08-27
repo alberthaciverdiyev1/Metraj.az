@@ -23,13 +23,20 @@ class HomeController extends Controller
 
     public function __invoke(Request $request, ?string $first = null, ?string $second = null, ?string $third = null)
     {
+        // When accessed via localized route group /{locale}/...
+        if ($first !== null && in_array(strtolower($first), ['az', 'en', 'ru', 'tr'], true)) {
+            $first = $second;
+            $second = $third;
+            $third = func_num_args() > 4 ? func_get_arg(4) : null;
+        }
+
         // AJAX istekleri her zaman canlı veri döndürür
         if ($request->ajax() || $request->wantsJson()) {
             return $this->ajaxListing($request, $first, $second, $third);
         }
 
         if (! $request->has('_cache_bust')) {
-            return $this->cacheGuestPage($request, 'home_index', 300, fn () => $this->renderListingPage($request, $first, $second, $third));
+            return $this->cacheGuestPage($request, 'home_index_' . app()->getLocale(), 300, fn () => $this->renderListingPage($request, $first, $second, $third));
         }
 
         return response($this->renderListingPage($request, $first, $second, $third));
