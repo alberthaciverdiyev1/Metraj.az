@@ -170,11 +170,23 @@ class TelegramBotService
             $chatId = $message['chat']['id'];
             $text = $message['text'] ?? '';
 
-            if (strtolower(trim($text)) === '/start') {
+            $lowerText = strtolower(trim($text));
+            if ($lowerText === '/start' || str_starts_with($lowerText, '/start@')) {
                 Cache::forever('telegram_admin_chat_id', $chatId);
+                
+                $chatType = $message['chat']['type'] ?? 'private';
+                $chatTitle = $message['chat']['title'] ?? 'Şəxsi Çat';
+                
+                $responseText = "Salam! Bu çat bildirişlərin göndərilməsi üçün yadda saxlanıldı.\n\n"
+                    . "ℹ️ *Çat Məlumatı:*\n"
+                    . "• *Növ:* {$chatType}\n"
+                    . "• *Ad/Başlıq:* {$chatTitle}\n"
+                    . "• *ID:* `{$chatId}`\n\n"
+                    . "Artıq yeni elanlar və müraciətlər bu çata/qrupa gələcək.";
+                
                 Http::post($this->getApiUrl() . '/sendMessage', [
                     'chat_id' => $chatId,
-                    'text' => "Salam Admin! Sizin Chat ID yadda saxlanıldı: `{$chatId}`. Artıq yeni elanlar və müraciətlər bu çat-a gələcək.",
+                    'text' => $responseText,
                     'parse_mode' => 'Markdown',
                 ]);
                 return;
