@@ -78,6 +78,11 @@ php artisan event:cache 2>/dev/null || true
 echo "🪙 Warming up currency rates..."
 php artisan currency:update-rates || true
 
+# 8.6 Ensure proper permissions and ownership for www-data
+echo "🔒 Fixing storage and cache permissions (www-data)..."
+chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || sudo chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
+chmod -R 775 storage bootstrap/cache 2>/dev/null || sudo chmod -R 775 storage bootstrap/cache 2>/dev/null || true
+
 # 9. Purge Nginx Caches & Reload Nginx
 echo "🌐 Flushing Nginx cache and reloading Nginx..."
 if [ -d "/var/cache/nginx" ]; then
