@@ -39,16 +39,17 @@ class TelegramBotService
         $type = '';
         $details = '';
         $id = $model->id;
-        $title = $model->title ?? 'Başlıqsız';
+        $title = $this->getTranslatableString($model->title, 'Başlıqsız');
         $user = $model->user;
-        $contactName = $model->contact_name ?? $user?->name ?? 'Qeyd olunmayıb';
-        $contactPhone = $model->contact_phone ?? 'Qeyd olunmayıb';
+        
+        $contactName = $this->getTranslatableString($model->contact_name ?? $user?->name, 'Qeyd olunmayıb');
+        $contactPhone = $this->getTranslatableString($model->contact_phone, 'Qeyd olunmayıb');
 
         if ($model instanceof Property) {
             $type = 'property';
             $price = number_format($model->price) . ' ' . $model->currency;
-            $city = $model->city?->name ?? '-';
-            $district = $model->district?->name ?? '-';
+            $city = $this->getTranslatableString($model->city?->name, '-');
+            $district = $this->getTranslatableString($model->district?->name, '-');
             $rooms = $model->rooms ?? '-';
             $area = $model->area ? $model->area . ' m²' : '-';
 
@@ -60,8 +61,8 @@ class TelegramBotService
         } elseif ($model instanceof PropertyRequest) {
             $type = 'request';
             $budget = number_format($model->budget_min) . ' - ' . number_format($model->budget_max) . ' ' . $model->currency;
-            $city = $model->city?->name ?? '-';
-            $district = $model->district?->name ?? '-';
+            $city = $this->getTranslatableString($model->city?->name, '-');
+            $district = $this->getTranslatableString($model->district?->name, '-');
 
             $details = "🔍 *YENİ ƏMLAK TƏLƏBİ (AXTARIRAM)*\n"
                 . "🏷️ *Başlıq:* {$title}\n"
@@ -70,7 +71,7 @@ class TelegramBotService
         } elseif ($model instanceof RoommateListing) {
             $type = 'roommate';
             $price = number_format($model->price) . ' ' . $model->currency;
-            $city = $model->city?->name ?? '-';
+            $city = $this->getTranslatableString($model->city?->name, '-');
 
             $details = "🤝 *YENİ OTAQ YOLDAŞI ELANI*\n"
                 . "🏷️ *Başlıq:* {$title}\n"
@@ -238,5 +239,13 @@ class TelegramBotService
                 return RoommateListing::find($id);
         }
         return null;
+    }
+
+    protected function getTranslatableString($value, string $default = '-'): string
+    {
+        if (is_array($value)) {
+            return $value['az'] ?? $value['ru'] ?? $value['en'] ?? reset($value) ?? $default;
+        }
+        return (string) ($value ?? $default);
     }
 }
