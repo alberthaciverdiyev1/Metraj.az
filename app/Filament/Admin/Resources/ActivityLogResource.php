@@ -319,7 +319,7 @@ class ActivityLogResource extends Resource
     public static function getWidgets(): array
     {
         return [
-            Pages\ActivityLogStatsWidget::class ?? \App\Filament\Admin\Resources\ActivityLogResource\Widgets\ActivityLogStatsWidget::class,
+            \App\Filament\Admin\Resources\ActivityLogResource\Widgets\ActivityLogStatsWidget::class,
         ];
     }
 
