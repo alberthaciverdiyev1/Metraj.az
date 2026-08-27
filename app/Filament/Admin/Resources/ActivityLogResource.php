@@ -17,8 +17,6 @@ class ActivityLogResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-finger-print';
 
-    protected static ?string $navigationGroup = 'Kataloq və Tənzimləmələr';
-
     protected static ?string $navigationLabel = 'Aktivlik Qeydləri';
 
     protected static ?string $modelLabel = 'Aktivlik Qeydi';
@@ -72,9 +70,12 @@ class ActivityLogResource extends Resource
 
                 Forms\Components\Section::make('Dəyişiklik / İstək Göndərişi (Payload)')
                     ->schema([
-                        Forms\Components\KeyValue::make('payload')
-                            ->label('Məlumatlar')
-                            ->disabled(),
+                        Forms\Components\Textarea::make('payload')
+                            ->label('Məlumatlar (JSON)')
+                            ->disabled()
+                            ->rows(12)
+                            ->formatStateUsing(fn ($state) => is_array($state) ? json_encode($state, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) : $state)
+                            ->columnSpanFull(),
                     ])
                     ->visible(fn (ActivityLog $record) => !empty($record->payload)),
             ]);
