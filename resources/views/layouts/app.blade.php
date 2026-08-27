@@ -17,6 +17,7 @@
     @endphp
 
     <title>{{ $resolvedTitle }}</title>
+    <link rel="canonical" href="{{ url()->current() }}" />
 
     @if($resolvedDescription)
         <meta name="description" content="{{ $resolvedDescription }}"/>
