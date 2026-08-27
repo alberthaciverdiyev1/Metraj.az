@@ -104,12 +104,44 @@ class TelegramBotService
             ]
         ];
 
-        $firstImage = $model->images ? $model->images->first() : null;
-        $imageUrl = $firstImage ? $firstImage->url : null;
+        $images = $model->images;
+        $imageCount = $images ? $images->count() : 0;
 
         $sent = false;
-        if ($imageUrl) {
-            // Truncate caption to Telegram limit of 1024 characters
+
+        if ($imageCount > 1) {
+            // Send Media Group (up to 10 photos)
+            $media = [];
+            foreach ($images->take(10) as $img) {
+                $media[] = [
+                    'type' => 'photo',
+                    'media' => $img->url,
+                ];
+            }
+
+            $responseGroup = Http::post($this->getApiUrl() . '/sendMediaGroup', [
+                'chat_id' => $chatId,
+                'media' => json_encode($media),
+            ]);
+
+            if ($responseGroup->json('ok', false)) {
+                // Send the listing message with keyboard right after the album
+                $responseMsg = Http::post($this->getApiUrl() . '/sendMessage', [
+                    'chat_id' => $chatId,
+                    'text' => $message,
+                    'parse_mode' => 'Markdown',
+                    'reply_markup' => json_encode($keyboard),
+                ]);
+
+                if ($responseMsg->json('ok', false)) {
+                    $sent = true;
+                }
+            } else {
+                Log::warning('Telegram sendMediaGroup failed, falling back: ' . $responseGroup->body());
+            }
+        } elseif ($imageCount === 1) {
+            // Send single photo with inline keyboard caption
+            $imageUrl = $images->first()->url;
             $caption = \Illuminate\Support\Str::limit($message, 1000);
             
             $response = Http::post($this->getApiUrl() . '/sendPhoto', [
@@ -123,7 +155,7 @@ class TelegramBotService
             if ($response->json('ok', false)) {
                 $sent = true;
             } else {
-                Log::warning('Telegram sendPhoto failed, falling back to sendMessage: ' . $response->body());
+                Log::warning('Telegram sendPhoto failed: ' . $response->body());
             }
         }
 
