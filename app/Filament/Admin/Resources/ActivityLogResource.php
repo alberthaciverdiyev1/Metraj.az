@@ -134,6 +134,7 @@ class ActivityLogResource extends Resource
                                 ]),
 
                                 Forms\Components\View::make('filament.components.activity-log-map')
+                                    ->viewData(fn ($record) => ['record' => $record])
                                     ->columnSpanFull(),
                             ]),
 
