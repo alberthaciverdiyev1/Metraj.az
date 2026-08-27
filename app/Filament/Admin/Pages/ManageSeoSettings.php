@@ -61,7 +61,6 @@ class ManageSeoSettings extends Page implements HasForms
             'listing_sale' => 'heroicon-o-tag',
             'listing_rent_monthly' => 'heroicon-o-key',
             'listing_rent_daily' => 'heroicon-o-calendar',
-            'listing' => 'heroicon-o-magnifying-glass',
             'requests' => 'heroicon-o-megaphone',
             'requests_create' => 'heroicon-o-plus-circle',
             'roommates' => 'heroicon-o-user-group',

@@ -133,21 +133,18 @@ class PageSeo extends Model
         }
 
         // 3. Path-based fallbacks for all navbar routes
-        if ($path === '' || $path === '/') {
+        if ($path === '' || $path === '/' || $path === 'listing' || $path === 'properties') {
             return static::$memoizedCurrent = ($all['home'] ?? null);
         }
 
         if ($path === 'satilik' || str_starts_with($path, 'satilik/')) {
-            return static::$memoizedCurrent = ($all['listing_sale'] ?? $all['listing'] ?? null);
+            return static::$memoizedCurrent = ($all['listing_sale'] ?? $all['home'] ?? null);
         }
         if (str_starts_with($path, 'kira/gunluk')) {
             return static::$memoizedCurrent = ($all['listing_rent_daily'] ?? $all['listing_rent_monthly'] ?? null);
         }
         if (str_starts_with($path, 'kira')) {
             return static::$memoizedCurrent = ($all['listing_rent_monthly'] ?? null);
-        }
-        if ($path === 'listing' || $path === 'properties') {
-            return static::$memoizedCurrent = ($all['listing'] ?? null);
         }
         if (str_starts_with($path, 'axtariram/elave-et') || str_starts_with($path, 'requests/create')) {
             return static::$memoizedCurrent = ($all['requests_create'] ?? $all['requests'] ?? null);
@@ -283,28 +280,10 @@ class PageSeo extends Model
                 ],
             ],
             [
-                'page_key' => 'listing',
-                'page_name' => 'Bütün Əmlak Elanları (Axtarış Kataloqu)',
-                'route_name' => 'listing',
-                'sort_order' => 5,
-                'title' => [
-                    'tr' => 'Kuzey Kıbrıs Tüm Emlak İlanları Kataloğu - KibrisKare',
-                    'az' => 'Şimali Kipr Bütün Əmlak Elanları Kataloqu - KibrisKare',
-                    'en' => 'All Real Estate & Property Catalog in Northern Cyprus',
-                    'ru' => 'Каталог всех объектов недвижимости на Северном Кипре',
-                ],
-                'description' => [
-                    'tr' => 'Kuzey Kıbrıs genelinde tüm satılık ve kiralık gayrimenkulleri filtreleyin ve karşılaştırın.',
-                    'az' => 'Şimali Kipr üzrə bütün satılıq və kirayə daşınmaz əmlakları filtrləyin və müqayisə edin.',
-                    'en' => 'Filter, search and compare all properties for sale and rent in Northern Cyprus.',
-                    'ru' => 'Поиск, фильтрация и сравнение всех объектов недвижимости на Северном Кипре.',
-                ],
-            ],
-            [
                 'page_key' => 'requests',
                 'page_name' => 'Əmlak Tələbləri (Axtarıram)',
                 'route_name' => 'requests.index',
-                'sort_order' => 6,
+                'sort_order' => 5,
                 'title' => [
                     'tr' => 'Alıcı ve Kiracı Talepleri (Arıyorum) - KibrisKare',
                     'az' => 'Alıcı və Kirayəçi Tələbləri (Axtarıram) - KibrisKare',
@@ -322,7 +301,7 @@ class PageSeo extends Model
                 'page_key' => 'requests_create',
                 'page_name' => 'Tələb Yerləşdir (Axtarıram Elan Et)',
                 'route_name' => 'requests.create',
-                'sort_order' => 7,
+                'sort_order' => 6,
                 'title' => [
                     'tr' => 'Gayrimenkul Talebi Oluştur (Arıyorum İlanı Ver) - KibrisKare',
                     'az' => 'Əmlak Tələbi Yerləşdir (Axtarıram Elanı Ver) - KibrisKare',
@@ -340,7 +319,7 @@ class PageSeo extends Model
                 'page_key' => 'roommates',
                 'page_name' => 'Otaq Yoldaşı Elanları',
                 'route_name' => 'roommates.index',
-                'sort_order' => 8,
+                'sort_order' => 7,
                 'title' => [
                     'tr' => 'Kuzey Kıbrıs Oda Arkadaşı ve Paylaşımlı Ev İlanları - KibrisKare',
                     'az' => 'Şimali Kipr Otaq Yoldaşı və Həmyoldaş Elanları - KibrisKare',
@@ -358,7 +337,7 @@ class PageSeo extends Model
                 'page_key' => 'roommates_create',
                 'page_name' => 'Otaq Yoldaşı Elanı Əlavə Et',
                 'route_name' => 'roommates.create',
-                'sort_order' => 9,
+                'sort_order' => 8,
                 'title' => [
                     'tr' => 'Oda Arkadaşı İlanı Ver - KibrisKare',
                     'az' => 'Otaq Yoldaşı Elanı Yerləşdir - KibrisKare',
@@ -376,7 +355,7 @@ class PageSeo extends Model
                 'page_key' => 'add_property',
                 'page_name' => 'Yeni Elan Yerləşdir (Əmlakını Sat / Kirayə Ver)',
                 'route_name' => 'add-property',
-                'sort_order' => 10,
+                'sort_order' => 9,
                 'title' => [
                     'tr' => 'Ücretsiz Emlak İlanı Ver - Evini Sat veya Kirala - KibrisKare',
                     'az' => 'Pulsuz Əmlak Elanı Yerləşdir - Evini Sat və ya Kirayə Ver - KibrisKare',
@@ -394,7 +373,7 @@ class PageSeo extends Model
                 'page_key' => 'agencies',
                 'page_name' => 'Əmlak Agentlikləri',
                 'route_name' => 'agencies.list',
-                'sort_order' => 11,
+                'sort_order' => 10,
                 'title' => [
                     'tr' => 'Kuzey Kıbrıs Güvenilir Emlak Acenteleri ve Ofisleri - KibrisKare',
                     'az' => 'Şimali Kipr Etibarlı Əmlak Agentlikləri və Ofisləri - KibrisKare',
@@ -412,7 +391,7 @@ class PageSeo extends Model
                 'page_key' => 'blog',
                 'page_name' => 'Bloq & Xəbərlər',
                 'route_name' => 'blog.list',
-                'sort_order' => 12,
+                'sort_order' => 11,
                 'title' => [
                     'tr' => 'Kıbrıs Emlak Rehberi, Yatırım Tavsiyeleri ve Haberler - Blog',
                     'az' => 'Kipr Əmlak Bələdçisi, İnvestisiya Məsləhətləri və Xəbərlər - Bloq',
@@ -430,7 +409,7 @@ class PageSeo extends Model
                 'page_key' => 'contact',
                 'page_name' => 'Əlaqə',
                 'route_name' => 'contact',
-                'sort_order' => 13,
+                'sort_order' => 12,
                 'title' => [
                     'tr' => 'İletişim - KibrisKare.com Müşteri Hizmetleri',
                     'az' => 'Əlaqə - KibrisKare.com Müştəri Xidmətləri',
@@ -448,7 +427,7 @@ class PageSeo extends Model
                 'page_key' => 'about',
                 'page_name' => 'Haqqımızda',
                 'route_name' => 'about-us',
-                'sort_order' => 14,
+                'sort_order' => 13,
                 'title' => [
                     'tr' => 'Hakkımızda - KibrisKare.com Vizyon ve Misyonumuz',
                     'az' => 'Haqqımızda - KibrisKare.com Baxış və Missiyamız',
@@ -466,7 +445,7 @@ class PageSeo extends Model
                 'page_key' => 'faq',
                 'page_name' => 'Tez-tez Verilən Suallar (FAQ / SSS)',
                 'route_name' => 'faq',
-                'sort_order' => 15,
+                'sort_order' => 14,
                 'title' => [
                     'tr' => 'Sıkça Sorulan Sorular (SSS) - KibrisKare',
                     'az' => 'Tez-tez Verilən Suallar (FAQ) - KibrisKare',
@@ -484,7 +463,7 @@ class PageSeo extends Model
                 'page_key' => 'compare',
                 'page_name' => 'Əmlak Müqayisəsi',
                 'route_name' => 'compares',
-                'sort_order' => 16,
+                'sort_order' => 15,
                 'title' => [
                     'tr' => 'Emlak Karşılaştırma Aracı - KibrisKare',
                     'az' => 'Əmlak Müqayisəsi Aləti - KibrisKare',
@@ -502,7 +481,7 @@ class PageSeo extends Model
                 'page_key' => 'favorites',
                 'page_name' => 'Seçilmişlər (Sevimlilər)',
                 'route_name' => 'favorites',
-                'sort_order' => 17,
+                'sort_order' => 16,
                 'title' => [
                     'tr' => 'Favori İlanlarım - KibrisKare',
                     'az' => 'Seçilmiş Elanlarım - KibrisKare',
