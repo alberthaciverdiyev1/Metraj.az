@@ -50,7 +50,7 @@ class ManageRobotsTxt extends Page implements HasForms
                             ->label('Fayl Məzmunu')
                             ->rows(18)
                             ->required()
-                            ->fontFamily('mono')
+                            ->extraInputAttributes(['style' => 'font-family: monospace;'])
                             ->placeholder("User-agent: *\nDisallow: /admin\n\nSitemap: " . url('sitemap.xml'))
                             ->helperText('Hər bir qaydanı yeni sətirdən yazın. Dəyişikliklərdən dərhal sonra robots.txt faylı yenilənəcək.'),
                     ]),
