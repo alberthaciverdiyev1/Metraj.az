@@ -36,10 +36,9 @@ class ActivityLogResource extends Resource
             ->schema([
                 Forms\Components\Section::make('Qeyd Detalları')
                     ->schema([
-                        Forms\Components\TextInput::make('user.name')
+                        Forms\Components\Placeholder::make('user_name')
                             ->label('İstifadəçi')
-                            ->placeholder('Qonaq (Qeydiyyatsız)')
-                            ->disabled(),
+                            ->content(fn ($record) => $record?->user?->name ?? 'Qonaq (Qeydiyyatsız)'),
 
                         Forms\Components\TextInput::make('action')
                             ->label('Hərəkət / Hadisə')
@@ -86,10 +85,9 @@ class ActivityLogResource extends Resource
         return $table
             ->defaultSort('id', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')
+                Tables\Columns\TextColumn::make('user_id')
                     ->label('İstifadəçi')
-                    ->searchable()
-                    ->placeholder('Qonaq')
+                    ->formatStateUsing(fn ($state, $record) => $record->user?->name ?? 'Qonaq')
                     ->weight('bold'),
 
                 Tables\Columns\TextColumn::make('action')
@@ -145,6 +143,11 @@ class ActivityLogResource extends Resource
                     ->sortable(),
             ])
             ->filters([
+                Tables\Filters\SelectFilter::make('user_id')
+                    ->label('İstifadəçi')
+                    ->searchable()
+                    ->options(fn () => \App\Modules\Shared\Models\User::pluck('name', 'id')->toArray()),
+
                 Tables\Filters\SelectFilter::make('action')
                     ->label('Hərəkət növü')
                     ->options([

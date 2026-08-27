@@ -26,6 +26,8 @@ class ActivityLog extends Model
 
     protected $connection = 'logs';
 
+    protected $with = ['user'];
+
     public $timestamps = false;
 
     protected $fillable = [
