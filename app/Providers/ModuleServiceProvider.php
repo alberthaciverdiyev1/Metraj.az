@@ -29,6 +29,7 @@ class ModuleServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->prefix('{locale}')
             ->where(['locale' => 'az|en|ru|tr'])
+            ->as('localized.')
             ->group(function () {
                 foreach ($this->modules as $module) {
                     $modulePath = app_path("Modules/{$module}");
