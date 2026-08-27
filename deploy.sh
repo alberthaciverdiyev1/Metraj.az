@@ -74,6 +74,10 @@ php artisan route:cache
 php artisan view:cache
 php artisan event:cache 2>/dev/null || true
 
+# 8.5 Warm up currency rates cache
+echo "🪙 Warming up currency rates..."
+php artisan currency:update-rates || true
+
 # 9. Purge Nginx Caches & Reload Nginx
 echo "🌐 Flushing Nginx cache and reloading Nginx..."
 if [ -d "/var/cache/nginx" ]; then
@@ -100,5 +104,9 @@ if [ "$1" == "--maintenance" ]; then
     echo "✨ Bringing application back online..."
     php artisan up
 fi
+
+# 13. Warm up OPcache and Guest Cache with a curl request
+echo "☕ Warming up OPcache & homepage guest cache..."
+curl -sL https://kibriskare.com > /dev/null || true
 
 echo "✅ Deployment completed successfully! All caches cleared & re-warmed."

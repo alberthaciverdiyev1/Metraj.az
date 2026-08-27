@@ -28,28 +28,7 @@ class CurrencyService
      */
     public function getRatesFromGbp(): array
     {
-        return Cache::remember(self::CACHE_KEY, self::CACHE_TTL_SECONDS, function () {
-            $defaultRates = Currency::getDefaultRatesFromGbp();
-            try {
-                $response = Http::timeout(3)->get('https://open.er-api.com/v6/latest/GBP');
-                if ($response->successful() && isset($response->json()['rates'])) {
-                    $apiRates = $response->json()['rates'];
-                    $rates = $defaultRates;
-
-                    foreach (array_keys($defaultRates) as $cur) {
-                        if (isset($apiRates[$cur])) {
-                            $rates[$cur] = (float) $apiRates[$cur];
-                        }
-                    }
-
-                    return $rates;
-                }
-            } catch (\Throwable $e) {
-                // Fallback to default rates
-            }
-
-            return $defaultRates;
-        });
+        return Cache::get(self::CACHE_KEY) ?? Currency::getDefaultRatesFromGbp();
     }
 
     /**

@@ -14,6 +14,8 @@ use Illuminate\View\View;
 
 class HomeController extends Controller
 {
+    use \App\Modules\Shared\Concerns\CachesGuestPage;
+
     public function __construct(
         protected PropertyService $propertyService,
         protected LocationService $locationService,
@@ -24,6 +26,10 @@ class HomeController extends Controller
         // AJAX istekleri her zaman canlı veri döndürür
         if ($request->ajax() || $request->wantsJson()) {
             return $this->ajaxListing($request, $first, $second, $third);
+        }
+
+        if (! $request->has('_cache_bust')) {
+            return $this->cacheGuestPage($request, 'home_index', 300, fn () => $this->renderListingPage($request, $first, $second, $third));
         }
 
         return response($this->renderListingPage($request, $first, $second, $third));
