@@ -57,7 +57,7 @@
         <div id="navCurrencyDropdown"
              class="hidden absolute right-0 mt-2 w-36 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden">
           @foreach($currencySymbols as $cCode => $cSym)
-            <a href="{{ route('currency.switch', $cCode) }}"
+            <a href="{{ route('currency.switch', ['code' => $cCode]) }}"
                class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ $currentCurrency === $cCode ? 'text-orange-500 bg-orange-50/60 font-semibold' : 'text-gray-700 hover:bg-gray-50' }} transition">
               <span class="flex items-center gap-2">
                 <span class="w-4 text-center font-semibold text-gray-400">{{ $cSym }}</span>
@@ -83,7 +83,7 @@
         <div id="navLangDropdown"
              class="hidden absolute right-0 mt-2 w-40 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden">
           @foreach($languages as $lKey => $lData)
-            <a href="{{ route('lang.switch', $lKey) }}"
+            <a href="{{ route('lang.switch', ['lang' => $lKey]) }}"
                class="flex items-center justify-between px-3.5 py-2 text-xs font-semibold {{ $currentLocale === $lKey ? 'text-orange-500 bg-orange-50/60 font-semibold' : 'text-gray-700 hover:bg-gray-50' }} transition">
               <span class="flex items-center gap-2">
                 <span class="text-base leading-none">{{ $lData['flag'] }}</span>

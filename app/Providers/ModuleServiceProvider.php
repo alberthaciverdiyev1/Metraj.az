@@ -25,6 +25,13 @@ class ModuleServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        // 1. Dil və Valyuta Dəyişmə Marşrutları (Prefikssiz birbaşa kökdə)
+        Route::middleware('web')->group(function () {
+            Route::get('/lang/{lang}', [\App\Modules\Shared\Controllers\LocaleController::class, 'switchLanguage'])->name('lang.switch');
+            Route::get('/currency/{code}', [\App\Modules\Shared\Controllers\LocaleController::class, 'switchCurrency'])->name('currency.switch');
+        });
+
+        // 2. Bütün Modul Marşrutları ({locale?} prefiksi ilə)
         Route::middleware('web')
             ->prefix('{locale?}')
             ->where(['locale' => 'az|en|ru|tr'])

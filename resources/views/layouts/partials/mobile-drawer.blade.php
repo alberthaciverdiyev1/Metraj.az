@@ -65,7 +65,7 @@
       <div class="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-2">{{ __('navbar.select_language') }}</div>
       <div class="grid grid-cols-4 gap-1.5">
         @foreach($languages as $lKey => $lData)
-          <a href="{{ route('lang.switch', $lKey) }}"
+          <a href="{{ route('lang.switch', ['lang' => $lKey]) }}"
              class="flex items-center justify-center gap-1.5 py-2 px-2 rounded-2xl text-xs font-semibold border {{ $currentLocale === $lKey ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-2xs' : 'border-gray-200 text-gray-700 hover:bg-gray-50' }}">
             <span class="text-sm">{{ $lData['flag'] }}</span>
             <span>{{ $lData['label'] }}</span>
@@ -79,7 +79,7 @@
       <div class="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-2">{{ __('navbar.currency') }}</div>
       <div class="grid grid-cols-4 gap-1.5">
         @foreach($currencySymbols as $cCode => $cSym)
-          <a href="{{ route('currency.switch', $cCode) }}"
+          <a href="{{ route('currency.switch', ['code' => $cCode]) }}"
              class="flex items-center justify-center py-2 px-2 rounded-xl text-xs font-semibold border {{ $currentCurrency === $cCode ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-2xs' : 'border-gray-200 text-gray-700 hover:bg-gray-50' }}">
             <span>{{ $cSym }} {{ $cCode }}</span>
           </a>

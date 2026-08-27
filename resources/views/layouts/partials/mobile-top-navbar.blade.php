@@ -31,7 +31,7 @@
                     {{ __('navbar.currency') ?? 'Valyuta' }}
                 </div>
                 @foreach($currencySymbols as $cCode => $cSym)
-                    <a href="{{ route('currency.switch', $cCode) }}" 
+                    <a href="{{ route('currency.switch', ['code' => $cCode]) }}" 
                        class="flex items-center justify-between px-3 py-2 text-xs transition {{ $currentCurrency === $cCode ? 'bg-orange-50 text-orange-600 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
                         <div class="flex items-center gap-2.5">
                             <span class="w-6 h-6 rounded-lg {{ $currentCurrency === $cCode ? 'bg-orange-100 text-orange-600' : 'bg-gray-100 text-gray-600' }} flex items-center justify-center font-bold text-xs">
@@ -69,7 +69,7 @@
                     {{ __('navbar.language') ?? 'Dil' }}
                 </div>
                 @foreach($languages as $langCode => $langData)
-                    <a href="{{ route('lang.switch', $langCode) }}" 
+                    <a href="{{ route('lang.switch', ['lang' => $langCode]) }}" 
                        class="flex items-center justify-between px-3 py-2 text-xs transition {{ $currentLocale === $langCode ? 'bg-orange-50 text-orange-600 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
                         <div class="flex items-center gap-2.5">
                             <span class="text-base leading-none">{{ $langData['flag'] }}</span>

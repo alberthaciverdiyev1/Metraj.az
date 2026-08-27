@@ -72,9 +72,7 @@ Route::get('/profile', [DashboardController::class, 'profile']);
 Route::get('/ilanlarim', [DashboardController::class, 'myProperties'])->name('my-properties');
 Route::get('/my-properties', [DashboardController::class, 'myProperties']);
 
-// Dil & Para Birimi Değişimi
-Route::get('/lang/{lang}', [LocaleController::class, 'switchLanguage'])->name('lang.switch');
-Route::get('/currency/{code}', [LocaleController::class, 'switchCurrency'])->name('currency.switch');
+
 
 // Oda Arkadaşı İlanları (Roommates)
 Route::get('/oda-arkadasi', [\App\Modules\Roommate\Controllers\RoommateController::class, 'index'])->name('roommates.index');
