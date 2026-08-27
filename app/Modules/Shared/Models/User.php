@@ -34,6 +34,8 @@ class User extends Authenticatable implements FilamentUser
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $connection = 'pgsql';
+
     public const ADMIN_EMAIL = 'admin@kibriskare.com';
 
     /**
