@@ -16,6 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Modules\Shared\Middleware\SetLocale::class,
             \App\Modules\Shared\Middleware\LogActivityMiddleware::class,
         ]);
+
+        $middleware->validateCsrfTokens(except: [
+            'api/telegram/webhook',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

@@ -63,6 +63,8 @@ Route::get('/axtariram', [\App\Modules\PropertyRequest\Controllers\PropertyReque
 Route::get('/axtariram/elan-ver', [\App\Modules\PropertyRequest\Controllers\PropertyRequestController::class, 'create'])->name('requests.create');
 Route::post('/axtariram/elan-ver', [\App\Modules\PropertyRequest\Controllers\PropertyRequestController::class, 'store'])->name('requests.store');
 Route::get('/axtariram/{slug}', [\App\Modules\PropertyRequest\Controllers\PropertyRequestController::class, 'show'])->name('requests.show');
+// Telegram Bot Webhook
+Route::post('/api/telegram/webhook', [\App\Http\Controllers\TelegramWebhookController::class, 'handle'])->name('telegram.webhook');
 
 // ===================================================================
 // SEO dostu filtr URL-ləri — ƏN SONDA yüklənir ki, mövcud statik
