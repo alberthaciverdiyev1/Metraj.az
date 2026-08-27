@@ -23,6 +23,14 @@ class ActivityLogServiceProvider extends ServiceProvider
             \App\Modules\PropertyRequest\Models\PropertyRequest::class => 'Əmlak Tələbi',
             \App\Modules\Agency\Models\Agency::class => 'Agentlik',
             \App\Modules\Agency\Models\Agent::class => 'Agent / Rieltor',
+            \App\Modules\Shared\Models\PageSeo::class => 'SEO Səhifə Ayarı',
+            \App\Modules\Shared\Models\SeoSetting::class => 'SEO Qlobal Ayarı',
+            \App\Modules\Shared\Models\SiteSetting::class => 'Sayt Ayarı',
+            \App\Modules\Location\Models\City::class => 'Şəhər',
+            \App\Modules\Location\Models\District::class => 'Rayon / Bölgə',
+            \App\Modules\Location\Models\Amenity::class => 'Əmlak Xüsusiyyəti (Amenity)',
+            \App\Modules\Location\Models\Filter::class => 'Axtarış Filtri',
+            \App\Modules\Location\Models\FilterOption::class => 'Filtr Seçimi',
         ];
 
         foreach ($models as $modelClass => $modelName) {

@@ -27,20 +27,53 @@ class LogActivityMiddleware
             return $response;
         }
 
-        // Determine action name based on route method
-        $action = 'page_view';
-        if ($request->isMethod('POST')) {
-            $action = 'form_submit';
-        } elseif ($request->isMethod('PUT') || $request->isMethod('PATCH')) {
-            $action = 'data_update';
-        } elseif ($request->isMethod('DELETE')) {
-            $action = 'data_delete';
+        $userAgent = $request->userAgent() ?? '';
+        $botName = null;
+        
+        // Detect Search Engine Bots
+        if (preg_match('/(googlebot|bingbot|yandexbot|duckduckbot|baiduspider|sogou|exabot|facebot|facebookexternalhit|ia_archiver)/i', $userAgent, $matches)) {
+            $botName = ucfirst($matches[1]);
         }
 
-        // Fetch payload (excluding sensitive or large file fields)
-        $payload = null;
+        // Determine action name
+        $action = 'page_view';
+        $isAdmin = str_starts_with($request->getPathInfo(), '/admin');
+
+        if ($botName) {
+            $action = 'bot_visit';
+        } elseif ($isAdmin) {
+            if ($request->isMethod('GET')) {
+                $action = 'admin_view';
+            } else {
+                $action = 'admin_action';
+            }
+        } else {
+            if ($request->isMethod('POST')) {
+                $action = 'form_submit';
+            } elseif ($request->isMethod('PUT') || $request->isMethod('PATCH')) {
+                $action = 'data_update';
+            } elseif ($request->isMethod('DELETE')) {
+                $action = 'data_delete';
+            }
+        }
+
+        // Build Payload
+        $payload = [
+            'status_code' => $response->getStatusCode(),
+        ];
+
+        if ($botName) {
+            $payload['bot_name'] = $botName;
+        }
+
+        // Log query parameters for GET requests (useful for search/filter tracking)
+        if ($request->isMethod('GET') && !empty($request->query())) {
+            $payload['query'] = $request->query();
+        }
+
+        // Log input payload for state-changing requests (excluding sensitive or file fields)
         if (!$request->isMethod('GET')) {
-            $payload = $request->except([
+            $payload['input'] = $request->except([
                 'password', 
                 'password_confirmation', 
                 '_token', 
@@ -55,11 +88,17 @@ class LogActivityMiddleware
             ]);
         }
 
+        // Store user role if logged in
+        if (auth()->check()) {
+            $user = auth()->user();
+            $payload['user_role'] = $user->email === \App\Modules\Shared\Models\User::ADMIN_EMAIL ? 'Admin' : ($user->agent ? 'Rieltor' : 'İstifadəçi');
+        }
+
         try {
             ActivityLog::create([
                 'user_id' => auth()->id(),
                 'ip_address' => $request->ip(),
-                'user_agent' => $request->userAgent(),
+                'user_agent' => $userAgent,
                 'method' => $request->method(),
                 'url' => $request->fullUrl(),
                 'action' => $action,
@@ -67,7 +106,7 @@ class LogActivityMiddleware
                 'created_at' => now(),
             ]);
         } catch (\Throwable $e) {
-            logger()->error('Activity Log Error: ' . $e->getMessage());
+            logger()->error('Activity Log Middleware Error: ' . $e->getMessage());
         }
 
         return $response;

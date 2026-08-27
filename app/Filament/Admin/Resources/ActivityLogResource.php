@@ -86,12 +86,23 @@ class ActivityLogResource extends Resource
             ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('user_id')
-                    ->label('İstifadəçi')
-                    ->formatStateUsing(fn ($state, $record) => $record->user?->name ?? 'Qonaq')
-                    ->weight('bold'),
+                    ->label('İstifadəçi / Rol / Bot')
+                    ->formatStateUsing(function ($state, $record) {
+                        $payload = $record->payload;
+                        if (!empty($payload['bot_name'])) {
+                            return '🤖 ' . $payload['bot_name'] . ' (Axtarış Botu)';
+                        }
+                        
+                        $name = $record->user?->name ?? 'Qonaq';
+                        $role = $payload['user_role'] ?? 'Ziyarətçi';
+                        
+                        return $name . ' (' . $role . ')';
+                    })
+                    ->weight('bold')
+                    ->description(fn ($record) => $record->user_agent ? \Illuminate\Support\Str::limit($record->user_agent, 45) : null),
 
                 Tables\Columns\TextColumn::make('action')
-                    ->label('Hərəkət')
+                    ->label('Hərəkət / Hadisə')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'login' => 'success',
@@ -100,22 +111,40 @@ class ActivityLogResource extends Resource
                         'create_model' => 'info',
                         'update_model' => 'warning',
                         'delete_model' => 'danger',
+                        'bot_visit' => 'gray',
+                        'admin_view' => 'warning',
+                        'admin_action' => 'danger',
+                        'form_submit' => 'success',
                         default => 'gray',
                     })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'login' => 'Giriş etdi',
-                        'logout' => 'Çıxış etdi',
+                        'login' => 'Sistemə Giriş',
+                        'logout' => 'Sistemdən Çıxış',
                         'failed_login' => 'Uğursuz Giriş',
-                        'create_model' => 'Yeni Məlumat',
-                        'update_model' => 'Yeniləndi',
-                        'delete_model' => 'Silindi',
+                        'create_model' => 'Yeni Məlumat (Create)',
+                        'update_model' => 'Məlumat Dəyişimi (Update)',
+                        'delete_model' => 'Məlumat Silinməsi (Delete)',
                         'page_view' => 'Ziyarət',
+                        'bot_visit' => 'Bot Ziyarəti 🤖',
+                        'admin_view' => 'Admin Panel Səhifəsi',
+                        'admin_action' => 'Admin Paneldə Əməliyyat',
                         'form_submit' => 'Form Göndərişi',
                         'data_update' => 'Məlumat Dəyişimi',
                         'data_delete' => 'Məlumat Silinməsi',
                         default => $state,
                     })
                     ->searchable(),
+
+                Tables\Columns\TextColumn::make('payload.status_code')
+                    ->label('Status')
+                    ->badge()
+                    ->color(fn ($state): string => match (true) {
+                        $state >= 200 && $state < 300 => 'success',
+                        $state >= 300 && $state < 400 => 'warning',
+                        $state >= 400 => 'danger',
+                        default => 'gray',
+                    })
+                    ->placeholder('-'),
 
                 Tables\Columns\TextColumn::make('ip_address')
                     ->label('IP')
@@ -158,6 +187,9 @@ class ActivityLogResource extends Resource
                         'update_model' => 'Yeniləndi',
                         'delete_model' => 'Silindi',
                         'page_view' => 'Səhifə Ziyarəti',
+                        'bot_visit' => 'Bot Ziyarəti',
+                        'admin_view' => 'Admin Panel Ziyarəti',
+                        'admin_action' => 'Admin Panel Əməliyyatı',
                     ]),
             ])
             ->actions([
