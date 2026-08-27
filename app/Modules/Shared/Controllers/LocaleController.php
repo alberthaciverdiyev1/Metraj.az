@@ -43,17 +43,19 @@ class LocaleController extends Controller
             array_shift($segments);
         }
 
-        $cleanPath = implode('/', $segments);
+        $cleanPath = implode('/', array_filter($segments));
 
-        // Build target URL
-        if ($locale === 'tr') {
-            // Default Turkish can be root or /tr
-            $targetUrl = '/' . $cleanPath;
+        // Build target absolute path
+        if ($targetLocale === 'tr') {
+            $targetPath = '/' . $cleanPath;
         } else {
-            $targetUrl = '/' . $locale . ($cleanPath !== '' ? '/' . $cleanPath : '');
+            $targetPath = '/' . $targetLocale . ($cleanPath !== '' ? '/' . $cleanPath : '');
         }
 
-        return redirect()->to($targetUrl . $query);
+        // Generate full URL with domain
+        $fullTargetUrl = url($targetPath) . $query;
+
+        return redirect()->to($fullTargetUrl);
     }
 
     public function switchCurrency(string $code): RedirectResponse
