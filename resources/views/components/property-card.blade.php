@@ -32,7 +32,7 @@
     $isRepaired = $repairOpt ? (str_contains(strtolower($repairOpt->name['az'] ?? $repairOpt->name['tr'] ?? ''), 'təmirli') || strtolower($repairOpt->value) === 'repaired' || strtolower($repairOpt->value) === 'tadilatli') : false;
 @endphp
 
-<div onclick="window.location.href='/elan/{{ $property->slug }}'"
+<div onclick="window.location.href='{{ route('properties.show', $property->slug) }}'"
      data-property-id="{{ $property->id }}"
      class="cursor-pointer border border-[color:var(--border-color)] rounded-2xl overflow-hidden flex flex-col h-full group transition-all duration-300 relative">
 
