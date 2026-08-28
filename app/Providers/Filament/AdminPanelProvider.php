@@ -37,7 +37,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogo(asset('images/kibriskarelogo1.png'))
             ->brandLogoHeight('2.2rem')
             ->colors([
-                'primary' => Color::Orange,
+                'primary' => Color::Teal,
             ])
             ->userMenuItems([
                 'profile' => MenuItem::make()
