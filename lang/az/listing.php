@@ -55,4 +55,8 @@ return [
     'popular_searches_desc' => 'Şimali Kiprdə ən çox axtarılan əmlak kateqoriyaları və tələblər',
     'advanced_options' => 'Ətraflı Seçimlər',
     'district_suffix' => 'rayon',
+    'min_price_greater_than_max' => 'Minimum qiymət maksimum qiymətdən çox ola bilməz.',
+    'min_area_greater_than_max' => 'Minimum sahə maksimum sahədən çox ola bilməz.',
+    'min_floor_greater_than_max' => 'Minimum mərtəbə maksimum mərtəbədən çox ola bilməz.',
+    'min_land_area_greater_than_max' => 'Minimum torpaq sahəsi maksimum torpaq sahəsindən çox ola bilməz.',
 ];

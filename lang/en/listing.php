@@ -55,4 +55,8 @@ return [
     'popular_searches_desc' => 'Most searched property categories and listings in Northern Cyprus',
     'advanced_options' => 'Advanced Options',
     'district_suffix' => 'districts',
+    'min_price_greater_than_max' => 'Minimum price cannot be greater than maximum price.',
+    'min_area_greater_than_max' => 'Minimum area cannot be greater than maximum area.',
+    'min_floor_greater_than_max' => 'Minimum floor cannot be greater than maximum floor.',
+    'min_land_area_greater_than_max' => 'Minimum land area cannot be greater than maximum land area.',
 ];

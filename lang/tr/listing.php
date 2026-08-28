@@ -55,4 +55,8 @@ return [
     'popular_searches_desc' => 'Kuzey Kıbrıs’ta en çok aranan emlak kategorileri ve aramalar',
     'advanced_options' => 'Gelişmiş Seçenekler',
     'district_suffix' => 'bölge',
+    'min_price_greater_than_max' => 'Minimum fiyat, maksimum fiyattan büyük olamaz.',
+    'min_area_greater_than_max' => 'Minimum alan, maksimum alandan büyük olamaz.',
+    'min_floor_greater_than_max' => 'Minimum kat, maksimum kattan büyük olamaz.',
+    'min_land_area_greater_than_max' => 'Minimum arsa alanı, maksimum arsa alanından büyük olamaz.',
 ];

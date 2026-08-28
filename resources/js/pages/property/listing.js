@@ -126,8 +126,121 @@
         }
     }
 
+    /* ===== RANGE VALIDATION & ERROR DISPLAY ===== */
+    function showFilterError(msg, invalidInputs) {
+        const errorBox = document.getElementById('searchFilterError');
+        const errorMsg = document.getElementById('searchFilterErrorMessage');
+        if (errorBox && errorMsg) {
+            errorMsg.textContent = msg;
+            errorBox.classList.remove('hidden');
+            errorBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+            alert(msg);
+        }
+
+        if (invalidInputs && invalidInputs.length) {
+            invalidInputs.forEach(function (el) {
+                if (el) {
+                    el.classList.add('border-red-500', 'bg-red-50/50');
+                    el.classList.remove('border-gray-200');
+                }
+            });
+        }
+    }
+
+    function clearFilterErrors() {
+        const errorBox = document.getElementById('searchFilterError');
+        if (errorBox) errorBox.classList.add('hidden');
+
+        const form = document.getElementById('filterForm');
+        if (form) {
+            form.querySelectorAll('input').forEach(function (el) {
+                el.classList.remove('border-red-500', 'bg-red-50/50');
+            });
+        }
+
+        const modal = document.getElementById('moreFiltersModal');
+        if (modal) {
+            modal.querySelectorAll('input').forEach(function (el) {
+                el.classList.remove('border-red-500', 'bg-red-50/50');
+            });
+        }
+    }
+
+    function parseNumeric(val) {
+        if (val === null || val === undefined) return NaN;
+        const cleaned = val.toString().replace(/[^0-9.]/g, '').trim();
+        return cleaned === '' ? NaN : parseFloat(cleaned);
+    }
+
+    function validateFilterRanges() {
+        clearFilterErrors();
+
+        const form = document.getElementById('filterForm');
+        const modal = document.getElementById('moreFiltersModal');
+        const T = window.__trans || {};
+
+        // 1. Price validation (minPrice > maxPrice)
+        const minPriceEl = (form && form.querySelector('input[name="minPrice"]')) || (modal && modal.querySelector('input[name="minPrice"]'));
+        const maxPriceEl = (form && form.querySelector('input[name="maxPrice"]')) || (modal && modal.querySelector('input[name="maxPrice"]'));
+        if (minPriceEl && maxPriceEl) {
+            const minP = parseNumeric(minPriceEl.value);
+            const maxP = parseNumeric(maxPriceEl.value);
+            if (!isNaN(minP) && !isNaN(maxP) && minP > maxP) {
+                const msg = T.min_price_error || 'Minimum fiyat, maksimum fiyattan büyük olamaz.';
+                showFilterError(msg, [minPriceEl, maxPriceEl]);
+                return false;
+            }
+        }
+
+        // 2. Area validation (minArea > maxArea)
+        const minAreaEl = (form && form.querySelector('input[name="minArea"]')) || (modal && modal.querySelector('input[name="minArea"]'));
+        const maxAreaEl = (form && form.querySelector('input[name="maxArea"]')) || (modal && modal.querySelector('input[name="maxArea"]'));
+        if (minAreaEl && maxAreaEl) {
+            const minA = parseNumeric(minAreaEl.value);
+            const maxA = parseNumeric(maxAreaEl.value);
+            if (!isNaN(minA) && !isNaN(maxA) && minA > maxA) {
+                const msg = T.min_area_error || 'Minimum alan, maksimum alandan büyük olamaz.';
+                showFilterError(msg, [minAreaEl, maxAreaEl]);
+                return false;
+            }
+        }
+
+        // 3. Land area validation (fieldAreaMin > fieldAreaMax)
+        const minLandEl = (form && form.querySelector('input[name="fieldAreaMin"]')) || (modal && modal.querySelector('input[name="fieldAreaMin"]'));
+        const maxLandEl = (form && form.querySelector('input[name="fieldAreaMax"]')) || (modal && modal.querySelector('input[name="fieldAreaMax"]'));
+        if (minLandEl && maxLandEl) {
+            const minL = parseNumeric(minLandEl.value);
+            const maxL = parseNumeric(maxLandEl.value);
+            if (!isNaN(minL) && !isNaN(maxL) && minL > maxL) {
+                const msg = T.min_land_area_error || 'Minimum arsa alanı, maksimum arsa alanından büyük olamaz.';
+                showFilterError(msg, [minLandEl, maxLandEl]);
+                return false;
+            }
+        }
+
+        // 4. Floor validation (floorMin > floorMax)
+        const minFloorEl = (form && form.querySelector('input[name="floorMin"]')) || (modal && modal.querySelector('input[name="floorMin"]'));
+        const maxFloorEl = (form && form.querySelector('input[name="floorMax"]')) || (modal && modal.querySelector('input[name="floorMax"]'));
+        if (minFloorEl && maxFloorEl) {
+            const minF = parseNumeric(minFloorEl.value);
+            const maxF = parseNumeric(maxFloorEl.value);
+            if (!isNaN(minF) && !isNaN(maxF) && minF > maxF) {
+                const msg = T.min_floor_error || 'Minimum kat, maksimum kattan büyük olamaz.';
+                showFilterError(msg, [minFloorEl, maxFloorEl]);
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     /* ===== FETCH LISTINGS VIA AJAX ===== */
     function fetchListings() {
+        if (!validateFilterRanges()) {
+            return;
+        }
+
         if (isLoading) return;
         isLoading = true;
         showLoading(true);
@@ -150,12 +263,27 @@
                 'Accept': 'application/json'
             }
         })
-        .then(function (r) { return r.json(); })
+        .then(function (r) {
+            if (r.status === 422) {
+                return r.json().then(function (errData) {
+                    const msg = errData.message || (errData.errors ? Object.values(errData.errors)[0][0] : 'Validation error');
+                    showFilterError(msg);
+                    throw new Error(msg);
+                });
+            }
+            if (!r.ok) {
+                throw new Error('HTTP error ' + r.status);
+            }
+            return r.json();
+        })
         .then(function (data) {
             updateListings(data);
         })
-        .catch(function () {
-            window.location.reload();
+        .catch(function (err) {
+            if (err && err.message && (err.message.includes('Minimum') || err.message.includes('Validation') || err.message.includes('Maksimum'))) {
+                return;
+            }
+            console.error('Fetch listings error:', err);
         })
         .finally(function () {
             isLoading = false;

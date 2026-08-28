@@ -25,6 +25,34 @@ class PropertyRequestController extends Controller
 
     public function index(Request $request): \Illuminate\Http\Response|View|JsonResponse
     {
+        $rawMinPrice = $request->input('min_price', $request->input('minPrice'));
+        $rawMaxPrice = $request->input('max_price', $request->input('maxPrice'));
+        if ($rawMinPrice !== null && $rawMinPrice !== '' && $rawMaxPrice !== null && $rawMaxPrice !== '') {
+            if ((float) $rawMinPrice > (float) $rawMaxPrice) {
+                if ($request->ajax() || $request->wantsJson()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => __('listing.min_price_greater_than_max'),
+                        'errors' => ['price' => [__('listing.min_price_greater_than_max')]],
+                    ], 422);
+                }
+            }
+        }
+
+        $rawMinArea = $request->input('min_area', $request->input('minArea'));
+        $rawMaxArea = $request->input('max_area', $request->input('maxArea'));
+        if ($rawMinArea !== null && $rawMinArea !== '' && $rawMaxArea !== null && $rawMaxArea !== '') {
+            if ((float) $rawMinArea > (float) $rawMaxArea) {
+                if ($request->ajax() || $request->wantsJson()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => __('listing.min_area_greater_than_max'),
+                        'errors' => ['area' => [__('listing.min_area_greater_than_max')]],
+                    ], 422);
+                }
+            }
+        }
+
         $filter = PropertyRequestFilterDTO::fromArray($request->all());
 
         if ($request->ajax() || $request->wantsJson()) {

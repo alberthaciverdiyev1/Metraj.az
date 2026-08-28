@@ -25,6 +25,20 @@ class RoommateController extends Controller
 
     public function index(Request $request): \Illuminate\Http\Response|View|JsonResponse
     {
+        $rawMin = $request->input('min_price', $request->input('minPrice'));
+        $rawMax = $request->input('max_price', $request->input('maxPrice'));
+        if ($rawMin !== null && $rawMin !== '' && $rawMax !== null && $rawMax !== '') {
+            if ((float) $rawMin > (float) $rawMax) {
+                if ($request->ajax() || $request->wantsJson()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => __('listing.min_price_greater_than_max'),
+                        'errors' => ['price' => [__('listing.min_price_greater_than_max')]],
+                    ], 422);
+                }
+            }
+        }
+
         $filter = RoommateFilterDTO::fromArray($request->all());
 
         if ($request->ajax() || $request->wantsJson()) {

@@ -186,6 +186,18 @@
                                 </div>
                             </section>
 
+                            <!-- Filter Validation Error Banner -->
+                            <div id="searchFilterError" class="{{ !empty($validationErrors) ? '' : 'hidden' }} mb-4 p-3.5 bg-red-50/90 border border-red-200 text-red-700 rounded-2xl text-xs sm:text-sm flex items-center gap-2.5 shadow-sm transition-all duration-200">
+                                <i class="bi bi-exclamation-triangle-fill text-red-500 shrink-0 text-base"></i>
+                                <span id="searchFilterErrorMessage" class="font-medium">
+                                    @if(!empty($validationErrors))
+                                        @foreach($validationErrors as $fieldErrors)
+                                            {{ implode(' ', $fieldErrors) }}
+                                        @endforeach
+                                    @endif
+                                </span>
+                            </div>
+
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div class="p-3 bg-gray-50 rounded-2xl border border-gray-200/90">
                                     <label class="block text-gray-700 font-semibold mb-2 flex items-center gap-2 text-xs sm:text-sm">
@@ -278,8 +290,12 @@
             rooms_suffix: @json(__('listing.rooms_suffix')),
             all_cities: @json(__('listing.all_cities')),
             district_suffix: @json(__('listing.district_suffix')),
+            min_price_error: @json(__('listing.min_price_greater_than_max')),
+            min_area_error: @json(__('listing.min_area_greater_than_max')),
+            min_floor_error: @json(__('listing.min_floor_greater_than_max')),
+            min_land_area_error: @json(__('listing.min_land_area_greater_than_max')),
         };
     </script>
     <script src="{{ asset('js/pages/property/list-filters.js') }}"></script>
-    <script src="{{ asset('js/pages/property/listing.js') }}?v=3"></script>
+    <script src="{{ asset('js/pages/property/listing.js') }}?v=4"></script>
 @endpush

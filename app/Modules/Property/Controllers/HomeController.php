@@ -47,6 +47,14 @@ class HomeController extends Controller
      */
     protected function ajaxListing(Request $request, ?string $first, ?string $second, ?string $third)
     {
+        if ($validationErrors = $this->validateSearchRanges($request)) {
+            return response()->json([
+                'success' => false,
+                'message' => reset($validationErrors)[0] ?? __('validation.invalid'),
+                'errors' => $validationErrors,
+            ], 422);
+        }
+
         if ($first !== null) {
             $this->applyPathFilters($request, $first, $second, $third);
         }
@@ -69,6 +77,8 @@ class HomeController extends Controller
      */
     protected function renderListingPage(Request $request, ?string $first, ?string $second, ?string $third): string
     {
+        $validationErrors = $this->validateSearchRanges($request);
+
         $currentQuickSearch = null;
         if ($first !== null) {
             $currentQuickSearch = $this->applyPathFilters($request, $first, $second, $third);
@@ -102,8 +112,63 @@ class HomeController extends Controller
             'currentQuickSearch',
             'breadcrumbs',
             'pageTitle',
-            'metaDescription'
+            'metaDescription',
+            'validationErrors'
         ))->with('css', ['listing.css'])->render();
+    }
+
+    /**
+     * Min/Max aralıq filtrlərini yoxlayır (Min > Maks olmamalıdır)
+     */
+    protected function validateSearchRanges(Request $request): ?array
+    {
+        $errors = [];
+
+        // Qiymət yoxlaması
+        $rawMinPrice = $request->input('min_price', $request->input('minPrice'));
+        $rawMaxPrice = $request->input('max_price', $request->input('maxPrice'));
+        if ($rawMinPrice !== null && $rawMinPrice !== '' && $rawMaxPrice !== null && $rawMaxPrice !== '') {
+            $minP = (float) str_replace([' ', ','], ['', '.'], (string) $rawMinPrice);
+            $maxP = (float) str_replace([' ', ','], ['', '.'], (string) $rawMaxPrice);
+            if ($minP > $maxP) {
+                $errors['price'] = [__('listing.min_price_greater_than_max')];
+            }
+        }
+
+        // Sahə yoxlaması
+        $rawMinArea = $request->input('min_area', $request->input('minArea'));
+        $rawMaxArea = $request->input('max_area', $request->input('maxArea'));
+        if ($rawMinArea !== null && $rawMinArea !== '' && $rawMaxArea !== null && $rawMaxArea !== '') {
+            $minA = (float) str_replace([' ', ','], ['', '.'], (string) $rawMinArea);
+            $maxA = (float) str_replace([' ', ','], ['', '.'], (string) $rawMaxArea);
+            if ($minA > $maxA) {
+                $errors['area'] = [__('listing.min_area_greater_than_max')];
+            }
+        }
+
+        // Torpaq sahəsi yoxlaması
+        $rawMinLand = $request->input('min_land_area', $request->input('fieldAreaMin'));
+        $rawMaxLand = $request->input('max_land_area', $request->input('fieldAreaMax'));
+        if ($rawMinLand !== null && $rawMinLand !== '' && $rawMaxLand !== null && $rawMaxLand !== '') {
+            $minL = (float) str_replace([' ', ','], ['', '.'], (string) $rawMinLand);
+            $maxL = (float) str_replace([' ', ','], ['', '.'], (string) $rawMaxLand);
+            if ($minL > $maxL) {
+                $errors['land_area'] = [__('listing.min_land_area_greater_than_max')];
+            }
+        }
+
+        // Mərtəbə yoxlaması
+        $rawMinFloor = $request->input('min_floor', $request->input('floorMin'));
+        $rawMaxFloor = $request->input('max_floor', $request->input('floorMax'));
+        if ($rawMinFloor !== null && $rawMinFloor !== '' && $rawMaxFloor !== null && $rawMaxFloor !== '') {
+            $minF = (float) str_replace([' ', ','], ['', '.'], (string) $rawMinFloor);
+            $maxF = (float) str_replace([' ', ','], ['', '.'], (string) $rawMaxFloor);
+            if ($minF > $maxF) {
+                $errors['floor'] = [__('listing.min_floor_greater_than_max')];
+            }
+        }
+
+        return !empty($errors) ? $errors : null;
     }
 
     /**
