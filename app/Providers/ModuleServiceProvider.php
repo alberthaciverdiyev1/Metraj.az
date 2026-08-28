@@ -21,6 +21,8 @@ class ModuleServiceProvider extends ServiceProvider
         'Blog',
         'Inquiry',
         'Location',
+        'PropertyRequest',
+        'Roommate',
         'Shared',
     ];
 

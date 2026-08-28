@@ -19,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        \Illuminate\Support\Facades\URL::defaults([
+            'locale' => config('app.locale', 'tr'),
+        ]);
+
         \Filament\Tables\Table::configureUsing(function (\Filament\Tables\Table $table): void {
             $table
                 ->paginationPageOptions([20])

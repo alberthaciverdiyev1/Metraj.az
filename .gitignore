@@ -39,3 +39,7 @@ ARCHITECTURE.md
 roadmap.md
 architecture.md
 
+/public/sitemap*.xml
+.directory
+
+

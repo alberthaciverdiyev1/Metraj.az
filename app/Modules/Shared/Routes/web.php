@@ -74,26 +74,6 @@ Route::get('/my-properties', [DashboardController::class, 'myProperties']);
 
 
 
-// Oda Arkadaşı İlanları (Roommates)
-Route::get('/oda-arkadasi', [\App\Modules\Roommate\Controllers\RoommateController::class, 'index'])->name('roommates.index');
-Route::get('/otaq-yoldasi', [\App\Modules\Roommate\Controllers\RoommateController::class, 'index']);
-Route::get('/oda-arkadasi/ilan-ver', [\App\Modules\Roommate\Controllers\RoommateController::class, 'create'])->name('roommates.create');
-Route::get('/otaq-yoldasi/elan-ver', [\App\Modules\Roommate\Controllers\RoommateController::class, 'create']);
-Route::post('/oda-arkadasi/ilan-ver', [\App\Modules\Roommate\Controllers\RoommateController::class, 'store'])->name('roommates.store');
-Route::post('/otaq-yoldasi/elan-ver', [\App\Modules\Roommate\Controllers\RoommateController::class, 'store']);
-Route::get('/oda-arkadasi/{slug}', [\App\Modules\Roommate\Controllers\RoommateController::class, 'show'])->name('roommates.show');
-Route::get('/otaq-yoldasi/{slug}', [\App\Modules\Roommate\Controllers\RoommateController::class, 'show']);
-
-// Arıyorum (Talep İlanları - Requests)
-Route::get('/ariyorum', [\App\Modules\PropertyRequest\Controllers\PropertyRequestController::class, 'index'])->name('requests.index');
-Route::get('/axtariram', [\App\Modules\PropertyRequest\Controllers\PropertyRequestController::class, 'index']);
-Route::get('/ariyorum/ilan-ver', [\App\Modules\PropertyRequest\Controllers\PropertyRequestController::class, 'create'])->name('requests.create');
-Route::get('/axtariram/elan-ver', [\App\Modules\PropertyRequest\Controllers\PropertyRequestController::class, 'create']);
-Route::post('/ariyorum/ilan-ver', [\App\Modules\PropertyRequest\Controllers\PropertyRequestController::class, 'store'])->name('requests.store');
-Route::post('/axtariram/elan-ver', [\App\Modules\PropertyRequest\Controllers\PropertyRequestController::class, 'store']);
-Route::get('/ariyorum/{slug}', [\App\Modules\PropertyRequest\Controllers\PropertyRequestController::class, 'show'])->name('requests.show');
-Route::get('/axtariram/{slug}', [\App\Modules\PropertyRequest\Controllers\PropertyRequestController::class, 'show']);
-
 // Telegram Webhook
 Route::post('/api/telegram/webhook', [\App\Http\Controllers\TelegramWebhookController::class, 'handle'])->name('telegram.webhook');
 
