@@ -57,6 +57,7 @@
     /* ===== SEO URL PATH ===== */
     function buildSeoPath(params) {
         const citySlugs = (R && R.citySlugs) || {};
+        const locale = (R && R.locale) || 'tr';
         const adType = params.get('adType') || '';
         const cityId = params.get('cityId') || '';
 
@@ -76,14 +77,18 @@
             path = path ? citySlugs[cityId] + '/' + path : citySlugs[cityId];
         }
 
-        return path ? '/' + path : '/listing';
+        return path ? '/' + locale + '/' + path : '/' + locale + '/listing';
     }
 
     /* ===== RESTORE PATH SEGMENTS BACK TO FORM (popstate) ===== */
     function restorePathToForm(pathname, form) {
         const citySlugs = (R && R.citySlugs) || {};
+        const locale = (R && R.locale) || 'tr';
         const segments = pathname.split('/').filter(Boolean);
         if (!segments.length) return;
+
+        /* Locale prefiksini segmentlərdən çıxar (məs: /tr/baki → [baki]) */
+        if (segments[0] === locale) segments.shift();
 
         const slugToCity = {};
         Object.keys(citySlugs).forEach(function (id) {

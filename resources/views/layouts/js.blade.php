@@ -71,13 +71,14 @@
 
     // Front JS faylları üçün Laravel route() ilə yaradılmış API URL-ləri
     window.KibrisKareRoutes = {
+        locale: "{{ app()->getLocale() }}",
         favoritesToggle: "{{ route('favorites.toggle') }}",
         favoritesClear: "{{ route('favorites.clear') }}",
         favoritesIds: "{{ route('favorites.ids') }}",
         comparesToggle: "{{ route('compares.toggle') }}",
         comparesClear: "{{ route('compares.clear') }}",
         comparesIds: "{{ route('compares.ids') }}",
-        cities: "{{ url('/api/cities') }}",
+        cities: "{{ route('api.cities') }}",
     };
 </script>
 

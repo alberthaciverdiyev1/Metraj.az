@@ -137,9 +137,6 @@
             <a href="{{ route('favorites') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500">
               <i class="bi bi-heart mr-3 text-gray-400"></i> {{ __('navbar.my_favorites') }}
             </a>
-            <a href="/mysavesearches" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500">
-              <i class="bi bi-bookmark mr-3 text-gray-400"></i> {{ __('navbar.my_saved_searches') }}
-            </a>
 
             @if(auth()->user()->is_admin ?? false)
               <div class="border-t border-gray-100 my-1"></div>
