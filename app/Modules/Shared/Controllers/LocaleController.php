@@ -45,12 +45,8 @@ class LocaleController extends Controller
 
         $cleanPath = implode('/', array_filter($segments));
 
-        // Build target absolute path
-        if ($targetLocale === 'tr') {
-            $targetPath = '/' . $cleanPath;
-        } else {
-            $targetPath = '/' . $targetLocale . ($cleanPath !== '' ? '/' . $cleanPath : '');
-        }
+        // Build target absolute path (always prefixed for all languages: /tr, /az, /en, /ru)
+        $targetPath = '/' . $targetLocale . ($cleanPath !== '' ? '/' . $cleanPath : '');
 
         // Generate full URL with domain
         $fullTargetUrl = url($targetPath) . $query;

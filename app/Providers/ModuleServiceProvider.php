@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Hər modulun öz Routes/ qovluğunu vahid şəkildə {locale?} prefiksi ilə qeydiyyatdan keçirir.
- * Bütün route() çağırışları URL::defaults(['locale' => ...]) vasitəsilə avtomatik aktiv dil ilə yaranır.
+ * Hər modulun öz Routes/ qovluğunu vahid şəkildə {locale} prefiksi ilə qeydiyyatdan keçirir.
+ * Bütün 4 dil (az, en, ru, tr) hər zaman prefikslə işləyir.
  */
 class ModuleServiceProvider extends ServiceProvider
 {
@@ -31,9 +31,9 @@ class ModuleServiceProvider extends ServiceProvider
             Route::get('/currency/{code}', [\App\Modules\Shared\Controllers\LocaleController::class, 'switchCurrency'])->name('currency.switch');
         });
 
-        // 2. Bütün Modul Marşrutları ({locale?} prefiksi ilə)
+        // 2. Bütün Modul Marşrutları ({locale} prefiksi ilə: /tr/..., /az/..., /en/..., /ru/...)
         Route::middleware('web')
-            ->prefix('{locale?}')
+            ->prefix('{locale}')
             ->where(['locale' => 'az|en|ru|tr'])
             ->group(function () {
                 foreach ($this->modules as $module) {
