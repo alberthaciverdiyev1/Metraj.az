@@ -1,84 +1,120 @@
 @php
     $log = $record ?? (isset($getRecord) && is_callable($getRecord) ? $getRecord() : null);
+    $lat = $log?->latitude ? (float) $log->latitude : null;
+    $lon = $log?->longitude ? (float) $log->longitude : null;
+    $hasCoords = $lat !== null && $lon !== null && (abs($lat) > 0.001 || abs($lon) > 0.001);
 @endphp
 
-<div class="space-y-4">
-    @if($log && !empty($log->latitude) && !empty($log->longitude) && abs($log->latitude) > 0.001)
-        {{-- Interactive Leaflet Map --}}
-        <div class="relative w-full h-[380px] rounded-2xl overflow-hidden border border-gray-200 shadow-inner" id="log-map-container-{{ $log->id }}">
-            <div id="log-map-{{ $log->id }}" class="w-full h-full z-0"></div>
-        </div>
-
-        <div class="flex flex-wrap items-center justify-between gap-3 text-xs bg-gray-50 p-3 rounded-xl border border-gray-200">
-            <div class="flex items-center gap-2 text-gray-700">
-                <span class="text-base">{{ $log->flag_emoji }}</span>
-                <span class="font-semibold">{{ $log->city ?? 'Naməlum Şəhər' }}, {{ $log->country_name ?? $log->country_code }}</span>
-                <span class="text-gray-400">({{ number_format($log->latitude, 4) }}, {{ number_format($log->longitude, 4) }})</span>
+<div class="space-y-4 font-sans select-none" x-data="{ mapType: 'google' }">
+    @if($log && $hasCoords)
+        {{-- Header Controls / Map Provider Switcher --}}
+        <div class="flex items-center justify-between pb-1">
+            <div class="flex items-center gap-2 text-xs font-semibold text-gray-700">
+                <span class="text-base">{{ $log->flag_emoji ?? '📍' }}</span>
+                <span>{{ $log->city ?? 'Naməlum Şəhər' }}, {{ $log->country_name ?? $log->country_code }}</span>
+                <span class="text-gray-400 font-mono text-[11px]">({{ number_format($lat, 4) }}, {{ number_format($lon, 4) }})</span>
             </div>
 
-            <a href="https://www.google.com/maps?q={{ $log->latitude }},{{ $log->longitude }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg transition shadow-2xs">
-                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                <span>Google Maps-də Aç</span>
-            </a>
+            <div class="inline-flex rounded-xl p-1 bg-gray-100 border border-gray-200 text-xs">
+                <button type="button" 
+                        @click="mapType = 'google'" 
+                        :class="mapType === 'google' ? 'bg-white text-blue-600 font-bold shadow-xs' : 'text-gray-600 hover:text-gray-900'" 
+                        class="px-2.5 py-1 rounded-lg transition text-[11px] flex items-center gap-1 cursor-pointer">
+                    <i class="fa-brands fa-google text-[10px]"></i> Google Maps
+                </button>
+                <button type="button" 
+                        @click="mapType = 'osm'" 
+                        :class="mapType === 'osm' ? 'bg-white text-green-600 font-bold shadow-xs' : 'text-gray-600 hover:text-gray-900'" 
+                        class="px-2.5 py-1 rounded-lg transition text-[11px] flex items-center gap-1 cursor-pointer">
+                    <i class="fa-solid fa-map-location-dot text-[10px]"></i> OpenStreetMap
+                </button>
+            </div>
         </div>
 
-        {{-- Leaflet Assets & Initialization --}}
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+        {{-- Map Container with Iframe (100% Reliable across all browser and modal lifecycles) --}}
+        <div class="relative w-full h-[400px] rounded-2xl overflow-hidden border border-gray-200 bg-gray-100 shadow-inner">
+            {{-- Google Maps Embed --}}
+            <iframe x-show="mapType === 'google'"
+                    class="w-full h-full border-0"
+                    loading="lazy"
+                    allowfullscreen
+                    referrerpolicy="no-referrer-when-downgrade"
+                    src="https://maps.google.com/maps?q={{ $lat }},{{ $lon }}&hl=tr&z=13&output=embed">
+            </iframe>
 
-        <script>
-            (function() {
-                var mapId = "log-map-{{ $log->id }}";
-                var lat = {{ $log->latitude }};
-                var lon = {{ $log->longitude }};
-                var label = "{{ addslashes($log->location_text) }} (IP: {{ $log->ip_address }})";
+            {{-- OpenStreetMap Embed --}}
+            <iframe x-show="mapType === 'osm'"
+                    class="w-full h-full border-0"
+                    loading="lazy"
+                    src="https://www.openstreetmap.org/export/embed.html?bbox={{ $lon - 0.035 }}%2C{{ $lat - 0.02 }}%2C{{ $lon + 0.035 }}%2C{{ $lat + 0.02 }}&amp;layer=mapnik&amp;marker={{ $lat }}%2C{{ $lon }}">
+            </iframe>
+        </div>
 
-                function initMap() {
-                    var el = document.getElementById(mapId);
-                    if (!el) return;
-                    
-                    // Prevent re-initialization
-                    if (el._leaflet_id) {
-                        return;
-                    }
+        {{-- Bottom Details & External Links --}}
+        <div class="bg-gray-50 border border-gray-200/80 rounded-2xl p-3.5 space-y-3">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                <div class="bg-white p-2.5 rounded-xl border border-gray-100 shadow-2xs">
+                    <span class="text-gray-400 block text-[10px] uppercase font-bold">IP Ünvanı</span>
+                    <span class="font-mono font-semibold text-gray-800">{{ $log->ip_address }}</span>
+                </div>
+                <div class="bg-white p-2.5 rounded-xl border border-gray-100 shadow-2xs">
+                    <span class="text-gray-400 block text-[10px] uppercase font-bold">Provayder (ISP)</span>
+                    <span class="font-semibold text-gray-800 truncate block" title="{{ $log->isp }}">{{ $log->isp ?? 'Naməlum' }}</span>
+                </div>
+                <div class="bg-white p-2.5 rounded-xl border border-gray-100 shadow-2xs">
+                    <span class="text-gray-400 block text-[10px] uppercase font-bold">Cihaz & Sistem</span>
+                    <span class="font-semibold text-gray-800">{{ $log->device_type }} / {{ $log->os }}</span>
+                </div>
+                <div class="bg-white p-2.5 rounded-xl border border-gray-100 shadow-2xs">
+                    <span class="text-gray-400 block text-[10px] uppercase font-bold">Brauzer</span>
+                    <span class="font-semibold text-gray-800 truncate block">{{ $log->browser ?? 'Naməlum' }}</span>
+                </div>
+            </div>
 
-                    var map = L.map(mapId, {
-                        center: [lat, lon],
-                        zoom: 12,
-                        zoomControl: true
-                    });
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+                <div class="text-[11px] text-gray-500">
+                    ⏱️ Qeydiyyat Vaxtı: <span class="font-medium text-gray-700">{{ $log->created_at?->format('d.m.Y H:i:s') }}</span>
+                </div>
 
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        maxZoom: 19,
-                        attribution: '&copy; OpenStreetMap'
-                    }).addTo(map);
+                <div class="flex items-center gap-2">
+                    <a href="https://www.google.com/maps?q={{ $lat }},{{ $lon }}" 
+                       target="_blank" 
+                       rel="noopener" 
+                       class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl transition shadow-2xs">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        <span>Google Maps</span>
+                    </a>
 
-                    var marker = L.marker([lat, lon]).addTo(map);
-                    marker.bindPopup("<b>" + label + "</b><br>ISP: {{ addslashes($log->isp ?? 'Naməlum') }}").openPopup();
+                    <a href="https://www.openstreetmap.org/?mlat={{ $lat }}&mlon={{ $lon }}#map=14/{{ $lat }}/{{ $lon }}" 
+                       target="_blank" 
+                       rel="noopener" 
+                       class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-200 hover:bg-gray-300 text-gray-800 text-xs font-semibold rounded-xl transition">
+                        <i class="fa-solid fa-map-location-dot text-[10px]"></i>
+                        <span>OpenStreetMap</span>
+                    </a>
 
-                    setTimeout(function() {
-                        map.invalidateSize();
-                    }, 300);
-                }
+                    <a href="https://ipinfo.io/{{ $log->ip_address }}" 
+                       target="_blank" 
+                       rel="noopener" 
+                       class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-xl transition">
+                        <i class="fa-solid fa-globe text-[10px]"></i>
+                        <span>IP Info</span>
+                    </a>
+                </div>
+            </div>
+        </div>
 
-                if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', initMap);
-                } else {
-                    setTimeout(initMap, 200);
-                }
-            })();
-        </script>
     @elseif($log)
         <div class="text-center py-10 px-4 bg-gray-50 rounded-2xl border border-gray-200">
-            <div class="text-4xl mb-2">{{ $log->flag_emoji }}</div>
+            <div class="text-4xl mb-2">{{ $log->flag_emoji ?? '📍' }}</div>
             <div class="text-sm font-semibold text-gray-800">Dəqiq GPS Koordinatları Tapılmadı</div>
             <div class="text-xs text-gray-500 mt-1">
-                IP Ünvanı: <span class="font-mono">{{ $log->ip_address }}</span> | Məkan: {{ $log->location_text }}
+                IP Ünvanı: <span class="font-mono font-bold">{{ $log->ip_address }}</span> | Məkan: {{ $log->location_text }}
             </div>
             @if($log->ip_address && $log->ip_address !== '127.0.0.1')
-                <div class="mt-4">
-                    <a href="https://whatismyipaddress.com/ip/{{ $log->ip_address }}" target="_blank" rel="noopener" class="text-xs text-orange-600 hover:underline">
-                        IP Məlumatını Xarici Xidmətdə Yoxla &rarr;
+                <div class="mt-4 flex items-center justify-center gap-2">
+                    <a href="https://ipinfo.io/{{ $log->ip_address }}" target="_blank" rel="noopener" class="text-xs bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg font-medium hover:bg-blue-100 transition">
+                        IP Məlumatını Yoxla (IPInfo) &rarr;
                     </a>
                 </div>
             @endif
