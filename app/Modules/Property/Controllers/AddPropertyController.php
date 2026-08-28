@@ -115,13 +115,17 @@ class AddPropertyController extends Controller
                 );
             }
 
+            // Yalnızca "agent" seçən istifadəçi üçün agent/agentlik əlaqəsi qurulur.
+            // Sahib (owner) və ya qeydiyyatdan keçməmiş istifadəçi agentlik/agent
+            // kimi görünməməlidir — əks halda elan agentlik elanı kimi göstərilir.
             $agentId = null;
-            if ($user) {
+            $agencyId = null;
+            if ($validated['advertiser'] === 'agent' && $user) {
                 $agent = $user->agent;
                 if (!$agent) {
                     $agent = Agent::create([
                         'user_id' => $user->id,
-                        'position' => $validated['advertiser'] === 'agent' ? 'Rieltor' : 'Mülkiyyətçi',
+                        'position' => 'Rieltor',
                         'phone' => $validated['phone'],
                         'whatsapp' => $validated['whatsapp'] ?? null,
                         'is_active' => true,
@@ -134,6 +138,7 @@ class AddPropertyController extends Controller
                     $agent->update($updateData);
                 }
                 $agentId = $agent->id;
+                $agencyId = $user->tenantAgency()?->id;
             }
 
             $videoPath = null;
@@ -165,7 +170,7 @@ class AddPropertyController extends Controller
                 address: $validated['address'],
                 latitude: isset($validated['latitude']) ? (float) $validated['latitude'] : null,
                 longitude: isset($validated['longitude']) ? (float) $validated['longitude'] : null,
-                agencyId: $user?->tenantAgency()?->id,
+                agencyId: $agencyId,
                 agentId: $agentId,
                 userId: $user?->id,
                 sellerType: $sellerType,
