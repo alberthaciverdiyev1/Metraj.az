@@ -16,7 +16,7 @@ class AgencyDetailController extends Controller
         protected PropertyService $propertyService,
     ) {}
 
-    public function __invoke(string $agency): View
+    public function __invoke(string $locale, string $agency): View
     {
         // /agency/{id} → ID ilə, /agentlik/{slug} → slug ilə rezolyusiya
         $agency = $this->agencyService->show($agency);

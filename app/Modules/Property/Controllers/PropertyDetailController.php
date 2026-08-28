@@ -17,7 +17,7 @@ class PropertyDetailController extends Controller
         protected PropertyService $propertyService,
     ) {}
 
-    public function __invoke(string $slug): \Illuminate\Http\Response|View
+    public function __invoke(string $locale, string $slug): \Illuminate\Http\Response|View
     {
         if (auth()->guest() && ! request()->has('_cache_bust')) {
             $key = 'page_cache:property_details:'.md5(

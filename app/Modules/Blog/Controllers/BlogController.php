@@ -43,7 +43,7 @@ class BlogController extends Controller
         return view('pages.blog.list', compact('blogs', 'categories', 'category', 'search', 'breadcrumbs'))->render();
     }
 
-    public function show(Blog $blog): View
+    public function show(string $locale, Blog $blog): View
     {
         $viewKey = 'viewed_blog_' . $blog->id;
         if (!session()->has($viewKey)) {

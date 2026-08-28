@@ -88,7 +88,7 @@ class RoommateController extends Controller
         return redirect()->route('roommates.show', $listing->slug)->with('success', __('roommates.post_success'));
     }
 
-    public function show(string $slug): View
+    public function show(string $locale, string $slug): View
     {
         $listing = RoommateListing::published()
             ->where('slug', $slug)

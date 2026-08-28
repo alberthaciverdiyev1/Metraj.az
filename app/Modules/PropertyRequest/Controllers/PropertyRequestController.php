@@ -94,7 +94,7 @@ class PropertyRequestController extends Controller
         return redirect()->route('requests.show', $propertyRequest->slug)->with('success', $successMsg);
     }
 
-    public function show(string $slug): View
+    public function show(string $locale, string $slug): View
     {
         $propertyRequest = PropertyRequest::published()
             ->where('slug', $slug)

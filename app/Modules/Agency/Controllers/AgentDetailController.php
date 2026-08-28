@@ -16,7 +16,7 @@ class AgentDetailController extends Controller
         protected PropertyService $propertyService,
     ) {}
 
-    public function __invoke(int $id): View
+    public function __invoke(string $locale, int $id): View
     {
         $agent = $this->agentService->show($id);
 
