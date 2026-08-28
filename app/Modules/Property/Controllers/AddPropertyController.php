@@ -173,6 +173,8 @@ class AddPropertyController extends Controller
                 agencyId: $agencyId,
                 agentId: $agentId,
                 userId: $user?->id,
+                phone: $validated['phone'] ?? null,
+                contactName: $validated['advertiser_name'] ?? null,
                 sellerType: $sellerType,
                 status: PropertyStatus::PendingApproval,
                 video: $videoPath,

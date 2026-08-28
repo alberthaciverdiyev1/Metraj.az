@@ -113,6 +113,8 @@ class Property extends Model
         'agency_id',           // Elanın aid olduğu daşınmaz əmlak agentliyinin ID-si (varsa)
         'agent_id',            // Elana cavabdeh olan rieltorun / agentin ID-si (varsa)
         'user_id',             // Elanı əlavə edən istifadəçinin ID-si
+        'phone',               // Göndəricinin əlaqə telefonu (ilan üzərində saxlanılır)
+        'contact_name',        // Göndəricinin adı (ilan üzərində saxlanılır)
 
         // Moderasiya və Statistika
         'status',              // Elanın statusu (Qaralama, Təsdiq gözləyir, Dərc olunub, Satılıb və s.)

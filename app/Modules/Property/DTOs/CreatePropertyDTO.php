@@ -33,6 +33,8 @@ readonly class CreatePropertyDTO
         public ?int $agencyId = null,
         public ?int $agentId = null,
         public ?int $userId = null,
+        public ?string $phone = null,
+        public ?string $contactName = null,
         public ?SellerType $sellerType = null,
         public PropertyStatus $status = PropertyStatus::PendingApproval,
         public bool $isFeatured = false,
@@ -70,7 +72,9 @@ readonly class CreatePropertyDTO
             agencyId: isset($data['agency_id']) ? (int) $data['agency_id'] : null,
             agentId: isset($data['agent_id']) ? (int) $data['agent_id'] : null,
             userId: isset($data['user_id']) ? (int) $data['user_id'] : null,
-            sellerType: !empty($data['seller_type']) 
+            phone: $data['phone'] ?? null,
+            contactName: $data['contact_name'] ?? null,
+            sellerType: !empty($data['seller_type'])
                 ? ($data['seller_type'] instanceof SellerType ? $data['seller_type'] : SellerType::tryFrom($data['seller_type'])) 
                 : null,
             status: isset($data['status']) 

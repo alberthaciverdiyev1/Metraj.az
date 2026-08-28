@@ -16,8 +16,16 @@
             || in_array($property->seller_type, ['agent', 'agency'])
             || !empty($property->agent)
             || !empty($property->agency);
-        $agentName = $property->agent->user->name ?? ($property->agency->name ?? ($property->user->name ?? __('property.owner')));
-        $agentPhone = $property->agent->phone ?? ($property->agency->phone ?? ($property->user->phone ?? ($property->phone ?? '+994 50 123 45 67')));
+        $agentName = $property->agent->user->name
+            ?? ($property->agency->name
+            ?? ($property->contact_name
+            ?? ($property->user->name
+            ?? __('property.owner'))));
+        $agentPhone = $property->agent->phone
+            ?? ($property->agency->phone
+            ?? ($property->phone
+            ?? ($property->user->phone
+            ?? '+994 50 123 45 67')));
         $agentWhatsapp = $property->agent->whatsapp ?? ($property->agency->whatsapp ?? null);
         $cleanWhatsapp = $agentWhatsapp ? preg_replace('/[^0-9]/', '', $agentWhatsapp) : null;
         $agentAvatar = $property->agent->avatar_url ?? ($property->agency->logo_url ?? ($property->agent->user->avatar ?? ''));

@@ -74,6 +74,8 @@ class PropertyRepository implements PropertyRepositoryInterface
             'agency_id' => $dto->agencyId,
             'agent_id' => $dto->agentId,
             'user_id' => $dto->userId,
+            'phone' => $dto->phone,
+            'contact_name' => $dto->contactName,
             'seller_type' => $dto->sellerType ?? ($dto->agencyId ? \App\Modules\Property\Enums\SellerType::Agency : \App\Modules\Property\Enums\SellerType::Owner),
             'status' => $dto->status,
             'is_featured' => $dto->isFeatured,
