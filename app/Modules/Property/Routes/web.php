@@ -26,9 +26,9 @@ Route::post('/ilan-ver', [AddPropertyController::class, 'store'])->name('add-pro
 Route::post('/add-property', [AddPropertyController::class, 'store']);
 
 // Telefon Numarası Gösterme (Reveal Phone AJAX)
-Route::post('/listings/{listing}/reveal-phone', [\App\Modules\Property\Controllers\RevealPhoneController::class, 'reveal'])
+Route::match(['GET', 'POST'], '/listings/{listing}/reveal-phone', [\App\Modules\Property\Controllers\RevealPhoneController::class, 'reveal'])
     ->middleware('throttle:30,1')
     ->name('listings.reveal-phone');
-Route::post('/properties/{listing}/reveal-phone', [\App\Modules\Property\Controllers\RevealPhoneController::class, 'reveal'])
+Route::match(['GET', 'POST'], '/properties/{listing}/reveal-phone', [\App\Modules\Property\Controllers\RevealPhoneController::class, 'reveal'])
     ->middleware('throttle:30,1');
 

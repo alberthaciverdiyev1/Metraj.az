@@ -32,7 +32,9 @@ class ModuleServiceProvider extends ServiceProvider
         Route::middleware('web')->group(function () {
             Route::get('/lang/{lang}', [\App\Modules\Shared\Controllers\LocaleController::class, 'switchLanguage'])->name('lang.switch');
             Route::get('/currency/{code}', [\App\Modules\Shared\Controllers\LocaleController::class, 'switchCurrency'])->name('currency.switch');
-            Route::post('/listings/{listing}/reveal-phone', [\App\Modules\Property\Controllers\RevealPhoneController::class, 'reveal'])
+            Route::match(['GET', 'POST'], '/listings/{listing}/reveal-phone', [\App\Modules\Property\Controllers\RevealPhoneController::class, 'reveal'])
+                ->middleware('throttle:30,1');
+            Route::match(['GET', 'POST'], '/properties/{listing}/reveal-phone', [\App\Modules\Property\Controllers\RevealPhoneController::class, 'reveal'])
                 ->middleware('throttle:30,1');
         });
 
@@ -69,7 +71,8 @@ class ModuleServiceProvider extends ServiceProvider
                     $request->is('livewire*') ||
                     $request->is('build*') ||
                     $request->is('vendor*') ||
-                    $request->is('storage*')
+                    $request->is('storage*') ||
+                    $request->is('*reveal-phone*')
                 ) {
                     abort(404);
                 }

@@ -597,7 +597,10 @@
                 const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
                     || '{{ csrf_token() }}';
 
-                const res = await fetch('/listings/' + propertyId + '/reveal-phone', {
+                const currentLocale = document.documentElement.lang || '{{ app()->getLocale() }}';
+                const revealUrl = '/' + currentLocale + '/listings/' + propertyId + '/reveal-phone';
+
+                const res = await fetch(revealUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
