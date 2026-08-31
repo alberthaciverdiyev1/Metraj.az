@@ -1,5 +1,5 @@
 @php
-    $currentCurrency = session('currency', 'AZN');
+    $currentCurrency = session('currency', 'GBP');
     $currencySymbols = \App\Modules\Shared\Enums\Currency::getSymbols();
     $currentLocale = app()->getLocale() ?? session('lang', config('app.locale', 'tr'));
     $languages = \App\Modules\Shared\Enums\SupportedLocale::getList();

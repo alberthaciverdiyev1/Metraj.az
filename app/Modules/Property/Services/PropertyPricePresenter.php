@@ -23,7 +23,7 @@ class PropertyPricePresenter
      */
     public function display(Property $property, ?string $targetCurrency = null): array
     {
-        $currency = strtoupper($targetCurrency ?: session('currency', 'AZN'));
+        $currency = strtoupper($targetCurrency ?: session('currency', 'GBP'));
         $prices = $property->prices ?? [];
         $symbol = match ($currency) {
             'GBP' => '£',

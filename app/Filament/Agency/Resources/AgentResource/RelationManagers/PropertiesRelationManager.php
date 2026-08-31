@@ -42,7 +42,7 @@ class PropertiesRelationManager extends RelationManager
 
                 Tables\Columns\TextColumn::make('price')
                     ->label('Qiymət')
-                    ->money('AZN')
+                    ->money(fn ($record) => $record->currency ?? 'GBP')
                     ->sortable()
                     ->weight('bold')
                     ->color('success'),

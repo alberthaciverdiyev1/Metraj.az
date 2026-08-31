@@ -172,7 +172,7 @@ readonly class PropertyFilterDTO
             $hasMortgage = (bool) $data['inCredit'];
         }
 
-        $filterCurrency = strtoupper($data['currency'] ?? session('currency', 'AZN'));
+        $filterCurrency = strtoupper($data['currency'] ?? session('currency', 'GBP'));
         $rawMinPrice = isset($data['min_price']) && $data['min_price'] !== '' ? (float) $data['min_price'] : (isset($data['minPrice']) && $data['minPrice'] !== '' ? (float) $data['minPrice'] : null);
         $rawMaxPrice = isset($data['max_price']) && $data['max_price'] !== '' ? (float) $data['max_price'] : (isset($data['maxPrice']) && $data['maxPrice'] !== '' ? (float) $data['maxPrice'] : null);
 

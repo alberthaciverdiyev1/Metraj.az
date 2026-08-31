@@ -49,7 +49,7 @@ class ViewProperty extends ViewRecord
 
                         TextEntry::make('price')
                             ->label('Qiymət')
-                            ->money('AZN')
+                            ->money(fn ($record) => $record->currency ?? 'GBP')
                             ->weight('bold')
                             ->color('success'),
 
