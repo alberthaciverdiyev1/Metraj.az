@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'my_listings' => 'İlanlarım',
+    'all_properties' => 'Tüm İlanlar',
+    'property_requests' => 'Müşteri Talepleri (Arıyorum)',
+    'agency_info' => 'Acente Bilgileri',
+    'my_agents' => 'Danışmanlarım',
+    'all_agents' => 'Danışmanlar / Emlakçılar',
+    'all_agencies' => 'Acenteler',
+    'inquiries' => 'Müşteri Talepleri',
+    'users' => 'Kullanıcılar',
+    'blog' => 'Blog ve Haberler',
+    'faq' => 'Soru-Cevap (FAQ)',
+    'locations' => 'Şehir ve Bölgeler',
+    'amenities' => 'Donanım ve Özellikler',
+    'filters' => 'Dinamik Filtreler',
+    'quick_searches' => 'Hızlı Aramalar',
+    'roommates' => 'Ev Arkadaşı İlanları',
+    'profile' => 'Profilim',
+    'visit_site' => 'Siteye Git',
+    'site_settings' => 'Site Ayarları',
+    'seo_settings' => 'SEO Ayarları',
+    'sitemap' => 'Sitemap Yönetimi',
+    'robots_txt' => 'Robots.txt Düzenleyici',
+    'activity_logs' => 'İşlem Geçmişi',
+    'system_logs' => 'Sistem Logları',
+];

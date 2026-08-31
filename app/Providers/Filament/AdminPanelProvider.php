@@ -41,11 +41,11 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->userMenuItems([
                 'profile' => MenuItem::make()
-                    ->label('Profilim')
+                    ->label(fn (): string => __('panel.profile'))
                     ->url(fn (): string => EditProfile::getUrl())
                     ->icon('heroicon-o-user-circle'),
                 'website' => MenuItem::make()
-                    ->label('Sayta Keçid')
+                    ->label(fn (): string => __('panel.visit_site'))
                     ->url('/')
                     ->icon('heroicon-o-arrow-top-right-on-square')
                     ->openUrlInNewTab(true),

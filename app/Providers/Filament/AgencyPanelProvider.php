@@ -40,11 +40,11 @@ class AgencyPanelProvider extends PanelProvider
             ])
             ->userMenuItems([
                 'profile' => MenuItem::make()
-                    ->label('Profilim')
+                    ->label(fn (): string => __('panel.profile'))
                     ->url(fn (): string => EditProfile::getUrl())
                     ->icon('heroicon-o-user-circle'),
                 'website' => MenuItem::make()
-                    ->label('Sayta Keçid')
+                    ->label(fn (): string => __('panel.visit_site'))
                     ->url('/')
                     ->icon('heroicon-o-arrow-top-right-on-square')
                     ->openUrlInNewTab(true),
@@ -55,7 +55,7 @@ class AgencyPanelProvider extends PanelProvider
                 Pages\Dashboard::class,
             ])
             ->navigationItems([
-                NavigationItem::make('Sayta Keçid')
+                NavigationItem::make(fn (): string => __('panel.visit_site'))
                     ->url('/')
                     ->icon('heroicon-o-globe-alt')
                     ->sort(99)

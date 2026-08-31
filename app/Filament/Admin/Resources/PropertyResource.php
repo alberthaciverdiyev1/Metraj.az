@@ -24,11 +24,20 @@ class PropertyResource extends Resource
 
     protected static ?string $navigationGroup = 'Əmlak və Müraciətlər';
 
-    protected static ?string $navigationLabel = 'Bütün Əmlaklar';
+    public static function getNavigationLabel(): string
+    {
+        return __('panel.all_properties');
+    }
 
-    protected static ?string $modelLabel = 'Əmlak Elanı';
+    public static function getModelLabel(): string
+    {
+        return __('panel.all_properties');
+    }
 
-    protected static ?string $pluralModelLabel = 'Əmlak Elanları';
+    public static function getPluralModelLabel(): string
+    {
+        return __('panel.all_properties');
+    }
 
     protected static ?int $navigationSort = 1;
 

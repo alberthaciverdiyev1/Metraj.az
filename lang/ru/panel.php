@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'my_listings' => 'Мои объявления',
+    'all_properties' => 'Все объекты',
+    'property_requests' => 'Запросы клиентов (Ищу)',
+    'agency_info' => 'Информация об агентстве',
+    'my_agents' => 'Мои риелторы',
+    'all_agents' => 'Агенты / Риелторы',
+    'all_agencies' => 'Агентства',
+    'inquiries' => 'Заявки клиентов',
+    'users' => 'Пользователи',
+    'blog' => 'Блог и новости',
+    'faq' => 'Вопросы и ответы (FAQ)',
+    'locations' => 'Города и районы',
+    'amenities' => 'Удобства и оснащение',
+    'filters' => 'Динамические фильтры',
+    'quick_searches' => 'Быстрый поиск',
+    'roommates' => 'Поиск сожителей',
+    'profile' => 'Мой профиль',
+    'visit_site' => 'Перейти на сайт',
+    'site_settings' => 'Настройки сайта',
+    'seo_settings' => 'Настройки SEO',
+    'sitemap' => 'Управление картой сайта',
+    'robots_txt' => 'Редактор Robots.txt',
+    'activity_logs' => 'Журнал действий',
+    'system_logs' => 'Системные логи',
+];

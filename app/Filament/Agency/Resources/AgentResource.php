@@ -19,11 +19,20 @@ class AgentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    protected static ?string $navigationLabel = 'Rieltorlarım';
+    public static function getNavigationLabel(): string
+    {
+        return __('panel.my_agents');
+    }
 
-    protected static ?string $modelLabel = 'Rieltor';
+    public static function getModelLabel(): string
+    {
+        return __('panel.my_agents');
+    }
 
-    protected static ?string $pluralModelLabel = 'Rieltorlar';
+    public static function getPluralModelLabel(): string
+    {
+        return __('panel.my_agents');
+    }
 
     protected static ?int $navigationSort = 2;
 

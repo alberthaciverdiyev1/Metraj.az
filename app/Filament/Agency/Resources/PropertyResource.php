@@ -19,11 +19,20 @@ class PropertyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
-    protected static ?string $navigationLabel = 'Elanlarım';
+    public static function getNavigationLabel(): string
+    {
+        return __('panel.my_listings');
+    }
 
-    protected static ?string $modelLabel = 'Əmlak Elanı';
+    public static function getModelLabel(): string
+    {
+        return __('panel.my_listings');
+    }
 
-    protected static ?string $pluralModelLabel = 'Agentlik Elanları';
+    public static function getPluralModelLabel(): string
+    {
+        return __('panel.my_listings');
+    }
 
     public static function getEloquentQuery(): Builder
     {

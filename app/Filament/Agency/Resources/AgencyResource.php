@@ -20,11 +20,20 @@ class AgencyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
-    protected static ?string $navigationLabel = 'Agentlik Məlumatları';
+    public static function getNavigationLabel(): string
+    {
+        return __('panel.agency_info');
+    }
 
-    protected static ?string $modelLabel = 'Agentlik';
+    public static function getModelLabel(): string
+    {
+        return __('panel.agency_info');
+    }
 
-    protected static ?string $pluralModelLabel = 'Agentlik Məlumatları';
+    public static function getPluralModelLabel(): string
+    {
+        return __('panel.agency_info');
+    }
 
     protected static ?int $navigationSort = 1;
 

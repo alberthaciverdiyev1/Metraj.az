@@ -20,11 +20,20 @@ class PropertyRequestResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-megaphone';
 
-    protected static ?string $navigationLabel = 'Müştəri Tələbləri (Arıyorum)';
+    public static function getNavigationLabel(): string
+    {
+        return __('panel.property_requests');
+    }
 
-    protected static ?string $modelLabel = 'Müştəri Tələbi';
+    public static function getModelLabel(): string
+    {
+        return __('panel.property_requests');
+    }
 
-    protected static ?string $pluralModelLabel = 'Müştəri Tələbləri (Arıyorum)';
+    public static function getPluralModelLabel(): string
+    {
+        return __('panel.property_requests');
+    }
 
     protected static ?int $navigationSort = 2;
 

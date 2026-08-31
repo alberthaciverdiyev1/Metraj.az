@@ -18,16 +18,14 @@ class EditProfile extends BaseEditProfile
 {
     protected static ?string $title = 'Profilim';
 
-    protected static ?string $navigationLabel = 'Profilim';
-
     public function getTitle(): string | Htmlable
     {
-        return static::$title ?? __('Profilim');
+        return __('panel.profile');
     }
 
     public static function getNavigationLabel(): string
     {
-        return static::$navigationLabel ?? __('Profilim');
+        return __('panel.profile');
     }
 
     public static function getSlug(): string

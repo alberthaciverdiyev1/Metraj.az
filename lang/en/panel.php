@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'my_listings' => 'My Listings',
+    'all_properties' => 'All Properties',
+    'property_requests' => 'Client Requests (Seeking)',
+    'agency_info' => 'Agency Information',
+    'my_agents' => 'My Agents',
+    'all_agents' => 'Agents / Realtors',
+    'all_agencies' => 'Agencies',
+    'inquiries' => 'Client Inquiries',
+    'users' => 'Users',
+    'blog' => 'Blog & News',
+    'faq' => 'FAQ',
+    'locations' => 'Cities & Districts',
+    'amenities' => 'Amenities & Features',
+    'filters' => 'Dynamic Filters',
+    'quick_searches' => 'Quick Searches',
+    'roommates' => 'Roommate Listings',
+    'profile' => 'My Profile',
+    'visit_site' => 'Visit Website',
+    'site_settings' => 'Site Settings',
+    'seo_settings' => 'SEO Settings',
+    'sitemap' => 'Sitemap Management',
+    'robots_txt' => 'Robots.txt Editor',
+    'activity_logs' => 'Activity History',
+    'system_logs' => 'System Logs',
+];
