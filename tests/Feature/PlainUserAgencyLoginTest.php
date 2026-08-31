@@ -10,11 +10,11 @@ use Tests\TestCase;
 
 class PlainUserAgencyLoginTest extends TestCase
 {
-    public function test_plain_new_user_can_login_to_agency_panel(): void
+    public function test_plain_new_user_cannot_access_agency_panel(): void
     {
         $email = 'plain.user.' . time() . '@kibriskare.com';
 
-        // A user with NO agent record and NO owned agency (e.g. created via admin UserResource)
+        // A user with NO agent record and NO owned agency (e.g. created via normal registration)
         $user = User::create([
             'name' => 'Plain User',
             'email' => $email,
@@ -24,25 +24,9 @@ class PlainUserAgencyLoginTest extends TestCase
         $this->assertNull($user->agent, 'No agent record');
         $this->assertFalse($user->agencies()->exists(), 'No owned agency');
 
-        // canAccessPanel must allow them into the agency panel
+        // canAccessPanel must deny them from the agency panel
         Filament::setCurrentPanel(Filament::getPanel('agency'));
-        $this->assertTrue($user->canAccessPanel(Filament::getCurrentPanel()));
-
-        // Real login through the agency panel
-        Filament::setCurrentPanel(Filament::getPanel('agency'));
-        Livewire::test(\Filament\Pages\Auth\Login::class)
-            ->fillForm([
-                'email' => $email,
-                'password' => 'password123',
-                'remember' => false,
-            ])
-            ->call('authenticate')
-            ->assertHasNoErrors();
-
-        $this->assertAuthenticatedAs($user);
-
-        // The agency panel dashboard is accessible
-        $this->get('/agency')->assertOk();
+        $this->assertFalse($user->canAccessPanel(Filament::getCurrentPanel()));
 
         // Cleanup
         $user->forceDelete();
