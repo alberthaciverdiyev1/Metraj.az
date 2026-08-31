@@ -46,12 +46,27 @@ class InquiryController extends Controller
     {
         $validated = $request->validated();
 
+        $interestMap = [
+            'bug_report' => 'Hata Bildirimi (Bug Report)',
+            'buy' => 'Gayrimenkul Alımı',
+            'sell' => 'Gayrimenkul Satışı',
+            'rent' => 'Kiralık Gayrimenkul',
+            'agency' => 'Acente / Danışman İş Birliği',
+            'other' => 'Diğer Konular',
+        ];
+
+        $subjectLabel = !empty($validated['interest']) ? ($interestMap[$validated['interest']] ?? $validated['interest']) : null;
+        $messageContent = $validated['message'] ?? '';
+        if ($subjectLabel) {
+            $messageContent = "[Konu: {$subjectLabel}]\n\n" . $messageContent;
+        }
+
         $this->inquiryService->create([
             'name' => $validated['name'],
             'phone' => $validated['phone'] ?? null,
             'email' => $validated['email'] ?? null,
-            'message' => $validated['message'] ?? null,
-            'type' => 'contact',
+            'message' => trim($messageContent) ?: null,
+            'type' => !empty($validated['interest']) && $validated['interest'] === 'bug_report' ? 'bug_report' : 'contact',
             'status' => 'new',
         ]);
 

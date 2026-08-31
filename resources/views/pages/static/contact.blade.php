@@ -149,6 +149,7 @@
                             <select id="contact_subject" name="interest"
                                     class="w-full px-4 py-3 text-sm bg-gray-50/60 border border-gray-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/40 focus:border-orange-500 transition cursor-pointer">
                                 <option value="">{{ __('contact.select') }}</option>
+                                <option value="bug_report">{{ __('contact.report_bug') }}</option>
                                 <option value="buy">{{ __('contact.property_buy') }}</option>
                                 <option value="sell">{{ __('contact.property_sell') }}</option>
                                 <option value="rent">{{ __('contact.property_rent') }}</option>
