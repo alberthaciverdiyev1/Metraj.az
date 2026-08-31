@@ -21,19 +21,12 @@
             ?? ($property->contact_name
             ?? ($property->user->name
             ?? __('property.owner'))));
-        $agentPhone = $property->agent->phone
-            ?? ($property->agency->phone
-            ?? ($property->phone
-            ?? ($property->user->phone
-            ?? null)));
-        $agentWhatsapp = $property->agent->whatsapp
-            ?? ($property->agency->whatsapp
-            ?? ($property->whatsapp
-            ?? ($property->phone
-            ?? ($property->user->phone ?? null))));
-        $cleanWhatsapp = $agentWhatsapp ? preg_replace('/[^0-9]/', '', $agentWhatsapp) : null;
         $agentAvatar = $property->agent->avatar_url ?? ($property->agency->logo_url ?? ($property->agent->user->avatar ?? ''));
         $agentRole = $property->agency ? __('property.official_agency') : ($property->agent ? __('property.agent') : __('property.owner'));
+        $hasContact = !empty($property->agent_id)
+            || !empty($property->agency_id)
+            || !empty($property->phone)
+            || !empty($property->user_id);
 
         $galleryImages = $property->images->sortBy('sort_order')->values();
         $hasVideo = !empty($property->video_url);
@@ -306,43 +299,28 @@
                                     </div>
                                 </div>
 
-                                @if(!empty($agentPhone) || !empty($cleanWhatsapp))
+                                @if($hasContact)
                                     <div class="pt-3 border-t border-gray-100 space-y-2.5">
-                                        @if(!empty($agentPhone))
-                                            <div class="flex items-center justify-between text-sm">
-                                                <span class="text-gray-500">{{ __('property.phone') }}:</span>
-                                                <a href="tel:{{ $agentPhone }}"
-                                                   class="font-semibold text-gray-900 hover:text-orange-500 transition duration-200">{{ $agentPhone }}</a>
-                                            </div>
-                                        @endif
-                                        @if(!empty($agentWhatsapp))
-                                            <div class="flex items-center justify-between text-sm">
-                                                <span class="text-gray-500">WhatsApp:</span>
-                                                <a href="https://wa.me/{{ $cleanWhatsapp }}" target="_blank"
-                                                   rel="noopener noreferrer"
-                                                   class="font-semibold text-emerald-600 hover:text-emerald-700 transition duration-200">{{ $agentWhatsapp }}</a>
-                                            </div>
-                                        @endif
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-gray-500">{{ __('property.phone') }}:</span>
+                                            <span class="js-phone-display font-semibold text-gray-900 filter blur-xs select-none tracking-wider">+90 533 ··· ·· ··</span>
+                                        </div>
                                     </div>
 
-                                    <div
-                                        class="grid {{ (!empty($agentPhone) && !empty($cleanWhatsapp)) ? 'grid-cols-2' : 'grid-cols-1' }} gap-2.5 pt-1">
-                                        @if(!empty($agentPhone))
-                                            <a href="tel:{{ $agentPhone }}"
-                                                class="w-full flex items-center justify-center gap-2 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
-                                                <i class="bi bi-telephone-fill text-xs"></i>
-                                                <span>{{ __('property.call') }}</span>
-                                            </a>
-                                        @endif
+                                    <div class="grid grid-cols-2 gap-2.5 pt-1">
+                                        <button type="button"
+                                            onclick="revealPropertyPhone(event, this, {{ $property->id }}, 'call')"
+                                            class="js-btn-show-phone w-full flex items-center justify-center gap-2 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm cursor-pointer">
+                                            <i class="bi bi-eye text-xs"></i>
+                                            <span class="js-phone-btn-text">{{ __('property.show_phone') }}</span>
+                                        </button>
 
-                                        @if(!empty($cleanWhatsapp))
-                                            <a href="https://wa.me/{{ $cleanWhatsapp }}" target="_blank"
-                                               rel="noopener noreferrer"
-                                               class="w-full flex items-center justify-center gap-2 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
-                                                <i class="bi bi-whatsapp text-sm"></i>
-                                                <span>WhatsApp</span>
-                                            </a>
-                                        @endif
+                                        <a href="javascript:void(0)"
+                                           onclick="revealPropertyPhone(event, this, {{ $property->id }}, 'whatsapp')"
+                                           class="js-btn-whatsapp w-full flex items-center justify-center gap-2 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm cursor-pointer">
+                                            <i class="bi bi-whatsapp text-sm"></i>
+                                            <span>WhatsApp</span>
+                                        </a>
                                     </div>
                                 @endif
 
@@ -420,42 +398,28 @@
                                     </div>
                                 </div>
 
-                                @if(!empty($agentPhone) || !empty($cleanWhatsapp))
+                                @if($hasContact)
                                     <div class="pt-3 border-t border-gray-100 space-y-2.5">
-                                        @if(!empty($agentPhone))
-                                            <div class="flex items-center justify-between text-sm">
-                                                <span class="text-gray-500">{{ __('property.phone') }}:</span>
-                                                <a href="tel:{{ $agentPhone }}"
-                                                   class="font-bold text-gray-900 hover:text-orange-500 transition duration-200">{{ $agentPhone }}</a>
-                                            </div>
-                                        @endif
-                                        @if(!empty($agentWhatsapp))
-                                            <div class="flex items-center justify-between text-sm">
-                                                <span class="text-gray-500">WhatsApp:</span>
-                                                <a href="https://wa.me/{{ $cleanWhatsapp }}" target="_blank"
-                                                   rel="noopener noreferrer"
-                                                   class="font-bold text-emerald-600 hover:text-emerald-700 transition duration-200">{{ $agentWhatsapp }}</a>
-                                            </div>
-                                        @endif
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-gray-500">{{ __('property.phone') }}:</span>
+                                            <span class="js-phone-display font-bold text-gray-900 filter blur-xs select-none tracking-wider">+90 533 ··· ·· ··</span>
+                                        </div>
                                     </div>
 
-                                    <div class="grid {{ (!empty($agentPhone) && !empty($cleanWhatsapp)) ? 'grid-cols-2' : 'grid-cols-1' }} gap-2.5 pt-1">
-                                        @if(!empty($agentPhone))
-                                            <a href="tel:{{ $agentPhone }}"
-                                               class="w-full flex items-center justify-center gap-2 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
-                                                <i class="bi bi-telephone-fill text-xs"></i>
-                                                <span>{{ __('property.call') }}</span>
-                                            </a>
-                                        @endif
+                                    <div class="grid grid-cols-2 gap-2.5 pt-1">
+                                        <button type="button"
+                                            onclick="revealPropertyPhone(event, this, {{ $property->id }}, 'call')"
+                                            class="js-btn-show-phone w-full flex items-center justify-center gap-2 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm cursor-pointer">
+                                            <i class="bi bi-eye text-xs"></i>
+                                            <span class="js-phone-btn-text">{{ __('property.show_phone') }}</span>
+                                        </button>
 
-                                        @if(!empty($cleanWhatsapp))
-                                            <a href="https://wa.me/{{ $cleanWhatsapp }}" target="_blank"
-                                               rel="noopener noreferrer"
-                                               class="w-full flex items-center justify-center gap-2 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
-                                                <i class="bi bi-whatsapp text-sm"></i>
-                                                <span>WhatsApp</span>
-                                            </a>
-                                        @endif
+                                        <a href="javascript:void(0)"
+                                           onclick="revealPropertyPhone(event, this, {{ $property->id }}, 'whatsapp')"
+                                           class="js-btn-whatsapp w-full flex items-center justify-center gap-2 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm cursor-pointer">
+                                            <i class="bi bi-whatsapp text-sm"></i>
+                                            <span>WhatsApp</span>
+                                        </a>
                                     </div>
                                 @endif
                             </div>
@@ -556,7 +520,6 @@
 
     <script>
         window.mediaList = @json($mediaItems->values());
-        window.fullPhoneNumber = @json($agentPhone);
         let currentHeroIndex = 0;
 
         function selectHeroImage(index) {
@@ -612,18 +575,75 @@
             selectHeroImage(currentHeroIndex);
         }
 
-        function revealPhoneNumber() {
-            const numElem = document.getElementById('phone-btn-number');
-            const titleElem = document.getElementById('phone-btn-title');
-            const btn = document.getElementById('btn-show-phone');
-            if (window.fullPhoneNumber) {
-                if (numElem) numElem.textContent = window.fullPhoneNumber;
-                if (titleElem) titleElem.textContent = "{{ __('property.call_now') }}";
-                if (btn && !btn.dataset.revealed) {
-                    btn.dataset.revealed = "true";
-                } else if (btn && btn.dataset.revealed === "true") {
-                    window.location.href = "tel:" + window.fullPhoneNumber;
+        window.revealedPhones = window.revealedPhones || {};
+
+        async function revealPropertyPhone(e, btn, propertyId, intent = 'call') {
+            if (e) e.preventDefault();
+
+            if (window.revealedPhones[propertyId]) {
+                const data = window.revealedPhones[propertyId];
+                if (intent === 'whatsapp' && data.whatsapp_url) {
+                    window.open(data.whatsapp_url, '_blank');
+                } else if (data.call_url) {
+                    window.location.href = data.call_url;
                 }
+                return;
+            }
+
+            const btnTexts = document.querySelectorAll('.js-phone-btn-text');
+            btnTexts.forEach(t => t.textContent = '...');
+
+            try {
+                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+                    || '{{ csrf_token() }}';
+
+                const res = await fetch('/listings/' + propertyId + '/reveal-phone', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': token,
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const data = await res.json();
+
+                if (data.success && data.phone) {
+                    window.revealedPhones[propertyId] = data;
+
+                    // Reveal phone number text
+                    document.querySelectorAll('.js-phone-display').forEach(el => {
+                        el.textContent = data.phone;
+                        el.classList.remove('blur-xs', 'filter', 'select-none', 'tracking-wider');
+                        el.innerHTML = `<a href="${data.call_url || ('tel:' + data.clean_phone)}" class="hover:text-orange-500 transition">${data.phone}</a>`;
+                    });
+
+                    // Update call buttons
+                    document.querySelectorAll('.js-btn-show-phone').forEach(b => {
+                        const icon = b.querySelector('i');
+                        if (icon) icon.className = 'bi bi-telephone-fill text-xs';
+                        const txt = b.querySelector('.js-phone-btn-text');
+                        if (txt) txt.textContent = "{{ __('property.call') }}";
+                    });
+
+                    // Update WhatsApp links
+                    document.querySelectorAll('.js-btn-whatsapp').forEach(w => {
+                        if (data.whatsapp_url) {
+                            w.href = data.whatsapp_url;
+                            w.target = '_blank';
+                            w.rel = 'noopener noreferrer';
+                        }
+                    });
+
+                    if (intent === 'whatsapp' && data.whatsapp_url) {
+                        window.open(data.whatsapp_url, '_blank');
+                    }
+                }
+            } catch (err) {
+                console.error('reveal-phone error:', err);
+                btnTexts.forEach(t => t.textContent = "{{ __('property.show_phone') }}");
             }
         }
 

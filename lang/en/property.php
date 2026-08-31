@@ -17,6 +17,7 @@ return [
     'owner' => 'Owner',
     'verified' => 'Verified',
     'phone' => 'Phone',
+    'show_phone' => 'Show Phone',
     'call' => 'Call',
     'send_inquiry' => 'Send Inquiry',
     'online_inquiry' => 'Online Inquiry',

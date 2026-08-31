@@ -17,6 +17,7 @@ return [
     'owner' => 'Mülkiyyətçi',
     'verified' => 'Təsdiqlənmiş',
     'phone' => 'Telefon',
+    'show_phone' => 'Nömrəni Göstər',
     'call' => 'Zəng et',
     'send_inquiry' => 'Müraciət Göndər',
     'online_inquiry' => 'Onlayn sorğu',

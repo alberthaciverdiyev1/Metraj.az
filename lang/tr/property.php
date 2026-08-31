@@ -17,6 +17,7 @@ return [
     'owner' => 'Sahibinden',
     'verified' => 'Doğrulanmış',
     'phone' => 'Telefon',
+    'show_phone' => 'Telefonu Göster',
     'call' => 'Ara',
     'send_inquiry' => 'Talep Gönder',
     'online_inquiry' => 'Online Talep',
