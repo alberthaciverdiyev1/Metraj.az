@@ -147,7 +147,9 @@ class StaticPageController extends Controller
             ['label' => __('faq.page_title'), 'url' => null],
         ];
 
-        return view('pages.static.faq', compact('breadcrumbs'));
+        $faqs = \App\Modules\Shared\Models\Faq::active()->get();
+
+        return view('pages.static.faq', compact('breadcrumbs', 'faqs'));
     }
 
     public function userAgreement(): View

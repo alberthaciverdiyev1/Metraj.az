@@ -9,6 +9,7 @@ return [
     'category_listings' => 'Listing Submission',
     'category_payments' => 'VIP & Payments',
     'category_safety' => 'Safety',
+    'category_agency' => 'Agencies',
     'q1' => 'What is KibrisKare.com and how does it work?',
     'a1' => 'KibrisKare.com is a modern and reliable real estate listings platform for buying, selling, and renting properties. Both individual property owners and professional agencies can easily post listings and reach thousands of genuine buyers.',
     'q2' => 'Do I need an account to browse listings?',

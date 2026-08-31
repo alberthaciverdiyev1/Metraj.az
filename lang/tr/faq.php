@@ -9,6 +9,7 @@ return [
     'category_listings' => 'İlan Verme',
     'category_payments' => 'VIP & Ödemeler',
     'category_safety' => 'Güvenlik',
+    'category_agency' => 'Acenteler',
     'q1' => 'KibrisKare.com nedir ve nasıl çalışır?',
     'a1' => 'KibrisKare.com, gayrimenkul alım-satımı ve kiralanması üzerine modern ve güvenilir bir ilan platformudur. Burada bireysel mülk sahipleri, profesyonel acenteler ve danışmanlar ilanlarını kolayca yayınlayabilir ve binlerce gerçek alıcıya ulaşabilir.',
     'q2' => 'İlanlara bakmak için kayıt olmak zorunlu mu?',

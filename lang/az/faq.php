@@ -9,6 +9,7 @@ return [
     'category_listings' => 'Elan Yerləşdirmə',
     'category_payments' => 'VIP & Ödənişlər',
     'category_safety' => 'Təhlükəsizlik',
+    'category_agency' => 'Agentliklər',
     'q1' => 'KibrisKare.com nədir və necə işləyir?',
     'a1' => 'KibrisKare.com daşınmaz əmlak alqı-satqısı və kirayəsi üzrə müasir və etibarlı elan platformasıdır. Burada həm fərdi mülkiyyətçilər, həm də peşəkar agentliklər və rieltorlar öz elanlarını rahatlıqla yerləşdirə və minlərlə real alıcı ilə əlaqə qura bilərlər.',
     'q2' => 'Elanlara baxmaq üçün qeydiyyatdan keçmək məcburidirmi?',
