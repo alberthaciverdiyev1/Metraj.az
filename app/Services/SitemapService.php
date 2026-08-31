@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\File;
 
 class SitemapService
 {
-    public const CHUNK_SIZE = 10000; // Auto-split limit per sitemap file
+    public const CHUNK_SIZE = 10000;
 
     public function generate(): array
     {

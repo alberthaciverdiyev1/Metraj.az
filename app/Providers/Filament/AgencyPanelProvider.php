@@ -61,9 +61,11 @@ class AgencyPanelProvider extends PanelProvider
                     ->sort(99)
                     ->openUrlInNewTab(true),
             ])
-            ->discoverWidgets(in: app_path('Filament/Agency/Widgets'), for: 'App\\Filament\\Agency\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
+                \App\Filament\Agency\Widgets\AgencyStatsOverviewWidget::class,
+                \App\Filament\Agency\Widgets\AgencyPropertiesTrendChartWidget::class,
+                \App\Filament\Agency\Widgets\AgencyLatestInquiriesTableWidget::class,
+                \App\Filament\Agency\Widgets\AgencyLatestPropertiesTableWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
