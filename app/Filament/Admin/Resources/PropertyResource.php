@@ -576,17 +576,15 @@ class PropertyResource extends Resource
                     ->multiple()
                     ->reorderable()
                     ->image()
-                    ->imageEditor()
                     ->disk('public')
                     ->directory('properties')
                     ->visibility('public')
                     ->openable()
                     ->downloadable()
-                    ->panelLayout('grid')
                     ->columnSpanFull()
                     ->afterStateHydrated(function ($component, $record) {
                         if (! $record) return;
-                        $component->state($record->images()->orderBy('sort_order', 'asc')->get()->map(fn ($img) => $img->getRawOriginal('url'))->toArray());
+                        $component->state($record->images()->orderBy('sort_order', 'asc')->get()->map(fn ($img) => $img->getRawOriginal('url'))->filter()->values()->toArray());
                     })
                     ->dehydrated(false),
 
