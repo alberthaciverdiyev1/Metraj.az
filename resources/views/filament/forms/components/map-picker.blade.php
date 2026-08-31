@@ -6,13 +6,13 @@
             return [
                 $city->id => [
                     'id' => $city->id,
-                    'name' => $city->name['az'] ?? $city->slug,
+                    'name' => $city->name[app()->getLocale()] ?? ($city->name['tr'] ?? ($city->name['az'] ?? $city->slug)),
                     'slug' => $city->slug,
                     'districts' => $city->districts->mapWithKeys(function ($d) {
                         return [
                             $d->id => [
                                 'id' => $d->id,
-                                'name' => $d->name['az'] ?? $d->slug,
+                                'name' => $d->name[app()->getLocale()] ?? ($d->name['tr'] ?? ($d->name['az'] ?? $d->slug)),
                                 'slug' => $d->slug,
                             ]
                         ];

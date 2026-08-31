@@ -1,4 +1,4 @@
-/* Filament OSM Map Picker — Alpine komponenti (filament/forms/components/map-picker.blade.php-dən çıxarılıb) */
+/* Filament OSM Map Picker — Alpine komponenti */
 (function() {
     function registerOsmMapPicker() {
         if (typeof window.Alpine === 'undefined') return;
@@ -14,6 +14,7 @@
             map: null,
             marker: null,
             tileLayer: null,
+            boundaryLayer: null,
             isUpdatingFromMap: false,
             searchTimer: null,
 
@@ -36,13 +37,25 @@
             },
 
             knownCoords: {
-                'baku': [40.409264, 49.867092, 13],
-                'sumqayit': [40.589722, 49.668611, 13],
-                'ganja': [40.682778, 46.360556, 13],
-                'yasamal': [40.380000, 49.810000, 15],
-                'nasimi': [40.400000, 49.840000, 15],
-                'narimanov': [40.415000, 49.870000, 15],
-                'xatai': [40.385000, 49.880000, 15],
+                'girne': [35.338244, 33.318627, 13],
+                'kyrenia': [35.338244, 33.318627, 13],
+                'lefkosa': [35.185566, 33.382276, 13],
+                'nicosia': [35.185566, 33.382276, 13],
+                'gazimagusa': [35.125000, 33.941667, 13],
+                'famagusta': [35.125000, 33.941667, 13],
+                'magusa': [35.125000, 33.941667, 13],
+                'iskele': [35.286389, 33.890556, 13],
+                'trikomo': [35.286389, 33.890556, 13],
+                'guzelyurt': [35.198889, 32.993056, 13],
+                'morphou': [35.198889, 32.993056, 13],
+                'lefke': [35.111111, 32.848889, 13],
+                'yenibogazici': [35.195000, 33.896000, 14],
+                'catalkoy': [35.318000, 33.398000, 14],
+                'alsancak': [35.352000, 33.225000, 14],
+                'lapta': [35.342000, 33.167000, 14],
+                'esentepe': [35.337000, 33.585000, 14],
+                'dikmen': [35.265000, 33.325000, 14],
+                'bafra': [35.395000, 34.075000, 14],
             },
 
             init() {
@@ -73,9 +86,9 @@
                     this.map = null;
                 }
 
-                const defaultLat = this.latitude ? parseFloat(this.latitude) : 40.409264;
-                const defaultLng = this.longitude ? parseFloat(this.longitude) : 49.867092;
-                const defaultZoom = (this.latitude && this.longitude) ? 16 : 13;
+                const defaultLat = this.latitude ? parseFloat(this.latitude) : 35.338244;
+                const defaultLng = this.longitude ? parseFloat(this.longitude) : 33.318627;
+                const defaultZoom = (this.latitude && this.longitude) ? 15 : 12;
 
                 this.map = window.L.map(container, {
                     center: [defaultLat, defaultLng],
@@ -83,16 +96,13 @@
                     zoomControl: false,
                 });
 
-                // Add zoom control at bottom-right for clean uncluttered layout
                 window.L.control.zoom({ position: 'topleft' }).addTo(this.map);
 
-                // Set initial tile layer
                 this.tileLayer = window.L.tileLayer(this.layers.voyager.url, {
                     maxZoom: this.layers.voyager.maxZoom,
                     attribution: this.layers.voyager.attribution,
                 }).addTo(this.map);
 
-                // Create custom modern KibrisKare Pin
                 const customIcon = window.L.divIcon({
                     className: 'custom-kibriskare-marker',
                     html: `
@@ -130,7 +140,7 @@
                     this.updatePosition(e.latlng.lat, e.latlng.lng, true);
                 });
 
-                // Watch typing into 'Dəqiq Ünvan' field directly
+                // Watch Address text input
                 this.$watch('address', (newAddress) => {
                     if (this.isUpdatingFromMap) {
                         this.isUpdatingFromMap = false;
@@ -145,42 +155,112 @@
                     }, 500);
                 });
 
-                // Watch City selection changes
+                // Watch City selection changes -> Auto highlight region and fit bounds
                 this.$watch('cityId', (newCityId) => {
                     if (!newCityId || !this.locations[newCityId]) return;
                     const city = this.locations[newCityId];
-                    const slug = (city.slug || '').toLowerCase();
-
-                    if (this.knownCoords[slug]) {
-                        const [lat, lng, zoom] = this.knownCoords[slug];
-                        this.flyToCoordinates(lat, lng, zoom, city.name);
-                    } else {
-                        this.goToLocation(city.name + ', Azerbaijan', 13);
-                    }
+                    const cityName = city.name || city.slug;
+                    this.updateMapBoundary(cityName, cityName);
                 });
 
-                // Watch District selection changes
+                // Watch District selection changes -> Auto highlight sub-region
                 this.$watch('districtId', (newDistrictId) => {
                     if (!newDistrictId) return;
                     const city = this.locations[this.cityId];
                     if (city && city.districts && city.districts[newDistrictId]) {
                         const dist = city.districts[newDistrictId];
-                        const slug = (dist.slug || '').toLowerCase();
-
-                        if (this.knownCoords[slug]) {
-                            const [lat, lng, zoom] = this.knownCoords[slug];
-                            this.flyToCoordinates(lat, lng, zoom, dist.name + ', ' + city.name);
-                        } else {
-                            this.goToLocation(dist.name + ', ' + city.name + ', Azerbaijan', 15);
-                        }
+                        const distName = dist.name || dist.slug;
+                        const cityName = city.name || city.slug;
+                        this.updateMapBoundary(distName + ', ' + cityName, distName);
                     }
                 });
+
+                // If city is already selected on edit, trigger initial boundary highlight
+                if (this.cityId && this.locations[this.cityId] && !this.latitude) {
+                    const city = this.locations[this.cityId];
+                    const cityName = city.name || city.slug;
+                    this.updateMapBoundary(cityName, cityName);
+                }
 
                 setTimeout(() => {
                     if (this.map) {
                         this.map.invalidateSize();
                     }
                 }, 300);
+            },
+
+            updateMapBoundary(query, displayName) {
+                if (!this.map || !query) return;
+
+                const url = 'https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(query + ', Cyprus') + '&polygon_geojson=1&limit=1&accept-language=tr,en,az';
+
+                fetch(url, { headers: { 'Accept-Language': 'tr, en, az' } })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.length > 0) {
+                            const item = data[0];
+                            const bbox = item.boundingbox;
+                            if (bbox && bbox.length === 4) {
+                                const latMin = parseFloat(bbox[0]);
+                                const latMax = parseFloat(bbox[1]);
+                                const lonMin = parseFloat(bbox[2]);
+                                const lonMax = parseFloat(bbox[3]);
+
+                                const bounds = window.L.latLngBounds([[latMin, lonMin], [latMax, lonMax]]);
+
+                                // Remove previous boundary overlay
+                                if (this.boundaryLayer) {
+                                    this.map.removeLayer(this.boundaryLayer);
+                                    this.boundaryLayer = null;
+                                }
+
+                                // Render boundary polygon or rectangle
+                                if (item.geojson && (item.geojson.type === 'Polygon' || item.geojson.type === 'MultiPolygon')) {
+                                    this.boundaryLayer = window.L.geoJSON(item.geojson, {
+                                        style: {
+                                            color: '#ea580c',
+                                            weight: 2.5,
+                                            dashArray: '6, 6',
+                                            fillOpacity: 0.08,
+                                            fillColor: '#ea580c'
+                                        }
+                                    }).addTo(this.map);
+                                } else {
+                                    this.boundaryLayer = window.L.rectangle(bounds, {
+                                        color: '#ea580c',
+                                        weight: 2.5,
+                                        dashArray: '6, 6',
+                                        fillOpacity: 0.08,
+                                        fillColor: '#ea580c'
+                                    }).addTo(this.map);
+                                }
+
+                                this.map.fitBounds(bounds, { padding: [25, 25], maxZoom: 15 });
+
+                                const centerLat = parseFloat(item.lat);
+                                const centerLng = parseFloat(item.lon);
+
+                                if (this.marker) {
+                                    this.marker.setLatLng([centerLat, centerLng]);
+                                    if (displayName) {
+                                        this.showPopup(displayName);
+                                    }
+                                }
+
+                                this.updatePosition(centerLat, centerLng, false);
+                            }
+                        } else {
+                            // Fallback to knownCoords
+                            const slug = (displayName || query || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                            if (this.knownCoords[slug]) {
+                                const [lat, lng, zoom] = this.knownCoords[slug];
+                                this.flyToCoordinates(lat, lng, zoom, displayName);
+                            }
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Boundary geocode error:', err);
+                    });
             },
 
             setLayer(layerName) {
@@ -241,9 +321,9 @@
 
             goToLocation(query, zoom = 14) {
                 if (!query) return;
-                const url = 'https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(query) + '&limit=1&accept-language=az,ru,en';
+                const url = 'https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(query + ', Cyprus') + '&limit=1&accept-language=tr,en,az';
 
-                fetch(url, { headers: { 'Accept-Language': 'az, en' } })
+                fetch(url, { headers: { 'Accept-Language': 'tr, en, az' } })
                     .then(res => res.json())
                     .then(data => {
                         if (data && data.length > 0) {
@@ -258,9 +338,9 @@
             searchAddressOnMap(query) {
                 if (!query || !query.trim()) return;
 
-                const url = 'https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(query.trim()) + '&limit=1&accept-language=az,ru,en';
+                const url = 'https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(query.trim() + ', Cyprus') + '&limit=1&accept-language=tr,en,az';
 
-                fetch(url, { headers: { 'Accept-Language': 'az, en' } })
+                fetch(url, { headers: { 'Accept-Language': 'tr, en, az' } })
                     .then(res => res.json())
                     .then(data => {
                         if (data && data.length > 0) {
@@ -295,9 +375,9 @@
             },
 
             reverseGeocode(lat, lng) {
-                const url = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lng + '&zoom=18&addressdetails=1&accept-language=az,ru,en';
+                const url = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lng + '&zoom=18&addressdetails=1&accept-language=tr,en,az';
 
-                fetch(url, { headers: { 'Accept-Language': 'az, en' } })
+                fetch(url, { headers: { 'Accept-Language': 'tr, en, az' } })
                     .then(res => res.json())
                     .then(data => {
                         if (data && data.address) {
