@@ -7,7 +7,7 @@
             <!-- Brand Column -->
             <div class="lg:col-span-2 space-y-6">
                 <a href="{{ route('home') }}" class="flex items-center space-x-2.5">
-                    <img class="h-9 w-auto object-contain brightness-0 invert" src="{{ asset('images/kibriskarelogo1.png') }}" alt="KibrisKare" />
+                    <img class="h-9 w-auto object-contain" width="36" height="36" src="{{ asset('images/kibriskarelogo1.png') }}" alt="KibrisKare" />
                     <div class="leading-tight">
                         <div class="text-xl font-bold text-white tracking-tight">{{ $siteSetting?->copyright_text ?: 'KibrisKare.com' }}</div>
                         <div class="text-[8px] text-orange-500 underline underline-offset-4 uppercase tracking-[0.15em] font-semibold">
