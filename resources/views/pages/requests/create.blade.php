@@ -151,11 +151,15 @@
                     </select>
                 </div>
 
-                <!-- Max Budget -->
+                <!-- Budget (Tək Qiymət / Bütçə) -->
                 <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('requests.budget_azn') }} <span class="text-rose-500">*</span></label>
-                    <input type="number" name="budget_max" value="{{ old('budget_max') }}" required placeholder="{{ __('requests.budget_placeholder_example') }}" min="1"
-                           class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:bg-white focus:outline-none focus:border-orange-500 transition">
+                    <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('requests.budget_gbp') }} <span class="text-rose-500">*</span></label>
+                    <div class="relative">
+                        <input type="number" name="budget_max" value="{{ old('budget_max') }}" required placeholder="{{ __('requests.budget_placeholder_example') }}" min="1"
+                               class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-xs sm:text-sm rounded-xl pl-4 pr-12 py-3 focus:bg-white focus:outline-none focus:border-orange-500 transition font-semibold">
+                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500 select-none">£ GBP</span>
+                    </div>
+                    <input type="hidden" name="currency" value="GBP">
                 </div>
 
             </div>

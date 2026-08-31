@@ -125,18 +125,20 @@ class PropertyRequest extends Model
 
     public function getFormattedBudgetAttribute(): string
     {
-        $symbol = match ($this->currency) {
+        $symbol = match (strtoupper($this->currency ?? 'GBP')) {
             'USD' => '$',
             'EUR' => '€',
-            'GBP' => '£',
+            'AZN' => '₼',
             'TRY' => '₺',
-            default => '₼',
+            'RUB' => '₽',
+            'AED' => 'AED',
+            default => '£',
         };
 
         if ($this->budget_min && $this->budget_min > 0 && $this->budget_min < $this->budget_max) {
             return number_format((float)$this->budget_min, 0, '.', ' ') . ' - ' . number_format((float)$this->budget_max, 0, '.', ' ') . ' ' . $symbol;
         }
 
-        return 'maks. ' . number_format((float)$this->budget_max, 0, '.', ' ') . ' ' . $symbol;
+        return number_format((float)$this->budget_max, 0, '.', ' ') . ' ' . $symbol;
     }
 }

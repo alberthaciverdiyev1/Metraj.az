@@ -20,11 +20,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const config = window.requestsIndexConfig || {};
     const labels = config.labels || {
-        roommateBudget: 'Aylıq Pay Büdcəsi (₼)',
-        rentBudget: 'Aylıq Kirayə Büdcəsi (₼)',
-        dailyBudget: 'Günlük Büdcə (₼)',
-        buyBudget: 'Alış Büdcəsi (₼)',
-        maxBudget: 'Maksimum Büdcə (₼)'
+        roommateBudget: 'Aylıq Pay Büdcəsi (£)',
+        rentBudget: 'Aylıq Kirayə Büdcəsi (£)',
+        dailyBudget: 'Günlük Büdcə (£)',
+        buyBudget: 'Alış Büdcəsi (£)',
+        maxBudget: 'Maksimum Büdcə (£)'
     };
     const indexRoute = config.routes?.index || window.location.pathname;
 
