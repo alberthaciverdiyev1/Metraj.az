@@ -14,10 +14,19 @@ class SetLocale
         $supportedLocales = ['az', 'en', 'ru', 'tr'];
         $segment = strtolower((string) $request->segment(1));
 
+        // Filament Admin & Agency panelləri üçün sessiyadakı dili (default: tr) təyin et
+        if ($request->is('admin*') || $request->is('agency*')) {
+            $panelLocale = session('lang', config('app.locale', 'tr'));
+            if (!in_array($panelLocale, $supportedLocales, true)) {
+                $panelLocale = 'tr';
+            }
+            app()->setLocale($panelLocale);
+
+            return $next($request);
+        }
+
         // Skip non-public / internal / asset paths
         if (
-            $request->is('admin*') ||
-            $request->is('agency*') ||
             $request->is('api*') ||
             $request->is('livewire*') ||
             $request->is('lang*') ||
