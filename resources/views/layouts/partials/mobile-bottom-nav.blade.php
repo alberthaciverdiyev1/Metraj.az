@@ -23,18 +23,11 @@
     <span class="text-[8px] font-semibold uppercase tracking-tight text-gray-500 mt-0.5">{{ __('navbar.mobile_new_ad') }}</span>
   </div>
 
-  <!-- 4. KABİNET -->
-  @auth
-    <a href="{{ route('profile') }}" class="flex flex-col items-center justify-center flex-1 py-1 text-center transition {{ request()->is('profile*') || request()->is('dashboard*') || request()->is('my-*') ? 'text-orange-500 font-semibold' : 'text-gray-400 hover:text-gray-700' }}">
-      <i class="fa-solid fa-circle-user text-lg mb-0.5"></i>
-      <span class="text-[8px] font-semibold uppercase tracking-tight truncate max-w-[65px]">{{ __('navbar.mobile_cabinet') }}</span>
-    </a>
-  @else
-    <a href="{{ route('login') }}" class="flex flex-col items-center justify-center flex-1 py-1 text-center transition {{ request()->is('login*') || request()->is('register*') ? 'text-orange-500 font-semibold' : 'text-gray-400 hover:text-gray-700' }}">
-      <i class="fa-solid fa-circle-user text-lg mb-0.5"></i>
-      <span class="text-[8px] font-semibold uppercase tracking-tight">{{ __('navbar.mobile_cabinet') }}</span>
-    </a>
-  @endauth
+  <!-- 4. ARIYORUM -->
+  <a href="{{ route('requests.index') }}" class="flex flex-col items-center justify-center flex-1 py-1 text-center transition {{ request()->is('*ariyorum*') || request()->is('*oda-arkadasi*') || request()->is('*axtariram*') || request()->is('*otaq-yoldasi*') || request()->routeIs('requests*') || request()->routeIs('roommates*') ? 'text-orange-500 font-semibold' : 'text-gray-400 hover:text-gray-700' }}">
+    <i class="fa-solid fa-magnifying-glass text-lg mb-0.5"></i>
+    <span class="text-[8px] font-semibold uppercase tracking-tight truncate max-w-[65px]">{{ __('navbar.mobile_requests') }}</span>
+  </a>
 
   <!-- 5. DAHA ÇOX -->
   <button type="button" id="mobileMoreDrawerBtn" class="flex flex-col items-center justify-center flex-1 py-1 text-center text-gray-400 hover:text-gray-700 transition cursor-pointer">

@@ -24,6 +24,7 @@ return [
     'mobile_favorites' => 'FAVORITES',
     'mobile_new_ad' => 'NEW AD',
     'mobile_cabinet' => 'CABINET',
+    'mobile_requests' => 'SEEKING',
     'mobile_more' => 'MORE',
     'home' => 'Home',
     'select_language' => 'Select Language',

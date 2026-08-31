@@ -24,6 +24,7 @@ return [
     'mobile_favorites' => 'SEÇİLMİŞLƏR',
     'mobile_new_ad' => 'YENİ ELAN',
     'mobile_cabinet' => 'KABİNET',
+    'mobile_requests' => 'AXTARIRAM',
     'mobile_more' => 'DAHA ÇOX',
     'home' => 'Ana Səhifə',
     'select_language' => 'Dil seçimi',

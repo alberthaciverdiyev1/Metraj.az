@@ -24,6 +24,7 @@ return [
     'mobile_favorites' => 'FAVORİLER',
     'mobile_new_ad' => 'YENİ İLAN',
     'mobile_cabinet' => 'KABİNET',
+    'mobile_requests' => 'ARIYORUM',
     'mobile_more' => 'DAHA FAZLA',
     'home' => 'Ana Sayfa',
     'select_language' => 'Dil Seçimi',

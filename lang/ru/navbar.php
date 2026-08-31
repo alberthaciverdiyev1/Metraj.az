@@ -24,6 +24,7 @@ return [
     'mobile_favorites' => 'ИЗБРАННОЕ',
     'mobile_new_ad' => 'НОВОЕ ОБЪЯВЛЕНИЕ',
     'mobile_cabinet' => 'КАБИНЕТ',
+    'mobile_requests' => 'ИЩУ',
     'mobile_more' => 'ЕЩЁ',
     'home' => 'Главная',
     'select_language' => 'Выбор языка',
