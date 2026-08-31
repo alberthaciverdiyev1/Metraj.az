@@ -129,7 +129,15 @@ class AgentResource extends Resource
                             ->imageEditor()
                             ->directory('agents')
                             ->visibility('public')
-                            ->columnSpanFull(),
+                            ->columnSpan(1),
+
+                        Forms\Components\FileUpload::make('banner')
+                            ->label('Banner Şəkli (Üzlük)')
+                            ->image()
+                            ->imageEditor()
+                            ->directory('agents/banners')
+                            ->visibility('public')
+                            ->columnSpan(1),
 
                         Forms\Components\Toggle::make('is_active')
                             ->label('Aktivdir')

@@ -240,6 +240,13 @@ class EditProfile extends BaseEditProfile
             $record->agent->update($agentData);
         }
 
+        // Yenilənmiş məlumatların front tərəfdə dərhal görünməsi üçün keşi təmizlə
+        try {
+            cache()->flush();
+        } catch (\Throwable $e) {
+            // ignore
+        }
+
         return $record;
     }
 

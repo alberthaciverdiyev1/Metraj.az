@@ -96,7 +96,7 @@ class AgencyListController extends Controller
                 'name' => $name,
                 'subtitle' => $agent->position ?? __('agency.agent_independent_subtitle'),
                 'is_address' => false,
-                'banner' => 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80',
+                'banner' => $agent->banner_url ?: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80',
                 'avatar' => $agent->avatar_url,
                 'initial' => strtoupper(substr($name, 0, 1)),
                 'properties_count' => $agent->published_properties_count ?? 0,
