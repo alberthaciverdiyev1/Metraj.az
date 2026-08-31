@@ -13,13 +13,21 @@ class RevealPhoneController extends Controller
     /**
      * Reveal phone number for a property and log the interaction.
      */
-    public function reveal(Request $request, string|int $listing): JsonResponse
+    public function reveal(Request $request, ...$args): JsonResponse
     {
-        /** @var Property $property */
-        $property = Property::query()
-            ->where('id', $listing)
-            ->orWhere('slug', $listing)
-            ->first();
+        $listing = $request->route('listing') ?? end($args);
+
+        if (! $listing) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Listing parameter missing.',
+            ], 400);
+        }
+
+        /** @var Property|null $property */
+        $property = is_numeric($listing)
+            ? Property::where('id', (int) $listing)->first()
+            : Property::where('slug', (string) $listing)->first();
 
         if (! $property) {
             return response()->json([
