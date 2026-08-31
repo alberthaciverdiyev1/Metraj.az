@@ -18,11 +18,11 @@
 
     <!-- Quick Action Buttons -->
     <div class="grid grid-cols-2 gap-2.5">
-      <a href="{{ route('add-property') }}" class="flex items-center justify-center gap-2 py-3 px-text-orange-500 hover:bg-orange-600 text-white rounded-2xl font-semibold text-xs shadow-sm">
+      <a href="{{ route('add-property') }}" class="flex items-center justify-center gap-2 py-3 px-4 bg-orange-500 hover:bg-orange-600 text-white rounded-2xl font-bold text-xs shadow-sm active:scale-95 transition-all">
         <i class="fa-solid fa-plus text-sm"></i>
         <span>{{ __('navbar.post_property') }}</span>
       </a>
-      <a href="{{ route('requests.create') }}" class="flex items-center justify-center gap-2 py-3 px-4 bg-orange-500 text-white rounded-2xl font-semibold text-xs shadow-sm">
+      <a href="{{ route('requests.create') }}" class="flex items-center justify-center gap-2 py-3 px-4 bg-orange-50 hover:bg-orange-100 text-orange-600 border border-orange-200 rounded-2xl font-bold text-xs shadow-xs active:scale-95 transition-all">
         <i class="fa-solid fa-bullhorn text-xs"></i>
         <span>{{ __('navbar.post_request') }}</span>
       </a>
