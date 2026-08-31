@@ -59,7 +59,7 @@
 
                     {{-- Category 1: Ümumi --}}
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="general">
-                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition cursor-pointer select-none">
                             <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('faq.q1') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
@@ -71,7 +71,7 @@
                     </div>
 
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="general">
-                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition cursor-pointer select-none">
                             <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('faq.q2') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
@@ -83,7 +83,7 @@
                     </div>
 
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="general">
-                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition cursor-pointer select-none">
                             <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('faq.q3') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
@@ -96,7 +96,7 @@
 
                     {{-- Category 2: Elan Yerləşdirmə --}}
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="listings">
-                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition cursor-pointer select-none">
                             <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('faq.q4') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
@@ -108,7 +108,7 @@
                     </div>
 
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="listings">
-                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition cursor-pointer select-none">
                             <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('faq.q5') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
@@ -120,7 +120,7 @@
                     </div>
 
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="listings">
-                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition cursor-pointer select-none">
                             <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('faq.q6') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
@@ -133,7 +133,7 @@
 
                     {{-- Category 3: VIP & Ödənişlər --}}
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="payments">
-                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition cursor-pointer select-none">
                             <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('faq.q7') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
@@ -145,7 +145,7 @@
                     </div>
 
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="payments">
-                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition cursor-pointer select-none">
                             <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('faq.q8') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
@@ -157,7 +157,7 @@
                     </div>
 
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="payments">
-                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition cursor-pointer select-none">
                             <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('faq.q9') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
@@ -170,7 +170,7 @@
 
                     {{-- Category 4: Təhlükəsizlik --}}
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="safety">
-                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition cursor-pointer select-none">
                             <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('faq.q10') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
@@ -182,7 +182,7 @@
                     </div>
 
                     <div class="faq-item bg-white rounded-2xl border border-gray-200/90 shadow-sm overflow-hidden transition-all duration-200" data-category="safety">
-                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition">
+                        <button type="button" class="faq-trigger w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between text-left gap-4 hover:bg-gray-50/50 transition cursor-pointer select-none">
                             <span class="font-semibold text-sm sm:text-base text-gray-900">{{ __('faq.q11') }}</span>
                             <span class="faq-icon w-8 h-8 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 transition-transform duration-200">
                                 <i class="bi bi-chevron-down text-xs"></i>
@@ -287,6 +287,6 @@
 </div>
 
 @push('scripts')
-    <script src="{{ asset('js/pages/static/faq.js') }}"></script>
+    <script src="{{ asset('js/pages/static/faq.js') }}?v=2"></script>
 @endpush
 @endsection
