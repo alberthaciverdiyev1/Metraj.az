@@ -47,12 +47,6 @@
                     <i class="fas fa-home text-[color:var(--primary)]"></i>
                     {{ $item->properties_count }} {{ __('agency.listings_count_suffix') }}
                 </span>
-                @if($item->phone)
-                <span class="flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
-                    <i class="fas fa-phone text-green-500"></i>
-                    {{ $item->phone }}
-                </span>
-                @endif
             </div>
 
             <div class="mt-auto pt-3 sm:pt-4">

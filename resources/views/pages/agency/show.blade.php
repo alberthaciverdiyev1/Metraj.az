@@ -48,23 +48,26 @@
                 </div>
 
                 {{-- Contact CTAs --}}
+                @if($agency->phone || $agency->whatsapp)
                 <div class="flex flex-wrap items-center gap-2 sm:gap-3 pb-1">
-                    @if($agency->phone)
-                        <a href="tel:{{ $agency->phone }}"
-                           class="flex items-center gap-2 px-5 py-2.5 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 text-sm sm:text-base">
-                            <i class="bi bi-telephone-fill text-sm"></i>
-                            {{ $agency->phone }}
-                        </a>
-                    @endif
-                    @if($agency->whatsapp)
-                        @php $wa = preg_replace('/[^0-9]/', '', $agency->whatsapp); @endphp
-                        <a href="https://wa.me/{{ $wa }}" target="_blank"
-                           class="flex items-center gap-2 px-5 py-2.5 sm:py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 text-sm sm:text-base">
+                    <button type="button"
+                        onclick="revealAgencyPhone(event, this, {{ $agency->id }}, 'call')"
+                        class="js-btn-show-agency-phone flex items-center gap-2 px-5 py-2.5 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 text-sm sm:text-base cursor-pointer">
+                        <i class="bi bi-telephone-fill text-sm"></i>
+                        <span class="js-agency-phone-btn-text">{{ __('property.show_phone') }}</span>
+                        <span class="js-agency-phone-number hidden font-mono tracking-wider font-bold"></span>
+                    </button>
+
+                    @if($agency->whatsapp || $agency->phone)
+                        <button type="button"
+                            onclick="revealAgencyPhone(event, this, {{ $agency->id }}, 'whatsapp')"
+                            class="js-btn-agency-whatsapp flex items-center gap-2 px-5 py-2.5 sm:py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 text-sm sm:text-base cursor-pointer">
                             <i class="bi bi-whatsapp text-base"></i>
-                            WhatsApp
-                        </a>
+                            <span>WhatsApp</span>
+                        </button>
                     @endif
                 </div>
+                @endif
             </div>
 
             {{-- Description + Contact Info --}}
@@ -174,4 +177,63 @@
 
 @push('scripts')
     <script src="{{ asset('js/pages/property/listing.js') }}"></script>
+    <script>
+    window.revealedAgencyPhones = window.revealedAgencyPhones || {};
+
+    async function revealAgencyPhone(e, btn, agencyId, intent) {
+        if (e) e.preventDefault();
+        intent = intent || 'call';
+
+        if (window.revealedAgencyPhones[agencyId]) {
+            const data = window.revealedAgencyPhones[agencyId];
+            if (intent === 'whatsapp' && data.whatsapp_url) {
+                window.open(data.whatsapp_url, '_blank');
+            } else if (data.call_url) {
+                window.location.href = data.call_url;
+            }
+            return;
+        }
+
+        const btnTexts = document.querySelectorAll('.js-agency-phone-btn-text');
+        btnTexts.forEach(t => t.textContent = '...');
+
+        try {
+            const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}';
+            const currentLocale = document.documentElement.lang || '{{ app()->getLocale() }}';
+            const revealUrl = '/' + currentLocale + '/agency/' + agencyId + '/reveal-phone';
+
+            const res = await fetch(revealUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': token,
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            });
+
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const data = await res.json();
+
+            if (data.success && data.phone) {
+                window.revealedAgencyPhones[agencyId] = data;
+
+                document.querySelectorAll('.js-agency-phone-btn-text').forEach(t => t.classList.add('hidden'));
+                document.querySelectorAll('.js-agency-phone-number').forEach(el => {
+                    el.textContent = data.phone;
+                    el.classList.remove('hidden');
+                });
+
+                if (intent === 'whatsapp' && data.whatsapp_url) {
+                    window.open(data.whatsapp_url, '_blank');
+                } else if (intent === 'call' && data.call_url) {
+                    window.location.href = data.call_url;
+                }
+            }
+        } catch (err) {
+            console.error('reveal-agency-phone error:', err);
+            btnTexts.forEach(t => t.textContent = "{{ __('property.show_phone') }}");
+        }
+    }
+    </script>
 @endpush

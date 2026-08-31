@@ -36,6 +36,10 @@ class ModuleServiceProvider extends ServiceProvider
                 ->middleware('throttle:30,1');
             Route::match(['GET', 'POST'], '/properties/{listing}/reveal-phone', [\App\Modules\Property\Controllers\RevealPhoneController::class, 'reveal'])
                 ->middleware('throttle:30,1');
+            Route::match(['GET', 'POST'], '/agency/{agency}/reveal-phone', [\App\Modules\Agency\Controllers\AgencyRevealPhoneController::class, 'revealAgency'])
+                ->middleware('throttle:30,1');
+            Route::match(['GET', 'POST'], '/agent/{agent}/reveal-phone', [\App\Modules\Agency\Controllers\AgencyRevealPhoneController::class, 'revealAgent'])
+                ->middleware('throttle:30,1');
         });
 
         // 2. Bütün Modul Marşrutları ({locale} prefiksi ilə: /tr/..., /az/..., /en/..., /ru/...)
