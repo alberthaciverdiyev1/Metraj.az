@@ -66,8 +66,7 @@ class User extends Authenticatable implements FilamentUser
     /**
      * Filament panellərinə giriş icazəsi.
      * - Admin panelinə yalnız sistem admini daxil ola bilər.
-     * - Agentlik (Agency) panelinə yalnız Adminlər, Agentlik sahibləri və təyin edilmiş Rieltorlar (Agentlər) daxil ola bilər.
-     * - Adi istifadəçilər (normal users) Agency panelinə daxil ola bilməz.
+     * - Agency / İstifadəçi panelinə bütün daxil olmuş istifadəçilər daxil ola bilər.
      */
     public function canAccessPanel(Panel $panel): bool
     {
@@ -76,7 +75,7 @@ class User extends Authenticatable implements FilamentUser
         }
 
         if ($panel->getId() === 'agency') {
-            return $this->isAdmin() || $this->isTenantOwner() || $this->agent()->exists();
+            return true;
         }
 
         return false;

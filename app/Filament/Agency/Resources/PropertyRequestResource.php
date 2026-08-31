@@ -37,6 +37,25 @@ class PropertyRequestResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
+    /**
+     * Arıyorum (Müştəri Tələbləri) yalnız Adminlərə, Agentlik sahiblərinə və Rieltorlara göstərilir.
+     * Adi istifadəçilər üçün tamamilə gizlidir.
+     */
+    public static function canViewAny(): bool
+    {
+        $user = \Illuminate\Support\Facades\Auth::user();
+        if (! $user) {
+            return false;
+        }
+
+        return $user->isAdmin() || $user->isTenantOwner() || $user->agent()->exists();
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return static::canViewAny();
+    }
+
     public static function canCreate(): bool
     {
         return false;

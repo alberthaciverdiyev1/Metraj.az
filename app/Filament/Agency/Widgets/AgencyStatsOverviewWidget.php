@@ -112,11 +112,14 @@ class AgencyStatsOverviewWidget extends BaseWidget
                 ->color('warning');
         }
 
-        // Market Seeking requests
-        $stats[] = Stat::make(__('panel.property_requests'), number_format($marketRequestsCount))
-            ->description(app()->getLocale() === 'tr' ? 'Pazardaki alıcı/kiracı talepleri' : (app()->getLocale() === 'az' ? 'Bazarda axtarılan əmlaklar' : 'Open market requests'))
-            ->descriptionIcon('heroicon-m-megaphone')
-            ->color('danger');
+        // Market Seeking requests (Arıyorum) - Yalnız Admin, Agentlik sahibi və Rieltorlar üçün
+        $isAgentOrAgency = $isOwner || $user?->isAdmin() || (bool) $user?->agent()->exists();
+        if ($isAgentOrAgency) {
+            $stats[] = Stat::make(__('panel.property_requests'), number_format($marketRequestsCount))
+                ->description(app()->getLocale() === 'tr' ? 'Pazardaki alıcı/kiracı talepleri' : (app()->getLocale() === 'az' ? 'Bazarda axtarılan əmlaklar' : 'Open market requests'))
+                ->descriptionIcon('heroicon-m-megaphone')
+                ->color('danger');
+        }
 
         return $stats;
     }
