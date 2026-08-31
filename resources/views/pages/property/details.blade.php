@@ -25,8 +25,12 @@
             ?? ($property->agency->phone
             ?? ($property->phone
             ?? ($property->user->phone
-            ?? '+994 50 123 45 67')));
-        $agentWhatsapp = $property->agent->whatsapp ?? ($property->agency->whatsapp ?? null);
+            ?? null)));
+        $agentWhatsapp = $property->agent->whatsapp
+            ?? ($property->agency->whatsapp
+            ?? ($property->whatsapp
+            ?? ($property->phone
+            ?? ($property->user->phone ?? null))));
         $cleanWhatsapp = $agentWhatsapp ? preg_replace('/[^0-9]/', '', $agentWhatsapp) : null;
         $agentAvatar = $property->agent->avatar_url ?? ($property->agency->logo_url ?? ($property->agent->user->avatar ?? ''));
         $agentRole = $property->agency ? __('property.official_agency') : ($property->agent ? __('property.agent') : __('property.owner'));
@@ -394,44 +398,52 @@
                                 </div>
                             </div>
                         @else
-                            <!-- Guest / Owner Layout (Sadəcə Telefon və Zəng et) -->
+                            <!-- Owner Layout (Sahibinden — Yalnız Telefon və WhatsApp) -->
                             <div class="space-y-4">
                                 <div class="flex items-center justify-between">
                                     <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-widest">{{ __('property.contact_person') }}</h3>
-                                    <span class="text-xs font-semibold text-gray-500">{{ __('property.owner') }}</span>
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                        <i class="bi bi-person-check-fill text-emerald-600"></i>
+                                        {{ __('property.owner') }}
+                                    </span>
                                 </div>
 
-                                @if(!empty($agentName) && $agentName !== 'KibrisKare Təmsilçisi')
-                                    <div class="text-base font-bold text-gray-900">
-                                        {{ $agentName }}
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-13 h-13 rounded-2xl bg-orange-50 text-orange-500 flex items-center justify-center text-2xl border border-orange-100 shadow-2xs shrink-0">
+                                        <i class="bi bi-person-fill"></i>
                                     </div>
-                                @endif
-
-                                @if(!empty($agentPhone))
-                                    <div
-                                        class="p-4 bg-orange-50/60 border border-orange-100 rounded-2xl flex items-center justify-between">
-                                        <div class="flex items-center gap-3">
-                                            <div
-                                                class="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center text-lg shadow-sm">
-                                                <i class="bi bi-telephone-fill"></i>
-                                            </div>
-                                            <div>
-                                                <span
-                                                    class="block text-[11px] text-gray-500 font-medium">{{ __('property.contact_number') }}</span>
-                                                <a href="tel:{{ $agentPhone }}"
-                                                   class="text-base font-black text-gray-900 hover:text-orange-600 transition">{{ $agentPhone }}</a>
-                                            </div>
-                                        </div>
+                                    <div class="space-y-0.5 min-w-0">
+                                        <h4 class="text-base font-bold text-gray-900 leading-tight truncate">
+                                            {{ $agentName }}
+                                        </h4>
+                                        <p class="text-xs text-gray-500 font-medium">{{ __('property.owner') }}</p>
                                     </div>
-                                @endif
+                                </div>
 
                                 @if(!empty($agentPhone) || !empty($cleanWhatsapp))
-                                    <div
-                                        class="grid {{ (!empty($agentPhone) && !empty($cleanWhatsapp)) ? 'grid-cols-2' : 'grid-cols-1' }} gap-2.5">
+                                    <div class="pt-3 border-t border-gray-100 space-y-2.5">
+                                        @if(!empty($agentPhone))
+                                            <div class="flex items-center justify-between text-sm">
+                                                <span class="text-gray-500">{{ __('property.phone') }}:</span>
+                                                <a href="tel:{{ $agentPhone }}"
+                                                   class="font-bold text-gray-900 hover:text-orange-500 transition duration-200">{{ $agentPhone }}</a>
+                                            </div>
+                                        @endif
+                                        @if(!empty($agentWhatsapp))
+                                            <div class="flex items-center justify-between text-sm">
+                                                <span class="text-gray-500">WhatsApp:</span>
+                                                <a href="https://wa.me/{{ $cleanWhatsapp }}" target="_blank"
+                                                   rel="noopener noreferrer"
+                                                   class="font-bold text-emerald-600 hover:text-emerald-700 transition duration-200">{{ $agentWhatsapp }}</a>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <div class="grid {{ (!empty($agentPhone) && !empty($cleanWhatsapp)) ? 'grid-cols-2' : 'grid-cols-1' }} gap-2.5 pt-1">
                                         @if(!empty($agentPhone))
                                             <a href="tel:{{ $agentPhone }}"
-                                               class="w-full flex items-center justify-center gap-2 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
-                                                <i class="bi bi-telephone-fill text-sm"></i>
+                                               class="w-full flex items-center justify-center gap-2 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
+                                                <i class="bi bi-telephone-fill text-xs"></i>
                                                 <span>{{ __('property.call') }}</span>
                                             </a>
                                         @endif
@@ -439,7 +451,7 @@
                                         @if(!empty($cleanWhatsapp))
                                             <a href="https://wa.me/{{ $cleanWhatsapp }}" target="_blank"
                                                rel="noopener noreferrer"
-                                               class="w-full flex items-center justify-center gap-2 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
+                                               class="w-full flex items-center justify-center gap-2 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-2xl shadow-md transition duration-200 transform active:scale-98 text-sm">
                                                 <i class="bi bi-whatsapp text-sm"></i>
                                                 <span>WhatsApp</span>
                                             </a>
