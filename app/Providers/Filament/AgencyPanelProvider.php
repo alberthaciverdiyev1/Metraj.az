@@ -55,6 +55,10 @@ class AgencyPanelProvider extends PanelProvider
                 Pages\Dashboard::class,
             ])
             ->navigationItems([
+                NavigationItem::make(fn (): string => __('panel.edit_profile'))
+                    ->url(fn (): string => EditProfile::getUrl())
+                    ->icon('heroicon-o-user-circle')
+                    ->sort(80),
                 NavigationItem::make(fn (): string => __('panel.visit_site'))
                     ->url('/')
                     ->icon('heroicon-o-globe-alt')
