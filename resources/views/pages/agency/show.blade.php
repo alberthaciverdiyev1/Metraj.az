@@ -9,7 +9,7 @@
     {{-- ==================== AGENCY PROFILE CARD ==================== --}}
     <div class="bg-white rounded-3xl shadow-sm border border-gray-100 mt-4 sm:mt-6 overflow-hidden">
         {{-- Banner strip --}}
-        <div class="h-28 sm:h-36 relative overflow-hidden @if(!($agency->banner || $agency->banner_url)) bg-[var(--primary)] @endif">
+        <div class="h-28 sm:h-36 relative overflow-hidden @if(!($agency->banner || $agency->banner_url)) bg-[var(--primary)] @endif z-0">
             @if($agency->banner || $agency->banner_url)
                 <img src="{{ $agency->banner ? (str_starts_with($agency->banner, 'http') ? $agency->banner : asset('storage/'.$agency->banner)) : $agency->banner_url }}" alt="{{ $agency->name }} banner" class="w-full h-full object-cover">
             @endif

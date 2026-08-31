@@ -10,17 +10,17 @@
     {{-- ==================== AGENT PROFILE CARD ==================== --}}
     <div class="bg-white rounded-3xl shadow-sm border border-gray-100 mt-4 sm:mt-6 overflow-hidden">
         {{-- Banner strip --}}
-        <div class="h-32 sm:h-44 relative overflow-hidden bg-gradient-to-r from-orange-500 to-amber-600">
+        <div class="h-32 sm:h-44 relative overflow-hidden bg-gradient-to-r from-orange-500 to-amber-600 z-0">
             @if($agent->banner || $agent->banner_url)
                 <img src="{{ $agent->banner_url }}" alt="{{ $agent->user?->name }} banner" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-black/15"></div>
             @endif
         </div>
 
-        <div class="px-6 sm:px-8 pb-6 sm:pb-8">
+        <div class="px-6 sm:px-8 pb-6 sm:pb-8 relative z-10">
             {{-- Avatar + Name --}}
-            <div class="flex flex-col sm:flex-row sm:items-end gap-4 -mt-10 sm:-mt-12">
-                <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-4 border-white shadow-lg overflow-hidden bg-white flex-shrink-0">
+            <div class="flex flex-col sm:flex-row sm:items-end gap-4 -mt-10 sm:-mt-12 relative z-10">
+                <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-4 border-white shadow-lg overflow-hidden bg-white flex-shrink-0 relative z-20">
                     @if($agent->avatar_url)
                         <img src="{{ $agent->avatar_url }}" alt="{{ $agent->user?->name }}" class="w-full h-full object-cover">
                     @else
