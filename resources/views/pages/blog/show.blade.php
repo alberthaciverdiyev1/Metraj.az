@@ -64,9 +64,9 @@
                 </p>
             @endif
 
-            {{-- Content --}}
-            <div class="prose prose-orange max-w-none text-[color:var(--text-color)] leading-relaxed text-sm sm:text-base">
-                {{ $blog->content }}
+            {{-- Content (Raw HTML from RichEditor) --}}
+            <div class="blog-content text-[color:var(--text-color)] leading-relaxed text-sm sm:text-base">
+                {!! $blog->content !!}
             </div>
 
             {{-- Share --}}
