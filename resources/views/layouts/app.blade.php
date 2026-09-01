@@ -44,13 +44,16 @@
         <link rel="shortcut icon" href="{{ $siteSetting->favicon }}" type="image/x-icon">
     @endif
 
-    <link rel="stylesheet" href="{{ asset('vendor/fontawesome/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/toastify/toastify.min.css') }}">
+    {{-- Deferred (non-render-blocking) icon & toast styles --}}
+    <link rel="preload" as="style" href="{{ asset('vendor/fontawesome/css/all.min.css') }}" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" as="style" href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.min.css') }}" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" as="style" href="{{ asset('vendor/toastify/toastify.min.css') }}" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ asset('vendor/fontawesome/css/all.min.css') }}"></noscript>
+    <noscript><link rel="stylesheet" href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.min.css') }}"></noscript>
+    <noscript><link rel="stylesheet" href="{{ asset('vendor/toastify/toastify.min.css') }}"></noscript>
 
 
     <link rel="icon" type="image/png" href="{{asset("images/favicons/favicon-96x96.png")}}" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="{{asset("images/favicons/favicon.svg")}}" />
     <link rel="shortcut icon" href="{{asset("images/favicons/favicon.ico")}}" />
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset("images/favicons/apple-touch-icon.png")}}" />
     <meta name="apple-mobile-web-app-title" content="KibrisKare" />
@@ -58,8 +61,10 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <link rel="stylesheet" href="{{ asset('css/app-legacy.css') }}?v=1.3">
-    <link rel="stylesheet" href="{{ asset('css/components.css') }}?v=1.3">
+    <link rel="preload" as="style" href="{{ asset('css/app-legacy.css') }}?v=1.3" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" as="style" href="{{ asset('css/components.css') }}?v=1.3" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ asset('css/app-legacy.css') }}?v=1.3"></noscript>
+    <noscript><link rel="stylesheet" href="{{ asset('css/components.css') }}?v=1.3"></noscript>
 
     @if(isset($css))
         @foreach($css as $file)
