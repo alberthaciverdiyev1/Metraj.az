@@ -22,7 +22,7 @@
             <div class="flex flex-col sm:flex-row sm:items-end gap-4 -mt-10 sm:-mt-12 relative z-10">
                 <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-4 border-white shadow-lg overflow-hidden bg-white flex-shrink-0 relative z-20">
                     @if($agent->avatar_url)
-                        <img src="{{ $agent->avatar_url }}" alt="{{ $agent->user?->name }}" class="w-full h-full object-cover">
+                        <img src="{{ $agent->avatar_url }}" alt="{{ $agent->user?->name }}" loading="lazy" decoding="async" class="w-full h-full object-cover">
                     @else
                         <div class="w-full h-full bg-orange-500 text-white font-black text-3xl sm:text-4xl flex items-center justify-center">
                             {{ strtoupper(substr($agent->user?->name ?? 'R', 0, 1)) }}

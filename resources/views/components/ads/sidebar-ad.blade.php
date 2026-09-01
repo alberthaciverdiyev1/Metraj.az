@@ -15,7 +15,7 @@
                 {{-- Sağ: brend loqolu reklam kartı (yerli assetlər) --}}
                 <div class="absolute inset-0 bg-orange-400"></div>
                 <div class="relative h-full flex flex-col items-center justify-center text-center px-5 py-6">
-                    <img src="{{ asset('images/kibriskarelogo.png') }}" alt="KibrisKare.com"
+                    <img src="{{ asset('images/kibriskarelogo.png') }}" alt="KibrisKare.com" loading="lazy" decoding="async"
                          class="w-28 mb-5 drop-shadow-sm">
                     <p class="text-white font-bold text-xl leading-snug">{!! __('ads.post_free_title') !!}</p>
                     <p class="text-orange-100 text-xs mt-2 leading-relaxed">{{ __('ads.post_free_desc') }}</p>
@@ -25,7 +25,7 @@
                 </div>
             @else
                 {{-- Sol: şəkil reklamı (yerli asset) --}}
-                <img src="{{ asset('images/ads.jpg') }}" alt="{{ __('ads.find_home_alt') }}"
+                <img src="{{ asset('images/ads.jpg') }}" alt="{{ __('ads.find_home_alt') }}" loading="lazy" decoding="async"
                      class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"/>
                 <div class="absolute inset-0 bg-black/40"></div>
                 <div class="absolute bottom-0 inset-x-0 p-4 pb-5">

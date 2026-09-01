@@ -168,7 +168,7 @@
                                                 <i class="bi bi-play-circle-fill text-orange-500 text-2xl"></i>
                                             </div>
                                         @else
-                                            <img src="{{ $item['thumb'] }}" alt="{{ $property->title }}"
+                                            <img src="{{ $item['thumb'] }}" alt="{{ $property->title }}" loading="lazy" decoding="async"
                                                  class="w-full h-full object-cover">
                                         @endif
                                         <div
@@ -183,7 +183,7 @@
                                         @if($item['type'] === 'video')
                                             <div class="w-full h-full bg-gray-900 flex items-center justify-center relative overflow-hidden">
                                                 @if(!empty($item['thumb']))
-                                                    <img src="{{ $item['thumb'] }}" alt="" class="w-full h-full object-cover opacity-60">
+                                                    <img src="{{ $item['thumb'] }}" alt="" loading="lazy" decoding="async" class="w-full h-full object-cover opacity-60">
                                                 @endif
                                                 <div class="absolute inset-0 flex flex-col items-center justify-center gap-0.5 bg-black/30">
                                                     <i class="bi bi-play-circle-fill text-orange-500 text-xl sm:text-2xl drop-shadow"></i>
@@ -191,7 +191,7 @@
                                                 </div>
                                             </div>
                                         @else
-                                            <img src="{{ $item['thumb'] }}" alt="{{ $property->title }}"
+                                            <img src="{{ $item['thumb'] }}" alt="{{ $property->title }}" loading="lazy" decoding="async"
                                                  class="w-full h-full object-cover">
                                         @endif
                                     </div>
@@ -308,14 +308,14 @@
                     <div onclick="openModal({{ $index }})"
                          class="w-14 h-14 sm:w-18 sm:h-18 shrink-0 rounded-xl border-2 border-transparent cursor-pointer hover:border-orange-500 transition modal-thumb bg-gray-900 flex flex-col items-center justify-center relative overflow-hidden">
                         @if(!empty($item['thumb']))
-                            <img src="{{ $item['thumb'] }}" alt="" class="w-full h-full object-cover opacity-50">
+                            <img src="{{ $item['thumb'] }}" alt="" loading="lazy" decoding="async" class="w-full h-full object-cover opacity-50">
                         @endif
                         <div class="absolute inset-0 flex items-center justify-center">
                             <i class="bi bi-play-fill text-orange-500 text-2xl"></i>
                         </div>
                     </div>
                 @else
-                    <img src="{{ $item['thumb'] }}" onclick="openModal({{ $index }})" alt=""
+                    <img src="{{ $item['thumb'] }}" onclick="openModal({{ $index }})" alt="" loading="lazy" decoding="async"
                          class="w-14 h-14 sm:w-18 sm:h-18 shrink-0 object-cover rounded-xl border-2 border-transparent cursor-pointer hover:border-orange-500 transition modal-thumb">
                 @endif
             @endforeach

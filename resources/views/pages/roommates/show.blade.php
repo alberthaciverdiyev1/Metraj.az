@@ -95,7 +95,7 @@
                             @foreach($images as $index => $img)
                                 <button type="button" onclick="document.getElementById('mainRoommateImage').src = '{{ $img->url }}'"
                                         class="shrink-0 w-20 h-14 rounded-xl overflow-hidden border-2 border-transparent hover:border-orange-500 focus:border-orange-500 transition cursor-pointer">
-                                    <img src="{{ $img->url }}" class="w-full h-full object-cover" />
+                                    <img src="{{ $img->url }}" loading="lazy" decoding="async" class="w-full h-full object-cover" />
                                 </button>
                             @endforeach
                         </div>

@@ -42,7 +42,7 @@
             @if($totalImages > 1)
             <div class="mt-4 flex gap-3 overflow-x-auto thumbnails-row" id="pageThumbnails">
                 @foreach($galleryImages as $index => $image)
-                    <img src="{{ $image->url }}"
+                    <img src="{{ $image->url }}" loading="lazy" decoding="async"
                          onclick="selectPageImage({{ $index }})"
                          alt="{{ $propertyRequest->title }}"
                          class="page-thumb shrink-0 w-24 h-20 sm:w-28 sm:h-24 md:w-32 md:h-24 object-cover rounded-xl border-2 cursor-pointer transition {{ $index === 0 ? 'active border-orange-500' : 'border-transparent' }}">
@@ -67,7 +67,7 @@
             </div>
             <div class="thumbnails mt-4 flex space-x-2 overflow-x-auto" id="thumbnails">
                 @foreach($galleryImages as $index => $image)
-                    <img src="{{ $image->url }}" onclick="openModal({{ $index }})" alt=""
+                    <img src="{{ $image->url }}" onclick="openModal({{ $index }})" alt="" loading="lazy" decoding="async"
                          class="w-20 h-20 object-cover rounded-xl border-2 border-transparent cursor-pointer hover:border-orange-500">
                 @endforeach
             </div>

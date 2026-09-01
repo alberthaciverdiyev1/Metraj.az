@@ -32,7 +32,7 @@
         <!-- Top Image Banner (Real Image or KibrisKare Logo) -->
         <div class="relative overflow-hidden aspect-[4/3] sm:aspect-[5/3] md:aspect-[3/2] lg:aspect-[16/10] bg-gray-50 flex items-center justify-center border-b border-gray-100">
             @if($hasRealImage)
-                <img src="{{ $req->first_image_url }}"
+                <img src="{{ $req->first_image_url }}" loading="lazy" decoding="async"
                      alt="{{ $req->title }}"
                      class="card-image w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                      loading="lazy" />
