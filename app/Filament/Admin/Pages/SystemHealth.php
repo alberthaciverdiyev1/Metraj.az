@@ -6,6 +6,7 @@ use App\Modules\Agency\Models\Agency;
 use App\Modules\Property\Models\Property;
 use App\Modules\PropertyRequest\Models\PropertyRequest;
 use App\Modules\Shared\Models\User;
+use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Artisan;
@@ -16,7 +17,7 @@ class SystemHealth extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-cpu-chip';
     protected static ?string $navigationGroup = 'Kataloq və Tənzimləmələr';
-    protected static ?string $navigationLabel = 'Server və Sistem İdarəetməsi';
+    protected static ?string $navigationLabel = 'Server və Sistem Vəziyyəti';
     protected static ?string $title = 'Server Vəziyyəti və Sistem Alətləri';
     protected static ?int $navigationSort = 7;
 
@@ -26,6 +27,35 @@ class SystemHealth extends Page
     public ?string $lastActionTitle = null;
     public ?string $lastActionStatus = null;
     public ?string $lastActionTime = null;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('optimize_all')
+                ->label('Tam Optimizasiya')
+                ->icon('heroicon-m-bolt')
+                ->color('warning')
+                ->requiresConfirmation()
+                ->modalHeading('Tam Sistem Optimizasiyası')
+                ->modalDescription('Bütün keşlər təmizlənəcək, konfiqurasiya, marşrutlar və görünüşlər istehsal üçün yenidən keşlənəcək.')
+                ->modalSubmitActionLabel('Optimizasiya Et')
+                ->action(fn () => $this->runOptimizeAll()),
+
+            Action::make('clear_all')
+                ->label('Bütün Keşləri Təmizlə')
+                ->icon('heroicon-m-trash')
+                ->color('gray')
+                ->action(fn () => $this->runClearAllCache()),
+
+            Action::make('refresh')
+                ->label('Yenilə')
+                ->icon('heroicon-m-arrow-path')
+                ->color('gray')
+                ->action(function () {
+                    Notification::make()->title('Göstəricilər yeniləndi')->success()->send();
+                }),
+        ];
+    }
 
     /**
      * 1. Tam Optimizasiya və Keşləmə
@@ -50,7 +80,7 @@ class SystemHealth extends Page
 
             if (function_exists('opcache_reset')) {
                 @opcache_reset();
-                $output .= ">>> OPcache: Keş uğurla sıfırlandı.\n";
+                $output .= ">>> OPcache: Sıfırlandı.\n";
             }
 
             $duration = round(microtime(true) - $start, 3);
@@ -62,8 +92,8 @@ class SystemHealth extends Page
                 ->success()
                 ->send();
         } catch (\Throwable $e) {
-            $this->setActionResult('Tam Optimizasiya Xətası', $e->getMessage(), 'error');
-            Notification::make()->title('Optimizasiya zamanı xəta baş verdi')->body($e->getMessage())->danger()->send();
+            $this->setActionResult('Optimizasiya Xətası', $e->getMessage(), 'error');
+            Notification::make()->title('Xəta baş verdi')->body($e->getMessage())->danger()->send();
         }
     }
 
@@ -84,8 +114,7 @@ class SystemHealth extends Page
 
             $duration = round(microtime(true) - $start, 3);
             $this->setActionResult('Bütün Keşlərin Təmizlənməsi', $output, 'success', $duration);
-
-            Notification::make()->title('Bütün keşlər uğurla təmizləndi!')->success()->send();
+            Notification::make()->title('Bütün keşlər təmizləndi!')->success()->send();
         } catch (\Throwable $e) {
             $this->setActionResult('Keş Təmizləmə Xətası', $e->getMessage(), 'error');
             Notification::make()->title('Xəta baş verdi')->body($e->getMessage())->danger()->send();
@@ -103,7 +132,7 @@ class SystemHealth extends Page
             $output = Artisan::output();
             $duration = round(microtime(true) - $start, 3);
             $this->setActionResult('Tətbiq Keşi Təmizləndi', $output, 'success', $duration);
-            Notification::make()->title('Tətbiq keşi (Application Cache) təmizləndi!')->success()->send();
+            Notification::make()->title('Tətbiq keşi (Cache) təmizləndi!')->success()->send();
         } catch (\Throwable $e) {
             $this->setActionResult('Xəta', $e->getMessage(), 'error');
             Notification::make()->title('Xəta baş verdi')->body($e->getMessage())->danger()->send();
@@ -111,7 +140,7 @@ class SystemHealth extends Page
     }
 
     /**
-     * 4. Görünüş Keşini Təmizlə və Yenidən Yığ (view:clear)
+     * 4. Görünüş Keşini Təmizlə və Yenidən Yığ (view:clear & view:cache)
      */
     public function runClearViews(): void
     {
@@ -183,14 +212,14 @@ class SystemHealth extends Page
             $res = @opcache_reset();
             $duration = round(microtime(true) - $start, 3);
             if ($res) {
-                $this->setActionResult('PHP OPcache Sıfırlandı', "PHP Zend OPcache yaddaşı uğurla sıfırlandı və bütün PHP skriptləri yenidən oxundu.", 'success', $duration);
+                $this->setActionResult('PHP OPcache Sıfırlandı', "PHP Zend OPcache yaddaşı sıfırlandı.", 'success', $duration);
                 Notification::make()->title('OPcache uğurla sıfırlandı!')->success()->send();
             } else {
-                $this->setActionResult('OPcache Xətası', "OPcache sıfırlana bilmədi və ya aktiv deyil.", 'warning', $duration);
+                $this->setActionResult('OPcache Xətası', "OPcache sıfırlana bilmədi.", 'warning', $duration);
                 Notification::make()->title('OPcache sıfırlanmadı')->warning()->send();
             }
         } else {
-            $this->setActionResult('OPcache Dəstəklənmir', "opcache_reset funksiyası mövcud deyil.", 'warning');
+            $this->setActionResult('OPcache Mövcud Deyil', "opcache_reset funksiyası mövcud deyil.", 'warning');
             Notification::make()->title('OPcache mövcud deyil')->warning()->send();
         }
     }
@@ -205,7 +234,7 @@ class SystemHealth extends Page
             Artisan::call('storage:link');
             $output = Artisan::output();
             $duration = round(microtime(true) - $start, 3);
-            $this->setActionResult('Storage Simvolik Linki', $output ?: 'Storage link uğurla yoxlanıldı.', 'success', $duration);
+            $this->setActionResult('Storage Simvolik Linki', $output ?: 'Storage link yoxlanıldı.', 'success', $duration);
             Notification::make()->title('Storage link yoxlanıldı!')->success()->send();
         } catch (\Throwable $e) {
             $this->setActionResult('Xəta', $e->getMessage(), 'error');
@@ -225,7 +254,6 @@ class SystemHealth extends Page
                 File::put($logFile, '');
             }
 
-            // Also clear older daily logs if any
             $logs = File::glob(storage_path('logs/*.log'));
             foreach ($logs as $f) {
                 if (basename($f) !== 'laravel.log') {
@@ -234,11 +262,11 @@ class SystemHealth extends Page
             }
 
             $duration = round(microtime(true) - $start, 3);
-            $this->setActionResult('Log Faylları Təmizləndi', 'Bütün köhnə sistem qeydləri (laravel.log) uğurla təmizləndi.', 'success', $duration);
+            $this->setActionResult('Log Faylları Təmizləndi', 'Bütün sistem log faylları sıfırlandı.', 'success', $duration);
             Notification::make()->title('Log faylları sıfırlandı!')->success()->send();
         } catch (\Throwable $e) {
             $this->setActionResult('Xəta', $e->getMessage(), 'error');
-            Notification::make()->title('Logları təmizləyərkən xəta baş verdi')->body($e->getMessage())->danger()->send();
+            Notification::make()->title('Xəta baş verdi')->body($e->getMessage())->danger()->send();
         }
     }
 
@@ -252,7 +280,7 @@ class SystemHealth extends Page
             Artisan::call('queue:restart');
             $output = Artisan::output();
             $duration = round(microtime(true) - $start, 3);
-            $this->setActionResult('Növbə İşləyiciləri (Queue)', $output ?: 'Queue restart siqnalı göndərildi.', 'success', $duration);
+            $this->setActionResult('Növbə İşləyiciləri', $output ?: 'Queue restart siqnalı göndərildi.', 'success', $duration);
             Notification::make()->title('Növbə işləyiciləri yenidən başladıldı!')->success()->send();
         } catch (\Throwable $e) {
             $this->setActionResult('Xəta', $e->getMessage(), 'error');
@@ -274,11 +302,11 @@ class SystemHealth extends Page
     public function getSystemMetrics(): array
     {
         // 1. Server & Hardware
-        $os = php_uname('s') . ' ' . php_uname('r') . ' (' . php_uname('m') . ')';
+        $os = php_uname('s') . ' ' . php_uname('r');
         if (File::exists('/etc/os-release')) {
             $osRelease = @parse_ini_file('/etc/os-release');
             if (!empty($osRelease['PRETTY_NAME'])) {
-                $os = $osRelease['PRETTY_NAME'] . ' (' . php_uname('r') . ')';
+                $os = $osRelease['PRETTY_NAME'];
             }
         }
 
@@ -365,16 +393,16 @@ class SystemHealth extends Page
 
         // 6. PHP Extensions Check
         $extensions = [
-            'pdo_pgsql' => ['name' => 'PostgreSQL Driver (PDO)', 'status' => extension_loaded('pdo_pgsql')],
-            'gd' => ['name' => 'GD Library (Şəkil Emalı)', 'status' => extension_loaded('gd')],
-            'imagick' => ['name' => 'Imagick (Qabaqcıl Şəkil Emalı)', 'status' => extension_loaded('imagick')],
-            'redis' => ['name' => 'Redis Driver', 'status' => extension_loaded('redis')],
-            'curl' => ['name' => 'cURL (Xarici API İstəkləri)', 'status' => extension_loaded('curl')],
-            'mbstring' => ['name' => 'Multibyte String (Çoxdillilik)', 'status' => extension_loaded('mbstring')],
-            'intl' => ['name' => 'Intl (Beynəlxalq Lokallaşdırma)', 'status' => extension_loaded('intl')],
-            'exif' => ['name' => 'Exif (Foto Metadata)', 'status' => extension_loaded('exif')],
+            'pdo_pgsql' => ['name' => 'PostgreSQL (PDO)', 'status' => extension_loaded('pdo_pgsql')],
+            'gd' => ['name' => 'GD Library', 'status' => extension_loaded('gd')],
+            'imagick' => ['name' => 'Imagick', 'status' => extension_loaded('imagick')],
+            'redis' => ['name' => 'Redis', 'status' => extension_loaded('redis')],
+            'curl' => ['name' => 'cURL', 'status' => extension_loaded('curl')],
+            'mbstring' => ['name' => 'Multibyte String', 'status' => extension_loaded('mbstring')],
+            'intl' => ['name' => 'Intl', 'status' => extension_loaded('intl')],
+            'exif' => ['name' => 'Exif', 'status' => extension_loaded('exif')],
             'zip' => ['name' => 'Zip Archive', 'status' => extension_loaded('zip')],
-            'openssl' => ['name' => 'OpenSSL (Təhlükəsizlik/SSL)', 'status' => extension_loaded('openssl')],
+            'openssl' => ['name' => 'OpenSSL', 'status' => extension_loaded('openssl')],
         ];
 
         return [
