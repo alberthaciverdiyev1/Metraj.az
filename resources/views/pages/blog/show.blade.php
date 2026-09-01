@@ -231,7 +231,7 @@
 
             {{-- Share --}}
             <div class="flex items-center gap-3 mt-10 pt-6 border-t border-gray-100">
-                <span class="text-sm font-semibold text-gray-900">{{ __('blog.share') }}:</span>
+                <span class="text-sm font-semibold text-gray-900">{{ __('blog.share') }}</span>
                 <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank"
                    class="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition">
                     <i class="bi bi-facebook"></i>
