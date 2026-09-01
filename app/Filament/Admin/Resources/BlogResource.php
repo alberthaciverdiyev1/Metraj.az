@@ -42,9 +42,9 @@ class BlogResource extends Resource
 
                         Forms\Components\TextInput::make('slug')
                             ->label('URL (Slug)')
-                            ->required()
+                            ->nullable()
                             ->unique(table: 'blogs', column: 'slug', ignoreRecord: true)
-                            ->helperText('Boş buraxsa, başlıqdan avtomatik yaranır.'),
+                            ->helperText('Boş buraxılarsa, başlıqdan avtomatik unikal slug yaradılacaq.'),
 
                         Forms\Components\Select::make('category')
                             ->label('Kategoriya')
@@ -89,6 +89,21 @@ class BlogResource extends Resource
                             ->required()
                             ->placeholder('Məqalənin əsas mətni...')
                             ->columnSpanFull(),
+                    ])->columns(1),
+
+                Forms\Components\Section::make('SEO Tənzimləmələri')
+                    ->description('Axtarış motorları (Google) üçün başlıq və təsvir')
+                    ->collapsible()
+                    ->schema([
+                        Forms\Components\TextInput::make('meta_title')
+                            ->label('Meta Title (SEO Başlığı)')
+                            ->placeholder('Boş buraxılarsa, bloqun əsas başlığı istifadə olunacaq')
+                            ->maxLength(255),
+                        Forms\Components\Textarea::make('meta_description')
+                            ->label('Meta Description (SEO Təsviri)')
+                            ->placeholder('Boş buraxılarsa, qısa mətn (excerpt) istifadə olunacaq')
+                            ->rows(2)
+                            ->maxLength(500),
                     ])->columns(1),
             ]);
     }

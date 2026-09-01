@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
-@section('title', ($blog->title ?? '') . ' - ' . __('blog.page_title') . ' - KibrisKare.com')
+@php
+    $resolvedBlogTitle = ($blog->meta_title ?: $blog->title) . ' - KibrisKare.com';
+    $resolvedBlogDescription = $blog->meta_description ?: ($blog->excerpt ?: \Illuminate\Support\Str::limit(strip_tags($blog->content), 160));
+@endphp
+
+@section('title', $resolvedBlogTitle)
+@section('meta_description', $resolvedBlogDescription)
+@section('h1', $blog->title)
 
 @section('content')
 <div class="w-full pb-16">

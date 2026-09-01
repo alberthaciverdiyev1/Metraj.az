@@ -30,14 +30,16 @@ class Blog extends Model
      * Kütləvi doldurula bilən sütunlar (Mass Assignable)
      */
     protected $fillable = [
-        'title',        // Bloq başlığı
-        'slug',         // URL üçün unikal slug
-        'category',     // Kategoriya (Məs: Bazar, Məsləhət, Xəbər)
-        'cover_image',  // Üzlük / başlıq şəkli
-        'excerpt',      // Qısa mətn (kartda göstərilir)
-        'content',      // Tam məzmun
-        'views_count',  // Baxış sayı
-        'published_at', // Dərc tarixi
+        'title',            // Bloq başlığı
+        'slug',             // URL üçün unikal slug
+        'category',         // Kategoriya (Məs: Bazar, Məsləhət, Xəbər)
+        'cover_image',      // Üzlük / başlıq şəkli
+        'excerpt',          // Qısa mətn (kartda göstərilir)
+        'content',          // Tam məzmun
+        'meta_title',       // SEO Başlığı (Meta Title)
+        'meta_description', // SEO Təsviri (Meta Description)
+        'views_count',      // Baxış sayı
+        'published_at',     // Dərc tarixi
     ];
 
     /**
@@ -55,9 +57,17 @@ class Blog extends Model
     {
         parent::boot();
 
-        static::creating(function ($model) {
+        static::saving(function ($model) {
             if (empty($model->slug)) {
-                $model->slug = Str::slug($model->title);
+                $baseSlug = Str::slug($model->title) ?: 'blog-' . time();
+                $slug = $baseSlug;
+                $count = 1;
+                while (static::where('slug', $slug)->where('id', '!=', $model->id ?? 0)->exists()) {
+                    $slug = $baseSlug . '-' . (++$count);
+                }
+                $model->slug = $slug;
+            } else {
+                $model->slug = Str::slug($model->slug);
             }
         });
     }
