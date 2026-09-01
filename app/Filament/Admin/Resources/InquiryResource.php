@@ -46,9 +46,11 @@ class InquiryResource extends Resource
                         Forms\Components\Select::make('property_id')
                             ->label('Aid Olduğu Əmlak')
                             ->relationship('property', 'title')
+                            ->getOptionLabelFromRecordUsing(fn ($record) => ($record->code ? "[{$record->code}] " : '') . (is_array($record->title) ? ($record->title['az'] ?? ($record->title['tr'] ?? reset($record->title))) : $record->title))
                             ->searchable()
                             ->preload()
-                            ->required(),
+                            ->nullable()
+                            ->placeholder('Ümumi Müraciət (Əmlaksız)'),
 
                         Forms\Components\Select::make('status')
                             ->label('Status')
@@ -68,8 +70,7 @@ class InquiryResource extends Resource
 
                         Forms\Components\TextInput::make('phone')
                             ->label('Telefon Nömrəsi')
-                            ->tel()
-                            ->required(),
+                            ->tel(),
 
                         Forms\Components\TextInput::make('email')
                             ->label('E-poçt')
@@ -96,38 +97,34 @@ class InquiryResource extends Resource
 
                 Tables\Columns\TextColumn::make('phone')
                     ->label('Telefon')
-                    ->searchable(),
+                    ->searchable()
+                    ->placeholder('-'),
 
                 Tables\Columns\TextColumn::make('property.code')
                     ->label('Elan Kodu')
                     ->badge()
                     ->color('primary')
+                    ->placeholder('-')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('property.title')
                     ->label('Əmlak')
+                    ->formatStateUsing(fn ($state, $record) => $record->property ? (is_array($record->property->title) ? ($record->property->title['az'] ?? ($record->property->title['tr'] ?? reset($record->property->title))) : $record->property->title) : 'Ümumi Müraciət')
                     ->limit(25)
+                    ->placeholder('Ümumi Müraciət')
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('status')
+                Tables\Columns\SelectColumn::make('status')
                     ->label('Status')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'new' => 'warning',
-                        'contacted' => 'info',
-                        'in_progress' => 'primary',
-                        'closed' => 'success',
-                        'cancelled' => 'danger',
-                        default => 'gray',
-                    })
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->options([
                         'new' => 'Yeni',
                         'contacted' => 'Əlaqə saxlanılıb',
                         'in_progress' => 'Baxış təyin olunub',
-                        'closed' => 'Bağlanıb',
+                        'closed' => 'Bağlanıb (Uğurlu)',
                         'cancelled' => 'Ləğv edilib',
-                        default => $state,
-                    }),
+                    ])
+                    ->selectablePlaceholder(false)
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Tarix')
