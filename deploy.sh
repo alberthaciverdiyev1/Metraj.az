@@ -29,8 +29,8 @@ git pull origin main
 echo "📦 Installing PHP dependencies..."
 composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
-# 4. Database Migrations
-echo "🗄️ Running database migrations..."
+# 4. Database Migrations (STRICTLY NO SEEDERS - preserve live production data)
+echo "🗄️ Running non-destructive database migrations..."
 php artisan migrate --force
 
 # 5. Build Frontend Assets (if node >= 18 is present)
