@@ -3,6 +3,7 @@
 @php
     $resolvedBlogTitle = ($blog->meta_title ?: $blog->title) . ' - KibrisKare.com';
     $resolvedBlogDescription = $blog->meta_description ?: ($blog->excerpt ?: \Illuminate\Support\Str::limit(strip_tags($blog->content), 160));
+    $coverImgUrl = $blog->cover_image ? (filter_var($blog->cover_image, FILTER_VALIDATE_URL) ? $blog->cover_image : asset('storage/' . ltrim($blog->cover_image, '/'))) : null;
 @endphp
 
 @section('title', $resolvedBlogTitle)
@@ -15,9 +16,9 @@
 
     {{-- ==================== BLOG HEADER ==================== --}}
     <article class="bg-white rounded-3xl shadow-sm border border-gray-100 mt-4 sm:mt-6 overflow-hidden">
-        @if($blog->cover_image)
+        @if($coverImgUrl)
             <div class="relative h-56 sm:h-80 lg:h-96 overflow-hidden">
-                <img src="{{ $blog->cover_image }}" alt="{{ $blog->title }}" class="w-full h-full object-cover">
+                <img src="{{ $coverImgUrl }}" alt="{{ $blog->title }}" class="w-full h-full object-cover">
                 @if($blog->category)
                     <span class="absolute top-4 left-4 bg-[var(--primary)] text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow">
                         {{ $blog->category }}

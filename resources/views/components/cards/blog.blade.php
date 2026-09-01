@@ -14,7 +14,8 @@
     $blogDate = $blog ? $blog->formatted_date : $date;
     $blogCategory = $blog ? $blog->category : (is_object($category) ? ($category->name ?? '') : $category);
     $defaultBlogImg = asset('images/section-contact.jpg');
-    $blogImage = $blog ? ($blog->cover_image ?: $defaultBlogImg) : (!empty($images[0]) ? $images[0] : $defaultBlogImg);
+    $rawImg = $blog ? $blog->cover_image : ($images[0] ?? null);
+    $blogImage = $rawImg ? (filter_var($rawImg, FILTER_VALIDATE_URL) ? $rawImg : asset('storage/' . ltrim($rawImg, '/'))) : $defaultBlogImg;
     $blogExcerpt = $blog ? $blog->excerpt : $excerpt;
 @endphp
 
