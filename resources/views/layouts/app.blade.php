@@ -11,6 +11,7 @@
         $seoConf = $seoSetting ?? \App\Modules\Shared\Models\SeoSetting::current();
 
         $resolvedTitle = View::hasSection('title') ? View::getSection('title') : ($title ?? ($curPageSeo?->getTrans('title') ?: ($seoConf?->getTrans('default_meta_title') ?: 'KibrisKare.com')));
+        $resolvedH1 = ($h1 ?? null) ?: (View::hasSection('h1') ? View::getSection('h1') : ($curPageSeo?->getTrans('h1') ?: ($resolvedTitle ?: '')));
         $resolvedDescription = ($metaDescription ?? null) ?: (View::hasSection('meta_description') ? View::getSection('meta_description') : ($curPageSeo?->getTrans('description') ?: ($seoConf?->getTrans('default_meta_description') ?: '')));
         $resolvedKeywords = ($metaKeywords ?? null) ?: (View::hasSection('meta_keywords') ? View::getSection('meta_keywords') : ($curPageSeo?->getTrans('keywords') ?: ($seoConf?->getTrans('default_meta_keywords') ?: '')));
         $resolvedOgImage = ($ogImage ?? null) ?? ($curPageSeo?->og_image ?: ($seoConf?->og_image ?: asset('images/kibriskarelogo1.png')));
@@ -95,6 +96,9 @@
 
                 <!-- Əsas Məzmun (Bütün Səhifələr Eyni Genişlikdə) -->
                 <main class="flex-1 min-w-0 w-full">
+                    @if(!empty($resolvedH1))
+                        <h1 class="sr-only">{{ $resolvedH1 }}</h1>
+                    @endif
                     @yield('content')
                 </main>
 
@@ -109,6 +113,9 @@
 
         @include('layouts.footer')
     @else
+        @if(!empty($resolvedH1))
+            <h1 class="sr-only">{{ $resolvedH1 }}</h1>
+        @endif
         @yield('content')
     @endif
 

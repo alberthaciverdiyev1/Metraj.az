@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Cache;
  * @property string $page_key
  * @property string $page_name
  * @property string|null $route_name
+ * @property array|null $h1
  * @property array|null $title
  * @property array|null $description
  * @property array|null $keywords
@@ -25,6 +26,7 @@ class PageSeo extends Model
         'page_key',
         'page_name',
         'route_name',
+        'h1',
         'title',
         'description',
         'keywords',
@@ -34,6 +36,7 @@ class PageSeo extends Model
     ];
 
     protected $casts = [
+        'h1' => 'array',
         'title' => 'array',
         'description' => 'array',
         'keywords' => 'array',
@@ -83,12 +86,15 @@ class PageSeo extends Model
         return static::$memoizedAll = $all;
     }
 
+    protected static ?string $memoizedRequestKey = null;
+
     /**
      * Cari route və ya səhifə açarı üzrə PageSeo tapır
      */
     public static function findForCurrentRoute(?string $currentRoute = null): ?self
     {
-        if ($currentRoute === null && static::$memoizedCurrent !== null) {
+        $requestKey = ($currentRoute ?: '') . '|' . request()->path();
+        if ($currentRoute === null && static::$memoizedCurrent !== null && static::$memoizedRequestKey === $requestKey) {
             return static::$memoizedCurrent;
         }
 
@@ -96,13 +102,84 @@ class PageSeo extends Model
         $routeName = $currentRoute ?: request()->route()?->getName();
         $path = trim(request()->path(), '/');
 
-        // 1. Specific checks for deal_type / listing subpaths (Satılıq vs Kirayə vs Günlük)
-        $first = request()->route('first') ?? (explode('/', $path)[0] ?? null);
-        $second = request()->route('second') ?? (explode('/', $path)[1] ?? null);
+        // Strip locale prefix if present (e.g. tr/hakkimizda -> hakkimizda)
+        $segments = explode('/', $path);
+        if (!empty($segments[0]) && in_array(strtolower($segments[0]), ['az', 'tr', 'en', 'ru'], true)) {
+            array_shift($segments);
+        }
+        $cleanPath = implode('/', $segments);
+
+        // 1. Home Page
+        if ($cleanPath === '' || $cleanPath === '/') {
+            static::$memoizedRequestKey = $requestKey;
+            return static::$memoizedCurrent = ($all['home'] ?? null);
+        }
+
+        // 2. Specific static sections & modules (before wildcard routes)
+        if (str_starts_with($cleanPath, 'requests') || str_starts_with($cleanPath, 'telebler') || str_starts_with($cleanPath, 'ariyorum')) {
+            static::$memoizedRequestKey = $requestKey;
+            if (str_contains($cleanPath, 'create') || str_contains($cleanPath, 'elave-et') || str_contains($cleanPath, 'ilan-ver')) {
+                return static::$memoizedCurrent = ($all['requests_create'] ?? null);
+            }
+            return static::$memoizedCurrent = ($all['requests'] ?? null);
+        }
+
+        if (str_starts_with($cleanPath, 'roommates') || str_starts_with($cleanPath, 'otaq-yoldasi') || str_starts_with($cleanPath, 'oda-arkadasi')) {
+            static::$memoizedRequestKey = $requestKey;
+            if (str_contains($cleanPath, 'create') || str_contains($cleanPath, 'elave-et') || str_contains($cleanPath, 'ilan-ver')) {
+                return static::$memoizedCurrent = ($all['roommates_create'] ?? null);
+            }
+            return static::$memoizedCurrent = ($all['roommates'] ?? null);
+        }
+
+        if (str_starts_with($cleanPath, 'emlak-ofisleri') || str_starts_with($cleanPath, 'agencies') || str_starts_with($cleanPath, 'agentlikler') || str_starts_with($cleanPath, 'acenteler')) {
+            static::$memoizedRequestKey = $requestKey;
+            return static::$memoizedCurrent = ($all['agencies'] ?? null);
+        }
+
+        if (str_starts_with($cleanPath, 'blog') || str_starts_with($cleanPath, 'meqaleler') || str_starts_with($cleanPath, 'bloq')) {
+            static::$memoizedRequestKey = $requestKey;
+            return static::$memoizedCurrent = ($all['blog'] ?? null);
+        }
+
+        if (str_starts_with($cleanPath, 'contact') || str_starts_with($cleanPath, 'elaqe') || str_starts_with($cleanPath, 'iletisim')) {
+            static::$memoizedRequestKey = $requestKey;
+            return static::$memoizedCurrent = ($all['contact'] ?? null);
+        }
+
+        if (str_starts_with($cleanPath, 'about') || str_starts_with($cleanPath, 'haqqimizda') || str_starts_with($cleanPath, 'hakkimizda')) {
+            static::$memoizedRequestKey = $requestKey;
+            return static::$memoizedCurrent = ($all['about'] ?? null);
+        }
+
+        if (str_starts_with($cleanPath, 'faq') || str_starts_with($cleanPath, 'suallar') || str_starts_with($cleanPath, 'sss') || str_starts_with($cleanPath, 'sikca-sorulan-sorular')) {
+            static::$memoizedRequestKey = $requestKey;
+            return static::$memoizedCurrent = ($all['faq'] ?? null);
+        }
+
+        if (str_starts_with($cleanPath, 'compare') || str_starts_with($cleanPath, 'muqayise') || str_starts_with($cleanPath, 'karsilastir')) {
+            static::$memoizedRequestKey = $requestKey;
+            return static::$memoizedCurrent = ($all['compare'] ?? null);
+        }
+
+        if (str_starts_with($cleanPath, 'favorites') || str_starts_with($cleanPath, 'secilmisler') || str_starts_with($cleanPath, 'favoriler')) {
+            static::$memoizedRequestKey = $requestKey;
+            return static::$memoizedCurrent = ($all['favorites'] ?? null);
+        }
+
+        if (str_starts_with($cleanPath, 'add-property') || str_starts_with($cleanPath, 'elan-yerlesdir') || str_starts_with($cleanPath, 'ilan-ver')) {
+            static::$memoizedRequestKey = $requestKey;
+            return static::$memoizedCurrent = ($all['add_property'] ?? null);
+        }
+
+        // 3. Deal type / Listing subpaths (Satılıq vs Kirayə vs Günlük)
+        $first = request()->route('first') ?? ($segments[0] ?? null);
+        $second = request()->route('second') ?? ($segments[1] ?? null);
         $dealType = request('deal_type');
 
         if (in_array($first, ['satilik', 'satis', 'satiq', 'sale'], true) || $dealType === 'sale') {
             if (isset($all['listing_sale'])) {
+                static::$memoizedRequestKey = $requestKey;
                 return static::$memoizedCurrent = $all['listing_sale'];
             }
         }
@@ -110,80 +187,36 @@ class PageSeo extends Model
         if ($first === 'kira' || in_array($first, ['kiralik', 'kiraye', 'kiraya', 'rent'], true) || in_array($dealType, ['rent', 'rent_monthly', 'rent_daily'])) {
             if ($second === 'gunluk' || in_array($second, ['gundelik', 'daily'], true) || $dealType === 'rent_daily') {
                 if (isset($all['listing_rent_daily'])) {
+                    static::$memoizedRequestKey = $requestKey;
                     return static::$memoizedCurrent = $all['listing_rent_daily'];
                 }
             }
             if ($second === 'ayliq' || in_array($second, ['aylik', 'monthly'], true) || $dealType === 'rent_monthly') {
                 if (isset($all['listing_rent_monthly'])) {
+                    static::$memoizedRequestKey = $requestKey;
                     return static::$memoizedCurrent = $all['listing_rent_monthly'];
                 }
             }
-            if (isset($all['listing_rent_monthly'])) {
-                return static::$memoizedCurrent = $all['listing_rent_monthly'];
-            }
         }
 
-        // 2. Specific route matches
-        if ($routeName) {
+        // 4. Exact route name match (excluding generic wildcards)
+        if ($routeName && !in_array($routeName, ['listing.path1', 'listing.path2', 'listing.path3'], true)) {
             foreach ($all as $pageSeo) {
-                if ($pageSeo->route_name === $routeName || $pageSeo->page_key === $routeName) {
+                if ($pageSeo->route_name === $routeName) {
+                    static::$memoizedRequestKey = $requestKey;
                     return static::$memoizedCurrent = $pageSeo;
                 }
             }
         }
 
-        // 3. Path-based fallbacks for all navbar routes
-        if ($path === '' || $path === '/' || $path === 'listing' || $path === 'properties') {
-            return static::$memoizedCurrent = ($all['home'] ?? null);
+        // 5. Page key or URI fallback
+        if (!empty($routeName) && isset($all[$routeName])) {
+            static::$memoizedRequestKey = $requestKey;
+            return static::$memoizedCurrent = $all[$routeName];
         }
 
-        if ($path === 'satilik' || str_starts_with($path, 'satilik/')) {
-            return static::$memoizedCurrent = ($all['listing_sale'] ?? $all['home'] ?? null);
-        }
-        if (str_starts_with($path, 'kira/gunluk')) {
-            return static::$memoizedCurrent = ($all['listing_rent_daily'] ?? $all['listing_rent_monthly'] ?? null);
-        }
-        if (str_starts_with($path, 'kira')) {
-            return static::$memoizedCurrent = ($all['listing_rent_monthly'] ?? null);
-        }
-        if (str_starts_with($path, 'axtariram/elave-et') || str_starts_with($path, 'requests/create')) {
-            return static::$memoizedCurrent = ($all['requests_create'] ?? $all['requests'] ?? null);
-        }
-        if (str_starts_with($path, 'axtariram') || str_starts_with($path, 'requests')) {
-            return static::$memoizedCurrent = ($all['requests'] ?? null);
-        }
-        if (str_starts_with($path, 'otaq-yoldasi/elave-et') || str_starts_with($path, 'roommates/create')) {
-            return static::$memoizedCurrent = ($all['roommates_create'] ?? $all['roommates'] ?? null);
-        }
-        if (str_starts_with($path, 'otaq-yoldasi') || str_starts_with($path, 'roommates')) {
-            return static::$memoizedCurrent = ($all['roommates'] ?? null);
-        }
-        if (str_starts_with($path, 'agencies') || str_starts_with($path, 'agentlik')) {
-            return static::$memoizedCurrent = ($all['agencies'] ?? null);
-        }
-        if (str_starts_with($path, 'blog')) {
-            return static::$memoizedCurrent = ($all['blog'] ?? null);
-        }
-        if (str_starts_with($path, 'contact') || str_starts_with($path, 'elaqe')) {
-            return static::$memoizedCurrent = ($all['contact'] ?? null);
-        }
-        if (str_starts_with($path, 'about') || str_starts_with($path, 'haqqimizda')) {
-            return static::$memoizedCurrent = ($all['about'] ?? null);
-        }
-        if (str_starts_with($path, 'faq') || str_starts_with($path, 'suallar')) {
-            return static::$memoizedCurrent = ($all['faq'] ?? null);
-        }
-        if (str_starts_with($path, 'compare') || str_starts_with($path, 'muqayise')) {
-            return static::$memoizedCurrent = ($all['compare'] ?? null);
-        }
-        if (str_starts_with($path, 'favorites') || str_starts_with($path, 'sevimliler')) {
-            return static::$memoizedCurrent = ($all['favorites'] ?? null);
-        }
-        if (str_starts_with($path, 'add-property') || str_starts_with($path, 'elan-yerlesdir')) {
-            return static::$memoizedCurrent = ($all['add_property'] ?? null);
-        }
-
-        return null;
+        static::$memoizedRequestKey = $requestKey;
+        return static::$memoizedCurrent = null;
     }
 
     /**
@@ -212,6 +245,12 @@ class PageSeo extends Model
                 'page_name' => 'Ana Səhifə',
                 'route_name' => 'home',
                 'sort_order' => 1,
+                'h1' => [
+                    'tr' => 'Kuzey Kıbrıs Emlak, Satılık ve Kiralık Ev İlanları',
+                    'az' => 'Şimali Kipr Əmlak, Satılıq və Kirayə Ev Elanları',
+                    'en' => 'Northern Cyprus Real Estate, Properties for Sale & Rent',
+                    'ru' => 'Недвижимость на Северном Кипре: Продажа и Аренда',
+                ],
                 'title' => [
                     'tr' => 'KibrisKare - Kuzey Kıbrıs Emlak İlanları ve Satılık Evler',
                     'az' => 'KibrisKare - Şimali Kipr Əmlak Elanları və Satılıq Evlər',
@@ -230,6 +269,12 @@ class PageSeo extends Model
                 'page_name' => 'Satılıq Əmlaklar',
                 'route_name' => 'listing.path1',
                 'sort_order' => 2,
+                'h1' => [
+                    'tr' => 'Kuzey Kıbrıs Satılık Evler, Villalar ve Daireler',
+                    'az' => 'Şimali Kiprdə Satılıq Evlər, Villalar və Mənzillər',
+                    'en' => 'Houses, Villas and Apartments for Sale in Northern Cyprus',
+                    'ru' => 'Продажа домов, вилл и квартир на Северном Кипре',
+                ],
                 'title' => [
                     'tr' => 'Kuzey Kıbrıs Satılık Evler, Villalar ve Daireler - KibrisKare',
                     'az' => 'Şimali Kipr Satılıq Evlər, Villalar və Mənzillər - KibrisKare',
@@ -248,6 +293,12 @@ class PageSeo extends Model
                 'page_name' => 'Kirayə Əmlaklar (Aylıq)',
                 'route_name' => 'listing.path2',
                 'sort_order' => 3,
+                'h1' => [
+                    'tr' => 'Kuzey Kıbrıs Kiralık Evler ve Daireler (Aylık)',
+                    'az' => 'Şimali Kiprdə Aylıq Kirayə Evlər və Mənzillər',
+                    'en' => 'Long Term & Monthly Rentals in Northern Cyprus',
+                    'ru' => 'Долгосрочная аренда квартир и домов на Северном Кипре',
+                ],
                 'title' => [
                     'tr' => 'Kuzey Kıbrıs Kiralık Evler ve Daireler (Aylık) - KibrisKare',
                     'az' => 'Şimali Kipr Kirayə Evlər və Mənzillər (Aylıq) - KibrisKare',
@@ -266,6 +317,12 @@ class PageSeo extends Model
                 'page_name' => 'Günlük Kirayə Əmlaklar (Tətil/Qısa Müddətli)',
                 'route_name' => 'listing.path2',
                 'sort_order' => 4,
+                'h1' => [
+                    'tr' => 'Kuzey Kıbrıs Günlük Kiralık Villalar ve Tatil Evleri',
+                    'az' => 'Şimali Kiprdə Günlük Kirayə Villalar və İstirahət Evləri',
+                    'en' => 'Daily Vacation Rentals & Luxury Villas in Cyprus',
+                    'ru' => 'Посуточная аренда вилл и апартаментов на Кипре',
+                ],
                 'title' => [
                     'tr' => 'Kıbrıs Günlük Kiralık Villalar ve Tatil Evleri - KibrisKare',
                     'az' => 'Kipr Günlük Kirayə Villalar və İstirahət Evləri - KibrisKare',
@@ -284,6 +341,12 @@ class PageSeo extends Model
                 'page_name' => 'Əmlak Tələbləri (Axtarıram)',
                 'route_name' => 'requests.index',
                 'sort_order' => 5,
+                'h1' => [
+                    'tr' => 'Alıcı ve Kiracı Gayrimenkul Talepleri (Arıyorum)',
+                    'az' => 'Alıcı və Kirayəçi Daşınmaz Əmlak Tələbləri (Axtarıram)',
+                    'en' => 'Buyer and Tenant Property Requests in Cyprus',
+                    'ru' => 'Запросы клиентов на покупку и аренду недвижимости',
+                ],
                 'title' => [
                     'tr' => 'Alıcı ve Kiracı Talepleri (Arıyorum) - KibrisKare',
                     'az' => 'Alıcı və Kirayəçi Tələbləri (Axtarıram) - KibrisKare',
@@ -302,6 +365,12 @@ class PageSeo extends Model
                 'page_name' => 'Tələb Yerləşdir (Axtarıram Elan Et)',
                 'route_name' => 'requests.create',
                 'sort_order' => 6,
+                'h1' => [
+                    'tr' => 'Gayrimenkul Talebi Oluştur ve Aradığın Evi Bul',
+                    'az' => 'Əmlak Tələbi Yerləşdir və Axtardığın Evi Tap',
+                    'en' => 'Post a Property Request in Northern Cyprus',
+                    'ru' => 'Оставить заявку на подбор недвижимости на Кипре',
+                ],
                 'title' => [
                     'tr' => 'Gayrimenkul Talebi Oluştur (Arıyorum İlanı Ver) - KibrisKare',
                     'az' => 'Əmlak Tələbi Yerləşdir (Axtarıram Elanı Ver) - KibrisKare',
@@ -320,6 +389,12 @@ class PageSeo extends Model
                 'page_name' => 'Otaq Yoldaşı Elanları',
                 'route_name' => 'roommates.index',
                 'sort_order' => 7,
+                'h1' => [
+                    'tr' => 'Kuzey Kıbrıs Oda Arkadaşı ve Paylaşımlı Ev İlanları',
+                    'az' => 'Şimali Kipr Otaq Yoldaşı və Həmyoldaş Elanları',
+                    'en' => 'Roommates and Flatshare Listings in Northern Cyprus',
+                    'ru' => 'Поиск соседей по комнате и совместная аренда на Кипре',
+                ],
                 'title' => [
                     'tr' => 'Kuzey Kıbrıs Oda Arkadaşı ve Paylaşımlı Ev İlanları - KibrisKare',
                     'az' => 'Şimali Kipr Otaq Yoldaşı və Həmyoldaş Elanları - KibrisKare',
@@ -338,6 +413,12 @@ class PageSeo extends Model
                 'page_name' => 'Otaq Yoldaşı Elanı Əlavə Et',
                 'route_name' => 'roommates.create',
                 'sort_order' => 8,
+                'h1' => [
+                    'tr' => 'Oda Arkadaşı İlanı Ver',
+                    'az' => 'Otaq Yoldaşı Elanı Yerləşdir',
+                    'en' => 'Post a Roommate Listing in Northern Cyprus',
+                    'ru' => 'Подать объявление о поиске соседа по комнате',
+                ],
                 'title' => [
                     'tr' => 'Oda Arkadaşı İlanı Ver - KibrisKare',
                     'az' => 'Otaq Yoldaşı Elanı Yerləşdir - KibrisKare',
@@ -356,6 +437,12 @@ class PageSeo extends Model
                 'page_name' => 'Yeni Elan Yerləşdir (Əmlakını Sat / Kirayə Ver)',
                 'route_name' => 'add-property',
                 'sort_order' => 9,
+                'h1' => [
+                    'tr' => 'Ücretsiz Emlak İlanı Ver, Evini Sat veya Kirala',
+                    'az' => 'Pulsuz Əmlak Elanı Yerləşdir, Evini Sat və ya Kirayə Ver',
+                    'en' => 'Post Free Property Listing in Northern Cyprus',
+                    'ru' => 'Подать бесплатное объявление о недвижимости на Кипре',
+                ],
                 'title' => [
                     'tr' => 'Ücretsiz Emlak İlanı Ver - Evini Sat veya Kirala - KibrisKare',
                     'az' => 'Pulsuz Əmlak Elanı Yerləşdir - Evini Sat və ya Kirayə Ver - KibrisKare',
@@ -374,6 +461,12 @@ class PageSeo extends Model
                 'page_name' => 'Əmlak Agentlikləri',
                 'route_name' => 'agencies.list',
                 'sort_order' => 10,
+                'h1' => [
+                    'tr' => 'Kuzey Kıbrıs Emlak Acenteleri ve Danışmanlık Ofisleri',
+                    'az' => 'Şimali Kipr Əmlak Agentlikləri və Konsaltinq Ofisləri',
+                    'en' => 'Real Estate Agencies and Property Brokers in Northern Cyprus',
+                    'ru' => 'Агентства недвижимости и риелторские компании на Северном Кипре',
+                ],
                 'title' => [
                     'tr' => 'Kuzey Kıbrıs Güvenilir Emlak Acenteleri ve Ofisleri - KibrisKare',
                     'az' => 'Şimali Kipr Etibarlı Əmlak Agentlikləri və Ofisləri - KibrisKare',
@@ -392,6 +485,12 @@ class PageSeo extends Model
                 'page_name' => 'Bloq & Xəbərlər',
                 'route_name' => 'blog.list',
                 'sort_order' => 11,
+                'h1' => [
+                    'tr' => 'Kıbrıs Emlak Rehberi, Yatırım Tavsiyeleri ve Piyasa Haberleri',
+                    'az' => 'Kipr Əmlak Bələdçisi, İnvestisiya Məsləhətləri və Bazar Xəbərləri',
+                    'en' => 'Cyprus Real Estate Guide, Investment News and Articles',
+                    'ru' => 'Новости недвижимости и инвестиционный гид по Северному Кипру',
+                ],
                 'title' => [
                     'tr' => 'Kıbrıs Emlak Rehberi, Yatırım Tavsiyeleri ve Haberler - Blog',
                     'az' => 'Kipr Əmlak Bələdçisi, İnvestisiya Məsləhətləri və Xəbərlər - Bloq',
@@ -410,6 +509,12 @@ class PageSeo extends Model
                 'page_name' => 'Əlaqə',
                 'route_name' => 'contact',
                 'sort_order' => 12,
+                'h1' => [
+                    'tr' => 'KibrisKare İletişim ve Müşteri Hizmetleri',
+                    'az' => 'KibrisKare Əlaqə və Müştəri Xidmətləri',
+                    'en' => 'Contact KibrisKare Customer Support',
+                    'ru' => 'Контакты и служба поддержки KibrisKare',
+                ],
                 'title' => [
                     'tr' => 'İletişim - KibrisKare.com Müşteri Hizmetleri',
                     'az' => 'Əlaqə - KibrisKare.com Müştəri Xidmətləri',
@@ -428,6 +533,12 @@ class PageSeo extends Model
                 'page_name' => 'Haqqımızda',
                 'route_name' => 'about-us',
                 'sort_order' => 13,
+                'h1' => [
+                    'tr' => 'KibrisKare Hakkında - Vizyonumuz ve Hizmetlerimiz',
+                    'az' => 'KibrisKare Haqqında - Baxışımız və Xidmətlərimiz',
+                    'en' => 'About KibrisKare - Our Vision and Services',
+                    'ru' => 'О компании KibrisKare - Наша миссия и услуги',
+                ],
                 'title' => [
                     'tr' => 'Hakkımızda - KibrisKare.com Vizyon ve Misyonumuz',
                     'az' => 'Haqqımızda - KibrisKare.com Baxış və Missiyamız',
@@ -446,6 +557,12 @@ class PageSeo extends Model
                 'page_name' => 'Tez-tez Verilən Suallar (FAQ / SSS)',
                 'route_name' => 'faq',
                 'sort_order' => 14,
+                'h1' => [
+                    'tr' => 'Sıkça Sorulan Sorular ve Emlak Rehberi',
+                    'az' => 'Tez-tez Verilən Suallar və Əmlak Bələdçisi',
+                    'en' => 'Frequently Asked Questions (FAQ)',
+                    'ru' => 'Часто задаваемые вопросы о недвижимости',
+                ],
                 'title' => [
                     'tr' => 'Sıkça Sorulan Sorular (SSS) - KibrisKare',
                     'az' => 'Tez-tez Verilən Suallar (FAQ) - KibrisKare',
@@ -464,6 +581,12 @@ class PageSeo extends Model
                 'page_name' => 'Əmlak Müqayisəsi',
                 'route_name' => 'compares',
                 'sort_order' => 15,
+                'h1' => [
+                    'tr' => 'Emlak Karşılaştırma Listesi',
+                    'az' => 'Əmlak Müqayisəsi Siyahısı',
+                    'en' => 'Property Comparison List',
+                    'ru' => 'Сравнение объектов недвижимости',
+                ],
                 'title' => [
                     'tr' => 'Emlak Karşılaştırma Aracı - KibrisKare',
                     'az' => 'Əmlak Müqayisəsi Aləti - KibrisKare',
@@ -482,6 +605,12 @@ class PageSeo extends Model
                 'page_name' => 'Seçilmişlər (Sevimlilər)',
                 'route_name' => 'favorites',
                 'sort_order' => 16,
+                'h1' => [
+                    'tr' => 'Favori İlanlarım',
+                    'az' => 'Seçilmiş Elanlarım',
+                    'en' => 'My Favorite Properties',
+                    'ru' => 'Мои избранные объявления',
+                ],
                 'title' => [
                     'tr' => 'Favori İlanlarım - KibrisKare',
                     'az' => 'Seçilmiş Elanlarım - KibrisKare',
@@ -498,10 +627,14 @@ class PageSeo extends Model
         ];
 
         foreach ($defaultPages as $pageData) {
-            self::firstOrCreate(
-                ['page_key' => $pageData['page_key']],
-                $pageData
-            );
+            $record = self::where('page_key', $pageData['page_key'])->first();
+            if ($record) {
+                if (empty($record->h1)) {
+                    $record->update(['h1' => $pageData['h1']]);
+                }
+            } else {
+                self::create($pageData);
+            }
         }
     }
 }

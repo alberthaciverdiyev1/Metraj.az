@@ -40,6 +40,7 @@ class ManageSeoSettings extends Page implements HasForms
         foreach ($pages as $page) {
             $pageData[$page->page_key] = [
                 'page_name' => $page->page_name,
+                'h1' => $page->h1,
                 'title' => $page->title,
                 'description' => $page->description,
                 'keywords' => $page->keywords,
@@ -82,6 +83,18 @@ class ManageSeoSettings extends Page implements HasForms
                 ->label($p->page_name)
                 ->icon($iconMap[$key] ?? 'heroicon-o-document-text')
                 ->schema([
+                    Section::make("{$p->page_name} — H1 Başlığı (SEO H1 Tag)")
+                        ->description('Axtarış sistemləri üçün səhifənin əsas H1 başlığı (HTML daxilində gizli saxlanılır)')
+                        ->schema([
+                            Grid::make(2)->schema([
+                                TextInput::make("pages.{$key}.h1.tr")->label('H1 (Türkcə)')->placeholder('məs: Kuzey Kıbrıs Satılık Evler'),
+                                TextInput::make("pages.{$key}.h1.az")->label('H1 (Azərbaycanca)')->placeholder('məs: Şimali Kipr Satılıq Evlər'),
+                                TextInput::make("pages.{$key}.h1.en")->label('H1 (İngiliscə)')->placeholder('e.g: Properties For Sale in Northern Cyprus'),
+                                TextInput::make("pages.{$key}.h1.ru")->label('H1 (Rusca)')->placeholder('напр: Недвижимость на Северном Кипре'),
+                            ]),
+                        ])
+                        ->collapsible(),
+
                     Section::make("{$p->page_name} — SEO Başlığı (Meta Title)")
                         ->description('Axtarış sistemlərində və brauzer tabında görünəcək səhifə başlığı')
                         ->schema([
@@ -231,6 +244,7 @@ class ManageSeoSettings extends Page implements HasForms
                 PageSeo::updateOrCreate(
                     ['page_key' => $pageKey],
                     [
+                        'h1' => $pData['h1'] ?? null,
                         'title' => $pData['title'] ?? null,
                         'description' => $pData['description'] ?? null,
                         'keywords' => $pData['keywords'] ?? null,
