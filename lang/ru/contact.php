@@ -47,4 +47,6 @@ return [
     'error_occurred' => 'Произошла ошибка, пожалуйста, попробуйте еще раз.',
     'network_error' => 'Произошла сетевая ошибка.',
     'map_office_popup' => 'Главный офис KibrisKare.com',
+    'support_desc' => 'Поддержка KibrisKare.com',
+    'whatsapp_number' => 'Номер WhatsApp',
 ];

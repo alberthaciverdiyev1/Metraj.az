@@ -61,4 +61,24 @@ return [
     'register_success' => 'Registration completed!',
     'register_completed' => 'Completed successfully!',
     'invalid_form_data' => 'Please make sure all form details are entered correctly.',
+
+    // Placeholders
+    'email_placeholder' => 'example@kibriskare.com',
+
+    // Backend response messages
+    'msg_login_success' => 'Logged in successfully! Redirecting...',
+    'msg_logged_out' => 'Logged out.',
+    'msg_register_success' => 'Registration completed successfully! Redirecting...',
+    'msg_register_saved' => 'Registration completed successfully!',
+
+    // Backend validation messages
+    'val_email_required' => 'Please enter your email address.',
+    'val_email_invalid' => 'Please enter a valid email address.',
+    'val_password_required' => 'Please enter your password.',
+    'val_agency_name_required' => 'Please enter the agency (company) name.',
+    'val_name_required' => 'Please enter your full name.',
+    'val_email_unique' => 'This email address is already registered.',
+    'val_phone_required' => 'Please enter your contact number.',
+    'val_password_min' => 'The password must be at least 6 characters.',
+    'val_password_confirmed' => 'Password confirmation does not match.',
 ];

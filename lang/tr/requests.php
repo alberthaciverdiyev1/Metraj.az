@@ -130,4 +130,7 @@ return [
     'badge_roommate_have' => 'Oda Veriyor',
     'badge_roommate_need' => 'Oda Arıyor',
     'request_success' => 'Talep ilanınız başarıyla yayınlandı!',
+
+    // Prefilled WhatsApp message
+    'whatsapp_message' => 'Merhaba, KibrisKare.com üzerindeki talep ilanınıza uygun bir teklifim var: {title}',
 ];

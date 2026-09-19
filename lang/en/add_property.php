@@ -73,5 +73,20 @@ return [
     'submit_notice' => 'Once submitted, your listing will be reviewed by our moderation team before going live.',
     'submit_btn' => 'Post Property',
     'loading' => 'Loading...',
+    'submit_success_notice' => 'Your listing has been received successfully! It will be published after being reviewed by a moderator shortly.',
     'success_message' => 'Your property has been submitted successfully!',
+
+    // Placeholders
+    'price_placeholder' => 'e.g. 150000',
+    'advertiser_name_placeholder' => 'e.g. John Doe',
+    'phone_placeholder' => '+90 5xx xxx xx xx',
+
+    // Currency labels
+    'currency_azn' => 'AZN (₼ - Azerbaijani Manat)',
+    'currency_gbp' => 'GBP (£ - Pound Sterling)',
+    'currency_usd' => 'USD ($ - US Dollar)',
+    'currency_eur' => 'EUR (€ - Euro)',
+    'currency_try' => 'TRY (₺ - Turkish Lira)',
+    'currency_rub' => 'RUB (₽ - Russian Ruble)',
+    'currency_aed' => 'AED (د.إ - UAE Dirham)',
 ];

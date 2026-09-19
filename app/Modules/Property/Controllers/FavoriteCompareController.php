@@ -20,7 +20,7 @@ class FavoriteCompareController extends Controller
     {
         $propertyId = (int) $request->input('property_id');
         if (! $propertyId || ! Property::where('id', $propertyId)->exists()) {
-            return response()->json(['success' => false, 'message' => 'Property not found'], 404);
+            return response()->json(['success' => false, 'message' => __('property.not_found')], 404);
         }
 
         $userId = auth()->id();
@@ -123,7 +123,7 @@ class FavoriteCompareController extends Controller
     {
         $propertyId = (int) $request->input('property_id');
         if (! $propertyId || ! Property::where('id', $propertyId)->exists()) {
-            return response()->json(['success' => false, 'message' => 'Property not found'], 404);
+            return response()->json(['success' => false, 'message' => __('property.not_found')], 404);
         }
 
         $userId = auth()->id();
@@ -152,7 +152,7 @@ class FavoriteCompareController extends Controller
             if ($countQuery->count() >= 4) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Ən çox 4 elan müqayisə edilə bilər.',
+                    'message' => __('compare.limit_reached'),
                     'limit_reached' => true,
                 ], 422);
             }

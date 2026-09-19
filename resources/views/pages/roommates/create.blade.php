@@ -256,18 +256,26 @@
                 <label class="block text-xs font-semibold text-gray-700 mb-2">{{ __('roommates.amenities_checklist') }}</label>
                 @php
                     $availableAmenities = [
-                        'Wi-Fi İnternet', 'Kondisioner', 'Paltaryuyan', 'Mərkəzi İstilik / Kombi',
-                        'Qabyuyan', 'Soyuducu', 'Televizor', 'Balkon', 'Mebel / Çarpayı', 'Lift'
+                        'Wi-Fi İnternet' => 'amenity_wifi',
+                        'Kondisioner' => 'amenity_ac',
+                        'Paltaryuyan' => 'amenity_washer',
+                        'Mərkəzi İstilik / Kombi' => 'amenity_heating',
+                        'Qabyuyan' => 'amenity_dishwasher',
+                        'Soyuducu' => 'amenity_fridge',
+                        'Televizor' => 'amenity_tv',
+                        'Balkon' => 'amenity_balcony',
+                        'Mebel / Çarpayı' => 'amenity_furniture',
+                        'Lift' => 'amenity_elevator',
                     ];
                     $selectedAmenities = old('amenities', []);
                 @endphp
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
-                    @foreach($availableAmenities as $amenity)
+                    @foreach($availableAmenities as $amenity => $amenityKey)
                         <label class="inline-flex items-center gap-2 p-2.5 rounded-xl border border-gray-200 bg-gray-50/50 hover:bg-orange-50/50 transition cursor-pointer text-xs font-medium text-gray-700 select-none">
                             <input type="checkbox" name="amenities[]" value="{{ $amenity }}"
                                    {{ in_array($amenity, (array)$selectedAmenities) ? 'checked' : '' }}
                                    class="rounded border-gray-300 text-orange-500 focus:ring-orange-500 h-3.5 w-3.5">
-                            <span class="truncate">{{ $amenity }}</span>
+                            <span class="truncate">{{ __('roommates.' . $amenityKey) }}</span>
                         </label>
                     @endforeach
                 </div>

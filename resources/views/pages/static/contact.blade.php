@@ -126,7 +126,7 @@
                             <label for="contact_phone" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">
                                 {{ __('contact.contact_phone') }} <span class="text-red-500">*</span>
                             </label>
-                            <input type="tel" id="contact_phone" name="phone" required placeholder="{{ __('+90 548 000 00 00') }}"
+                            <input type="tel" id="contact_phone" name="phone" required placeholder="+90 548 000 00 00"
                                    class="w-full px-4 py-3 text-sm bg-gray-50/60 border border-gray-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/40 focus:border-orange-500 transition">
                         </div>
                     </div>
@@ -137,7 +137,7 @@
                             <label for="contact_email" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">
                                 {{ __('contact.email_address') }}
                             </label>
-                            <input type="email" id="contact_email" name="email" placeholder="{{ __('email@example.com') }}"
+                            <input type="email" id="contact_email" name="email" placeholder="{{ __('auth.email_placeholder') }}"
                                    class="w-full px-4 py-3 text-sm bg-gray-50/60 border border-gray-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-400/40 focus:border-orange-500 transition">
                         </div>
 

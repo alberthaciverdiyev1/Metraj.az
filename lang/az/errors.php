@@ -7,6 +7,13 @@ return [
     'refresh_page' => 'Səhifəni Yenilə',
     'contact_support' => 'Bizimlə Əlaqə',
     'search_placeholder' => 'Şəhər və ya rayon üzrə axtar...',
+    'generic_badge' => 'Xəta Baş Verdi',
+    'generic_description' => 'Sorğunuz icra edilərkən xəta baş verdi. Zəhmət olmasa bir az sonra yenidən cəhd edin.',
+    'useful_links' => 'Faydalı Bölmələr',
+    'quick_sale' => 'Satılıq Əmlaklar',
+    'quick_rent' => 'Kirayə Mənzillər',
+    'quick_requests' => 'Əmlak Tələbləri',
+    'quick_contact' => 'Əlaqə',
 
     '404' => [
         'badge' => '404 Xətası',

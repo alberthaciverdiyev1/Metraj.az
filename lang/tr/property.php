@@ -82,4 +82,5 @@ return [
     'today' => 'Bugün',
     'safety_note_title' => 'Güvenlik Tavsiyesi',
     'safety_note_desc' => 'Mülkü bizzat görmeden ve şartları netleştirmeden kimseye önceden kapora / ödeme göndermeyiniz.',
+    'not_found' => 'İlan bulunamadı.',
 ];

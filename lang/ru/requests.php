@@ -130,4 +130,7 @@ return [
     'badge_roommate_have' => 'Сдает комнату',
     'badge_roommate_need' => 'Ищет комнату',
     'request_success' => 'Ваша заявка успешно опубликована!',
+
+    // Prefilled WhatsApp message
+    'whatsapp_message' => 'Здравствуйте, у меня есть предложение по вашему объявлению на KibrisKare.com: {title}',
 ];

@@ -93,13 +93,13 @@
             <div class="sm:col-span-1">
                 <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('add_property.main_currency') }}</label>
                 <select name="currency" id="main_currency" class="w-full bg-white border border-gray-300 rounded-xl px-3.5 py-3 text-sm font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 transition">
-                    <option value="GBP" {{ old('currency', 'GBP') === 'GBP' ? 'selected' : '' }}>GBP (£ - Funt Sterlinq)</option>
-                    <option value="AZN" {{ old('currency') === 'AZN' ? 'selected' : '' }}>AZN (₼ - Manat)</option>
-                    <option value="USD" {{ old('currency') === 'USD' ? 'selected' : '' }}>USD ($ - Dollar)</option>
-                    <option value="EUR" {{ old('currency') === 'EUR' ? 'selected' : '' }}>EUR (€ - Avro)</option>
-                    <option value="TRY" {{ old('currency') === 'TRY' ? 'selected' : '' }}>TRY (₺ - Türk Lirəsi)</option>
-                    <option value="RUB" {{ old('currency') === 'RUB' ? 'selected' : '' }}>RUB (₽ - Rubl)</option>
-                    <option value="AED" {{ old('currency') === 'AED' ? 'selected' : '' }}>AED (د.إ - Dirhəm)</option>
+                    <option value="GBP" {{ old('currency', 'GBP') === 'GBP' ? 'selected' : '' }}>{{ __('add_property.currency_gbp') }}</option>
+                    <option value="AZN" {{ old('currency') === 'AZN' ? 'selected' : '' }}>{{ __('add_property.currency_azn') }}</option>
+                    <option value="USD" {{ old('currency') === 'USD' ? 'selected' : '' }}>{{ __('add_property.currency_usd') }}</option>
+                    <option value="EUR" {{ old('currency') === 'EUR' ? 'selected' : '' }}>{{ __('add_property.currency_eur') }}</option>
+                    <option value="TRY" {{ old('currency') === 'TRY' ? 'selected' : '' }}>{{ __('add_property.currency_try') }}</option>
+                    <option value="RUB" {{ old('currency') === 'RUB' ? 'selected' : '' }}>{{ __('add_property.currency_rub') }}</option>
+                    <option value="AED" {{ old('currency') === 'AED' ? 'selected' : '' }}>{{ __('add_property.currency_aed') }}</option>
                 </select>
             </div>
 
@@ -107,7 +107,7 @@
                 <label class="block text-xs font-semibold text-gray-700 mb-1.5">{{ __('add_property.main_price') }} <span class="text-rose-500">*</span></label>
                 <div class="relative">
                     <span id="main_currency_symbol" class="absolute left-4 top-1/2 -translate-y-1/2 text-orange-600 font-bold text-base">£</span>
-                    <input type="number" step="any" name="price" id="main_price_input" value="{{ old('price', old('price_gbp')) }}" required min="1" placeholder="Məs: 150000"
+                    <input type="number" step="any" name="price" id="main_price_input" value="{{ old('price', old('price_gbp')) }}" required min="1" placeholder="{{ __('add_property.price_placeholder') }}"
                         class="w-full bg-white border border-gray-300 rounded-xl pl-9 pr-4 py-3 text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 transition shadow-inner">
                     <input type="hidden" name="price_gbp" id="price_gbp" value="{{ old('price_gbp') }}">
                 </div>

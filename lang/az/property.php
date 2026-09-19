@@ -82,4 +82,5 @@ return [
     'today' => 'Bugün',
     'safety_note_title' => 'Təhlükəsizlik Tövsiyəsi',
     'safety_note_desc' => 'Mənzillə əyani tanış olmadan və şərtləri razılaşdırmadan heç kimə əvvəlcədən beh / ödəniş göndərməyin.',
+    'not_found' => 'Elan tapılmadı.',
 ];

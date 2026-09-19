@@ -20,5 +20,6 @@ return [
     'rooms_count' => ':count rooms',
     'yes' => 'Yes',
     'no' => 'No',
+    'limit_reached' => 'You can compare up to 4 listings.',
     'confirm_clear_all' => 'Are you sure you want to clear the entire comparison list?',
 ];

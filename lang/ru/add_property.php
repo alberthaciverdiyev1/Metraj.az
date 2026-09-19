@@ -73,5 +73,20 @@ return [
     'submit_notice' => 'После отправки ваше объявление пройдет модерацию и появится на сайте.',
     'submit_btn' => 'Разместить объявление',
     'loading' => 'Загрузка...',
+    'submit_success_notice' => 'Ваше объявление успешно получено! Оно будет опубликовано после проверки модератором в ближайшее время.',
     'success_message' => 'Ваше объявление успешно отправлено!',
+
+    // Placeholders
+    'price_placeholder' => 'Напр: 150000',
+    'advertiser_name_placeholder' => 'Напр: Иван Иванов',
+    'phone_placeholder' => '+7 900 123 45 67',
+
+    // Currency labels
+    'currency_azn' => 'AZN (₼ - Азербайджанский манат)',
+    'currency_gbp' => 'GBP (£ - Фунт стерлингов)',
+    'currency_usd' => 'USD ($ - Доллар США)',
+    'currency_eur' => 'EUR (€ - Евро)',
+    'currency_try' => 'TRY (₺ - Турецкая лира)',
+    'currency_rub' => 'RUB (₽ - Российский рубль)',
+    'currency_aed' => 'AED (د.إ - Дирхам ОАЭ)',
 ];

@@ -130,4 +130,7 @@ return [
     'badge_roommate_have' => 'Offering Room',
     'badge_roommate_need' => 'Looking for Room',
     'request_success' => 'Your request listing has been posted successfully!',
+
+    // Prefilled WhatsApp message
+    'whatsapp_message' => 'Hello, I have an offer matching your request listing on KibrisKare.com: {title}',
 ];

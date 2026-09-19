@@ -47,4 +47,6 @@ return [
     'error_occurred' => 'Xəta baş verdi, zəhmət olmasa yenidən cəhd edin.',
     'network_error' => 'Şəbəkə xətası baş verdi.',
     'map_office_popup' => 'KibrisKare.com Baş Ofisi',
+    'support_desc' => 'KibrisKare.com Dəstək',
+    'whatsapp_number' => 'WhatsApp Nömrəsi',
 ];

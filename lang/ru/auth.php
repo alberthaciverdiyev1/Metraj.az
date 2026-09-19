@@ -61,4 +61,24 @@ return [
     'register_success' => 'Регистрация завершена!',
     'register_completed' => 'Успешно завершено!',
     'invalid_form_data' => 'Убедитесь, что все данные формы заполнены корректно.',
+
+    // Placeholders
+    'email_placeholder' => 'primer@kibriskare.com',
+
+    // Backend response messages
+    'msg_login_success' => 'Вы успешно вошли! Перенаправление...',
+    'msg_logged_out' => 'Вы вышли из системы.',
+    'msg_register_success' => 'Регистрация успешно завершена! Перенаправление...',
+    'msg_register_saved' => 'Регистрация успешно завершена!',
+
+    // Backend validation messages
+    'val_email_required' => 'Пожалуйста, введите адрес электронной почты.',
+    'val_email_invalid' => 'Пожалуйста, введите корректный адрес электронной почты.',
+    'val_password_required' => 'Пожалуйста, введите пароль.',
+    'val_agency_name_required' => 'Пожалуйста, введите название агентства (компании).',
+    'val_name_required' => 'Пожалуйста, введите имя и фамилию.',
+    'val_email_unique' => 'Этот адрес электронной почты уже зарегистрирован.',
+    'val_phone_required' => 'Пожалуйста, введите контактный номер.',
+    'val_password_min' => 'Пароль должен содержать не менее 6 символов.',
+    'val_password_confirmed' => 'Подтверждение пароля не совпадает.',
 ];

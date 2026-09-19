@@ -20,5 +20,6 @@ return [
     'rooms_count' => ':count otaqlı',
     'yes' => 'Var',
     'no' => 'Yoxdur',
+    'limit_reached' => 'Ən çox 4 elan müqayisə edilə bilər.',
     'confirm_clear_all' => 'Bütün müqayisə siyahısını təmizləmək istədiyinizdən əminsiniz?',
 ];

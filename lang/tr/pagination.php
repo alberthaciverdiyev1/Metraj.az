@@ -8,5 +8,7 @@ return [
     'of' => '/',
     'results' => 'sonuç',
     'ad' => 'ilan',
+    'request' => 'talep',
+    'go_to_page' => ':page. sayfaya git',
     'navigation' => 'Sayfalama Gezinimi',
 ];

@@ -61,4 +61,24 @@ return [
     'register_success' => 'Kaydınız tamamlandı!',
     'register_completed' => 'Başarıyla tamamlandı!',
     'invalid_form_data' => 'Lütfen form bilgilerini doğru ve eksiksiz doldurunuz.',
+
+    // Placeholders
+    'email_placeholder' => 'ornek@kibriskare.com',
+
+    // Backend response messages
+    'msg_login_success' => 'Başarıyla giriş yapıldı! Yönlendiriliyorsunuz...',
+    'msg_logged_out' => 'Çıkış yapıldı.',
+    'msg_register_success' => 'Kayıt başarıyla tamamlandı! Yönlendiriliyorsunuz...',
+    'msg_register_saved' => 'Kayıt başarıyla tamamlandı!',
+
+    // Backend validation messages
+    'val_email_required' => 'Lütfen e-posta adresinizi giriniz.',
+    'val_email_invalid' => 'Lütfen geçerli bir e-posta adresi giriniz.',
+    'val_password_required' => 'Lütfen şifrenizi giriniz.',
+    'val_agency_name_required' => 'Lütfen acente (şirket) adını giriniz.',
+    'val_name_required' => 'Lütfen adınızı ve soyadınızı giriniz.',
+    'val_email_unique' => 'Bu e-posta adresi zaten kayıtlıdır.',
+    'val_phone_required' => 'Lütfen iletişim numaranızı giriniz.',
+    'val_password_min' => 'Şifre en az 6 karakterden oluşmalıdır.',
+    'val_password_confirmed' => 'Şifre tekrarı eşleşmiyor.',
 ];

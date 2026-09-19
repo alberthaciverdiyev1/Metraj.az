@@ -88,4 +88,19 @@ return [
     'step_contact_desc' => 'Sizinlə əlaqə qurulacaq şəxsi nömrələr',
     'publish_ad_btn' => 'Elanı Dərc Et',
     'post_success' => 'Otaq yoldaşı elanınız uğurla yerləşdirildi!',
+
+    // Amenity labels
+    'amenity_wifi' => 'Wi-Fi İnternet',
+    'amenity_ac' => 'Kondisioner',
+    'amenity_washer' => 'Paltaryuyan',
+    'amenity_heating' => 'Mərkəzi İstilik / Kombi',
+    'amenity_dishwasher' => 'Qabyuyan',
+    'amenity_fridge' => 'Soyuducu',
+    'amenity_tv' => 'Televizor',
+    'amenity_balcony' => 'Balkon',
+    'amenity_furniture' => 'Mebel / Çarpayı',
+    'amenity_elevator' => 'Lift',
+
+    // Prefilled WhatsApp message
+    'whatsapp_message' => 'Salam, KibrisKare.com saytındakı otaq yoldaşı elanınızla bağlı yazıram: {title}',
 ];

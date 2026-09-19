@@ -8,5 +8,7 @@ return [
     'of' => 'of',
     'results' => 'results',
     'ad' => 'listing',
+    'request' => 'request',
+    'go_to_page' => 'Go to page :page',
     'navigation' => 'Pagination Navigation',
 ];

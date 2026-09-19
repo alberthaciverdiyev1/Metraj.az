@@ -43,7 +43,7 @@
                     <div class="relative">
                         <i class="bi bi-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base"></i>
                         <input type="email" id="login_email" name="email" value="{{ old('email') }}" required autofocus
-                               placeholder="nümunə@kibriskare.com"
+                               placeholder="{{ __('auth.email_placeholder') }}"
                                class="w-full pl-11 pr-4 py-3.5 sm:py-4 bg-gray-50/80 border border-gray-200 rounded-2xl text-sm sm:text-base text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-inner">
                     </div>
                     <span id="email_error" class="text-rose-500 text-xs font-semibold hidden"></span>

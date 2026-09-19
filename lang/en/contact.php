@@ -47,4 +47,6 @@ return [
     'error_occurred' => 'An error occurred, please try again.',
     'network_error' => 'A network error occurred.',
     'map_office_popup' => 'KibrisKare.com Head Office',
+    'support_desc' => 'KibrisKare.com Support',
+    'whatsapp_number' => 'WhatsApp Number',
 ];

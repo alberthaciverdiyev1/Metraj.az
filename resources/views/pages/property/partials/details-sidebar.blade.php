@@ -98,7 +98,7 @@
                             <span class="text-rose-500">*</span></label>
                         <input type="text" name="phone" required
                                value="{{ auth()->user()?->phone }}"
-                               placeholder="Məs: +994 50 123 45 67"
+                               placeholder="{{ __('add_property.phone_placeholder') }}"
                                class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition">
                     </div>
 

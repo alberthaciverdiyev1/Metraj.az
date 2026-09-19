@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ($badge ?? 'Xəta') . ' - ' . ($title ?? 'KibrisKare.com'))
+@section('title', ($badge ?? __('errors.generic_badge')) . ' - ' . ($title ?? 'KibrisKare.com'))
 
 @section('content')
 <div class="min-h-[75vh] flex items-center justify-center px-4 py-12 sm:py-20">
@@ -8,7 +8,7 @@
         {{-- Status Icon / Badge --}}
         <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase shadow-2xs mb-6 {{ $badgeClass ?? 'bg-orange-50 text-orange-600 border border-orange-200' }}">
             <i class="{{ $icon ?? 'fa-solid fa-triangle-exclamation' }}"></i>
-            <span>{{ $badge ?? 'Xəta' }}</span>
+            <span>{{ $badge ?? __('errors.generic_badge') }}</span>
         </div>
 
         {{-- Big Stylized Number --}}
@@ -61,20 +61,20 @@
         {{-- Quick Nav Suggestions --}}
         <div class="mt-12 pt-8 border-t border-gray-200/80">
             <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-                Faydalı Bölmələr
+                {{ __('errors.useful_links') }}
             </div>
             <div class="flex flex-wrap items-center justify-center gap-2 text-xs font-medium">
                 <a href="{{ route('listing.path1', ['first' => 'satilik']) }}" class="px-3 py-1.5 bg-white hover:bg-orange-50 hover:text-orange-600 border border-gray-200/80 rounded-xl text-gray-700 transition">
-                    🏷️ Satılıq Əmlaklar
+                    🏷️ {{ __('errors.quick_sale') }}
                 </a>
                 <a href="{{ route('listing.path2', ['first' => 'kiralik', 'second' => 'aylik']) }}" class="px-3 py-1.5 bg-white hover:bg-orange-50 hover:text-orange-600 border border-gray-200/80 rounded-xl text-gray-700 transition">
-                    🔑 Kirayə Mənzillər
+                    🔑 {{ __('errors.quick_rent') }}
                 </a>
                 <a href="{{ route('requests.index') }}" class="px-3 py-1.5 bg-white hover:bg-orange-50 hover:text-orange-600 border border-gray-200/80 rounded-xl text-gray-700 transition">
-                    📢 Əmlak Tələbləri
+                    📢 {{ __('errors.quick_requests') }}
                 </a>
                 <a href="{{ route('contact') }}" class="px-3 py-1.5 bg-white hover:bg-orange-50 hover:text-orange-600 border border-gray-200/80 rounded-xl text-gray-700 transition">
-                    📞 Əlaqə
+                    📞 {{ __('errors.quick_contact') }}
                 </a>
             </div>
         </div>

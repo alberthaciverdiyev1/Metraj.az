@@ -111,19 +111,19 @@
 
             <div>
                 <label class="block text-[11px] font-semibold text-gray-600 mb-1">{{ __('add_property.name_or_company') }} <span class="text-rose-500">*</span></label>
-                <input type="text" name="advertiser_name" id="advertiser_name" value="{{ old('advertiser_name', auth()->user()?->name) }}" required placeholder="Məs: Əli Əliyev"
+                <input type="text" name="advertiser_name" id="advertiser_name" value="{{ old('advertiser_name', auth()->user()?->name) }}" required placeholder="{{ __('add_property.advertiser_name_placeholder') }}"
                     class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-3 py-2 text-xs sm:text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
             </div>
 
             <div>
                 <label class="block text-[11px] font-semibold text-gray-600 mb-1">{{ __('add_property.phone') }} <span class="text-rose-500">*</span></label>
-                <input type="text" name="phone" id="phone" value="{{ old('phone', auth()->user()?->agent?->phone ?? auth()->user()?->phone) }}" required placeholder="Məs: +994 50 123 45 67"
+                <input type="text" name="phone" id="phone" value="{{ old('phone', auth()->user()?->agent?->phone ?? auth()->user()?->phone) }}" required placeholder="{{ __('add_property.phone_placeholder') }}"
                     class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-3 py-2 text-xs sm:text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
             </div>
 
             <div>
                 <label class="block text-[11px] font-semibold text-gray-600 mb-1">{{ __('add_property.whatsapp') }}</label>
-                <input type="text" name="whatsapp" id="whatsapp" value="{{ old('whatsapp', auth()->user()?->agent?->whatsapp) }}" placeholder="Məs: +994 50 123 45 67"
+                <input type="text" name="whatsapp" id="whatsapp" value="{{ old('whatsapp', auth()->user()?->agent?->whatsapp) }}" placeholder="{{ __('add_property.phone_placeholder') }}"
                     class="w-full bg-gray-50/70 border border-gray-200 rounded-xl px-3 py-2 text-xs sm:text-sm font-medium text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
             </div>
         </div>

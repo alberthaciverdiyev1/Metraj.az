@@ -73,5 +73,20 @@ return [
     'submit_notice' => 'Elanınız göndərildikdən sonra moderator təsdiqindən keçərək saytda dərc olunacaq.',
     'submit_btn' => 'Elanı Yerləşdir',
     'loading' => 'Yüklənir...',
+    'submit_success_notice' => 'Elanınız uğurla qəbul edildi! Qısa müddətdə moderator tərəfindən yoxlanıldıqdan sonra saytda dərc olunacaq.',
     'success_message' => 'Elanınız uğurla göndərildi!',
+
+    // Placeholders
+    'price_placeholder' => 'Məs: 150000',
+    'advertiser_name_placeholder' => 'Məs: Əli Əliyev',
+    'phone_placeholder' => '+994 50 123 45 67',
+
+    // Currency labels
+    'currency_azn' => 'AZN (₼ - Manat)',
+    'currency_gbp' => 'GBP (£ - Funt Sterlinq)',
+    'currency_usd' => 'USD ($ - ABŞ Dolları)',
+    'currency_eur' => 'EUR (€ - Avro)',
+    'currency_try' => 'TRY (₺ - Türk Lirəsi)',
+    'currency_rub' => 'RUB (₽ - Rus Rublu)',
+    'currency_aed' => 'AED (د.إ - BƏƏ Dirhəmi)',
 ];

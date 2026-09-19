@@ -55,95 +55,80 @@
                     @if($activeDoc === 'user_agreement')
                         <div class="space-y-4">
                             <h2 class="text-xl sm:text-2xl font-bold text-gray-900 border-b border-gray-100 pb-3">
-                                1. {{ __('footer.user_agreement') }} Şartları
+                                {{ __('legal.user_agreement.s1_title') }}
                             </h2>
-                            <p>
-                                KibrisKare.com platformuna hoş geldiniz. Bu Kullanıcı Sözleşmesi ("Sözleşme"), KibrisKare.com ("Platform") web sitesi ve mobil uygulamalarını kullanan tüm ziyaretçiler ve kayıtlı üyeler ("Kullanıcı") için geçerlidir.
-                            </p>
-                            <p>
-                                Platforma erişim sağlayarak veya üye olarak, bu sözleşmede yer alan tüm şartları ve kuralları peşinen kabul etmiş sayılırsınız.
-                            </p>
+                            <p>{!! __('legal.user_agreement.s1_p1') !!}</p>
+                            <p>{!! __('legal.user_agreement.s1_p2') !!}</p>
                         </div>
 
                         <div class="space-y-4">
                             <h2 class="text-xl sm:text-2xl font-bold text-gray-900 border-b border-gray-100 pb-3">
-                                2. Üyelik ve Hizmet Kullanımı
+                                {{ __('legal.user_agreement.s2_title') }}
                             </h2>
                             <ul class="list-disc list-inside space-y-2 text-gray-600 ml-2">
-                                <li>Kullanıcı, kayıt sırasında doğru, eksiksiz ve güncel bilgiler vermekle yükümlüdür.</li>
-                                <li>Hesap güvenliği ve şifre gizliliği tamamen kullanıcının sorumluluğundadır.</li>
-                                <li>Platform üzerinden yayınlanan tüm ilanların doğruluğu ve yasallığı ilan sahibine aittir.</li>
+                                <li>{!! __('legal.user_agreement.s2_li1') !!}</li>
+                                <li>{!! __('legal.user_agreement.s2_li2') !!}</li>
+                                <li>{!! __('legal.user_agreement.s2_li3') !!}</li>
                             </ul>
                         </div>
 
                         <div class="space-y-4">
                             <h2 class="text-xl sm:text-2xl font-bold text-gray-900 border-b border-gray-100 pb-3">
-                                3. Fikri Mülkiyet ve Haklar
+                                {{ __('legal.user_agreement.s3_title') }}
                             </h2>
-                            <p>
-                                KibrisKare.com'da yer alan logo, tasarım, metin, yazılım ve veri tabanının tüm fikri ve sınai mülkiyet hakları saklıdır. İzinsiz kopyalanamaz veya çoğaltılamaz.
-                            </p>
+                            <p>{!! __('legal.user_agreement.s3_p1') !!}</p>
                         </div>
                     @elseif($activeDoc === 'privacy_policy')
                         <div class="space-y-4">
                             <h2 class="text-xl sm:text-2xl font-bold text-gray-900 border-b border-gray-100 pb-3">
-                                1. Kişisel Verilerin Korunması ve Gizlilik
+                                {{ __('legal.privacy_policy.s1_title') }}
                             </h2>
-                            <p>
-                                KibrisKare.com olarak kullanıcılarımızın kişisel verilerinin gizliliğine ve güvenliğine en üst düzeyde önem vermekteyiz. Bu Gizlilik Politikası, hangi verilerin toplandığını, nasıl kullanıldığını ve korunduğunu açıklamaktadır.
-                            </p>
+                            <p>{!! __('legal.privacy_policy.s1_p1') !!}</p>
                         </div>
 
                         <div class="space-y-4">
                             <h2 class="text-xl sm:text-2xl font-bold text-gray-900 border-b border-gray-100 pb-3">
-                                2. Toplanan Bilgiler ve Çerezler (Cookies)
+                                {{ __('legal.privacy_policy.s2_title') }}
                             </h2>
                             <ul class="list-disc list-inside space-y-2 text-gray-600 ml-2">
-                                <li><strong>Hesap Bilgileri:</strong> İsim, e-posta adresi, telefon numarası.</li>
-                                <li><strong>İlan ve Arama Verileri:</strong> Favoriye eklenen ilanlar, arama tercihleri ve konum filtreleri.</li>
-                                <li><strong>Teknik Veriler:</strong> IP adresi, tarayıcı türü, ziyaret süresi ve çerezler.</li>
+                                <li>{!! __('legal.privacy_policy.s2_li1') !!}</li>
+                                <li>{!! __('legal.privacy_policy.s2_li2') !!}</li>
+                                <li>{!! __('legal.privacy_policy.s2_li3') !!}</li>
                             </ul>
                         </div>
 
                         <div class="space-y-4">
                             <h2 class="text-xl sm:text-2xl font-bold text-gray-900 border-b border-gray-100 pb-3">
-                                3. Verilerin Güvenliği
+                                {{ __('legal.privacy_policy.s3_title') }}
                             </h2>
-                            <p>
-                                Kişisel bilgileriniz SSL şifreleme ve güvenli sunucu altyapıları ile korunmakta olup, yasal zorunluluklar dışında üçüncü şahıslarla paylaşılmaz.
-                            </p>
+                            <p>{!! __('legal.privacy_policy.s3_p1') !!}</p>
                         </div>
                     @else
                         <div class="space-y-4">
                             <h2 class="text-xl sm:text-2xl font-bold text-gray-900 border-b border-gray-100 pb-3">
-                                1. Genel Kullanım Koşulları
+                                {{ __('legal.terms_of_use.s1_title') }}
                             </h2>
-                            <p>
-                                Bu kullanım koşulları, KibrisKare.com platformunu ziyaret eden ve ilan yayınlayan tüm gerçek ve tüzel kişiler için bağlayıcıdır.
-                            </p>
+                            <p>{!! __('legal.terms_of_use.s1_p1') !!}</p>
                         </div>
 
                         <div class="space-y-4">
                             <h2 class="text-xl sm:text-2xl font-bold text-gray-900 border-b border-gray-100 pb-3">
-                                2. İlan Verme Kuralları
+                                {{ __('legal.terms_of_use.s2_title') }}
                             </h2>
                             <ul class="list-disc list-inside space-y-2 text-gray-600 ml-2">
-                                <li>Yayınlanan ilanlar gerçek, güncel ve Kuzey Kıbrıs mevzuatına uygun olmalıdır.</li>
-                                <li>Yanıltıcı fiyat, konum veya sahte görseller içeren ilanlar sistem tarafından askıya alınabilir.</li>
-                                <li>Her mülk için yalnızca bir aktif ilan oluşturulabilir.</li>
+                                <li>{!! __('legal.terms_of_use.s2_li1') !!}</li>
+                                <li>{!! __('legal.terms_of_use.s2_li2') !!}</li>
+                                <li>{!! __('legal.terms_of_use.s2_li3') !!}</li>
                             </ul>
                         </div>
 
                         <div class="space-y-4">
                             <h2 class="text-xl sm:text-2xl font-bold text-gray-900 border-b border-gray-100 pb-3">
-                                3. Sorumluluk Reddi
+                                {{ __('legal.terms_of_use.s3_title') }}
                             </h2>
-                            <p>
-                                KibrisKare.com bir ilan ve bilgi paylaşım platformudur. Alıcı ve satıcı arasındaki ticari ve hukuki işlemlerden tarafların kendileri sorumludur.
-                            </p>
+                            <p>{!! __('legal.terms_of_use.s3_p1') !!}</p>
                         </div>
                     @endif
-                </div>
             @endif
 
             {{-- Support & Contact Footer inside legal card --}}

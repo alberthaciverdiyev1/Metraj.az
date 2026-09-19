@@ -50,8 +50,8 @@ class AuthController extends Controller
         }
 
         $breadcrumbs = [
-            ['label' => __('Ana səhifə'), 'url' => '/'],
-            ['label' => __('Daxil ol'), 'url' => null],
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => __('auth.login_title'), 'url' => null],
         ];
 
         return view('pages.auth.login', compact('breadcrumbs'));
@@ -88,8 +88,8 @@ class AuthController extends Controller
             ->get(['id', 'name']);
 
         $breadcrumbs = [
-            ['label' => __('Ana səhifə'), 'url' => '/'],
-            ['label' => __('Qeydiyyat'), 'url' => null],
+            ['label' => __('navbar.home'), 'url' => '/'],
+            ['label' => __('auth.register_title'), 'url' => null],
         ];
 
         return view('pages.auth.register', compact('agencies', 'breadcrumbs'))->render();
@@ -104,9 +104,9 @@ class AuthController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required', 'string'],
         ], [
-            'email.required' => 'E-poçt ünvanınızı daxil edin.',
-            'email.email' => 'Düzgün e-poçt formatı daxil edin.',
-            'password.required' => 'Şifrənizi daxil edin.',
+            'email.required' => __('auth.val_email_required'),
+            'email.email' => __('auth.val_email_invalid'),
+            'password.required' => __('auth.val_password_required'),
         ]);
 
         $remember = $request->boolean('remember');
@@ -134,7 +134,7 @@ class AuthController extends Controller
             if ($request->wantsJson() || $request->ajax()) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Uğurla daxil oldunuz! Yönləndirilirsiniz...',
+                    'message' => __('auth.msg_login_success'),
                     'redirect' => $redirectUrl,
                     'role' => $role,
                 ]);
@@ -146,16 +146,16 @@ class AuthController extends Controller
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Daxil etdiyiniz e-poçt və ya şifrə yanlışdır.',
+                'message' => __('auth.invalid_credentials'),
                 'errors' => [
-                    'email' => ['Daxil etdiyiniz e-poçt və ya şifrə yanlışdır.'],
+                    'email' => [__('auth.invalid_credentials')],
                 ],
             ], 422);
         }
 
         return back()
             ->withInput($request->only('email', 'remember'))
-            ->withErrors(['email' => 'Daxil etdiyiniz e-poçt və ya şifrə yanlışdır.']);
+            ->withErrors(['email' => __('auth.invalid_credentials')]);
     }
 
     /**
@@ -187,15 +187,15 @@ class AuthController extends Controller
         }
 
         $messages = [
-            'agency_name.required' => 'Agentliyin (şirkətin) adını daxil edin.',
-            'name.required' => 'Ad və soyadınızı daxil edin.',
-            'email.required' => 'E-poçt ünvanınızı daxil edin.',
-            'email.email' => 'Düzgün e-poçt ünvanı daxil edin.',
-            'email.unique' => 'Bu e-poçt ünvanı artıq qeydiyyatdan keçib.',
-            'phone.required' => 'Əlaqə nömrənizi daxil edin.',
-            'password.required' => 'Şifrə daxil edin.',
-            'password.min' => 'Şifrə ən azı 6 simvoldan ibarət olmalıdır.',
-            'password.confirmed' => 'Şifrə təkrarı uyğun gəlmir.',
+            'agency_name.required' => __('auth.val_agency_name_required'),
+            'name.required' => __('auth.val_name_required'),
+            'email.required' => __('auth.val_email_required'),
+            'email.email' => __('auth.val_email_invalid'),
+            'email.unique' => __('auth.val_email_unique'),
+            'phone.required' => __('auth.val_phone_required'),
+            'password.required' => __('auth.val_password_required'),
+            'password.min' => __('auth.val_password_min'),
+            'password.confirmed' => __('auth.val_password_confirmed'),
         ];
 
         $validated = $request->validate($rules, $messages);
@@ -247,13 +247,13 @@ class AuthController extends Controller
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Qeydiyyat uğurla tamamlandı! Yönləndirilirsiniz...',
+                'message' => __('auth.msg_register_success'),
                 'redirect' => $redirectUrl,
                 'role' => $roleType,
             ]);
         }
 
-        return redirect($redirectUrl)->with('success', 'Qeydiyyat uğurla tamamlandı!');
+        return redirect($redirectUrl)->with('success', __('auth.msg_register_saved'));
     }
 
     /**
@@ -271,7 +271,7 @@ class AuthController extends Controller
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Çıxış edildi.',
+                'message' => __('auth.msg_logged_out'),
                 'redirect' => '/',
             ]);
         }

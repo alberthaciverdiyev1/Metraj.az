@@ -242,7 +242,7 @@
                 <x-contact-profile :name="$listing->contact_name" :role="__('roommates.listing_owner')" />
 
                 <x-contact-actions :whatsapp="$listing->contact_whatsapp" :phone="$listing->contact_phone"
-                    :message="'Salam, KibrisKare.com saytındakı otaq yoldaşı elanınızla bağlı yazıram: ' . $listing->title"
+                    :message="str_replace('{title}', $listing->title, __('roommates.whatsapp_message'))"
                     :whatsapp-label="__('roommates.write_whatsapp')" />
 
                 <x-safety-note />

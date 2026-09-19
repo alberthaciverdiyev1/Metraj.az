@@ -47,4 +47,6 @@ return [
     'error_occurred' => 'Bir hata oluştu, lütfen tekrar deneyin.',
     'network_error' => 'Ağ hatası oluştu.',
     'map_office_popup' => 'KibrisKare.com Genel Merkezi',
+    'support_desc' => 'KibrisKare.com Destek',
+    'whatsapp_number' => 'WhatsApp Numarası',
 ];

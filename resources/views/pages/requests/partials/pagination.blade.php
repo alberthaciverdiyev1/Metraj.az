@@ -1,1 +1,1 @@
-<x-pagination :paginator="$requests" :label="__('tələb')" />
+<x-pagination :paginator="$requests" :label="__('pagination.request')" />

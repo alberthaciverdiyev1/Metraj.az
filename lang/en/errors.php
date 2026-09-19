@@ -7,6 +7,13 @@ return [
     'refresh_page' => 'Refresh Page',
     'contact_support' => 'Contact Support',
     'search_placeholder' => 'Search by city or area...',
+    'generic_badge' => 'An Error Occurred',
+    'generic_description' => 'An error occurred while processing your request. Please try again shortly.',
+    'useful_links' => 'Useful Links',
+    'quick_sale' => 'Properties for Sale',
+    'quick_rent' => 'Apartments for Rent',
+    'quick_requests' => 'Property Requests',
+    'quick_contact' => 'Contact',
 
     '404' => [
         'badge' => '404 Error',

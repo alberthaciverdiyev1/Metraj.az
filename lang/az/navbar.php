@@ -28,5 +28,7 @@ return [
     'mobile_more' => 'DAHA ÇOX',
     'home' => 'Ana Səhifə',
     'select_language' => 'Dil seçimi',
+    'language' => 'Dil',
     'currency' => 'Valyuta',
+    'call' => 'Zəng et',
 ];

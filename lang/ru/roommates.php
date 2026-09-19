@@ -88,4 +88,19 @@ return [
     'step_contact_desc' => 'Номера телефонов для связи',
     'publish_ad_btn' => 'Опубликовать объявление',
     'post_success' => 'Ваше объявление о поиске соседа успешно опубликовано!',
+
+    // Amenity labels
+    'amenity_wifi' => 'Wi-Fi Интернет',
+    'amenity_ac' => 'Кондиционер',
+    'amenity_washer' => 'Стиральная машина',
+    'amenity_heating' => 'Центральное отопление / Котёл',
+    'amenity_dishwasher' => 'Посудомоечная машина',
+    'amenity_fridge' => 'Холодильник',
+    'amenity_tv' => 'Телевизор',
+    'amenity_balcony' => 'Балкон',
+    'amenity_furniture' => 'Мебель / Кровать',
+    'amenity_elevator' => 'Лифт',
+
+    // Prefilled WhatsApp message
+    'whatsapp_message' => 'Здравствуйте, пишу по поводу вашего объявления о поиске соседа на KibrisKare.com: {title}',
 ];

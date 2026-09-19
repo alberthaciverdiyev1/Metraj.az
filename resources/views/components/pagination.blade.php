@@ -1,4 +1,4 @@
-@props(['paginator', 'label' => 'nəticə'])
+@props(['paginator', 'label' => null])
 
 @if ($paginator->hasPages())
     <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center justify-between py-6">
@@ -27,13 +27,13 @@
         <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
             <div>
                 <p class="text-xs sm:text-sm text-gray-600">
-                    {{ __('Göstərilir') }}
+                    {{ __('pagination.showing') }}
                     <span class="font-semibold text-gray-900">{{ $paginator->firstItem() ?? 0 }}</span>
                     -
                     <span class="font-semibold text-gray-900">{{ $paginator->lastItem() ?? 0 }}</span>
                     /
                     <span class="font-semibold text-gray-900">{{ $paginator->total() }}</span>
-                    {{ $label }}
+                    {{ $label ?? __('pagination.results') }}
                 </p>
             </div>
 
@@ -61,7 +61,7 @@
                                 </span>
                             </span>
                         @elseif($page == 1 || $page == $paginator->lastPage() || abs($page - $paginator->currentPage()) <= 2)
-                            <a href="{{ $url }}" class="relative inline-flex items-center px-3.5 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-orange-50 hover:text-orange-600 hover:border-orange-200 transition" aria-label="{{ __('Go to page :page', ['page' => $page]) }}">
+                            <a href="{{ $url }}" class="relative inline-flex items-center px-3.5 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-orange-50 hover:text-orange-600 hover:border-orange-200 transition" aria-label="{{ __('pagination.go_to_page', ['page' => $page]) }}">
                                 {{ $page }}
                             </a>
                         @elseif(abs($page - $paginator->currentPage()) == 3)

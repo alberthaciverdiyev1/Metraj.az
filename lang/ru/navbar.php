@@ -28,5 +28,7 @@ return [
     'mobile_more' => 'ЕЩЁ',
     'home' => 'Главная',
     'select_language' => 'Выбор языка',
+    'language' => 'Язык',
     'currency' => 'Валюта',
+    'call' => 'Позвонить',
 ];

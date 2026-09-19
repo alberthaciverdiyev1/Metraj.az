@@ -88,4 +88,19 @@ return [
     'step_contact_desc' => 'Sizinle iletişim kurulacak telefon numaraları',
     'publish_ad_btn' => 'İlanı Yayınla',
     'post_success' => 'Ev arkadaşı ilanınız başarıyla yayınlandı!',
+
+    // Amenity labels
+    'amenity_wifi' => 'Wi-Fi İnternet',
+    'amenity_ac' => 'Klima',
+    'amenity_washer' => 'Çamaşır Makinesi',
+    'amenity_heating' => 'Merkezi Isıtma / Kombi',
+    'amenity_dishwasher' => 'Bulaşık Makinesi',
+    'amenity_fridge' => 'Buzdolabı',
+    'amenity_tv' => 'Televizyon',
+    'amenity_balcony' => 'Balkon',
+    'amenity_furniture' => 'Mobilya / Yatak',
+    'amenity_elevator' => 'Asansör',
+
+    // Prefilled WhatsApp message
+    'whatsapp_message' => 'Merhaba, KibrisKare.com üzerindeki ev arkadaşı ilanınızla ilgili yazıyorum: {title}',
 ];

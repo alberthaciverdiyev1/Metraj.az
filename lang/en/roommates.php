@@ -88,4 +88,19 @@ return [
     'step_contact_desc' => 'Phone numbers to contact you',
     'publish_ad_btn' => 'Publish Listing',
     'post_success' => 'Your roommate listing has been submitted successfully!',
+
+    // Amenity labels
+    'amenity_wifi' => 'Wi-Fi Internet',
+    'amenity_ac' => 'Air Conditioning',
+    'amenity_washer' => 'Washing Machine',
+    'amenity_heating' => 'Central Heating / Boiler',
+    'amenity_dishwasher' => 'Dishwasher',
+    'amenity_fridge' => 'Refrigerator',
+    'amenity_tv' => 'TV',
+    'amenity_balcony' => 'Balcony',
+    'amenity_furniture' => 'Furniture / Bed',
+    'amenity_elevator' => 'Elevator',
+
+    // Prefilled WhatsApp message
+    'whatsapp_message' => 'Hello, I am writing regarding your roommate listing on KibrisKare.com: {title}',
 ];

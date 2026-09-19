@@ -20,5 +20,6 @@ return [
     'rooms_count' => ':count Odalı',
     'yes' => 'Var',
     'no' => 'Yok',
+    'limit_reached' => 'En fazla 4 ilan karşılaştırılabilir.',
     'confirm_clear_all' => 'Tüm karşılaştırma listesini temizlemek istediğinizden emin misiniz?',
 ];

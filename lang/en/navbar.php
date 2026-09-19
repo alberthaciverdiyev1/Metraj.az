@@ -28,5 +28,7 @@ return [
     'mobile_more' => 'MORE',
     'home' => 'Home',
     'select_language' => 'Select Language',
+    'language' => 'Language',
     'currency' => 'Currency',
+    'call' => 'Call',
 ];

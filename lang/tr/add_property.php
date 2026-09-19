@@ -73,5 +73,20 @@ return [
     'submit_notice' => 'İlanınız gönderildikten sonra yönetici onayından geçerek sitede yayınlanacaktır.',
     'submit_btn' => 'İlanı Yayınla',
     'loading' => 'Yükleniyor...',
+    'submit_success_notice' => 'İlanınız başarıyla alındı! Kısa süre içinde moderatör tarafından incelendikten sonra sitede yayınlanacaktır.',
     'success_message' => 'İlanınız başarıyla gönderildi!',
+
+    // Placeholders
+    'price_placeholder' => 'Örn: 150000',
+    'advertiser_name_placeholder' => 'Örn: Ali Yılmaz',
+    'phone_placeholder' => '+90 5xx xxx xx xx',
+
+    // Currency labels
+    'currency_azn' => 'AZN (₼ - Azerbaycan Manatı)',
+    'currency_gbp' => 'GBP (£ - İngiliz Sterlini)',
+    'currency_usd' => 'USD ($ - ABD Doları)',
+    'currency_eur' => 'EUR (€ - Euro)',
+    'currency_try' => 'TRY (₺ - Türk Lirası)',
+    'currency_rub' => 'RUB (₽ - Rus Rublesi)',
+    'currency_aed' => 'AED (د.إ - BAE Dirhemi)',
 ];

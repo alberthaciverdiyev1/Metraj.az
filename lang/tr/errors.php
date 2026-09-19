@@ -7,6 +7,13 @@ return [
     'refresh_page' => 'Sayfayı Yenile',
     'contact_support' => 'Bize Ulaşın',
     'search_placeholder' => 'Şehir veya bölge ara...',
+    'generic_badge' => 'Bir Hata Oluştu',
+    'generic_description' => 'İsteğiniz işlenirken bir hata oluştu. Lütfen biraz sonra tekrar deneyin.',
+    'useful_links' => 'Faydalı Bölümler',
+    'quick_sale' => 'Satılık Gayrimenkuller',
+    'quick_rent' => 'Kiralık Daireler',
+    'quick_requests' => 'Gayrimenkul Talepleri',
+    'quick_contact' => 'İletişim',
 
     '404' => [
         'badge' => '404 Hatası',

@@ -192,7 +192,7 @@ class AddPropertyController extends Controller
             return $property;
         });
 
-        $message = 'Elanınız uğurla qəbul edildi! Qısa müddətdə moderator tərəfindən yoxlanıldıqdan sonra saytda dərc olunacaq.';
+        $message = __('add_property.submit_success_notice');
 
         if ($request->wantsJson()) {
             return response()->json([

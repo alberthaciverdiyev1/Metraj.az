@@ -28,5 +28,7 @@ return [
     'mobile_more' => 'DAHA FAZLA',
     'home' => 'Ana Sayfa',
     'select_language' => 'Dil Seçimi',
+    'language' => 'Dil',
     'currency' => 'Para Birimi',
+    'call' => 'Ara',
 ];
