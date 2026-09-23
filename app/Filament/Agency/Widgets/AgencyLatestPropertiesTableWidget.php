@@ -17,9 +17,7 @@ class AgencyLatestPropertiesTableWidget extends BaseWidget
 
     public function getHeading(): ?string
     {
-        return app()->getLocale() === 'tr'
-            ? 'Son Eklenen İlanlarım'
-            : (app()->getLocale() === 'az' ? 'Son Əlavə Edilən Elanlarım' : 'Recent Listings');
+        return __('admin.my_latest_listings_az');
     }
 
     public function table(Table $table): Table
@@ -39,28 +37,28 @@ class AgencyLatestPropertiesTableWidget extends BaseWidget
             ->query($query->latest('id')->limit(5))
             ->columns([
                 Tables\Columns\ImageColumn::make('first_image_url')
-                    ->label(app()->getLocale() === 'tr' ? 'Fotoğraf' : (app()->getLocale() === 'az' ? 'Şəkil' : 'Image'))
+                    ->label(__('admin.image'))
                     ->state(fn (Property $record) => $record->first_image_url)
                     ->size(44)
                     ->square(),
 
                 Tables\Columns\TextColumn::make('code')
-                    ->label(app()->getLocale() === 'tr' ? 'Kod' : (app()->getLocale() === 'az' ? 'Kod' : 'Code'))
+                    ->label(__('admin.code_field'))
                     ->weight('bold')
                     ->color('primary'),
 
                 Tables\Columns\TextColumn::make('title')
-                    ->label(app()->getLocale() === 'tr' ? 'Başlık' : (app()->getLocale() === 'az' ? 'Başlıq' : 'Title'))
+                    ->label(__('admin.title'))
                     ->limit(35),
 
                 Tables\Columns\TextColumn::make('price')
-                    ->label(app()->getLocale() === 'tr' ? 'Fiyat' : (app()->getLocale() === 'az' ? 'Qiymət' : 'Price'))
+                    ->label(__('admin.price'))
                     ->formatStateUsing(fn ($record) => ($record->currency === 'GBP' || empty($record->currency) ? '£ ' : $record->currency . ' ') . number_format($record->price, 0, '.', ' '))
                     ->weight('bold')
                     ->color('success'),
 
                 Tables\Columns\TextColumn::make('views_count')
-                    ->label(app()->getLocale() === 'tr' ? 'Görüntülenme' : (app()->getLocale() === 'az' ? 'Baxış' : 'Views'))
+                    ->label(__('admin.view'))
                     ->icon('heroicon-o-eye')
                     ->badge()
                     ->color('gray'),
@@ -80,12 +78,12 @@ class AgencyLatestPropertiesTableWidget extends BaseWidget
                     ->formatStateUsing(fn (PropertyStatus $state): string => $state->label()),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label(app()->getLocale() === 'tr' ? 'Tarih' : (app()->getLocale() === 'az' ? 'Tarix' : 'Date'))
+                    ->label(__('admin.date_field'))
                     ->dateTime('d.m.Y H:i'),
             ])
             ->actions([
                 Tables\Actions\Action::make('edit')
-                    ->label(app()->getLocale() === 'tr' ? 'Düzenle' : (app()->getLocale() === 'az' ? 'Düzəliş et' : 'Edit'))
+                    ->label(__('admin.edit'))
                     ->icon('heroicon-m-pencil-square')
                     ->url(fn (Property $record): string => PropertyResource::getUrl('edit', ['record' => $record])),
             ]);

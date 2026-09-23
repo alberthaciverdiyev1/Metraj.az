@@ -17,7 +17,8 @@ class ManageRobotsTxt extends Page implements HasForms
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static ?string $navigationGroup = 'Kataloq və Tənzimləmələr';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.catalog_and_settings'); }
 
     protected static ?string $navigationLabel = 'Robots.txt Redaktoru';
 
@@ -43,16 +44,16 @@ class ManageRobotsTxt extends Page implements HasForms
     {
         return $form
             ->schema([
-                Section::make('robots.txt Faylının Məzmunu')
-                    ->description('Axtarış motorlarının (Google, Yandex, Bing) saytınızda hansı səhifələri indeksləyib, hansıları indeksləyə bilməyəcəyini tənzimləyən qaydalar.')
+                Section::make(__('admin.robots_file_content'))
+                    ->description(__('admin.robots_help'))
                     ->schema([
                         Textarea::make('content')
-                            ->label('Fayl Məzmunu')
+                            ->label(__('admin.file_content'))
                             ->rows(18)
                             ->required()
                             ->extraInputAttributes(['style' => 'font-family: monospace;'])
                             ->placeholder("User-agent: *\nDisallow: /admin\n\nSitemap: " . url('sitemap.xml'))
-                            ->helperText('Hər bir qaydanı yeni sətirdən yazın. Dəyişikliklərdən dərhal sonra robots.txt faylı yenilənəcək.'),
+                            ->helperText(__('admin.robots_edit_hint')),
                     ]),
             ])
             ->statePath('data');
@@ -69,12 +70,12 @@ class ManageRobotsTxt extends Page implements HasForms
             File::put($filePath, $content);
 
             Notification::make()
-                ->title('robots.txt faylı uğurla yeniləndi!')
+                ->title(__('admin.robots_updated'))
                 ->success()
                 ->send();
         } catch (\Throwable $e) {
             Notification::make()
-                ->title('Fayla yazılarkən xəta baş verdi!')
+                ->title(__('admin.file_write_error'))
                 ->body($e->getMessage())
                 ->danger()
                 ->send();

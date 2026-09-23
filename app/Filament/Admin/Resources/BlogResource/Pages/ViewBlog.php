@@ -23,7 +23,7 @@ class ViewBlog extends ViewRecord
                     ->columns(3)
                     ->schema([
                         TextEntry::make('title')
-                            ->label('Başlıq')
+                            ->label(__('admin.title'))
                             ->weight('bold')
                             ->size(TextEntry\TextEntrySize::Large)
                             ->columnSpanFull(),
@@ -41,7 +41,7 @@ class ViewBlog extends ViewRecord
                             }),
 
                         TextEntry::make('published_at')
-                            ->label('Dərc Tarixi')
+                            ->label(__('admin.publish_date'))
                             ->dateTime('d.m.Y H:i'),
 
                         TextEntry::make('slug')
@@ -50,17 +50,17 @@ class ViewBlog extends ViewRecord
                             ->copyableState(fn ($state): string => url('/blog/' . $state)),
 
                         ImageEntry::make('cover_image')
-                            ->label('Üzlük Şəkli')
+                            ->label(__('admin.cover_image'))
                             ->height(200)
                             ->columnSpanFull()
                             ->extraImgAttributes(['class' => 'rounded-xl object-cover']),
 
                         TextEntry::make('excerpt')
-                            ->label('Qısa Mətn')
+                            ->label(__('admin.excerpt'))
                             ->columnSpanFull(),
 
                         TextEntry::make('content')
-                            ->label('Məzmun')
+                            ->label(__('admin.content'))
                             ->html()
                             ->columnSpanFull(),
                     ]),

@@ -20,13 +20,16 @@ class ActivityLogResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-finger-print';
 
-    protected static ?string $navigationGroup = 'Sistem və Monitorinq';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.system_and_monitoring'); }
 
-    protected static ?string $navigationLabel = 'Aktivlik və Hərəkət Tarixçəsi';
+    public static function getNavigationLabel(): string {
+        return __('admin.activity_history'); }
 
     protected static ?string $modelLabel = 'Aktivlik Qeydi';
 
-    protected static ?string $pluralModelLabel = 'Aktivlik və Hərəkət Tarixçəsi';
+    public static function getPluralModelLabel(): string {
+        return __('admin.activity_history'); }
 
     protected static ?int $navigationSort = 1;
 
@@ -41,20 +44,20 @@ class ActivityLogResource extends Resource
             ->schema([
                 Forms\Components\Tabs::make('LogDetailsTabs')
                     ->tabs([
-                        Forms\Components\Tabs\Tab::make('Ümumi Məlumat')
+                        Forms\Components\Tabs\Tab::make(__('admin.general_information'))
                             ->icon('heroicon-o-information-circle')
                             ->schema([
                                 Forms\Components\Grid::make(3)->schema([
                                     Forms\Components\Placeholder::make('user_name')
-                                        ->label('İstifadəçi')
+                                        ->label(__('admin.user'))
                                         ->content(fn ($record) => $record?->user ? "{$record->user->name} ({$record->user->email})" : 'Qonaq (Qeydiyyatsız)'),
 
                                     Forms\Components\TextInput::make('action')
-                                        ->label('Hərəkət / Hadisə')
+                                        ->label(__('admin.action_event'))
                                         ->disabled(),
 
                                     Forms\Components\TextInput::make('ip_address')
-                                        ->label('IP Ünvanı')
+                                        ->label(__('admin.ip_address'))
                                         ->disabled(),
 
                                     Forms\Components\TextInput::make('method')
@@ -66,28 +69,28 @@ class ActivityLogResource extends Resource
                                         ->disabled(),
 
                                     Forms\Components\TextInput::make('duration_ms')
-                                        ->label('İcra Müddəti')
+                                        ->label(__('admin.execution_time'))
                                         ->formatStateUsing(fn ($state) => $state ? "{$state} ms" : '—')
                                         ->disabled(),
 
                                     Forms\Components\TextInput::make('url')
-                                        ->label('Sorğu URL')
+                                        ->label(__('admin.request_url'))
                                         ->disabled()
                                         ->columnSpanFull(),
 
                                     Forms\Components\TextInput::make('referer')
-                                        ->label('Gəldiyi Səhifə (Referer)')
+                                        ->label(__('admin.referer'))
                                         ->disabled()
                                         ->columnSpanFull(),
 
                                     Forms\Components\DateTimePicker::make('created_at')
-                                        ->label('Qeyd Vaxtı')
+                                        ->label(__('admin.recorded_at'))
                                         ->disabled()
                                         ->columnSpanFull(),
                                 ]),
                             ]),
 
-                        Forms\Components\Tabs\Tab::make('Cihaz və Brauzer')
+                        Forms\Components\Tabs\Tab::make(__('admin.device_and_browser'))
                             ->icon('heroicon-o-device-phone-mobile')
                             ->schema([
                                 Forms\Components\Grid::make(3)->schema([
@@ -100,7 +103,7 @@ class ActivityLogResource extends Resource
                                         ->disabled(),
 
                                     Forms\Components\TextInput::make('os')
-                                        ->label('Əməliyyat Sistemi')
+                                        ->label(__('admin.operating_system'))
                                         ->disabled(),
 
                                     Forms\Components\Textarea::make('user_agent')
@@ -111,17 +114,17 @@ class ActivityLogResource extends Resource
                                 ]),
                             ]),
 
-                        Forms\Components\Tabs\Tab::make('Məkan və Xəritə')
+                        Forms\Components\Tabs\Tab::make(__('admin.location_and_map'))
                             ->icon('heroicon-o-map-pin')
                             ->schema([
                                 Forms\Components\Grid::make(2)->schema([
                                     Forms\Components\TextInput::make('location_name')
-                                        ->label('Şəhər və Ölkə')
+                                        ->label(__('admin.city_and_country'))
                                         ->formatStateUsing(fn ($record) => $record?->location_text)
                                         ->disabled(),
 
                                     Forms\Components\TextInput::make('isp')
-                                        ->label('İnternet Provayder (ISP)')
+                                        ->label(__('admin.isp'))
                                         ->disabled(),
 
                                     Forms\Components\TextInput::make('latitude')
@@ -138,11 +141,11 @@ class ActivityLogResource extends Resource
                                     ->columnSpanFull(),
                             ]),
 
-                        Forms\Components\Tabs\Tab::make('Məlumat Strukturu (Payload)')
+                        Forms\Components\Tabs\Tab::make(__('admin.data_structure_payload'))
                             ->icon('heroicon-o-code-bracket')
                             ->schema([
                                 Forms\Components\Textarea::make('payload')
-                                    ->label('Məlumatlar (JSON Formatında)')
+                                    ->label(__('admin.data_json_format'))
                                     ->disabled()
                                     ->rows(14)
                                     ->formatStateUsing(fn ($state) => is_array($state) ? json_encode($state, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) : $state)
@@ -165,7 +168,7 @@ class ActivityLogResource extends Resource
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('user')
-                    ->label('İstifadəçi / Bot')
+                    ->label(__('admin.user_bot'))
                     ->formatStateUsing(function ($state, ActivityLog $record) {
                         $payload = $record->payload;
                         if (!empty($payload['bot_name'])) {
@@ -189,28 +192,28 @@ class ActivityLogResource extends Resource
                     ->searchable(['user_id']),
 
                 Tables\Columns\TextColumn::make('action')
-                    ->label('Hadisə')
+                    ->label(__('admin.event'))
                     ->badge()
                     ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'user_login' => '🔐 Giriş (Login)',
-                        'user_logout' => '🚪 Çıxış (Logout)',
-                        'auth_failed' => '⚠️ Giriş Xətası',
+                        'user_login' => __('admin.icon_login'),
+                        'user_logout' => __('admin.icon_logout'),
+                        'auth_failed' => __('admin.icon_login_error'),
                         'user_registered' => '✨ Yeni Qeydiyyat',
-                        'password_reset' => '🔑 Şifrə Dəyişdirildi',
-                        'model_created' => '➕ Yaradıldı',
-                        'model_updated' => '✏️ Redaktə Edildi',
+                        'password_reset' => __('admin.icon_password_changed'),
+                        'model_created' => __('admin.icon_created'),
+                        'model_updated' => __('admin.icon_edited'),
                         'model_deleted' => '🗑️ Silindi',
-                        'search_filter' => '🔍 Axtarış / Filtr',
-                        'property_view' => '🏠 Əmlaka Baxış',
-                        'page_view' => '📄 Səhifə Ziyarəti',
+                        'search_filter' => __('admin.icon_search_filter'),
+                        'property_view' => __('admin.icon_property_view'),
+                        'page_view' => __('admin.icon_page_visit'),
                         'admin_view' => '🛠️ Admin Panel',
-                        'admin_action' => '⚡ Admin Əməliyyat',
+                        'admin_action' => __('admin.icon_admin_operation'),
                         'agency_view' => '🏢 Agentlik Paneli',
-                        'agency_action' => '📝 Agentlik Əməliyyat',
-                        'form_submit' => '📨 Forma Göndərişi',
-                        'server_error' => '🚨 500 Server Xətası',
-                        'not_found_404' => '❓ 404 Tapılmadı',
-                        'bot_visit' => '🤖 Axtarış Botu',
+                        'agency_action' => __('admin.icon_agency_operation'),
+                        'form_submit' => __('admin.icon_form_submission'),
+                        'server_error' => __('admin.icon_500_server_error'),
+                        'not_found_404' => __('admin.icon_404_not_found'),
+                        'bot_visit' => __('admin.search_bot'),
                         default => ucfirst(str_replace('_', ' ', $state)),
                     })
                     ->color(fn (string $state): string => match ($state) {
@@ -223,7 +226,7 @@ class ActivityLogResource extends Resource
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('location')
-                    ->label('Məkan / Şəhər')
+                    ->label(__('admin.location_city'))
                     ->state(fn (ActivityLog $record) => $record->location_text)
                     ->description(fn (ActivityLog $record) => $record->isp ?: $record->ip_address)
                     ->searchable(['city', 'country_name', 'country_code', 'ip_address']),
@@ -244,7 +247,7 @@ class ActivityLogResource extends Resource
                     }),
 
                 Tables\Columns\TextColumn::make('ip_address')
-                    ->label('IP Ünvanı')
+                    ->label(__('admin.ip_address'))
                     ->copyable()
                     ->copyMessage('IP ünvanı kopyalandı')
                     ->fontFamily('mono')
@@ -264,32 +267,32 @@ class ActivityLogResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('action')
-                    ->label('Hadisə Növü')
+                    ->label(__('admin.event_type'))
                     ->options([
-                        'user_login' => '🔐 Girişlər (Logins)',
-                        'auth_failed' => '⚠️ Uğursuz Giriş Cəhdləri',
+                        'user_login' => __('admin.icon_logins'),
+                        'auth_failed' => __('admin.icon_failed_logins'),
                         'user_registered' => '✨ Yeni Qeydiyyatlar',
-                        'model_created' => '➕ Məlumat Yaradılması',
-                        'model_updated' => '✏️ Redaktə / Yenilənmə',
-                        'model_deleted' => '🗑️ Silinmə Əməliyyatları',
-                        'search_filter' => '🔍 Axtarış və Filtrlər',
-                        'property_view' => '🏠 Əmlak Detal Baxışları',
-                        'admin_action' => '⚡ Admin Əməliyyatları',
-                        'server_error' => '🚨 Server Xətaları (500)',
-                        'bot_visit' => '🤖 Bot Ziyarətləri',
+                        'model_created' => __('admin.icon_data_created'),
+                        'model_updated' => __('admin.icon_edit_update'),
+                        'model_deleted' => __('admin.icon_deletion_operations'),
+                        'search_filter' => __('admin.icon_search_and_filters'),
+                        'property_view' => __('admin.icon_property_detail_views'),
+                        'admin_action' => __('admin.icon_admin_operations'),
+                        'server_error' => __('admin.icon_server_errors'),
+                        'bot_visit' => __('admin.icon_bot_visits'),
                     ]),
 
                 Tables\Filters\SelectFilter::make('device_type')
-                    ->label('Cihaz Növü')
+                    ->label(__('admin.device_type'))
                     ->options([
-                        'Desktop' => '💻 Kompüter (Desktop)',
+                        'Desktop' => __('admin.desktop'),
                         'Mobile' => '📱 Mobil Telefon',
-                        'Tablet' => '📟 Planşet',
-                        'Bot' => '🤖 Axtarış Botu',
+                        'Tablet' => __('admin.tablet'),
+                        'Bot' => __('admin.search_bot'),
                     ]),
 
                 Tables\Filters\SelectFilter::make('country_code')
-                    ->label('Ölkə')
+                    ->label(__('admin.country'))
                     ->options(function () {
                         return ActivityLog::query()
                             ->whereNotNull('country_code')
@@ -301,14 +304,14 @@ class ActivityLogResource extends Resource
             ])
             ->actions([
                 Tables\Actions\Action::make('view_map')
-                    ->label('Xəritədə Bax')
+                    ->label(__('admin.view_on_map'))
                     ->icon('heroicon-o-map-pin')
                     ->color('warning')
-                    ->modalHeading(fn (ActivityLog $record) => "📍 Məkan Xəritəsi: {$record->location_text}")
-                    ->modalDescription(fn (ActivityLog $record) => "IP: {$record->ip_address} | Vaxt: {$record->created_at?->format('d.m.Y H:i:s')} | Hadisə: {$record->action}")
+                    ->modalHeading(fn (ActivityLog $record) => __('admin.location_map_popup', ['location' => $record->location_text]))
+                    ->modalDescription(fn (ActivityLog $record) => __('admin.ip_vaxt_event', ['ip' => $record->ip_address, 'time' => $record->created_at?->format('d.m.Y H:i:s'), 'event' => $record->action]))
                     ->modalContent(fn (ActivityLog $record) => view('filament.components.activity-log-map', ['record' => $record]))
                     ->modalSubmitAction(false)
-                    ->modalCancelActionLabel('Bağla'),
+                    ->modalCancelActionLabel(__('admin.close')),
 
                 Tables\Actions\ViewAction::make()
                     ->label('Detallar')

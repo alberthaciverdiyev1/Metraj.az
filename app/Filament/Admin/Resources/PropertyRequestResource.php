@@ -18,13 +18,17 @@ class PropertyRequestResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
 
-    protected static ?string $navigationGroup = 'Əmlak və Müraciətlər';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.properties_and_inquiries'); }
 
-    protected static ?string $navigationLabel = 'Əmlak Sifarişləri';
+    public static function getNavigationLabel(): string {
+        return __('admin.property_orders'); }
 
-    protected static ?string $modelLabel = 'Əmlak Sifarişi';
+    public static function getModelLabel(): string {
+        return __('admin.property_order'); }
 
-    protected static ?string $pluralModelLabel = 'Əmlak Sifarişləri';
+    public static function getPluralModelLabel(): string {
+        return __('admin.property_orders'); }
 
     protected static ?int $navigationSort = 3;
 
@@ -32,24 +36,24 @@ class PropertyRequestResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Əsas Məlumatlar')
+                Forms\Components\Section::make(__('admin.basic_information'))
                     ->schema([
                         Forms\Components\Select::make('request_type')
-                            ->label('Tələb Növü')
+                            ->label(__('admin.request_type'))
                             ->options([
-                                'buy' => 'Almaq İstəyir',
-                                'rent_monthly' => 'Kirayə Axtarır',
-                                'rent_daily' => 'Günlük Axtarır',
+                                'buy' => __('admin.wants_to_buy'),
+                                'rent_monthly' => __('admin.looking_for_rent'),
+                                'rent_daily' => __('admin.looking_for_daily'),
                                 'roommate_have' => 'Otaq Verir',
-                                'roommate_need' => 'Otaq Axtarır',
+                                'roommate_need' => __('admin.looking_for_room'),
                             ])
                             ->required(),
 
                         Forms\Components\Select::make('property_type')
-                            ->label('Əmlak Növü')
+                            ->label(__('admin.property_type'))
                             ->options([
-                                'Mənzil' => 'Mənzil',
-                                'Həyət evi' => 'Həyət evi / Bağ',
+                                'Mənzil' => __('admin.apartment'),
+                                'Həyət evi' => __('admin.house_garden'),
                                 'Villa' => 'Villa',
                                 'Torpaq' => 'Torpaq',
                                 'Obyekt' => 'Obyekt',
@@ -57,47 +61,47 @@ class PropertyRequestResource extends Resource
                             ]),
 
                         Forms\Components\TextInput::make('title')
-                            ->label('Başlıq')
+                            ->label(__('admin.title'))
                             ->required()
                             ->maxLength(255)
                             ->columnSpanFull(),
 
                         Forms\Components\TextInput::make('budget_min')
-                            ->label('Min. Büdcə (₼)')
+                            ->label(__('admin.min_budget'))
                             ->numeric()
                             ->prefix('₼'),
 
                         Forms\Components\TextInput::make('budget_max')
-                            ->label('Maks. Büdcə (₼)')
+                            ->label(__('admin.max_budget'))
                             ->numeric()
                             ->required()
                             ->prefix('₼'),
 
                         Forms\Components\Select::make('rooms')
-                            ->label('Otaq Sayı')
+                            ->label(__('admin.room_count'))
                             ->options([
-                                '1' => '1 otaqlı',
-                                '2' => '2 otaqlı',
-                                '3' => '3 otaqlı',
-                                '4+' => '4+ otaqlı',
+                                '1' => __('admin.rooms_1'),
+                                '2' => __('admin.rooms_2'),
+                                '3' => __('admin.rooms_3'),
+                                '4+' => __('admin.rooms_4_plus'),
                             ]),
 
                         Forms\Components\Select::make('status')
                             ->label('Status')
                             ->options([
-                                'published' => 'Dərc olunub',
-                                'pending' => 'Gözləmədə',
-                                'rejected' => 'İmtina edilib',
-                                'closed' => 'Bağlanıb',
+                                'published' => __('admin.published'),
+                                'pending' => __('admin.pending'),
+                                'rejected' => __('admin.rejected'),
+                                'closed' => __('admin.closed'),
                             ])
                             ->default('published')
                             ->required(),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Yerləşmə və Tələblər')
+                Forms\Components\Section::make(__('admin.location_and_requirements'))
                     ->schema([
                         Forms\Components\Select::make('city_id')
-                            ->label('Şəhər')
+                            ->label(__('admin.city'))
                             ->relationship('city', 'id')
                             ->getOptionLabelFromRecordUsing(fn ($record) => is_array($record->name) ? ($record->name['az'] ?? reset($record->name)) : $record->name)
                             ->searchable()
@@ -112,30 +116,30 @@ class PropertyRequestResource extends Resource
                             ->preload(),
 
                         Forms\Components\TextInput::make('location_note')
-                            ->label('Metro / Ünvan / Qeyd')
+                            ->label(__('admin.metro_address_note'))
                             ->maxLength(255)
                             ->columnSpanFull(),
 
                         Forms\Components\Toggle::make('has_deed')
-                            ->label('Yalnız Kupçalı'),
+                            ->label(__('admin.deed_only_kupcha')),
 
                         Forms\Components\Toggle::make('mortgage_eligible')
-                            ->label('İpotekaya yararlı'),
+                            ->label(__('admin.mortgage_eligible')),
 
                         Forms\Components\Toggle::make('bills_included')
                             ->label('Kommunal daxil'),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Təsvir')
+                Forms\Components\Section::make(__('admin.description'))
                     ->schema([
                         Forms\Components\Textarea::make('description')
-                            ->label('Ətraflı Təsvir')
+                            ->label(__('admin.detailed_description'))
                             ->rows(5)
                             ->required()
                             ->columnSpanFull(),
                     ]),
 
-                Forms\Components\Section::make('Əlaqə')
+                Forms\Components\Section::make(__('admin.contact'))
                     ->schema([
                         Forms\Components\TextInput::make('contact_name')
                             ->label('Ad')
@@ -160,12 +164,12 @@ class PropertyRequestResource extends Resource
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('title')
-                    ->label('Başlıq')
+                    ->label(__('admin.title'))
                     ->searchable()
                     ->limit(35),
 
                 Tables\Columns\BadgeColumn::make('request_type')
-                    ->label('Tələb Növü')
+                    ->label(__('admin.request_type'))
                     ->formatStateUsing(fn ($state) => $state instanceof RequestType ? $state->badgeLabel() : $state)
                     ->colors([
                         'success' => 'buy',
@@ -176,12 +180,12 @@ class PropertyRequestResource extends Resource
                     ]),
 
                 Tables\Columns\TextColumn::make('budget_max')
-                    ->label('Büdcə')
+                    ->label(__('admin.budget'))
                     ->formatStateUsing(fn ($record) => $record->formatted_budget)
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('city.name')
-                    ->label('Şəhər')
+                    ->label(__('admin.city'))
                     ->formatStateUsing(fn ($state) => is_array($state) ? ($state['az'] ?? reset($state)) : $state),
 
                 Tables\Columns\BadgeColumn::make('status')
@@ -201,22 +205,22 @@ class PropertyRequestResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('request_type')
-                    ->label('Tələb Növü')
+                    ->label(__('admin.request_type'))
                     ->options([
-                        'buy' => 'Almaq İstəyir',
-                        'rent_monthly' => 'Kirayə Axtarır',
-                        'rent_daily' => 'Günlük Axtarır',
+                        'buy' => __('admin.wants_to_buy'),
+                        'rent_monthly' => __('admin.looking_for_rent'),
+                        'rent_daily' => __('admin.looking_for_daily'),
                         'roommate_have' => 'Otaq Verir',
-                        'roommate_need' => 'Otaq Axtarır',
+                        'roommate_need' => __('admin.looking_for_room'),
                     ]),
 
                 Tables\Filters\SelectFilter::make('status')
                     ->label('Status')
                     ->options([
-                        'published' => 'Dərc olunub',
-                        'pending' => 'Gözləmədə',
-                        'rejected' => 'İmtina edilib',
-                        'closed' => 'Bağlanıb',
+                        'published' => __('admin.published'),
+                        'pending' => __('admin.pending'),
+                        'rejected' => __('admin.rejected'),
+                        'closed' => __('admin.closed'),
                     ]),
             ])
             ->actions([

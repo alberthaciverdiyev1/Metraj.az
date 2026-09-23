@@ -20,7 +20,7 @@ class ViewProperty extends ViewRecord
     {
         return $infolist
             ->schema([
-                Section::make('Əsas Məlumatlar')
+                Section::make(__('admin.basic_information'))
                     ->columns(3)
                     ->schema([
                         TextEntry::make('code')
@@ -28,7 +28,7 @@ class ViewProperty extends ViewRecord
                             ->weight('bold'),
 
                         TextEntry::make('title')
-                            ->label('Başlıq')
+                            ->label(__('admin.title'))
                             ->weight('bold')
                             ->columnSpanFull(),
 
@@ -48,58 +48,58 @@ class ViewProperty extends ViewRecord
                             ->formatStateUsing(fn ($state) => $state->label()),
 
                         TextEntry::make('price')
-                            ->label('Qiymət')
+                            ->label(__('admin.price'))
                             ->money(fn ($record) => $record->currency ?? 'GBP')
                             ->weight('bold')
                             ->color('success'),
 
                         TextEntry::make('area')
-                            ->label('Sahə')
+                            ->label(__('admin.area'))
                             ->suffix(' m²'),
 
                         TextEntry::make('land_area')
-                            ->label('Torpaq Sahəsi')
+                            ->label(__('admin.land_area'))
                             ->suffix(' sot'),
 
                         TextEntry::make('rooms')
-                            ->label('Otaq Sayı'),
+                            ->label(__('admin.room_count')),
 
                         TextEntry::make('floor')
-                            ->label('Mərtəbə'),
+                            ->label(__('admin.floor')),
 
                         TextEntry::make('total_floors')
-                            ->label('Bina Mərtəbəsi'),
+                            ->label(__('admin.building_floors')),
 
                         TextEntry::make('views_count')
-                            ->label('Baxış Sayı'),
+                            ->label(__('admin.view_count')),
                     ]),
 
-                Section::make('Təsvir və Ünvan')
+                Section::make(__('admin.description_and_address'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('description')
-                            ->label('Təsvir')
+                            ->label(__('admin.description'))
                             ->html()
                             ->columnSpanFull(),
 
                         TextEntry::make('address')
-                            ->label('Dəqiq Ünvan')
+                            ->label(__('admin.exact_address'))
                             ->icon('heroicon-o-map-pin'),
 
                         TextEntry::make('landmark')
-                            ->label('Nişangah')
+                            ->label(__('admin.landmark'))
                             ->icon('heroicon-o-building-library'),
                     ]),
 
-                Section::make('Xüsusiyyətlər & Təchizatlar')
+                Section::make(__('admin.features_and_amenities'))
                     ->columns(3)
                     ->schema([
                         IconEntry::make('has_document')
-                            ->label('Çıxarış (Kupça)')
+                            ->label(__('admin.deed_kupcha'))
                             ->boolean(),
 
                         IconEntry::make('has_mortgage')
-                            ->label('İpotekaya Yararlı')
+                            ->label(__('admin.mortgage_available'))
                             ->boolean(),
 
                         IconEntry::make('has_internal_credit')
@@ -111,20 +111,20 @@ class ViewProperty extends ViewRecord
                             ->boolean(),
 
                         IconEntry::make('is_featured')
-                            ->label('Seçilmiş Elan')
+                            ->label(__('admin.featured_listing'))
                             ->boolean(),
 
                         TextEntry::make('amenities')
-                            ->label('Təchizatlar')
+                            ->label(__('admin.amenities'))
                             ->getStateUsing(fn ($record) => $record->amenities->map(fn ($a) => $a->localized_name))
                             ->badge()
                             ->color('info'),
                     ]),
 
-                Section::make('Dinamik Xüsusiyyətlər (Filtrlər)')
+                Section::make(__('admin.dynamic_features_filters'))
                     ->schema([
                         TextEntry::make('filter_options')
-                            ->label('Seçilmiş filtrlər')
+                            ->label(__('admin.selected_filters'))
                             ->getStateUsing(function ($record): string {
                                 if (! $record->filterOptions->count()) {
                                     return '—';
@@ -150,7 +150,7 @@ class ViewProperty extends ViewRecord
                             ->color('warning'),
                     ]),
 
-                Section::make('Şəkillər')
+                Section::make(__('admin.images'))
                     ->schema([
                         ImageEntry::make('images.url')
                             ->label('')
@@ -163,11 +163,11 @@ class ViewProperty extends ViewRecord
                     ->columns(2)
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label('Yaradılma Tarixi')
+                            ->label(__('admin.created_at'))
                             ->dateTime('d.m.Y H:i'),
 
                         TextEntry::make('updated_at')
-                            ->label('Yenilənmə Tarixi')
+                            ->label(__('admin.updated_at'))
                             ->dateTime('d.m.Y H:i'),
                     ]),
             ]);

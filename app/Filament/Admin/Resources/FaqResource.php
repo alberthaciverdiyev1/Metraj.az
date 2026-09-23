@@ -16,7 +16,8 @@ class FaqResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-question-mark-circle';
 
-    protected static ?string $navigationGroup = 'Məzmun və Axtarış';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.content_and_search'); }
 
     protected static ?string $navigationLabel = 'Sual-Cavab (FAQ)';
 
@@ -30,23 +31,23 @@ class FaqResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Əsas Parametrlər')
+                Forms\Components\Section::make(__('admin.main_parameters'))
                     ->schema([
                         Forms\Components\Select::make('category')
                             ->label('Kateqoriya')
                             ->options([
-                                'general' => 'Ümumi Məlumat',
-                                'listings' => 'İlanlar və Yerləşdirmə',
-                                'payments' => 'Ödənişlər və VIP Xidmətlər',
-                                'safety' => 'Təhlükəsizlik və Məxfilik',
-                                'agency' => 'Əmlak Ofisləri və Agentlər',
+                                'general' => __('admin.general_information'),
+                                'listings' => __('admin.listings_and_placement'),
+                                'payments' => __('admin.payments_and_vip_services'),
+                                'safety' => __('admin.security_and_privacy'),
+                                'agency' => __('admin.real_estate_offices_and_agents'),
                             ])
                             ->default('general')
                             ->required()
                             ->native(false),
 
                         Forms\Components\TextInput::make('sort_order')
-                            ->label('Sıralama')
+                            ->label(__('admin.sort_order'))
                             ->numeric()
                             ->default(0)
                             ->required(),
@@ -56,17 +57,17 @@ class FaqResource extends Resource
                             ->default(true),
                     ])->columns(3),
 
-                Forms\Components\Section::make('Sual (Çoxdilli)')
-                    ->description('Bütün dillər üçün sual mətnini daxil edin')
+                Forms\Components\Section::make(__('admin.question_multilingual'))
+                    ->description(__('admin.enter_question_all_languages'))
                     ->schema([
                         Forms\Components\TextInput::make('question.tr')
                             ->label('Soru (TR)')
-                            ->placeholder('Örn: KıbrısKare\'de nasıl ilan verebilirim?')
+                            ->placeholder(__('admin.example_how_to_post_tr'))
                             ->required(),
 
                         Forms\Components\TextInput::make('question.az')
                             ->label('Sual (AZ)')
-                            ->placeholder('Məs: KıbrısKare-də necə elan yerləşdirə bilərəm?')
+                            ->placeholder(__('admin.example_how_to_post'))
                             ->required(),
 
                         Forms\Components\TextInput::make('question.en')
@@ -80,8 +81,8 @@ class FaqResource extends Resource
                             ->nullable(),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Cavab (Çoxdilli)')
-                    ->description('Bütün dillər üçün cavab mətnini daxil edin')
+                Forms\Components\Section::make(__('admin.answer_multilingual'))
+                    ->description(__('admin.enter_answer_all_languages'))
                     ->schema([
                         Forms\Components\Textarea::make('answer.tr')
                             ->label('Cevap (TR)')
@@ -126,11 +127,11 @@ class FaqResource extends Resource
                     ->label('Kateqoriya')
                     ->badge()
                     ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'general' => 'Ümumi',
-                        'listings' => 'İlanlar',
-                        'payments' => 'Ödənişlər',
-                        'safety' => 'Təhlükəsizlik',
-                        'agency' => 'Agentliklər',
+                        'general' => __('admin.general'),
+                        'listings' => __('admin.listings'),
+                        'payments' => __('admin.payments'),
+                        'safety' => __('admin.security'),
+                        'agency' => __('admin.agencies'),
                         default => $state,
                     })
                     ->colors([
@@ -142,14 +143,14 @@ class FaqResource extends Resource
                     ]),
 
                 Tables\Columns\TextInputColumn::make('sort_order')
-                    ->label('Sıra')
+                    ->label(__('admin.sort_order_short'))
                     ->sortable(),
 
                 Tables\Columns\ToggleColumn::make('is_active')
                     ->label('Aktiv'),
 
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Yeniləndi')
+                    ->label(__('admin.updated'))
                     ->dateTime('d.m.Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -159,11 +160,11 @@ class FaqResource extends Resource
                 Tables\Filters\SelectFilter::make('category')
                     ->label('Kateqoriya')
                     ->options([
-                        'general' => 'Ümumi',
-                        'listings' => 'İlanlar',
-                        'payments' => 'Ödənişlər',
-                        'safety' => 'Təhlükəsizlik',
-                        'agency' => 'Agentliklər',
+                        'general' => __('admin.general'),
+                        'listings' => __('admin.listings'),
+                        'payments' => __('admin.payments'),
+                        'safety' => __('admin.security'),
+                        'agency' => __('admin.agencies'),
                     ]),
 
                 Tables\Filters\TernaryFilter::make('is_active')

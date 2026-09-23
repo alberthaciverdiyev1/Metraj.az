@@ -21,23 +21,23 @@ class ActivityLogStatsWidget extends BaseWidget
         $searchesToday = ActivityLog::where('created_at', '>=', $today)->where('action', 'search_filter')->count();
 
         return [
-            Stat::make('Bugünkü Bütün Hərəkətlər', number_format($totalToday))
-                ->description('Saytdakı bütün hadisələr və sorğular')
+            Stat::make(__('admin.all_actions_today'), number_format($totalToday))
+                ->description(__('admin.all_events_requests'))
                 ->descriptionIcon('heroicon-m-chart-bar')
                 ->color('primary'),
 
-            Stat::make('Unikal Ziyarətçilər (IP)', number_format($uniqueIpsToday))
-                ->description('Bugün aktiv olan fərqli ziyarətçi sayı')
+            Stat::make(__('admin.unique_visitors_ip'), number_format($uniqueIpsToday))
+                ->description(__('admin.unique_visitors_hint'))
                 ->descriptionIcon('heroicon-m-users')
                 ->color('success'),
 
-            Stat::make('Uğurlu Girişlər', number_format($loginsToday))
-                ->description('Hesaba daxil olan istifadəçilər')
+            Stat::make(__('admin.successful_logins'), number_format($loginsToday))
+                ->description(__('admin.users_who_logged_in'))
                 ->descriptionIcon('heroicon-m-lock-open')
                 ->color('info'),
 
-            Stat::make('Əmlak Axtarışları', number_format($searchesToday))
-                ->description('Filtrlənmiş qlobal axtarış sorğuları')
+            Stat::make(__('admin.property_searches'), number_format($searchesToday))
+                ->description(__('admin.filtered_global_searches'))
                 ->descriptionIcon('heroicon-m-magnifying-glass')
                 ->color('warning'),
         ];

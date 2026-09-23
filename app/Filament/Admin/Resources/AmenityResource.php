@@ -16,13 +16,17 @@ class AmenityResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-sparkles';
 
-    protected static ?string $navigationGroup = 'Kataloq və Tənzimləmələr';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.catalog_and_settings'); }
 
-    protected static ?string $navigationLabel = 'Təchizatlar';
+    public static function getNavigationLabel(): string {
+        return __('admin.amenities'); }
 
-    protected static ?string $modelLabel = 'Təchizat';
+    public static function getModelLabel(): string {
+        return __('admin.amenity'); }
 
-    protected static ?string $pluralModelLabel = 'Təchizatlar';
+    public static function getPluralModelLabel(): string {
+        return __('admin.amenities'); }
 
     protected static ?int $navigationSort = 2;
 
@@ -30,33 +34,33 @@ class AmenityResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Təchizat Adı (Çoxdilli)')
+                Forms\Components\Section::make(__('admin.amenity_name_multilingual'))
                     ->schema([
                         Forms\Components\TextInput::make('name.az')
                             ->label('Ad (AZ)')
-                            ->placeholder('Məs: Qaz, Lift, Parkinq')
+                            ->placeholder(__('admin.example_amenities_az'))
                             ->required(),
 
                         Forms\Components\TextInput::make('name.tr')
                             ->label('Ad (TR)')
-                            ->placeholder('Məs: Doğalgaz, Asansör, Otopark')
+                            ->placeholder(__('admin.example_amenities_tr'))
                             ->nullable(),
 
                         Forms\Components\TextInput::make('name.en')
                             ->label('Ad (EN)')
-                            ->placeholder('Məs: Gas Supply, Elevator, Parking')
+                            ->placeholder(__('admin.example_amenities_en'))
                             ->nullable(),
 
                         Forms\Components\TextInput::make('name.ru')
                             ->label('Ad (RU)')
-                            ->placeholder('Məs: Газ, Лифт, Парковка')
+                            ->placeholder(__('admin.example_amenities_ru'))
                             ->nullable(),
                     ])->columns(4),
 
-                Forms\Components\Section::make('Əlavə Məlumatlar')
+                Forms\Components\Section::make(__('admin.additional_information'))
                     ->schema([
                         Forms\Components\TextInput::make('icon')
-                            ->label('İkon Kodu')
+                            ->label(__('admin.icon_code'))
                             ->placeholder('flame, home, banknotes, sparkles')
                             ->maxLength(255),
 
@@ -90,13 +94,13 @@ class AmenityResource extends Resource
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('icon')
-                    ->label('İkon')
+                    ->label(__('admin.icon'))
                     ->badge()
                     ->color('gray'),
 
                 Tables\Columns\TextColumn::make('properties_count')
                     ->counts('properties')
-                    ->label('İstifadə Olunan Elanlar')
+                    ->label(__('admin.used_listings'))
                     ->badge()
                     ->color('info'),
             ])
@@ -104,11 +108,11 @@ class AmenityResource extends Resource
                 Tables\Filters\SelectFilter::make('category')
                     ->label('Kateqoriya')
                     ->options([
-                        'utilities' => 'Kommunal / Xidmətlər',
-                        'document' => 'Sənəd',
-                        'financial' => 'Maliyyə',
+                        'utilities' => __('admin.utilities_services'),
+                        'document' => __('admin.document'),
+                        'financial' => __('admin.finance'),
                         'building' => 'Bina infrastrukturu',
-                        'interior' => 'Daxili təchizat',
+                        'interior' => __('admin.internal_amenity'),
                         'exterior' => 'Xarici / Balkon',
                     ]),
             ])

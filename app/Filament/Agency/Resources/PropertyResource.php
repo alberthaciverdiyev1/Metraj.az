@@ -89,7 +89,7 @@ class PropertyResource extends Resource
             ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\ImageColumn::make('first_image_url')
-                    ->label('Şəkil')
+                    ->label(__('admin.image'))
                     ->state(fn (Property $record) => $record->first_image_url)
                     ->extraImgAttributes([
                         'class' => 'w-12 h-12 object-cover rounded-lg shadow-sm',
@@ -104,19 +104,19 @@ class PropertyResource extends Resource
                     ->weight('bold'),
 
                 Tables\Columns\TextColumn::make('title')
-                    ->label('Başlıq')
+                    ->label(__('admin.title'))
                     ->limit(35)
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('price')
-                    ->label('Qiymət')
+                    ->label(__('admin.price'))
                     ->formatStateUsing(fn ($record) => ($record->currency === 'GBP' || empty($record->currency) ? '£ ' : $record->currency . ' ') . number_format($record->price, 0, '.', ' '))
                     ->sortable()
                     ->weight('bold')
                     ->color('success'),
 
                 Tables\Columns\TextColumn::make('views_count')
-                    ->label('Baxış Sayı')
+                    ->label(__('admin.view_count'))
                     ->icon('heroicon-o-eye')
                     ->numeric()
                     ->default(0)
@@ -126,7 +126,7 @@ class PropertyResource extends Resource
 
                 Tables\Columns\TextColumn::make('inquiries_count')
                     ->counts('inquiries')
-                    ->label('Müraciət')
+                    ->label(__('admin.inquiry'))
                     ->icon('heroicon-o-chat-bubble-left-right')
                     ->sortable()
                     ->badge()

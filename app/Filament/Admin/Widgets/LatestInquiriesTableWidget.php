@@ -10,7 +10,8 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class LatestInquiriesTableWidget extends BaseWidget
 {
-    protected static ?string $heading = 'Son Müştəri Müraciətləri';
+    protected function getTableHeading(): string | \Illuminate\Contracts\Support\Htmlable | null {
+        return __('admin.latest_customer_inquiries'); }
     protected static ?int $sort = 6;
     protected int | string | array $columnSpan = 'full';
 
@@ -22,7 +23,7 @@ class LatestInquiriesTableWidget extends BaseWidget
             )
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Müştəri')
+                    ->label(__('admin.customer'))
                     ->searchable()
                     ->weight('bold'),
 
@@ -31,9 +32,9 @@ class LatestInquiriesTableWidget extends BaseWidget
                     ->icon('heroicon-m-phone'),
 
                 Tables\Columns\TextColumn::make('property.title')
-                    ->label('Əlaqəli Əmlak')
+                    ->label(__('admin.related_property_full'))
                     ->limit(30)
-                    ->placeholder('Ümumi Müraciət'),
+                    ->placeholder(__('admin.general_inquiry')),
 
                 Tables\Columns\TextColumn::make('message')
                     ->label('Mesaj')
@@ -55,7 +56,7 @@ class LatestInquiriesTableWidget extends BaseWidget
             ])
             ->actions([
                 Tables\Actions\Action::make('edit')
-                    ->label('Baxış')
+                    ->label(__('admin.view'))
                     ->icon('heroicon-m-eye')
                     ->url(fn (Inquiry $record): string => InquiryResource::getUrl('edit', ['record' => $record])),
             ])

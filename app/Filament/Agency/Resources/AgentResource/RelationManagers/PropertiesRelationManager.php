@@ -12,11 +12,14 @@ class PropertiesRelationManager extends RelationManager
 {
     protected static string $relationship = 'properties';
 
-    protected static ?string $title = 'Rieltorun Əlavə Etdiyi Elanlar';
+    public static function getTitle(\Illuminate\Database\Eloquent\Model $ownerRecord, string $pageClass): string {
+        return __('admin.listings_added_by_realtor'); }
 
-    protected static ?string $modelLabel = 'Əmlak Elanı';
+    protected static function getModelLabel(): ?string {
+        return __('admin.property_listing'); }
 
-    protected static ?string $pluralModelLabel = 'Əmlak Elanları';
+    protected static function getPluralModelLabel(): ?string {
+        return __('admin.property_listings'); }
 
     public function table(Table $table): Table
     {
@@ -36,19 +39,19 @@ class PropertiesRelationManager extends RelationManager
                     ->weight('bold'),
 
                 Tables\Columns\TextColumn::make('title')
-                    ->label('Başlıq')
+                    ->label(__('admin.title'))
                     ->limit(45)
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('price')
-                    ->label('Qiymət')
+                    ->label(__('admin.price'))
                     ->money(fn ($record) => $record->currency ?? 'GBP')
                     ->sortable()
                     ->weight('bold')
                     ->color('success'),
 
                 Tables\Columns\TextColumn::make('area')
-                    ->label('Sahə')
+                    ->label(__('admin.area'))
                     ->suffix(' m²')
                     ->sortable(),
 
@@ -71,7 +74,7 @@ class PropertiesRelationManager extends RelationManager
                     ->formatStateUsing(fn (PropertyStatus $state): string => $state->label()),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Əlavə Olunma Tarixi')
+                    ->label(__('admin.added_date'))
                     ->dateTime('d.m.Y H:i')
                     ->sortable(),
             ])
@@ -88,7 +91,7 @@ class PropertiesRelationManager extends RelationManager
                     ->url(fn ($record): string => $propertyResource::getUrl('view', ['record' => $record])),
 
                 Tables\Actions\Action::make('edit')
-                    ->label('Düzəliş et')
+                    ->label(__('admin.edit'))
                     ->icon('heroicon-o-pencil-square')
                     ->url(fn ($record): string => $propertyResource::getUrl('edit', ['record' => $record])),
             ]);

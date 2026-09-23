@@ -12,18 +12,21 @@ class InquiriesRelationManager extends RelationManager
 {
     protected static string $relationship = 'inquiries';
 
-    protected static ?string $title = 'Bu Elana Gələn Müraciətlər';
+    public static function getTitle(\Illuminate\Database\Eloquent\Model $ownerRecord, string $pageClass): string {
+        return __('admin.inquiries_for_this_listing'); }
 
-    protected static ?string $modelLabel = 'Müraciət';
+    protected static function getModelLabel(): ?string {
+        return __('admin.inquiry'); }
 
-    protected static ?string $pluralModelLabel = 'Müraciətlər';
+    protected static function getPluralModelLabel(): ?string {
+        return __('admin.inquiries'); }
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label('Müştərinin Adı')
+                    ->label(__('admin.customer_name'))
                     ->required()
                     ->maxLength(255),
 
@@ -33,7 +36,7 @@ class InquiriesRelationManager extends RelationManager
                     ->maxLength(255),
 
                 Forms\Components\TextInput::make('email')
-                    ->label('E-poçt')
+                    ->label(__('admin.email'))
                     ->email()
                     ->maxLength(255),
 
@@ -41,15 +44,15 @@ class InquiriesRelationManager extends RelationManager
                     ->label('Status')
                     ->options([
                         'new' => 'Yeni',
-                        'contacted' => 'Əlaqə saxlanılıb',
-                        'in_progress' => 'Baxış təyin olunub',
-                        'closed' => 'Bağlanıb',
-                        'cancelled' => 'Ləğv edilib',
+                        'contacted' => __('admin.contacted'),
+                        'in_progress' => __('admin.viewing_scheduled'),
+                        'closed' => __('admin.closed'),
+                        'cancelled' => __('admin.cancelled'),
                     ])
                     ->required(),
 
                 Forms\Components\Textarea::make('message')
-                    ->label('Müştərinin Mesajı')
+                    ->label(__('admin.customer_message'))
                     ->columnSpanFull(),
             ]);
     }
@@ -61,7 +64,7 @@ class InquiriesRelationManager extends RelationManager
             ->recordTitleAttribute('name')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Müştəri')
+                    ->label(__('admin.customer'))
                     ->searchable()
                     ->weight('bold'),
 
@@ -82,10 +85,10 @@ class InquiriesRelationManager extends RelationManager
                     })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'new' => 'Yeni',
-                        'contacted' => 'Əlaqə saxlanılıb',
-                        'in_progress' => 'Baxış təyin olunub',
-                        'closed' => 'Bağlanıb',
-                        'cancelled' => 'Ləğv edilib',
+                        'contacted' => __('admin.contacted'),
+                        'in_progress' => __('admin.viewing_scheduled'),
+                        'closed' => __('admin.closed'),
+                        'cancelled' => __('admin.cancelled'),
                         default => $state,
                     }),
 
@@ -98,10 +101,10 @@ class InquiriesRelationManager extends RelationManager
                 Tables\Filters\SelectFilter::make('status')
                     ->options([
                         'new' => 'Yeni',
-                        'contacted' => 'Əlaqə saxlanılıb',
-                        'in_progress' => 'Baxış təyin olunub',
-                        'closed' => 'Bağlanıb',
-                        'cancelled' => 'Ləğv edilib',
+                        'contacted' => __('admin.contacted'),
+                        'in_progress' => __('admin.viewing_scheduled'),
+                        'closed' => __('admin.closed'),
+                        'cancelled' => __('admin.cancelled'),
                     ]),
             ])
             ->headerActions([

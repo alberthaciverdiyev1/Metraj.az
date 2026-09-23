@@ -13,19 +13,22 @@ class FilterOptionsRelationManager extends RelationManager
 {
     protected static string $relationship = 'options';
 
-    protected static ?string $title = 'Filtr Seçimləri və Subfiltrlər';
+    public static function getTitle(\Illuminate\Database\Eloquent\Model $ownerRecord, string $pageClass): string {
+        return __('admin.filter_options_subfilters'); }
 
-    protected static ?string $modelLabel = 'Seçim';
+    protected static function getModelLabel(): ?string {
+        return __('admin.option'); }
 
-    protected static ?string $pluralModelLabel = 'Seçimlər';
+    protected static function getPluralModelLabel(): ?string {
+        return __('admin.options'); }
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('parent_id')
-                    ->label('Üst Seçim (Parent - Alt-filtr üçün)')
-                    ->placeholder('Ana Seçim (Root - Ən üst səviyyə)')
+                    ->label(__('admin.parent_selection'))
+                    ->placeholder(__('admin.root_selection'))
                     ->options(function ($livewire, ?FilterOption $record) {
                         $filterId = $livewire->ownerRecord->id;
                         if (!$filterId) {
@@ -42,17 +45,17 @@ class FilterOptionsRelationManager extends RelationManager
                     ->columnSpanFull(),
 
                 Forms\Components\TextInput::make('value')
-                    ->label('Dəyər (Slug / Value)')
-                    ->placeholder('Məs: yasamal, new_building')
+                    ->label(__('admin.value_slug'))
+                    ->placeholder(__('admin.example_slug_values'))
                     ->required(),
 
                 Forms\Components\TextInput::make('sort_order')
-                    ->label('Sıralama')
+                    ->label(__('admin.sort_order'))
                     ->numeric()
                     ->default(0)
                     ->required(),
 
-                Forms\Components\Section::make('Seçim Adı (Çoxdilli)')
+                Forms\Components\Section::make(__('admin.selection_name_multilingual'))
                     ->schema([
                         Forms\Components\TextInput::make('name.az')
                             ->label('Ad (AZ)')
@@ -72,7 +75,7 @@ class FilterOptionsRelationManager extends RelationManager
                     ])->columns(4),
 
                 Forms\Components\TextInput::make('icon')
-                    ->label('İkon (FontAwesome)')
+                    ->label(__('admin.icon_fontawesome'))
                     ->placeholder('fa-map-pin')
                     ->nullable(),
 
@@ -90,7 +93,7 @@ class FilterOptionsRelationManager extends RelationManager
             ->recordTitleAttribute('value')
             ->columns([
                 Tables\Columns\TextColumn::make('hierarchical_name')
-                    ->label('Seçim / İyerarxiya')
+                    ->label(__('admin.selection_hierarchy'))
                     ->searchable(query: function ($query, $search) {
                         return $query->where('name->az', 'like', "%{$search}%")
                             ->orWhere('name->tr', 'like', "%{$search}%")
@@ -104,13 +107,13 @@ class FilterOptionsRelationManager extends RelationManager
                     ->placeholder('—'),
 
                 Tables\Columns\TextColumn::make('value')
-                    ->label('Dəyər (Value)')
+                    ->label(__('admin.value'))
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('parent.name.az')
-                    ->label('Üst Seçim (Parent)')
-                    ->placeholder('Əsas Seçim (Root)')
+                    ->label(__('admin.parent'))
+                    ->placeholder(__('admin.root_selection_short'))
                     ->badge()
                     ->color('gray'),
 
@@ -119,7 +122,7 @@ class FilterOptionsRelationManager extends RelationManager
                     ->boolean(),
 
                 Tables\Columns\TextColumn::make('sort_order')
-                    ->label('Sıra')
+                    ->label(__('admin.sort_order_short'))
                     ->sortable(),
             ])
             ->filters([

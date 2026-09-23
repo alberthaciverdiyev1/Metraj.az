@@ -16,13 +16,18 @@
             || in_array($property->seller_type, ['agent', 'agency'])
             || !empty($property->agent)
             || !empty($property->agency);
-        $agentName = $property->agent->user->name
-            ?? ($property->agency->name
+        $hasAgent = !empty($property->agent);
+        $hasAgency = !empty($property->agency);
+
+        $agentName = $property->agent?->user?->name
+            ?? ($property->agency?->name
             ?? ($property->contact_name
-            ?? ($property->user->name
+            ?? ($property->user?->name
             ?? __('property.owner'))));
-        $agentAvatar = $property->agent->avatar_url ?? ($property->agency->logo_url ?? ($property->agent->user->avatar ?? ''));
-        $agentRole = $property->agency ? __('property.official_agency') : ($property->agent ? __('property.agent') : __('property.owner'));
+        $agentAvatar = $property->agent?->avatar_url ?? ($property->agency?->logo_url ?? ($property->agent?->user?->avatar ?? ''));
+        $agentRole = $hasAgent 
+            ? ($property->agent->position ?? __('property.agent')) 
+            : ($hasAgency ? __('property.official_agency') : __('property.owner'));
         $hasContact = !empty($property->agent_id)
             || !empty($property->agency_id)
             || !empty($property->phone)

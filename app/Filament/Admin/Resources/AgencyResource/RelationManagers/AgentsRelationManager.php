@@ -12,7 +12,8 @@ class AgentsRelationManager extends RelationManager
 {
     protected static string $relationship = 'agents';
 
-    protected static ?string $title = 'Agentliyin Rieltorları';
+    public static function getTitle(\Illuminate\Database\Eloquent\Model $ownerRecord, string $pageClass): string {
+        return __('admin.agency_realtors'); }
 
     protected static ?string $modelLabel = 'Rieltor';
 
@@ -23,7 +24,7 @@ class AgentsRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\Select::make('user_id')
-                    ->label('İstifadəçi Hesabı')
+                    ->label(__('admin.user_account'))
                     ->relationship('user', 'name')
                     ->searchable()
                     ->preload()
@@ -31,23 +32,23 @@ class AgentsRelationManager extends RelationManager
                     ->columnSpanFull(),
 
                 Forms\Components\TextInput::make('position')
-                    ->label('Vəzifəsi / Titul')
-                    ->placeholder('Məs: Baş rieltor, Satış meneceri')
+                    ->label(__('admin.position_title'))
+                    ->placeholder(__('admin.position_placeholder'))
                     ->maxLength(255),
 
                 Forms\Components\TextInput::make('phone')
-                    ->label('Əlaqə Nömrəsi')
+                    ->label(__('admin.contact_number'))
                     ->tel()
                     ->required(),
 
                 Forms\Components\TextInput::make('whatsapp')
-                    ->label('WhatsApp Nömrəsi')
+                    ->label(__('admin.whatsapp_number'))
                     ->tel()
-                    ->helperText('WhatsApp mesajlaşma üçün.')
+                    ->helperText(__('admin.for_whatsapp_messaging'))
                     ->prefixIcon('heroicon-o-chat-bubble-left-right'),
 
                 Forms\Components\FileUpload::make('avatar')
-                    ->label('Profil Şəkli')
+                    ->label(__('admin.profile_image'))
                     ->image()
                     ->imageEditor()
                     ->directory('agents')
@@ -65,7 +66,7 @@ class AgentsRelationManager extends RelationManager
             ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\ImageColumn::make('avatar')
-                    ->label('Şəkil')
+                    ->label(__('admin.image'))
                     ->circular(),
 
                 Tables\Columns\TextColumn::make('user.name')
@@ -75,7 +76,7 @@ class AgentsRelationManager extends RelationManager
                     ->weight('bold'),
 
                 Tables\Columns\TextColumn::make('position')
-                    ->label('Vəzifə')
+                    ->label(__('admin.position'))
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('phone')
@@ -89,7 +90,7 @@ class AgentsRelationManager extends RelationManager
 
                 Tables\Columns\TextColumn::make('properties_count')
                     ->counts('properties')
-                    ->label('Elan Sayı')
+                    ->label(__('admin.listing_count'))
                     ->badge()
                     ->color('success'),
 

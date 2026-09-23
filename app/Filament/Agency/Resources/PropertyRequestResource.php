@@ -72,25 +72,25 @@ class PropertyRequestResource extends Resource
     {
         return $infolist
             ->schema([
-                Infolists\Components\Section::make('Müştəri və Əlaqə Məlumatları')
+                Infolists\Components\Section::make(__('admin.customer_and_contact_information'))
                     ->icon('heroicon-o-user')
                     ->schema([
                         Infolists\Components\Grid::make(3)
                             ->schema([
                                 Infolists\Components\TextEntry::make('contact_name')
-                                    ->label('Müştəri Adı')
+                                    ->label(__('admin.customer_name_full'))
                                     ->weight('bold')
                                     ->size(Infolists\Components\TextEntry\TextEntrySize::Large),
 
                                 Infolists\Components\TextEntry::make('contact_phone')
-                                    ->label('Əlaqə Nömrəsi')
+                                    ->label(__('admin.contact_number'))
                                     ->weight('bold')
                                     ->icon('heroicon-o-phone')
                                     ->color('primary')
                                     ->url(fn ($record) => $record->contact_phone ? 'tel:' . preg_replace('/[^0-9+]/', '', $record->contact_phone) : null),
 
                                 Infolists\Components\TextEntry::make('contact_whatsapp')
-                                    ->label('WhatsApp Nömrəsi')
+                                    ->label(__('admin.whatsapp_number'))
                                     ->icon('heroicon-o-chat-bubble-left-ellipsis')
                                     ->color('success')
                                     ->placeholder('—')
@@ -102,18 +102,18 @@ class PropertyRequestResource extends Resource
                             ]),
                     ]),
 
-                Infolists\Components\Section::make('Axtarılan Əmlak Parametrləri')
+                Infolists\Components\Section::make(__('admin.searched_property_parameters'))
                     ->icon('heroicon-o-building-office')
                     ->schema([
                         Infolists\Components\Grid::make(3)
                             ->schema([
                                 Infolists\Components\TextEntry::make('title')
-                                    ->label('Tələb Başlığı')
+                                    ->label(__('admin.request_title'))
                                     ->columnSpanFull()
                                     ->weight('bold'),
 
                                 Infolists\Components\TextEntry::make('request_type')
-                                    ->label('Tələb Növü')
+                                    ->label(__('admin.request_type'))
                                     ->badge()
                                     ->formatStateUsing(fn ($state) => $state instanceof RequestType ? $state->badgeLabel() : $state)
                                     ->color(fn ($state) => match ($state instanceof RequestType ? $state->value : $state) {
@@ -126,39 +126,39 @@ class PropertyRequestResource extends Resource
                                     }),
 
                                 Infolists\Components\TextEntry::make('property_type')
-                                    ->label('Əmlak Növü')
-                                    ->placeholder('Fərq etməz'),
+                                    ->label(__('admin.property_type'))
+                                    ->placeholder(__('admin.any')),
 
                                 Infolists\Components\TextEntry::make('formatted_budget')
-                                    ->label('Müştərinin Büdcəsi')
+                                    ->label(__('admin.customer_budget'))
                                     ->weight('bold')
                                     ->color('success'),
 
                                 Infolists\Components\TextEntry::make('city.name')
-                                    ->label('Şəhər')
+                                    ->label(__('admin.city'))
                                     ->formatStateUsing(fn ($state) => is_array($state) ? ($state['az'] ?? reset($state)) : $state),
 
                                 Infolists\Components\TextEntry::make('district.name')
-                                    ->label('Rayon / Bölgə')
+                                    ->label(__('admin.district_region'))
                                     ->formatStateUsing(fn ($state) => is_array($state) ? ($state['az'] ?? reset($state)) : $state)
-                                    ->placeholder('Bütün rayonlar'),
+                                    ->placeholder(__('admin.all_districts')),
 
                                 Infolists\Components\TextEntry::make('rooms')
-                                    ->label('Otaq Sayı')
-                                    ->placeholder('Fərq etməz'),
+                                    ->label(__('admin.room_count'))
+                                    ->placeholder(__('admin.any')),
 
                                 Infolists\Components\TextEntry::make('location_note')
-                                    ->label('Bölgə / Ünvan Qeydi')
+                                    ->label(__('admin.region_address_note'))
                                     ->placeholder('—')
                                     ->columnSpan(2),
 
                                 Infolists\Components\TextEntry::make('created_at')
-                                    ->label('Tələb Tarixi')
+                                    ->label(__('admin.request_date'))
                                     ->dateTime('d.m.Y H:i'),
                             ]),
                     ]),
 
-                Infolists\Components\Section::make('Müştərinin Əlavə Qeydi və Təsviri')
+                Infolists\Components\Section::make(__('admin.customer_notes_description'))
                     ->icon('heroicon-o-document-text')
                     ->schema([
                         Infolists\Components\TextEntry::make('description')
@@ -179,7 +179,7 @@ class PropertyRequestResource extends Resource
                     ->width('60px'),
 
                 Tables\Columns\TextColumn::make('request_type')
-                    ->label('Tələb Növü')
+                    ->label(__('admin.request_type'))
                     ->badge()
                     ->formatStateUsing(fn ($state) => $state instanceof RequestType ? $state->badgeLabel() : $state)
                     ->color(fn ($state) => match ($state instanceof RequestType ? $state->value : $state) {
@@ -192,20 +192,20 @@ class PropertyRequestResource extends Resource
                     }),
 
                 Tables\Columns\TextColumn::make('title')
-                    ->label('Tələb Başlığı')
+                    ->label(__('admin.request_title'))
                     ->searchable()
                     ->weight('bold')
                     ->limit(40)
                     ->tooltip(fn ($record) => $record->title),
 
                 Tables\Columns\TextColumn::make('property_type')
-                    ->label('Əmlak Növü')
+                    ->label(__('admin.property_type'))
                     ->badge()
                     ->color('gray')
                     ->placeholder('—'),
 
                 Tables\Columns\TextColumn::make('city.name')
-                    ->label('Şəhər / Rayon')
+                    ->label(__('admin.city_district'))
                     ->formatStateUsing(function ($record) {
                         $city = is_array($record->city?->name) ? ($record->city->name['az'] ?? reset($record->city->name)) : $record->city?->name;
                         $district = is_array($record->district?->name) ? ($record->district->name['az'] ?? reset($record->district->name)) : $record->district?->name;
@@ -214,13 +214,13 @@ class PropertyRequestResource extends Resource
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('formatted_budget')
-                    ->label('Büdcə')
+                    ->label(__('admin.budget'))
                     ->weight('bold')
                     ->color('success')
                     ->sortable(['budget_max']),
 
                 Tables\Columns\TextColumn::make('contact_name')
-                    ->label('Müştəri')
+                    ->label(__('admin.customer'))
                     ->description(fn ($record) => $record->contact_phone)
                     ->searchable(),
 
@@ -231,25 +231,25 @@ class PropertyRequestResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('request_type')
-                    ->label('Tələb Növü')
+                    ->label(__('admin.request_type'))
                     ->options([
-                        'buy' => 'Almaq İstəyir',
-                        'rent_monthly' => 'Kirayə Axtarır',
-                        'rent_daily' => 'Günlük Axtarır',
+                        'buy' => __('admin.wants_to_buy'),
+                        'rent_monthly' => __('admin.looking_for_rent'),
+                        'rent_daily' => __('admin.looking_for_daily'),
                         'roommate_have' => 'Otaq Verir',
-                        'roommate_need' => 'Otaq Axtarır',
+                        'roommate_need' => __('admin.looking_for_room'),
                     ]),
 
                 Tables\Filters\SelectFilter::make('city_id')
-                    ->label('Şəhər')
+                    ->label(__('admin.city'))
                     ->relationship('city', 'id')
                     ->getOptionLabelFromRecordUsing(fn ($record) => is_array($record->name) ? ($record->name['az'] ?? reset($record->name)) : $record->name),
 
                 Tables\Filters\SelectFilter::make('property_type')
-                    ->label('Əmlak Növü')
+                    ->label(__('admin.property_type'))
                     ->options([
-                        'Mənzil' => 'Mənzil',
-                        'Həyət evi' => 'Həyət evi / Villa',
+                        'Mənzil' => __('admin.apartment'),
+                        'Həyət evi' => __('admin.house_villa'),
                         'Torpaq' => 'Torpaq',
                         'Obyekt' => 'Obyekt',
                         'Ofis' => 'Ofis',
@@ -261,7 +261,7 @@ class PropertyRequestResource extends Resource
                     ->icon('heroicon-o-eye'),
 
                 Tables\Actions\Action::make('call')
-                    ->label('Zəng et')
+                    ->label(__('admin.call'))
                     ->icon('heroicon-o-phone')
                     ->color('warning')
                     ->url(fn ($record) => $record->contact_phone ? 'tel:' . preg_replace('/[^0-9+]/', '', $record->contact_phone) : null)

@@ -35,7 +35,7 @@ class AgentDetailController extends Controller
         if ($agent->agency) {
             $breadcrumbs[] = [
                 'label' => $agent->agency->name,
-                'url' => route('agencies.show.byId', $agent->agency->id),
+                'url' => route('agencies.show', $agent->agency->slug ?: $agent->agency->id),
             ];
         }
 

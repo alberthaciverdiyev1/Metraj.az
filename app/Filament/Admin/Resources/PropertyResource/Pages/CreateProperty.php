@@ -19,7 +19,7 @@ class CreateProperty extends CreateRecord
     {
         return [
             $this->getCreateFormAction()
-                ->label('Oluştur')
+                ->label(__('admin.create'))
                 ->extraAttributes([
                     'style' => 'flex: 9 1 0%; min-width: 0;',
                     'class' => 'w-[88%] md:w-[90%] justify-center font-bold text-base py-3 shadow-md rounded-xl',

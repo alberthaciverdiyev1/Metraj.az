@@ -16,13 +16,17 @@ class InquiryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
 
-    protected static ?string $navigationGroup = 'Əmlak və Müraciətlər';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.properties_and_inquiries'); }
 
-    protected static ?string $navigationLabel = 'Müştəri Müraciətləri';
+    public static function getNavigationLabel(): string {
+        return __('admin.customer_inquiries'); }
 
-    protected static ?string $modelLabel = 'Müraciət';
+    public static function getModelLabel(): string {
+        return __('admin.inquiry'); }
 
-    protected static ?string $pluralModelLabel = 'Müştəri Müraciətləri';
+    public static function getPluralModelLabel(): string {
+        return __('admin.customer_inquiries'); }
 
     protected static ?int $navigationSort = 4;
 
@@ -41,43 +45,43 @@ class InquiryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Müraciət Məlumatları')
+                Forms\Components\Section::make(__('admin.inquiry_information'))
                     ->schema([
                         Forms\Components\Select::make('property_id')
-                            ->label('Aid Olduğu Əmlak')
+                            ->label(__('admin.related_property'))
                             ->relationship('property', 'title')
                             ->getOptionLabelFromRecordUsing(fn ($record) => ($record->code ? "[{$record->code}] " : '') . (is_array($record->title) ? ($record->title['az'] ?? ($record->title['tr'] ?? reset($record->title))) : $record->title))
                             ->searchable()
                             ->preload()
                             ->nullable()
-                            ->placeholder('Ümumi Müraciət (Əmlaksız)'),
+                            ->placeholder(__('admin.general_inquiry_no_property')),
 
                         Forms\Components\Select::make('status')
                             ->label('Status')
                             ->options([
                                 'new' => 'Yeni',
-                                'contacted' => 'Əlaqə saxlanılıb',
-                                'in_progress' => 'Baxış təyin olunub',
-                                'closed' => 'Bağlanıb (Uğurlu)',
-                                'cancelled' => 'Ləğv edilib',
+                                'contacted' => __('admin.contacted'),
+                                'in_progress' => __('admin.viewing_scheduled'),
+                                'closed' => __('admin.closed_successful'),
+                                'cancelled' => __('admin.cancelled'),
                             ])
                             ->default('new')
                             ->required(),
 
                         Forms\Components\TextInput::make('name')
-                            ->label('Müştərinin Adı')
+                            ->label(__('admin.customer_name'))
                             ->required(),
 
                         Forms\Components\TextInput::make('phone')
-                            ->label('Telefon Nömrəsi')
+                            ->label(__('admin.phone_number'))
                             ->tel(),
 
                         Forms\Components\TextInput::make('email')
-                            ->label('E-poçt')
+                            ->label(__('admin.email'))
                             ->email(),
 
                         Forms\Components\Textarea::make('message')
-                            ->label('Müştərinin Mesajı')
+                            ->label(__('admin.customer_message'))
                             ->rows(3)
                             ->columnSpanFull(),
                     ])->columns(2),
@@ -90,7 +94,7 @@ class InquiryResource extends Resource
             ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Müştəri')
+                    ->label(__('admin.customer'))
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
@@ -108,20 +112,20 @@ class InquiryResource extends Resource
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('property.title')
-                    ->label('Əmlak')
+                    ->label(__('admin.property'))
                     ->formatStateUsing(fn ($state, $record) => $record->property ? (is_array($record->property->title) ? ($record->property->title['az'] ?? ($record->property->title['tr'] ?? reset($record->property->title))) : $record->property->title) : 'Ümumi Müraciət')
                     ->limit(25)
-                    ->placeholder('Ümumi Müraciət')
+                    ->placeholder(__('admin.general_inquiry'))
                     ->searchable(),
 
                 Tables\Columns\SelectColumn::make('status')
                     ->label('Status')
                     ->options([
                         'new' => 'Yeni',
-                        'contacted' => 'Əlaqə saxlanılıb',
-                        'in_progress' => 'Baxış təyin olunub',
-                        'closed' => 'Bağlanıb (Uğurlu)',
-                        'cancelled' => 'Ləğv edilib',
+                        'contacted' => __('admin.contacted'),
+                        'in_progress' => __('admin.viewing_scheduled'),
+                        'closed' => __('admin.closed_successful'),
+                        'cancelled' => __('admin.cancelled'),
                     ])
                     ->selectablePlaceholder(false)
                     ->sortable(),
@@ -136,10 +140,10 @@ class InquiryResource extends Resource
                     ->label('Status')
                     ->options([
                         'new' => 'Yeni',
-                        'contacted' => 'Əlaqə saxlanılıb',
-                        'in_progress' => 'Baxış təyin olunub',
-                        'closed' => 'Bağlanıb',
-                        'cancelled' => 'Ləğv edilib',
+                        'contacted' => __('admin.contacted'),
+                        'in_progress' => __('admin.viewing_scheduled'),
+                        'closed' => __('admin.closed'),
+                        'cancelled' => __('admin.cancelled'),
                     ]),
             ])
             ->actions([

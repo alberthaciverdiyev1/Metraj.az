@@ -8,7 +8,8 @@ use Filament\Widgets\ChartWidget;
 
 class PropertiesByStatusChartWidget extends ChartWidget
 {
-    protected static ?string $heading = 'Statuslar Üzrə Əmlaklar';
+    public function getHeading(): string | \Illuminate\Contracts\Support\Htmlable | null {
+        return __('admin.properties_by_status'); }
     protected static ?int $sort = 4;
     protected static ?string $maxHeight = '230px';
     protected int | string | array $columnSpan = [
@@ -20,13 +21,13 @@ class PropertiesByStatusChartWidget extends ChartWidget
     protected function getData(): array
     {
         $statuses = [
-            PropertyStatus::Published->value => ['label' => 'Dərc olunub', 'color' => '#10b981'],
-            PropertyStatus::PendingApproval->value => ['label' => 'Təsdiq gözləyir', 'color' => '#f59e0b'],
+            PropertyStatus::Published->value => ['label' => __('admin.published'), 'color' => '#10b981'],
+            PropertyStatus::PendingApproval->value => ['label' => __('admin.pending_approval'), 'color' => '#f59e0b'],
             PropertyStatus::Draft->value => ['label' => 'Qaralama', 'color' => '#6b7280'],
-            PropertyStatus::Rejected->value => ['label' => 'İmtina edilib', 'color' => '#ef4444'],
-            PropertyStatus::Sold->value => ['label' => 'Satılıb', 'color' => '#3b82f6'],
-            PropertyStatus::Rented->value => ['label' => 'Kirayə verilib', 'color' => '#8b5cf6'],
-            PropertyStatus::Archived->value => ['label' => 'Arxivlənib', 'color' => '#94a3b8'],
+            PropertyStatus::Rejected->value => ['label' => __('admin.rejected'), 'color' => '#ef4444'],
+            PropertyStatus::Sold->value => ['label' => __('admin.sold'), 'color' => '#3b82f6'],
+            PropertyStatus::Rented->value => ['label' => __('admin.rented_out'), 'color' => '#8b5cf6'],
+            PropertyStatus::Archived->value => ['label' => __('admin.archived'), 'color' => '#94a3b8'],
         ];
 
         $labels = [];

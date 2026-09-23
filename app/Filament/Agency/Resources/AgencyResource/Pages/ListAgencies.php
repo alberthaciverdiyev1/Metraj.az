@@ -9,7 +9,7 @@ class ListAgencies extends ListRecords
 {
     protected static string $resource = AgencyResource::class;
 
-    protected static ?string $title = 'Agentlik Məlumatlarım';
+    public function getTitle(): string | \Illuminate\Contracts\Support\Htmlable { return __('admin.my_agency_information'); }
 
     protected function getHeaderActions(): array
     {

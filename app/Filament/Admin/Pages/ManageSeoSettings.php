@@ -21,9 +21,12 @@ class ManageSeoSettings extends Page implements HasForms
     use InteractsWithForms;
 
     protected static ?string $navigationIcon = 'heroicon-o-globe-alt';
-    protected static ?string $navigationGroup = 'Kataloq və Tənzimləmələr';
-    protected static ?string $navigationLabel = 'SEO Tənzimləmələri';
-    protected static ?string $title = 'SEO Tənzimləmələri və Qlobal Skriptlər';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.catalog_and_settings'); }
+    public static function getNavigationLabel(): string {
+        return __('admin.seo_settings'); }
+    public function getTitle(): string | \Illuminate\Contracts\Support\Htmlable {
+        return __('admin.seo_settings_global_scripts'); }
     protected static ?int $navigationSort = 5;
 
     protected static string $view = 'filament.pages.manage-seo-settings';
@@ -83,48 +86,48 @@ class ManageSeoSettings extends Page implements HasForms
                 ->label($p->page_name)
                 ->icon($iconMap[$key] ?? 'heroicon-o-document-text')
                 ->schema([
-                    Section::make("{$p->page_name} — H1 Başlığı (SEO H1 Tag)")
-                        ->description('Axtarış sistemləri üçün səhifənin əsas H1 başlığı (HTML daxilində gizli saxlanılır)')
+                    Section::make(__('admin.seo_section_h1', ['page' => $p->page_name]))
+                        ->description(__('admin.seo_h1_hint'))
                         ->schema([
                             Grid::make(2)->schema([
-                                TextInput::make("pages.{$key}.h1.tr")->label('H1 (Türkcə)')->placeholder('məs: Kuzey Kıbrıs Satılık Evler'),
-                                TextInput::make("pages.{$key}.h1.az")->label('H1 (Azərbaycanca)')->placeholder('məs: Şimali Kipr Satılıq Evlər'),
-                                TextInput::make("pages.{$key}.h1.en")->label('H1 (İngiliscə)')->placeholder('e.g: Properties For Sale in Northern Cyprus'),
+                                TextInput::make("pages.{$key}.h1.tr")->label(__('admin.h1_tr'))->placeholder(__('admin.example_h1_tr')),
+                                TextInput::make("pages.{$key}.h1.az")->label(__('admin.h1_az'))->placeholder(__('admin.example_h1_az')),
+                                TextInput::make("pages.{$key}.h1.en")->label(__('admin.h1_en'))->placeholder('e.g: Properties For Sale in Northern Cyprus'),
                                 TextInput::make("pages.{$key}.h1.ru")->label('H1 (Rusca)')->placeholder('напр: Недвижимость на Северном Кипре'),
                             ]),
                         ])
                         ->collapsible(),
 
-                    Section::make("{$p->page_name} — SEO Başlığı (Meta Title)")
-                        ->description('Axtarış sistemlərində və brauzer tabında görünəcək səhifə başlığı')
+                    Section::make(__('admin.seo_section_meta_title', ['page' => $p->page_name]))
+                        ->description(__('admin.seo_meta_title_hint'))
                         ->schema([
                             Grid::make(2)->schema([
-                                TextInput::make("pages.{$key}.title.tr")->label('Title (Türkcə)'),
-                                TextInput::make("pages.{$key}.title.az")->label('Title (Azərbaycanca)'),
-                                TextInput::make("pages.{$key}.title.en")->label('Title (İngiliscə)'),
+                                TextInput::make("pages.{$key}.title.tr")->label(__('admin.title_tr')),
+                                TextInput::make("pages.{$key}.title.az")->label(__('admin.title_az')),
+                                TextInput::make("pages.{$key}.title.en")->label(__('admin.title_en')),
                                 TextInput::make("pages.{$key}.title.ru")->label('Title (Rusca)'),
                             ]),
                         ])
                         ->collapsible(),
 
-                    Section::make("{$p->page_name} — SEO Təsviri (Meta Description)")
-                        ->description('Google və digər axtarış sistemlərində nəticələrin altında çıxan təsvir')
+                    Section::make(__('admin.seo_section_meta_description', ['page' => $p->page_name]))
+                        ->description(__('admin.meta_description_hint'))
                         ->schema([
                             Grid::make(2)->schema([
-                                Textarea::make("pages.{$key}.description.tr")->label('Description (Türkcə)')->rows(2),
-                                Textarea::make("pages.{$key}.description.az")->label('Description (Azərbaycanca)')->rows(2),
-                                Textarea::make("pages.{$key}.description.en")->label('Description (İngiliscə)')->rows(2),
+                                Textarea::make("pages.{$key}.description.tr")->label(__('admin.description_tr'))->rows(2),
+                                Textarea::make("pages.{$key}.description.az")->label(__('admin.description_az'))->rows(2),
+                                Textarea::make("pages.{$key}.description.en")->label(__('admin.description_en'))->rows(2),
                                 Textarea::make("pages.{$key}.description.ru")->label('Description (Rusca)')->rows(2),
                             ]),
                         ])
                         ->collapsible(),
 
-                    Section::make("{$p->page_name} — Açar Sözlər (Meta Keywords)")
+                    Section::make(__('admin.seo_section_meta_keywords', ['page' => $p->page_name]))
                         ->schema([
                             Grid::make(2)->schema([
-                                TextInput::make("pages.{$key}.keywords.tr")->label('Keywords (Türkcə)')->placeholder('vergüllə ayırın'),
-                                TextInput::make("pages.{$key}.keywords.az")->label('Keywords (Azərbaycanca)')->placeholder('vergüllə ayırın'),
-                                TextInput::make("pages.{$key}.keywords.en")->label('Keywords (İngiliscə)')->placeholder('comma separated'),
+                                TextInput::make("pages.{$key}.keywords.tr")->label(__('admin.keywords_tr'))->placeholder(__('admin.separate_with_commas')),
+                                TextInput::make("pages.{$key}.keywords.az")->label(__('admin.keywords_az'))->placeholder(__('admin.separate_with_commas')),
+                                TextInput::make("pages.{$key}.keywords.en")->label(__('admin.keywords_en'))->placeholder('comma separated'),
                                 TextInput::make("pages.{$key}.keywords.ru")->label('Keywords (Rusca)')->placeholder('через запятую'),
                             ]),
                         ])
@@ -137,41 +140,41 @@ class ManageSeoSettings extends Page implements HasForms
             ->schema([
                 Tabs::make('SeoSettingsTabs')
                     ->tabs([
-                        Tabs\Tab::make('Qlobal Skriptlər (Head, Body, Footer)')
+                        Tabs\Tab::make(__('admin.global_scripts'))
                             ->icon('heroicon-o-code-bracket')
                             ->schema([
-                                Section::make('1. <head> Skriptləri (Global Head Scripts)')
-                                    ->description('Google Analytics (gtag.js), Google Tag Manager (<head>), Meta Pixel, Yandex Metrika və ya Meta Verification kodları. Saytın bütün səhifələrində <head> daxilində birbaşa (RAW) icra olunur.')
+                                Section::make(__('admin.head_scripts_title'))
+                                    ->description(__('admin.head_scripts_hint'))
                                     ->schema([
                                         Textarea::make('head_scripts')
-                                            ->label('HTML / JS Kodları (<head>)')
+                                            ->label(__('admin.html_js_head'))
                                             ->rows(6)
                                             ->extraAttributes(['class' => 'font-mono text-xs'])
                                             ->placeholder("<!-- Google Tag Manager -->\n<script>...</script>\n<!-- End Google Tag Manager -->"),
                                     ]),
 
-                                Section::make('2. <body> Skriptləri (Global Body Opening Scripts)')
-                                    ->description('Google Tag Manager (<noscript>) və ya <body> tagı açılan kimi dərhal icra olunmalı olan izləmə və xüsusi kodlar.')
+                                Section::make(__('admin.body_scripts_title'))
+                                    ->description(__('admin.body_scripts_hint'))
                                     ->schema([
                                         Textarea::make('body_scripts')
-                                            ->label('HTML / JS Kodları (<body>)')
+                                            ->label(__('admin.html_js_body'))
                                             ->rows(5)
                                             ->extraAttributes(['class' => 'font-mono text-xs'])
                                             ->placeholder("<!-- Google Tag Manager (noscript) -->\n<noscript><iframe src=\"https://www.googletagmanager.com/ns.html?id=GTM-XXXX\" height=\"0\" width=\"0\" style=\"display:none;visibility:hidden\"></iframe></noscript>"),
                                     ]),
 
-                                Section::make('3. Footer / </body> Skriptləri (Global Footer Scripts)')
-                                    ->description('Canlı Çat (Tawk.to, WhatsApp vidjetləri), reCAPTCHA və ya </body> bağlanışından dərhal əvvəl yüklənən digər üçüncü tərəf skriptləri.')
+                                Section::make(__('admin.footer_scripts_title'))
+                                    ->description(__('admin.footer_scripts_hint'))
                                     ->schema([
                                         Textarea::make('footer_scripts')
-                                            ->label('HTML / JS Kodları (</body> öncəsi)')
+                                            ->label(__('admin.html_js_footer'))
                                             ->rows(5)
                                             ->extraAttributes(['class' => 'font-mono text-xs'])
                                             ->placeholder("<!-- Live Chat Widget -->\n<script>...</script>"),
                                     ]),
                             ]),
 
-                        Tabs\Tab::make('Səhifə Başlıqları və Meta (Hər Səhifə Üçün)')
+                        Tabs\Tab::make(__('admin.page_titles_meta'))
                             ->icon('heroicon-o-document-text')
                             ->schema([
                                 Tabs::make('PageTabs')
@@ -181,39 +184,39 @@ class ManageSeoSettings extends Page implements HasForms
                         Tabs\Tab::make('Qlobal Standart Meta (Default)')
                             ->icon('heroicon-o-sparkles')
                             ->schema([
-                                Section::make('Ümumi Sayt Başlığı (Default Meta Title)')
-                                    ->description('Xüsusi başlıq təyin olunmayan səhifələrdə istifadə ediləcək standart başlıq')
+                                Section::make(__('admin.default_meta_title'))
+                                    ->description(__('admin.default_meta_title_hint'))
                                     ->schema([
                                         Grid::make(2)->schema([
-                                            TextInput::make('default_meta_title.tr')->label('Title (Türkcə)'),
-                                            TextInput::make('default_meta_title.az')->label('Title (Azərbaycanca)'),
-                                            TextInput::make('default_meta_title.en')->label('Title (İngiliscə)'),
+                                            TextInput::make('default_meta_title.tr')->label(__('admin.title_tr')),
+                                            TextInput::make('default_meta_title.az')->label(__('admin.title_az')),
+                                            TextInput::make('default_meta_title.en')->label(__('admin.title_en')),
                                             TextInput::make('default_meta_title.ru')->label('Title (Rusca)'),
                                         ]),
                                     ]),
 
-                                Section::make('Ümumi Sayt Təsviri (Default Meta Description)')
+                                Section::make(__('admin.default_meta_description'))
                                     ->schema([
                                         Grid::make(2)->schema([
-                                            Textarea::make('default_meta_description.tr')->label('Description (Türkcə)')->rows(2),
-                                            Textarea::make('default_meta_description.az')->label('Description (Azərbaycanca)')->rows(2),
-                                            Textarea::make('default_meta_description.en')->label('Description (İngiliscə)')->rows(2),
+                                            Textarea::make('default_meta_description.tr')->label(__('admin.description_tr'))->rows(2),
+                                            Textarea::make('default_meta_description.az')->label(__('admin.description_az'))->rows(2),
+                                            Textarea::make('default_meta_description.en')->label(__('admin.description_en'))->rows(2),
                                             Textarea::make('default_meta_description.ru')->label('Description (Rusca)')->rows(2),
                                         ]),
                                     ]),
 
-                                Section::make('Ümumi Açar Sözlər (Default Meta Keywords)')
+                                Section::make(__('admin.default_meta_keywords'))
                                     ->schema([
                                         Grid::make(2)->schema([
-                                            TextInput::make('default_meta_keywords.tr')->label('Keywords (Türkcə)'),
-                                            TextInput::make('default_meta_keywords.az')->label('Keywords (Azərbaycanca)'),
-                                            TextInput::make('default_meta_keywords.en')->label('Keywords (İngiliscə)'),
+                                            TextInput::make('default_meta_keywords.tr')->label(__('admin.keywords_tr')),
+                                            TextInput::make('default_meta_keywords.az')->label(__('admin.keywords_az')),
+                                            TextInput::make('default_meta_keywords.en')->label(__('admin.keywords_en')),
                                             TextInput::make('default_meta_keywords.ru')->label('Keywords (Rusca)'),
                                         ]),
                                     ]),
 
                                 TextInput::make('og_image')
-                                    ->label('Standart Sosial Şəbəkə Şəkli (OG:Image URL)')
+                                    ->label(__('admin.default_og_image'))
                                     ->placeholder('https://kibriskare.com/images/og-share.jpg'),
                             ]),
                     ]),
@@ -254,7 +257,7 @@ class ManageSeoSettings extends Page implements HasForms
         }
 
         Notification::make()
-            ->title('SEO və Skript tənzimləmələri uğurla yadda saxlanıldı!')
+            ->title(__('admin.seo_scripts_saved'))
             ->success()
             ->send();
     }

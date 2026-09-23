@@ -11,9 +11,11 @@ class ManageSitemap extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-magnifying-glass';
 
-    protected static ?string $navigationGroup = 'Kataloq və Tənzimləmələr';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.catalog_and_settings'); }
 
-    protected static ?string $navigationLabel = 'Sitemap İdarəetməsi';
+    public static function getNavigationLabel(): string {
+        return __('admin.sitemap_management'); }
 
     protected static ?string $title = 'Sitemap XML Generator';
 
@@ -74,13 +76,13 @@ class ManageSitemap extends Page
             $this->loadSitemaps();
 
             Notification::make()
-                ->title('Sitemap XML faylları uğurla yaradıldı!')
-                ->body('Ümumi ' . count($results) . ' sitemap faylı yeniləndi.')
+                ->title(__('admin.sitemaps_created'))
+                ->body(__('admin.sitemap_file_updated', ['count' => count($results)]))
                 ->success()
                 ->send();
         } catch (\Throwable $e) {
             Notification::make()
-                ->title('Sitemap yaradılarkən xəta baş verdi!')
+                ->title(__('admin.sitemap_creation_error'))
                 ->body($e->getMessage())
                 ->danger()
                 ->send();

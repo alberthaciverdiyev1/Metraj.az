@@ -22,13 +22,17 @@ class RoommateListingResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    protected static ?string $navigationGroup = 'Əmlak və Müraciətlər';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.properties_and_inquiries'); }
 
-    protected static ?string $navigationLabel = 'Otaq Yoldaşı';
+    public static function getNavigationLabel(): string {
+        return __('admin.roommate'); }
 
-    protected static ?string $modelLabel = 'Otaq Yoldaşı Elanı';
+    public static function getModelLabel(): string {
+        return __('admin.roommate_listing'); }
 
-    protected static ?string $pluralModelLabel = 'Otaq Yoldaşı Elanları';
+    public static function getPluralModelLabel(): string {
+        return __('admin.roommate_listings'); }
 
     protected static ?int $navigationSort = 2;
 
@@ -36,46 +40,46 @@ class RoommateListingResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Əsas Məlumatlar')
+                Forms\Components\Section::make(__('admin.basic_information'))
                     ->schema([
                         Forms\Components\Select::make('listing_type')
-                            ->label('Elan Növü')
+                            ->label(__('admin.listing_type'))
                             ->options([
-                                'have_room' => 'Evim var, otaq yoldaşı axtarıram',
-                                'need_room' => 'Ev axtarıram, otaq yoldaşı axtarıram',
+                                'have_room' => __('admin.have_room_looking_for_roommate'),
+                                'need_room' => __('admin.looking_for_flat_and_roommate'),
                             ])
                             ->required(),
 
                         Forms\Components\TextInput::make('title')
-                            ->label('Başlıq')
+                            ->label(__('admin.title'))
                             ->required()
                             ->maxLength(255),
 
                         Forms\Components\TextInput::make('price')
-                            ->label('Aylıq Ödəniş (₼)')
+                            ->label(__('admin.monthly_payment'))
                             ->numeric()
                             ->required()
                             ->prefix('₼'),
 
                         Forms\Components\Toggle::make('bills_included')
-                            ->label('Kommunal xərclər daxildir'),
+                            ->label(__('admin.utilities_included')),
 
                         Forms\Components\Select::make('status')
                             ->label('Status')
                             ->options([
-                                'published' => 'Dərc olunub',
-                                'pending' => 'Gözləmədə',
-                                'rejected' => 'İmtina edilib',
-                                'closed' => 'Bağlanıb',
+                                'published' => __('admin.published'),
+                                'pending' => __('admin.pending'),
+                                'rejected' => __('admin.rejected'),
+                                'closed' => __('admin.closed'),
                             ])
                             ->default('published')
                             ->required(),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Yerləşmə')
+                Forms\Components\Section::make(__('admin.location'))
                     ->schema([
                         Forms\Components\Select::make('city_id')
-                            ->label('Şəhər')
+                            ->label(__('admin.city'))
                             ->relationship('city', 'id')
                             ->getOptionLabelFromRecordUsing(fn ($record) => is_array($record->name) ? ($record->name['az'] ?? reset($record->name)) : $record->name)
                             ->searchable()
@@ -91,58 +95,58 @@ class RoommateListingResource extends Resource
                             ->preload(),
 
                         Forms\Components\TextInput::make('location_note')
-                            ->label('Metro / Ünvan / Qeyd')
+                            ->label(__('admin.metro_address_note'))
                             ->maxLength(255)
                             ->columnSpanFull(),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Tələblər və Qaydalar')
+                Forms\Components\Section::make(__('admin.requirements_and_rules'))
                     ->schema([
                         Forms\Components\Select::make('gender_preference')
-                            ->label('Cinsiyyət Tələbi')
+                            ->label(__('admin.gender_requirement'))
                             ->options([
-                                'any' => 'Fərqi yoxdur',
-                                'female' => 'Yalnız Xanım',
-                                'male' => 'Yalnız Bəy',
+                                'any' => __('admin.no_preference'),
+                                'female' => __('admin.female_only'),
+                                'male' => __('admin.male_only'),
                             ])
                             ->required(),
 
                         Forms\Components\Select::make('occupation_preference')
-                            ->label('Məşğuliyyət')
+                            ->label(__('admin.occupation'))
                             ->options([
-                                'any' => 'Fərqi yoxdur',
-                                'student' => 'Yalnız Tələbə',
-                                'working' => 'Yalnız İşləyən',
+                                'any' => __('admin.no_preference'),
+                                'student' => __('admin.students_only'),
+                                'working' => __('admin.working_only'),
                             ]),
 
                         Forms\Components\Toggle::make('smoker_allowed')
-                            ->label('Siqaret çəkməyə icazə var'),
+                            ->label(__('admin.smoking_allowed')),
 
                         Forms\Components\Toggle::make('pet_allowed')
-                            ->label('Ev heyvanı saxlamağa icazə var'),
+                            ->label(__('admin.pets_allowed')),
 
                         Forms\Components\TextInput::make('stay_duration')
-                            ->label('Qalma Müddəti')
+                            ->label(__('admin.stay_duration'))
                             ->maxLength(100),
 
                         Forms\Components\DatePicker::make('available_from')
-                            ->label('Köçmə Tarixi'),
+                            ->label(__('admin.move_in_date')),
 
                         Forms\Components\TextInput::make('total_roommates')
-                            ->label('Evdə Ümumi Adam Sayı')
+                            ->label(__('admin.total_people_in_house'))
                             ->numeric(),
                     ])->columns(3),
 
-                Forms\Components\Section::make('Ətraflı Təsvir')
+                Forms\Components\Section::make(__('admin.detailed_description'))
                     ->schema([
                         Forms\Components\Textarea::make('description')
-                            ->label('Təsvir')
+                            ->label(__('admin.description'))
                             ->rows(5)
                             ->required()
                             ->columnSpanFull(),
                     ]),
 
-                Forms\Components\Section::make('Əlaqə Məlumatları')
+                Forms\Components\Section::make(__('admin.contact_information'))
                     ->schema([
                         Forms\Components\TextInput::make('contact_name')
                             ->label('Ad')
@@ -171,12 +175,12 @@ class RoommateListingResource extends Resource
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('title')
-                    ->label('Başlıq')
+                    ->label(__('admin.title'))
                     ->searchable()
                     ->limit(35),
 
                 Tables\Columns\BadgeColumn::make('listing_type')
-                    ->label('Növ')
+                    ->label(__('admin.type'))
                     ->formatStateUsing(fn ($state) => $state instanceof RoommateListingType ? $state->badgeLabel() : ($state === 'have_room' ? 'Otaq verilir' : 'Otaq axtarır'))
                     ->colors([
                         'success' => 'have_room',
@@ -184,16 +188,16 @@ class RoommateListingResource extends Resource
                     ]),
 
                 Tables\Columns\TextColumn::make('price')
-                    ->label('Qiymət')
+                    ->label(__('admin.price'))
                     ->formatStateUsing(fn ($record) => $record->formatted_price)
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('city.name')
-                    ->label('Şəhər')
+                    ->label(__('admin.city'))
                     ->formatStateUsing(fn ($state) => is_array($state) ? ($state['az'] ?? reset($state)) : $state),
 
                 Tables\Columns\BadgeColumn::make('gender_preference')
-                    ->label('Cinsiyyət')
+                    ->label(__('admin.gender'))
                     ->formatStateUsing(fn ($state) => $state instanceof GenderPreference ? $state->badgeLabel() : $state)
                     ->colors([
                         'danger' => 'female',
@@ -218,27 +222,27 @@ class RoommateListingResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('listing_type')
-                    ->label('Elan Növü')
+                    ->label(__('admin.listing_type'))
                     ->options([
                         'have_room' => 'Otaq verilir',
-                        'need_room' => 'Otaq axtarır',
+                        'need_room' => __('admin.looking_for_room_short'),
                     ]),
 
                 Tables\Filters\SelectFilter::make('gender_preference')
-                    ->label('Cinsiyyət')
+                    ->label(__('admin.gender'))
                     ->options([
-                        'any' => 'Hamı üçün',
-                        'female' => 'Yalnız Xanım',
-                        'male' => 'Yalnız Bəy',
+                        'any' => __('admin.for_everyone'),
+                        'female' => __('admin.female_only'),
+                        'male' => __('admin.male_only'),
                     ]),
 
                 Tables\Filters\SelectFilter::make('status')
                     ->label('Status')
                     ->options([
-                        'published' => 'Dərc olunub',
-                        'pending' => 'Gözləmədə',
-                        'rejected' => 'İmtina edilib',
-                        'closed' => 'Bağlanıb',
+                        'published' => __('admin.published'),
+                        'pending' => __('admin.pending'),
+                        'rejected' => __('admin.rejected'),
+                        'closed' => __('admin.closed'),
                     ]),
             ])
             ->actions([

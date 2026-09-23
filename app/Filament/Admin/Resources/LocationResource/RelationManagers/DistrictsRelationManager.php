@@ -13,19 +13,22 @@ class DistrictsRelationManager extends RelationManager
 {
     protected static string $relationship = 'districts';
 
-    protected static ?string $title = 'Bu Şəhərə Aid Rayonlar / Bölqələr';
+    public static function getTitle(\Illuminate\Database\Eloquent\Model $ownerRecord, string $pageClass): string {
+        return __('admin.districts_of_this_city'); }
 
-    protected static ?string $modelLabel = 'Rayon / Bölqə';
+    protected static function getModelLabel(): ?string {
+        return __('admin.district_region_variant'); }
 
-    protected static ?string $pluralModelLabel = 'Rayonlar və Bölqələr';
+    protected static function getPluralModelLabel(): ?string {
+        return __('admin.districts_and_regions'); }
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name.az')
-                    ->label('Rayon / Bölqə Adı (AZ)')
-                    ->placeholder('Məs: Yasamal, Alsancak, Lapta')
+                    ->label(__('admin.district_name_az'))
+                    ->placeholder(__('admin.example_yasamal_alsancak_lapta'))
                     ->required()
                     ->live(onBlur: true)
                     ->afterStateUpdated(function (Forms\Set $set, $state) {
@@ -35,27 +38,27 @@ class DistrictsRelationManager extends RelationManager
                     }),
 
                 Forms\Components\TextInput::make('name.tr')
-                    ->label('Rayon / Bölqə Adı (TR)')
-                    ->placeholder('Məs: Alsancak, Lapta')
+                    ->label(__('admin.district_name_tr'))
+                    ->placeholder(__('admin.example_alsancak_lapta'))
                     ->nullable(),
 
                 Forms\Components\TextInput::make('name.en')
-                    ->label('Rayon / Bölqə Adı (EN)')
-                    ->placeholder('Məs: Alsancak')
+                    ->label(__('admin.district_name_en'))
+                    ->placeholder(__('admin.example_alsancak'))
                     ->nullable(),
 
                 Forms\Components\TextInput::make('name.ru')
-                    ->label('Rayon / Bölqə Adı (RU)')
-                    ->placeholder('Məs: Алсанджак')
+                    ->label(__('admin.district_name_ru'))
+                    ->placeholder(__('admin.example_alsancak_ru'))
                     ->nullable(),
 
                 Forms\Components\TextInput::make('slug')
-                    ->label('Slug / Dəyər')
+                    ->label(__('admin.slug_value'))
                     ->placeholder('yasamal, lapta')
                     ->required(),
 
                 Forms\Components\TextInput::make('sort_order')
-                    ->label('Sıralama')
+                    ->label(__('admin.sort_order'))
                     ->numeric()
                     ->default(0),
 
@@ -72,7 +75,7 @@ class DistrictsRelationManager extends RelationManager
             ->recordTitleAttribute('name.az')
             ->columns([
                 Tables\Columns\TextColumn::make('name.az')
-                    ->label('Rayon / Bölqə (AZ)')
+                    ->label(__('admin.district_az'))
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
@@ -100,12 +103,12 @@ class DistrictsRelationManager extends RelationManager
                     ->boolean(),
 
                 Tables\Columns\TextColumn::make('sort_order')
-                    ->label('Sıra')
+                    ->label(__('admin.sort_order_short'))
                     ->sortable(),
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()
-                    ->label('Yeni Rayon / Bölqə Əlavə Et'),
+                    ->label(__('admin.add_new_district')),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

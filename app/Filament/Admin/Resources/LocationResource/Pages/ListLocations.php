@@ -14,7 +14,7 @@ class ListLocations extends ListRecords
     {
         return [
             Actions\CreateAction::make()
-                ->label('Yeni Şəhər Əlavə Et'),
+                ->label(__('admin.add_new_city')),
         ];
     }
 }

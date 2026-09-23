@@ -67,10 +67,26 @@ class ModuleServiceProvider extends ServiceProvider
             });
 
             Route::fallback(function (\Illuminate\Http\Request $request) {
-                // Admin, agency, api, livewire və asset sorğularını yönləndirmə
+                $path = ltrim($request->path(), '/');
+                $locale = session('lang', config('app.locale', 'tr'));
+                if (!in_array($locale, ['az', 'en', 'ru', 'tr'], true)) {
+                    $locale = 'tr';
+                }
+
+                // If it is a frontend agency profile link like /agency/{slug_or_id}
+                if (preg_match('#^agency/([^/]+)$#', $path, $matches)) {
+                    $sub = $matches[1];
+                    if (!in_array($sub, ['login', 'logout', 'password-reset', 'register'], true)) {
+                        return redirect()->to('/' . $locale . '/emlak-ofisi/' . $sub);
+                    }
+                }
+
+                // Admin, agency panel auth, api, livewire and asset requests
                 if (
                     $request->is('admin*') ||
-                    $request->is('agency*') ||
+                    $request->is('agency') ||
+                    $request->is('agency/login*') ||
+                    $request->is('agency/logout*') ||
                     $request->is('api*') ||
                     $request->is('livewire*') ||
                     $request->is('build*') ||
@@ -81,12 +97,6 @@ class ModuleServiceProvider extends ServiceProvider
                     abort(404);
                 }
 
-                $locale = session('lang', config('app.locale', 'tr'));
-                if (!in_array($locale, ['az', 'en', 'ru', 'tr'], true)) {
-                    $locale = 'tr';
-                }
-
-                $path = ltrim($request->path(), '/');
                 $query = $request->getQueryString() ? '?' . $request->getQueryString() : '';
 
                 return redirect()->to('/' . $locale . '/' . $path . $query);

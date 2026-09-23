@@ -18,13 +18,17 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
-    protected static ?string $navigationGroup = 'İstifadəçilər və Agentliklər';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.users_and_agencies'); }
 
-    protected static ?string $navigationLabel = 'İstifadəçilər';
+    public static function getNavigationLabel(): string {
+        return __('admin.users'); }
 
-    protected static ?string $modelLabel = 'İstifadəçi';
+    public static function getModelLabel(): string {
+        return __('admin.user'); }
 
-    protected static ?string $pluralModelLabel = 'İstifadəçilər';
+    public static function getPluralModelLabel(): string {
+        return __('admin.users'); }
 
     protected static ?int $navigationSort = 1;
 
@@ -32,7 +36,7 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('İstifadəçi Hesabı')
+                Forms\Components\Section::make(__('admin.user_account'))
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->label('Ad Soyad')
@@ -40,37 +44,37 @@ class UserResource extends Resource
                             ->maxLength(255),
 
                         Forms\Components\TextInput::make('email')
-                            ->label('E-poçt Ünvanı')
+                            ->label(__('admin.email_address'))
                             ->email()
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(255),
 
                         Forms\Components\TextInput::make('password')
-                            ->label('Şifrə')
+                            ->label(__('admin.password'))
                             ->password()
                             ->dehydrateStateUsing(fn ($state) => Hash::make($state))
                             ->dehydrated(fn ($state) => filled($state))
                             ->required(fn (string $context): bool => $context === 'create')
-                            ->helperText('Dəyişmək istəmirsinizsə boş buraxın.'),
+                            ->helperText(__('admin.leave_blank_to_keep')),
 
                         Forms\Components\Toggle::make('email_verified_at')
-                            ->label('E-poçt Təsdiqlənib')
+                            ->label(__('admin.email_verified'))
                             ->formatStateUsing(fn ($state) => filled($state))
                             ->dehydrateStateUsing(fn ($state) => $state ? now() : null),
                     ])->columns(2),
 
                 Forms\Components\Section::make('Platforma Rolu')
-                    ->description('İstifadəçinin agent/agentlik əlaqəsi ilə avtomatik müəyyən edilir.')
+                    ->description(__('admin.auto_determined_by_agent_hint'))
                     ->schema([
                         Forms\Components\Placeholder::make('role_summary')
-                            ->label('Rol / Vəzifə')
+                            ->label(__('admin.role_position'))
                             ->content(fn (?User $record): string => $record ? match (true) {
                                 $record->email === 'admin@kibriskare.com' => 'Admin (Super Administrator)',
                                 $record->agent && $record->agent->agency_id !== null => 'Rieltor — ' . ($record->agent->agency?->name ?? 'Agentlik'),
-                                $record->agent !== null => 'Müstəqil Rieltor',
+                                $record->agent !== null => __('admin.independent_realtor'),
                                 $record->agencies()->exists() => 'Agentlik Sahibi',
-                                default => 'Normal İstifadəçi',
+                                default => __('admin.normal_user'),
                             } : '—'),
 
                         Forms\Components\Placeholder::make('agent_info')
@@ -95,7 +99,7 @@ class UserResource extends Resource
                     ->weight('bold'),
 
                 Tables\Columns\TextColumn::make('email')
-                    ->label('E-poçt')
+                    ->label(__('admin.email'))
                     ->searchable()
                     ->sortable(),
 
@@ -104,7 +108,7 @@ class UserResource extends Resource
                     ->getStateUsing(fn (User $record): string => match (true) {
                         $record->email === 'admin@kibriskare.com' => 'Admin',
                         $record->agent && $record->agent->agency_id !== null => 'Rieltor',
-                        $record->agent !== null => 'Müstəqil Rieltor',
+                        $record->agent !== null => __('admin.independent_realtor'),
                         $record->agencies()->exists() => 'Agentlik Sahibi',
                         default => 'Normal',
                     })
@@ -124,12 +128,12 @@ class UserResource extends Resource
 
                 Tables\Columns\TextColumn::make('properties_count')
                     ->counts('properties')
-                    ->label('Elan Sayı')
+                    ->label(__('admin.listing_count'))
                     ->badge()
                     ->color('success'),
 
                 Tables\Columns\IconColumn::make('email_verified_at')
-                    ->label('E-poçt Təsdiqi')
+                    ->label(__('admin.email_verification'))
                     ->boolean()
                     ->falseIcon('heroicon-o-x-circle')
                     ->falseColor('gray'),
@@ -146,7 +150,7 @@ class UserResource extends Resource
                         'admin' => 'Admin',
                         'agency_owner' => 'Agentlik Sahibi',
                         'realtor' => 'Rieltor',
-                        'independent' => 'Müstəqil Rieltor',
+                        'independent' => __('admin.independent_realtor'),
                         'normal' => 'Normal',
                     ])
                     ->query(function (Builder $query, array $data) {

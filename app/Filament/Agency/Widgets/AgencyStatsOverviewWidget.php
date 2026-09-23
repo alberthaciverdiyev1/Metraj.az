@@ -72,33 +72,33 @@ class AgencyStatsOverviewWidget extends BaseWidget
         // Stats array
         $stats = [
             Stat::make(__('panel.my_listings'), number_format($totalProperties))
-                ->description(app()->getLocale() === 'tr' ? 'Toplam portföy' : (app()->getLocale() === 'az' ? 'Ümumi portfel' : 'Total listings'))
+                ->description(__('admin.total_portfolio'))
                 ->descriptionIcon('heroicon-m-home-modern')
                 ->color('primary')
                 ->chart($propertyTrend),
 
-            Stat::make(app()->getLocale() === 'tr' ? 'Yayında Olanlar' : (app()->getLocale() === 'az' ? 'Dərc Olunmuş' : 'Published'), number_format($publishedCount))
-                ->description(app()->getLocale() === 'tr' ? 'Aktif elanlar' : (app()->getLocale() === 'az' ? 'Aktiv elanlar' : 'Active listings'))
+            Stat::make(__('admin.published_short'), number_format($publishedCount))
+                ->description(__('admin.active_listings'))
                 ->descriptionIcon('heroicon-m-check-badge')
                 ->color('success'),
 
-            Stat::make(app()->getLocale() === 'tr' ? 'Təsdiq Gözləyən' : (app()->getLocale() === 'az' ? 'Təsdiq Gözləyən' : 'Pending Approval'), number_format($pendingCount))
-                ->description($pendingCount > 0 ? (app()->getLocale() === 'tr' ? 'İnceleme aşamasında' : 'Moderasiyada') : (app()->getLocale() === 'tr' ? 'Bekleyen yok' : 'Hamısı aktiv'))
+            Stat::make(__('admin.pending_approval_tr'), number_format($pendingCount))
+                ->description($pendingCount > 0 ? (__('admin.under_moderation')) : (__('admin.all_active')))
                 ->descriptionIcon('heroicon-m-clock')
                 ->color($pendingCount > 0 ? 'warning' : 'gray'),
 
-            Stat::make(app()->getLocale() === 'tr' ? 'Görüntülenme Sayısı' : (app()->getLocale() === 'az' ? 'Baxış Sayı' : 'Total Views'), number_format($totalViews))
-                ->description(app()->getLocale() === 'tr' ? 'Tüm ilanların görüntülenmesi' : (app()->getLocale() === 'az' ? 'Bütün elanların baxışı' : 'Total property views'))
+            Stat::make(__('admin.view_count'), number_format($totalViews))
+                ->description(__('admin.views_of_all_listings'))
                 ->descriptionIcon('heroicon-m-eye')
                 ->color('info'),
 
             Stat::make(__('panel.inquiries'), number_format($inquiriesCount))
-                ->description(app()->getLocale() === 'tr' ? 'Müşteri mesajları' : (app()->getLocale() === 'az' ? 'Gələn müraciətlər' : 'Lead messages'))
+                ->description(__('admin.incoming_inquiries_tr'))
                 ->descriptionIcon('heroicon-m-chat-bubble-left-right')
                 ->color('primary'),
 
-            Stat::make(app()->getLocale() === 'tr' ? 'Numara Gösterimleri' : (app()->getLocale() === 'az' ? 'Nömrə Baxışları' : 'Phone Reveals'), number_format($phoneRevealsCount))
-                ->description(app()->getLocale() === 'tr' ? 'Telefonu göster tıklamaları' : (app()->getLocale() === 'az' ? 'Telefonu göstər klikləri' : 'Phone click reveals'))
+            Stat::make(__('admin.phone_views'), number_format($phoneRevealsCount))
+                ->description(__('admin.phone_reveal_clicks'))
                 ->descriptionIcon('heroicon-m-phone')
                 ->color('success'),
         ];
@@ -107,7 +107,7 @@ class AgencyStatsOverviewWidget extends BaseWidget
         if ($isOwner) {
             $agentsCount = $tenantAgency->agents()->count();
             $stats[] = Stat::make(__('panel.my_agents'), number_format($agentsCount))
-                ->description(app()->getLocale() === 'tr' ? 'Ekip danışmanları' : (app()->getLocale() === 'az' ? 'Kollektiv rieltorları' : 'Team agents'))
+                ->description(__('admin.collective_realtors'))
                 ->descriptionIcon('heroicon-m-user-group')
                 ->color('warning');
         }
@@ -116,7 +116,7 @@ class AgencyStatsOverviewWidget extends BaseWidget
         $isAgentOrAgency = $isOwner || $user?->isAdmin() || (bool) $user?->agent()->exists();
         if ($isAgentOrAgency) {
             $stats[] = Stat::make(__('panel.property_requests'), number_format($marketRequestsCount))
-                ->description(app()->getLocale() === 'tr' ? 'Pazardaki alıcı/kiracı talepleri' : (app()->getLocale() === 'az' ? 'Bazarda axtarılan əmlaklar' : 'Open market requests'))
+                ->description(__('admin.properties_searched_in_market'))
                 ->descriptionIcon('heroicon-m-megaphone')
                 ->color('danger');
         }

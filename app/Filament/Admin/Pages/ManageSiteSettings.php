@@ -21,9 +21,12 @@ class ManageSiteSettings extends Page implements HasForms
     use InteractsWithForms;
 
     protected static ?string $navigationIcon = 'heroicon-o-wrench-screwdriver';
-    protected static ?string $navigationGroup = 'Kataloq və Tənzimləmələr';
-    protected static ?string $navigationLabel = 'Sayt Tənzimləmələri';
-    protected static ?string $title = 'Sayt Tənzimləmələri və Əlaqə Parametrləri';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.catalog_and_settings'); }
+    public static function getNavigationLabel(): string {
+        return __('admin.site_settings'); }
+    public function getTitle(): string | \Illuminate\Contracts\Support\Htmlable {
+        return __('admin.site_and_contact_settings'); }
     protected static ?int $navigationSort = 4;
 
     protected static string $view = 'filament.pages.manage-site-settings';
@@ -42,53 +45,53 @@ class ManageSiteSettings extends Page implements HasForms
             ->schema([
                 Tabs::make('SettingsTabs')
                     ->tabs([
-                        Tabs\Tab::make('Əlaqə Məlumatları')
+                        Tabs\Tab::make(__('admin.contact_information'))
                             ->icon('heroicon-o-phone')
                             ->schema([
                                 Grid::make(2)->schema([
                                     TextInput::make('phone')
-                                        ->label('Əsas Telefon')
+                                        ->label(__('admin.primary_phone'))
                                         ->tel()
                                         ->placeholder('+90 (548) 888-8888'),
                                     TextInput::make('phone_secondary')
-                                        ->label('İkinci Telefon')
+                                        ->label(__('admin.second_phone'))
                                         ->tel()
                                         ->placeholder('+90 (392) 815 00 00'),
                                     TextInput::make('whatsapp')
-                                        ->label('WhatsApp Nömrəsi')
+                                        ->label(__('admin.whatsapp_number'))
                                         ->placeholder('+905488888888'),
                                     TextInput::make('email')
-                                        ->label('Əsas E-poçt')
+                                        ->label(__('admin.primary_email'))
                                         ->email()
                                         ->placeholder('info@kibriskare.com'),
                                     TextInput::make('support_email')
-                                        ->label('Dəstək E-poçtu')
+                                        ->label(__('admin.support_email'))
                                         ->email()
                                         ->placeholder('support@kibriskare.com'),
                                 ]),
 
-                                Section::make('Ofis Ünvanı (4 Dildə)')
-                                    ->description('Saytın Footer və Əlaqə səhifəsində görünəcək ofis ünvanı')
+                                Section::make(__('admin.office_address_4langs'))
+                                    ->description(__('admin.office_address_footer_hint'))
                                     ->schema([
                                         Grid::make(2)->schema([
                                             TextInput::make('address.tr')
-                                                ->label('Ünvan (Türkcə)')
-                                                ->placeholder('Girne, Kuzey Kıbrıs Türk Cumhuriyeti'),
+                                                ->label(__('admin.address_label_tr'))
+                                                ->placeholder(__('admin.address_tr')),
                                             TextInput::make('address.az')
-                                                ->label('Ünvan (Azərbaycanca)')
-                                                ->placeholder('Girnə, Şimali Kipr'),
+                                                ->label(__('admin.address_label_az'))
+                                                ->placeholder(__('admin.address_az')),
                                             TextInput::make('address.en')
-                                                ->label('Ünvan (İngiliscə)')
+                                                ->label(__('admin.address_label_en'))
                                                 ->placeholder('Kyrenia, Northern Cyprus'),
                                             TextInput::make('address.ru')
-                                                ->label('Ünvan (Rusca)')
+                                                ->label(__('admin.address_label_ru'))
                                                 ->placeholder('Кирения, Северный Кипр'),
                                         ]),
                                     ])
                                     ->collapsible(),
                             ]),
 
-                        Tabs\Tab::make('Sosial Şəbəkələr')
+                        Tabs\Tab::make(__('admin.social_networks'))
                             ->icon('heroicon-o-share')
                             ->schema([
                                 Grid::make(2)->schema([
@@ -123,17 +126,17 @@ class ManageSiteSettings extends Page implements HasForms
                                 ]),
                             ]),
 
-                        Tabs\Tab::make('İş Saatları & Xəritə')
+                        Tabs\Tab::make(__('admin.working_hours_map'))
                             ->icon('heroicon-o-clock')
                             ->schema([
-                                Section::make('İş Rejimi')
+                                Section::make(__('admin.working_hours'))
                                     ->schema([
                                         Grid::make(3)->schema([
                                             TextInput::make('working_hours_mon_fri')
-                                                ->label('Bazar ertəsi – Cümə')
+                                                ->label(__('admin.monday_friday'))
                                                 ->placeholder('09:00 – 19:00'),
                                             TextInput::make('working_hours_sat')
-                                                ->label('Şənbə')
+                                                ->label(__('admin.saturday'))
                                                 ->placeholder('10:00 – 18:00'),
                                             TextInput::make('working_hours_sun')
                                                 ->label('Bazar')
@@ -141,8 +144,8 @@ class ManageSiteSettings extends Page implements HasForms
                                         ]),
                                     ]),
 
-                                Section::make('Ofis Xəritə Koordinatları')
-                                    ->description('Əlaqə səhifəsində xəritə üzərində ofisin yerini təyin edir')
+                                Section::make(__('admin.office_map_coordinates'))
+                                    ->description(__('admin.office_map_location_hint'))
                                     ->schema([
                                         Grid::make(2)->schema([
                                             TextInput::make('map_latitude')
@@ -157,54 +160,54 @@ class ManageSiteSettings extends Page implements HasForms
                                     ]),
                             ]),
 
-                        Tabs\Tab::make('Mətnlər & Footer')
+                        Tabs\Tab::make(__('admin.texts_footer'))
                             ->icon('heroicon-o-document-text')
                             ->schema([
-                                Section::make('Sayt Şüarı (Tagline)')
+                                Section::make(__('admin.site_tagline'))
                                     ->schema([
                                         Grid::make(2)->schema([
-                                            TextInput::make('tagline.tr')->label('Şüar (Türkcə)'),
-                                            TextInput::make('tagline.az')->label('Şüar (Azərbaycanca)'),
-                                            TextInput::make('tagline.en')->label('Şüar (İngiliscə)'),
-                                            TextInput::make('tagline.ru')->label('Şüar (Rusca)'),
+                                            TextInput::make('tagline.tr')->label(__('admin.tagline_tr')),
+                                            TextInput::make('tagline.az')->label(__('admin.tagline_az')),
+                                            TextInput::make('tagline.en')->label(__('admin.tagline_en')),
+                                            TextInput::make('tagline.ru')->label(__('admin.tagline_ru')),
                                         ]),
                                     ])
                                     ->collapsible(),
 
-                                Section::make('Footer Təsviri (4 Dildə)')
+                                Section::make(__('admin.footer_description_4langs'))
                                     ->schema([
                                         Grid::make(2)->schema([
-                                            Textarea::make('footer_description.tr')->label('Təsvir (Türkcə)')->rows(3),
-                                            Textarea::make('footer_description.az')->label('Təsvir (Azərbaycanca)')->rows(3),
-                                            Textarea::make('footer_description.en')->label('Təsvir (İngiliscə)')->rows(3),
-                                            Textarea::make('footer_description.ru')->label('Təsvir (Rusca)')->rows(3),
+                                            Textarea::make('footer_description.tr')->label(__('admin.description_field_tr'))->rows(3),
+                                            Textarea::make('footer_description.az')->label(__('admin.description_field_az'))->rows(3),
+                                            Textarea::make('footer_description.en')->label(__('admin.description_field_en'))->rows(3),
+                                            Textarea::make('footer_description.ru')->label(__('admin.description_ru'))->rows(3),
                                         ]),
                                     ])
                                     ->collapsible(),
 
                                 TextInput::make('copyright_text')
-                                    ->label('Müəllif Hüququ (Copyright)')
+                                    ->label(__('admin.copyright'))
                                     ->placeholder('KibrisKare.com'),
                             ]),
 
-                        Tabs\Tab::make('Hüquqi Sənədlər & Şərtlər')
+                        Tabs\Tab::make(__('admin.legal_documents_terms'))
                             ->icon('heroicon-o-scale')
                             ->schema([
-                                Section::make('Kullanıcı Sözleşmesi (İstifadəçi Razılaşması - 4 Dildə)')
-                                    ->description('İstifadəçilərin saytdan qeydiyyatdan keçərkən və xidmətlərdən istifadə edərkən razılaşdığı hüquqi müqavilə')
+                                Section::make(__('admin.user_agreement_4langs'))
+                                    ->description(__('admin.user_agreement_hint'))
                                     ->schema([
                                         Tabs::make('UserAgreementLangTabs')->tabs([
-                                            Tabs\Tab::make('Türkçə (TR)')->schema([
+                                            Tabs\Tab::make(__('admin.turkish_tr'))->schema([
                                                 RichEditor::make('user_agreement.tr')
-                                                    ->label('Kullanıcı Sözleşmesi (Türkçe)')
-                                                    ->placeholder('Kullanıcı sözleşmesi metnini buraya giriniz...'),
+                                                    ->label(__('admin.user_agreement_tr'))
+                                                    ->placeholder(__('admin.user_agreement_tr_placeholder')),
                                             ]),
-                                            Tabs\Tab::make('Azərbaycanca (AZ)')->schema([
+                                            Tabs\Tab::make(__('admin.azerbaijani_az'))->schema([
                                                 RichEditor::make('user_agreement.az')
-                                                    ->label('İstifadəçi Razılaşması (Azərbaycanca)')
-                                                    ->placeholder('İstifadəçi razılaşması mətnini bura daxil edin...'),
+                                                    ->label(__('admin.user_agreement_az'))
+                                                    ->placeholder(__('admin.user_agreement_az_placeholder')),
                                             ]),
-                                            Tabs\Tab::make('İngiliscə (EN)')->schema([
+                                            Tabs\Tab::make(__('admin.english_en'))->schema([
                                                 RichEditor::make('user_agreement.en')
                                                     ->label('User Agreement (English)')
                                                     ->placeholder('Enter user agreement text here...'),
@@ -218,21 +221,21 @@ class ManageSiteSettings extends Page implements HasForms
                                     ])
                                     ->collapsible(),
 
-                                Section::make('Gizlilik Politikası (Məxfilik Siyasəti - 4 Dildə)')
-                                    ->description('Fərdi məlumatların toplanması, emalı və təhlükəsizliyi qaydaları')
+                                Section::make(__('admin.privacy_policy_4langs'))
+                                    ->description(__('admin.privacy_policy_hint'))
                                     ->schema([
                                         Tabs::make('PrivacyPolicyLangTabs')->tabs([
-                                            Tabs\Tab::make('Türkçə (TR)')->schema([
+                                            Tabs\Tab::make(__('admin.turkish_tr'))->schema([
                                                 RichEditor::make('privacy_policy.tr')
-                                                    ->label('Gizlilik Politikası (Türkçe)')
-                                                    ->placeholder('Gizlilik politikası metnini buraya giriniz...'),
+                                                    ->label(__('admin.privacy_policy_tr'))
+                                                    ->placeholder(__('admin.privacy_policy_tr_placeholder')),
                                             ]),
-                                            Tabs\Tab::make('Azərbaycanca (AZ)')->schema([
+                                            Tabs\Tab::make(__('admin.azerbaijani_az'))->schema([
                                                 RichEditor::make('privacy_policy.az')
-                                                    ->label('Məxfilik Siyasəti (Azərbaycanca)')
-                                                    ->placeholder('Məxfilik siyasəti mətnini bura daxil edin...'),
+                                                    ->label(__('admin.privacy_policy_az'))
+                                                    ->placeholder(__('admin.privacy_policy_az_placeholder')),
                                             ]),
-                                            Tabs\Tab::make('İngiliscə (EN)')->schema([
+                                            Tabs\Tab::make(__('admin.english_en'))->schema([
                                                 RichEditor::make('privacy_policy.en')
                                                     ->label('Privacy Policy (English)')
                                                     ->placeholder('Enter privacy policy text here...'),
@@ -246,21 +249,21 @@ class ManageSiteSettings extends Page implements HasForms
                                     ])
                                     ->collapsible(),
 
-                                Section::make('Kullanım Koşulları (İstifadə Qaydaları - 4 Dildə)')
-                                    ->description('Saytın və elanların istifadəsi üzrə ümumi şərtlər və qaydalar')
+                                Section::make(__('admin.terms_4langs'))
+                                    ->description(__('admin.terms_general_hint'))
                                     ->schema([
                                         Tabs::make('TermsOfUseLangTabs')->tabs([
-                                            Tabs\Tab::make('Türkçə (TR)')->schema([
+                                            Tabs\Tab::make(__('admin.turkish_tr'))->schema([
                                                 RichEditor::make('terms_of_use.tr')
-                                                    ->label('Kullanım Koşulları (Türkçe)')
-                                                    ->placeholder('Kullanım koşulları metnini buraya giriniz...'),
+                                                    ->label(__('admin.terms_tr'))
+                                                    ->placeholder(__('admin.terms_tr_placeholder')),
                                             ]),
-                                            Tabs\Tab::make('Azərbaycanca (AZ)')->schema([
+                                            Tabs\Tab::make(__('admin.azerbaijani_az'))->schema([
                                                 RichEditor::make('terms_of_use.az')
-                                                    ->label('İstifadə Qaydaları (Azərbaycanca)')
-                                                    ->placeholder('İstifadə qaydaları mətnini bura daxil edin...'),
+                                                    ->label(__('admin.terms_az'))
+                                                    ->placeholder(__('admin.terms_az_placeholder')),
                                             ]),
-                                            Tabs\Tab::make('İngiliscə (EN)')->schema([
+                                            Tabs\Tab::make(__('admin.english_en'))->schema([
                                                 RichEditor::make('terms_of_use.en')
                                                     ->label('Terms of Use (English)')
                                                     ->placeholder('Enter terms of use text here...'),
@@ -275,50 +278,50 @@ class ManageSiteSettings extends Page implements HasForms
                                     ->collapsible(),
                             ]),
 
-                        Tabs\Tab::make('Limitlər & Mesaj Şablonları')
+                        Tabs\Tab::make(__('admin.limits_message_templates'))
                             ->icon('heroicon-o-cog-6-tooth')
                             ->schema([
-                                Section::make('Elan & Səhifələmə Limitləri')
-                                    ->description('Saytdakı elanların görünmə müddəti və siyahılama limitləri')
+                                Section::make(__('admin.listing_pagination_limits'))
+                                    ->description(__('admin.listing_visibility_limits'))
                                     ->schema([
                                         Grid::make(2)->schema([
                                             TextInput::make('listing_expiration_days')
-                                                ->label('Elanların Aktivlik Müddəti (Gün)')
+                                                ->label(__('admin.listing_active_days'))
                                                 ->numeric()
                                                 ->default(30)
-                                                ->helperText('Yenilənmə tarixindən bu qədər gün keçmiş köhnə elanlar avtomatik gizlədilir.'),
+                                                ->helperText(__('admin.listing_expiry_hint')),
                                             TextInput::make('items_per_page')
-                                                ->label('Səhifə Başına Elan Sayı (Paginasiya)')
+                                                ->label(__('admin.listings_per_page'))
                                                 ->numeric()
                                                 ->default(30),
                                             TextInput::make('featured_limit')
-                                                ->label('Seçilmiş Elanlar Sayı (Featured)')
+                                                ->label(__('admin.featured_listings_count'))
                                                 ->numeric()
                                                 ->default(10),
                                             TextInput::make('vip_limit')
-                                                ->label('VIP Elanlar Sayı')
+                                                ->label(__('admin.vip_listings_count'))
                                                 ->numeric()
                                                 ->default(10),
                                         ]),
                                     ]),
 
-                                Section::make('WhatsApp Sorğu Mesaj Şablonları (4 Dildə)')
-                                    ->description('İstifadəçilər "WhatsApp ilə Əlaqə" düyməsini basdıqda avtomatik doldurulan mətn')
+                                Section::make(__('admin.whatsapp_templates_4langs'))
+                                    ->description(__('admin.whatsapp_autofill_hint'))
                                     ->schema([
                                         Tabs::make('WhatsAppMsgTabs')->tabs([
-                                            Tabs\Tab::make('Əmlak Mesajı')->schema([
+                                            Tabs\Tab::make(__('admin.property_message'))->schema([
                                                 Grid::make(2)->schema([
-                                                    TextInput::make('whatsapp_property_message.tr')->label('Mesaj (Türkcə)')->placeholder('Merhaba, KibrisKare.com ilanınızla ilgili bilgi almak istiyorum: {title}'),
-                                                    TextInput::make('whatsapp_property_message.az')->label('Mesaj (Azərbaycanca)')->placeholder('Salam, KibrisKare.com elanınızla bağlı məlumat almaq istəyirəm: {title}'),
-                                                    TextInput::make('whatsapp_property_message.en')->label('Mesaj (İngiliscə)')->placeholder('Hello, I would like to get information regarding your KibrisKare.com listing: {title}'),
+                                                    TextInput::make('whatsapp_property_message.tr')->label(__('admin.message_tr'))->placeholder(__('admin.whatsapp_property_template_tr')),
+                                                    TextInput::make('whatsapp_property_message.az')->label(__('admin.message_az'))->placeholder(__('admin.whatsapp_property_template_az')),
+                                                    TextInput::make('whatsapp_property_message.en')->label(__('admin.message_en'))->placeholder('Hello, I would like to get information regarding your KibrisKare.com listing: {title}'),
                                                     TextInput::make('whatsapp_property_message.ru')->label('Mesaj (Rusca)')->placeholder('Здравствуйте, хочу получить информацию по вашему объявлению на KibrisKare.com: {title}'),
                                                 ]),
                                             ]),
-                                            Tabs\Tab::make('Otaq Yoldaşı Mesajı')->schema([
+                                            Tabs\Tab::make(__('admin.roommate_message'))->schema([
                                                 Grid::make(2)->schema([
-                                                    TextInput::make('whatsapp_roommate_message.tr')->label('Mesaj (Türkcə)')->placeholder('Merhaba, KibrisKare.com oda arkadaşı ilanınızla ilgili yazıyorum: {title}'),
-                                                    TextInput::make('whatsapp_roommate_message.az')->label('Mesaj (Azərbaycanca)')->placeholder('Salam, KibrisKare.com otaq yoldaşı elanınızla bağlı yazıram: {title}'),
-                                                    TextInput::make('whatsapp_roommate_message.en')->label('Mesaj (İngiliscə)')->placeholder('Hello, I am contacting you regarding your roommate listing on KibrisKare.com: {title}'),
+                                                    TextInput::make('whatsapp_roommate_message.tr')->label(__('admin.message_tr'))->placeholder(__('admin.whatsapp_roommate_template_tr')),
+                                                    TextInput::make('whatsapp_roommate_message.az')->label(__('admin.message_az'))->placeholder(__('admin.whatsapp_roommate_template_az')),
+                                                    TextInput::make('whatsapp_roommate_message.en')->label(__('admin.message_en'))->placeholder('Hello, I am contacting you regarding your roommate listing on KibrisKare.com: {title}'),
                                                     TextInput::make('whatsapp_roommate_message.ru')->label('Mesaj (Rusca)')->placeholder('Здравствуйте, пишу по поводу вашего объявления о поиске соседа на KibrisKare.com: {title}'),
                                                 ]),
                                             ]),
@@ -340,7 +343,7 @@ class ManageSiteSettings extends Page implements HasForms
         $setting->save();
 
         Notification::make()
-            ->title('Parametrlər uğurla yadda saxlanıldı!')
+            ->title(__('admin.settings_saved_success'))
             ->success()
             ->send();
     }

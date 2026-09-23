@@ -41,10 +41,38 @@
                     </div>
                 @endif
                 <div class="space-y-0.5">
-                    <h4 class="text-base font-bold text-gray-900 leading-tight">{{ $agentName }}</h4>
+                    @if($property->agent)
+                        <a href="{{ route('agents.show', $property->agent->id) }}" class="text-base font-bold text-gray-900 leading-tight hover:text-orange-500 transition block">
+                            {{ $agentName }}
+                        </a>
+                    @elseif($property->agency)
+                        <a href="{{ route('agencies.show', $property->agency->slug ?: $property->agency->id) }}" class="text-base font-bold text-gray-900 leading-tight hover:text-orange-500 transition block">
+                            {{ $agentName }}
+                        </a>
+                    @else
+                        <h4 class="text-base font-bold text-gray-900 leading-tight">{{ $agentName }}</h4>
+                    @endif
                     <p class="text-xs text-gray-500">{{ $agentRole }}</p>
                 </div>
             </div>
+
+            @if($property->agency && $property->agent)
+                <div class="p-3 rounded-2xl bg-gray-50/90 border border-gray-100 hover:bg-orange-50/40 transition group">
+                    <a href="{{ route('agencies.show', $property->agency->slug ?: $property->agency->id) }}" class="flex items-center gap-3">
+                        @if($property->agency->logo_url)
+                            <img src="{{ $property->agency->logo_url }}" alt="{{ $property->agency->name }}" class="w-9 h-9 rounded-xl object-contain bg-white border border-gray-200/60 p-0.5 shrink-0">
+                        @else
+                            <div class="w-9 h-9 rounded-xl bg-orange-100 text-orange-600 font-bold flex items-center justify-center text-sm shrink-0">
+                                <i class="bi bi-building"></i>
+                            </div>
+                        @endif
+                        <div class="min-w-0 flex-1">
+                            <span class="block text-xs font-bold text-gray-900 truncate group-hover:text-orange-600 transition">{{ $property->agency->name }}</span>
+                            <span class="block text-[11px] text-gray-400 group-hover:text-orange-500 transition">{{ __('agency.agency_default_subtitle') }} →</span>
+                        </div>
+                    </a>
+                </div>
+            @endif
 
             @if($hasContact)
                 <div class="pt-3 border-t border-gray-100 space-y-2.5">

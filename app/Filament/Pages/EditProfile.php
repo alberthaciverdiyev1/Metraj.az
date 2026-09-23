@@ -44,8 +44,8 @@ class EditProfile extends BaseEditProfile
             $user->email === User::ADMIN_EMAIL => 'Admin (Super Administrator)',
             $user->isTenantOwner() => 'Agentlik Sahibi — ' . ($user->tenantAgency()?->name ?? 'Agentlik'),
             $user->agent && $user->agent->agency_id !== null => 'Rieltor — ' . ($user->agent->agency?->name ?? 'Agentlik'),
-            $user->agent !== null => 'Müstəqil Rieltor',
-            default => 'İstifadəçi',
+            $user->agent !== null => __('admin.independent_realtor'),
+            default => __('admin.user'),
         };
     }
 
@@ -70,20 +70,20 @@ class EditProfile extends BaseEditProfile
 
         // 1. Əgər Agentlik Sahibidirsə -> YALNIZ Agentlik Məlumatları göstərilir
         if ($user->isTenantOwner() && $user->tenantAgency()) {
-            $components[] = Section::make('Agentlik Məlumatları')
-                ->description('Veb saytında və elanlarınızda görünən rəsmi agentlik detalları.')
+            $components[] = Section::make(__('admin.agency_information'))
+                ->description(__('admin.agency_public_details'))
                 ->schema([
                     TextInput::make('agency.name')
-                        ->label('Agentliyin Adı')
+                        ->label(__('admin.agency_name'))
                         ->required()
                         ->maxLength(255)
                         ->columnSpanFull(),
 
                     Textarea::make('agency.description')
-                        ->label('Haqqında Ətraflı Məlumat')
+                        ->label(__('admin.detailed_about'))
                         ->rows(3)
                         ->columnSpanFull()
-                        ->helperText('Agentliyiniz haqqında ətraflı məlumat.'),
+                        ->helperText(__('admin.about_your_agency')),
 
                     FileUpload::make('agency.logo')
                         ->label('Agentlik Loqosu')
@@ -94,7 +94,7 @@ class EditProfile extends BaseEditProfile
                         ->columnSpan(1),
 
                     FileUpload::make('agency.banner')
-                        ->label('Banner Şəkli')
+                        ->label(__('admin.banner_image'))
                         ->image()
                         ->imageEditor()
                         ->directory('agencies')
@@ -102,17 +102,17 @@ class EditProfile extends BaseEditProfile
                         ->columnSpan(1),
 
                     TextInput::make('agency.phone')
-                        ->label('Telefon Nömrəsi')
+                        ->label(__('admin.phone_number'))
                         ->tel()
                         ->required(),
 
                     TextInput::make('agency.whatsapp')
-                        ->label('WhatsApp Nömrəsi')
+                        ->label(__('admin.whatsapp_number'))
                         ->tel()
                         ->prefixIcon('heroicon-o-chat-bubble-left-right'),
 
                     TextInput::make('agency.email')
-                        ->label('Rəsmi E-poçt')
+                        ->label(__('admin.official_email'))
                         ->email(),
 
                     TextInput::make('agency.website')
@@ -121,7 +121,7 @@ class EditProfile extends BaseEditProfile
                         ->placeholder('https://...'),
 
                     TextInput::make('agency.address')
-                        ->label('Ofis Ünvanı')
+                        ->label(__('admin.office_address'))
                         ->maxLength(255)
                         ->columnSpanFull(),
                 ])->columns(2);
@@ -129,10 +129,10 @@ class EditProfile extends BaseEditProfile
         // 2. Əks halda Rieltordursa -> YALNIZ Rieltor Profili göstərilir
         elseif ($user->agent) {
             $components[] = Section::make('Rieltor Profili')
-                ->description('Veb saytında görünən rieltor məlumatlarınızı buradan yeniləyin.')
+                ->description(__('admin.update_realtor_public_info'))
                 ->schema([
                     FileUpload::make('agent.avatar')
-                        ->label('Profil Şəkli')
+                        ->label(__('admin.profile_image'))
                         ->image()
                         ->imageEditor()
                         ->directory('agents')
@@ -140,7 +140,7 @@ class EditProfile extends BaseEditProfile
                         ->columnSpan(1),
 
                     FileUpload::make('agent.banner')
-                        ->label('Banner Şəkli (Üzlük)')
+                        ->label(__('admin.banner_image_cover'))
                         ->image()
                         ->imageEditor()
                         ->directory('agents/banners')
@@ -148,16 +148,16 @@ class EditProfile extends BaseEditProfile
                         ->columnSpan(1),
 
                     TextInput::make('agent.position')
-                        ->label('Vəzifə / Titul')
-                        ->placeholder('Məs: Baş rieltor, Satış meneceri')
+                        ->label(__('admin.position_title_short'))
+                        ->placeholder(__('admin.position_placeholder'))
                         ->maxLength(255),
 
                     TextInput::make('agent.phone')
-                        ->label('Əlaqə Nömrəsi')
+                        ->label(__('admin.contact_number'))
                         ->tel(),
 
                     TextInput::make('agent.whatsapp')
-                        ->label('WhatsApp Nömrəsi')
+                        ->label(__('admin.whatsapp_number'))
                         ->tel()
                         ->prefixIcon('heroicon-o-chat-bubble-left-right')
                         ->columnSpanFull(),

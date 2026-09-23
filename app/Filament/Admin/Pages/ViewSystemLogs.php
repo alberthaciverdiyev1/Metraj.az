@@ -11,9 +11,12 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class ViewSystemLogs extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-magnifying-glass';
-    protected static ?string $navigationGroup = 'Kataloq və Tənzimləmələr';
-    protected static ?string $navigationLabel = 'Sistem Qeydləri (Logs)';
-    protected static ?string $title = 'Laravel Sistem Qeydləri';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.catalog_and_settings'); }
+    public static function getNavigationLabel(): string {
+        return __('admin.system_logs'); }
+    public function getTitle(): string | \Illuminate\Contracts\Support\Htmlable {
+        return __('admin.laravel_system_logs'); }
     protected static ?int $navigationSort = 6;
 
     protected static string $view = 'filament.pages.view-system-logs';
@@ -170,7 +173,7 @@ class ViewSystemLogs extends Page
     {
         $filePath = $this->getSelectedFilePath();
         if (!$filePath) {
-            Notification::make()->danger()->title('Log faylı tapılmadı!')->send();
+            Notification::make()->danger()->title(__('admin.no_log_file_found'))->send();
             return;
         }
 
@@ -178,7 +181,7 @@ class ViewSystemLogs extends Page
 
         Notification::make()
             ->success()
-            ->title("{$this->selectedFile} faylının məzmunu uğurla təmizləndi!")
+            ->title(__('admin.log_file_cleared', ['file' => $this->selectedFile]))
             ->send();
     }
 
@@ -189,7 +192,7 @@ class ViewSystemLogs extends Page
     {
         $filePath = $this->getSelectedFilePath();
         if (!$filePath) {
-            Notification::make()->danger()->title('Log faylı tapılmadı!')->send();
+            Notification::make()->danger()->title(__('admin.no_log_file_found'))->send();
             return;
         }
 
@@ -201,7 +204,7 @@ class ViewSystemLogs extends Page
 
         Notification::make()
             ->success()
-            ->title("{$deletedName} faylı uğurla silindi!")
+            ->title(__('admin.log_file_deleted', ['file' => $deletedName]))
             ->send();
     }
 
@@ -212,7 +215,7 @@ class ViewSystemLogs extends Page
     {
         $filePath = $this->getSelectedFilePath();
         if (!$filePath) {
-            Notification::make()->danger()->title('Log faylı tapılmadı!')->send();
+            Notification::make()->danger()->title(__('admin.no_log_file_found'))->send();
             return null;
         }
 
@@ -223,31 +226,31 @@ class ViewSystemLogs extends Page
     {
         return [
             Action::make('download')
-                ->label('Faylı Endir')
+                ->label(__('admin.download_file'))
                 ->icon('heroicon-o-arrow-down-tray')
                 ->color('gray')
                 ->action('downloadSelectedLog')
                 ->visible(fn () => !empty($this->selectedFile)),
 
             Action::make('clear')
-                ->label('İçini Təmizlə')
+                ->label(__('admin.clear_contents'))
                 ->icon('heroicon-o-paint-brush')
                 ->color('warning')
                 ->requiresConfirmation()
-                ->modalHeading('Log faylının məzmununu təmizləmək istəyirsiniz?')
-                ->modalDescription('Seçilmiş log faylının daxilindəki bütün qeydlər silinəcək, faylın özü saxlanılacaq.')
-                ->modalSubmitActionLabel('Bəli, təmizlə')
+                ->modalHeading(__('admin.clear_log_file_confirm'))
+                ->modalDescription(__('admin.clear_log_file_hint'))
+                ->modalSubmitActionLabel(__('admin.yes_clear'))
                 ->action('clearSelectedLog')
                 ->visible(fn () => !empty($this->selectedFile)),
 
             Action::make('delete')
-                ->label('Faylı Sil')
+                ->label(__('admin.delete_file'))
                 ->icon('heroicon-o-trash')
                 ->color('danger')
                 ->requiresConfirmation()
-                ->modalHeading('Log faylını tamamilə silmək istəyirsiniz?')
-                ->modalDescription('Bu fayl server diskindən tamamilə silinəcək.')
-                ->modalSubmitActionLabel('Bəli, sil')
+                ->modalHeading(__('admin.delete_log_file_confirm'))
+                ->modalDescription(__('admin.file_will_be_deleted'))
+                ->modalSubmitActionLabel(__('admin.yes_delete'))
                 ->action('deleteSelectedLog')
                 ->visible(fn () => !empty($this->selectedFile)),
         ];

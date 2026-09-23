@@ -64,8 +64,8 @@ class AgentResource extends Resource
         return $form
             ->schema([
                 // 1. Create Mode User Account
-                Forms\Components\Section::make('Yeni İstifadəçi Hesabı')
-                    ->description('Hər yeni rieltor üçün yeni istifadəçi hesabı yaradılır.')
+                Forms\Components\Section::make(__('admin.new_user_account'))
+                    ->description(__('admin.realtor_user_account_hint'))
                     ->visibleOn('create')
                     ->schema([
                         Forms\Components\TextInput::make('new_user_name')
@@ -74,15 +74,15 @@ class AgentResource extends Resource
                             ->maxLength(255),
 
                         Forms\Components\TextInput::make('new_user_email')
-                            ->label('E-poçt')
+                            ->label(__('admin.email'))
                             ->email()
                             ->required()
                             ->unique(table: 'users', column: 'email')
                             ->maxLength(255)
-                            ->helperText('Bu istifadəçi agentlik paneline daxil ola biləcək.'),
+                            ->helperText(__('admin.user_can_access_agency_panel')),
 
                         Forms\Components\TextInput::make('new_user_password')
-                            ->label('Şifrə')
+                            ->label(__('admin.password'))
                             ->password()
                             ->required()
                             ->revealable()
@@ -90,8 +90,8 @@ class AgentResource extends Resource
                     ])->columns(3),
 
                 // 2. Edit Mode User Account
-                Forms\Components\Section::make('İstifadəçi Hesabı Məlumatları')
-                    ->description('Rieltorun sistemə giriş hesabı və əlaqə detalları.')
+                Forms\Components\Section::make(__('admin.user_account_information'))
+                    ->description(__('admin.realtor_account_details'))
                     ->visibleOn('edit')
                     ->schema([
                         Forms\Components\TextInput::make('user_name')
@@ -100,13 +100,13 @@ class AgentResource extends Resource
                             ->maxLength(255),
 
                         Forms\Components\TextInput::make('user_email')
-                            ->label('E-poçt')
+                            ->label(__('admin.email'))
                             ->email()
                             ->required()
                             ->maxLength(255),
 
                         Forms\Components\TextInput::make('new_password')
-                            ->label('Yeni Şifrə (Dəyişmək istəmirsinizsə boş qoyun)')
+                            ->label(__('admin.new_password_optional'))
                             ->password()
                             ->revealable()
                             ->nullable()
@@ -114,26 +114,26 @@ class AgentResource extends Resource
                     ])->columns(3),
 
                 // 3. Realtor Details
-                Forms\Components\Section::make('Rieltor Məlumatları')
-                    ->description('Veb saytında və elanlarda görünən profil məlumatları.')
+                Forms\Components\Section::make(__('admin.realtor_information'))
+                    ->description(__('admin.profile_info_public_hint'))
                     ->schema([
                         Forms\Components\TextInput::make('position')
-                            ->label('Vəzifə / Titul')
-                            ->placeholder('Məs: Baş rieltor, Satış meneceri')
+                            ->label(__('admin.position_title_short'))
+                            ->placeholder(__('admin.position_placeholder'))
                             ->maxLength(255),
 
                         Forms\Components\TextInput::make('phone')
-                            ->label('Əlaqə Nömrəsi')
+                            ->label(__('admin.contact_number'))
                             ->tel()
                             ->required(),
 
                         Forms\Components\TextInput::make('whatsapp')
-                            ->label('WhatsApp Nömrəsi')
+                            ->label(__('admin.whatsapp_number'))
                             ->tel()
                             ->prefixIcon('heroicon-o-chat-bubble-left-right'),
 
                         Forms\Components\FileUpload::make('avatar')
-                            ->label('Profil Şəkli')
+                            ->label(__('admin.profile_image'))
                             ->image()
                             ->imageEditor()
                             ->directory('agents')
@@ -141,7 +141,7 @@ class AgentResource extends Resource
                             ->columnSpan(1),
 
                         Forms\Components\FileUpload::make('banner')
-                            ->label('Banner Şəkli (Üzlük)')
+                            ->label(__('admin.banner_image_cover'))
                             ->image()
                             ->imageEditor()
                             ->directory('agents/banners')
@@ -163,7 +163,7 @@ class AgentResource extends Resource
             ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\ImageColumn::make('avatar')
-                    ->label('Şəkil')
+                    ->label(__('admin.image'))
                     ->circular()
                     ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->user?->name ?? 'R') . '&background=F97316&color=fff&size=80'),
 
@@ -174,7 +174,7 @@ class AgentResource extends Resource
                     ->weight('bold'),
 
                 Tables\Columns\TextColumn::make('position')
-                    ->label('Vəzifə')
+                    ->label(__('admin.position'))
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('phone')
@@ -190,7 +190,7 @@ class AgentResource extends Resource
 
                 Tables\Columns\TextColumn::make('properties_count')
                     ->counts('properties')
-                    ->label('Elan Sayı')
+                    ->label(__('admin.listing_count'))
                     ->badge()
                     ->color('success'),
 

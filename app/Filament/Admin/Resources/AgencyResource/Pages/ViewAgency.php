@@ -21,7 +21,7 @@ class ViewAgency extends ViewRecord
     {
         return $infolist
             ->schema([
-                Section::make('Loqo və Banner')
+                Section::make(__('admin.logo_and_banner_full'))
                     ->columns(2)
                     ->schema([
                         ImageEntry::make('logo')
@@ -38,11 +38,11 @@ class ViewAgency extends ViewRecord
                             ->extraImgAttributes(['class' => 'rounded-xl object-cover w-full']),
                     ]),
 
-                Section::make('Agentlik Məlumatları')
+                Section::make(__('admin.agency_information'))
                     ->columns(3)
                     ->schema([
                         TextEntry::make('name')
-                            ->label('Agentliyin Adı')
+                            ->label(__('admin.agency_name'))
                             ->weight('bold')
                             ->size(TextEntry\TextEntrySize::Large)
                             ->columnSpanFull(),
@@ -59,13 +59,13 @@ class ViewAgency extends ViewRecord
                             ->formatStateUsing(fn (AgencyStatus $state): string => $state->label()),
 
                         IconEntry::make('is_verified')
-                            ->label('Rəsmi Partnyor (Təsdiqlənib)')
+                            ->label(__('admin.official_partner_verified'))
                             ->boolean()
                             ->trueIcon('heroicon-o-check-badge')
                             ->falseIcon('heroicon-o-x-circle'),
 
                         TextEntry::make('owner.name')
-                            ->label('Rəhbər / Sahibi')
+                            ->label(__('admin.manager_owner'))
                             ->icon('heroicon-o-user')
                             ->placeholder('—'),
 
@@ -77,7 +77,7 @@ class ViewAgency extends ViewRecord
                             ->columnSpanFull(),
                     ]),
 
-                Section::make('Haqqında')
+                Section::make(__('admin.about'))
                     ->schema([
                         TextEntry::make('description')
                             ->label('')
@@ -86,7 +86,7 @@ class ViewAgency extends ViewRecord
                             ->columnSpanFull(),
                     ]),
 
-                Section::make('Əlaqə və Ünvan')
+                Section::make(__('admin.contact_and_address'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('phone')
@@ -103,7 +103,7 @@ class ViewAgency extends ViewRecord
                             ->copyable(),
 
                         TextEntry::make('email')
-                            ->label('Rəsmi E-poçt')
+                            ->label(__('admin.official_email'))
                             ->icon('heroicon-o-envelope')
                             ->placeholder('—')
                             ->copyable(),
@@ -117,7 +117,7 @@ class ViewAgency extends ViewRecord
                             ->openUrlInNewTab(),
 
                         TextEntry::make('address')
-                            ->label('Ofis Ünvanı')
+                            ->label(__('admin.office_address'))
                             ->icon('heroicon-o-map-pin')
                             ->placeholder('—')
                             ->columnSpanFull(),
@@ -127,21 +127,21 @@ class ViewAgency extends ViewRecord
                     ->columns(3)
                     ->schema([
                         TextEntry::make('agents_count')
-                            ->label('Rieltor Sayı')
+                            ->label(__('admin.realtor_count'))
                             ->state(fn ($record): int => $record->agents()->count())
                             ->badge()
                             ->color('info')
                             ->icon('heroicon-o-user-group'),
 
                         TextEntry::make('properties_count')
-                            ->label('Elan Sayı')
+                            ->label(__('admin.listing_count'))
                             ->state(fn ($record): int => $record->properties()->count())
                             ->badge()
                             ->color('success')
                             ->icon('heroicon-o-home-modern'),
 
                         TextEntry::make('published_properties_count')
-                            ->label('Aktiv (Dərc olunmuş) Elan')
+                            ->label(__('admin.active_published_listing'))
                             ->state(fn ($record): int => $record->properties()->where('status', 'published')->count())
                             ->badge()
                             ->color('primary')
@@ -152,11 +152,11 @@ class ViewAgency extends ViewRecord
                     ->columns(2)
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label('Yaradılma Tarixi')
+                            ->label(__('admin.created_at'))
                             ->dateTime('d.m.Y H:i'),
 
                         TextEntry::make('updated_at')
-                            ->label('Yenilənmə Tarixi')
+                            ->label(__('admin.updated_at'))
                             ->dateTime('d.m.Y H:i'),
                     ]),
             ]);

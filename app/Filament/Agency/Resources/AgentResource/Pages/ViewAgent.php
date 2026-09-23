@@ -35,7 +35,7 @@ class ViewAgent extends ViewRecord
                             ->columnSpan(2),
 
                         TextEntry::make('position')
-                            ->label('Vəzifə')
+                            ->label(__('admin.position'))
                             ->placeholder('—'),
 
                         TextEntry::make('phone')
@@ -52,7 +52,7 @@ class ViewAgent extends ViewRecord
                             ->boolean(),
 
                         TextEntry::make('properties_count')
-                            ->label('Elan Sayı')
+                            ->label(__('admin.listing_count'))
                             ->badge()
                             ->color('success'),
                     ]),

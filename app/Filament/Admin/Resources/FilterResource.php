@@ -18,13 +18,16 @@ class FilterResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-adjustments-horizontal';
 
-    protected static ?string $navigationGroup = 'Kataloq və Tənzimləmələr';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.catalog_and_settings'); }
 
-    protected static ?string $navigationLabel = 'Dinamik Filtrlər';
+    public static function getNavigationLabel(): string {
+        return __('admin.dynamic_filters'); }
 
     protected static ?string $modelLabel = 'Filtr';
 
-    protected static ?string $pluralModelLabel = 'Dinamik Filtrlər';
+    public static function getPluralModelLabel(): string {
+        return __('admin.dynamic_filters'); }
 
     protected static ?int $navigationSort = 3;
 
@@ -32,18 +35,18 @@ class FilterResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Filtr Parametrləri')
-                    ->description('Sayt və admin paneldə istifadə olunacaq dinamik parametr və filtr qrupu')
+                Forms\Components\Section::make(__('admin.filter_parameters'))
+                    ->description(__('admin.dynamic_filter_group_hint'))
                     ->schema([
                         Forms\Components\Select::make('key')
-                            ->label('Unikal Açar Söz (Enum Key)')
+                            ->label(__('admin.unique_keyword_enum_key'))
                             ->options(FilterKey::options())
                             ->searchable()
                             ->required()
                             ->unique(ignoreRecord: true),
 
                         Forms\Components\TextInput::make('sort_order')
-                            ->label('Sıralama')
+                            ->label(__('admin.sort_order'))
                             ->numeric()
                             ->default(0),
 
@@ -52,30 +55,30 @@ class FilterResource extends Resource
                             ->default(true),
 
                         Forms\Components\Toggle::make('is_searchable')
-                            ->label('Ön Axtarış Blokunda Göstərilsin')
+                            ->label(__('admin.show_in_pre_search'))
                             ->default(true),
                     ])->columns(4),
 
-                Forms\Components\Section::make('Filtr Adı (Çoxdilli)')
+                Forms\Components\Section::make(__('admin.filter_name_multilingual'))
                     ->schema([
                         Forms\Components\TextInput::make('name.az')
-                            ->label('Filtr Adı (AZ)')
-                            ->placeholder('Məs: Yerləşmə, Əmlakın növü')
+                            ->label(__('admin.filter_name_az'))
+                            ->placeholder(__('admin.example_location_property_type'))
                             ->required(),
 
                         Forms\Components\TextInput::make('name.tr')
-                            ->label('Filtr Adı (TR)')
-                            ->placeholder('Məs: Emlak Türü')
+                            ->label(__('admin.filter_name_tr'))
+                            ->placeholder(__('admin.example_property_type_tr'))
                             ->nullable(),
 
                         Forms\Components\TextInput::make('name.en')
-                            ->label('Filtr Adı (EN)')
-                            ->placeholder('Məs: Property Type')
+                            ->label(__('admin.filter_name_en'))
+                            ->placeholder(__('admin.example_property_type_en'))
                             ->nullable(),
 
                         Forms\Components\TextInput::make('name.ru')
-                            ->label('Filtr Adı (RU)')
-                            ->placeholder('Məs: Тип недвижимости')
+                            ->label(__('admin.filter_name_ru'))
+                            ->placeholder(__('admin.example_property_type_ru'))
                             ->nullable(),
                     ])->columns(4),
             ]);
@@ -87,28 +90,28 @@ class FilterResource extends Resource
             ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('key')
-                    ->label('Açar Söz (Key)')
+                    ->label(__('admin.keyword_key'))
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
 
                 Tables\Columns\TextColumn::make('name.az')
-                    ->label('Filtr Adı (AZ)')
+                    ->label(__('admin.filter_name_az'))
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('name.tr')
-                    ->label('Filtr Adı (TR)')
+                    ->label(__('admin.filter_name_tr'))
                     ->searchable()
                     ->placeholder('—'),
 
                 Tables\Columns\TextColumn::make('options_count')
                     ->counts('options')
-                    ->label('Seçim Sayı')
+                    ->label(__('admin.selection_count'))
                     ->badge()
                     ->color('info'),
 
                 Tables\Columns\IconColumn::make('is_searchable')
-                    ->label('Axtarışda')
+                    ->label(__('admin.in_search'))
                     ->boolean(),
 
                 Tables\Columns\IconColumn::make('is_active')
@@ -116,14 +119,14 @@ class FilterResource extends Resource
                     ->boolean(),
 
                 Tables\Columns\TextColumn::make('sort_order')
-                    ->label('Sıra')
+                    ->label(__('admin.sort_order_short'))
                     ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_active')
                     ->label('Aktivlik'),
                 Tables\Filters\TernaryFilter::make('is_searchable')
-                    ->label('Axtarışda göstərilən'),
+                    ->label(__('admin.shown_in_search')),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

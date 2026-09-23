@@ -52,45 +52,45 @@ class StatsOverviewWidget extends BaseWidget
         $inquiryCount = Inquiry::count();
 
         return [
-            Stat::make('Ümumi Əmlak', number_format($totalProperties))
-                ->description("Son 7 gündə: +" . array_sum($propertyTrend))
+            Stat::make(__('admin.total_properties'), number_format($totalProperties))
+                ->description(__('admin.last_7_days_plus') . array_sum($propertyTrend))
                 ->descriptionIcon('heroicon-m-home-modern')
                 ->color('primary')
                 ->chart($propertyTrend),
 
-            Stat::make('Dərc Olunmuş', number_format($publishedCount))
+            Stat::make(__('admin.published_short'), number_format($publishedCount))
                 ->description('Saytda aktiv elanlar')
                 ->descriptionIcon('heroicon-m-check-badge')
                 ->color('success'),
 
-            Stat::make('Təsdiq Gözləyən', number_format($pendingCount))
-                ->description($pendingCount > 0 ? 'Moderasiya tələb olunur' : 'Yoxlanılıb')
+            Stat::make(__('admin.pending_approval_tr'), number_format($pendingCount))
+                ->description($pendingCount > 0 ? __('admin.moderation_required') : __('admin.checked'))
                 ->descriptionIcon('heroicon-m-clock')
                 ->color($pendingCount > 0 ? 'warning' : 'gray'),
 
-            Stat::make('İstifadəçilər', number_format($totalUsers))
-                ->description("+{$newUsersThisWeek} yeni (bu həftə)")
+            Stat::make(__('admin.users'), number_format($totalUsers))
+                ->description(__('admin.stat_new_users_this_week', ['count' => $newUsersThisWeek]))
                 ->descriptionIcon('heroicon-m-users')
                 ->color('info')
                 ->chart($userTrend),
 
-            Stat::make('Agentliklər & Agentlər', "{$agencyCount} / {$agentCount}")
-                ->description("{$agencyCount} şirkət, {$agentCount} rieltor")
+            Stat::make(__('admin.agencies_and_agents'), "{$agencyCount} / {$agentCount}")
+                ->description(__('admin.stat_agencies_agents_desc', ['agencies' => $agencyCount, 'agents' => $agentCount]))
                 ->descriptionIcon('heroicon-m-building-office-2')
                 ->color('primary'),
 
-            Stat::make('Otaq Yoldaşı & Sifariş', "{$roommateCount} / {$requestCount}")
-                ->description("{$roommateCount} otaq, {$requestCount} tələb")
+            Stat::make(__('admin.roommate_and_request'), "{$roommateCount} / {$requestCount}")
+                ->description(__('admin.stat_roommates_requests_desc', ['roommates' => $roommateCount, 'requests' => $requestCount]))
                 ->descriptionIcon('heroicon-m-user-group')
                 ->color('success'),
 
-            Stat::make('Müştəri Müraciətləri', number_format($inquiryCount))
-                ->description('Gələn mesaj & sorğular')
+            Stat::make(__('admin.customer_inquiries'), number_format($inquiryCount))
+                ->description(__('admin.incoming_messages_requests'))
                 ->descriptionIcon('heroicon-m-chat-bubble-left-right')
                 ->color('danger'),
 
-            Stat::make('Ümumi Baxış Sayı', number_format($totalViews))
-                ->description('Bütün baxışlar cəmi')
+            Stat::make(__('admin.total_view_count'), number_format($totalViews))
+                ->description(__('admin.total_views_all'))
                 ->descriptionIcon('heroicon-m-eye')
                 ->color('gray'),
         ];

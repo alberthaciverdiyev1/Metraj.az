@@ -36,8 +36,15 @@ class AgencyRepository implements AgencyRepositoryInterface
     {
         $query = $this->model->with(['agents.user', 'owner'])->where('status', AgencyStatus::Active);
 
-        return ctype_digit((string) $idOrSlug)
-            ? $query->where('id', (int) $idOrSlug)->first()
-            : $query->where('slug', $idOrSlug)->first();
+        if (ctype_digit((string) $idOrSlug)) {
+            $agency = (clone $query)->where('id', (int) $idOrSlug)->first();
+            if ($agency) return $agency;
+        }
+
+        $term = trim((string) $idOrSlug);
+        return $query->where(function ($q) use ($term) {
+            $q->whereRaw('LOWER(slug) = LOWER(?)', [$term])
+              ->orWhereRaw('LOWER(name) = LOWER(?)', [$term]);
+        })->first();
     }
 }

@@ -14,14 +14,14 @@ class ViewPropertyRequest extends ViewRecord
     {
         return [
             Action::make('call')
-                ->label('Zəng et')
+                ->label(__('admin.call'))
                 ->icon('heroicon-o-phone')
                 ->color('warning')
                 ->url(fn ($record) => $record->contact_phone ? 'tel:' . preg_replace('/[^0-9+]/', '', $record->contact_phone) : null)
                 ->visible(fn ($record) => ! empty($record->contact_phone)),
 
             Action::make('whatsapp')
-                ->label('WhatsApp ilə Əlaqə')
+                ->label(__('admin.contact_via_whatsapp'))
                 ->icon('heroicon-o-chat-bubble-left-ellipsis')
                 ->color('success')
                 ->url(fn ($record) => ! empty($record->contact_whatsapp ?? $record->contact_phone)

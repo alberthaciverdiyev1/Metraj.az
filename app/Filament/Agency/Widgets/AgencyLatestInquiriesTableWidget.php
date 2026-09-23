@@ -20,9 +20,7 @@ class AgencyLatestInquiriesTableWidget extends BaseWidget
 
     public function getHeading(): ?string
     {
-        return app()->getLocale() === 'tr'
-            ? 'Son Müşteri Talepleri ve Mesajları'
-            : (app()->getLocale() === 'az' ? 'Son Müştəri Müraciətləri' : 'Recent Client Inquiries');
+        return __('admin.latest_customer_inquiries');
     }
 
     public function table(Table $table): Table
@@ -59,29 +57,29 @@ class AgencyLatestInquiriesTableWidget extends BaseWidget
             )
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label(app()->getLocale() === 'tr' ? 'Müşteri' : (app()->getLocale() === 'az' ? 'Müştəri' : 'Client'))
+                    ->label(__('admin.customer'))
                     ->searchable()
                     ->weight('bold'),
 
                 Tables\Columns\TextColumn::make('phone')
-                    ->label(app()->getLocale() === 'tr' ? 'Telefon' : (app()->getLocale() === 'az' ? 'Telefon' : 'Phone'))
+                    ->label(__('admin.phone_short'))
                     ->icon('heroicon-m-phone'),
 
                 Tables\Columns\TextColumn::make('property.title')
-                    ->label(app()->getLocale() === 'tr' ? 'İlgili İlan' : (app()->getLocale() === 'az' ? 'Əlaqəli Əmlak' : 'Property'))
+                    ->label(__('admin.related_property_full'))
                     ->limit(25)
-                    ->placeholder(app()->getLocale() === 'tr' ? 'Genel Talep' : 'Ümumi Müraciət'),
+                    ->placeholder(__('admin.general_inquiry')),
 
                 Tables\Columns\TextColumn::make('message')
-                    ->label(app()->getLocale() === 'tr' ? 'Mesaj' : (app()->getLocale() === 'az' ? 'Mesaj' : 'Message'))
+                    ->label(__('admin.message_field'))
                     ->limit(35),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label(app()->getLocale() === 'tr' ? 'Tarih' : (app()->getLocale() === 'az' ? 'Tarix' : 'Date'))
+                    ->label(__('admin.date_field'))
                     ->since(),
             ])
-            ->emptyStateHeading(app()->getLocale() === 'tr' ? 'Henüz müşteri talebi bulunmuyor' : (app()->getLocale() === 'az' ? 'Hələ ki müraciət yoxdur' : 'No inquiries yet'))
-            ->emptyStateDescription(app()->getLocale() === 'tr' ? 'İlanlarınızdan gelen mesajlar burada listelenecektir.' : 'Elanlarınızdan daxil olan müraciətlər burada görünəcək.')
+            ->emptyStateHeading(__('admin.no_inquiries_yet'))
+            ->emptyStateDescription(__('admin.incoming_inquiries_hint'))
             ->emptyStateIcon('heroicon-o-chat-bubble-left-right');
     }
 }

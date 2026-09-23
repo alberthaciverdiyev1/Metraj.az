@@ -18,13 +18,16 @@ class LocationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
 
-    protected static ?string $navigationGroup = 'Kataloq və Tənzimləmələr';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.catalog_and_settings'); }
 
-    protected static ?string $navigationLabel = 'Şəhər və Rayonlar';
+    public static function getNavigationLabel(): string {
+        return __('admin.cities_and_districts'); }
 
-    protected static ?string $modelLabel = 'Şəhər';
+    public static function getModelLabel(): string {
+        return __('admin.city'); }
 
-    protected static ?string $pluralModelLabel = 'Şəhərlər və Rayonlar';
+    public static function getPluralModelLabel(): string { return __('admin.cities_and_districts_2'); }
 
     protected static ?int $navigationSort = 1;
 
@@ -32,12 +35,12 @@ class LocationResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Şəhər Məlumatları')
-                    ->description('Yeni şəhər əlavə edin. Şəhəri yadda saxladıqdan sonra ona aid rayon və bölqələri idarə edə bilərsiniz.')
+                Forms\Components\Section::make(__('admin.city_information'))
+                    ->description(__('admin.add_city_hint'))
                     ->schema([
                         Forms\Components\TextInput::make('name.az')
-                            ->label('Şəhər Adı (AZ)')
-                            ->placeholder('Məs: Bakı, Girne, Lefkoşa')
+                            ->label(__('admin.city_name_az'))
+                            ->placeholder(__('admin.example_baku_girne_lefkosa'))
                             ->required()
                             ->live(onBlur: true)
                             ->afterStateUpdated(function (Forms\Set $set, $state) {
@@ -47,27 +50,27 @@ class LocationResource extends Resource
                             }),
 
                         Forms\Components\TextInput::make('name.tr')
-                            ->label('Şəhər Adı (TR)')
-                            ->placeholder('Məs: Girne, Lefkoşa')
+                            ->label(__('admin.city_name_tr'))
+                            ->placeholder(__('admin.example_girne_lefkosa'))
                             ->nullable(),
 
                         Forms\Components\TextInput::make('name.en')
-                            ->label('Şəhər Adı (EN)')
-                            ->placeholder('Məs: Baku, Kyrenia')
+                            ->label(__('admin.city_name_en'))
+                            ->placeholder(__('admin.example_baku_kyrenia'))
                             ->nullable(),
 
                         Forms\Components\TextInput::make('name.ru')
-                            ->label('Şəhər Adı (RU)')
-                            ->placeholder('Məs: Баку, Кирения')
+                            ->label(__('admin.city_name_ru'))
+                            ->placeholder(__('admin.example_baku_kyrenia_ru'))
                             ->nullable(),
 
                         Forms\Components\TextInput::make('slug')
-                            ->label('Slug / Açar Kod')
+                            ->label(__('admin.slug_key_code'))
                             ->placeholder('baku, girne')
                             ->required(),
 
                         Forms\Components\TextInput::make('sort_order')
-                            ->label('Sıralama')
+                            ->label(__('admin.sort_order'))
                             ->numeric()
                             ->default(0),
 
@@ -84,22 +87,22 @@ class LocationResource extends Resource
             ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('name.az')
-                    ->label('Şəhər (AZ)')
+                    ->label(__('admin.city_az'))
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
 
                 Tables\Columns\TextColumn::make('name.tr')
-                    ->label('Şəhər (TR)')
+                    ->label(__('admin.city_tr'))
                     ->searchable()
                     ->placeholder('—'),
 
                 Tables\Columns\TextColumn::make('name.en')
-                    ->label('Şəhər (EN)')
+                    ->label(__('admin.city_en'))
                     ->placeholder('—'),
 
                 Tables\Columns\TextColumn::make('name.ru')
-                    ->label('Şəhər (RU)')
+                    ->label(__('admin.city_ru'))
                     ->placeholder('—'),
 
                 Tables\Columns\TextColumn::make('slug')
@@ -109,7 +112,7 @@ class LocationResource extends Resource
 
                 Tables\Columns\TextColumn::make('districts_count')
                     ->counts('districts')
-                    ->label('Rayon / Bölqə Sayı')
+                    ->label(__('admin.district_count'))
                     ->badge()
                     ->color('success'),
 
@@ -118,7 +121,7 @@ class LocationResource extends Resource
                     ->boolean(),
 
                 Tables\Columns\TextColumn::make('sort_order')
-                    ->label('Sıra')
+                    ->label(__('admin.sort_order_short'))
                     ->sortable(),
             ])
             ->filters([

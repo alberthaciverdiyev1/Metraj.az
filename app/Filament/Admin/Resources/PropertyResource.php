@@ -22,7 +22,8 @@ class PropertyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-home-modern';
 
-    protected static ?string $navigationGroup = 'Əmlak və Müraciətlər';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.properties_and_inquiries'); }
 
     public static function getNavigationLabel(): string
     {
@@ -107,16 +108,16 @@ class PropertyResource extends Resource
 
         if ($isAdmin) {
             $schema[] = Forms\Components\ToggleButtons::make('seller_type')
-                ->label('Satıcı növü')
+                ->label(__('admin.seller_type'))
                 ->options(SellerType::options())
                 ->default(SellerType::Owner->value)
                 ->inline()
-                ->helperText('Elanı kimin adından yerləşdirirsiniz?')
+                ->helperText(__('admin.on_behalf_of_whom'))
                 ->columnSpanFull();
         }
 
-        return Forms\Components\Section::make('Əmlak və Əməliyyat')
-            ->description('Əmlakın növünü və əməliyyat formasını seçin')
+        return Forms\Components\Section::make(__('admin.property_and_deal'))
+            ->description(__('admin.select_property_type_and_deal'))
             ->icon('heroicon-o-home-modern')
             ->columnSpan(2)
             ->schema($schema);
@@ -127,24 +128,24 @@ class PropertyResource extends Resource
      */
     protected static function sectionLocation(): Forms\Components\Section
     {
-        return Forms\Components\Section::make('Yerləşmə və Dəqiq Xəritə')
-            ->description('Şəhər, rayon və OpenStreetMap üzərində dəqiq ünvan / koordinat seçimi')
+        return Forms\Components\Section::make(__('admin.location_and_exact_map'))
+            ->description(__('admin.city_district_map_hint'))
             ->icon('heroicon-o-map-pin')
             ->columnSpan(2)
             ->columns(2)
             ->schema([
                 Forms\Components\Select::make('city_id')
-                    ->label('Şəhər')
+                    ->label(__('admin.city'))
                     ->options(fn () => \App\Modules\Location\Models\City::where('is_active', true)->orderBy('sort_order')->get()->mapWithKeys(fn ($c) => [$c->id => $c->name['az'] ?? $c->slug]))
                     ->searchable()
                     ->preload()
-                    ->placeholder('Şəhər seçin')
+                    ->placeholder(__('admin.select_city'))
                     ->live()
                     ->afterStateUpdated(fn (Forms\Set $set) => $set('district_id', null))
                     ->required(),
 
                 Forms\Components\Select::make('district_id')
-                    ->label('Rayon / Bölqə')
+                    ->label(__('admin.district_region_variant'))
                     ->options(fn (Forms\Get $get) =>
                         $get('city_id')
                             ? \App\Modules\Location\Models\District::where('city_id', $get('city_id'))
@@ -161,16 +162,16 @@ class PropertyResource extends Resource
                     ->nullable(),
 
                 Forms\Components\TextInput::make('address')
-                    ->label('Dəqiq Ünvan')
-                    ->placeholder('Məs: Nizami küçəsi 45, mənzil 12')
-                    ->helperText('Ünvan yazdıqda xəritədə göstərilir, xəritədə seçdikdə isə avtomatik bura yazılır')
+                    ->label(__('admin.exact_address'))
+                    ->placeholder(__('admin.example_address'))
+                    ->helperText(__('admin.map_address_sync_hint'))
                     ->maxLength(255)
                     ->live(debounce: 500)
                     ->columnSpan(1),
 
                 Forms\Components\TextInput::make('landmark')
-                    ->label('Nişangah')
-                    ->placeholder('Məs: Dəniz kənarı, Universitet yaxınlığı')
+                    ->label(__('admin.landmark'))
+                    ->placeholder(__('admin.example_near_sea_university'))
                     ->maxLength(255)
                     ->columnSpan(1),
 
@@ -258,15 +259,15 @@ class PropertyResource extends Resource
             }
         };
 
-        return Forms\Components\Section::make('Qiymət və Valyutalar')
-            ->description('Əsas valyuta seçimi, qiymət və avtomatik məzənnə konvertasiyası')
+        return Forms\Components\Section::make(__('admin.price_and_currencies'))
+            ->description(__('admin.main_currency_price_hint'))
             ->icon('heroicon-o-banknotes')
             ->columnSpan(2)
             ->columns(4)
             ->schema([
                 Forms\Components\Toggle::make('auto_convert_currency')
-                    ->label('Məzənnəyə uyğun avtomatik konvertasiya')
-                    ->helperText('Aktiv olduqda, əsas qiymət daxil edildikdə digər bütün valyutalar günlük məzənnəyə əsasən avtomatik doldurulur.')
+                    ->label(__('admin.auto_convert_by_rate'))
+                    ->helperText(__('admin.auto_convert_hint'))
                     ->default(true)
                     ->live()
                     ->afterStateUpdated(fn (bool $state, Forms\Get $get, Forms\Set $set) => $recalculateCurrencies($get, $set))
@@ -274,15 +275,15 @@ class PropertyResource extends Resource
 
                 // Əsas Valyuta Seçimi (Default: GBP)
                 Forms\Components\Select::make('currency')
-                    ->label('Əsas Valyuta')
+                    ->label(__('admin.main_currency'))
                     ->options([
                         'GBP' => 'Pound (£ GBP)',
                         'AZN' => 'Manat (₼ AZN)',
                         'USD' => 'Dollar ($ USD)',
                         'EUR' => 'Avro (€ EUR)',
-                        'TRY' => 'Türk Lirəsi (₺ TRY)',
+                        'TRY' => __('admin.try_lira_short'),
                         'RUB' => 'Rusiya Rublu (₽ RUB)',
-                        'AED' => 'BƏƏ Dirhəmi (AED)',
+                        'AED' => __('admin.aed_dirham'),
                     ])
                     ->default('GBP')
                     ->required()
@@ -305,7 +306,7 @@ class PropertyResource extends Resource
                         default => '£'
                     })
                     ->required()
-                    ->placeholder('Məs: 150000')
+                    ->placeholder(__('admin.price_placeholder'))
                     ->live(debounce: 350)
                     ->afterStateUpdated(fn ($state, Forms\Get $get, Forms\Set $set) => $recalculateCurrencies($get, $set))
                     ->afterStateHydrated(function ($component, $record) {
@@ -322,7 +323,7 @@ class PropertyResource extends Resource
                     ->prefix('£')
                     ->disabled(fn (Forms\Get $get) => (bool) $get('auto_convert_currency'))
                     ->dehydrated()
-                    ->placeholder('Məs: 150000')
+                    ->placeholder(__('admin.price_placeholder'))
                     ->afterStateHydrated(function ($component, $record) {
                         if (! $record) return;
                         $component->state($record->prices['GBP'] ?? $record->price ?? null);
@@ -336,7 +337,7 @@ class PropertyResource extends Resource
                     ->prefix('$')
                     ->disabled(fn (Forms\Get $get) => (bool) $get('auto_convert_currency'))
                     ->dehydrated()
-                    ->placeholder('Məs: 195000')
+                    ->placeholder(__('admin.example_195000'))
                     ->afterStateHydrated(function ($component, $record) {
                         if (! $record) return;
                         $component->state($record->prices['USD'] ?? null);
@@ -350,7 +351,7 @@ class PropertyResource extends Resource
                     ->prefix('€')
                     ->disabled(fn (Forms\Get $get) => (bool) $get('auto_convert_currency'))
                     ->dehydrated()
-                    ->placeholder('Məs: 177000')
+                    ->placeholder(__('admin.example_177000'))
                     ->afterStateHydrated(function ($component, $record) {
                         if (! $record) return;
                         $component->state($record->prices['EUR'] ?? null);
@@ -364,7 +365,7 @@ class PropertyResource extends Resource
                     ->prefix('₼')
                     ->disabled(fn (Forms\Get $get) => (bool) $get('auto_convert_currency'))
                     ->dehydrated()
-                    ->placeholder('Məs: 331500')
+                    ->placeholder(__('admin.example_331500'))
                     ->afterStateHydrated(function ($component, $record) {
                         if (! $record) return;
                         $component->state($record->prices['AZN'] ?? null);
@@ -373,12 +374,12 @@ class PropertyResource extends Resource
 
                 // 5) TÜRK LİRƏSİ (TRY ₺)
                 Forms\Components\TextInput::make('price_try')
-                    ->label('Türk Lirəsi (₺ TL/TRY)')
+                    ->label(__('admin.try_lira'))
                     ->numeric()
                     ->prefix('₺')
                     ->disabled(fn (Forms\Get $get) => (bool) $get('auto_convert_currency'))
                     ->dehydrated()
-                    ->placeholder('Məs: 6675000')
+                    ->placeholder(__('admin.example_6675000'))
                     ->afterStateHydrated(function ($component, $record) {
                         if (! $record) return;
                         $component->state($record->prices['TRY'] ?? null);
@@ -392,7 +393,7 @@ class PropertyResource extends Resource
                     ->prefix('₽')
                     ->disabled(fn (Forms\Get $get) => (bool) $get('auto_convert_currency'))
                     ->dehydrated()
-                    ->placeholder('Məs: 18000000')
+                    ->placeholder(__('admin.example_18000000'))
                     ->afterStateHydrated(function ($component, $record) {
                         if (! $record) return;
                         $component->state($record->prices['RUB'] ?? null);
@@ -401,12 +402,12 @@ class PropertyResource extends Resource
 
                 // 7) BƏƏ DİRHƏMİ (AED د.إ)
                 Forms\Components\TextInput::make('price_aed')
-                    ->label('BƏƏ Dirhəmi (AED د.إ)')
+                    ->label(__('admin.aed_dirham_uae'))
                     ->numeric()
                     ->prefix('د.إ')
                     ->disabled(fn (Forms\Get $get) => (bool) $get('auto_convert_currency'))
                     ->dehydrated()
-                    ->placeholder('Məs: 715500')
+                    ->placeholder(__('admin.example_715500'))
                     ->afterStateHydrated(function ($component, $record) {
                         if (! $record) return;
                         $component->state($record->prices['AED'] ?? null);
@@ -423,17 +424,17 @@ class PropertyResource extends Resource
      */
     protected static function sectionDimensions(): Forms\Components\Section
     {
-        return Forms\Components\Section::make('Ölçülər və Mərtəbə')
-            ->description('Əmlakın sahəsi, torpaq ölçüsü, otaq və mərtəbə məlumatları')
+        return Forms\Components\Section::make(__('admin.sizes_and_floor'))
+            ->description(__('admin.property_size_details_hint'))
             ->icon('heroicon-o-arrows-pointing-out')
             ->columnSpan(2)
             ->columns(4)
             ->schema([
                 Forms\Components\TextInput::make('area')
-                    ->label('Sahə (m²)')
+                    ->label(__('admin.area_sqm'))
                     ->numeric()
                     ->suffix('m²')
-                    ->placeholder('Məs: 120')
+                    ->placeholder(__('admin.example_120'))
                     ->hidden(fn (Forms\Get $get): bool => static::isLand($get))
                     ->columnSpan(1),
 
@@ -441,28 +442,28 @@ class PropertyResource extends Resource
                     ->label('Torpaq (sot)')
                     ->numeric()
                     ->suffix('sot')
-                    ->placeholder('Məs: 10')
+                    ->placeholder(__('admin.example_10'))
                     ->visible(fn (Forms\Get $get): bool => static::isLand($get))
                     ->columnSpan(1),
 
                 Forms\Components\TextInput::make('rooms')
-                    ->label('Otaq Sayı')
+                    ->label(__('admin.room_count'))
                     ->numeric()
-                    ->placeholder('Məs: 3')
+                    ->placeholder(__('admin.example_3'))
                     ->hidden(fn (Forms\Get $get): bool => static::isLand($get))
                     ->columnSpan(1),
 
                 Forms\Components\TextInput::make('floor')
-                    ->label('Mərtəbə')
+                    ->label(__('admin.floor'))
                     ->numeric()
-                    ->placeholder('Məs: 4')
+                    ->placeholder(__('admin.example_4'))
                     ->hidden(fn (Forms\Get $get): bool => static::isLand($get))
                     ->columnSpan(1),
 
                 Forms\Components\TextInput::make('total_floors')
-                    ->label('Binanın Mərtəbəsi')
+                    ->label(__('admin.building_floor'))
                     ->numeric()
-                    ->placeholder('Məs: 9')
+                    ->placeholder(__('admin.example_9'))
                     ->hidden(fn (Forms\Get $get): bool => static::isLand($get))
                     ->columnSpan(1),
             ]);
@@ -473,8 +474,8 @@ class PropertyResource extends Resource
      */
     protected static function sectionFeatures(): Forms\Components\Section
     {
-        return Forms\Components\Section::make('Əlavə Xüsusiyyətlər')
-            ->description('Tikili növü, təmir vəziyyəti, istilik sistemi və mənzərə')
+        return Forms\Components\Section::make(__('admin.additional_features'))
+            ->description(__('admin.building_repair_heating_view_hint'))
             ->icon('heroicon-o-sparkles')
             ->columnSpan(2)
             ->columns(2)
@@ -499,20 +500,20 @@ class PropertyResource extends Resource
      */
     protected static function sectionDocuments(bool $isAdmin = true): Forms\Components\Section
     {
-        return Forms\Components\Section::make('Sənədlər və İşarələr')
-            ->description('Sənəd durumu və elanın önəmlilik işarələri')
+        return Forms\Components\Section::make(__('admin.documents_and_markers'))
+            ->description(__('admin.deed_status_hint'))
             ->icon('heroicon-o-document-check')
             ->columnSpan(2)
             ->columns(3)
             ->hidden(fn (Forms\Get $get): bool => static::isRental($get))
             ->schema([
                 Forms\Components\Toggle::make('has_document')
-                    ->label('Çıxarış var (Kupça)')
+                    ->label(__('admin.deed_available_kupcha'))
                     ->default(false)
                     ->columnSpan(1),
 
                 Forms\Components\Toggle::make('has_mortgage')
-                    ->label('İpotekaya yararlı')
+                    ->label(__('admin.mortgage_eligible'))
                     ->default(false)
                     ->columnSpan(1),
 
@@ -528,7 +529,7 @@ class PropertyResource extends Resource
                     ->columnSpan(1),
 
                 Forms\Components\Toggle::make('is_featured')
-                    ->label('Seçilmiş Elan')
+                    ->label(__('admin.featured_listing'))
                     ->default(false)
                     ->visible($isAdmin)
                     ->columnSpan(1),
@@ -540,8 +541,8 @@ class PropertyResource extends Resource
      */
     protected static function sectionAmenities(): Forms\Components\Section
     {
-        return Forms\Components\Section::make('Təchizatlar')
-            ->description('Əmlakda mövcud olan təchizatları seçin')
+        return Forms\Components\Section::make(__('admin.amenities'))
+            ->description(__('admin.select_available_amenities'))
             ->icon('heroicon-o-check-circle')
             ->columnSpan(2)
             ->schema([
@@ -559,13 +560,13 @@ class PropertyResource extends Resource
      */
     protected static function sectionDescription(): Forms\Components\Section
     {
-        return Forms\Components\Section::make('Təsvir')
-            ->description('Elanın ətraflı təsviri — alıcıları cəlb edən məlumatlar')
+        return Forms\Components\Section::make(__('admin.description'))
+            ->description(__('admin.listing_description_hint'))
             ->icon('heroicon-o-pencil-square')
             ->columnSpan(2)
             ->schema([
                 Forms\Components\RichEditor::make('description')
-                    ->label('Elanın Təsviri')
+                    ->label(__('admin.listing_description'))
                     ->columnSpanFull(),
             ]);
     }
@@ -575,13 +576,13 @@ class PropertyResource extends Resource
      */
     protected static function sectionImages(): Forms\Components\Section
     {
-        return Forms\Components\Section::make('Media (Şəkillər və Video)')
-            ->description('Elanın şəkillərini və video çarxını yükləyin — ilk şəkil əsas üz qabığı kimi göstərilir. Sıranı dəyişmək üçün şəkilləri sürükləyib yerini dəyişin (Drag & Drop).')
+        return Forms\Components\Section::make(__('admin.media_images_video'))
+            ->description(__('admin.media_upload_hint'))
             ->icon('heroicon-o-photo')
             ->columnSpan(2)
             ->schema([
                 Forms\Components\FileUpload::make('uploaded_images')
-                    ->label('Fotoşəkillər')
+                    ->label(__('admin.photos'))
                     ->multiple()
                     ->reorderable()
                     ->image()
@@ -598,8 +599,8 @@ class PropertyResource extends Resource
                     ->dehydrated(false),
 
                 Forms\Components\FileUpload::make('video')
-                    ->label('Video (İstəyə görə - 1 ədəd)')
-                    ->helperText('Əmlakın video görüntüsünü yükləyin (MP4, WebM, MOV — maksimum 50MB)')
+                    ->label(__('admin.video_optional'))
+                    ->helperText(__('admin.upload_property_video_hint'))
                     ->acceptedFileTypes(['video/mp4', 'video/webm', 'video/quicktime', 'video/x-msvideo', 'video/ogg'])
                     ->maxSize(51200)
                     ->disk('public')
@@ -617,8 +618,8 @@ class PropertyResource extends Resource
      */
     protected static function sectionOwnership(): Forms\Components\Section
     {
-        return Forms\Components\Section::make('Sahiblik və Status')
-            ->description('Elanın sahibini və yayım statusunu təyin edin')
+        return Forms\Components\Section::make(__('admin.ownership_and_status'))
+            ->description(__('admin.set_owner_and_status'))
             ->icon('heroicon-o-user-group')
             ->columnSpan(2)
             ->columns(3)
@@ -658,12 +659,12 @@ class PropertyResource extends Resource
     protected static function sectionSubmission(): Forms\Components\Section
     {
         return Forms\Components\Section::make('Yekun')
-            ->description('Elanı yaratmadan əvvəl məlumatları yoxlayın')
+            ->description(__('admin.review_before_create'))
             ->icon('heroicon-o-check-badge')
             ->columnSpan(2)
             ->schema([
                 Forms\Components\Placeholder::make('submission_info')
-                    ->label('Növbəti addım')
+                    ->label(__('admin.next_step'))
                     ->content('Elan yaradıldıqdan sonra status "Təsdiq gözləyir" olaraq təyin ediləcək. Admin tərəfindən təsdiqləndikdən sonra elan dərc olunacaq.'),
             ]);
     }
@@ -696,7 +697,7 @@ class PropertyResource extends Resource
                 ->options($optionList)
                 ->searchable()
                 ->preload()
-                ->placeholder('Seçin...'),
+                ->placeholder(__('admin.select_placeholder')),
         };
 
         return $component
@@ -737,7 +738,7 @@ class PropertyResource extends Resource
                 ])
                 ->filters([
                     Tables\Filters\SelectFilter::make('seller_type')
-                        ->label('Satıcı növü')
+                        ->label(__('admin.seller_type'))
                         ->options(SellerType::options()),
 
                     Tables\Filters\SelectFilter::make('status')
@@ -757,7 +758,7 @@ class PropertyResource extends Resource
             ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\ImageColumn::make('first_image_url')
-                    ->label('Şəkil')
+                    ->label(__('admin.image'))
                     ->state(fn (Property $record) => $record->first_image_url)
                     ->extraImgAttributes([
                         'class' => 'w-12 h-12 object-cover rounded-lg shadow-sm',
@@ -772,19 +773,19 @@ class PropertyResource extends Resource
                     ->weight('bold'),
 
                 Tables\Columns\TextColumn::make('title')
-                    ->label('Başlıq')
+                    ->label(__('admin.title'))
                     ->limit(35)
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('price')
-                    ->label('Qiymət')
+                    ->label(__('admin.price'))
                     ->formatStateUsing(fn ($record) => ($record->currency === 'GBP' || empty($record->currency) ? '£ ' : $record->currency . ' ') . number_format($record->price, 0, '.', ' '))
                     ->sortable()
                     ->weight('bold')
                     ->color('success'),
 
                 Tables\Columns\TextColumn::make('views_count')
-                    ->label('Baxış Sayı')
+                    ->label(__('admin.view_count'))
                     ->icon('heroicon-o-eye')
                     ->numeric()
                     ->default(0)
@@ -794,14 +795,14 @@ class PropertyResource extends Resource
 
                 Tables\Columns\TextColumn::make('inquiries_count')
                     ->counts('inquiries')
-                    ->label('Müraciət')
+                    ->label(__('admin.inquiry'))
                     ->icon('heroicon-o-chat-bubble-left-right')
                     ->sortable()
                     ->badge()
                     ->color('info'),
 
                 Tables\Columns\TextColumn::make('seller_type')
-                    ->label('Satıcı')
+                    ->label(__('admin.seller'))
                     ->badge()
                     ->formatStateUsing(fn (?SellerType $state): string => $state?->label() ?? '—'),
 
@@ -811,8 +812,8 @@ class PropertyResource extends Resource
                     ->selectablePlaceholder(false)
                     ->afterStateUpdated(function (Property $record, $state) {
                         \Filament\Notifications\Notification::make()
-                            ->title('Status yeniləndi')
-                            ->body("#{$record->code} elanın statusu dəyişdirildi.")
+                            ->title(__('admin.status_updated'))
+                            ->body(__('admin.status_changed_for_listing', ['code' => $record->code]))
                             ->success()
                             ->send();
                     })
@@ -826,7 +827,7 @@ class PropertyResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('seller_type')
-                    ->label('Satıcı növü')
+                    ->label(__('admin.seller_type'))
                     ->options(SellerType::options()),
 
                 Tables\Filters\SelectFilter::make('status')
@@ -839,7 +840,7 @@ class PropertyResource extends Resource
                         ->url(fn (\Illuminate\Database\Eloquent\Model $record): string => static::getUrl('view', ['record' => $record])),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\Action::make('changeStatus')
-                        ->label('Statusu Dəyiş')
+                        ->label(__('admin.change_status'))
                         ->icon('heroicon-m-arrow-path')
                         ->color('warning')
                         ->form([
@@ -852,33 +853,33 @@ class PropertyResource extends Resource
                         ->action(function (Property $record, array $data) {
                             $record->update(['status' => $data['status']]);
                             \Filament\Notifications\Notification::make()
-                                ->title('Status yeniləndi')
+                                ->title(__('admin.status_updated'))
                                 ->success()
                                 ->send();
                         }),
                     Tables\Actions\Action::make('quickPublish')
-                        ->label('Dərc et (Təsdiqlə)')
+                        ->label(__('admin.publish_approve'))
                         ->icon('heroicon-m-check-circle')
                         ->color('success')
                         ->visible(fn (Property $record) => $record->status !== PropertyStatus::Published)
                         ->requiresConfirmation()
-                        ->modalHeading('Elanı Dərc Et')
-                        ->modalDescription('Bu elanı dərhal təsdiqləyib saytda dərc etmək istədiyinizə əminsiniz?')
+                        ->modalHeading(__('admin.publish_listing'))
+                        ->modalDescription(__('admin.confirm_publish_listing'))
                         ->action(function (Property $record) {
                             $record->update(['status' => PropertyStatus::Published]);
                             \Filament\Notifications\Notification::make()
-                                ->title('Elan dərc edildi')
+                                ->title(__('admin.listing_published'))
                                 ->success()
                                 ->send();
                         }),
                     Tables\Actions\Action::make('quickReject')
-                        ->label('İmtina et')
+                        ->label(__('admin.reject'))
                         ->icon('heroicon-m-x-circle')
                         ->color('danger')
                         ->visible(fn (Property $record) => $record->status !== PropertyStatus::Rejected)
                         ->requiresConfirmation()
-                        ->modalHeading('Elanı İmtina Et')
-                        ->modalDescription('Bu elanı imtina edilmiş statusa keçirmək istədiyinizə əminsiniz?')
+                        ->modalHeading(__('admin.reject_listing'))
+                        ->modalDescription(__('admin.confirm_reject_listing'))
                         ->action(function (Property $record) {
                             $record->update(['status' => PropertyStatus::Rejected]);
                             \Filament\Notifications\Notification::make()
@@ -892,38 +893,38 @@ class PropertyResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\BulkAction::make('bulkPublish')
-                        ->label('Seçilənləri Dərc Et')
+                        ->label(__('admin.publish_selected'))
                         ->icon('heroicon-m-check-badge')
                         ->color('success')
                         ->requiresConfirmation()
                         ->action(function (\Illuminate\Database\Eloquent\Collection $records) {
                             $records->each->update(['status' => PropertyStatus::Published]);
                             \Filament\Notifications\Notification::make()
-                                ->title('Seçilmiş elanlar dərc edildi')
+                                ->title(__('admin.selected_listings_published'))
                                 ->success()
                                 ->send();
                         }),
                     Tables\Actions\BulkAction::make('bulkPending')
-                        ->label('Seçilənləri Gözləməyə Al')
+                        ->label(__('admin.move_selected_to_pending'))
                         ->icon('heroicon-m-clock')
                         ->color('warning')
                         ->requiresConfirmation()
                         ->action(function (\Illuminate\Database\Eloquent\Collection $records) {
                             $records->each->update(['status' => PropertyStatus::PendingApproval]);
                             \Filament\Notifications\Notification::make()
-                                ->title('Seçilmiş elanlar təsdiq gözləməyə keçirildi')
+                                ->title(__('admin.selected_listings_pending'))
                                 ->warning()
                                 ->send();
                         }),
                     Tables\Actions\BulkAction::make('bulkArchive')
-                        ->label('Seçilənləri Arxivlə')
+                        ->label(__('admin.archive_selected'))
                         ->icon('heroicon-m-archive-box')
                         ->color('gray')
                         ->requiresConfirmation()
                         ->action(function (\Illuminate\Database\Eloquent\Collection $records) {
                             $records->each->update(['status' => PropertyStatus::Archived]);
                             \Filament\Notifications\Notification::make()
-                                ->title('Seçilmiş elanlar arxivləndi')
+                                ->title(__('admin.selected_listings_archived'))
                                 ->success()
                                 ->send();
                         }),

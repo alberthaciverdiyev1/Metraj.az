@@ -18,9 +18,7 @@ class AgencyPropertiesTrendChartWidget extends ChartWidget
 
     public function getHeading(): ?string
     {
-        return app()->getLocale() === 'tr'
-            ? 'Portföy İlan İstatistiği (Son 30 Gün)'
-            : (app()->getLocale() === 'az' ? 'Portfel Elan Statistikası (Son 30 Gün)' : 'Portfolio Listings Trend (Last 30 Days)');
+        return __('admin.portfolio_listing_stats_az');
     }
 
     protected function getData(): array
@@ -52,7 +50,7 @@ class AgencyPropertiesTrendChartWidget extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => app()->getLocale() === 'tr' ? 'Eklenen İlanlar' : (app()->getLocale() === 'az' ? 'Əlavə edilən elanlar' : 'New Listings'),
+                    'label' => __('admin.added_listings'),
                     'data' => $propertyData,
                     'borderColor' => '#ea580c',
                     'backgroundColor' => 'rgba(234, 88, 12, 0.15)',

@@ -46,7 +46,7 @@
                         <span class="font-medium text-[color:var(--text-color)]">{{ $agent->position ?? __('agency.agent_independent_subtitle') }}</span>
                         @if($agent->agency)
                             <span class="mx-1 text-gray-300">•</span>
-                            <a href="{{ route('agencies.show.byId', $agent->agency->id) }}" class="text-[color:var(--primary)] font-semibold hover:underline">
+                            <a href="{{ route('agencies.show', $agent->agency->slug ?: $agent->agency->id) }}" class="text-[color:var(--primary)] font-semibold hover:underline">
                                 {{ $agent->agency->name }}
                             </a>
                         @endif
@@ -91,7 +91,7 @@
                             {{ $agent->user?->name ?? __('agency.agent_default_title') }}
                             {{ $agent->position ? __('agency.works_as_position') : __('agency.works_as_independent') }}
                             @if($agent->agency)
-                                — <a href="{{ route('agencies.show.byId', $agent->agency->id) }}" class="text-[color:var(--primary)] font-semibold hover:underline">{{ $agent->agency->name }}</a>
+                                — <a href="{{ route('agencies.show', $agent->agency->slug ?: $agent->agency->id) }}" class="text-[color:var(--primary)] font-semibold hover:underline">{{ $agent->agency->name }}</a>
                                 {{ __('agency.agency_member') }}.
                             @else
                                 .
@@ -136,7 +136,7 @@
                     @if($agent->agency)
                         <p class="flex items-start gap-2.5">
                             <i class="bi bi-building text-[var(--primary)] mt-0.5"></i>
-                            <a href="{{ route('agencies.show.byId', $agent->agency->id) }}" class="hover:text-[var(--primary)] transition font-medium">{{ $agent->agency->name }}</a>
+                            <a href="{{ route('agencies.show', $agent->agency->slug ?: $agent->agency->id) }}" class="hover:text-[var(--primary)] transition font-medium">{{ $agent->agency->name }}</a>
                         </p>
                     @endif
                 </div>

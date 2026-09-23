@@ -75,7 +75,7 @@ class AgencyListController extends Controller
             return (object) [
                 'type' => 'agency',
                 'id' => $agency->id,
-                'url' => '/agency/' . $agency->id,
+                'url' => route('agencies.show', $agency->slug ?: $agency->id),
                 'name' => $agency->name,
                 'subtitle' => $agency->address ?? __('agency.agency_default_subtitle'),
                 'is_address' => !empty($agency->address),
@@ -92,7 +92,7 @@ class AgencyListController extends Controller
             return (object) [
                 'type' => 'agent',
                 'id' => $agent->id,
-                'url' => '/agent/' . $agent->id,
+                'url' => route('agents.show', $agent->id),
                 'name' => $name,
                 'subtitle' => $agent->position ?? __('agency.agent_independent_subtitle'),
                 'is_address' => false,

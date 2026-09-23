@@ -88,6 +88,13 @@ class Property extends Model
         'has_document',        // Çıxarış var (Kupça) - true/false
         'has_mortgage',        // İpotekaya yararlıdır - true/false
         'has_internal_credit', // Daxili kredit mümkündür - true/false
+        'deed_type',           // Koçan Türü (turkish, exchange, allocation, foreign)
+        'furnished_status',    // Eşya Durumu (furnished, unfurnished, semi_furnished)
+        'in_complex',          // Site İçerisinde (true/false)
+        'building_age',        // Bina Yaşı (0, 1-5, under_construction)
+        'exchangeable',        // Takas (true/false)
+        'zoning_ratio',        // İmar Oranı (%)
+        'floors_allowed',      // Kat İzni
 
         // Qiymət parametrləri
         'price',               // Əmlakın əsas qiyməti (GBP / Funt Sterlinq)
@@ -98,6 +105,7 @@ class Property extends Model
         'area',                // Əmlakın sahəsi (m² ilə)
         'land_area',           // Torpaq sahəsi (sot ilə)
         'rooms',               // Otaq sayı (1, 2, 3, 4, 5+)
+        'bathrooms',           // Banyo sayı (1, 2, 3+)
         'floor',               // Yerləşdiyi mərtəbə
         'total_floors',        // Binanın ümumi mərtəbə sayı
 
@@ -132,6 +140,11 @@ class Property extends Model
         'has_document' => 'boolean',                  // Kupça var (true/false)
         'has_mortgage' => 'boolean',                  // İpoteka var (true/false)
         'has_internal_credit' => 'boolean',           // Daxili kredit var (true/false)
+        'in_complex' => 'boolean',                    // Site İçerisinde (true/false)
+        'exchangeable' => 'boolean',                  // Takas (true/false)
+        'bathrooms' => 'integer',                     // Banyo sayısı
+        'zoning_ratio' => 'integer',                  // İmar Oranı
+        'floors_allowed' => 'integer',                // Kat İzni
         'price' => 'decimal:2',                       // Qiymət onluq kəsr kimi saxlanılır
         'prices' => 'array',                          // Bütün valyuta qiymətləri massiv/JSON kimi
         'latitude' => 'decimal:8',                    // Xəritə enliyi dəqiq koordinat kimi

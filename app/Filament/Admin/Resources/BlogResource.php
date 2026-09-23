@@ -16,9 +16,11 @@ class BlogResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
 
-    protected static ?string $navigationGroup = 'Məzmun və Axtarış';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.content_and_search'); }
 
-    protected static ?string $navigationLabel = 'Bloq və Xəbərlər';
+    public static function getNavigationLabel(): string {
+        return __('admin.blog_and_news'); }
 
     protected static ?string $modelLabel = 'Bloq';
 
@@ -30,10 +32,10 @@ class BlogResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Bloq Məlumatları')
+                Forms\Components\Section::make(__('admin.blog_information'))
                     ->schema([
                         Forms\Components\TextInput::make('title')
-                            ->label('Başlıq')
+                            ->label(__('admin.title'))
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
@@ -44,64 +46,64 @@ class BlogResource extends Resource
                             ->label('URL (Slug)')
                             ->nullable()
                             ->unique(table: 'blogs', column: 'slug', ignoreRecord: true)
-                            ->helperText('Boş buraxılarsa, başlıqdan avtomatik unikal slug yaradılacaq.'),
+                            ->helperText(__('admin.slug_auto_hint')),
 
                         Forms\Components\Select::make('category')
                             ->label('Kategoriya')
                             ->options([
-                                'Məsləhət' => 'Məsləhət',
+                                'Məsləhət' => __('admin.advice'),
                                 'Bazar' => 'Bazar',
-                                'Xəbər' => 'Xəbər',
-                                'İnvestisiya' => 'İnvestisiya',
-                                'Hüquqi' => 'Hüquqi',
-                                'Həyat tərzi' => 'Həyat tərzi',
+                                'Xəbər' => __('admin.news'),
+                                'İnvestisiya' => __('admin.investment'),
+                                'Hüquqi' => __('admin.legal'),
+                                'Həyat tərzi' => __('admin.lifestyle'),
                                 'Texniki' => 'Texniki',
                             ])
                             ->searchable()
-                            ->placeholder('Kategoriya seçin'),
+                            ->placeholder(__('admin.select_category')),
 
                         Forms\Components\DateTimePicker::make('published_at')
-                            ->label('Dərc Tarixi')
+                            ->label(__('admin.publish_date'))
                             ->default(now())
                             ->required(),
 
                         Forms\Components\FileUpload::make('cover_image')
-                            ->label('Üzlük Şəkli')
+                            ->label(__('admin.cover_image'))
                             ->image()
                             ->imageEditor()
                             ->directory('blogs')
                             ->visibility('public')
-                            ->helperText('Bloq kartında və məqalənin başında görünür.')
+                            ->helperText(__('admin.blog_card_and_top_hint'))
                             ->columnSpanFull(),
                     ])->columns(3),
 
-                Forms\Components\Section::make('Mətn')
+                Forms\Components\Section::make(__('admin.text'))
                     ->schema([
                         Forms\Components\Textarea::make('excerpt')
-                            ->label('Qısa Mətn (Excerpt)')
-                            ->placeholder('Kartda görünən qısa təsvir — 1-2 cümlə')
+                            ->label(__('admin.excerpt_label'))
+                            ->placeholder(__('admin.card_excerpt_hint'))
                             ->rows(2)
                             ->maxLength(500)
-                            ->helperText('Bloq kartında göstərilir. Qısa və maraqlı yazın.'),
+                            ->helperText(__('admin.blog_card_hint')),
 
                         Forms\Components\RichEditor::make('content')
-                            ->label('Məzmun')
+                            ->label(__('admin.content'))
                             ->required()
-                            ->placeholder('Məqalənin əsas mətni...')
+                            ->placeholder(__('admin.article_main_text_placeholder'))
                             ->columnSpanFull(),
                     ])->columns(1),
 
-                Forms\Components\Section::make('SEO Tənzimləmələri')
-                    ->description('Axtarış motorları (Google) üçün başlıq və təsvir')
+                Forms\Components\Section::make(__('admin.seo_settings'))
+                    ->description(__('admin.seo_title_desc_hint'))
                     ->collapsible()
                     ->schema([
                         Forms\Components\TextInput::make('meta_title')
-                            ->label('Meta Title (SEO Başlığı)')
-                            ->placeholder('Boş buraxılarsa, bloqun əsas başlığı istifadə olunacaq')
+                            ->label(__('admin.meta_title_seo'))
+                            ->placeholder(__('admin.meta_title_fallback_hint'))
                             ->maxLength(255),
                         Forms\Components\Textarea::make('meta_description')
-                            ->label('Meta Description (SEO Təsviri)')
-                            ->placeholder('Boş buraxılarsa, qısa mətn (excerpt) istifadə olunacaq')
+                            ->label(__('admin.meta_description_seo'))
+                            ->placeholder(__('admin.meta_description_fallback_hint'))
                             ->rows(2)
                             ->maxLength(500),
                     ])->columns(1),
@@ -114,12 +116,12 @@ class BlogResource extends Resource
             ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\ImageColumn::make('cover_image')
-                    ->label('Şəkil')
+                    ->label(__('admin.image'))
                     ->circular()
                     ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode(substr($record->title ?? 'B', 0, 1)) . '&background=F97316&color=fff&size=64'),
 
                 Tables\Columns\TextColumn::make('title')
-                    ->label('Başlıq')
+                    ->label(__('admin.title'))
                     ->searchable()
                     ->sortable()
                     ->weight('bold')
@@ -140,12 +142,12 @@ class BlogResource extends Resource
                     }),
 
                 Tables\Columns\TextColumn::make('excerpt')
-                    ->label('Qısa Mətn')
+                    ->label(__('admin.excerpt'))
                     ->limit(40)
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('views_count')
-                    ->label('Baxış')
+                    ->label(__('admin.view'))
                     ->icon('heroicon-m-eye')
                     ->numeric()
                     ->default(0)
@@ -154,7 +156,7 @@ class BlogResource extends Resource
                     ->color('gray'),
 
                 Tables\Columns\TextColumn::make('published_at')
-                    ->label('Dərc Tarixi')
+                    ->label(__('admin.publish_date'))
                     ->dateTime('d.m.Y H:i')
                     ->sortable(),
             ])
@@ -162,16 +164,16 @@ class BlogResource extends Resource
                 Tables\Filters\SelectFilter::make('category')
                     ->label('Kategoriya')
                     ->options([
-                        'Məsləhət' => 'Məsləhət',
+                        'Məsləhət' => __('admin.advice'),
                         'Bazar' => 'Bazar',
-                        'Xəbər' => 'Xəbər',
-                        'İnvestisiya' => 'İnvestisiya',
-                        'Hüquqi' => 'Hüquqi',
-                        'Həyat tərzi' => 'Həyat tərzi',
+                        'Xəbər' => __('admin.news'),
+                        'İnvestisiya' => __('admin.investment'),
+                        'Hüquqi' => __('admin.legal'),
+                        'Həyat tərzi' => __('admin.lifestyle'),
                         'Texniki' => 'Texniki',
                     ]),
                 Tables\Filters\Filter::make('published')
-                    ->label('Yalnız dərc olunanlar')
+                    ->label(__('admin.published_only'))
                     ->query(fn ($query) => $query->whereNotNull('published_at')),
             ])
             ->actions([

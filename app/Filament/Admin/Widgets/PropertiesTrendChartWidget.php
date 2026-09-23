@@ -9,7 +9,8 @@ use Illuminate\Support\Carbon;
 
 class PropertiesTrendChartWidget extends ChartWidget
 {
-    protected static ?string $heading = 'Elan və Qeydiyyat Dinamikası (Son 30 Gün)';
+    public function getHeading(): string | \Illuminate\Contracts\Support\Htmlable | null {
+        return __('admin.listing_registration_dynamics'); }
     protected static ?int $sort = 2;
     protected static ?string $maxHeight = '230px';
     protected int | string | array $columnSpan = [
@@ -37,7 +38,7 @@ class PropertiesTrendChartWidget extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Yeni Əmlaklar',
+                    'label' => __('admin.new_properties'),
                     'data' => $propertyData,
                     'borderColor' => '#ea580c',
                     'backgroundColor' => 'rgba(234, 88, 12, 0.10)',
@@ -45,7 +46,7 @@ class PropertiesTrendChartWidget extends ChartWidget
                     'tension' => 0.35,
                 ],
                 [
-                    'label' => 'Yeni İstifadəçilər',
+                    'label' => __('admin.new_users'),
                     'data' => $userData,
                     'borderColor' => '#3b82f6',
                     'backgroundColor' => 'rgba(59, 130, 246, 0.10)',

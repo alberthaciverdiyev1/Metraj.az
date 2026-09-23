@@ -25,13 +25,17 @@ class QuickSearchResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-magnifying-glass';
 
-    protected static ?string $navigationGroup = 'Məzmun və Axtarış';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.content_and_search'); }
 
-    protected static ?string $navigationLabel = 'Sürətli Axtarışlar';
+    public static function getNavigationLabel(): string {
+        return __('admin.quick_searches'); }
 
-    protected static ?string $modelLabel = 'Axtarış Şablonu';
+    public static function getModelLabel(): string {
+        return __('admin.search_template'); }
 
-    protected static ?string $pluralModelLabel = 'Sürətli Axtarışlar';
+    public static function getPluralModelLabel(): string {
+        return __('admin.quick_searches'); }
 
     protected static ?int $navigationSort = 2;
 
@@ -39,12 +43,12 @@ class QuickSearchResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Başlıq və SEO Linki')
-                    ->description('İstifadəçilərin saytda və axtarış sistemlərində görəcəyi başlıq')
+                Forms\Components\Section::make(__('admin.title_and_seo_link'))
+                    ->description(__('admin.title_seen_by_users_hint'))
                     ->schema([
                         Forms\Components\TextInput::make('title.az')
-                            ->label('Başlıq (AZ)')
-                            ->placeholder('Məs: Girnədə yeni tikili 2+1 mənzillər')
+                            ->label(__('admin.title_az_label'))
+                            ->placeholder(__('admin.example_girne_new_build'))
                             ->required()
                             ->live(onBlur: true)
                             ->afterStateUpdated(function (Get $get, Set $set, ?string $state) {
@@ -54,17 +58,17 @@ class QuickSearchResource extends Resource
                             }),
 
                         Forms\Components\TextInput::make('title.tr')
-                            ->label('Başlıq (TR)')
-                            ->placeholder('Örn: Girne yeni bina 2+1 daireler')
+                            ->label(__('admin.title_tr_label'))
+                            ->placeholder(__('admin.example_title_tr'))
                             ->nullable(),
 
                         Forms\Components\TextInput::make('title.en')
-                            ->label('Başlıq (EN)')
+                            ->label(__('admin.title_en_label'))
                             ->placeholder('e.g. New building 2+1 apartments in Kyrenia')
                             ->nullable(),
 
                         Forms\Components\TextInput::make('title.ru')
-                            ->label('Başlıq (RU)')
+                            ->label(__('admin.title_ru_label'))
                             ->placeholder('Напр: Новостройки 2+1 квартиры в Гирне')
                             ->nullable(),
 
@@ -77,11 +81,11 @@ class QuickSearchResource extends Resource
                             ->columnSpanFull(),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Məkan və Əmlak Parametrləri')
-                    ->description('Bu teqə kliklədikdə avtomatik tətbiq olunacaq filtrlər')
+                Forms\Components\Section::make(__('admin.location_and_property_parameters'))
+                    ->description(__('admin.filters_applied_on_click'))
                     ->schema([
                         Forms\Components\Select::make('city_id')
-                            ->label('Şəhər')
+                            ->label(__('admin.city'))
                             ->options(City::query()->pluck('name', 'id')->map(function ($name) {
                                 return is_array($name) ? ($name['az'] ?? reset($name)) : $name;
                             }))
@@ -92,7 +96,7 @@ class QuickSearchResource extends Resource
                             ->nullable(),
 
                         Forms\Components\Select::make('district_id')
-                            ->label('Rayon / Qəsəbə')
+                            ->label(__('admin.district_town'))
                             ->options(function (Get $get) {
                                 $cityId = $get('city_id');
                                 if (! $cityId) {
@@ -110,87 +114,87 @@ class QuickSearchResource extends Resource
                             ->nullable(),
 
                         Forms\Components\Select::make('deal_type')
-                            ->label('Alqı-Satqı Növü')
+                            ->label(__('admin.deal_type'))
                             ->options([
-                                DealType::Sale->value => 'Satış',
-                                DealType::RentMonthly->value => 'Aylıq Kirayə',
-                                DealType::RentDaily->value => 'Günlük Kirayə',
+                                DealType::Sale->value => __('admin.sale'),
+                                DealType::RentMonthly->value => __('admin.monthly_rent'),
+                                DealType::RentDaily->value => __('admin.daily_rent'),
                             ])
                             ->nullable(),
 
                         Forms\Components\Select::make('property_type')
-                            ->label('Əmlak Növü')
+                            ->label(__('admin.property_type'))
                             ->options(collect(PropertyType::cases())->mapWithKeys(fn ($type) => [$type->value => $type->label()]))
                             ->nullable(),
 
                         Forms\Components\Select::make('building_type')
-                            ->label('Bina Növü (Tikili)')
+                            ->label(__('admin.building_type'))
                             ->options(collect(BuildingType::cases())->mapWithKeys(fn ($type) => [$type->value => $type->label()]))
                             ->nullable(),
 
                         Forms\Components\Select::make('repair_type')
-                            ->label('Təmir Vəziyyəti')
+                            ->label(__('admin.renovation_status'))
                             ->options(collect(RepairType::cases())->mapWithKeys(fn ($type) => [$type->value => $type->label()]))
                             ->nullable(),
 
                         Forms\Components\Select::make('rooms')
-                            ->label('Otaq Sayı')
+                            ->label(__('admin.room_count'))
                             ->options([
-                                1 => '1 otaqlı',
-                                2 => '2 otaqlı',
-                                3 => '3 otaqlı',
+                                1 => __('admin.rooms_1'),
+                                2 => __('admin.rooms_2'),
+                                3 => __('admin.rooms_3'),
                                 4 => '4 otaqlı',
                                 5 => '5+ otaqlı',
                             ])
                             ->nullable(),
                     ])->columns(3),
 
-                Forms\Components\Section::make('Qiymət, Sahə və Sənəd Şərtləri')
+                Forms\Components\Section::make(__('admin.price_area_deed_terms'))
                     ->schema([
                         Forms\Components\TextInput::make('min_price')
-                            ->label('Min. Qiymət')
+                            ->label(__('admin.min_price'))
                             ->numeric()
                             ->prefix('£')
                             ->nullable(),
 
                         Forms\Components\TextInput::make('max_price')
-                            ->label('Maks. Qiymət')
+                            ->label(__('admin.max_price'))
                             ->numeric()
                             ->prefix('£')
                             ->nullable(),
 
                         Forms\Components\TextInput::make('min_area')
-                            ->label('Min. Sahə (m²)')
+                            ->label(__('admin.min_area'))
                             ->numeric()
                             ->nullable(),
 
                         Forms\Components\TextInput::make('max_area')
-                            ->label('Maks. Sahə (m²)')
+                            ->label(__('admin.max_area'))
                             ->numeric()
                             ->nullable(),
 
                         Forms\Components\Toggle::make('has_document')
-                            ->label('Çıxarış var (Kupçalı)')
+                            ->label(__('admin.deed_available_kupchali'))
                             ->nullable(),
 
                         Forms\Components\Toggle::make('has_mortgage')
-                            ->label('İpotekaya yararlı')
+                            ->label(__('admin.mortgage_eligible'))
                             ->nullable(),
                     ])->columns(4),
 
-                Forms\Components\Section::make('Görünüş və Status')
+                Forms\Components\Section::make(__('admin.appearance_and_status'))
                     ->schema([
                         Forms\Components\Toggle::make('is_popular')
-                            ->label('Populyar Axtarış Teqi Kimi Göstərilsin')
+                            ->label(__('admin.show_as_popular_search_tag'))
                             ->default(true)
-                            ->helperText('Aktiv olduqda ana səhifə və list səhifəsində teq olaraq çıxacaq'),
+                            ->helperText(__('admin.shown_as_tag_hint')),
 
                         Forms\Components\Toggle::make('is_active')
                             ->label('Aktivdir')
                             ->default(true),
 
                         Forms\Components\TextInput::make('sort_order')
-                            ->label('Sıralama')
+                            ->label(__('admin.sort_order'))
                             ->numeric()
                             ->default(0),
                     ])->columns(3),
@@ -203,7 +207,7 @@ class QuickSearchResource extends Resource
             ->defaultSort('sort_order', 'asc')
             ->columns([
                 Tables\Columns\TextColumn::make('title.az')
-                    ->label('Başlıq (AZ)')
+                    ->label(__('admin.title_az_label'))
                     ->searchable()
                     ->weight('bold'),
 
@@ -216,16 +220,16 @@ class QuickSearchResource extends Resource
                     ->copyMessage('Link kopyalandı'),
 
                 Tables\Columns\TextColumn::make('city.name')
-                    ->label('Şəhər')
+                    ->label(__('admin.city'))
                     ->formatStateUsing(fn ($state) => is_array($state) ? ($state['az'] ?? reset($state)) : $state)
-                    ->placeholder('Bütün şəhərlər'),
+                    ->placeholder(__('admin.all_cities')),
 
                 Tables\Columns\TextColumn::make('rooms')
                     ->label('Otaq')
                     ->formatStateUsing(fn ($state) => $state ? $state . ' otaqlı' : '—'),
 
                 Tables\Columns\TextColumn::make('view_count')
-                    ->label('Baxış Sayı')
+                    ->label(__('admin.view_count'))
                     ->sortable()
                     ->badge()
                     ->color('info'),
@@ -239,14 +243,14 @@ class QuickSearchResource extends Resource
                     ->boolean(),
 
                 Tables\Columns\TextColumn::make('sort_order')
-                    ->label('Sıra')
+                    ->label(__('admin.sort_order_short'))
                     ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_active')
                     ->label('Aktivlik'),
                 Tables\Filters\TernaryFilter::make('is_popular')
-                    ->label('Populyar teqlər'),
+                    ->label(__('admin.popular_tags')),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

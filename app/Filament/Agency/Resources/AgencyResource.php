@@ -71,23 +71,23 @@ class AgencyResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Agentlik Məlumatları')
-                    ->description('Veb saytında və elanlarınızda görünən rəsmi agentlik detalları.')
+                Forms\Components\Section::make(__('admin.agency_information'))
+                    ->description(__('admin.agency_public_details'))
                     ->schema([
                         Forms\Components\TextInput::make('name')
-                            ->label('Agentliyin Adı')
+                            ->label(__('admin.agency_name'))
                             ->required()
                             ->maxLength(255),
 
                         Forms\Components\Textarea::make('description')
-                            ->label('Haqqında Ətraflı Məlumat')
+                            ->label(__('admin.detailed_about'))
                             ->rows(4)
                             ->columnSpanFull()
-                            ->helperText('Agentliyinizin fəaliyyəti, təcrübəsi və xidmətləri haqqında ətraflı məlumat.'),
+                            ->helperText(__('admin.agency_activity_hint')),
                     ])->columns(1),
 
-                Forms\Components\Section::make('Logo və Banner')
-                    ->description('Agentlik profilinizin vizual tərtibatı.')
+                Forms\Components\Section::make(__('admin.logo_and_banner'))
+                    ->description(__('admin.agency_profile_visual'))
                     ->schema([
                         Forms\Components\FileUpload::make('logo')
                             ->label('Agentlik Loqosu')
@@ -95,38 +95,38 @@ class AgencyResource extends Resource
                             ->imageEditor()
                             ->directory('agencies')
                             ->visibility('public')
-                            ->helperText('Dairəvi profil şəkli. Web saytında agentlik kartında və elanlarda görünür.')
+                            ->helperText(__('admin.agency_avatar_hint_2'))
                             ->columnSpan(1),
 
                         Forms\Components\FileUpload::make('banner')
-                            ->label('Banner Şəkli')
+                            ->label(__('admin.banner_image'))
                             ->image()
                             ->imageEditor()
                             ->directory('agencies')
                             ->visibility('public')
-                            ->helperText('Agentlik detal səhifəsinin üst hissəsindəki geniş banner şəkli.')
+                            ->helperText(__('admin.agency_banner_hint_show'))
                             ->columnSpan(1),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Əlaqə və Ünvan')
-                    ->description('Müştərilərin sizinlə əlaqə saxlaması üçün istifadə olunacaq məlumatlar.')
+                Forms\Components\Section::make(__('admin.contact_and_address'))
+                    ->description(__('admin.contact_info_hint'))
                     ->schema([
                         Forms\Components\TextInput::make('phone')
-                            ->label('Telefon Nömrəsi')
+                            ->label(__('admin.phone_number'))
                             ->tel()
                             ->required()
-                            ->helperText('Rəsmi əlaqə telefonu.'),
+                            ->helperText(__('admin.official_phone_hint')),
 
                         Forms\Components\TextInput::make('whatsapp')
-                            ->label('WhatsApp Nömrəsi')
+                            ->label(__('admin.whatsapp_number'))
                             ->tel()
                             ->prefixIcon('heroicon-o-chat-bubble-left-right')
-                            ->helperText('WhatsApp vasitəsilə birbaşa yazışma üçün.'),
+                            ->helperText(__('admin.for_direct_whatsapp_chat')),
 
                         Forms\Components\TextInput::make('email')
-                            ->label('Rəsmi E-poçt')
+                            ->label(__('admin.official_email'))
                             ->email()
-                            ->helperText('Rəsmi müraciətlər və sorğular üçün e-poçt ünvanı.'),
+                            ->helperText(__('admin.official_email_hint')),
 
                         Forms\Components\TextInput::make('website')
                             ->label('Vebsayt')
@@ -134,10 +134,10 @@ class AgencyResource extends Resource
                             ->placeholder('https://...'),
 
                         Forms\Components\TextInput::make('address')
-                            ->label('Ofis Ünvanı')
+                            ->label(__('admin.office_address'))
                             ->maxLength(255)
                             ->columnSpanFull()
-                            ->helperText('Fiziki ofisinizin yerləşdiyi tam ünvan.'),
+                            ->helperText(__('admin.full_office_address_hint')),
                     ])->columns(2),
             ]);
     }
@@ -153,7 +153,7 @@ class AgencyResource extends Resource
                     ->defaultImageUrl(fn () => 'https://ui-avatars.com/api/?name=' . urlencode('A') . '&background=F97316&color=fff&size=80'),
 
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Agentliyin Adı')
+                    ->label(__('admin.agency_name'))
                     ->weight('bold')
                     ->searchable(),
 
@@ -168,19 +168,19 @@ class AgencyResource extends Resource
 
                 Tables\Columns\TextColumn::make('agents_count')
                     ->counts('agents')
-                    ->label('Rieltor Sayı')
+                    ->label(__('admin.realtor_count'))
                     ->badge()
                     ->color('info'),
 
                 Tables\Columns\TextColumn::make('properties_count')
                     ->counts('properties')
-                    ->label('Elan Sayı')
+                    ->label(__('admin.listing_count'))
                     ->badge()
                     ->color('success'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
-                    ->label('Məlumatları Yenilə')
+                    ->label(__('admin.update_data'))
                     ->icon('heroicon-o-pencil-square'),
             ]);
     }

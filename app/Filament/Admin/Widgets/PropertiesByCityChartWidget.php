@@ -7,7 +7,8 @@ use Filament\Widgets\ChartWidget;
 
 class PropertiesByCityChartWidget extends ChartWidget
 {
-    protected static ?string $heading = 'Şəhərlər Üzrə Əmlak Bölgüsü';
+    public function getHeading(): string | \Illuminate\Contracts\Support\Htmlable | null {
+        return __('admin.properties_by_city'); }
     protected static ?int $sort = 3;
     protected static ?string $maxHeight = '230px';
     protected int | string | array $columnSpan = [

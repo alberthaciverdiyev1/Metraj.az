@@ -19,13 +19,16 @@ class AgencyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
-    protected static ?string $navigationGroup = 'İstifadəçilər və Agentliklər';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.users_and_agencies'); }
 
-    protected static ?string $navigationLabel = 'Agentliklər';
+    public static function getNavigationLabel(): string {
+        return __('admin.agencies'); }
 
     protected static ?string $modelLabel = 'Agentlik';
 
-    protected static ?string $pluralModelLabel = 'Agentliklər';
+    public static function getPluralModelLabel(): string {
+        return __('admin.agencies'); }
 
     protected static ?int $navigationSort = 2;
 
@@ -33,15 +36,15 @@ class AgencyResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Agentlik Məlumatları')
+                Forms\Components\Section::make(__('admin.agency_information'))
                     ->schema([
                         Forms\Components\TextInput::make('name')
-                            ->label('Agentliyin Adı')
+                            ->label(__('admin.agency_name'))
                             ->required()
                             ->maxLength(255),
 
                         Forms\Components\Select::make('owner_id')
-                            ->label('Sahibi / İstifadəçi')
+                            ->label(__('admin.owner_user'))
                             ->relationship('owner', 'name')
                             ->searchable()
                             ->preload()
@@ -54,16 +57,16 @@ class AgencyResource extends Resource
                             ->required(),
 
                         Forms\Components\Toggle::make('is_verified')
-                            ->label('Təsdiqlənmiş Agentlik (Verified Badge)')
+                            ->label(__('admin.verified_agency_badge'))
                             ->default(false),
 
                         Forms\Components\Textarea::make('description')
-                            ->label('Haqqında Ətraflı Məlumat')
+                            ->label(__('admin.detailed_about'))
                             ->rows(3)
                             ->columnSpanFull(),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Logo və Banner')
+                Forms\Components\Section::make(__('admin.logo_and_banner'))
                     ->schema([
                         Forms\Components\FileUpload::make('logo')
                             ->label('Agentlik Loqosu')
@@ -71,34 +74,34 @@ class AgencyResource extends Resource
                             ->imageEditor()
                             ->directory('agencies')
                             ->visibility('public')
-                            ->helperText('Dairəvi profil şəkli. Web saytında agentlik kartında görünür.')
+                            ->helperText(__('admin.agency_avatar_hint'))
                             ->columnSpan(1),
 
                         Forms\Components\FileUpload::make('banner')
-                            ->label('Banner Şəkli')
+                            ->label(__('admin.banner_image'))
                             ->image()
                             ->imageEditor()
                             ->directory('agencies')
                             ->visibility('public')
-                            ->helperText('Agentlik detal səhifəsinin üstündəki geniş banner şəkli.')
+                            ->helperText(__('admin.agency_banner_hint'))
                             ->columnSpan(1),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Əlaqə və Ünvan')
+                Forms\Components\Section::make(__('admin.contact_and_address'))
                     ->schema([
                         Forms\Components\TextInput::make('phone')
-                            ->label('Telefon Nömrəsi')
+                            ->label(__('admin.phone_number'))
                             ->tel()
                             ->required(),
 
                         Forms\Components\TextInput::make('whatsapp')
-                            ->label('WhatsApp Nömrəsi')
+                            ->label(__('admin.whatsapp_number'))
                             ->tel()
-                            ->helperText('WhatsApp mesajlaşma üçün. Web saytındakı WhatsApp butonunda istifadə olunur.')
+                            ->helperText(__('admin.for_whatsapp_button_hint'))
                             ->prefixIcon('heroicon-o-chat-bubble-left-right'),
 
                         Forms\Components\TextInput::make('email')
-                            ->label('Rəsmi E-poçt')
+                            ->label(__('admin.official_email'))
                             ->email(),
 
                         Forms\Components\TextInput::make('website')
@@ -107,7 +110,7 @@ class AgencyResource extends Resource
                             ->placeholder('https://...'),
 
                         Forms\Components\TextInput::make('address')
-                            ->label('Ofis Ünvanı')
+                            ->label(__('admin.office_address'))
                             ->maxLength(255)
                             ->columnSpanFull(),
                     ])->columns(2),
@@ -125,13 +128,13 @@ class AgencyResource extends Resource
                     ->defaultImageUrl(fn () => 'https://ui-avatars.com/api/?name=' . urlencode('A') . '&background=F97316&color=fff&size=80'),
 
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Agentliyin Adı')
+                    ->label(__('admin.agency_name'))
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
 
                 Tables\Columns\TextColumn::make('owner.name')
-                    ->label('Rəhbər / Sahibi')
+                    ->label(__('admin.manager_owner'))
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('phone')
@@ -147,13 +150,13 @@ class AgencyResource extends Resource
 
                 Tables\Columns\TextColumn::make('agents_count')
                     ->counts('agents')
-                    ->label('Agent Sayı')
+                    ->label(__('admin.agent_count'))
                     ->badge()
                     ->color('info'),
 
                 Tables\Columns\TextColumn::make('properties_count')
                     ->counts('properties')
-                    ->label('Elan Sayı')
+                    ->label(__('admin.listing_count'))
                     ->badge()
                     ->color('success'),
 
@@ -169,7 +172,7 @@ class AgencyResource extends Resource
                     ->formatStateUsing(fn (AgencyStatus $state): string => $state->label()),
 
                 Tables\Columns\IconColumn::make('is_verified')
-                    ->label('Təsdiqlənib')
+                    ->label(__('admin.verified'))
                     ->boolean(),
             ])
             ->filters([
@@ -177,7 +180,7 @@ class AgencyResource extends Resource
                     ->label('Status')
                     ->options(collect(AgencyStatus::cases())->mapWithKeys(fn ($status) => [$status->value => $status->label()])),
                 Tables\Filters\TernaryFilter::make('is_verified')
-                    ->label('Təsdiqlənmə vəziyyəti'),
+                    ->label(__('admin.verification_status')),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()

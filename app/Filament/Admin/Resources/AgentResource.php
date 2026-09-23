@@ -16,13 +16,16 @@ class AgentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-identification';
 
-    protected static ?string $navigationGroup = 'İstifadəçilər və Agentliklər';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.users_and_agencies'); }
 
-    protected static ?string $navigationLabel = 'Agentlər / Rieltorlar';
+    public static function getNavigationLabel(): string {
+        return __('admin.agents_realtors'); }
 
     protected static ?string $modelLabel = 'Agent';
 
-    protected static ?string $pluralModelLabel = 'Agentlər';
+    public static function getPluralModelLabel(): string {
+        return __('admin.agents'); }
 
     protected static ?int $navigationSort = 3;
 
@@ -30,56 +33,56 @@ class AgentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Rieltor Məlumatları')
+                Forms\Components\Section::make(__('admin.realtor_information'))
                     ->schema([
                         Forms\Components\Select::make('agency_id')
-                            ->label('Aid Olduğu Agentlik')
+                            ->label(__('admin.affiliated_agency'))
                             ->relationship('agency', 'name')
                             ->searchable()
                             ->preload()
                             ->nullable()
-                            ->placeholder('Müstəqil Rieltor (Agentliksiz)')
-                            ->helperText('Boş buraxılarsa rieltor "müstəqil" sayılır və /agencies səhifəsində "Müstəqil Rieltorlar" bölümündə görünür.'),
+                            ->placeholder(__('admin.independent_realtor_no_agency'))
+                            ->helperText(__('admin.independent_realtor_hint')),
 
                         Forms\Components\Select::make('user_id')
-                            ->label('İstifadəçi Hesabı')
+                            ->label(__('admin.user_account'))
                             ->relationship('user', 'name')
                             ->searchable()
                             ->preload()
                             ->required(),
 
                         Forms\Components\TextInput::make('position')
-                            ->label('Vəzifəsi / Titul')
-                            ->placeholder('Məs: Baş rieltor, Satış meneceri')
+                            ->label(__('admin.position_title'))
+                            ->placeholder(__('admin.position_placeholder'))
                             ->maxLength(255),
 
                         Forms\Components\TextInput::make('phone')
-                            ->label('Əlaqə Nömrəsi')
+                            ->label(__('admin.contact_number'))
                             ->tel()
                             ->required(),
 
                         Forms\Components\TextInput::make('whatsapp')
-                            ->label('WhatsApp Nömrəsi')
+                            ->label(__('admin.whatsapp_number'))
                             ->tel()
-                            ->helperText('WhatsApp mesajlaşma üçün.')
+                            ->helperText(__('admin.for_whatsapp_messaging'))
                             ->prefixIcon('heroicon-o-chat-bubble-left-right'),
 
                         Forms\Components\FileUpload::make('avatar')
-                            ->label('Profil Şəkli (Avatar)')
+                            ->label(__('admin.profile_image_avatar'))
                             ->image()
                             ->imageEditor()
                             ->directory('agents')
                             ->visibility('public')
-                            ->helperText('Rieltor kartında və detal səhifəsində görünür.')
+                            ->helperText(__('admin.realtor_avatar_hint'))
                             ->columnSpan(1),
 
                         Forms\Components\FileUpload::make('banner')
-                            ->label('Banner Şəkli (Üzlük)')
+                            ->label(__('admin.banner_image_cover'))
                             ->image()
                             ->imageEditor()
                             ->directory('agents/banners')
                             ->visibility('public')
-                            ->helperText('Rieltor profil səhifəsinin yuxarı başlıq fonunda görünür.')
+                            ->helperText(__('admin.realtor_banner_hint'))
                             ->columnSpan(1),
 
                         Forms\Components\Toggle::make('is_active')
@@ -95,7 +98,7 @@ class AgentResource extends Resource
             ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\ImageColumn::make('avatar')
-                    ->label('Şəkil')
+                    ->label(__('admin.image'))
                     ->circular()
                     ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->user?->name ?? 'R') . '&background=F97316&color=fff&size=80'),
 
@@ -109,13 +112,13 @@ class AgentResource extends Resource
                     ->label('Agentlik')
                     ->searchable()
                     ->sortable()
-                    ->placeholder('Müstəqil')
+                    ->placeholder(__('admin.independent'))
                     ->badge()
                     ->color(fn ($state) => $state ? 'info' : 'gray')
                     ->icon(fn ($state) => $state ? 'heroicon-o-building-office-2' : 'heroicon-o-user'),
 
                 Tables\Columns\TextColumn::make('position')
-                    ->label('Vəzifə')
+                    ->label(__('admin.position'))
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('phone')
@@ -131,7 +134,7 @@ class AgentResource extends Resource
 
                 Tables\Columns\TextColumn::make('properties_count')
                     ->counts('properties')
-                    ->label('Elan Sayı')
+                    ->label(__('admin.listing_count'))
                     ->badge()
                     ->color('success'),
 

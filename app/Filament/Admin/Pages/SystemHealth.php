@@ -16,9 +16,12 @@ use Illuminate\Support\Facades\File;
 class SystemHealth extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-cpu-chip';
-    protected static ?string $navigationGroup = 'Kataloq və Tənzimləmələr';
-    protected static ?string $navigationLabel = 'Server və Sistem Vəziyyəti';
-    protected static ?string $title = 'Server Vəziyyəti və Sistem Alətləri';
+    public static function getNavigationGroup(): ?string {
+        return __('admin.catalog_and_settings'); }
+    public static function getNavigationLabel(): string {
+        return __('admin.server_and_system_status'); }
+    public function getTitle(): string | \Illuminate\Contracts\Support\Htmlable {
+        return __('admin.server_status_and_tools'); }
     protected static ?int $navigationSort = 7;
 
     protected static string $view = 'filament.pages.system-health';
@@ -36,23 +39,23 @@ class SystemHealth extends Page
                 ->icon('heroicon-m-bolt')
                 ->color('warning')
                 ->requiresConfirmation()
-                ->modalHeading('Tam Sistem Optimizasiyası')
-                ->modalDescription('Bütün keşlər təmizlənəcək, konfiqurasiya, marşrutlar və görünüşlər istehsal üçün yenidən keşlənəcək.')
+                ->modalHeading(__('admin.full_system_optimization'))
+                ->modalDescription(__('admin.clear_all_caches_hint'))
                 ->modalSubmitActionLabel('Optimizasiya Et')
                 ->action(fn () => $this->runOptimizeAll()),
 
             Action::make('clear_all')
-                ->label('Bütün Keşləri Təmizlə')
+                ->label(__('admin.clear_all_caches'))
                 ->icon('heroicon-m-trash')
                 ->color('gray')
                 ->action(fn () => $this->runClearAllCache()),
 
             Action::make('refresh')
-                ->label('Yenilə')
+                ->label(__('admin.refresh'))
                 ->icon('heroicon-m-arrow-path')
                 ->color('gray')
                 ->action(function () {
-                    Notification::make()->title('Göstəricilər yeniləndi')->success()->send();
+                    Notification::make()->title(__('admin.indicators_refreshed'))->success()->send();
                 }),
         ];
     }
@@ -87,13 +90,13 @@ class SystemHealth extends Page
             $this->setActionResult('Tam Sistem Optimizasiyası', $output, 'success', $duration);
 
             Notification::make()
-                ->title('Sistem tam optimizasiya olundu və keşləndi!')
-                ->body("İcra müddəti: {$duration} saniyə")
+                ->title(__('admin.system_optimized_cached'))
+                ->body(__('admin.execution_time_seconds', ['duration' => $duration]))
                 ->success()
                 ->send();
         } catch (\Throwable $e) {
             $this->setActionResult('Optimizasiya Xətası', $e->getMessage(), 'error');
-            Notification::make()->title('Xəta baş verdi')->body($e->getMessage())->danger()->send();
+            Notification::make()->title(__('admin.error_occurred'))->body($e->getMessage())->danger()->send();
         }
     }
 
@@ -114,10 +117,10 @@ class SystemHealth extends Page
 
             $duration = round(microtime(true) - $start, 3);
             $this->setActionResult('Bütün Keşlərin Təmizlənməsi', $output, 'success', $duration);
-            Notification::make()->title('Bütün keşlər təmizləndi!')->success()->send();
+            Notification::make()->title(__('admin.all_caches_cleared'))->success()->send();
         } catch (\Throwable $e) {
             $this->setActionResult('Keş Təmizləmə Xətası', $e->getMessage(), 'error');
-            Notification::make()->title('Xəta baş verdi')->body($e->getMessage())->danger()->send();
+            Notification::make()->title(__('admin.error_occurred'))->body($e->getMessage())->danger()->send();
         }
     }
 
@@ -132,10 +135,10 @@ class SystemHealth extends Page
             $output = Artisan::output();
             $duration = round(microtime(true) - $start, 3);
             $this->setActionResult('Tətbiq Keşi Təmizləndi', $output, 'success', $duration);
-            Notification::make()->title('Tətbiq keşi (Cache) təmizləndi!')->success()->send();
+            Notification::make()->title(__('admin.app_cache_cleared'))->success()->send();
         } catch (\Throwable $e) {
             $this->setActionResult('Xəta', $e->getMessage(), 'error');
-            Notification::make()->title('Xəta baş verdi')->body($e->getMessage())->danger()->send();
+            Notification::make()->title(__('admin.error_occurred'))->body($e->getMessage())->danger()->send();
         }
     }
 
@@ -153,10 +156,10 @@ class SystemHealth extends Page
 
             $duration = round(microtime(true) - $start, 3);
             $this->setActionResult('Blade Görünüşləri Yeniləndi', $output, 'success', $duration);
-            Notification::make()->title('Blade şablonları təmizləndi və yenidən yığıldı!')->success()->send();
+            Notification::make()->title(__('admin.blade_templates_cleared'))->success()->send();
         } catch (\Throwable $e) {
             $this->setActionResult('Xəta', $e->getMessage(), 'error');
-            Notification::make()->title('Xəta baş verdi')->body($e->getMessage())->danger()->send();
+            Notification::make()->title(__('admin.error_occurred'))->body($e->getMessage())->danger()->send();
         }
     }
 
@@ -174,10 +177,10 @@ class SystemHealth extends Page
 
             $duration = round(microtime(true) - $start, 3);
             $this->setActionResult('Konfiqurasiya Keşi Yeniləndi', $output, 'success', $duration);
-            Notification::make()->title('Konfiqurasiya (.env və config) yeniləndi!')->success()->send();
+            Notification::make()->title(__('admin.config_cached'))->success()->send();
         } catch (\Throwable $e) {
             $this->setActionResult('Xəta', $e->getMessage(), 'error');
-            Notification::make()->title('Xəta baş verdi')->body($e->getMessage())->danger()->send();
+            Notification::make()->title(__('admin.error_occurred'))->body($e->getMessage())->danger()->send();
         }
     }
 
@@ -195,10 +198,10 @@ class SystemHealth extends Page
 
             $duration = round(microtime(true) - $start, 3);
             $this->setActionResult('Route Keşi Yeniləndi', $output, 'success', $duration);
-            Notification::make()->title('Bütün marşrutlar (routes) keşləndi!')->success()->send();
+            Notification::make()->title(__('admin.all_routes_cached'))->success()->send();
         } catch (\Throwable $e) {
             $this->setActionResult('Xəta', $e->getMessage(), 'error');
-            Notification::make()->title('Xəta baş verdi')->body($e->getMessage())->danger()->send();
+            Notification::make()->title(__('admin.error_occurred'))->body($e->getMessage())->danger()->send();
         }
     }
 
@@ -213,14 +216,14 @@ class SystemHealth extends Page
             $duration = round(microtime(true) - $start, 3);
             if ($res) {
                 $this->setActionResult('PHP OPcache Sıfırlandı', "PHP Zend OPcache yaddaşı sıfırlandı.", 'success', $duration);
-                Notification::make()->title('OPcache uğurla sıfırlandı!')->success()->send();
+                Notification::make()->title(__('admin.opcache_reset_success'))->success()->send();
             } else {
                 $this->setActionResult('OPcache Xətası', "OPcache sıfırlana bilmədi.", 'warning', $duration);
-                Notification::make()->title('OPcache sıfırlanmadı')->warning()->send();
+                Notification::make()->title(__('admin.opcache_not_reset'))->warning()->send();
             }
         } else {
             $this->setActionResult('OPcache Mövcud Deyil', "opcache_reset funksiyası mövcud deyil.", 'warning');
-            Notification::make()->title('OPcache mövcud deyil')->warning()->send();
+            Notification::make()->title(__('admin.opcache_not_available'))->warning()->send();
         }
     }
 
@@ -235,10 +238,10 @@ class SystemHealth extends Page
             $output = Artisan::output();
             $duration = round(microtime(true) - $start, 3);
             $this->setActionResult('Storage Simvolik Linki', $output ?: 'Storage link yoxlanıldı.', 'success', $duration);
-            Notification::make()->title('Storage link yoxlanıldı!')->success()->send();
+            Notification::make()->title(__('admin.storage_link_checked'))->success()->send();
         } catch (\Throwable $e) {
             $this->setActionResult('Xəta', $e->getMessage(), 'error');
-            Notification::make()->title('Xəta baş verdi')->body($e->getMessage())->danger()->send();
+            Notification::make()->title(__('admin.error_occurred'))->body($e->getMessage())->danger()->send();
         }
     }
 
@@ -263,10 +266,10 @@ class SystemHealth extends Page
 
             $duration = round(microtime(true) - $start, 3);
             $this->setActionResult('Log Faylları Təmizləndi', 'Bütün sistem log faylları sıfırlandı.', 'success', $duration);
-            Notification::make()->title('Log faylları sıfırlandı!')->success()->send();
+            Notification::make()->title(__('admin.log_files_reset'))->success()->send();
         } catch (\Throwable $e) {
             $this->setActionResult('Xəta', $e->getMessage(), 'error');
-            Notification::make()->title('Xəta baş verdi')->body($e->getMessage())->danger()->send();
+            Notification::make()->title(__('admin.error_occurred'))->body($e->getMessage())->danger()->send();
         }
     }
 
@@ -281,10 +284,10 @@ class SystemHealth extends Page
             $output = Artisan::output();
             $duration = round(microtime(true) - $start, 3);
             $this->setActionResult('Növbə İşləyiciləri', $output ?: 'Queue restart siqnalı göndərildi.', 'success', $duration);
-            Notification::make()->title('Növbə işləyiciləri yenidən başladıldı!')->success()->send();
+            Notification::make()->title(__('admin.queue_workers_restarted'))->success()->send();
         } catch (\Throwable $e) {
             $this->setActionResult('Xəta', $e->getMessage(), 'error');
-            Notification::make()->title('Xəta baş verdi')->body($e->getMessage())->danger()->send();
+            Notification::make()->title(__('admin.error_occurred'))->body($e->getMessage())->danger()->send();
         }
     }
 
@@ -317,7 +320,7 @@ class SystemHealth extends Page
             $days = floor($sec / 86400);
             $hours = floor(($sec % 86400) / 3600);
             $mins = floor(($sec % 3600) / 60);
-            $uptimeStr = "{$days} gün, {$hours} saat, {$mins} dəqiqə";
+            $uptimeStr = __('admin.days_hours_minutes', ['days' => $days, 'hours' => $hours, 'mins' => $mins]);
         }
 
         $cpuLoad = sys_getloadavg();
