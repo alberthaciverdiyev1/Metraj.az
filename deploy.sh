@@ -82,6 +82,9 @@ php artisan currency:update-rates || true
 # 8.6 Ensure proper permissions and ownership for www-data
 echo "🔒 Fixing storage and cache permissions (www-data)..."
 chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || sudo chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
+# public/robots.txt paneldən redaktə olunur (git reset root edir) — www-data sahibi olsun
+chown www-data:www-data public/robots.txt 2>/dev/null || sudo chown www-data:www-data public/robots.txt 2>/dev/null || true
+chmod 664 public/robots.txt 2>/dev/null || true
 chmod -R 777 storage bootstrap/cache 2>/dev/null || sudo chmod -R 777 storage bootstrap/cache 2>/dev/null || true
 find storage bootstrap/cache -type d -exec chmod 2777 {} + 2>/dev/null || true
 
@@ -118,6 +121,9 @@ curl -sL https://kibriskare.com > /dev/null || true
 
 # 14. Final Permission Lock (ensuring cache created by curl / warm-up is writable)
 chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || sudo chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
+# public/robots.txt paneldən redaktə olunur (git reset root edir) — www-data sahibi olsun
+chown www-data:www-data public/robots.txt 2>/dev/null || sudo chown www-data:www-data public/robots.txt 2>/dev/null || true
+chmod 664 public/robots.txt 2>/dev/null || true
 chmod -R 777 storage bootstrap/cache 2>/dev/null || sudo chmod -R 777 storage bootstrap/cache 2>/dev/null || true
 find storage bootstrap/cache -type d -exec chmod 2777 {} + 2>/dev/null || true
 
