@@ -23,6 +23,7 @@ class ModuleServiceProvider extends ServiceProvider
         'Location',
         'PropertyRequest',
         'Roommate',
+        'Scraper',
         'Shared',
     ];
 
